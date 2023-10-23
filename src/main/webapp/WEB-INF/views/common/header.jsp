@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,18 +9,15 @@
 </head>
 <body>
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-		<!-- Brand/logo -->
 		<a class="navbar-brand" href="#">LOGO</a>
 		<ul class="navbar-nav">
-			<!-- <c:if test="${user == null}"> -->
 				<li class="nav-item">
 					<a class="nav-link " href="#">회원가입</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link " href="#">로그인</a>
 				</li>
-			<!-- </c:if> -->
-			<!-- <c:if test="${user != null}" -->
+	
 				<li class="nav-item">
 					<a class="nav-link " href="#">로그아웃</a>
 				</li>
@@ -29,7 +27,6 @@
 				<li class="nav-item">
 					<a class="nav-link" href="#">커뮤니티 게시판</a>
 				</li>
-			<!-- </c:if> -->
 				<li class="nav-item">
 					<a class="nav-link" href="#">개인매치</a>
 				</li>
@@ -39,7 +36,6 @@
 					<a class="nav-link" href="#">시설 조회</a>
 				</li>
 				</li>
-			<!-- <c:if test="${user != null && user.me_authority == 'ADMIN'}"> -->
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 					관리자
@@ -51,17 +47,18 @@
 						<a class="dropdown-item" href="#">게시판 관리</a>
 					</div>
 				</li>
-			<!-- </c:if> -->
-			<!-- <c:if test="${user != null && user.me_authority == 'MANAGER'}"> -->
 			<li class="nav-item">
 					<a class="nav-link" href="#">매니저</a>
 			</li>
-			<!-- </c:if> -->
-			<!-- <c:if test="${user != null && user.me_authority == 'BUSINESS'}"> -->
 			<li class="nav-item">
 					<a class="nav-link" href="#">사업자</a>
 			</li>
-			<!-- </c:if> -->
+			<li class="nav-item">
+					<a class="nav-link" href="<c:url value='/application/manager'/>">매니저 신청</a>
+			</li>
+			<li class="nav-item">
+					<a class="nav-link" href="#">사업자 신청</a>
+			</li>
 		</ul>
 	</nav>
 </body>
