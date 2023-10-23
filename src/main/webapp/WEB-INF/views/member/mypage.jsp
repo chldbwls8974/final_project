@@ -16,7 +16,7 @@
 			<div>
 				<div>
 				<div class="myprofile-name">
-					<h2>이름</h2>
+					<h2>${user.me_name}</h2>
 				</div>
 				<div class="myprofile-num">
 					<p>번호16156</p>
