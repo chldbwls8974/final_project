@@ -2,11 +2,40 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.final_project.dao.MemberDAO">
 	<select id="selectMemberList" resultType="kr.kh.final_project.vo.MemberVO">
-		select 
-			* 
-		from 
-			member 
+		<!-- select * from member where me_num = #{me_num} -->
+		<if test='cri.t == "all"'>
 		where
-			me_num = #{me_num}
+			me_id like concat('%', #{cri.s}, '%')
+				or
+			me_nickname concat('%', #{cri.s}, '%')
+				or
+			me_email concat('%', #{cri.s}, '%')
+				or
+			me_tr_name concat('%', #{cri.s}, '%')
+				or
+			me_authority like concat('%', #{cri.s}, '%')
+				or
+			me_state1 concat('%', #{cri.s}, '%')
+				or
+			me_state2 concat('%', #{cri.s}, '%')
+		</if>
+		<if test='cri.t == "second"'>
+		where
+			me_nickname concat('%', #{cri.s}, '%')
+		</if>
+		<if test='cri.t == "third"'>
+		where
+			me_id like concat('%', #{cri.s}, '%')
+		</if>
+		<if test='cri.t == "fourth"'>
+		where
+			me_authority like concat('%', #{cri.s}, '%')
+		</if>
+		<if test='cri.t == "fifth"'>
+		where
+			me_state1 like concat('%', #{cri.s}, '%')
+				or
+			me_state2 like concat('%', #{cri.s}, '%')
+		</if>
 	</select>
 </mapper>

@@ -8,6 +8,7 @@
 <title>회원조회 검색</title>
 </head>
 <body>
+<!-- 회원검색 기능 -->
 	<form action="<c:url value='/admin/member'/>" method="get">
 	<div class="input-group mb-3 mt-3">
 		<div class="input-group-prepend">
@@ -19,7 +20,7 @@
 		      <option value="fifth">이용상태</option>
 		    </select>
 	    </div>
-	    <input type="text" class="form-control" name="s" id="me_title" placeholder="검색어를 입력하세요.">
+	    <input type="text" class="form-control" name="s" id="me_title" placeholder="검색어를 입력하세요." value="${pm.cri.s}">
 	    <button class="btn btn-outline-success btn-insert">찾기</button>
 	</div>
 	</form>
