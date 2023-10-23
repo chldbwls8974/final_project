@@ -20,7 +20,7 @@ CREATE TABLE `member` (
 	`me_authority`	varchar(10)	NOT NULL	DEFAULT 'USER'	COMMENT 'USER, ADMIN, MANAGER, BUSINESS',
 	`me_rating`	int	NULL,
 	`me_profile`	varchar(255)	NULL	COMMENT '이미지',
-	`me_tr_name`	varchar(10)	NOT NULL,
+	`me_tr_name`	varchar(10)	NOT NULL	DEFAULT '언랭',
 	`me_point`	int	NOT NULL	DEFAULT 0,
 	`me_state1`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 없음, 1 : 정지',
 	`me_state2`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 없음, 1 : 정지'
@@ -69,7 +69,7 @@ CREATE TABLE `stadium` (
 	`st_width`	int	NOT NULL,
 	`st_height`	int	NOT NULL,
 	`st_max`	int	NOT NULL,
-	`st_available`	varchar(1)	NULL,
+	`st_available`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 가능, 1 : 불가능',
 	`st_note`	varchar(255)	NULL,
 	`st_fa_num`	int	NOT NULL
 );
