@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -41,7 +42,7 @@
 					관리자
 					</a>
 					<div class="dropdown-menu">
-						<a class="dropdown-item" href="#">회원 관리</a>
+						<a class="dropdown-item" href="<c:url value='/admin/member'/>">회원 관리</a>
 						<a class="dropdown-item" href="#">매니저 관리</a>
 						<a class="dropdown-item" href="#">사업자 관리</a>
 						<a class="dropdown-item" href="#">게시판 관리</a>
