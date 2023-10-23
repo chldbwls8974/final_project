@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.final_project.dao.StadiumDAO">
+	<select id="selectStadiumList" resultType="kr.kh.final_project.vo.StadiumVO">
+		select * from stadium where st_fa_num = #{fa_num}
+	</select>
+</mapper>
