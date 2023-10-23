@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -19,7 +20,7 @@
 					<a class="nav-link " href="#">로그인</a>
 				</li>
 			<!-- </c:if> -->
-			<!-- <c:if test="${user != null}" -->
+			<!-- <c:if test="${user != null}"> -->
 				<li class="nav-item">
 					<a class="nav-link " href="#">로그아웃</a>
 				</li>
@@ -39,19 +40,17 @@
 					<a class="nav-link" href="#">시설 조회</a>
 				</li>
 				</li>
-			<!-- <c:if test="${user != null && user.me_authority == 'ADMIN'}"> -->
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 					관리자
 					</a>
 					<div class="dropdown-menu">
-						<a class="dropdown-item" href="#">회원 관리</a>
+						<a class="dropdown-item" href="<c:url value='/admin/member'/>">회원 관리</a>
 						<a class="dropdown-item" href="#">매니저 관리</a>
 						<a class="dropdown-item" href="#">사업자 관리</a>
 						<a class="dropdown-item" href="#">게시판 관리</a>
 					</div>
 				</li>
-			<!-- </c:if> -->
 			<!-- <c:if test="${user != null && user.me_authority == 'MANAGER'}"> -->
 			<li class="nav-item">
 					<a class="nav-link" href="#">매니저</a>
