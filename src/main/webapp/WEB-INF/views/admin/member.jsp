@@ -1,0 +1,57 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원조회 검색</title>
+</head>
+<body>
+	<form action="<c:url value='/admin/member'/>" method="get">
+	<div class="input-group mb-3 mt-3">
+		<div class="input-group-prepend">
+		    <select class="form-control" id="me_authority" name="t">
+		      <option value="all">전체</option>
+		      <option value="second">닉네임</option>
+		      <option value="third">아이디</option>
+		      <option value="fourth">권한</option>
+		      <option value="fifth">이용상태</option>
+		    </select>
+	    </div>
+	    <input type="text" class="form-control" name="s" id="me_title" placeholder="검색어를 입력하세요.">
+	    <button class="btn btn-outline-success btn-insert">찾기</button>
+	</div>
+	</form>
+<!-- 회원정보 출력 -->
+<div class="container">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>회원아이디</th>
+        <th>닉네임</th>
+        <th>이메일</th>
+        <th>티어</th>
+        <th>권한</th>
+        <th>매치 정지상태</th>
+        <th>커뮤니티 정지상태</th>
+      </tr>
+    </thead>
+    <tbody>
+   	 <c:forEach items="${list}" var="member">
+	      <tr>
+	        <td>${member.me_id}</td>
+	        <td>${member.me_nickname}</td>
+	        <td>${member.me_email}</td>
+	        <td>${member.me_tr_name}</td>
+	        <td>${member.me_authority}</td>
+	        <td>${member.me_state1}</td>
+	        <td>${member.me_state2}</td>
+	        <td></td>
+	      </tr>
+      </c:forEach>
+    </tbody>
+  </table>
+ </div>
+</body>
+</html>

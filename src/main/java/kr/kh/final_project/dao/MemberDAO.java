@@ -1,5 +1,10 @@
 package kr.kh.final_project.dao;
 
-public interface MemberDAO {
+import java.util.List;
 
+import kr.kh.final_project.vo.MemberVO;
+
+public interface MemberDAO {
+	
+	List<MemberVO> selectMemberList(int me_num);
 }
