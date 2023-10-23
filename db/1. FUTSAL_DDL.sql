@@ -379,8 +379,8 @@ DROP TABLE IF EXISTS `operating`;
 CREATE TABLE `operating` (
 	`op_num`	int AUTO_INCREMENT PRIMARY KEY	NOT NULL,
 	`op_day`	varchar(5)	NOT NULL,
-	`op_open`	time	NOT NULL,
-	`op_close`	time	NOT NULL,
+	`op_open`	int	NOT NULL,
+	`op_close`	int	NOT NULL,
 	`op_fa_num`	int	NOT NULL
 );
 
