@@ -1,7 +1,9 @@
 package kr.kh.final_project.vo;
 
 import java.util.Date;
+import lombok.Data;
 
+@Data
 public class MemberVO {
 	int me_num;
 	String me_id; 
