@@ -15,4 +15,13 @@ public class StadiumVO {
 	private int st_available;
 	private String st_note;
 	private int st_fa_num;
+	/*
+	@Override
+	public String toString() {
+		return "{st_num : " + st_num + ", st_name : '" + st_name + "', st_locate : '" + st_locate + "', st_door : "
+				+ st_door + ", st_floortype : " + st_floortype + ", st_width : " + st_width + ", st_height : " + st_height
+				+ ", st_max : " + st_max + ", st_available : " + st_available + ", st_note : '" + st_note + "', st_fa_num : "
+				+ st_fa_num + "}";
+	}
+	*/
 }
