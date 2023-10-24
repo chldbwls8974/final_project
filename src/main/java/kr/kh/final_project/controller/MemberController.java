@@ -9,9 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.final_project.service.MemberService;
 import kr.kh.final_project.service.RegionService;
@@ -24,7 +22,6 @@ public class MemberController {
 
 	@Autowired
 	MemberService memberService;
-	
 	@Autowired
 	RegionService regionService;
 	
@@ -66,5 +63,21 @@ public class MemberController {
 		MemberVO user = memberService.userById(name);
 		model.addAttribute("user", user);
 		return "/member/mypage";
+	}
+	
+	//포인트 환급 페이지
+	@GetMapping("/member/refund")
+	public String pointRefund(Model model, HttpSession session) {
+		//유저정보 세션에서 가져오도록 수정
+		MemberVO user = new MemberVO(1,"test", "test", "홍길동", "길동이", 2 , "01012341234" , "", "", "" , "USER", 0 , "", "실버", 0, 0, 0);
+//		MemberVO user = memberService.userById(name);
+		model.addAttribute("user", user);
+		return "/member/refund";
+	}
+	@PostMapping("/member/refund")
+	public String pointRefundPost(Model model, HttpSession session) {
+		MemberVO user = new MemberVO(1,"test", "test", "홍길동", "길동이", 2 , "01012341234" , "", "", "" , "USER", 0 , "", "실버", 0, 0, 0);
+		model.addAttribute("user", user);
+		return "/member/refund";
 	}
 }
