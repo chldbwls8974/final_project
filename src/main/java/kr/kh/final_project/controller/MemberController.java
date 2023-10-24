@@ -21,6 +21,6 @@ public class MemberController {
 		String name = (String) session.getAttribute("name");
 		MemberVO user = memberService.userById(name);
 		model.addAttribute("user", user);
-		return "member/mypage";
+		return "/member/mypage";
 	}
 }

@@ -27,7 +27,7 @@
 		</div>
 		<div class="form-group">
 			<label>계좌번호</label>
-			<input type="email" class="form-control" name="ac_num">
+			<input type="number" class="form-control" name="ac_num">
 		</div>
 		<button class="btn btn-outline-warning col-12">등록</button>
 	</form>

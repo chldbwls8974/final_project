@@ -32,7 +32,7 @@ public class MemberServiceImp implements MemberService{
 			return true;
 		}
 		//첨부파일을 서버에 업로드 하고, DB에 저장
-		uploadFileAndInsert(files, member.getMe_id());
+//		uploadFileAndInsert(files, member.getMe_id());
 		return memberDao.applyManager(member);
 	}
 

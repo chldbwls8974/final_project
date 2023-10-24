@@ -1,9 +1,12 @@
 package kr.kh.final_project.vo;
 
-import java.util.Date;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class MemberVO {
 	int me_num;
 	String me_id; 
@@ -14,7 +17,7 @@ public class MemberVO {
 	String me_phone; 
 	String me_email;
 	String me_gender;
-	Date me_birthday;
+	String me_birthday;
 	String me_authority;
 	int me_rating; 
 	String me_profile; 
