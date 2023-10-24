@@ -10,5 +10,9 @@ public interface MemberService {
 
 	boolean applyManager(MemberVO member, MemberVO user, MultipartFile[] files);
 
+	boolean signup(MemberVO member);
+
+	MemberVO getMember(String me_id);
+
 
 }
