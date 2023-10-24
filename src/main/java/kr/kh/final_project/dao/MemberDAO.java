@@ -8,6 +8,8 @@ import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.vo.MemberVO;
 
 public interface MemberDAO {
-	
+
 	List<MemberVO> selectMemberList(int me_num);
+
+	int selectTotalCount(@Param("cri")Criteria cri);
 }

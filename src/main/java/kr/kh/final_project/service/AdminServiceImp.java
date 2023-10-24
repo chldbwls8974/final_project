@@ -32,8 +32,11 @@ public class AdminServiceImp implements AdminService{
 	// 회원 페이지네이션
 	@Override
 	public int getTotalCount(Criteria cri) {
-		
-		return 1;
+		// cri가 null일 때 기본 Criteria의 객체를 생성한다.
+		if(cri == null) {
+			cri = new Criteria();
+		}//memberDao한테 cri를 사용하여 데이터베이스에서 검색해야 하는 총 데이터 항목수를 가져오라고
+		return memberDao.selectTotalCount(cri);
 	}
 	// 매니저신청 조회
 	@Override

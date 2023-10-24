@@ -13,11 +13,16 @@
 	<div class="input-group mb-3 mt-3">
 		<div class="input-group-prepend">
 		    <select class="form-control" id="me_authority" name="t">
-		      <option value="all">전체</option>
-		      <option value="second">닉네임</option>
-		      <option value="third">아이디</option>
-		      <option value="fourth">권한</option>
-		      <option value="fifth">이용상태</option>
+		      <option value="all" 
+		      	<c:if test="${pm.cri.t == 'all'}">selected</c:if>>전체</option>
+		      <option value="second"
+		      	<c:if test="${pm.cri.t == 'second'}">selected</c:if>>닉네임</option>
+		      <option value="third"
+		      	<c:if test="${pm.cri.t == 'third'}">selected</c:if>>아이디</option>
+		      <option value="fourth"
+		      	<c:if test="${pm.cri.t == 'fourth'}">selected</c:if>>권한</option>
+		      <option value="fifth"
+		      	<c:if test="${pm.cri.t == 'fifth'}">selected</c:if>>이용상태</option>
 		    </select>
 	    </div>
 	    <input type="text" class="form-control" name="s" id="me_title" placeholder="검색어를 입력하세요." value="${pm.cri.s}">
@@ -29,6 +34,7 @@
   <table class="table table-hover">
     <thead>
       <tr>
+      	<th>회원번호</th>
         <th>회원아이디</th>
         <th>닉네임</th>
         <th>이메일</th>
@@ -39,8 +45,9 @@
       </tr>
     </thead>
     <tbody>
-   	 <c:forEach items="${list}" var="member">
+   	 <c:forEach items="${list}" var="member" varStatus="vs">
 	      <tr>
+	      	<td>${pm.totalCount - vs.index}</td>
 	        <td>${member.me_id}</td>
 	        <td>${member.me_nickname}</td>
 	        <td>${member.me_email}</td>
