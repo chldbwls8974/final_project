@@ -1,6 +1,7 @@
 package kr.kh.final_project.vo;
 
 import java.util.Date;
+import lombok.Data;
 
 import lombok.Data;
 

@@ -10,7 +10,6 @@
 </head>
 <body>
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-		<!-- Brand/logo -->
 		<a class="navbar-brand" href="#">LOGO</a>
 		<ul class="navbar-nav">
 				<li class="nav-item">
@@ -19,7 +18,7 @@
 				<li class="nav-item">
 					<a class="nav-link " href="#">로그인</a>
 				</li>
-			
+	
 				<li class="nav-item">
 					<a class="nav-link " href="#">로그아웃</a>
 				</li>
@@ -37,6 +36,7 @@
 				<li class="nav-item">
 					<a class="nav-link" href="#">시설 조회</a>
 				</li>
+				</li>
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 					관리자
@@ -53,6 +53,12 @@
 			</li>
 			<li class="nav-item">
 					<a class="nav-link" href="#">사업자</a>
+			</li>
+			<li class="nav-item">
+					<a class="nav-link" href="<c:url value='/application/manager'/>">매니저 신청</a>
+			</li>
+			<li class="nav-item">
+					<a class="nav-link" href="#">사업자 신청</a>
 			</li>
 		</ul>
 	</nav>
