@@ -8,4 +8,17 @@
 			account(ac_me_num, ac_ba_name, ac_me_name, ac_num) 
 		values(#{account.ac_me_num}, #{account.ac_ba_name}, #{account.ac_me_name}, #{account.ac_num})
 	</insert>
+	<select id="selectAccount" resultType="kr.kh.final_project.vo.AccountVO">
+		select * from account where ac_me_num = #{me_num}
+	</select>
+	<update id="updateAccount">
+		update
+			account
+		set
+			ac_ba_name = #{account.ac_ba_name},
+			ac_me_name = #{account.ac_me_name},
+			ac_num = #{account.ac_num}
+		where
+			ac_me_num = #{account.ac_me_num}
+	</update>
 </mapper>

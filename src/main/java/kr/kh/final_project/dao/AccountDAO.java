@@ -8,4 +8,8 @@ public interface AccountDAO {
 
 	boolean insertAccount(@Param("account")AccountVO account);
 
+	boolean updateAccount(@Param("account")AccountVO account);
+	
+	AccountVO selectAccount(@Param("me_num")int me_num);
+
 }

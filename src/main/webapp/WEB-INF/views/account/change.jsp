@@ -7,12 +7,12 @@
 <meta charset="UTF-8">
 <style>
 </style>
-<title>환급 계좌 등록</title>
+<title>환급 계좌 수정</title>
 </head>
 <body>
 ${account }
-	<h1>환급 계좌 등록</h1>
-	<form action="<c:url value='/account/insert'/>" method="post">
+	<h1>환급 계좌 수정</h1>
+	<form action="<c:url value='/account/change'/>" method="post">
 		<div class="form-group">
 			<label>회원번호</label>
 			<!-- 세션에서 회원번호 가져오도록 수정해야 함. -->

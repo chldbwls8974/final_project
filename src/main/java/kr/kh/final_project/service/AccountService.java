@@ -7,4 +7,8 @@ public interface AccountService {
 
 	boolean insertAccount(AccountVO account, MemberVO user);
 
+	boolean updateAccount(AccountVO account, MemberVO user);
+
+	AccountVO getAccount(MemberVO user);
+
 }

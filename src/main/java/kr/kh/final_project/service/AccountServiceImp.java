@@ -30,4 +30,28 @@ public class AccountServiceImp implements AccountService {
 		
 		return accountDao.insertAccount(account);
 	}
+
+	@Override
+	public boolean updateAccount(AccountVO account, MemberVO user) {
+		//null값 예외 처리
+		if(user == null ||
+			account == null ||
+			account.getAc_ba_name() == null ||
+			account.getAc_me_name() == null ||
+			account.getAc_num() == null) {
+			return false;
+		}
+		//회원 이름과 예금주명이 다르면 false
+		if(!user.getMe_name().equals(account.getAc_me_name())) {
+			return false;
+		}
+		return accountDao.updateAccount(account);
+	}
+	
+
+	@Override
+	public AccountVO getAccount(MemberVO user) {
+		
+		return accountDao.selectAccount(user.getMe_num());
+	}
 }
