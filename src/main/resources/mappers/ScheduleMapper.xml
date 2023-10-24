@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.final_project.dao.ScheduleDAO">
+	<select id="selectSchedule" resultType="kr.kh.final_project.vo.ScheduleVO">
+		select
+			*
+		from
+			schedule
+		where
+			sc_st_num = #{schedule.sc_st_num} and
+			sc_ti_num = #{schedule.sc_ti_num}
+	</select>
+	<insert id="insertSchedule">
+		insert into schedule(sc_st_num, sc_ti_num, sc_personnel)
+		values
+			(#{schedule.sc_st_num},#{schedule.sc_ti_num},#{schedule.sc_personnel})
+	</insert>
+	<select id="selectScheduleListByStNum" resultType="kr.kh.final_project.vo.ScheduleVO">
+		select
+			*
+		from
+			schedule
+		where
+			sc_st_num = #{st_num}
+	</select>
+	<delete id="deleteSchedule">
+		delete from schedule where sc_num = #{sc_num}
+	</delete>
+</mapper>

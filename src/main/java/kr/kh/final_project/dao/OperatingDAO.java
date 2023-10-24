@@ -8,6 +8,6 @@ import kr.kh.final_project.vo.OperatingVO;
 
 public interface OperatingDAO {
 
-	List<OperatingVO> selectOperatingList(@Param("fa_num")int fa_num);
+	List<OperatingVO> selectOperatingListByFaNum(@Param("fa_num")int fa_num);
 
 }
