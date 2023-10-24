@@ -9,8 +9,6 @@ import kr.kh.final_project.vo.MemberVO;
 
 @Service
 public class MemberServiceImp implements MemberService{
-	@Autowired
-	MemberDAO memberDao;
 
 	@Autowired
 	private MemberDAO memberDao;
