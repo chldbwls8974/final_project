@@ -15,16 +15,17 @@
 		<section>
 			<div>
 				<div>
-				<div class="myprofile-name">
-					<h2>${user.me_name}</h2>
-				</div>
-				<div class="myprofile-num">
-					<p>번호16156</p>
-					<span class="myprofile-kakao"></span>
-				</div>
+					<div class="myprofile-name">
+						<h2>${user.me_name}</h2>
+						<a href="<c:url value='/member/imgupload'/>">내 사진 변경</a>
+					</div>
+					<div class="myprofile-num">
+						<p>임시번호16156</p>
+						<span class="myprofile-kakao"></span>
+					</div>
 				</div>
 				<div>
-					<a href="#" class="myprofile-btn">내 프로필</a>
+					<button class="myprofile-btn">내 프로필 수정</button>
 				</div>
 			</div>
 		</section>
@@ -51,13 +52,19 @@
 					</a>
 					</li>
 					<li>
-						<a href="#">
+						<a href="<c:url value='/member/clublist'/>">
 						<img src="" alt="소속 클럽">
 						<p></p>
 						</a>
 					</li>
 					<li>
-						<a href="#">
+						<a href="">
+						<img src="" alt="승인 대기 중 클럽">
+						<p></p>
+						</a>
+					</li>
+					<li>
+						<a href="<c:url value='/member/search'/>">
 						<img src="" alt="회원 조회">
 						<p></p>
 						</a>

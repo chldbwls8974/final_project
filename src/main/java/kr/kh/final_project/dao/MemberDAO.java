@@ -6,6 +6,6 @@ import kr.kh.final_project.vo.MemberVO;
 
 public interface MemberDAO {
 
-	boolean applyManager(@Param("member")MemberVO member);
+//	boolean applyManager(@Param("member")MemberVO member);
 
 }

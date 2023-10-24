@@ -10,7 +10,7 @@
 </head>
 <body>
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-		<a class="navbar-brand" href="#">LOGO</a>
+		<a class="navbar-brand" href="/final_project">LOGO</a>
 		<ul class="navbar-nav">
 				<li class="nav-item">
 					<a class="nav-link " href="#">회원가입</a>
