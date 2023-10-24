@@ -12,4 +12,6 @@ public interface MemberDAO {
 
 	boolean insertMember(@Param("member")MemberVO member);
 
+	MemberVO selectMemberNumByNick(@Param("check")String check);
+
 }

@@ -1,18 +1,28 @@
 package kr.kh.final_project.service;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.dao.MemberDAO;
+import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.vo.MemberVO;
+import kr.kh.final_project.vo.RegionVO;
 
 @Service
 public class MemberServiceImp implements MemberService{
 	@Autowired
 	MemberDAO memberDao;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
+	@Autowired
+	RegionDAO regionDao;
 
 
 	@Override
@@ -35,9 +45,9 @@ public class MemberServiceImp implements MemberService{
 			return false;
 		}
 		//아이디, 비번 null 체크 + 유효성 검사
-		//아이디는 영문으로 시작하고, 6~15자
+		//아이디는 영문으로 시작하고, 6~10자
 		String idRegex = "^[a-zA-Z][a-zA-Z0-9]{6,10}$";
-		//비번은 영문,숫자,!@#$%로 이루어지고 6~15자 
+		//비번은 영문,숫자,!@#$%로 이루어지고 10~20자 
 		String pwRegex = "^[a-zA-Z0-9!@#$%]{10,20}$";
 		
 		//아이디가 유효성에 맞지 않으면
@@ -81,6 +91,44 @@ public class MemberServiceImp implements MemberService{
 		//첨부파일을 서버에 업로드 하고, DB에 저장
 		//uploadFileAndInsert(files, member.getMe_id());
 		return memberDao.applyManager(member);
+	}
+
+
+	@Override
+	public List<RegionVO> getMainRegion() {
+		return regionDao.selectMainRegion();
+	}
+
+
+	@Override
+	public List<RegionVO> getSubRegionByMainRegion(String rg_main) {
+		return regionDao.selectSubRegion(rg_main);
+	}
+
+
+	@Override
+	public MemberVO isCheck(String check) {
+		MemberVO dbMember = memberDao.selectMemberNumByNick(check);
+		return dbMember;
+	}
+
+
+	@Override
+	public MemberVO login(MemberVO member) {
+		if(member == null) {
+			return null;
+		}
+		MemberVO dbMember = memberDao.selectMember(member.getMe_id());
+		//가입된 아이디가 아니면
+		if(dbMember == null) {
+			return null;
+		}
+		//비번확인
+		//matches(암호화안된문자열, 암호화된문자열)
+		if(passwordEncoder.matches(member.getMe_pw(), dbMember.getMe_pw())) {
+			return dbMember;
+		}
+		return null;
 	}
 
 

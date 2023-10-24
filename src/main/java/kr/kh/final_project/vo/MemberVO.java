@@ -22,4 +22,6 @@ public class MemberVO {
 	int me_point;
 	int me_state1; 
 	int me_state2;
+	
+	private boolean autoLogin;
 }
