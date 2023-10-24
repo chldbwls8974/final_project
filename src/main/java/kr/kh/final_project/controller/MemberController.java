@@ -20,6 +20,6 @@ public class MemberController {
 	public String mypage(HttpSession session, Model model) {
 		MemberVO user = (MemberVO) session.getAttribute("user");
 		model.addAttribute("user", user);
-		return "member/mypage";
+		return "/member/mypage";
 	}
 }
