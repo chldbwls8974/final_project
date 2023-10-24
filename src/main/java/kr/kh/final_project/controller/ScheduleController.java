@@ -20,7 +20,7 @@ public class ScheduleController {
 		
 	@GetMapping("/schedule/insert")
 	public String insertSchedule(Model model) {
-		int fa_num = 1;
+		int fa_num = 3;
 		List<StadiumVO> stadiumList = scheduleService.selectStadiumList(fa_num);
 		List<OperatingVO> operatingList = scheduleService.selectOperatingList(fa_num);
 		List<TimeVO> timeList = scheduleService.selectTimeList();
