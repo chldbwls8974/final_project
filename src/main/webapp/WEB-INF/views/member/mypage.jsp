@@ -35,43 +35,43 @@
 					<li>
 						<a href="#">
 						<img src="" alt="신청 경기">
-						<p>신청 경기</p>
+						<p></p>
 						</a>
 					</li>	
 					<li>
 						<a href="#">
 						<img src="" alt="나의 전적">
-						<p>나의 전적</p>
+						<p></p>
 						</a>
 					</li>
 					<li>
 						<a href="#">
 						<img src="" alt="나의 티어">
-						<p>나의 티어</p>
+						<p></p>
 					</a>
 					</li>
 					<li>
 						<a href="#">
 						<img src="" alt="소속 클럽">
-						<p>소속 클럽</p>
+						<p></p>
 						</a>
 					</li>
 					<li>
 						<a href="#">
 						<img src="" alt="회원 조회">
-						<p>회원 조회</p>
+						<p></p>
 						</a>
 					</li>
 					<li>
 						<a href="#">
 						<img src="" alt="나의 포인트">
-						<p>나의 포인트</p>
+						<p></p>
 						</a>
 					</li>
 					<li>
 						<a href="#">
 						<img src="" alt="나의 쿠폰">
-						<p>나의 쿠폰</p>
+						<p></p>
 						</a>
 					</li>
 				</ul>
