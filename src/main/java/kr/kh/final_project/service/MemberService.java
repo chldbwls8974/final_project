@@ -9,7 +9,5 @@ public interface MemberService {
 
 	MemberVO userById(String name);
 	
-	//List<MemberVO> getMemberList(int me_num);
-	
-	List<MemberVO> getMemberList(Criteria cri);
+	//List<MemberVO> getMemberList(Criteria cri);
 }

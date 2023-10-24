@@ -36,6 +36,7 @@
 			me_state1 like concat('%', #{cri.s}, '%')
 				or
 			me_state2 like concat('%', #{cri.s}, '%')
-		</if> -->
+		</if>
+		 -->
 	</select>
 </mapper>
