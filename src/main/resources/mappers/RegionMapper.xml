@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.final_project.dao.RegionDAO">
+	<select id="selectMainRegion" resultType="kr.kh.final_project.vo.RegionVO">
+		select distinct(rg_main) from region;
+	</select>
+	<select id="selectSubRegion" resultType="kr.kh.final_project.vo.RegionVO">
+		select rg_num,rg_sub from region where rg_main = #{rg_main};
+	</select>
+</mapper>
