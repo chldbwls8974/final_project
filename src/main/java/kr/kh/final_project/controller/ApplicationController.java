@@ -19,6 +19,7 @@ public class ApplicationController {
 
 	@Autowired
 	MemberService memberService;
+	
 	@Autowired
 	BoardService boardService;
 	
@@ -37,7 +38,9 @@ public class ApplicationController {
 		//MemberVO user = (MemberVO)session.getAttribute("user");
 		
 		//나중에 로그인 구현되면 member -> user로 바꾸기
+		//boardService를 통해 메서드를 호출하고, 매니저 신청 정보(board, member, files)를 전달
 		boolean res = boardService.insertApplication(board, member, files);
+		//매니저 신청 시 결과에 따라 메시지 및 URL을 설정
 		if(res) {
 			model.addAttribute("msg", "매니저 신청이 완료되었습니다.");
 			model.addAttribute("url", "/");
