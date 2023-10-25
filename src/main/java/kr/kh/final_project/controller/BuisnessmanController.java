@@ -65,4 +65,13 @@ public class BuisnessmanController {
 		map.put("res", res);
 		return map;
 	}
+	
+	@ResponseBody
+	@PostMapping("/update/schedule")
+	public Map<String, Object> updateScheduel(@RequestBody ScheduleVO schedule){
+		Map<String, Object> map = new HashMap<String, Object>();
+		boolean res = scheduleService.updateSchedule(schedule);
+		map.put("res", res);
+		return map;
+	}
 }

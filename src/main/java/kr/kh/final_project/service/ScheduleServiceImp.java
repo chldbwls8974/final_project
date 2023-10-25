@@ -93,4 +93,19 @@ public class ScheduleServiceImp implements ScheduleService{
 		}
 		return scheduleDao.deleteSchedule(dbSchedule.getSc_num());
 	}
+
+	@Override
+	public boolean updateSchedule(ScheduleVO schedule) {
+		if(schedule == null
+				|| schedule.getSc_st_num() == null
+				|| schedule.getSc_ti_num() == null
+				|| schedule.getSc_personnel() == null) {
+			return false;
+		}
+		ScheduleVO dbSchedule = scheduleDao.selectSchedule(schedule);
+		if(dbSchedule == null) {
+			return false;
+		}
+		return scheduleDao.updateSchedule(dbSchedule.getSc_num(), schedule.getSc_personnel());
+	}
 }

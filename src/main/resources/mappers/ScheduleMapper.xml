@@ -28,4 +28,12 @@
 	<delete id="deleteSchedule">
 		delete from schedule where sc_num = #{sc_num}
 	</delete>
+	<update id="updateSchedule">
+		update
+			schedule
+		set
+			sc_personnel = #{sc_personnel}
+		where
+			sc_num = #{sc_num};
+	</update>
 </mapper>

@@ -19,10 +19,12 @@
 		.hour-box-abled{background-color: white; cursor: pointer;}
 		.hour-box-abled:hover{background-color: yellow;}
 		.hour-box-disabled{background-color: black;}
-		.hour-box-select1{background-color: aqua; border-bottom: none;}
+		.hour-box-select1{background-color: aqua; border-bottom: none; display: flex;}
 		.hour-box-select2{background-color: aqua;}
-		.btn-box{float: right}
-		.select-box{float: left}
+		.select-box{flex: 1}
+		.select-personnel{float: left;}
+		.btn-box{flex: 1}
+		.btn-del{float: right;}
 		
 	</style>
 </head>
@@ -118,6 +120,7 @@
 	<script type="text/javascript">
 		let st_num;
 		let max;
+		let min = 3;
 		let select = ``;
 		$('.select-stadium').change(function() {
 			st_num = $(this).val();
@@ -130,16 +133,7 @@
 				dataType : 'json',
 				success : function(data) {
 					max = data.stadium.st_max;
-					select = `
-						<select class="select-personnel">`
-					for(i = max; i >= 3; i--){
-						select += `		
-							<option value="\${i}">\${i}vs\${i}</option>
-						`
-					}
-					select += `
-						</select>
-					`;
+					
 					for(schedule of data.scheduleList){
 						printSchedule(schedule.sc_ti_num, schedule.sc_personnel);
 					}
@@ -158,20 +152,56 @@
 					sc_ti_num : num,
 					sc_personnel : max
 			}
-			if(insertSchedule(data)){
-				printSchedule(num);
+			if(printSchedule(num, max)){
+				if(!insertSchedule(data)){
+					eraseSchedule(num);
+				}
+			}else{
+				alert('등록 불가능한 일정입니다.');
 			}
 		})
 		$(document).on('click', '.btn-del', function() {
-			let num = $(this).parents('div').siblings('span').text();
+			let num = $(this).parents('.btn-box').siblings('span').text();
+			let personnel = $(this).parents('.btn-box').siblings('.select-box').children('.select-personnel').val();
 			let data = {
 					sc_st_num : st_num,
 					sc_ti_num : num
 			}
-			if(deleteSchedule(data)){
-				eraseSchedule(num);
+			if(eraseSchedule(num)){
+				if(!deleteSchedule(data)){
+					printSchedule(num, personnel);
+				}
 			}
 		})
+		$(document).on('change', '.select-personnel', function() {
+			let num = $(this).parents('.select-box').siblings('span').text();
+			let personnel = $(this).val();
+			let data = {
+					sc_st_num : st_num,
+					sc_ti_num : num,
+					sc_personnel : personnel
+			}
+			updateSchedule(data);
+		})
+		function selectPersonnel(personnel) {
+			select = `
+				<select class="select-personnel" value="personnel">`
+			for(i = max; i >= min; i--){
+				if(i != personnel){
+					select += `		
+						<option value="\${i}">\${i}vs\${i}</option>
+					`					
+				}
+				if(i == personnel){
+					select += `		
+						<option value="\${i}" selected>\${i}vs\${i}</option>
+					`					
+				}
+			}
+			select += `
+				</select>
+			`;
+		};
 		function insertSchedule(data) {
 			let res = false;
 			$.ajax({
@@ -183,9 +213,9 @@
 				dataType : 'json',
 				success : function(data) {
 					if(data.res){
-						alert('성공');
+						alert('등록 성공');
 					}else{
-						alert('실패');
+						alert('등록 실패');
 					}
 					res = data.res;
 				}
@@ -203,9 +233,29 @@
 				dataType : 'json',
 				success : function(data) {
 					if(data.res){
-						alert('성공');
+						alert('삭제 성공');
 					}else{
-						alert('실패');
+						alert('삭제 실패');
+					}
+					res = data.res;
+				}
+			});
+			return res;
+		}
+		function updateSchedule(data) {
+			let res = false;
+			$.ajax({
+				async : false,
+				method : 'post',
+				url : '<c:url value="/update/schedule"/>',
+				data : JSON.stringify(data),
+				contentType : "application/json; charset=UTF-8",
+				dataType : 'json',
+				success : function(data) {
+					if(data.res){
+						alert('수정 성공');
+					}else{
+						alert('수정 실패');
 					}
 					res = data.res;
 				}
@@ -217,13 +267,16 @@
 				eraseSchedule(i);
 			}
 		}
-		function printSchedule(num) {
+		function printSchedule(num, personnel) {
+
+			selectPersonnel(personnel);
+
 			let day = (num % 24 == 0 ? parseInt(num / 24) -1 : parseInt(num / 24));
 			let time = (num % 24 == 0 ? 23 : num % 24 - 1);
 			if(time != 23 && $('.day-box').eq(day).children('.hour-box').eq(time+1).attr('class') == 'hour-box hour-box-abled'){
 				$('.day-box').eq(day).children('.hour-box').eq(time).toggleClass('hour-box-abled');
 				$('.day-box').eq(day).children('.hour-box').eq(time).toggleClass('hour-box-select1');
-				$('.day-box').eq(day).children('.hour-box').eq(time).children('.btn-box').html(`<button class="btn-del">삭제</button>`);
+				$('.day-box').eq(day).children('.hour-box').eq(time).children('.btn-box').html(`<button class="btn-del">X</button>`);
 				$('.day-box').eq(day).children('.hour-box').eq(time).children('.select-box').html(select);
 				$('.day-box').eq(day).children('.hour-box').eq(time + 1).toggleClass('hour-box-abled');
 				$('.day-box').eq(day).children('.hour-box').eq(time + 1).toggleClass('hour-box-select2');
@@ -233,7 +286,7 @@
 				if(day == 6 && $('.day-box').eq(0).children('.hour-box').eq(0).attr('class') == 'hour-box hour-box-abled'){
 					$('.day-box').eq(day).children('.hour-box').eq(time).toggleClass('hour-box-abled');
 					$('.day-box').eq(day).children('.hour-box').eq(time).toggleClass('hour-box-select1');
-					$('.day-box').eq(day).children('.hour-box').eq(time).children('.btn-box').html(`<button class="btn-del">삭제</button>`);
+					$('.day-box').eq(day).children('.hour-box').eq(time).children('.btn-box').html(`<button class="btn-del">X</button>`);
 					$('.day-box').eq(day).children('.hour-box').eq(time).children('.select-box').html(select);
 					$('.day-box').eq(0).children('.hour-box').eq(0).toggleClass('hour-box-abled')
 					$('.day-box').eq(0).children('.hour-box').eq(0).toggleClass('hour-box-select2')
@@ -242,7 +295,7 @@
 				if($('.day-box').eq(day+1).children('.hour-box').eq(0).attr('class') == 'hour-box hour-box-abled'){
 					$('.day-box').eq(day).children('.hour-box').eq(time).toggleClass('hour-box-abled');
 					$('.day-box').eq(day).children('.hour-box').eq(time).toggleClass('hour-box-select1');
-					$('.day-box').eq(day).children('.hour-box').eq(time).children('.btn-box').html(`<button class="btn-del">삭제</button>`);
+					$('.day-box').eq(day).children('.hour-box').eq(time).children('.btn-box').html(`<button class="btn-del">X</button>`);
 					$('.day-box').eq(day).children('.hour-box').eq(time).children('.select-box').html(select);
 					$('.day-box').eq(day + 1).children('.hour-box').eq(0).toggleClass('hour-box-abled')
 					$('.day-box').eq(day + 1).children('.hour-box').eq(0).toggleClass('hour-box-select2')

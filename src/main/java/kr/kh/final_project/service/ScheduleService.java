@@ -22,4 +22,6 @@ public interface ScheduleService {
 	boolean insertSchedule(ScheduleVO schedule);
 
 	boolean deleteSchedule(ScheduleVO schedule);
+
+	boolean updateSchedule(ScheduleVO schedule);
 }

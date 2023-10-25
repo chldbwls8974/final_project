@@ -17,4 +17,6 @@ public interface ScheduleDAO {
 
 	boolean deleteSchedule(@Param("sc_num")int sc_num);
 
+	boolean updateSchedule(@Param("sc_num")int sc_num, @Param("sc_personnel")Integer sc_personnel);
+
 }
