@@ -2,7 +2,6 @@ package kr.kh.final_project.vo;
 
 import java.util.Date;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -29,4 +28,10 @@ public class MemberVO {
 	private boolean autoLogin;
 	private String me_session_id;
 	private Date me_session_limit;
+	
+	public MemberVO(int i, String string, String string2, String string3, String string4, int j, String string5,
+			String string6, String string7, String string8, String string9, int k, String string10, String string11,
+			int l, int m, int n) {
+		// TODO Auto-generated constructor stub
+	}
 }
