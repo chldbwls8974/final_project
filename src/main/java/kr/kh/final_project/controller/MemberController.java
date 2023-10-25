@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,6 +84,20 @@ public class MemberController {
 		return "message";
 	}
 	
+	@GetMapping("/member/logout")
+	public String memberLogout(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		user.setMe_session_limit(null);
+		memberService.updateMemberSession(user);
+		Message msg = new Message("/", null);
+		if(user != null) {
+			session.removeAttribute("user");
+			msg.setMsg("로그아웃에 성공했습니다.");
+		}
+		model.addAttribute("msg", msg);
+		return "message";
+	}
 	
 	
 	
