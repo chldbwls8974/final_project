@@ -13,7 +13,7 @@
 	<h1>포인트 환급</h1>
 	<form action="<c:url value='/member/refund'/>" method="post">
 		<div class="form-group">
-			<h5>홍길동 님의</h5>
+			<h5>${user.me_name} 님의</h5>
 			<label>현재 보유 포인트는 ${user.me_point} 입니다.</label>
 			<input type="hidden" class="form-control" value="${user.me_num}" name="me_num">
 			<input type="hidden" class="form-control" value="${user.me_num}" name="ph_me_num">

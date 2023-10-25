@@ -16,8 +16,6 @@ public interface MemberService {
 
 	MemberVO getMember(String me_id);
 
-	boolean pointRefundApply(MemberVO user, PointHistoryVO pointHistory);
-
 	List<RegionVO> getMainRegion();
 
 	List<RegionVO> getSubRegionByMainRegion(String rg_main);
@@ -32,6 +30,8 @@ public interface MemberService {
 
 
 	MemberVO userById(String name);
+
+	boolean pointRefundApply(MemberVO user, MemberVO tmpUser, PointHistoryVO pointHistory);
 
 
 }

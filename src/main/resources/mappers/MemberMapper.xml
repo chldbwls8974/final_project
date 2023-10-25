@@ -34,4 +34,12 @@
 	<select id="selectManager" resultType="kr.kh.final_project.vo.MemberVO">
 		select * from member where me_num= #{me_num}
 	</select>
+	<update id="updateMemberPoint">
+		update
+			member
+		set
+			me_point = #{user.me_point}
+		where
+			me_num = #{user.me_num}
+	</update>
 </mapper>

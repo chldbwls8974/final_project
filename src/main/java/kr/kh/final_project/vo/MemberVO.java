@@ -23,7 +23,7 @@ public class MemberVO {
 	int me_rating; 
 	String me_profile; 
 	String me_tr_name;
-	int me_point;
+	Integer me_point;
 	int me_state1; 
 	int me_state2;
 	private boolean autoLogin;

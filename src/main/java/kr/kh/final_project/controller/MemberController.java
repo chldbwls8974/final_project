@@ -116,22 +116,22 @@ public class MemberController {
 	//포인트 환급 페이지
 	@GetMapping("/member/refund")
 	public String pointRefund(Model model, HttpSession session) {
-		
-		//유저정보 세션에서 가져오도록 수정
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
-		
-//		MemberVO user = memberService.userById(name);
+		//환급신청가능한 포인트를 반환하는 메서드
+//		memberService.refundAblePoint(user);
 		model.addAttribute("user", user);
 		return "/member/refund";
 	}
 	@PostMapping("/member/refund")
-	public String pointRefundPost(Model model, HttpSession session, MemberVO user, PointHistoryVO pointHistory) {
+	public String pointRefundPost(Model model, HttpSession session, PointHistoryVO pointHistory, MemberVO tmpUser) {
 		String msg, url;
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		//포인트내역 테이블의 용도 속성정보를 서비스에서 추가해 줘야 함.
 		System.out.println(pointHistory);
 		System.out.println(user);
-		if(memberService.pointRefundApply(user, pointHistory)) {
+		System.out.println(tmpUser);
+		if(memberService.pointRefundApply(user,tmpUser, pointHistory)) {
 			msg = "환급 신청이 성공하였습니다.";
 			url = "/";
 		}else {

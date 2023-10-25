@@ -18,4 +18,6 @@ public interface MemberDAO {
 
 	MemberVO selectMemberBySession(String me_session_id);
 
+	boolean updateMemberPoint(@Param("user")MemberVO user);
+
 }

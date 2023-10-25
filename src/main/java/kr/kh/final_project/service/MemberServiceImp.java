@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.kh.final_project.dao.MemberDAO;
+import kr.kh.final_project.dao.PointHistoryDAO;
 import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
@@ -24,7 +25,9 @@ public class MemberServiceImp implements MemberService{
 	@Autowired
 	RegionDAO regionDao;
 
-
+	@Autowired
+	PointHistoryDAO pointHistoryDao;
+	
 	@Override
 	public MemberVO userById(String name) {
 		
@@ -135,9 +138,23 @@ public class MemberServiceImp implements MemberService{
 	}
 
 	@Override
-	public boolean pointRefundApply(MemberVO user, PointHistoryVO pointHistory) {
-		return false;
+	public boolean pointRefundApply(MemberVO user, MemberVO tmpUser, PointHistoryVO pointHistory) {
+		if(user == null || tmpUser.getMe_point() == null) {
+			return false;
+		}
+		//회원이 총 환급 신청중인 금액 + 환급 신청하려는 포인트 <= 현재 포인트
+		
+		//관리자가 승인해야 실행되는 코드 (추후에 옮겨야 함)
+			//환급 후 예정 포인트를 user에 저장
+			//user.setMe_point(tmpUser.getMe_point());
+			//유저 테이블에 포인트를 업데이트
+			//memberDao.updateMemberPoint(user)
+		
+		
+		// 포인트내역 테이블에 추가( -로 바꿔서 기입)
+		return pointHistoryDao.insertPointHistory(pointHistory);
 	}
+
 
 
 
