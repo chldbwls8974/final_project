@@ -20,7 +20,6 @@ public class MemberServiceImp implements MemberService{
 		return null;
 	}
 	
-	
 	@Override
 	public boolean signup(MemberVO member) {
 		if(member == null) {
@@ -65,10 +64,11 @@ public class MemberServiceImp implements MemberService{
 	}
 	
 	@Override
-	public MemberVO getMember(Integer me_num) {
+	public MemberVO getManager(Integer me_num) {
 		if(me_num == null) {
 			return null;
 		}
-
+		return memberDao.selectManager(me_num);
+	}
 
 }

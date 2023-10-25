@@ -31,7 +31,7 @@ public class ApplicationController {
 	public String applyManager(Model model, BoardVO board, HttpSession session, MultipartFile[] files) {
 		//System.out.println(board);
 		Integer me_num = 2; //나중에 로그인 구현되면 지우기
-		MemberVO member = memberService.getMember(me_num); //나중에 로그인 구현되면 지우기
+		MemberVO member = memberService.getManager(me_num); //나중에 로그인 구현되면 지우기
 		//System.out.println(member);
 		//user 정보를 주고 멤버VO에서 정보를 가져와서 멤버VO user에 저장
 		//MemberVO user = (MemberVO)session.getAttribute("user");
