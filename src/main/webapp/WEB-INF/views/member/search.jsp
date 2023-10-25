@@ -9,17 +9,62 @@
 </head>
 <body>
 	<div class="member-search">
-		<div>
-			<svg xmlns="http://www.w3.org/2000/svg" fill="none"></svg>
-			<input type="search" placeholder="회원 검색으로 찾기">
-		</div>
-		
 		<div class="member-search-navigation">
-			<div>
-				<p>전체 회원 조회</p>
-			</div>
+				<h3>전체 회원 조회</h3>
+				<select  name="searchType">
+					<option value="id">아이디</option>
+					<option value="name">이름</option>
+				</select>
+				<input type="text" name="keyword"></input>
+				<input type="button" onclick="getSearchList()" value="검색"></input>
+		</div>
+		<div>
+			<ul id="membertable">
+				<c:forEach items="${memberList}" var="member">
+				<li>
+					<a href="#" class="member-link">
+						<img src=""/>
+						<span>${member.me_name}</span>
+						<span>${member.me_id}</span>
+					</a>
+				</li>
+				</c:forEach>
+			</ul>
 		</div>
 	</div>
-	
 </body>
+<script type="text/javascript">
+	let str = '';
+	function getSearchList(){
+		var searchType = $("[name='searchType']").val();
+		var keyword = $("[name='keyword']").val();
+		data = {
+			searchType : searchType,
+			keyword : keyword
+		}
+	
+		ajaxJsonToJson2(false, "get", "/member/searchfilter", data, (a)=>{
+			console.log(a)
+				if(a.res){
+					$('#membertable').empty();
+					str=``;
+					
+					for(me of a.memberList){
+						str += `
+							<li>
+								<a href="#" class="member-link">
+									<img src=""/>
+									<span>\${me.me_name}</span>
+									<span>\${me.me_id}</span>
+								</a>
+							</li>
+						`;
+					}
+					$('#membertable').html(str); 
+				}else{
+					alert('실패');
+				}
+	       });
+	}
+</script>
 </html>

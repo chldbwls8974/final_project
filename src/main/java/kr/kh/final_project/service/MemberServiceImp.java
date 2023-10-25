@@ -1,8 +1,9 @@
 package kr.kh.final_project.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.dao.MemberDAO;
 import kr.kh.final_project.vo.MemberVO;
@@ -12,6 +13,24 @@ public class MemberServiceImp implements MemberService{
 
 	@Autowired
 	private MemberDAO memberDao;
+
+	
+	@Override
+	public List<MemberVO> searchMemberById(String keyword) {
+		return memberDao.searchMemberById(keyword);
+	}
+
+	@Override
+	public List<MemberVO> searchMemberByName(String keyword) {
+		return memberDao.searchMemberByName(keyword);
+	}
+
+	@Override
+	public List<MemberVO> getMemberList() {
+		return memberDao.selectMemberList();
+	}
+
+
 
 
 //	@Override

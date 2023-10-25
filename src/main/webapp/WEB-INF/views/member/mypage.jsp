@@ -16,8 +16,8 @@
 			<div>
 				<div>
 					<div class="myprofile-name">
+						<img src="">
 						<h2>${user.me_name}</h2>
-						<a href="<c:url value='/member/imgupload'/>">내 사진 변경</a>
 					</div>
 					<div class="myprofile-num">
 						<p>임시번호16156</p>
@@ -25,7 +25,7 @@
 					</div>
 				</div>
 				<div>
-					<button class="myprofile-btn">내 프로필 수정</button>
+					<a class="myprofile-btn" href="<c:url value='/member/myedit'/>">내 프로필 수정</a>
 				</div>
 			</div>
 		</section>

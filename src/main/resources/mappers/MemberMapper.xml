@@ -3,5 +3,13 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.final_project.dao.MemberDAO">
-
+	<select id="searchMemberById" resultType="kr.kh.final_project.vo.MemberVO">
+		SELECT * FROM Member WHERE me_id like concat('%', #{keyword}, '%');
+	</select>
+	<select id="searchMemberByName" resultType="kr.kh.final_project.vo.MemberVO">
+		SELECT * FROM Member WHERE me_name like concat('%', #{keyword}, '%');
+	</select>
+	<select id="selectMemberList" resultType="kr.kh.final_project.vo.MemberVO">
+		SELECT * FROM Member
+	</select>
 </mapper>
