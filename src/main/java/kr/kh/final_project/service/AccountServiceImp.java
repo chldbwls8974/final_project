@@ -1,10 +1,14 @@
 package kr.kh.final_project.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.final_project.dao.AccountDAO;
+import kr.kh.final_project.dao.BankDAO;
 import kr.kh.final_project.vo.AccountVO;
+import kr.kh.final_project.vo.BankVO;
 import kr.kh.final_project.vo.MemberVO;
 
 @Service
@@ -12,7 +16,9 @@ public class AccountServiceImp implements AccountService {
 
 	@Autowired
 	AccountDAO accountDao;
-
+	@Autowired
+	BankDAO bankDao;
+	
 	@Override
 	public boolean insertAccount(AccountVO account, MemberVO user) {
 		//null값 예외 처리
@@ -51,7 +57,11 @@ public class AccountServiceImp implements AccountService {
 
 	@Override
 	public AccountVO getAccount(MemberVO user) {
-		
 		return accountDao.selectAccount(user.getMe_num());
+	}
+
+	@Override
+	public List<BankVO> getBankList() {
+		return bankDao.selectBankList();
 	}
 }

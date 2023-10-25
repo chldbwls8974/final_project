@@ -31,6 +31,7 @@ public class BoardServiceImp implements BoardService{
 		board.setBo_me_num(user.getMe_num());
 		
 		//게시글 등록을 성공하면 첨부파일 등록
+		//DAO를 이용하여 insertManager(매니저 신청 '게시글' 등록) 메서드를 불러옴
 		boolean res = boardDao.insertManager(board);
 		if(!res) {
 			return false;
