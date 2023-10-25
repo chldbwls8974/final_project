@@ -24,4 +24,6 @@ public interface ScheduleService {
 	boolean deleteSchedule(ScheduleVO schedule);
 
 	boolean updateSchedule(ScheduleVO schedule);
+
+	int selectFaNumByMeNum(Integer me_num);
 }

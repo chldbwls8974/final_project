@@ -5,10 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.kh.final_project.dao.FacilityDAO;
 import kr.kh.final_project.dao.OperatingDAO;
 import kr.kh.final_project.dao.ScheduleDAO;
 import kr.kh.final_project.dao.StadiumDAO;
 import kr.kh.final_project.dao.TimeDAO;
+import kr.kh.final_project.vo.FacilityVO;
 import kr.kh.final_project.vo.OperatingVO;
 import kr.kh.final_project.vo.ScheduleVO;
 import kr.kh.final_project.vo.StadiumVO;
@@ -28,6 +30,9 @@ public class ScheduleServiceImp implements ScheduleService{
 	
 	@Autowired
 	ScheduleDAO scheduleDao;
+	
+	@Autowired
+	FacilityDAO facilityDao;
 	
 	@Override
 	public List<StadiumVO> selectStadiumListByFaNum(int fa_num) {
@@ -107,5 +112,17 @@ public class ScheduleServiceImp implements ScheduleService{
 			return false;
 		}
 		return scheduleDao.updateSchedule(dbSchedule.getSc_num(), schedule.getSc_personnel());
+	}
+
+	@Override
+	public int selectFaNumByMeNum(Integer me_num) {
+		if(me_num == null) {
+			return 0;
+		}
+		FacilityVO facility = facilityDao.selectFacilityByMeNum(me_num);
+		if(facility == null) {
+			return 0; 
+		}
+		return facility.getFa_num();
 	}
 }

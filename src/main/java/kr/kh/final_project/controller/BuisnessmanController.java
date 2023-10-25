@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.final_project.service.ScheduleService;
+import kr.kh.final_project.util.Message;
+import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.OperatingVO;
 import kr.kh.final_project.vo.ScheduleVO;
 import kr.kh.final_project.vo.StadiumVO;
@@ -25,16 +29,29 @@ public class BuisnessmanController {
 	@Autowired
 	ScheduleService scheduleService;
 		
-	@GetMapping("/schedule/insert")
-	public String insertSchedule(Model model) {
-		int fa_num = 3;
+	@GetMapping("/buisnessman/schedule")
+	public String insertSchedule(Model model, HttpSession session) {
+		MemberVO member = (MemberVO)session.getAttribute("user");
+		
+		if(!member.getMe_authority().equals("BUSINESS")) {
+			Message msg = new Message("/", "사업자 권한이 필요합니다.");
+			model.addAttribute("msg", msg);
+			return "/message";
+		}
+		int fa_num = scheduleService.selectFaNumByMeNum(member.getMe_num());
+		if(fa_num == 0) {
+			Message msg = new Message("/", "등록된 시설이 없습니다.");
+			model.addAttribute("msg", msg);
+			return "/message";
+		}
+		
 		List<StadiumVO> stadiumList = scheduleService.selectStadiumListByFaNum(fa_num);
 		List<OperatingVO> operatingList = scheduleService.selectOperatingListByFaNum(fa_num);
 		List<TimeVO> timeList = scheduleService.selectTimeList();
 		model.addAttribute("stadiumList", stadiumList);
 		model.addAttribute("operatingList", operatingList);
 		model.addAttribute("timeList", timeList);
-		return "/schedule/insert";
+		return "/buisnessman/schedule";
 	}
 	
 	@ResponseBody
