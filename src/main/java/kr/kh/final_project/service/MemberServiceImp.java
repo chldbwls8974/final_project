@@ -73,15 +73,6 @@ public class MemberServiceImp implements MemberService{
 		MemberVO dbMember = memberDao.selectMember(me_id);
 		return dbMember;
 	}
-	
-	@Override
-	public MemberVO getManager(Integer me_num) {
-		if(me_num == null) {
-			return null;
-		}
-		return memberDao.selectManager(me_num);
-	}
-
 
 	@Override
 	public List<RegionVO> getMainRegion() {

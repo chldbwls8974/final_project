@@ -10,8 +10,6 @@ import kr.kh.final_project.vo.RegionVO;
 
 public interface MemberService {
 
-	MemberVO getManager(Integer me_num);
-
 	boolean signup(MemberVO member);
 
 	MemberVO getMember(String me_id);
