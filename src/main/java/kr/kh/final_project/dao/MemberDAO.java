@@ -12,4 +12,10 @@ public interface MemberDAO {
 
 	boolean insertMember(@Param("member")MemberVO member);
 
+	MemberVO selectMemberNumByNick(@Param("check")String check);
+
+	void updateMemberSession(@Param("user")MemberVO user);
+
+	MemberVO selectMemberBySession(String me_session_id);
+
 }
