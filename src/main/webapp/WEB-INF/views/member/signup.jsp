@@ -1,88 +1,82 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style type="text/css">
-.error{
-	color:#f00;
+.error {
+	color: #f00;
 }
 </style>
 </head>
 <body>
 	<h1>회원가입</h1>
 	<form action="<c:url value='/member/signup'/>" method="post">
-		<div class="form-group">
-			<label>아이디</label><label id="check-id-error" class="error" for="me_id"></label>
-			<input type="text" class="form-control" name="me_id" id="me_id" required>
-			
-		</div>
-		<div class="form-group">
-			<label>비번</label>
-			<input type="password" class="form-control" name="me_pw" id="me_pw" required>
-		</div>
-		<div class="form-group">
-			<label>비번 확인</label>
-			<input type="password" class="form-control" name="me_pw2" required>
-		</div>
-		<div class="form-group">
-			<label>이메일</label>
-			<input type="email" class="form-control" name="me_email" id="me_email" required>
-			<button type ="button" class="form-control" name="me_email_btn">이메일 인증</button>
-		</div>
-		<div class="form-group">
-			<label>전화번호</label>
-			<input type="text" class="form-control" name="me_phone" id="me_phone" required>
-		</div>
-		<div class="form-group">
-			<label>이름</label>
-			<input type="text" class="form-control" name="me_name" id="me_name" required>
-		</div>
-		<div class="form-group">
-			<label>성별</label>
-			<input type="radio" name="me_gender" value="M">남
-			<input type="radio" name="me_gender" value="F">여
-		</div>
-		<div class="form-group">
-			<label>생년월일</label>
-			<input type="text" class="form-control" name="me_birthday" id="me_birthday" required>
-		</div>
-		
-		
-		<div class="form-group">
-			<label>닉네임</label>
-			<input type="text" class="form-control" name="me_nickname" required>
-		</div>
-		
-		
-		<div class="form-group">
-		 <label>거주지</label>
-		 	<select class="form-control rg_main" >
-			 	<option value="0">지역을 선택하세요</option>
-			 	<c:forEach items="${MainRegion}" var="main">
-			 		<option value="${main.rg_main}">${main.rg_main}</option>
-			 	</c:forEach>
-			 </select>
-			 
-		</div>
-		<div class="form-group">
-			<select class="form-control rg_sub" name="me_rg_num">
-			 	<option value="0">지역을 선택하세요</option>
-			 	<c:forEach items="${SubRegion}" var="sub">
-			 		<option value="${sub.rg_num}">${sub.rg_sub}</option>
-			 	</c:forEach>
-			 </select>
-		</div>
-
-		<div class="prefer-area">
+		<div class="1p">
 			<div class="form-group">
-				<label>선호지역</label> <select class="form-control rg_main">
+				<label>아이디</label> <label id="check-id-error" class="error" for="me_id"></label> 
+					<input type="text" class="form-control" name="me_id" id="me_id" required>
+			</div>
+
+			<div class="form-group">
+				<label>비번</label> 
+				<input type="password" class="form-control" name="me_pw" id="me_pw" required>
+			</div>
+
+			<div class="form-group">
+				<label>비번 확인</label> 
+				<input type="password" class="form-control" name="me_pw2" required>
+			</div>
+
+			<div class="form-group">
+				<label>이메일</label> 
+				<input type="email" class="form-control" name="me_email" id="me_email" required>
+				<button type="button" class="form-control" name="me_email_btn">이메일 인증</button>
+			</div>
+
+			<div class="form-group">
+				<label>전화번호</label> 
+				<input type="text" class="form-control" name="me_phone" id="me_phone" required>
+			</div>
+
+			<div class="form-group">
+				<label>이름</label> 
+				<input type="text" class="form-control" name="me_name" id="me_name" required>
+			</div>
+
+			<div class="form-group">
+				<label>성별</label> 
+				<input type="radio" name="me_gender" value="M">남
+				<input type="radio" name="me_gender" value="F">여
+			</div>
+
+			<div class="form-group">
+				<label>생년월일</label> 
+				<input type="text" class="form-control" name="me_birthday" id="me_birthday" required>
+			</div>
+
+			<div class="form-group">
+				<label>닉네임</label> 
+				<input type="text" class="form-control" name="me_nickname" required>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<button type="button" class="btn next-btn form-control">다음</button>
+		</div>
+		
+		<div class="2p">
+			<div class="form-group">
+				<label>거주지</label> <select class="form-control rg_main">
 					<option value="0">지역을 선택하세요</option>
 					<c:forEach items="${MainRegion}" var="main">
 						<option value="${main.rg_main}">${main.rg_main}</option>
@@ -91,34 +85,79 @@
 
 			</div>
 			<div class="form-group">
-				<select class="form-control rg_sub" id="me_prefer_rg_num">
+				<select class="form-control rg_sub" name="me_rg_num">
 					<option value="0">지역을 선택하세요</option>
 					<c:forEach items="${SubRegion}" var="sub">
 						<option value="${sub.rg_num}">${sub.rg_sub}</option>
 					</c:forEach>
 				</select>
 			</div>
+
+			<div class="prefer-area">
+				<div class="form-group">
+					<label>선호지역</label> <select class="form-control pre_rg_main">
+						<option value="0">지역을 선택하세요</option>
+						<c:forEach items="${MainRegion}" var="main">
+							<option value="${main.rg_main}">${main.rg_main}</option>
+						</c:forEach>
+					</select>
+
+				</div>
+				<div class="form-group">
+					<select class="form-control rg_sub" name="pre_num">
+						<option value="0">지역을 선택하세요</option>
+						<c:forEach items="${SubRegion}" var="sub">
+							<option value="${sub.rg_num}">${sub.rg_sub}</option>
+						</c:forEach>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<button type="button" class="form-control" name="add-area-btn">지역 추가</button>
+			</div>
+			<div class="form-group">
+				<label>추천인 닉네임</label>
+				 <input type="text" class="form-control" name="recommed_check" id="recommed_check">
+				<button type="button" class="form-control" name="recommed_check_btn">입력</button>
+
+			</div>
+
 		</div>
-		
 		<div class="form-group">
-		<button type="button" class="form-control" name="add-area-btn">지역 추가</button>
+			<button type="button" class="btn prev-btn form-control">이전</button>
 		</div>
-		<div class="form-group">
-			<label>추천인 닉네임</label>
-			<input type="text" class="form-control" name="recommed_check" id="recommed_check">
-			<button type="button" class="form-control" name="recommed_check_btn">입력</button>
-			
-		</div>
-		
-		
-		
-		
 		<button class="btn btn-outline-warning col-12">회원가입</button>
 	</form>
 	<script type="text/javascript">
 	
 	let count = 0;
 	
+	$(document).on('click','[name=me_email_btn]',function(){
+		console.log($('[name=me_id]').val())
+		console.log($('[name=me_nickname]').val())
+		console.log($('[name=me_rg_num]').val())
+		
+	})
+	
+	
+	// 이전, 다음버튼
+	$('.2p').hide();
+	$('.prev-btn').hide();
+	$(document).on('click','.next-btn',function(){
+		$('.1p').hide();
+		$(this).hide();
+		$('.prev-btn').show();
+		$('.2p').show();
+	})
+	$(document).on('click','.prev-btn',function(){
+		$('.2p').hide();
+		$(this).hide();
+		$('.1p').show();
+		$('.next-btn').show();
+	})
+	
+	// 추천인 입력
 	$(document).on('click','[name=recommed_check_btn]',function(){
 		let check=$('[name=recommed_check]').val();
 		data={
@@ -137,9 +176,10 @@
 	})
 	
 	
+
 	
-	
-	 $(document).on('change','[name=rg_main]',function(){
+	// 지역 대분류 선택 시 해당하는 소분류 가져오기
+	 $(document).on('change','.rg_main',function(){
 		 let th = $(this);
 		 rg_main = th.val();
 		 console.log(rg_main)
@@ -150,18 +190,43 @@
 		
 		ajaxJsonToJson2(false, 'get', '/member/signup/region', data, (a)=>{
 			var option = "";
-			th.parent().next().find('[name=rg_sub]').empty();
+			th.parent().next().find('[name=me_rg_num]').empty();
 			
 			for (var i in a.SubRegion){
 				var obj = a.SubRegion[i];
 				option = "<option value='" + obj.rg_num + "'>" + obj.rg_sub + "</option>";
-				th.parent().next().find('[name=rg_sub]').append(option)
+				th.parent().next().find('[name=me_rg_num]').append(option)
 			}
 			
 		})
 		
 	   });
-	 	
+	
+	
+	
+	
+	// 선호 지역 대분류에 따른 소분류
+	 $(document).on('change','.pre_rg_main',function(){
+		 let th = $(this);
+		 rg_main = th.val();
+		 console.log(rg_main)
+		 data={
+			 rg_main : rg_main
+		}
+		ajaxJsonToJson2(false, 'get', '/member/signup/region', data, (a)=>{
+			var option = "";
+			th.parent().next().find('[name=pre_num]').empty();
+			
+			for (var i in a.SubRegion){
+				var obj = a.SubRegion[i];
+				option = "<option value='" + obj.rg_num + "'>" + obj.rg_sub + "</option>";
+				th.parent().next().find('[name=pre_num]').append(option)
+			}
+			
+		})
+		
+	   });
+	// 선호지역 추가 버튼
 	 $(document).on('click','[name=add-area-btn]',function(){
 		 count++;
 		 console.log(count)
@@ -172,24 +237,24 @@
 			 	<hr>
 				 <div class="prefer-area">
 					<div class="form-group">
-					 <label>선호지역</label>
-					 	<select class="form-control" name="rg_main">
-						 	<option value="0">지역을 선택하세요</option>
-						 	<c:forEach items="${MainRegion}" var="main">
-						 		<option value="${main.rg_main}">${main.rg_main}</option>
-						 	</c:forEach>
-						 </select>
-						 
+						<label>선호지역</label> <select class="form-control pre_rg_main">
+							<option value="0">지역을 선택하세요</option>
+							<c:forEach items="${MainRegion}" var="main">
+								<option value="${main.rg_main}">${main.rg_main}</option>
+							</c:forEach>
+						</select>
+
 					</div>
 					<div class="form-group">
-						<select class="form-control" name="rg_sub">
-						 	<option value="0">지역을 선택하세요</option>
-						 	<c:forEach items="${SubRegion}" var="sub">
-						 		<option value="${sub.rg_num}">${sub.rg_sub}</option>
-						 	</c:forEach>
-						 </select>
+						<select class="form-control rg_sub" name="pre_num">
+							<option value="0">지역을 선택하세요</option>
+							<c:forEach items="${SubRegion}" var="sub">
+								<option value="${sub.rg_num}">${sub.rg_sub}</option>
+							</c:forEach>
+						</select>
 					</div>
 				</div>
+
 			 `;
 			btn+=`
 			<div class="form-group">
@@ -203,7 +268,7 @@
 	 })
 	
 	
-	 
+	 // 데이트피커
 	 $(document).ready(function(){
 		$("#me_birthday").datepicker({
 			  showOn: "both", // 버튼과 텍스트 필드 모두 캘린더를 보여준다.
@@ -228,6 +293,37 @@
 	        })
 	        
 		})
+		
+		
+		
+		
+		
+		
+	// 아이디, 비밀번호 검사
+	let flag = false;
+		$('[name=me_id]').keyup(function(){
+			flag = false;
+			let id = $(this).val();
+			if(!/^[a-zA-Z]\w{5,9}$/.test(id)){
+				$('#check-id-error').text('');
+				return;
+			}
+			$.ajax({
+				async : false, 
+				type : 'post', 
+				url : '<c:url value="/member/check/id"/>', 
+				data : { id : id}, 
+				success : function(data){
+					if(data){
+						$('#check-id-error').text('사용 가능한 아이디입니다.');
+						flag = true;
+					}else{
+						$('#check-id-error').text('이미 사용중인 아이디입니다.');
+					}
+				}
+			});
+		})
+		
 		
 	
 	</script>

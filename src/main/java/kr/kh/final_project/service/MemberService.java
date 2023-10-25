@@ -30,5 +30,7 @@ public interface MemberService {
 
 	MemberVO userById(String name);
 
+	Object checkId(String id);
+
 
 }

@@ -52,6 +52,14 @@ public class MemberController {
 		return map;
 	}
 	
+	// 아이디 중복 체크
+	@ResponseBody
+	@PostMapping("/member/check/id")
+	public Object ajaxTest3(@RequestParam("id")String id){
+		
+		return memberService.checkId(id);
+	}
+	
 	
 	@PostMapping("/member/signup")
 	public String signupPost(MemberVO member, Model model) {

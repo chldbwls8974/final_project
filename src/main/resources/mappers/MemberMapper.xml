@@ -12,7 +12,8 @@
 	</select>
 	
 	<insert id="insertMember">
-		insert into member(me_id, me_pw, me_email) values(#{m.me_id},#{m.me_pw},#{m.me_email})
+		insert into member(me_id, me_pw, me_email, me_phone, me_name, me_gender, me_birthday, me_nickname, me_rg_num)
+		 values(#{m.me_id},#{m.me_pw},#{m.me_email},#{m.me_phone},#{m.me_name},#{m.me_gender},#{m.me_birthday},#{m.me_nickname},#{m.me_rg_num})
 	</insert>
 	<update id="updateMemberSession">
 		update
@@ -31,7 +32,6 @@
 		where
 			me_session_id = #{me_session_id} and me_session_limit >= now() 
 	</select>
-</mapper>
 	<select id="selectManager" resultType="kr.kh.final_project.vo.MemberVO">
 		select * from member where me_num= #{me_num}
 	</select>

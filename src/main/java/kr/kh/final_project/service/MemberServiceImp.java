@@ -58,11 +58,17 @@ public class MemberServiceImp implements MemberService{
 		}
 		
 		//비번 암호화 
-		//String encPw = passwordEncoder.encode(member.getMe_pw());
-		//member.setMe_pw(encPw);
+		String encPw = passwordEncoder.encode(member.getMe_pw());
+		member.setMe_pw(encPw);
 		//회원가입
 		return memberDao.insertMember(member);
 	}
+	
+	@Override
+	public Object checkId(String id) {
+		return memberDao.selectMember(id) == null;
+	}
+
 	
 	@Override
 	public MemberVO getMember(String me_id) {
@@ -133,6 +139,7 @@ public class MemberServiceImp implements MemberService{
 		
 	}
 
+	
 
 
 	
