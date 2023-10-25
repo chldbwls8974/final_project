@@ -29,10 +29,6 @@ public class MemberServiceImp implements MemberService{
 	@Autowired
 	RegionDAO regionDao;
 
-
-	@Autowired
-	MemberDAO memberDao;
-
 	@Override
 	public MemberVO userById(String name) {
 		
