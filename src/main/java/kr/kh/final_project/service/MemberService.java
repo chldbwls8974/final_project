@@ -9,9 +9,7 @@ import kr.kh.final_project.vo.RegionVO;
 
 public interface MemberService {
 
-	MemberVO userById(String name);
-
-	boolean applyManager(MemberVO member, MemberVO user, MultipartFile[] files);
+	MemberVO getManager(Integer me_num);
 
 	boolean signup(MemberVO member);
 
@@ -29,6 +27,8 @@ public interface MemberService {
 
 	void updateMemberSession(MemberVO user);
 
+
+	MemberVO userById(String name);
 
 
 }
