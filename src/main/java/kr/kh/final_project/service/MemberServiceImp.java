@@ -2,7 +2,6 @@ package kr.kh.final_project.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.dao.MemberDAO;
 import kr.kh.final_project.vo.MemberVO;
@@ -13,29 +12,12 @@ public class MemberServiceImp implements MemberService{
 	MemberDAO memberDao;
 
 	@Override
-	public MemberVO userById(String name) {
-		
-		return null;
-	}
-
-	@Override
-	public boolean applyManager(MemberVO member, MemberVO user, MultipartFile[] files) {
-		if(user == null || user.getMe_id() == null) {
-			return false;
+	public MemberVO getMember(Integer me_num) {
+		if(me_num == null) {
+			return null;
 		}
-		member.setMe_id(user.getMe_id());
-		if(!memberDao.applyManager(member)) {
-			return false;
+		MemberVO dbMember = memberDao.selectMember(me_num);
+		return dbMember;
 		}
-		//첨부파일을 업로드
-		if(files == null || files.length == 0) {
-			return true;
-		}
-		//첨부파일을 서버에 업로드 하고, DB에 저장
-		uploadFileAndInsert(files, member.getMe_id());
-		return memberDao.applyManager(member);
-	}
-
-
 
 }

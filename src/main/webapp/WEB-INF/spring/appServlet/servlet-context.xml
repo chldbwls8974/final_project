@@ -42,7 +42,6 @@
 	
 	<interceptors>
 		<interceptor>
-			<mapping path="/application/manager"/>
 			<mapping path="/application/businessman"/>
 			<beans:ref bean="memberInterceptor" />
 		</interceptor>
