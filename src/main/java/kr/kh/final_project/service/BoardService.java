@@ -7,6 +7,8 @@ import kr.kh.final_project.vo.MemberVO;
 
 public interface BoardService {
 
-	boolean insertApplication(BoardVO board, MemberVO user, MultipartFile[] files);
+	boolean insertMapplication(BoardVO board, MemberVO user, MultipartFile[] files);
+
+	boolean insertBapplication(BoardVO board, MemberVO user, MultipartFile[] files);
 
 }
