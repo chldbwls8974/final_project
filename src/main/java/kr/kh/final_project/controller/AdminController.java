@@ -1,11 +1,18 @@
 package kr.kh.final_project.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.pagination.PageMaker;
@@ -57,4 +64,17 @@ public class AdminController {
 			model.addAttribute("list", list);
 			return "/admin/manager";
 		} 
+	
+	// 매니저 신청 수락버튼 (회원정보 수정)
+		@ResponseBody
+		@PostMapping("/admin/manager")
+		public Map<String, Object>updateManager(@RequestBody ManagerVO manager){
+			// 결과 데이터를 넣기 위한 map을 만듬
+			Map<String, Object> map = new HashMap<String, Object>();
+			//ManagerVO user = (ManagerVO)session.getAttribute("user");
+			boolean res = adminService.updateManager(manager);
+			map.put("res", res);
+			return map;
+		}
+		
 }

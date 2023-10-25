@@ -45,7 +45,9 @@
 					<td>${ma.bo_title}</td>
 					<td class="update">${ma.me_authority}</td>
 					<td>${ma.bo_reg_date_str}</td>
-					<td><button class="btn btn-outline-warning btn-update">신청수락</button></td>
+					<td>
+						<button class="btn btn-outline-warning btn-update">신청수락</button>
+					</td>
 				</c:forEach>
 			</tr>
 		</tbody>
@@ -53,28 +55,28 @@
 </div>
 <script type="text/javascript">
 	/* 신청수락 수정버튼 */
-	/* $('.btn-update').click(function(){
+	 $('.btn-update').click(function(){
 		let me_id = $(this).parents('tr').find('.id').text();
 		let me_authority = $(this).parents('tr').find('.update').text();		
-		let member = {
+		let manager = {
 				me_id : me_id,
 				me_authority : me_authority
 		}
-		$ajax({
+		$.ajax({
 			method : 'post',
 			url : '<c:url value="/admin/manager"/>',
-			data : JSON.stringify(member),
+			data : JSON.stringify(manager),
 			contentType : 'application/json; charset=utf-8',
 			dataType : 'json',
 			success : function(data){
 				if(data.res){
 					alert('수정성공')
 				}else{
-					alert('수정 실패')
+					alert('수정실패')
 				}
 			}
 		});
-	}) */     
+	})      
 </script>
 </body>
 </html>

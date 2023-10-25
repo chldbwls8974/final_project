@@ -13,4 +13,6 @@ public interface MemberDAO {
 	List<MemberVO> selectMemberList(@Param("cri")Criteria cri);
 
 	int selectTotalCount(@Param("cri")Criteria cri);
+	
+
 }
