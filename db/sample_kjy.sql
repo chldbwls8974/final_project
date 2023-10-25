@@ -55,3 +55,60 @@ VALUES
 ('금', 09, 21, 3),
 ('토', 09, 21, 3),
 ('일', 09, 21, 3);
+
+INSERT INTO futsal.match (mt_ga_date, mt_st_num, mt_ti_num, mt_personnel)
+SELECT
+	date(adddate(adddate(now(), INTERVAL 0 DAY), INTERVAL 14 DAY)), sc_st_num, sc_ti_num, sc_personnel
+FROM
+	futsal.schedule
+		join
+	futsal.time on sc_ti_num = ti_num
+WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(adddate(now(), INTERVAL 0 DAY)), 1));
+INSERT INTO futsal.match (mt_ga_date, mt_st_num, mt_ti_num, mt_personnel)
+SELECT
+	date(adddate(adddate(now(), INTERVAL 1 DAY), INTERVAL 14 DAY)), sc_st_num, sc_ti_num, sc_personnel
+FROM
+	futsal.schedule
+		join
+	futsal.time on sc_ti_num = ti_num
+WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(adddate(now(), INTERVAL 1 DAY)), 1));
+INSERT INTO futsal.match (mt_ga_date, mt_st_num, mt_ti_num, mt_personnel)
+SELECT
+	date(adddate(adddate(now(), INTERVAL 2 DAY), INTERVAL 14 DAY)), sc_st_num, sc_ti_num, sc_personnel
+FROM
+	futsal.schedule
+		join
+	futsal.time on sc_ti_num = ti_num
+WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(adddate(now(), INTERVAL 2 DAY)), 1));
+INSERT INTO futsal.match (mt_ga_date, mt_st_num, mt_ti_num, mt_personnel)
+SELECT
+	date(adddate(adddate(now(), INTERVAL 3 DAY), INTERVAL 14 DAY)), sc_st_num, sc_ti_num, sc_personnel
+FROM
+	futsal.schedule
+		join
+	futsal.time on sc_ti_num = ti_num
+WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(adddate(now(), INTERVAL 3 DAY)), 1));
+INSERT INTO futsal.match (mt_ga_date, mt_st_num, mt_ti_num, mt_personnel)
+SELECT
+	date(adddate(adddate(now(), INTERVAL 4 DAY), INTERVAL 14 DAY)), sc_st_num, sc_ti_num, sc_personnel
+FROM
+	futsal.schedule
+		join
+	futsal.time on sc_ti_num = ti_num
+WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(adddate(now(), INTERVAL 4 DAY)), 1));
+INSERT INTO futsal.match (mt_ga_date, mt_st_num, mt_ti_num, mt_personnel)
+SELECT
+	date(adddate(adddate(now(), INTERVAL 5 DAY), INTERVAL 14 DAY)), sc_st_num, sc_ti_num, sc_personnel
+FROM
+	futsal.schedule
+		join
+	futsal.time on sc_ti_num = ti_num
+WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(adddate(now(), INTERVAL 5 DAY)), 1));
+INSERT INTO futsal.match (mt_ga_date, mt_st_num, mt_ti_num, mt_personnel)
+SELECT
+	date(adddate(adddate(now(), INTERVAL 6 DAY), INTERVAL 14 DAY)), sc_st_num, sc_ti_num, sc_personnel
+FROM
+	futsal.schedule
+		join
+	futsal.time on sc_ti_num = ti_num
+WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(adddate(now(), INTERVAL 6 DAY)), 1));

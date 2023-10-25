@@ -212,11 +212,12 @@
 				contentType : "application/json; charset=UTF-8",
 				dataType : 'json',
 				success : function(data) {
+					/*
 					if(data.res){
 						alert('등록 성공');
 					}else{
 						alert('등록 실패');
-					}
+					}*/
 					res = data.res;
 				}
 			});
@@ -232,11 +233,12 @@
 				contentType : "application/json; charset=UTF-8",
 				dataType : 'json',
 				success : function(data) {
+					/*
 					if(data.res){
 						alert('삭제 성공');
 					}else{
 						alert('삭제 실패');
-					}
+					}*/
 					res = data.res;
 				}
 			});
@@ -252,11 +254,12 @@
 				contentType : "application/json; charset=UTF-8",
 				dataType : 'json',
 				success : function(data) {
+					/*
 					if(data.res){
 						alert('수정 성공');
 					}else{
 						alert('수정 실패');
-					}
+					}*/
 					res = data.res;
 				}
 			});
