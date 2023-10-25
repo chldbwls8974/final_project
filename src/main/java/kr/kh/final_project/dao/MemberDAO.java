@@ -6,10 +6,16 @@ import kr.kh.final_project.vo.MemberVO;
 
 public interface MemberDAO {
 
-	boolean applyManager(@Param("member")MemberVO member);
+	MemberVO selectManager(@Param("me_num")Integer me_num);
 
 	MemberVO selectMember(@Param("me_id")String me_id);
 
 	boolean insertMember(@Param("member")MemberVO member);
+
+	MemberVO selectMemberNumByNick(@Param("check")String check);
+
+	void updateMemberSession(@Param("user")MemberVO user);
+
+	MemberVO selectMemberBySession(String me_session_id);
 
 }

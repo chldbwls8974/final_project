@@ -48,7 +48,12 @@ function ajaxJsonToJson2(async, type, url, sendObject, successFunc){
 		url : '<c:url value="/"/>'+url, 
 		data : data, 
 		dataType : "json",
-		success : successFunc
+		success : successFunc,
+		error : function(a,b,c){
+			console.log(a);
+			console.log(b);
+			console.log(c);
+		}
 	});
 }
 </script>

@@ -1,14 +1,15 @@
 package kr.kh.final_project.vo;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class MemberVO {
-	int me_num;
+	Integer me_num;
 	String me_id; 
 	String me_pw;
 	String me_name;
@@ -25,4 +26,7 @@ public class MemberVO {
 	int me_point;
 	int me_state1; 
 	int me_state2;
+	private boolean autoLogin;
+	private String me_session_id;
+	private Date me_session_limit;
 }
