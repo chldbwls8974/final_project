@@ -48,9 +48,11 @@ public class AdminServiceImp implements AdminService{
 	}
 	// 매니저신청 조회
 	@Override
-	public List<ManagerVO> getManagerList() {
-		return managerDao.selectManagerList();
+	public List<ManagerVO> getManagerList(Criteria cri) {
+		return managerDao.selectManagerList(cri);
 	}
+
+	
 
 	// 매니저신청 수락버튼 (권한 바꾸기)
 	@Override

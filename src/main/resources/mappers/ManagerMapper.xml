@@ -15,7 +15,7 @@
 		update
 			member
 		set
-			me_authority = #{manager.me_authority}
+			me_authority = 'MANAGER'
 		where
 			me_id = #{manager.me_id}
 	</update>

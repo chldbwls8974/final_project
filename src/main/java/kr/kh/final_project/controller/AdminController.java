@@ -57,22 +57,26 @@ public class AdminController {
 	
 	//매니저 신청 조회 하기
 		@GetMapping("/admin/manager")
-		public String adminMananger(Model model) {
-			List<ManagerVO> list = adminService.getManagerList();
-			
+		public String adminMananger(Model model, Criteria cri) {
+			List<ManagerVO> list = adminService.getManagerList(cri);
 			//화면에 전송
 			model.addAttribute("list", list);
+			model.addAttribute("cri", cri);
 			return "/admin/manager";
 		} 
 	
 	// 매니저 신청 수락버튼 (회원정보 수정)
 		@ResponseBody
 		@PostMapping("/admin/manager")
-		public Map<String, Object>updateManager(@RequestBody ManagerVO manager){
+		public Map<String, Object>updateManager(@RequestBody ManagerVO manager, Criteria cri){
 			// 결과 데이터를 넣기 위한 map을 만듬
 			Map<String, Object> map = new HashMap<String, Object>();
 			//ManagerVO user = (ManagerVO)session.getAttribute("user");
 			boolean res = adminService.updateManager(manager);
+			if(res) {
+				List<ManagerVO> list = adminService.getManagerList(cri);
+				map.put("list", list);
+			}
 			map.put("res", res);
 			return map;
 		}
