@@ -9,31 +9,27 @@
 </head>
 <body>
 	<h1>사업자 신청</h1>
-	<form action="<c:url value='/application/businessman'/>"  class="was-validated" method="post" enctype="multipart/form-data">
+	<form action="<c:url value='/application/businessman'/>" method="post" class="was-validated" enctype="multipart/form-data">
 	  <div class="form-group" hidden="hidden">
 	    <label for="bo_bt_num">게시글번호:</label>
 	    <input type="text" class="form-control" id="bo_bt_num" name="bo_bt_num" value="7" readonly>
 	  </div>
+	  
 	  <div class="form-group">
 	    <label for="bu_name">대표자명:</label>
 	    <input type="text" class="form-control" id="bu_name" name="bu_name" placeholder="대표자명은 한글/영문 2자에서 10자이어야 합니다." required>
-	  <div class="error-name" style="color:red"></div>
+	    <div class="error-name" style="color:red"></div>
 	  </div>
+	  <br>
 	  <div class="form-group">
 	    <label for="bu_phone">대표 전화번호:</label>
 	    <input type="text" class="form-control" id="bu_phone" name="bu_phone" placeholder="-를 제외하고 입력하세요" oninput="autoHyphen(this)" maxlength="14" required>
 	  </div>
-	  <div class="form-group" name="bu_email">
-	    <label for="bu_email">대표 이메일:</label>
-		<input class="form-control mb-2 mr-sm-2" id="bu_email" type="text">
-		<select class="box" id="domain-list">
-	  		<option value="type">직접 입력</option>
-	  		<option value="naver.com">naver.com</option>
-	  		<option value="google.com">google.com</option>
-			<option value="hanmail.net">hanmail.net</option>
-			<option value="nate.com">nate.com</option>
-			<option value="kakao.com">kakao.com</option>
-		</select> 
+	  <br>
+	  <div class="form-group">
+	      <label for="bu_email">대표 이메일:</label>
+		  <input type="text" class="form-control" id="bu_email" name="bu_email" required>
+		  <div class="error-email" style="color:red"></div>
 	  </div>
 	  <br>
 	  <div class="form-group">
@@ -41,8 +37,9 @@
 	    <input type="file" class="form-control" name="files" required> <br>
 		<input type="file" class="form-control" name="files"> <br>
 	  </div>
-  	<a href="<c:url value='/'/>"><button type="submit" class="btn btn-primary">신청하기</button></a>
+  	<a href="<c:url value='/'/>"><button type="submit" class="btn btn-primary">신청하기</button></a>	
 	</form>
+	<a href="<c:url value='/'/>"><button type="button" class="btn btn-danger">뒤로가기</button></a>
 	
 	
 	<script type="text/javascript">	
