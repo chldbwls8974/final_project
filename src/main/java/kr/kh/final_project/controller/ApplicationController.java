@@ -52,5 +52,20 @@ public class ApplicationController {
 		return "/util/message";
 	}
 	
+	@GetMapping("/application/businessman")
+	public String Businessman() {
+		return "/application/businessman";
+	}
 	
+	@PostMapping("/application/businessman")
+	public String applyBusinessman(Model model, BoardVO board, HttpSession session, MultipartFile[] files) {
+		//System.out.println(board);
+		Integer me_num = 2; //나중에 로그인 구현되면 지우기
+		MemberVO member = memberService.getManager(me_num); //나중에 로그인 구현되면 지우기
+		//System.out.println(member);
+	
+
+		
+		return "/util/message";
+	}
 }
