@@ -20,7 +20,7 @@ CREATE TABLE `member` (
 	`me_authority`	varchar(10)	NOT NULL	DEFAULT 'USER'	COMMENT 'USER, ADMIN, MANAGER, BUSINESS',
 	`me_rating`	int	NULL,
 	`me_profile`	varchar(255)	NULL	COMMENT '이미지',
-	`me_tr_name`	varchar(10)	NOT NULL,
+	`me_tr_name`	varchar(10)	NULL,
 	`me_point`	int	NOT NULL	DEFAULT 0,
 	`me_state1`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 없음, 1 : 정지',
 	`me_state2`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 없음, 1 : 정지',
@@ -86,7 +86,8 @@ CREATE TABLE `match` (
 	`mt_type`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 미확정, 1 : 개인 매치, 2 : 팀 매치',
 	`mt_rule`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 친선전, 1: 경쟁전',
 	`mt_personnel`	int	NOT NULL	COMMENT 'N : N vs N',
-	`mt_state`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 미확인, 1 : 확인, 2 : 취소',
+	`mt_state1`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 등록, 1 : 삭제 (조회에서 보여줄지)',
+	`mt_state2`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 신청 없음, 1 : 신청 있음 (날짜가 지난 후 삭제할지)',
 	`mt_memo`	longtext	NULL
 );
 
@@ -155,7 +156,7 @@ DROP TABLE IF EXISTS `point_history`;
 CREATE TABLE `point_history` (
 	`ph_num`	int AUTO_INCREMENT PRIMARY KEY	NOT NULL,
 	`ph_price`	int	NOT NULL	DEFAULT 0,
-	`ph_source`	int	NOT NULL	COMMENT '0 : 충전, 1: 경기 신청, 2 : 경기 취소, 3 : 환불, 4:환급',
+	`ph_source`	int	NOT NULL	COMMENT '0 : 충전, 1: 경기 신청, 2 : 경기 취소, 3 : 환불, 4 : 환급 대기, 5 : 환급 완료',
 	`ph_ga_num`	int	NULL,
 	`ph_me_num`	int	NOT NULL
 );
@@ -773,5 +774,4 @@ ALTER TABLE `holding coupon` ADD CONSTRAINT `FK_coupon_TO_holding coupon_1` FORE
 REFERENCES `coupon` (
 	`cp_num`
 );
-
 
