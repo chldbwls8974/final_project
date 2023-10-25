@@ -10,18 +10,17 @@
 </head>
 <body>
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-		<!-- Brand/logo -->
 		<a class="navbar-brand" href="#">LOGO</a>
 		<ul class="navbar-nav">
 				<li class="nav-item">
-					<a class="nav-link " href="#">회원가입</a>
+					<a class="nav-link " href="<c:url value='/member/signup'/>">회원가입</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link " href="#">로그인</a>
+					<a class="nav-link " href="<c:url value='/member/login'/>">로그인</a>
 				</li>
-			
+	
 				<li class="nav-item">
-					<a class="nav-link " href="#">로그아웃</a>
+					<a class="nav-link " href="<c:url value='/member/logout'/>">로그아웃</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="<c:url value='/member/mypage'/>">마이페이지</a>
@@ -36,6 +35,7 @@
 					<a class="nav-link" href="#">클럽매치</a>
 				<li class="nav-item">
 					<a class="nav-link" href="#">시설 조회</a>
+				</li>
 				</li>
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
@@ -53,6 +53,12 @@
 			</li>
 			<li class="nav-item">
 					<a class="nav-link" href="#">사업자</a>
+			</li>
+			<li class="nav-item">
+					<a class="nav-link" href="<c:url value='/application/manager'/>">매니저 신청</a>
+			</li>
+			<li class="nav-item">
+					<a class="nav-link" href="#">사업자 신청</a>
 			</li>
 		</ul>
 	</nav>
