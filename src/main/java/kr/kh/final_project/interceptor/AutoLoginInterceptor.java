@@ -18,26 +18,28 @@ public class AutoLoginInterceptor extends HandlerInterceptorAdapter {
 	MemberService memberService;
 	
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+	public boolean preHandle(HttpServletRequest request, 
+			HttpServletResponse response, Object handler)
 			throws Exception {
-
-		//이미 로그인되어 있으면 건너뜀
 		HttpSession session = request.getSession();
-		//부모클래스 객체(Object)를 자식 클래스(MemberVO) 객체로 형변환
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		if(user != null) {
-			return true;
+		MemberVO user = (MemberVO) session.getAttribute("user");
+		
+		//로그인이 안되어 있을 때 자동 로그인을 할지말지를 결정 
+		if(user == null) {
+			//loginCookie 정보를 가져옴
+			Cookie cookie = WebUtils.getCookie(request, "loginCookie");
+			//loginCookie가 null이 아니면 =>이전에 자동로그인을 체크했으면  
+			if(cookie != null) {
+				//쿠키에 있는 세션 정보와 일치하는 회원 정보를 가져옴 
+				String session_id = cookie.getValue();
+				user = memberService.getMemberBySession(session_id);
+				//회원 정보가 있으면 세션에 저장(자동로그인 성공)
+				if(user != null) {
+					session.setAttribute("user", user);
+				}
+			}
 		}
-		//로그인되어 있지 않으면 쿠키가 있는지 확인
-		Cookie cookie = WebUtils.getCookie(request, "lc");
-		//쿠키가 없으면 건너뜀(자동로그인 X)
-		if(cookie == null) {
-			return true;
-		}
-		user = memberService.getMemberBySession(cookie.getValue());
-		if(user != null) {
-			session.setAttribute("user", user);
-		}
+		
 		return true;
 	}
 }

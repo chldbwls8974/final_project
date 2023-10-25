@@ -39,7 +39,6 @@
 	<context:component-scan base-package="kr.kh.final_project.*" />
 	
 	<beans:bean id="memberInterceptor" class="kr.kh.final_project.interceptor.MemberInterceptor"></beans:bean>
-	
 	<beans:bean id="loginInterceptor" class="kr.kh.final_project.interceptor.LoginInterceptor"/>
 	<beans:bean id="autoLoginInterceptor" class="kr.kh.final_project.interceptor.AutoLoginInterceptor"/>
 	

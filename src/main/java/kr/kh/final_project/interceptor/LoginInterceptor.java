@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,29 +18,34 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	
 	@Autowired
 	MemberService memberService;
-
+	
 	@Override
-	public void postHandle(HttpServletRequest request, 
-			HttpServletResponse response, 
-			Object handler,
-			ModelAndView modelAndView) throws Exception {
-		MemberVO user = (MemberVO)modelAndView.getModel().get("user");
-
-		if(user != null) {
-			request.getSession().setAttribute("user", user);
+	public void postHandle(
+		HttpServletRequest request,
+		HttpServletResponse respose,
+		Object handler,
+		ModelAndView mv) {
+		
+		MemberVO user = (MemberVO)mv.getModel().get("user");
+		
+		if(user != null ) {
+			HttpSession session = request.getSession();
+			session.setAttribute("user", user);
+			
+			//자동로그인을 체크한 경우
 			if(user.isAutoLogin()) {
-				String value = request.getSession().getId();
-				Cookie cookie = new Cookie("lc", value);
+				//쿠키를 생성하여 필요한 정보를 넣고, 클라이언트한테 전달
+				Cookie cookie = new Cookie("loginCookie", session.getId());
 				cookie.setPath("/");
 				int day = 7;
-				int time = day * 24 * 60 * 60; //하루를 초로 변한한 값에 day를 곱함  
+				int time = 60 * 60 * 24 * day;
 				cookie.setMaxAge(time);
-				response.addCookie(cookie);
-				
+				respose.addCookie(cookie);
+				//쿠키에 넣은 필요한 정보를 DB에도 추가 
+				user.setMe_session_id(session.getId());
 				Date date = new Date(System.currentTimeMillis() + time * 1000);
-				user.setMe_session_id(value);
 				user.setMe_session_limit(date);
-				memberService.updateMemberSesseion(user);
+				memberService.updateMemberSession(user);
 			}
 		}
 	}

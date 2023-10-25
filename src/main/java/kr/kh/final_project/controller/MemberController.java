@@ -86,12 +86,9 @@ public class MemberController {
 	
 	
 	
-	
 	@GetMapping("/member/mypage")
 	public String mepage(HttpSession session, Model model) {
 		String name = (String) session.getAttribute("name");
-		MemberVO user2 = (MemberVO)session.getAttribute("user");
-		System.out.println(user2);
 		MemberVO user = memberService.userById(name);
 		model.addAttribute("user", user);
 		return "member/mypage";
