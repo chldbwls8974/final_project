@@ -40,7 +40,9 @@
 			<div class="form-group">
 				<label>이메일</label> 
 				<input type="email" class="form-control" name="me_email" id="me_email" required>
-				<button type="button" class="form-control" name="me_email_btn">이메일 인증</button>
+				<button type="button" class="form-control" name="me_email_btn">인증번호 전송</button>
+				<input type="number" class="form-control" name="email_code"  required>
+				<button type="button" class="form-control" name="email_code_btn">인증번호 확인</button>
 			</div>
 
 			<div class="form-group">
@@ -134,10 +136,14 @@
 	let count = 0;
 	
 	$(document).on('click','[name=me_email_btn]',function(){
-		console.log($('[name=me_id]').val())
-		console.log($('[name=me_nickname]').val())
-		console.log($('[name=me_rg_num]').val())
-		
+		const email = $('[name=me_email]').val();
+		const checkEmail = $('[name=email_code]').val();	
+		data ={
+				email : email
+		}
+		ajaxJsonToJson2(false, 'get','/member/signup/checkmail?email'+email,data,(a)=>{
+			
+		})
 	})
 	
 	
@@ -165,7 +171,6 @@
 		}
 		var str = '';
 		ajaxJsonToJson2(false, 'get','/member/signup/check',data,(a)=>{
-			console.log(a)
 			if(a.checked == null){
 				str+=`<span>없는 회원입니다.</span>`;
 			}else{

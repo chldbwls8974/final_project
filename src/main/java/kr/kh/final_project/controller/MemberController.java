@@ -52,6 +52,14 @@ public class MemberController {
 		return map;
 	}
 	
+	@ResponseBody
+	@GetMapping("/member/signup/checkmail")
+	public Map<String, Object> checkmail(@RequestParam String email,  Model model){
+		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println(email);
+		return map;
+	}
+	
 	// 아이디 중복 체크
 	@ResponseBody
 	@PostMapping("/member/check/id")

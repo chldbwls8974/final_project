@@ -218,6 +218,7 @@
 		    <artifactId>jackson-annotations</artifactId>
 		    <version>2.15.2</version>
 		</dependency>
+		<!-- 메일을 보내기 위한 의존성 추가 -->
 		<dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-context-support</artifactId>
@@ -226,7 +227,7 @@
 		<dependency>
 		    <groupId>javax.mail</groupId>
 		    <artifactId>mail</artifactId>
-		    <version>1.4.3</version>
+		    <version>1.4.7</version> <!-- 수정 전 1.4.3 -->
 		</dependency>						 
 	</dependencies>
     <build>
