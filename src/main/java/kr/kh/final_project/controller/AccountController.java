@@ -27,7 +27,7 @@ public class AccountController {
 	public String insert(Model model, HttpSession session) {
 		String url;
 		//세션에서 유저정보 가져와야 함
-		MemberVO user = new MemberVO(1,"test", "test", "홍길동", "길동이", 2 , "01012341234" , "", "", "" , "USER", 0 , "", "실버", 0, 0, 0);
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		//멤버의 계좌 정보 가져오는 메서드
 		AccountVO dbMemberAccount = accountService.getAccount(user);
 		List<BankVO> bankList = accountService.getBankList();
@@ -47,7 +47,7 @@ public class AccountController {
 	public String insertPost(HttpSession session, Model model, AccountVO account) {
 		String msg , url;
 		// 1.세션에서 유저정보 가져오기 코드 추가
-		MemberVO user = new MemberVO(1,"test", "test", "홍길동", "길동이", 2 , "01012341234" , "", "", "" , "USER", 0 , "", "실버", 0, 0, 0);
+		MemberVO user = (MemberVO)session.getAttribute("user");
 			
 		if(accountService.insertAccount(account, user)) {
 			msg = "계좌등록에 성공하였습니다.";
@@ -64,7 +64,7 @@ public class AccountController {
 	public String changePost(HttpSession session, Model model, AccountVO account) {
 		String msg , url;
 		// 1.세션에서 유저정보 가져오기 코드 추가
-		MemberVO user = new MemberVO(1,"test", "test", "홍길동", "길동이", 2 , "01012341234" , "", "", "" , "USER", 0 , "", "실버", 0, 0, 0);
+		MemberVO user = (MemberVO)session.getAttribute("user");
 			
 		if(accountService.updateAccount(account, user)) {
 			msg = "계좌변경에 성공하였습니다.";
