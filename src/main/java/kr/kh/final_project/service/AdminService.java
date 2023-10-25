@@ -14,9 +14,12 @@ public interface AdminService {
 	List<MemberVO> getMemberList(Criteria cri);
 	//회원정보 페이지네이션
 	int getTotalCount(Criteria cri);
+	
 	// 매니저신청 정보조회
 	List<ManagerVO> getManagerList(Criteria cri);
 	// 매니저신청 신청수락 버튼(권한 바꾸기)
 	boolean updateManager(ManagerVO manager);
+	// 매니저 정보 페이지네이션 (총 매니저신청 수 가져오기)
+	int getTotalCount2(Criteria cri);
 	
 }

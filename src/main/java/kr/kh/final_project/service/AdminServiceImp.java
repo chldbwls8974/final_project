@@ -35,8 +35,6 @@ public class AdminServiceImp implements AdminService{
 			
 			return memberDao.selectMemberList(cri); 
 		}
-	
-	
 	// 회원 페이지네이션
 	@Override
 	public int getTotalCount(Criteria cri) {
@@ -46,14 +44,12 @@ public class AdminServiceImp implements AdminService{
 		}//memberDao한테 cri를 사용하여 데이터베이스에서 검색해야 하는 총 데이터 항목수를 가져오라고
 		return memberDao.selectTotalCount(cri);
 	}
+	
 	// 매니저신청 조회
 	@Override
 	public List<ManagerVO> getManagerList(Criteria cri) {
 		return managerDao.selectManagerList(cri);
 	}
-
-	
-
 	// 매니저신청 수락버튼 (권한 바꾸기)
 	@Override
 	public boolean updateManager(ManagerVO manager) {
@@ -61,6 +57,14 @@ public class AdminServiceImp implements AdminService{
 			return false;
 		}
 		return managerDao.updateManagerByAuthority(manager);
+	}
+	// 매니저신청 페이지네이션
+	@Override
+	public int getTotalCount2(Criteria cri) {
+		if(cri == null) {
+			cri = new Criteria();
+		}
+		return managerDao.selectTotalCount(cri);
 	}
 	
 

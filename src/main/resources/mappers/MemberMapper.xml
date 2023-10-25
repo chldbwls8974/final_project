@@ -39,7 +39,10 @@
 				or
 			me_state2 like concat('%', #{cri.s}, '%')
 		</if>
-		 
+		order by 
+			me_num asc
+		limit
+			#{cri.pageStart}, #{cri.perPageNum}
 	</select>
 	<select id="selectTotalCount" resultType="int">
 		select count(*) from member 
@@ -79,6 +82,9 @@
 				or
 			me_state2 like concat('%', #{cri.s}, '%')
 		</if>
+		order by
+			me_num
+				asc
 	</select>
 
 	<select id="selectMember" resultType="kr.kh.final_project.vo.MemberVO">

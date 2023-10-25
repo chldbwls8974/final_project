@@ -34,10 +34,10 @@ public class AdminController {
 		//int me_num = 1;
 		//List<MemberVO> list = adminService.getMemberList(me_num);
 		
-		//현재 페이지 정보를 주면서 memberService한테 회원 리스트를 가져오라고 하고 list에 담는다.
-		List<MemberVO> list = adminService.getMemberList(cri);
 		
 		//페이지네이션
+		// perPageNum : 한페이지에서 보여줄 컨텐츠 개수
+		cri.setPerPageNum(5);
 		//현재 페이지 정보(검색어, 타입)에 맞는 전체 게시글 수(TotalCount)를 가져온다.
 		int totalCount = adminService.getTotalCount(cri);
 		//페이지네이션 페이지수
@@ -45,6 +45,8 @@ public class AdminController {
 		// DISPLAY_PAGE_NUM,cri,totalCount의 정보를 가지고 pageMaker를 만들어 pm으로 넣음
 		PageMaker pm = new PageMaker(DISPLAY_PAGE_NUM, cri, totalCount);
 		
+		//현재 페이지 정보를 주면서 memberService한테 회원 리스트를 가져오라고 하고 list에 담는다.
+		List<MemberVO> list = adminService.getMemberList(cri);
 		
 		
 		// 가져온 회원정보를 리스트에 담에 화면에 전송한다.
@@ -58,10 +60,21 @@ public class AdminController {
 	//매니저 신청 조회 하기
 		@GetMapping("/admin/manager")
 		public String adminMananger(Model model, Criteria cri) {
+			//페이지네이션
+			// 밑에 있는 cri의 영향을 받으려면 getManagerList를 cri.setPerPageNum보다 아래에 있어야함
+			cri.setPerPageNum(5);
+			//현재 페이지 정보(검색어, 타입)에 맞는 전체 게시글 수(TotalCount)를 가져온다.
+			int totalCount2 = adminService.getTotalCount2(cri);
+			//페이지네이션 페이지수
+			final int DISPLAY_PAGE_NUM = 3;
+			// DISPLAY_PAGE_NUM,cri,totalCount의 정보를 가지고 pageMaker를 만들어 pm으로 넣음
+			PageMaker pm = new PageMaker(DISPLAY_PAGE_NUM, cri, totalCount2);
+			
 			List<ManagerVO> list = adminService.getManagerList(cri);
 			//화면에 전송
 			model.addAttribute("list", list);
 			model.addAttribute("cri", cri);
+			model.addAttribute("pm", pm);
 			return "/admin/manager";
 		} 
 	
@@ -72,6 +85,7 @@ public class AdminController {
 			// 결과 데이터를 넣기 위한 map을 만듬
 			Map<String, Object> map = new HashMap<String, Object>();
 			//ManagerVO user = (ManagerVO)session.getAttribute("user");
+			
 			boolean res = adminService.updateManager(manager);
 			if(res) {
 				List<ManagerVO> list = adminService.getManagerList(cri);

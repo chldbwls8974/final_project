@@ -47,7 +47,7 @@
     <tbody>
    	 <c:forEach items="${list}" var="member" varStatus="vs">
 	      <tr>
-	      	<td>${pm.totalCount - vs.index}</td>
+	      	<td>${member.me_num}</td>
 	        <td>${member.me_id}</td>
 	        <td>${member.me_nickname}</td>
 	        <td>${member.me_email}</td>

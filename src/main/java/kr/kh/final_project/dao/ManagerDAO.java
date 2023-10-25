@@ -17,5 +17,8 @@ public interface ManagerDAO {
 	// 매니저신청 수락버튼 (권한 바꾸기)
 	boolean updateManagerByAuthority(@Param("manager")ManagerVO manager);
 	
+	// 매니저신청 totalCount 가져오라고 하기
+	int selectTotalCount(@Param("cri")Criteria cri);
+	
 	
 }
