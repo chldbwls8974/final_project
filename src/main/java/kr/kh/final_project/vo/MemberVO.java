@@ -22,6 +22,7 @@ public class MemberVO {
 	int me_point;
 	int me_state1; 
 	int me_state2;
-	
 	private boolean autoLogin;
+	private String me_session_id;
+	private Date me_session_limit;
 }

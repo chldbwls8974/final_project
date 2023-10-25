@@ -14,4 +14,8 @@ public interface MemberDAO {
 
 	MemberVO selectMemberNumByNick(@Param("check")String check);
 
+	void updateMemberSession(MemberVO user);
+
+	MemberVO selectMemberBySession(String me_session_id);
+
 }

@@ -67,6 +67,7 @@ public class MemberController {
 	public String memberLogin() {
 		return "/member/login";
 	}
+	
 	@PostMapping(value="/member/login")
 	public String memberLoginPost(MemberVO member, Model model) {
 		Message msg = new Message("/member/login", "로그인에 실패했습니다.");
@@ -82,9 +83,15 @@ public class MemberController {
 		return "message";
 	}
 	
+	
+	
+	
+	
 	@GetMapping("/member/mypage")
 	public String mepage(HttpSession session, Model model) {
 		String name = (String) session.getAttribute("name");
+		MemberVO user2 = (MemberVO)session.getAttribute("user");
+		System.out.println(user2);
 		MemberVO user = memberService.userById(name);
 		model.addAttribute("user", user);
 		return "member/mypage";

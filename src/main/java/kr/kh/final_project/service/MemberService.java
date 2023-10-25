@@ -24,6 +24,10 @@ public interface MemberService {
 	MemberVO isCheck(String check);
 
 	MemberVO login(MemberVO member);
+	
+	void updateMemberSesseion(MemberVO user);
+
+	MemberVO getMemberBySession(String me_session_id);
 
 
 }
