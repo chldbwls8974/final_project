@@ -116,7 +116,7 @@ public class MemberServiceImp implements MemberService{
 		if(user == null) {
 			return null;
 		}
-		if(member.getMe_pw().equals(user.getMe_pw())) {
+		if(passwordEncoder.matches(member.getMe_pw(), user.getMe_pw())) {
 			return user;
 		}
 		return null;
