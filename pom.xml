@@ -147,7 +147,7 @@
 		    <artifactId>lombok</artifactId>
 		    <version>1.18.24</version>
 		</dependency>
-		<!-- 스프링 시큐리티  -->
+		<!-- 스프링 시큐리티 (비밀번호 암호화를 위함) -->
 		<dependency>
 		    <groupId>org.springframework.security</groupId>
 		    <artifactId>spring-security-core</artifactId>

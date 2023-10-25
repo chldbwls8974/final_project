@@ -3,7 +3,6 @@ DROP DATABASE IF EXISTS FUTSAL;
 CREATE DATABASE FUTSAL;
 
 USE FUTSAL;
-
 DROP TABLE IF EXISTS `member`;
 
 CREATE TABLE `member` (
@@ -20,7 +19,7 @@ CREATE TABLE `member` (
 	`me_authority`	varchar(10)	NOT NULL	DEFAULT 'USER'	COMMENT 'USER, ADMIN, MANAGER, BUSINESS',
 	`me_rating`	int	NULL,
 	`me_profile`	varchar(255)	NULL	COMMENT '이미지',
-	`me_tr_name`	varchar(10)	NOT NULL	DEFAULT '언랭',
+	`me_tr_name`	varchar(10)	NOT NULL,
 	`me_point`	int	NOT NULL	DEFAULT 0,
 	`me_state1`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 없음, 1 : 정지',
 	`me_state2`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 없음, 1 : 정지'
@@ -168,16 +167,16 @@ CREATE TABLE `board` (
 	`bo_me_num`	int	NOT NULL,
 	`bo_reg_date`	datetime	NOT NULL,
 	`bo_up_date`	datetime	NULL,
-	`bo_contents`	longtext	NOT NULL,
-	`bo_count`	int	NOT NULL,
-	`bo_comment`	int	NOT NULL
+	`bo_contents`	longtext	NULL,
+	`bo_count`	int	NOT NULL	DEFAULT 0,
+	`bo_comment`	int	NOT NULL	DEFAULT 0
 );
 
 DROP TABLE IF EXISTS `board_type`;
 
 CREATE TABLE `board_type` (
 	`bt_num`	int AUTO_INCREMENT PRIMARY KEY	NOT NULL,
-	`bt_name`	varchar(10)	NOT NULL	DEFAULT '자유게시판'	COMMENT '공지,자유게시판, 개인 매칭, 팀 매칭,문의',
+	`bt_name`	varchar(10)	NOT NULL	DEFAULT '자유게시판'	COMMENT '공지,자유게시판, 개인 매칭, 팀 매칭,문의, 매니저/사업자 신청',
 	`bt_form`	longtext	NULL
 );
 
@@ -336,8 +335,8 @@ DROP TABLE IF EXISTS `file`;
 CREATE TABLE `file` (
 	`fi_num`	int AUTO_INCREMENT PRIMARY KEY	NOT NULL,
 	`fi_bo_num`	int	NOT NULL,
-	`fi_ori_name`	varchar(50)	NOT NULL,
-	`fi_name`	varchar(150)	NOT NULL
+	`fi_ori_name`	varchar(255)	NOT NULL,
+	`fi_name`	varchar(255)	NOT NULL
 );
 
 DROP TABLE IF EXISTS `team_preferred_time`;
@@ -378,7 +377,7 @@ DROP TABLE IF EXISTS `operating`;
 
 CREATE TABLE `operating` (
 	`op_num`	int AUTO_INCREMENT PRIMARY KEY	NOT NULL,
-	`op_day`	varchar(5)	NOT NULL,
+	`op_day`	varchar(1)	NOT NULL,
 	`op_open`	int	NOT NULL,
 	`op_close`	int	NOT NULL,
 	`op_fa_num`	int	NOT NULL

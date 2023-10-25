@@ -6,8 +6,6 @@
 </head>
 <body>
 	<h1>메인</h1>
-	<a href="<c:url value='/schedule/insert'/>">
-		<button>스케쥴 등록</button>
-	</a>
+	${user}
 </body>
 </html>

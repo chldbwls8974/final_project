@@ -21,4 +21,33 @@
     </div>                                                  
     <tiles:insertAttribute name="footer" />
 </body>
+<script type="text/javascript">
+function ajaxJsonToJson(async, type, url, sendObject, successFunc){
+	$.ajax({
+		async : async, 
+		type : type, 
+		url : '<c:url value="/"/>'+url, 
+		data : JSON.stringify(sendObject), 
+		contentType : "application/json; charset=UTF-8", 
+		dataType : "json",
+		success : successFunc
+	});
+}
+
+function ajaxJsonToJson2(async, type, url, sendObject, successFunc){
+	$.ajax({
+		async : async, 
+		type : type, 
+		url : '<c:url value="/"/>'+url, 
+		data : data, 
+		dataType : "json",
+		success : successFunc,
+		error : function(a,b,c){
+			console.log(a);
+			console.log(b);
+			console.log(c);
+		}
+	});
+}
+</script>
 </html>
