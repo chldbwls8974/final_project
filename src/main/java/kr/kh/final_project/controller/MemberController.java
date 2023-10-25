@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.final_project.service.MemberService;
+import kr.kh.final_project.service.RegionService;
 import kr.kh.final_project.util.Message;
 import kr.kh.final_project.vo.MemberVO;
+import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.RegionVO;
 
 @Controller
@@ -25,6 +27,8 @@ public class MemberController {
 
 	@Autowired
 	MemberService memberService;
+	@Autowired
+	RegionService regionService;
 	
 	@GetMapping("/member/signup")
 	public String signup(Model model) {
@@ -123,5 +127,35 @@ public class MemberController {
 		MemberVO user = memberService.userById(name);
 		model.addAttribute("user", user);
 		return "/member/mypage";
+	}
+	
+	//포인트 환급 페이지
+	@GetMapping("/member/refund")
+	public String pointRefund(Model model, HttpSession session) {
+		
+		//유저정보 세션에서 가져오도록 수정
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		
+//		MemberVO user = memberService.userById(name);
+		model.addAttribute("user", user);
+		return "/member/refund";
+	}
+	@PostMapping("/member/refund")
+	public String pointRefundPost(Model model, HttpSession session, MemberVO user, PointHistoryVO pointHistory) {
+		String msg, url;
+		//포인트내역 테이블의 용도 속성정보를 서비스에서 추가해 줘야 함.
+		System.out.println(pointHistory);
+		System.out.println(user);
+		if(memberService.pointRefundApply(user, pointHistory)) {
+			msg = "환급 신청이 성공하였습니다.";
+			url = "/";
+		}else {
+			msg = "환급 신청이 실패하였습니다.";
+			url = "/"; 
+		}
+		model.addAttribute("url", url);
+		model.addAttribute("msg", msg);
+		return "/util/message";
 	}
 }

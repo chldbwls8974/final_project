@@ -29,4 +29,5 @@ public class MemberVO {
 	private boolean autoLogin;
 	private String me_session_id;
 	private Date me_session_limit;
+	
 }
