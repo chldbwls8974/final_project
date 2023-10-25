@@ -6,6 +6,7 @@ import kr.kh.final_project.pagination.Criteria;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.vo.MemberVO;
+import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.RegionVO;
 
 public interface MemberService {
@@ -15,6 +16,8 @@ public interface MemberService {
 	boolean signup(MemberVO member);
 
 	MemberVO getMember(String me_id);
+
+	boolean pointRefundApply(MemberVO user, PointHistoryVO pointHistory);
 
 	List<RegionVO> getMainRegion();
 

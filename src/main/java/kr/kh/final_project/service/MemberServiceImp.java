@@ -16,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import kr.kh.final_project.dao.MemberDAO;
 import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.vo.MemberVO;
+import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.RegionVO;
 
 @Service
@@ -147,6 +148,11 @@ public class MemberServiceImp implements MemberService{
 		}
 		memberDao.updateMemberSession(user);
 		
+	}
+
+	@Override
+	public boolean pointRefundApply(MemberVO user, PointHistoryVO pointHistory) {
+		return false;
 	}
 
 

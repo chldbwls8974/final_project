@@ -36,9 +36,9 @@
 				<th>매니저신청 수락</th>
 			</tr>
 		</thead>
-		<tbody>
-			<tr>
-			   <c:forEach items="${list}" var="ma">
+		<tbody class="select-manager">
+		   <c:forEach items="${list}" var="ma">
+				<tr>
 					<td>${ma.me_num}</td>
 					<td class="id">${ma.me_id}</td>
 					<td>${ma.bo_bt_num}</td>
@@ -48,34 +48,54 @@
 					<td>
 						<button class="btn btn-outline-warning btn-update">신청수락</button>
 					</td>
-				</c:forEach>
-			</tr>
+				</tr>
+			</c:forEach>
 		</tbody>
 	</table>
 </div>
 <script type="text/javascript">
 	/* 신청수락 수정버튼 */
-	 $('.btn-update').click(function(){
-		let me_id = $(this).parents('tr').find('.id').text();
-		let me_authority = $(this).parents('tr').find('.update').text();		
-		let manager = {
-				me_id : me_id,
-				me_authority : me_authority
-		}
-		$.ajax({
-			method : 'post',
-			url : '<c:url value="/admin/manager"/>',
-			data : JSON.stringify(manager),
-			contentType : 'application/json; charset=utf-8',
-			dataType : 'json',
-			success : function(data){
-				if(data.res){
-					alert('수정성공')
-				}else{
-					alert('수정실패')
-				}
+	$(document).on('click', '.btn-update', function(){
+		if(confirm("수락하시겠습니까?")){
+			let me_id = $(this).parents('tr').find('.id').text();
+			let me_authority = $(this).parents('tr').find('.update').text();		
+			let manager = {
+					me_id : me_id,
+					me_authority : me_authority
 			}
-		});
+			$.ajax({
+				async : false,
+				method : 'post',
+				url : '<c:url value="/admin/manager"/>',
+				data : JSON.stringify(manager),
+				contentType : 'application/json; charset=utf-8',
+				dataType : 'json',
+				success : function(data){
+					if(data.res){
+						alert('수정성공')
+						let str = ``;
+						for(ma of data.list){
+							str += `
+								<tr>
+									<td>\${ma.me_num}</td>
+									<td class="id">\${ma.me_id}</td>
+									<td>\${ma.bo_bt_num}</td>
+									<td>\${ma.bo_title}</td>
+									<td class="update">\${ma.me_authority}</td>
+									<td>\${ma.bo_reg_date_str}</td>
+									<td>
+										<button class="btn btn-outline-warning btn-update">신청수락</button>
+									</td>
+								</tr>
+							`
+						}
+						$('.select-manager').html(str);
+					}else{
+						alert('수정실패')
+					}
+				}
+			});
+		}
 	})      
 </script>
 </body>

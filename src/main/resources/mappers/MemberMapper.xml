@@ -109,7 +109,6 @@
 		where
 			me_session_id = #{me_session_id} and me_session_limit >= now() 
 	</select>
-	
 	<select id="selectManager" resultType="kr.kh.final_project.vo.MemberVO">
 		select * from member where me_num= #{me_num}
 	</select>
