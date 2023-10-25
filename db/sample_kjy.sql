@@ -1,13 +1,13 @@
 -- 작동전 MEMBER.ME_TR_NAME NULL로 바꿀것
 
-INSERT INTO MEMBER(ME_RG_NUM, ME_NICKNAME)
+INSERT INTO MEMBER(ME_RG_NUM, ME_NICKNAME, ME_TR_NAME)
 VALUES
-(2, 'B-1'), (2, 'B-2'), (2, 'M-1'), (2, 'M-2'), (2, 'U-1'),
-(2, 'U-2'), (2, 'U-3'), (2, 'U-4'), (2, 'U-5'), (2, 'U-6'),
-(2, 'U-7'), (2, 'U-8'), (2, 'U-9'), (2, 'U-10'), (2, 'U-11'),
-(2, 'U-12'), (2, 'U-13'), (2, 'U-14'), (2, 'U-15'), (2, 'U-16'),
-(3, 'U-17'), (3, 'U-18'), (3, 'U-19'), (4, 'U-20'), (4, 'U-21'),
-(4, 'U-22'), (5, 'U-23'), (6, 'U-24'), (7, 'U-25'), (8, 'B-30');
+(2, 'B-1', '언랭'), (2, 'B-2', '언랭'), (2, 'M-1', '언랭'), (2, 'M-2', '언랭'), (2, 'U-1', '언랭'),
+(2, 'U-2', '언랭'), (2, 'U-3', '언랭'), (2, 'U-4', '언랭'), (2, 'U-5', '언랭'), (2, 'U-6', '언랭'),
+(2, 'U-7', '언랭'), (2, 'U-8', '언랭'), (2, 'U-9', '언랭'), (2, 'U-10', '언랭'), (2, 'U-11', '언랭'),
+(2, 'U-12', '언랭'), (2, 'U-13', '언랭'), (2, 'U-14', '언랭'), (2, 'U-15', '언랭'), (2, 'U-16', '언랭'),
+(3, 'U-17', '언랭'), (3, 'U-18', '언랭'), (3, 'U-19', '언랭'), (4, 'U-20', '언랭'), (4, 'U-21', '언랭'),
+(4, 'U-22', '언랭'), (5, 'U-23', '언랭'), (6, 'U-24', '언랭'), (7, 'U-25', '언랭'), (8, 'B-30', '언랭');
 
 INSERT INTO BUISNESSMAN(BU_ME_NUM)
 VALUES
@@ -56,59 +56,173 @@ VALUES
 ('토', 09, 21, 3),
 ('일', 09, 21, 3);
 
-INSERT INTO futsal.match (mt_ga_date, mt_st_num, mt_ti_num, mt_personnel)
+INSERT INTO SCHEDULE(SC_ST_NUM, SC_TI_NUM, SC_PERSONNEL)
+VALUES
+(1, 1, 3), (1, 10, 4), (1, 12, 5), (1, 14, 5), (1, 16, 5),
+(1, 18, 5), (1, 20, 5), (1, 34, 4), (1, 36, 5), (1, 38, 5),
+(1, 40, 5), (1, 42, 5), (1, 44, 5), (1, 58, 4), (1, 60, 5),
+(1, 62, 5), (1, 64, 5), (1, 66, 5), (1, 68, 5), (1, 82, 4),
+(1, 84, 5), (1, 86, 5), (1, 88, 5), (1, 90, 5), (1, 92, 5),
+(1, 106, 4), (1, 108, 5), (1, 119, 3), (1, 117, 5), (1, 115, 5),
+(1, 113, 5), (1, 111, 5), (1, 130, 4), (1, 132, 5), (1, 135, 5),
+(1, 137, 5), (1, 139, 5), (1, 141, 5), (1, 143, 3), (1, 154, 4),
+(1, 156, 5), (1, 159, 5), (1, 161, 5), (1, 163, 5), (1, 165, 5),
+(1, 167, 3), (1, 121, 3), (1, 145, 3), (2, 1, 5), (2, 10, 5),
+(2, 12, 5), (2, 14, 5), (2, 16, 5), (2, 18, 5), (2, 20, 5),
+(2, 34, 5), (2, 36, 5), (2, 38, 5), (2, 40, 5), (2, 42, 5),
+(2, 44, 5), (2, 58, 5), (2, 60, 5), (2, 62, 5), (2, 64, 5),
+(2, 66, 5), (2, 68, 5), (2, 82, 5), (2, 84, 5), (2, 86, 5),
+(2, 88, 5), (2, 90, 5), (2, 92, 5), (2, 106, 5), (2, 108, 5),
+(2, 111, 5), (2, 113, 5), (2, 115, 5), (2, 117, 5), (2, 119, 3),
+(2, 130, 5), (2, 132, 5), (2, 135, 5), (2, 137, 5), (2, 139, 5),
+(2, 141, 5), (2, 143, 3), (2, 154, 5), (2, 156, 5), (2, 159, 5),
+(2, 161, 5), (2, 163, 5), (2, 165, 5), (2, 167, 3), (2, 121, 3),
+(2, 145, 3), (3, 1, 3), (3, 10, 6), (3, 12, 6), (3, 14, 8),
+(3, 16, 8), (3, 18, 8), (3, 20, 8), (3, 34, 6), (3, 36, 6),
+(3, 38, 8), (3, 40, 8), (3, 42, 8), (3, 44, 8), (3, 58, 6),
+(3, 60, 6), (3, 62, 8), (3, 64, 8), (3, 66, 8), (3, 68, 8),
+(3, 82, 6), (3, 84, 6), (3, 86, 8), (3, 88, 8), (3, 90, 8),
+(3, 92, 8), (3, 106, 6), (3, 108, 6), (3, 111, 8), (3, 113, 8),
+(3, 115, 8), (3, 117, 8), (3, 119, 4), (3, 121, 3), (3, 130, 6),
+(3, 132, 6), (3, 135, 8), (3, 137, 8), (3, 139, 8), (3, 141, 8),
+(3, 143, 4), (3, 145, 3), (3, 154, 6), (3, 156, 6), (3, 159, 8),
+(3, 161, 8), (3, 163, 8), (3, 165, 8), (3, 167, 4), (4, 9, 5),
+(4, 11, 5), (4, 14, 5), (4, 16, 5), (4, 18, 5), (4, 20, 3),
+(4, 33, 5), (4, 35, 5), (4, 38, 5), (4, 40, 5), (4, 42, 5),
+(4, 44, 3), (4, 57, 5), (4, 59, 5), (4, 62, 5), (4, 64, 5),
+(4, 66, 5), (4, 68, 3), (4, 81, 5), (4, 83, 5), (4, 86, 5),
+(4, 88, 5), (4, 90, 5), (4, 92, 3), (4, 105, 5), (4, 107, 5),
+(4, 110, 5), (4, 112, 5), (4, 114, 5), (4, 116, 3), (4, 127, 4),
+(4, 129, 5), (4, 131, 5), (4, 134, 5), (4, 136, 5), (4, 138, 5),
+(4, 140, 3), (4, 142, 3), (4, 151, 4), (4, 153, 5), (4, 155, 5),
+(4, 158, 5), (4, 160, 5), (4, 162, 5), (4, 164, 3), (4, 166, 3),
+(5, 10, 5), (5, 12, 6), (5, 14, 6), (5, 16, 6), (5, 18, 6),
+(5, 20, 5), (5, 34, 5), (5, 36, 6), (5, 38, 6), (5, 40, 6),
+(5, 42, 6), (5, 44, 5), (5, 58, 5), (5, 60, 6), (5, 62, 6),
+(5, 64, 6), (5, 66, 6), (5, 68, 5), (5, 82, 5), (5, 84, 6),
+(5, 86, 6), (5, 88, 6), (5, 90, 6), (5, 92, 5), (5, 106, 5),
+(5, 108, 6), (5, 110, 6), (5, 112, 6), (5, 114, 6), (5, 116, 5),
+(5, 130, 5), (5, 132, 6), (5, 134, 6), (5, 136, 6), (5, 138, 6),
+(5, 140, 5), (5, 154, 5), (5, 156, 6), (5, 158, 6), (5, 160, 6),
+(5, 162, 6), (5, 164, 5), (6, 10, 5), (6, 12, 7), (6, 14, 7),
+(6, 16, 7), (6, 18, 7), (6, 20, 4), (6, 34, 5), (6, 36, 7),
+(6, 38, 7), (6, 40, 7), (6, 42, 7), (6, 44, 4), (6, 58, 5),
+(6, 60, 7), (6, 62, 7), (6, 64, 7), (6, 66, 7), (6, 68, 4),
+(6, 82, 5), (6, 84, 7), (6, 86, 7), (6, 88, 7), (6, 90, 7),
+(6, 92, 4), (6, 106, 5), (6, 108, 7), (6, 110, 7), (6, 112, 7),
+(6, 114, 7), (6, 116, 4), (6, 130, 5), (6, 132, 7), (6, 134, 7),
+(6, 136, 7), (6, 138, 7), (6, 140, 4), (6, 154, 5), (6, 156, 7),
+(6, 158, 7), (6, 160, 7), (6, 162, 7), (6, 164, 4);
+
+INSERT INTO futsal.match (mt_ga_date, mt_st_num, mt_ti_num, mt_personnel, mt_state)
 SELECT
-	date(adddate(adddate(now(), INTERVAL 0 DAY), INTERVAL 14 DAY)), sc_st_num, sc_ti_num, sc_personnel
+	date(adddate(adddate(now(), INTERVAL 0 DAY), INTERVAL 14 DAY)),
+    sc_st_num,
+    sc_ti_num,
+    sc_personnel,
+    if(st_available = 0, 0, if(date(adddate(now(), INTERVAL 14 DAY)) > av_notdate, 0, 1))
 FROM
 	futsal.schedule
 		join
 	futsal.time on sc_ti_num = ti_num
+		join
+	futsal.stadium on sc_st_num = st_num
+		left join
+	futsal.availability on av_st_num = st_num
 WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(adddate(now(), INTERVAL 0 DAY)), 1));
-INSERT INTO futsal.match (mt_ga_date, mt_st_num, mt_ti_num, mt_personnel)
+INSERT INTO futsal.match (mt_ga_date, mt_st_num, mt_ti_num, mt_personnel, mt_state)
 SELECT
-	date(adddate(adddate(now(), INTERVAL 1 DAY), INTERVAL 14 DAY)), sc_st_num, sc_ti_num, sc_personnel
+	date(adddate(adddate(now(), INTERVAL 1 DAY), INTERVAL 14 DAY)),
+    sc_st_num,
+    sc_ti_num,
+    sc_personnel,
+    if(st_available = 0, 0, if(date(adddate(now(), INTERVAL 14 DAY)) > av_notdate, 0, 1))
 FROM
 	futsal.schedule
 		join
 	futsal.time on sc_ti_num = ti_num
+		join
+	futsal.stadium on sc_st_num = st_num
+		left join
+	futsal.availability on av_st_num = st_num
 WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(adddate(now(), INTERVAL 1 DAY)), 1));
-INSERT INTO futsal.match (mt_ga_date, mt_st_num, mt_ti_num, mt_personnel)
+INSERT INTO futsal.match (mt_ga_date, mt_st_num, mt_ti_num, mt_personnel, mt_state)
 SELECT
-	date(adddate(adddate(now(), INTERVAL 2 DAY), INTERVAL 14 DAY)), sc_st_num, sc_ti_num, sc_personnel
+	date(adddate(adddate(now(), INTERVAL 2 DAY), INTERVAL 14 DAY)),
+    sc_st_num,
+    sc_ti_num,
+    sc_personnel,
+    if(st_available = 0, 0, if(date(adddate(now(), INTERVAL 14 DAY)) > av_notdate, 0, 1))
 FROM
 	futsal.schedule
 		join
 	futsal.time on sc_ti_num = ti_num
+		join
+	futsal.stadium on sc_st_num = st_num
+		left join
+	futsal.availability on av_st_num = st_num
 WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(adddate(now(), INTERVAL 2 DAY)), 1));
-INSERT INTO futsal.match (mt_ga_date, mt_st_num, mt_ti_num, mt_personnel)
+INSERT INTO futsal.match (mt_ga_date, mt_st_num, mt_ti_num, mt_personnel, mt_state)
 SELECT
-	date(adddate(adddate(now(), INTERVAL 3 DAY), INTERVAL 14 DAY)), sc_st_num, sc_ti_num, sc_personnel
+	date(adddate(adddate(now(), INTERVAL 3 DAY), INTERVAL 14 DAY)),
+    sc_st_num,
+    sc_ti_num,
+    sc_personnel,
+    if(st_available = 0, 0, if(date(adddate(now(), INTERVAL 14 DAY)) > av_notdate, 0, 1))
 FROM
 	futsal.schedule
 		join
 	futsal.time on sc_ti_num = ti_num
+		join
+	futsal.stadium on sc_st_num = st_num
+		left join
+	futsal.availability on av_st_num = st_num
 WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(adddate(now(), INTERVAL 3 DAY)), 1));
-INSERT INTO futsal.match (mt_ga_date, mt_st_num, mt_ti_num, mt_personnel)
+INSERT INTO futsal.match (mt_ga_date, mt_st_num, mt_ti_num, mt_personnel, mt_state)
 SELECT
-	date(adddate(adddate(now(), INTERVAL 4 DAY), INTERVAL 14 DAY)), sc_st_num, sc_ti_num, sc_personnel
+	date(adddate(adddate(now(), INTERVAL 4 DAY), INTERVAL 14 DAY)),
+    sc_st_num,
+    sc_ti_num,
+    sc_personnel,
+    if(st_available = 0, 0, if(date(adddate(now(), INTERVAL 14 DAY)) > av_notdate, 0, 1))
 FROM
 	futsal.schedule
 		join
 	futsal.time on sc_ti_num = ti_num
+		join
+	futsal.stadium on sc_st_num = st_num
+		left join
+	futsal.availability on av_st_num = st_num
 WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(adddate(now(), INTERVAL 4 DAY)), 1));
-INSERT INTO futsal.match (mt_ga_date, mt_st_num, mt_ti_num, mt_personnel)
+INSERT INTO futsal.match (mt_ga_date, mt_st_num, mt_ti_num, mt_personnel, mt_state)
 SELECT
-	date(adddate(adddate(now(), INTERVAL 5 DAY), INTERVAL 14 DAY)), sc_st_num, sc_ti_num, sc_personnel
+	date(adddate(adddate(now(), INTERVAL 5 DAY), INTERVAL 14 DAY)),
+    sc_st_num,
+    sc_ti_num,
+    sc_personnel,
+    if(st_available = 0, 0, if(date(adddate(now(), INTERVAL 14 DAY)) > av_notdate, 0, 1))
 FROM
 	futsal.schedule
 		join
 	futsal.time on sc_ti_num = ti_num
+		join
+	futsal.stadium on sc_st_num = st_num
+		left join
+	futsal.availability on av_st_num = st_num
 WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(adddate(now(), INTERVAL 5 DAY)), 1));
-INSERT INTO futsal.match (mt_ga_date, mt_st_num, mt_ti_num, mt_personnel)
+INSERT INTO futsal.match (mt_ga_date, mt_st_num, mt_ti_num, mt_personnel, mt_state)
 SELECT
-	date(adddate(adddate(now(), INTERVAL 6 DAY), INTERVAL 14 DAY)), sc_st_num, sc_ti_num, sc_personnel
+	date(adddate(adddate(now(), INTERVAL 6 DAY), INTERVAL 14 DAY)),
+    sc_st_num,
+    sc_ti_num,
+    sc_personnel,
+    if(st_available = 0, 0, if(date(adddate(now(), INTERVAL 14 DAY)) > av_notdate, 0, 1))
 FROM
 	futsal.schedule
 		join
 	futsal.time on sc_ti_num = ti_num
+		join
+	futsal.stadium on sc_st_num = st_num
+		left join
+	futsal.availability on av_st_num = st_num
 WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(adddate(now(), INTERVAL 6 DAY)), 1));

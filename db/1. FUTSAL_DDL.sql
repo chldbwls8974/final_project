@@ -3,6 +3,7 @@ DROP DATABASE IF EXISTS FUTSAL;
 CREATE DATABASE FUTSAL;
 
 USE FUTSAL;
+
 DROP TABLE IF EXISTS `member`;
 
 CREATE TABLE `member` (
@@ -22,7 +23,9 @@ CREATE TABLE `member` (
 	`me_tr_name`	varchar(10)	NOT NULL,
 	`me_point`	int	NOT NULL	DEFAULT 0,
 	`me_state1`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 없음, 1 : 정지',
-	`me_state2`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 없음, 1 : 정지'
+	`me_state2`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 없음, 1 : 정지',
+	`me_session_id`	varchar(225)	NULL,
+	`me_session_limit`	datetime	NULL
 );
 
 DROP TABLE IF EXISTS `region`;
@@ -152,7 +155,7 @@ DROP TABLE IF EXISTS `point_history`;
 CREATE TABLE `point_history` (
 	`ph_num`	int AUTO_INCREMENT PRIMARY KEY	NOT NULL,
 	`ph_price`	int	NOT NULL	DEFAULT 0,
-	`ph_source`	int	NOT NULL	COMMENT '0 : 충전, 1: 경기 신청, 2 : 경기 취소, 3 : 환불',
+	`ph_source`	int	NOT NULL	COMMENT '0 : 충전, 1: 경기 신청, 2 : 경기 취소, 3 : 환불, 4:환급',
 	`ph_ga_num`	int	NULL,
 	`ph_me_num`	int	NOT NULL
 );
@@ -770,4 +773,5 @@ ALTER TABLE `holding coupon` ADD CONSTRAINT `FK_coupon_TO_holding coupon_1` FORE
 REFERENCES `coupon` (
 	`cp_num`
 );
+
 

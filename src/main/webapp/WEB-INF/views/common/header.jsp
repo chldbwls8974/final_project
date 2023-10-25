@@ -52,7 +52,15 @@
 					<a class="nav-link" href="#">매니저</a>
 			</li>
 			<li class="nav-item">
-					<a class="nav-link" href="#">사업자</a>
+					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+					사업자
+					</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="#">시설 등록</a>
+						<a class="dropdown-item" href="#">경기장 등록</a>
+						<a class="dropdown-item" href="<c:url value='/schedule/insert'/>">스케줄 관리</a>
+						<a class="dropdown-item" href="#">일정 관리</a>
+					</div>
 			</li>
 			<li class="nav-item">
 					<a class="nav-link" href="<c:url value='/application/manager'/>">매니저 신청</a>
