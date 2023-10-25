@@ -12,7 +12,7 @@
 	<form action="<c:url value='/admin/member'/>" method="get">
 	<div class="input-group mb-3 mt-3">
 		<div class="input-group-prepend">
-		    <select class="form-control" id="me_authority" name="t">
+		    <select class="form-control select-type" id="me_authority" name="t">
 		      <option value="all" 
 		      	<c:if test="${pm.cri.t == 'all'}">selected</c:if>>전체</option>
 		      <option value="second"
@@ -25,7 +25,7 @@
 		      	<c:if test="${pm.cri.t == 'fifth'}">selected</c:if>>이용상태</option>
 		    </select>
 	    </div>
-	    <input type="text" class="form-control" name="s" id="me_title" placeholder="검색어를 입력하세요." value="${pm.cri.s}">
+	    <input type="text" class="form-control input-search" name="s" id="me_title" placeholder="검색어를 입력하세요." value="${pm.cri.s}">
 	    <button class="btn btn-outline-success btn-insert">찾기</button>
 	</div>
 	</form>
@@ -53,8 +53,18 @@
 	        <td>${member.me_email}</td>
 	        <td>${member.me_tr_name}</td>
 	        <td>${member.me_authority}</td>
-	        <td>${member.me_state1}</td>
-	        <td>${member.me_state2}</td>
+	        <td>
+	        	<c:choose>
+	        		<c:when test="${member.me_state1 == 0}">클린</c:when>
+	        		<c:when test="${member.me_state1 == 1}">정지</c:when>
+	        	</c:choose>
+	        </td>
+	        <td>
+	        	<c:choose>
+	        		<c:when test="${member.me_state2 == 0}">클린</c:when>
+	        		<c:when test="${member.me_state2 == 1}">정지</c:when>
+	        	</c:choose>
+	        </td>
 	        <td></td>
 	      </tr>
       </c:forEach>
@@ -82,5 +92,14 @@
 		</c:if>
 	</ul>
  </div>
+ <script type="text/javascript">
+ 	$(document).on('change', '.select-type', function() {
+		if($(this).val() == 'fifth'){
+			$('.input-search').prop('placeholder', '일반회원 검색 : 0, 정지회원 검색 : 1');
+		}else{
+			$('.input-search').prop('placeholder', '검색어를 입력하세요.');			
+		}
+	});
+ </script>
 </body>
 </html>

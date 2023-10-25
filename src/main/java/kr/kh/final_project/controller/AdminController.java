@@ -24,11 +24,11 @@ public class AdminController {
 	public String adminMember(Model model, Criteria cri) {
 		//회원정보를 가져오라고 서비스에게 시킨다.
 		//가져온 리스트 정보는 list에 담는다.
-		int me_num = 1;
-		List<MemberVO> list = adminService.getMemberList(me_num);
+		//int me_num = 1;
+		//List<MemberVO> list = adminService.getMemberList(me_num);
 		
 		//현재 페이지 정보를 주면서 memberService한테 회원 리스트를 가져오라고 하고 list에 담는다.
-		//List<MemberVO> list = memberService.getMemberList(cri);
+		List<MemberVO> list = adminService.getMemberList(cri);
 		
 		//페이지네이션
 		//현재 페이지 정보(검색어, 타입)에 맞는 전체 게시글 수(TotalCount)를 가져온다.

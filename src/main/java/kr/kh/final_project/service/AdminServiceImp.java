@@ -25,10 +25,18 @@ public class AdminServiceImp implements AdminService{
 	ManagerDAO managerDao;
 	
 	// 회원정보 조회
-	@Override
-	public List<MemberVO> getMemberList(int me_num) {
-		return memberDao.selectMemberList(me_num); 
-	}
+	//@Override
+	//public List<MemberVO> getMemberList(int me_num) {
+		//return memberDao.selectMemberList(me_num); 
+	//}
+	// 회원정보 조회
+		@Override
+		public List<MemberVO> getMemberList(Criteria cri) {
+			
+			return memberDao.selectMemberList(cri); 
+		}
+	
+	
 	// 회원 페이지네이션
 	@Override
 	public int getTotalCount(Criteria cri) {

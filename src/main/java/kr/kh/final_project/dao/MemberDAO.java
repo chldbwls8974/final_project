@@ -9,7 +9,8 @@ import kr.kh.final_project.vo.MemberVO;
 
 public interface MemberDAO {
 
-	List<MemberVO> selectMemberList(int me_num);
+	//List<MemberVO> selectMemberList(int me_num);
+	List<MemberVO> selectMemberList(@Param("cri")Criteria cri);
 
 	int selectTotalCount(@Param("cri")Criteria cri);
 }
