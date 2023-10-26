@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.dao.MemberDAO;
 import kr.kh.final_project.dao.RegionDAO;
@@ -78,6 +79,8 @@ public class MemberServiceImp implements MemberService{
 	@Override
 	public List<MemberVO> searchMemberByName(String keyword) {
 		return memberDao.searchMemberByName(keyword);
+	}
+		
 	public List<RegionVO> getMainRegion() {
 		return regionDao.selectMainRegion();
 	}
@@ -138,7 +141,16 @@ public class MemberServiceImp implements MemberService{
 		return memberDao.selectMemberList();
 	}
 
+	@Override
+	public MemberVO userById(String name) {
+		return null;
+	}
 
+	@Override
+	public boolean updateProfile(MemberVO member, MemberVO user, MultipartFile file) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 
 //	@Override
@@ -159,12 +171,7 @@ public class MemberServiceImp implements MemberService{
 //		return memberDao.applyManager(member);
 //	}
 
-
-
-	
-
+	}
 
 
 
-
-}

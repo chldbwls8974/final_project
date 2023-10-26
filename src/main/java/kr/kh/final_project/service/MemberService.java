@@ -16,9 +16,6 @@ public interface MemberService {
 
 	List<MemberVO> getMemberList();
 
-
-	
-}
 	boolean signup(MemberVO member);
 
 	MemberVO getMember(String me_id);
@@ -37,8 +34,12 @@ public interface MemberService {
 
 	void updateMemberSession(MemberVO user);
 
-
 	MemberVO userById(String name);
+
+	boolean updateProfile(MemberVO member, MemberVO user, MultipartFile file);
+
+
+
 
 
 }
