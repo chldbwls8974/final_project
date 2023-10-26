@@ -119,7 +119,7 @@ public class MemberController {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
 		//환급신청가능한 포인트를 반환하는 메서드
-//		memberService.refundAblePoint(user);
+		int point = memberService.refundAblePoint(user);
 		model.addAttribute("user", user);
 		return "/member/refund";
 	}

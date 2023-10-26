@@ -136,7 +136,8 @@ public class MemberServiceImp implements MemberService{
 		memberDao.updateMemberSession(user);
 		
 	}
-
+	
+	//포인트 환급 요청 메서드
 	@Override
 	public boolean pointRefundApply(MemberVO user, MemberVO tmpUser, PointHistoryVO pointHistory) {
 		if(user == null || tmpUser.getMe_point() == null) {
@@ -144,15 +145,22 @@ public class MemberServiceImp implements MemberService{
 		}
 		//회원이 총 환급 신청중인 금액 + 환급 신청하려는 포인트 <= 현재 포인트
 		
-		//관리자가 승인해야 실행되는 코드 (추후에 옮겨야 함)
-			//환급 후 예정 포인트를 user에 저장
-			//user.setMe_point(tmpUser.getMe_point());
-			//유저 테이블에 포인트를 업데이트
-			//memberDao.updateMemberPoint(user)
 		
+		
+		//환급 후 예정 포인트를 user에 저장
+		user.setMe_point(tmpUser.getMe_point());
+		//유저 테이블에 포인트를 업데이트
+		memberDao.updateMemberPoint(user);
 		
 		// 포인트내역 테이블에 추가( -로 바꿔서 기입)
+		pointHistory.setPh_price(-pointHistory.getPh_price());
 		return pointHistoryDao.insertPointHistory(pointHistory);
+	}
+	//환급신청 가능한 포인트를 반환하는 메서드
+	@Override
+	public int refundAblePoint(MemberVO user) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 
