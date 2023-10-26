@@ -12,42 +12,58 @@
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 		<a class="navbar-brand" href="#">LOGO</a>
 		<ul class="navbar-nav">
-				<li class="nav-item">
-					<a class="nav-link " href="<c:url value='/member/signup'/>">회원가입</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link " href="<c:url value='/member/login'/>">로그인</a>
-				</li>
-	
-				<li class="nav-item">
-					<a class="nav-link " href="<c:url value='/member/logout'/>">로그아웃</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<c:url value='/member/mypage'/>">마이페이지</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">커뮤니티 게시판</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">개인매치</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">클럽매치</a>
-				<li class="nav-item">
-					<a class="nav-link" href="#">시설 조회</a>
-				</li>
-				</li>
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-					관리자
-					</a>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" href="<c:url value='/admin/member'/>">회원 관리</a>
-						<a class="dropdown-item" href="<c:url value='/admin/manager'/>">매니저 관리</a>
-						<a class="dropdown-item" href="<c:url value='/admin/business'/>">사업자 관리</a>
-						<a class="dropdown-item" href="#">게시판 관리</a>
-					</div>
-				</li>
+			<li class="nav-item">
+				<a class="nav-link " href="<c:url value='/member/signup'/>">회원가입</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link " href="<c:url value='/member/login'/>">로그인</a>
+			</li>
+
+			<li class="nav-item">
+				<a class="nav-link " href="<c:url value='/member/logout'/>">로그아웃</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="<c:url value='/member/mypage'/>">마이페이지</a>
+			</li>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+				커뮤니티 게시판
+				</a>
+				<div class="dropdown-menu">
+					<c:if test="${user != null && user.me_authority == 'ADMIN'}">
+						<a class="dropdown-item" 
+						   href="<c:url value='/board/notice'/>">공지게시판</a>
+					</c:if>	
+						<a class="dropdown-item" href="<c:url value='/board/free'/>">자유게시판</a>
+						<a class="dropdown-item" href="<c:url value='/board/individual'/>">개인 매칭</a>
+						<a class="dropdown-item" href="<c:url value='/board/clue'/>">클럽 매칭</a>
+						<a class="dropdown-item" href="<c:url value='/board/inquiry'/>">문의게시판</a>
+					<c:if test="${user != null && user.me_authority == 'ADMIN'}">
+						<a class="dropdown-item" href="/board/block">게시판 관리</a>
+					</c:if>
+				</div>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#">개인매치</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#">클럽매치</a>
+			<li class="nav-item">
+				<a class="nav-link" href="#">시설 조회</a>
+			</li>
+				<c:if test="${user != null && user.me_authority == 'ADMIN'}">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+						관리자
+						</a>
+						<div class="dropdown-menu">
+							<a class="dropdown-item" href="<c:url value='/admin/member'/>">회원 관리</a>
+							<a class="dropdown-item" href="<c:url value='/admin/manager'/>">매니저 관리</a>
+							<a class="dropdown-item" href="<c:url value='/admin/business'/>">사업자 관리</a>
+							<a class="dropdown-item" href="#">게시판 관리</a>
+						</div>
+					</li>
+				</c:if>
 			<li class="nav-item">
 					<a class="nav-link" href="#">매니저</a>
 			</li>
