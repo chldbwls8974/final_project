@@ -40,9 +40,10 @@
 			<div class="form-group">
 				<label>이메일</label> 
 				<input type="email" class="form-control" name="me_email" id="me_email" required>
-				<button type="button" class="form-control" name="me_email_btn">인증번호 전송</button>
-				<input type="number" class="form-control" name="email_code"  required>
-				<button type="button" class="form-control" name="email_code_btn">인증번호 확인</button>
+				<button type="button" class="form-control" name="me_email_btn" id="me_email_btn" disabled="disabled">인증번호 전송</button>
+				<input type="number" class="form-control" name="email_code" id="email_code"  required>
+				<button type="button" class="form-control" name="email_code_btn" id="email_code_btn" disabled="disabled">인증번호 확인</button>
+				<div id="timer"></div>
 			</div>
 
 			<div class="form-group">
@@ -70,13 +71,6 @@
 				<label>닉네임</label> 
 				<input type="text" class="form-control" name="me_nickname" required>
 			</div>
-		</div>
-		
-		<div class="form-group">
-			<button type="button" class="btn next-btn form-control">다음</button>
-		</div>
-		
-		<div class="2p">
 			<div class="form-group">
 				<label>거주지</label> <select class="form-control rg_main">
 					<option value="0">지역을 선택하세요</option>
@@ -94,6 +88,15 @@
 					</c:forEach>
 				</select>
 			</div>
+			
+		</div>
+		
+		<div class="form-group">
+			<button type="button" class="btn next-btn form-control" id="next" disabled="disabled">다음</button>
+		</div>
+		
+		<div class="2p">
+			
 
 			<div class="prefer-area">
 				<div class="form-group">
@@ -129,21 +132,103 @@
 		<div class="form-group">
 			<button type="button" class="btn prev-btn form-control">이전</button>
 		</div>
-		<button class="btn btn-outline-warning col-12">회원가입</button>
+		<button class="btn btn-outline-warning col-12" id="signup" disabled="disabled">회원가입</button>
 	</form>
 	<script type="text/javascript">
 	
-	let count = 0;
+	const codeSendBtn = document.getElementById("me_email_btn");
+	const checkCode = document.getElementById("email_code");
+	const checkCodeBtn = document.getElementById("email_code_btn");
+	const nextBtn = document.getElementById("next");
+	const signUpBtn = document.getElementById("signup");
 	
+	let x;
+	let count = 0;
+	let time;
+	var min = ""; // 분
+	var sec=""; // 초
+	
+	// 6자리 난수 생성 함수
+    function generateRandomCode(length) {
+        const chars = "0123456789";
+        let randomCode = "";
+        for (let i = 0; i < length; i++) {
+            const index = Math.floor(Math.random() * chars.length);
+            randomCode += chars.charAt(index);
+        }
+        return randomCode;
+    }
+	
+	
+	
+	// 이메일 입력 시 전송 버튼 활성화
+	$(document).on('keyup','#me_email',function(){
+		let i = $(this).val();
+		if(i != '')
+		codeSendBtn.disabled = false;
+		else
+			codeSendBtn.disabled = true;	
+	})
+	
+	
+	// 인증번호 전송 버튼을 누르면 서버로 이메일주소와 코드 보내주고 타이머 시작
 	$(document).on('click','[name=me_email_btn]',function(){
+		time = 5; // 유효시간 여기서 설정 - 지금은 테스트를 위해서 5초
+		const randomCode = generateRandomCode(6);
+		
+		// 타이머 시작
+		x = setInterval(function(){
+			min = parseInt(time/60);
+			sec = time % 60;
+			
+			document.getElementById("timer").innerHTML = min + "분" + sec + "초";
+			time--;
+			
+			if(time < 0){
+				clearInterval(x);
+				document.getElementById("timer").textContent ="시간초과";
+				checkCodeBtn.disabled = true;
+				codeSendBtn.innerHTML = "인증번호 재전송"
+			}
+		},1000);
+		
+		// 지워도 됨
+		console.log(randomCode)
+		
+		// 인증버튼 활성화
+		checkCodeBtn.disabled = false;
+		
+		// 값
 		const email = $('[name=me_email]').val();
-		const checkEmail = $('[name=email_code]').val();	
+		const checkEmail = $('[name=email_code]').val();
+		
+		// ajax로 보내줄 data
 		data ={
-				email : email
+				to : email,
+				randomCode : randomCode
 		}
+		
+		// ajax
 		ajaxJsonToJson2(false, 'get','/member/signup/checkmail?email'+email,data,(a)=>{
 			
 		})
+	})
+	
+	
+	
+	// 인증번호가 맞는지 확인
+	$(document).on('click','[name=email_code_btn]',function(){
+		
+		let inputCode = $('[name=email_code]').val()
+		if(inputCode != randomCode){
+			alert('인증번호를 확인해주세요')
+		}else{
+			alert('인증되었습니다')
+			nextBtn.disabled = false;
+			signUpBtn.disabled = false;
+			clearInterval(x);
+			document.getElementById("timer").innerHTML ="인증완료";
+		}
 	})
 	
 	
@@ -298,8 +383,6 @@
 	        })
 	        
 		})
-		
-		
 		
 		
 		

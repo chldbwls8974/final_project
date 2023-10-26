@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -58,10 +59,16 @@ public class MemberController {
 	
 	@ResponseBody
 	@GetMapping("/member/signup/checkmail")
-	public Map<String, Object> checkmail(@RequestParam String email,  Model model){
-		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println(email);
-		return map;
+	public boolean checkmail(@RequestParam String to,@RequestParam String randomCode, Model model){
+		//Map<String, Object> map = new HashMap<String, Object>();
+		String title= "인증번호 메일 테스트";
+		String contents = 
+				"홈페이지를 방문해주셔서 감사합니다." + 	//html 형식으로 작성 ! 
+                "<br><br>" + 
+			    "인증 번호는 " + randomCode + "입니다." + 
+			    "<br>" + 
+			    "해당 인증번호를 인증번호 확인란에 기입하여 주세요."; //이메일 내용 삽입
+		return memberService.sendMail(to, title, contents);
 	}
 	
 	// 아이디 중복 체크

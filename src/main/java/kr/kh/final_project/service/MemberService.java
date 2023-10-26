@@ -34,6 +34,8 @@ public interface MemberService {
 	MemberVO userById(String name);
 
 	Object checkId(String id);
+	
+	boolean sendMail(String to, String title, String contents);
 
 
 }
