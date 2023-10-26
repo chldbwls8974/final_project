@@ -11,6 +11,8 @@ public interface BoardDAO {
 
 	void insertFile(@Param("file") FileVO fileVo);
 
+	boolean insertBusinessman(@Param("board")BoardVO board);
+
 
 
 }
