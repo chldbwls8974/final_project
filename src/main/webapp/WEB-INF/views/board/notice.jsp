@@ -8,30 +8,54 @@
 <title>공지사항 게시판</title>
 <style>
 	.btn-info{
-		
+		color : outline-info;
+		background-color : white;
+		border : 1px solid outline-info;
+	}
+	.btn-info:hover{
+		background-color : outline-info;
+		color : white;
+	}
+	h1{
+		text-align : center;
+	}
+	.a{
+		color : red;
 	}
 </style>
 </head>
 <body>
-<h1>공지게시판</h1>
-<button type="button" class="btn btn-outline-info btn-info">공지글 쓰기</button>
+<br>
+<h1> &#x1F525 공지게시판 &#x1F525;</h1>
+	<div style="display:flex; justify-content: flex-end;">
+		<button type="button"
+			    class="btn btn-outline-info btn-info"
+				onclick="location.href='<c:url value='/board/insert'/>'"	    
+		>공지글 쓰기</button>
+	</div>	
 <!-- 공지게시판 검색 기능 -->
 	<form action="<c:url value='/board/notice'/>" method="get">
 	<div class="input-group mb-3 mt-3">
 		<div class="input-group-prepend">
-		    <select class="form-control select-type" id="me_authority" name="t">
+		    <select class="form-control" id="me_authority" name="t">
 		      <option value="all" 
 		      	<c:if test="${pm.cri.t == 'all'}">selected</c:if>>전체</option>
+	 		  <option value="first"
+		      	<c:if test="${pm.cri.t == 'first'}">selected</c:if>>게시글번호</option>
 		      <option value="second"
 		      	<c:if test="${pm.cri.t == 'second'}">selected</c:if>>닉네임</option>
 		      <option value="third"
 		      	<c:if test="${pm.cri.t == 'third'}">selected</c:if>>제목</option>
+		      <option value="fourth"
+		      	<c:if test="${pm.cri.t == 'fourth'}">selected</c:if>>작성날짜</option>
+	   		</select>
 	    </div>
 	    <input type="text" class="form-control input-search" name="s" id="me_title" placeholder="검색어를 입력하세요." value="${pm.cri.s}">
 	    <button class="btn btn-outline-success btn-insert">찾기</button>
 	</div>
 	</form>
 <!-- 공지게시판 출력 -->
+<br>
 <div class="container">
   <table class="table table-hover">
     <thead>
@@ -45,12 +69,12 @@
       </tr>
     </thead>
     <tbody>
-   	 <c:forEach items="${list}" var="bo">
+   	 <c:forEach items="${list}" var="bo" >
 	      <tr>
 	      	<td>${bo.bo_num}</td>
-	      	<td><a href="#">${bo.bo_title}</a></td>
+	      	<td><a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>" style="color:red">${bo.bo_title}</a></td>
 	        <td>${bo.me_nickname}</td>
-	        <td>${bo.bo_reg_date}</td>
+	        <td>${bo.bo_reg_date_str}</td>
 	        <td>${bo.bo_count}</td>
 	        <td>${bo.bo_comment}</td>
 	      </tr>
@@ -80,7 +104,11 @@
 	</ul>
  </div>
  <script type="text/javascript">
-
+ 	/* $(document).on('click', '.btn-info', function(){
+ 		var url = '<c:url value="/board/insert"/>';
+ 		
+ 		window.location.href = url;
+ 	}); */
  </script>
 </body>
 </html>

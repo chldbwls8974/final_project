@@ -1,13 +1,14 @@
 package kr.kh.final_project.service;
 
 import java.io.IOException;
-import java.util.regex.Pattern;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.dao.BoardDAO;
+import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.util.UploadFileUtils;
 import kr.kh.final_project.vo.BoardVO;
 import kr.kh.final_project.vo.FileVO;
@@ -85,6 +86,20 @@ public class BoardServiceImp implements BoardService{
 				e.printStackTrace();
 			}
 		}	
+	}
+	
+	//게시판글 리스트 가져오기
+	@Override
+	public List<BoardVO> getBoardList(Criteria cri) {
+		return boardDao.selectBoardList(cri);
+	}
+	//공지게시판글 총 갯수 가져오기
+	@Override
+	public int getTotalCount(Criteria cri) {
+		if(cri == null) {
+			cri = new Criteria();
+		}
+		return boardDao.selectTotalCount(cri);
 	}
 
 }
