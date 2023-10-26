@@ -43,23 +43,48 @@
 			</div>
 		</c:forEach>
 	</div>
+	<br>
+	<div class="main-region-box">
+		<span>지역 : </span>
+		<select class="select-main">
+			<option value="0">선택 없음</option>
+			<c:forEach items="${mainRegion}" var="mr">
+				<option value="${mr.rg_main}">${mr.rg_main}</option>
+			</c:forEach>
+		</select>
+	</div>
+	<div class="sub-region-box">
+		
+	</div>
 	<div class="select-match-box">
 		
 	</div>
 	<script type="text/javascript">
+	let select_day = "${thirdWeek[0].date_str}"
+	
+	
+	$('.day-box').eq(0).children('.not-select-circle').toggleClass('select-circle');
+	$('.day-box').eq(0).children('.not-select-circle').toggleClass('not-select-circle');
+	printSelectMatch();
+	
 	$(document).on('click', '.not-select-circle', function() {
-		let date_str = $(this).children('.select-date-str').val();
+		select_day = $(this).children('.select-date-str').val();
 		$(this).toggleClass('not-select-circle');
 		$(this).toggleClass('select-circle');
 		$(this).parents('.day-box').siblings('.day-box').children('.select-circle').toggleClass('not-select-circle');
 		$(this).parents('.day-box').siblings('.day-box').children('.select-circle').toggleClass('select-circle');
 		
-		data = {
-				mt_date : date_str
-		}
-		printSelectMatch(data);
+		printSelectMatch();
 	});
-	function printSelectMatch(data) {
+	
+	$(document).on('change', '.select-main', function() {
+		mainSelect($(this).val());
+	});
+	
+	function printSelectMatch() {
+		let data = {
+				mt_date : select_day
+		}
 		let str = '';
 		$.ajax({
 			async : false,
@@ -93,6 +118,17 @@
 				$('.select-match-box').html(str)
 			}
 		});
+	}
+	function mainSelect(val) {
+		let str = ``;
+		if(val != 0){
+			str += `
+				<select class="select-sub">
+					<option>\${val}</option>
+				</select>
+			`;
+		}
+		$('.sub-region-box').html(str);
 	}
 	</script>
 </body>

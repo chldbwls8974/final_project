@@ -9,6 +9,8 @@ import kr.kh.final_project.vo.PreferredRegionVO;
 import kr.kh.final_project.vo.PreferredTimeVO;
 
 public interface MatchService {
+	
+	List<ExtraVO> selectThirdWeekDayList();
 
 	List<MatchVO> selectMatchListOfManager(Integer me_num, Date mt_date);
 

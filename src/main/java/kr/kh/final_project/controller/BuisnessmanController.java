@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.kh.final_project.service.ScheduleBService;
+import kr.kh.final_project.service.ScheduleService;
 import kr.kh.final_project.util.Message;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.OperatingVO;
@@ -27,7 +27,7 @@ import kr.kh.final_project.vo.TimeVO;
 public class BuisnessmanController {
 	
 	@Autowired
-	ScheduleBService scheduleBService;
+	ScheduleService scheduleBService;
 		
 	@GetMapping("/buisnessman/manage/schedule")
 	public String insertSchedule(Model model, HttpSession session) {

@@ -6,15 +6,20 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.kh.final_project.dao.ExtraDAO;
 import kr.kh.final_project.dao.MatchDAO;
 import kr.kh.final_project.dao.PreferredRegionDAO;
 import kr.kh.final_project.dao.PreferredTimeDAO;
+import kr.kh.final_project.vo.ExtraVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.PreferredRegionVO;
 import kr.kh.final_project.vo.PreferredTimeVO;
 
 @Service
 public class MatchServiceImp implements MatchService{
+
+	@Autowired
+	ExtraDAO extraDao;
 	
 	@Autowired
 	MatchDAO matchDao;
@@ -24,6 +29,12 @@ public class MatchServiceImp implements MatchService{
 	
 	@Autowired
 	PreferredTimeDAO PreferredTimeDao;
+	
+	@Override
+	public List<ExtraVO> selectThirdWeekDayList() {
+		return extraDao.selectThirdWeekDayList();
+	}
+	
 
 	@Override
 	public List<MatchVO> selectMatchListOfManager(Integer me_num, Date mt_date) {

@@ -15,19 +15,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.final_project.service.MatchService;
-import kr.kh.final_project.service.ScheduleMService;
+import kr.kh.final_project.service.MemberService;
 import kr.kh.final_project.util.Message;
 import kr.kh.final_project.vo.ExtraVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PreferredRegionVO;
 import kr.kh.final_project.vo.PreferredTimeVO;
+import kr.kh.final_project.vo.RegionVO;
 
 @Controller
 public class ManagerController {
 	
 	@Autowired
-	ScheduleMService scheduleMService;
+	MemberService memberService;
 	
 	@Autowired
 	MatchService matchService;
@@ -41,8 +42,10 @@ public class ManagerController {
 			model.addAttribute("msg", msg);
 			return "/message";
 		}
+		List<RegionVO> mainRegion = memberService.getMainRegion();
+		List<ExtraVO> thirdWeek = matchService.selectThirdWeekDayList();
 		
-		List<ExtraVO> thirdWeek = scheduleMService.selectThirdWeekDayList();
+		model.addAttribute("mainRegion",mainRegion);
 		model.addAttribute("thirdWeek", thirdWeek);
 		
 		return "/manager/match";
