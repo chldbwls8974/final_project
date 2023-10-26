@@ -8,7 +8,7 @@ ON SCHEDULE EVERY 1 day
 STARTS TIMESTAMP(CURRENT_DATE, '00:00:00')
 DO
 BEGIN
-    INSERT INTO futsal.match (mt_ga_date, mt_st_num, mt_ti_num, mt_personnel, mt_state1)
+    INSERT INTO futsal.match (mt_date, mt_st_num, mt_ti_num, mt_personnel, mt_state1)
     SELECT
 		date(adddate(now(), INTERVAL 21 DAY)),
         sc_st_num,

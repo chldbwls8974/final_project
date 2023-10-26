@@ -79,8 +79,8 @@ CREATE TABLE `stadium` (
 DROP TABLE IF EXISTS `match`;
 
 CREATE TABLE `match` (
-	`mt_ga_num`	int AUTO_INCREMENT PRIMARY KEY	NOT NULL,
-	`mt_ga_date`	date	NOT NULL,
+	`mt_num`	int AUTO_INCREMENT PRIMARY KEY	NOT NULL,
+	`mt_date`	date	NOT NULL,
 	`mt_st_num`	int	NOT NULL,
 	`mt_ti_num`	int	NOT NULL,
 	`mt_type`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 미확정, 1 : 개인 매치, 2 : 팀 매치',
@@ -108,7 +108,7 @@ DROP TABLE IF EXISTS `team`;
 
 CREATE TABLE `team` (
 	`te_num`	int AUTO_INCREMENT PRIMARY KEY	NOT NULL,
-	`te_ga_num`	int	NOT NULL,
+	`te_mt_num`	int	NOT NULL,
 	`te_type`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 참가자 리스트, 1 : 팀 리스트'
 );
 
@@ -157,7 +157,7 @@ CREATE TABLE `point_history` (
 	`ph_num`	int AUTO_INCREMENT PRIMARY KEY	NOT NULL,
 	`ph_price`	int	NOT NULL	DEFAULT 0,
 	`ph_source`	int	NOT NULL	COMMENT '0 : 충전, 1: 경기 신청, 2 : 경기 취소, 3 : 환불, 4 : 환급 대기, 5 : 환급 완료',
-	`ph_ga_num`	int	NULL,
+	`ph_mt_num`	int	NULL,
 	`ph_me_num`	int	NOT NULL
 );
 
@@ -270,7 +270,7 @@ DROP TABLE IF EXISTS `quarter`;
 
 CREATE TABLE `quarter` (
 	`qu_num`	int AUTO_INCREMENT PRIMARY KEY	NOT NULL,
-	`qu_ga_num`	int	NOT NULL,
+	`qu_mt_num`	int	NOT NULL,
 	`qu_te_num1`	int	NOT NULL,
 	`qu_goal`	int	NOT NULL	DEFAULT 0,
 	`qu_te_num2`	int	NOT NULL,
@@ -280,7 +280,7 @@ CREATE TABLE `quarter` (
 DROP TABLE IF EXISTS `manager`;
 
 CREATE TABLE `manager` (
-	`mn_ga_num`	int PRIMARY KEY	NOT NULL,
+	`mn_mt_num`	int PRIMARY KEY	NOT NULL,
 	`mn_me_num`	int	NOT NULL
 );
 
@@ -468,10 +468,10 @@ REFERENCES `region` (
 );
 
 ALTER TABLE `team` ADD CONSTRAINT `FK_match_TO_team_1` FOREIGN KEY (
-	`te_ga_num`
+	`te_mt_num`
 )
 REFERENCES `match` (
-	`mt_ga_num`
+	`mt_num`
 );
 
 ALTER TABLE `buisnessman` ADD CONSTRAINT `FK_member_TO_buisnessman_1` FOREIGN KEY (
@@ -510,10 +510,10 @@ REFERENCES `club` (
 );
 
 ALTER TABLE `point_history` ADD CONSTRAINT `FK_match_TO_point_history_1` FOREIGN KEY (
-	`ph_ga_num`
+	`ph_mt_num`
 )
 REFERENCES `match` (
-	`mt_ga_num`
+	`mt_num`
 );
 
 ALTER TABLE `point_history` ADD CONSTRAINT `FK_member_TO_point_history_1` FOREIGN KEY (
@@ -629,10 +629,10 @@ REFERENCES `bank` (
 );
 
 ALTER TABLE `quarter` ADD CONSTRAINT `FK_match_TO_quarter_1` FOREIGN KEY (
-	`qu_ga_num`
+	`qu_mt_num`
 )
 REFERENCES `match` (
-	`mt_ga_num`
+	`mt_num`
 );
 
 ALTER TABLE `quarter` ADD CONSTRAINT `FK_team_TO_quarter_1` FOREIGN KEY (
@@ -653,7 +653,7 @@ ALTER TABLE `manager` ADD CONSTRAINT `FK_match_TO_manager_1` FOREIGN KEY (
 	`mn_ga_num`
 )
 REFERENCES `match` (
-	`mt_ga_num`
+	`mt_num`
 );
 
 ALTER TABLE `manager` ADD CONSTRAINT `FK_member_TO_manager_1` FOREIGN KEY (
@@ -774,4 +774,5 @@ ALTER TABLE `holding coupon` ADD CONSTRAINT `FK_coupon_TO_holding coupon_1` FORE
 REFERENCES `coupon` (
 	`cp_num`
 );
+
 
