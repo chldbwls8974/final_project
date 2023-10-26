@@ -154,6 +154,15 @@ public class MemberServiceImp implements MemberService{
 		return 0;
 	}
 
+	@Override
+	public List<PointHistoryVO> getUserRefundHistoryList(MemberVO user) {
+		if(user == null) {
+			return null;
+		}
+		return pointHistoryDao.selectPointRefundHistoryByUserNum(user);
+	}
+
+
 
 
 

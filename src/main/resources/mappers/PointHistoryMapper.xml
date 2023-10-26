@@ -8,6 +8,14 @@
 		insert into point_history(ph_price, ph_source, ph_me_num) 
 			values(#{pointHistory.ph_price}, #{pointHistory.ph_source}, #{pointHistory.ph_me_num})
 	</insert>
-	
-	
+	<select id="selectPointRefundHistoryByUserNum" resultType="kr.kh.final_project.vo.PointHistoryVO">
+		select 
+			* 
+		from 
+			point_history 
+		where 
+			ph_me_num = #{user.me_num} and
+			(ph_source = '4' or
+            ph_source = '5')
+	</select>
 </mapper>

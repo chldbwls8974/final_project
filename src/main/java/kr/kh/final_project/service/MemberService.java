@@ -33,5 +33,7 @@ public interface MemberService {
 
 	int refundAblePoint(MemberVO user);
 
+	List<PointHistoryVO> getUserRefundHistoryList(MemberVO user);
+
 
 }

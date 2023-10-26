@@ -19,6 +19,7 @@
 			<input type="hidden" class="form-control" value="${user.me_num}" name="ph_me_num">
 			<input type="hidden" class="form-control" value="4" name="ph_source">
 		</div>
+		<br>
 		<hr>
 		<div class="form-group">
 			<label>환급받을 금액</label>
@@ -30,11 +31,28 @@
 		</div>
 		<button class="btn btn-outline-dark col-12">등록</button>
 	</form>
+	<br>
+	<hr>
+	<div>
+		<table class="table table-hover mt-4">
+			<thead>
+				<tr style="background: wheat; font-weight: bold;">
+					<th>환급 신청 금액</th>
+					<th>상태</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody class="list-tbody">
+			
+			</tbody>
+		</table>
+	</div>
+	<c:if test=""></c:if>
 </body>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-	    $("#refundAmount").on("change", function() {
+	    $(document).on("change", "#refundAmount", function(){
+	    	
 	        //입력한 금액을 변수에 저장
 	        var refundAmountValue = parseFloat($(this).val());
 	        if(refundAmountValue > 0){
@@ -46,6 +64,60 @@
 		        $("#resultAmount").val(userPoint - num);
 	        }
 	    });
+	
+	    
+	    
+	/* 환급이력리스트를 가져오는 함수 */
+	$(document).ready(function() {
+   	 	getPointHistoryList();
 	});
+	
+	
+	
+// 	$(document).on('click','[name=test]',function(){
+// 		ajaxJsonToJson(false,'post','/member/refund/list', data ,(data)=>{
+// 			//댓글 리스트 추가
+// 			//createPointHistoryList(data.list, '.comment-list');
+// 			console.log("json통신성공");
+// 		});
+// 	})
+	function getPointHistoryList(){
+		let data = {
+			me_num : ${user.me_num}
+		}
+		console.log(data);
+		
+		ajaxJsonToJson(false,'post','/member/refund/list', data ,(data)=>{
+			//댓글 리스트 추가
+			createPointHistoryList(data.refundList, '.list-tbody');
+			console.log(data.refundList);
+		});
+	}
+	
+	
+	function createPointHistoryList(refundList, target){
+		let str ='';
+		for(a of refundList){
+			let btnStr = '';
+			if(a.ph_source == '4'){
+				console.log("조건문")
+				btnStr = `
+				<div class="btn-group">
+					<button class="btn btn-outline-danger btn-comment-delete">삭제</button>
+				</div>
+				`;
+			} 
+			str += `
+				<tr>
+					<td>\${a.ph_price}</td>
+					<td>\${a.ph_source}</td>
+					<td>\${btnStr}</td>
+				</tr>
+				
+			`;
+		}
+		$(target).html(str);
+	}
+	
 </script>
 </html>

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -118,8 +119,11 @@ public class MemberController {
 	public String pointRefund(Model model, HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
+		//환급 리스트 받아오는 메서드
+//		List<PointHistoryVO> phList = memberService.getUserRefundHistoryList(user);
+		
 		//환급신청가능한 포인트를 반환하는 메서드
-		int point = memberService.refundAblePoint(user);
+//		int point = memberService.refundAblePoint(user);
 		model.addAttribute("user", user);
 		return "/member/refund";
 	}
@@ -141,5 +145,16 @@ public class MemberController {
 		model.addAttribute("url", url);
 		model.addAttribute("msg", msg);
 		return "/util/message";
+	}
+	
+	@ResponseBody
+	@PostMapping("/member/refund/list")
+	public Map<String, Object> refundList(@RequestBody MemberVO user){
+		System.out.println(user);
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<PointHistoryVO> refundList = memberService.getUserRefundHistoryList(user);
+		map.put("refundList", refundList);
+		System.out.println(refundList);
+		return map;
 	}
 }
