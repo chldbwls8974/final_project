@@ -14,6 +14,13 @@
 	<script crossorigin src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
 	<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
+<style>
+	input[type="number"]::-webkit-outer-spin-button,
+	input[type="number"]::-webkit-inner-spin-button {
+	    -webkit-appearance: none;
+	    margin: 0;
+	}
+</style>
 <body>
 	<tiles:insertAttribute name="header"/>
     <div class="container" style="min-height: calc(100vh - 10px - 184px)">        
@@ -34,21 +41,20 @@ function ajaxJsonToJson(async, type, url, sendObject, successFunc){
 	});
 }
 
-	
-	function ajaxJsonToJson2(async, type, url, sendObject, successFunc){
-		$.ajax({
-			async : async, 
-			type : type, 
-			url : '<c:url value="/"/>'+url, 
-			data : data, 
-			dataType : "json",
-			success : successFunc,
-			error : function(a,b,c){
-				console.log(a);
-				console.log(b);
-				console.log(c);
-			}
-		});
-	}
+function ajaxJsonToJson2(async, type, url, sendObject, successFunc){
+	$.ajax({
+		async : async, 
+		type : type, 
+		url : '<c:url value="/"/>'+url, 
+		data : data, 
+		dataType : "json",
+		success : successFunc,
+		error : function(a,b,c){
+			console.log(a);
+			console.log(b);
+			console.log(c);
+		}
+	});
+}
 </script>
 </html>

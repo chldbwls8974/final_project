@@ -13,14 +13,14 @@
 		<a class="navbar-brand" href="/final_project">LOGO</a>
 		<ul class="navbar-nav">
 				<li class="nav-item">
-					<a class="nav-link " href="#">회원가입</a>
+					<a class="nav-link " href="<c:url value='/member/signup'/>">회원가입</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link " href="#">로그인</a>
+					<a class="nav-link " href="<c:url value='/member/login'/>">로그인</a>
 				</li>
 	
 				<li class="nav-item">
-					<a class="nav-link " href="#">로그아웃</a>
+					<a class="nav-link " href="<c:url value='/member/logout'/>">로그아웃</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="<c:url value='/member/mypage'/>">마이페이지</a>
@@ -58,7 +58,7 @@
 					<a class="nav-link" href="<c:url value='/application/manager'/>">매니저 신청</a>
 			</li>
 			<li class="nav-item">
-					<a class="nav-link" href="#">사업자 신청</a>
+					<a class="nav-link" href="<c:url value='/application/businessman'/>">사업자 신청</a>
 			</li>
 		</ul>
 	</nav>

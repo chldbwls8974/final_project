@@ -81,6 +81,18 @@
 						<p></p>
 						</a>
 					</li>
+					<li>
+						<a href="<c:url value='/account/insert'/>">
+						<img src="" alt="환급 계좌 등록">
+						<p>환급 계좌 등록</p>
+						</a>
+					</li>
+					<li>
+						<a href="<c:url value='/member/refund'/>">
+						<img src="" alt="포인트 환급">
+						<p>포인트 환급</p>
+						</a>
+					</li>
 				</ul>
 			</div>
 		</section>

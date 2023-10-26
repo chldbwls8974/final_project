@@ -13,9 +13,9 @@ public class MemberInterceptor extends HandlerInterceptorAdapter{
 	public boolean preHandle(HttpServletRequest request, 
 			HttpServletResponse response, Object handler)
 			throws Exception {
-		//세션에 회원 정보가 없으면 메인 페이지로 이동
-		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
-		//로그인 하지 않았으면
+		//user 권한이 없으면 로그인 페이지로 이동
+		MemberVO user= (MemberVO)request.getSession().getAttribute("user");
+		//로그인이 안되어 있으면
 		if(user == null) {
 			//로그인 페이지로 이동
 			response.sendRedirect(request.getContextPath()+"/member/login");

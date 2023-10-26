@@ -12,4 +12,33 @@
 	<select id="selectMemberList" resultType="kr.kh.final_project.vo.MemberVO">
 		SELECT * FROM Member
 	</select>
+	
+	<select id="selectMember" resultType="kr.kh.final_project.vo.MemberVO">
+		select * from member where me_id = #{me_id}
+	</select>
+	
+	<select id="selectMemberNumByNick" resultType="kr.kh.final_project.vo.MemberVO">
+		select * from member where me_nickname = #{check}
+	</select>
+	
+	<insert id="insertMember">
+		insert into member(me_id, me_pw, me_email) values(#{m.me_id},#{m.me_pw},#{m.me_email})
+	</insert>
+	<update id="updateMemberSession">
+		update
+			member
+		set
+			me_session_id = #{user.me_session_id},
+			me_session_limit = #{user.me_session_limit}
+		where
+			me_id = #{user.me_id}
+	</update>
+	<select id="selectMemberBySession" resultType="kr.kh.final_project.vo.MemberVO">
+		select 
+			* 
+		from 
+			member
+		where
+			me_session_id = #{me_session_id} and me_session_limit >= now() 
+	</select>
 </mapper>
