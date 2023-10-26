@@ -22,7 +22,9 @@ CREATE TABLE `member` (
 	`me_tr_name`	varchar(10)	NOT NULL,
 	`me_point`	int	NOT NULL	DEFAULT 0,
 	`me_state1`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 없음, 1 : 정지',
-	`me_state2`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 없음, 1 : 정지'
+	`me_state2`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 없음, 1 : 정지',
+    `me_session_id`	varchar(225)	NULL,
+	`me_session_limit`	datetime	NULL
 );
 
 DROP TABLE IF EXISTS `region`;
