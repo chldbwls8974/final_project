@@ -58,7 +58,7 @@
 					<a class="nav-link" href="<c:url value='/application/manager'/>">매니저 신청</a>
 			</li>
 			<li class="nav-item">
-					<a class="nav-link" href="#">사업자 신청</a>
+					<a class="nav-link" href="<c:url value='/application/businessman'/>">사업자 신청</a>
 			</li>
 		</ul>
 	</nav>
