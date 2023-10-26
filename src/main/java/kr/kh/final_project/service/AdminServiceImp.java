@@ -53,7 +53,7 @@ public class AdminServiceImp implements AdminService{
 	// 매니저신청 수락버튼 (권한 바꾸기)
 	@Override
 	public boolean updateManager(ManagerVO manager) {
-		if(manager == null || manager.getMe_id() == null || manager.getMe_authority() == null) {
+		if(manager == null || manager.getMe_nickname() == null || manager.getMe_authority() == null) {
 			return false;
 		}
 		return managerDao.updateManagerByAuthority(manager);

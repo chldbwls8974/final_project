@@ -89,13 +89,13 @@
 		// confirm을 사용하여 알림창을 예 = true, 취소 = false로 출력되게 만들어준다.
 		// 만약 true면 밑에 있는 코드를 실행
 		if(confirm("수락하시겠습니까?")){
-			// 버튼을 클릭한 부모 tr에서 class가 id인 값을 me_id로 넣어준다.
-			let me_id = $(this).parents('tr').find('.id').text();
+			// 버튼을 클릭한 부모 tr에서 class가 id인 값을 me_nickname로 넣어준다.
+			let me_nickname = $(this).parents('tr').find('.id').text();
 			// 버튼을 클릭한 부모 tr에서 class가 update인 값을 me_authority로 넣어준다.
 			let me_authority = $(this).parents('tr').find('.update').text();
 			// 버튼을 누른 회원의 nickname과 authority값을 manager로 가져왔음 ( ex : 동해번쩍, USER )
 			let manager = {
-					me_id : me_id,
+					me_nickname : me_nickname,
 					me_authority : me_authority
 			}
 			$.ajax({
@@ -114,7 +114,7 @@
 							str += `
 								<tr>
 									<td>\${ma.me_num}</td>
-									<td class="id">\${ma.me_id}</td>
+									<td class="id">\${ma.me_nickname}</td>
 									<td>\${ma.bo_bt_num}</td>
 									<td>\${ma.bo_title}</td>
 									<td class="update">\${ma.me_authority}</td>

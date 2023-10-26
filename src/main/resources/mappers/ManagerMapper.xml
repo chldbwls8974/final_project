@@ -38,13 +38,14 @@
 		limit
 			#{cri.pageStart}, #{cri.perPageNum}
 	</select>
+	<!-- 매니저신청 수락버튼 (권한 바꾸기) -->
 	<update id="updateManagerByAuthority">
 		update
 			member
 		set
 			me_authority = 'MANAGER'
 		where
-			me_id = #{manager.me_id}
+			me_nickname = #{manager.me_nickname}
 	</update>
 	<select id="selectTotalCount" resultType="int">
 		select 
