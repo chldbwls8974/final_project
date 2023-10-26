@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.final_project.dao.BusinessDAO">
+	<!-- 사업자신청 조회하기 & 검색기능 -->
+	<select id="selectBusinessList" resultType="kr.kh.final_project.vo.ManagerVO">
+		select
+			*
+		from
+			board
+				join
+			member on bo_me_num = me_num
+		where
+			bo_bt_num = 7
+				and
+			me_authority = "USER"
+				and
+		<if test="cri.t == 'all'">
+			(
+				me_num like concat('%', #{cri.s}, '%')
+					or
+				me_nickname like concat('%', #{cri.s}, '%')
+					or
+				bo_title like concat('%', #{cri.s}, '%')
+					or
+				bo_reg_date like concat('%', #{cri.s}, '%')
+			)		
+		</if> 
+		<if test="cri.t == 'first'">
+				me_nickname like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'second'">
+				bo_title like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'third'">
+				bo_reg_date like concat('%', #{cri.s}, '%')
+		</if>
+		order by
+			me_num asc
+		limit
+			#{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<!-- 사업자신청 수락버튼 (권한 바꾸기) -->
+	<update id="updateBusinessByAuthority">
+		update
+			member
+		set
+			me_authority = 'BUSINESS'
+		where
+			me_nickname = #{manager.me_nickname}
+	</update>
+	<!-- 사업자신청 페이지네이션 -->
+	<select id="selectTotalCount" resultType="int">
+		select
+			count(*)
+		from
+			board
+				join
+			member on bo_me_num = me_num
+		where
+			bo_bt_num = 7
+				and
+			me_authority = "USER"
+				and
+		<if test="cri.t == 'all'">
+			(
+				me_num like concat('%', #{cri.s}, '%')
+					or
+				me_nickname like concat('%', #{cri.s}, '%')
+					or
+				bo_title like concat('%', #{cri.s}, '%')
+					or
+				bo_reg_date like concat('%', #{cri.s}, '%')
+			)		
+		</if> 
+		<if test="cri.t == 'first'">
+				me_nickname like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'second'">
+				bo_title like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'third'">
+				bo_reg_date like concat('%', #{cri.s}, '%')
+		</if>
+		order by
+			me_num asc
+	</select> 
+</mapper>

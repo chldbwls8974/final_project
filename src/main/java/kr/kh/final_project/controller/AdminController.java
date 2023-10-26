@@ -95,4 +95,43 @@ public class AdminController {
 			return map;
 		}
 		
+		
+	// 사업자 신청 조회하기, 페이지네이션 기능구현
+	@GetMapping("/admin/business")
+	public String adminBusiness(Model model, Criteria cri) {
+		//페이지네이션
+		// 밑에 있는 cri의 영향을 받으려면 getBusinessList를 cri.setPerPageNum보다 아래에 있어야함
+		// perPageNum : 한페이지에서 보여줄 컨텐츠 갯수 5개씩 보여주겠다 선언
+		cri.setPerPageNum(5);
+		//현재 페이지 정보(검색어, 타입)에 맞는 전체 게시글 수(TotalCount)를 가져온다.
+		int totalCount3 = adminService.getTotalCount3(cri);
+		//페이지네이션 페이지수
+		final int DISPLAY_PAGE_NUM = 3;
+		// DISPLAY_PAGE_NUM,cri,totalCount의 정보를 가지고 pageMaker를 만들어 pm으로 넣음
+		PageMaker pm = new PageMaker(DISPLAY_PAGE_NUM, cri, totalCount3);
+		// 사업자신청을 조회하는 list를 cri.setPerPageNum의 영향을 받고 가지고 가져온다.
+		List<ManagerVO> list = adminService.getBusinessList(cri);
+	
+		// 화면에 출력하기
+		model.addAttribute("list", list);
+		model.addAttribute("cri", cri);
+		model.addAttribute("pm", pm);
+		return ("/admin/business");
+	}
+	// 상업자 신청 수락버튼 (회원정보 수정)
+	@ResponseBody
+	@PostMapping("/admin/business")
+	public Map<String, Object>updateBusiness(@RequestBody ManagerVO manager, Criteria cri){
+		// 결과 데이터를 넣기 위한 map을 만듬
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		boolean res = adminService.updateBusiness(manager);
+		if(res) {
+			List<ManagerVO> list = adminService.getBusinessList(cri);
+			map.put("list", list);
+		}
+		map.put("res", res);
+		return map;
+	}
+		
 }

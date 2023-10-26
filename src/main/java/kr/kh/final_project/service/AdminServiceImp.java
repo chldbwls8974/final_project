@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.final_project.dao.BoardDAO;
+import kr.kh.final_project.dao.BusinessDAO;
 import kr.kh.final_project.dao.ManagerDAO;
 import kr.kh.final_project.dao.MemberDAO;
 import kr.kh.final_project.pagination.Criteria;
@@ -23,6 +24,9 @@ public class AdminServiceImp implements AdminService{
 
 	@Autowired
 	ManagerDAO managerDao;
+	
+	@Autowired
+	BusinessDAO businessDao;
 	
 	// 회원정보 조회
 	//@Override
@@ -45,6 +49,7 @@ public class AdminServiceImp implements AdminService{
 		return memberDao.selectTotalCount(cri);
 	}
 	
+	
 	// 매니저신청 조회
 	@Override
 	public List<ManagerVO> getManagerList(Criteria cri) {
@@ -65,6 +70,30 @@ public class AdminServiceImp implements AdminService{
 			cri = new Criteria();
 		}
 		return managerDao.selectTotalCount(cri);
+	}
+	
+	
+	// 사업자신청 조회하기
+	@Override
+	public List<ManagerVO> getBusinessList(Criteria cri) {
+		
+		return businessDao.selectBusinessList(cri);
+	}
+	// 사업자신청 수락버튼 (권한 바꾸기)
+	@Override
+	public boolean updateBusiness(ManagerVO manager) {
+		if(manager == null || manager.getMe_nickname() == null || manager.getMe_authority() == null) {
+			return false;
+		}
+		return businessDao.updateBusinessByAuthority(manager);
+	}
+	// 사업자신청 페이지네이션
+	@Override
+	public int getTotalCount3(Criteria cri) {
+		if(cri == null) {
+			cri = new Criteria();
+		}
+		return businessDao.selectTotalCount(cri);
 	}
 	
 
