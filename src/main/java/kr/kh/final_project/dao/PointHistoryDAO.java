@@ -13,4 +13,8 @@ public interface PointHistoryDAO {
 
 	List<PointHistoryVO> selectPointRefundHistoryByUserNum(@Param("user")MemberVO user);
 
+	boolean deleteRefundPointHistory(@Param("pointHistory") PointHistoryVO ph);
+
+	PointHistoryVO selectPointHistoryByNum(@Param("ph_num")int ph_num);
+
 }

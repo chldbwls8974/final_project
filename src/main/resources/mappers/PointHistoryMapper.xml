@@ -15,7 +15,19 @@
 			point_history 
 		where 
 			ph_me_num = #{user.me_num} and
-			(ph_source = '4' or
-            ph_source = '5')
+			(ph_source = '4' or ph_source = '5')
+        order by ph_num desc;
+	</select>
+	<delete id="deleteRefundPointHistory">
+		delete from point_history
+		where ph_num = ${pointHistory.ph_num};
+	</delete>
+	<select id="selectPointHistoryByNum" resultType="kr.kh.final_project.vo.PointHistoryVO">
+		select 
+			* 
+		from 
+			point_history 
+		where 
+			ph_num = #{ph_num}
 	</select>
 </mapper>

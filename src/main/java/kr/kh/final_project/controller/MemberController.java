@@ -150,11 +150,18 @@ public class MemberController {
 	@ResponseBody
 	@PostMapping("/member/refund/list")
 	public Map<String, Object> refundList(@RequestBody MemberVO user){
-		System.out.println(user);
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<PointHistoryVO> refundList = memberService.getUserRefundHistoryList(user);
 		map.put("refundList", refundList);
-		System.out.println(refundList);
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/member/refund/delete")
+	public Map<String, Object> refundDelete(@RequestBody PointHistoryVO ph){
+		boolean res = memberService.cancelRefundApply(ph);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("res", res);
 		return map;
 	}
 }

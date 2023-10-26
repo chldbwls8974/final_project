@@ -18,4 +18,6 @@ public interface MemberDAO {
 
 	boolean updateMemberPoint(@Param("user")MemberVO user);
 
+	MemberVO selectMemberByNum(@Param("me_num")int me_num);
+
 }

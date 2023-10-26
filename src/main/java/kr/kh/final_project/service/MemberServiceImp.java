@@ -162,6 +162,23 @@ public class MemberServiceImp implements MemberService{
 		return pointHistoryDao.selectPointRefundHistoryByUserNum(user);
 	}
 
+	@Override
+	public boolean cancelRefundApply(PointHistoryVO ph) {
+		if(ph == null) {
+			return false;
+		}
+		//환불신청하면서 차감되었던 포인트를 다시 유저에게 돌려줌
+		PointHistoryVO pointHistory = pointHistoryDao.selectPointHistoryByNum(ph.getPh_num());
+		int point = -(pointHistory.getPh_price());
+		MemberVO user = memberDao.selectMemberByNum(pointHistory.getPh_me_num());
+		//유저의 포인트에 환급 취소된 금액을 추가
+		user.setMe_point(user.getMe_point() + point);
+		//유저 테이블에 포인트를 업데이트
+		memberDao.updateMemberPoint(user);
+		//최종으로 환급신청중인 내역을 삭제
+		return pointHistoryDao.deleteRefundPointHistory(ph);
+	}
+
 
 
 

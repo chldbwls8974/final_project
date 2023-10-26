@@ -35,5 +35,7 @@ public interface MemberService {
 
 	List<PointHistoryVO> getUserRefundHistoryList(MemberVO user);
 
+	boolean cancelRefundApply(PointHistoryVO ph);
+
 
 }

@@ -14,6 +14,7 @@
 	<form action="<c:url value='/member/refund'/>" method="post">
 		<div class="form-group">
 			<h5>${user.me_name} 님의</h5>
+			<!-- 여기 작업해야 함. 유저가 로그인을 풀지않으면 변경포인트가 적용이 안됨. -->
 			<label>현재 보유 포인트는 ${user.me_point} 입니다.</label>
 			<input type="hidden" class="form-control" value="${user.me_num}" name="me_num">
 			<input type="hidden" class="form-control" value="${user.me_num}" name="ph_me_num">
@@ -74,13 +75,6 @@
 	
 	
 	
-// 	$(document).on('click','[name=test]',function(){
-// 		ajaxJsonToJson(false,'post','/member/refund/list', data ,(data)=>{
-// 			//댓글 리스트 추가
-// 			//createPointHistoryList(data.list, '.comment-list');
-// 			console.log("json통신성공");
-// 		});
-// 	})
 	function getPointHistoryList(){
 		let data = {
 			me_num : ${user.me_num}
@@ -88,7 +82,6 @@
 		console.log(data);
 		
 		ajaxJsonToJson(false,'post','/member/refund/list', data ,(data)=>{
-			//댓글 리스트 추가
 			createPointHistoryList(data.refundList, '.list-tbody');
 			console.log(data.refundList);
 		});
@@ -99,18 +92,28 @@
 		let str ='';
 		for(a of refundList){
 			let btnStr = '';
+			let state = '';
+			let price = -parseInt(a.ph_price);
+			console.log(price);
 			if(a.ph_source == '4'){
-				console.log("조건문")
+				state = '승인 대기중'
 				btnStr = `
-				<div class="btn-group">
-					<button class="btn btn-outline-danger btn-comment-delete">삭제</button>
-				</div>
-				`;
+					<div class="btn-group">
+						<button class="btn btn-outline-danger btn-delete"  onclick="deleteRefund(\${a.ph_num})" >취소</button>
+					</div>
+					`;
+			}else{
+				state = '환급 완료'
+				btnStr = `
+					<div class="btn-group">
+						<label class="btn btn-outline-dark disabled" >완료</label>
+					</div>
+					`
 			} 
 			str += `
 				<tr>
-					<td>\${a.ph_price}</td>
-					<td>\${a.ph_source}</td>
+					<td>\${price}</td>
+					<td>\${state}</td>
 					<td>\${btnStr}</td>
 				</tr>
 				
@@ -119,5 +122,19 @@
 		$(target).html(str);
 	}
 	
+	//환급을 취소하는 함수
+	function deleteRefund(ph_num){
+		let data = { 
+				ph_num : ph_num
+		}
+		console.log(ph_num)
+		 
+		ajaxJsonToJson(false,'post','/member/refund/delete', data ,(data)=>{
+			if(data.res){
+				alert('환급 신청이 취소되었습니다.')
+			}
+			getPointHistoryList();
+		}); 
+	}
 </script>
 </html>
