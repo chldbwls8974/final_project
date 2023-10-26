@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.final_project.dao.MatchDAO">
+	<select id="selectMatchListOfManager" resultType="kr.kh.final_project.vo.MatchVO">
+		select
+			*
+		from
+			`match`
+				join
+			stadium on mt_st_num = st_num
+				join
+			facility on st_fa_num = fa_num
+				join
+			`time` on mt_ti_num = ti_num
+				left join
+			manager on mn_mt_num = mt_num
+				left join
+			(select
+				mt_ti_num as t1
+			from
+				manager
+					join
+				`match` on mn_mt_num = mt_num
+			where mn_me_num = #{me_num}) as T1 on T1.t1 = ti_num
+		    	left join
+			(select
+				mt_ti_num + 1 as t2
+			from
+				manager
+					join
+				`match` on mn_mt_num = mt_num
+			where mn_me_num = #{me_num}) as T2 on T2.t2 = ti_num
+		where
+			mt_date = #{mt_date} and
+		    if(ifnull(mn_mt_num, 0) = 0, true, false) and
+		    if(ifnull(T1.t1, 0) = 0, true, false) and
+		    if(ifnull(T2.t2, 0) = 0, true, false)
+		order by
+			ti_time asc;
+	</select>
+</mapper>

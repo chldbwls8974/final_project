@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-	<title>Home</title>
+	<title>스케줄 관리</title>
 	<style type="text/css">
 		.schedule-box{width: 100%; height: 770px; background-color: lightblue; position : relative; border-radius: 5px}
 		.schedule-box::after{clear: both; content: ''; display: block;}
@@ -29,7 +29,6 @@
 	</style>
 </head>
 <body>
-	<h1>스케줄 등록</h1>
 	<div>
 		<span>경기장 선택 : </span>
 		<select class="select-stadium">

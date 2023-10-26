@@ -17,7 +17,7 @@ import kr.kh.final_project.vo.StadiumVO;
 import kr.kh.final_project.vo.TimeVO;
 
 @Service
-public class ScheduleServiceImp implements ScheduleService{
+public class ScheduleBServiceImp implements ScheduleBService{
 	
 	@Autowired
 	StadiumDAO stadiumDao;

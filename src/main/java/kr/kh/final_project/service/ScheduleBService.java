@@ -7,7 +7,7 @@ import kr.kh.final_project.vo.ScheduleVO;
 import kr.kh.final_project.vo.StadiumVO;
 import kr.kh.final_project.vo.TimeVO;
 
-public interface ScheduleService {
+public interface ScheduleBService {
 
 	List<StadiumVO> selectStadiumListByFaNum(int fa_num);
 	

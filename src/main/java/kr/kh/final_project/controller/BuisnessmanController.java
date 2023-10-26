@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.kh.final_project.service.ScheduleService;
+import kr.kh.final_project.service.ScheduleBService;
 import kr.kh.final_project.util.Message;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.OperatingVO;
@@ -27,27 +27,27 @@ import kr.kh.final_project.vo.TimeVO;
 public class BuisnessmanController {
 	
 	@Autowired
-	ScheduleService scheduleService;
+	ScheduleBService scheduleBService;
 		
-	@GetMapping("/buisnessman/schedule")
+	@GetMapping("/buisnessman/manage/schedule")
 	public String insertSchedule(Model model, HttpSession session) {
 		MemberVO member = (MemberVO)session.getAttribute("user");
 		
-		if(!member.getMe_authority().equals("BUSINESS")) {
+		if(member == null || !member.getMe_authority().equals("BUSINESS")) {
 			Message msg = new Message("/", "사업자 권한이 필요합니다.");
 			model.addAttribute("msg", msg);
 			return "/message";
 		}
-		int fa_num = scheduleService.selectFaNumByMeNum(member.getMe_num());
+		int fa_num = scheduleBService.selectFaNumByMeNum(member.getMe_num());
 		if(fa_num == 0) {
 			Message msg = new Message("/", "등록된 시설이 없습니다.");
 			model.addAttribute("msg", msg);
 			return "/message";
 		}
 		
-		List<StadiumVO> stadiumList = scheduleService.selectStadiumListByFaNum(fa_num);
-		List<OperatingVO> operatingList = scheduleService.selectOperatingListByFaNum(fa_num);
-		List<TimeVO> timeList = scheduleService.selectTimeList();
+		List<StadiumVO> stadiumList = scheduleBService.selectStadiumListByFaNum(fa_num);
+		List<OperatingVO> operatingList = scheduleBService.selectOperatingListByFaNum(fa_num);
+		List<TimeVO> timeList = scheduleBService.selectTimeList();
 		model.addAttribute("stadiumList", stadiumList);
 		model.addAttribute("operatingList", operatingList);
 		model.addAttribute("timeList", timeList);
@@ -58,8 +58,8 @@ public class BuisnessmanController {
 	@PostMapping("/select/stadium")
 	public Map<String, Object> selectStadium(@RequestParam("st_num")Integer st_num){
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<ScheduleVO> scheduleList = scheduleService.selectScheduleListByStNum(st_num);
-		StadiumVO stadium = scheduleService.selectStadiumByStNum(st_num);
+		List<ScheduleVO> scheduleList = scheduleBService.selectScheduleListByStNum(st_num);
+		StadiumVO stadium = scheduleBService.selectStadiumByStNum(st_num);
 		map.put("scheduleList", scheduleList);
 		map.put("stadium", stadium);
 		return map;
@@ -69,7 +69,7 @@ public class BuisnessmanController {
 	@PostMapping("/insert/schedule")
 	public Map<String, Object> insertScheduel(@RequestBody ScheduleVO schedule){
 		Map<String, Object> map = new HashMap<String, Object>();
-		boolean res = scheduleService.insertSchedule(schedule);
+		boolean res = scheduleBService.insertSchedule(schedule);
 		map.put("res", res);
 		return map;
 	}
@@ -78,7 +78,7 @@ public class BuisnessmanController {
 	@PostMapping("/delete/schedule")
 	public Map<String, Object> deleteScheduel(@RequestBody ScheduleVO schedule){
 		Map<String, Object> map = new HashMap<String, Object>();
-		boolean res = scheduleService.deleteSchedule(schedule);
+		boolean res = scheduleBService.deleteSchedule(schedule);
 		map.put("res", res);
 		return map;
 	}
@@ -87,7 +87,7 @@ public class BuisnessmanController {
 	@PostMapping("/update/schedule")
 	public Map<String, Object> updateScheduel(@RequestBody ScheduleVO schedule){
 		Map<String, Object> map = new HashMap<String, Object>();
-		boolean res = scheduleService.updateSchedule(schedule);
+		boolean res = scheduleBService.updateSchedule(schedule);
 		map.put("res", res);
 		return map;
 	}
