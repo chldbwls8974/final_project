@@ -13,12 +13,14 @@
 	<h1>포인트 환급</h1>
 	<form action="<c:url value='/member/refund'/>" method="post">
 		<div class="form-group">
-			<h5>홍길동 님의</h5>
-			<label>현재 보유 포인트는 ${user.me_point} 입니다.</label>
+			<h5>${user.me_name} 님의</h5>
+			<!-- 여기 작업해야 함. 유저가 로그인을 풀지않으면 변경포인트가 적용이 안됨. -->
+			<span class="point">현재 보유 포인트는 ${user.me_point} 입니다.</span>
 			<input type="hidden" class="form-control" value="${user.me_num}" name="me_num">
 			<input type="hidden" class="form-control" value="${user.me_num}" name="ph_me_num">
 			<input type="hidden" class="form-control" value="4" name="ph_source">
 		</div>
+		<br>
 		<hr>
 		<div class="form-group">
 			<label>환급받을 금액</label>
@@ -30,11 +32,29 @@
 		</div>
 		<button class="btn btn-outline-dark col-12">등록</button>
 	</form>
+	<br>
+	<hr>
+	<div>
+		<table class="table table-hover mt-4">
+			<thead>
+				<tr style="background: wheat; font-weight: bold;">
+					<th>환급 신청 금액</th>
+					<th>상태</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody class="list-tbody">
+			
+			</tbody>
+		</table>
+	</div>
+	<c:if test=""></c:if>
 </body>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-	    $("#refundAmount").on("change", function() {
+
+	
+	    $(document).on("change", "#refundAmount", function(){
 	        //입력한 금액을 변수에 저장
 	        var refundAmountValue = parseFloat($(this).val());
 	        if(refundAmountValue > 0){
@@ -46,6 +66,79 @@
 		        $("#resultAmount").val(userPoint - num);
 	        }
 	    });
+	
+	    
+	    
+	/* 환급이력리스트를 가져오는 함수 */
+	$(document).ready(function() {
+		
+   	 	getPointHistoryList();
 	});
+	
+	
+	
+	function getPointHistoryList(){
+		let data = {
+			me_num : ${user.me_num}
+		}
+		console.log(data);
+		
+		ajaxJsonToJson(false,'post','/member/refund/list', data ,(data)=>{
+			$('.point').text("현재 보유 포인트는 " + data.dbMember + " 입니다.");
+			createPointHistoryList(data.refundList, '.list-tbody');
+			console.log(data.refundList);
+		});
+	}
+	
+	
+	function createPointHistoryList(refundList, target){
+		let str ='';
+		for(a of refundList){
+			let btnStr = '';
+			let state = '';
+			let price = -parseInt(a.ph_price);
+			console.log(price);
+			if(a.ph_source == '4'){
+				state = '승인 대기중'
+				btnStr = `
+					<div class="btn-group">
+						<button class="btn btn-outline-danger btn-delete"  onclick="deleteRefund(\${a.ph_num})" >취소</button>
+					</div>
+					`;
+			}else{
+				state = '환급 완료'
+				btnStr = `
+					<div class="btn-group">
+						<label class="btn btn-outline-dark disabled" >완료</label>
+					</div>
+					`
+			} 
+			str += `
+				<tr>
+					<td>\${price}</td>
+					<td>\${state}</td>
+					<td>\${btnStr}</td>
+				</tr>
+				
+			`;
+		}
+		$(target).html(str);
+	}
+	
+	//환급을 취소하는 함수
+	function deleteRefund(ph_num){
+		let data = { 
+				ph_num : ph_num
+		}
+		console.log(ph_num)
+		 
+		ajaxJsonToJson(false,'post','/member/refund/delete', data ,(data)=>{
+			if(data.res){
+				alert('환급 신청이 취소되었습니다.')
+			}
+			
+			getPointHistoryList();
+		}); 
+	}
 </script>
 </html>

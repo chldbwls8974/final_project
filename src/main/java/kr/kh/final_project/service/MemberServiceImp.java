@@ -10,10 +10,12 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.dao.MemberDAO;
 import kr.kh.final_project.dao.PreferredRegionDAO;
 import kr.kh.final_project.dao.PreferredTimeDAO;
+import kr.kh.final_project.dao.PointHistoryDAO;
 import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.dao.TimeDAO;
 import kr.kh.final_project.vo.MemberVO;
@@ -23,6 +25,9 @@ import kr.kh.final_project.vo.TimeVO;
 
 @Service
 public class MemberServiceImp implements MemberService{
+
+	@Autowired
+	MemberDAO memberDao;
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -44,11 +49,12 @@ public class MemberServiceImp implements MemberService{
 	
 	@Autowired
 	TimeDAO timeDao;
+	PointHistoryDAO pointHistoryDao;
 
+	
 	@Override
-	public MemberVO userById(String name) {
-		
-		return null;
+	public List<MemberVO> searchMemberById(String keyword) {
+		return memberDao.searchMemberById(keyword);
 	}
 	
 	// 회원가입시 선호 시간을 선택하기 위해 모든 시간을 불러오는 메서드
@@ -213,6 +219,10 @@ public class MemberServiceImp implements MemberService{
 	}
 
 	@Override
+	public List<MemberVO> searchMemberByName(String keyword) {
+		return memberDao.searchMemberByName(keyword);
+	}
+		
 	public List<RegionVO> getMainRegion() {
 		return regionDao.selectMainRegion();
 	}
@@ -262,10 +272,50 @@ public class MemberServiceImp implements MemberService{
 		memberDao.updateMemberSession(user);
 		
 	}
+	
+	//포인트 환급 요청 메서드
+	@Override
+	public boolean pointRefundApply(MemberVO user, MemberVO tmpUser, PointHistoryVO pointHistory) {
+		if(user == null || tmpUser.getMe_point() == null) {
+			return false;
+		}
+		//회원이 총 환급 신청중인 금액 + 환급 신청하려는 포인트 <= 현재 포인트
+		
+		
+		
+		//환급 후 예정 포인트를 user에 저장
+		user.setMe_point(tmpUser.getMe_point());
+		//유저 테이블에 포인트를 업데이트
+		memberDao.updateMemberPoint(user);
+		
+		// 포인트내역 테이블에 추가( -로 바꿔서 기입)
+		pointHistory.setPh_price(-pointHistory.getPh_price());
+		return pointHistoryDao.insertPointHistory(pointHistory);
+	}
 
 	@Override
-	public boolean pointRefundApply(MemberVO user, PointHistoryVO pointHistory) {
-		return false;
+	public List<PointHistoryVO> getUserRefundHistoryList(MemberVO user) {
+		if(user == null) {
+			return null;
+		}
+		return pointHistoryDao.selectPointRefundHistoryByUserNum(user);
+	}
+
+	@Override
+	public boolean cancelRefundApply(PointHistoryVO ph) {
+		if(ph == null) {
+			return false;
+		}
+		//환불신청하면서 차감되었던 포인트를 다시 유저에게 돌려줌
+		PointHistoryVO pointHistory = pointHistoryDao.selectPointHistoryByNum(ph.getPh_num());
+		int point = -(pointHistory.getPh_price());
+		MemberVO user = memberDao.selectMemberByNum(pointHistory.getPh_me_num());
+		//유저의 포인트에 환급 취소된 금액을 추가
+		user.setMe_point(user.getMe_point() + point);
+		//유저 테이블에 포인트를 업데이트
+		memberDao.updateMemberPoint(user);
+		//최종으로 환급신청중인 내역을 삭제
+		return pointHistoryDao.deleteRefundPointHistory(ph);
 	}
 
 	@Override
@@ -290,9 +340,49 @@ public class MemberServiceImp implements MemberService{
 
 	
 	
+	public List<MemberVO> getMemberList() {
+		return memberDao.selectMemberList();
+	}
+
+	@Override
+	public MemberVO userById(String name) {
+		return null;
+	}
+
+	@Override
+	public boolean updateProfile(MemberVO member, MemberVO user, MultipartFile file) {
+		if(user == null || user.getMe_id() == null) {
+			return false;
+		}
+		return memberDao.updateMemberProfile(user);
+	}
+
+	@Override
+	public MemberVO isCheck2(String check) {
+		MemberVO dbMember = memberDao.selectMemberNumByNick2(check);
+		return dbMember;
+	}
+
+
+//	@Override
+//	public boolean applyManager(MemberVO member, MemberVO user, MultipartFile[] files) {
+//		if(user == null || user.getMe_id() == null) {
+//			return false;
+//		}
+//		member.setMe_id(user.getMe_id());
+//		if(!memberDao.applyManager(member)) {
+//			return false;
+//		}
+//		//첨부파일을 업로드
+//		if(files == null || files.length == 0) {
+//			return true;
+//		}
+//		//첨부파일을 서버에 업로드 하고, DB에 저장
+//		uploadFileAndInsert(files, member.getMe_id());
+//		return memberDao.applyManager(member);
+//	}
+
+	}
 
 
 
-
-
-}

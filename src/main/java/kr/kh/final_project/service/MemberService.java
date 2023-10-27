@@ -12,10 +12,15 @@ import kr.kh.final_project.vo.TimeVO;
 public interface MemberService {
 
 	boolean signup(MemberVO member, int[] pr_rg_num, int[] favoriteTime, int[] favoriteHoliTime);
+	List<MemberVO> searchMemberById(String keyword);
+
+	List<MemberVO> searchMemberByName(String keyword);
+
+	List<MemberVO> getMemberList();
+
+	boolean signup(MemberVO member);
 
 	MemberVO getMember(String me_id);
-
-	boolean pointRefundApply(MemberVO user, PointHistoryVO pointHistory);
 
 	List<RegionVO> getMainRegion();
 
@@ -40,6 +45,19 @@ public interface MemberService {
 	Object checkNickName(String nickname);
 
 	List<TimeVO> getAllTime();
+
+	boolean pointRefundApply(MemberVO user, MemberVO tmpUser, PointHistoryVO pointHistory);
+
+	List<PointHistoryVO> getUserRefundHistoryList(MemberVO user);
+
+	boolean cancelRefundApply(PointHistoryVO ph);
+
+	boolean updateProfile(MemberVO member, MemberVO user, MultipartFile file);
+
+	MemberVO isCheck2(String check);
+
+
+
 
 
 }
