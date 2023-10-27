@@ -17,8 +17,8 @@ VALUES
 
 INSERT INTO FACILITY(FA_BU_NUM, FA_RG_NUM, FA_NAME, FA_ADD, FA_ADD_DETAIL, FA_PHONE)
 VALUES
-(1, 1, '시설1', '주소1', '상세주소1', '010-1234-5678'),
-(2, 1, '시설2', '주소2', '상세주소2', '010-1111-1111'),
+(1, 2, '시설1', '주소1', '상세주소1', '010-1234-5678'),
+(2, 3, '시설2', '주소2', '상세주소2', '010-1111-1111'),
 (3, 8, '시설3', '주소3', '상세주소3', '010-1234-1234');
 
 INSERT INTO STADIUM(ST_NAME, ST_LOCATE, ST_DOOR, ST_FLOORTYPE, ST_WIDTH, ST_HEIGHT, ST_MAX, ST_AVAILABLE, ST_FA_NUM) 
@@ -480,7 +480,7 @@ where
 
 insert into preferred_region(pr_me_num, pr_rg_num)
 values
-(3, 1), (3, 8), (4, 8);
+(3, 2), (3, 3), (3, 8), (4, 8);
 
 insert into preferred_time(pt_ti_num, pt_me_num)
 values

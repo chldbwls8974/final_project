@@ -15,6 +15,8 @@
 		.sun{color: red}
 		.select-circle{height: 70px; border-radius: 20%; background-color: cyan;}
 		.not-select-circle:hover{height: 70px; border-radius: 20%; background-color: yellow; cursor: pointer;}
+		.main-region-box{display: inline;}
+		.sub-region-box{display: inline;}
 	</style>
 </head>
 <body>
