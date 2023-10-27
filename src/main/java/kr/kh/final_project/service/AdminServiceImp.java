@@ -37,7 +37,7 @@ public class AdminServiceImp implements AdminService{
 		@Override
 		public List<MemberVO> getMemberList(Criteria cri) {
 			
-			return memberDao.selectMemberList(cri); 
+			return memberDao.selectMemberListBySearch(cri); 
 		}
 	// 회원 페이지네이션
 	@Override

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.final_project.dao.MemberDAO">
-	<select id="selectMemberList" resultType="kr.kh.final_project.vo.MemberVO">
+	<select id="selectMemberListBySearch" resultType="kr.kh.final_project.vo.MemberVO">
 		select * from member 
 		<if test='cri.t == "all"'>
 		where
