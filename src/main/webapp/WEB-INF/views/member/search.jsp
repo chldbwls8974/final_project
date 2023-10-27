@@ -11,6 +11,7 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
 </head>
 <body>
 	<div class="member-search">
@@ -20,8 +21,10 @@
 					<option value="id">아이디</option>
 					<option value="name">이름</option>
 				</select>
-				<input type="text" name="keyword"></input>
-				<input type="button" onclick="getSearchList()" value="검색"></input>
+				<input type="search" name="keyword"></input>
+				<button type="submit" onclick="getSearchList()">
+					<i class="fa-solid fa-magnifying-glass"></i>
+				</button>
 		</div>
 		<div>
 			<ul id="membertable">
@@ -39,21 +42,23 @@
 	</div>
 </body>
 <script type="text/javascript">
+
 	let str = '';
+	//검색결과 가져오기
 	function getSearchList(){
-		var searchType = $("[name='searchType']").val();
-		var keyword = $("[name='keyword']").val();
+		var searchType = $("[name='searchType']").val(); //검색유형
+		var keyword = $("[name='keyword']").val();	//내가 검색할 키워드
 		data = {
 			searchType : searchType,
 			keyword : keyword
 		}
-	
+		
 		ajaxJsonToJson2(false, "get", "/member/searchfilter", data, (a)=>{
 			console.log(a)
 				if(a.res){
 					$('#membertable').empty();
 					str=``;
-					
+					//검색값을 반복
 					for(me of a.memberList){
 						str += `
 							<li>
@@ -71,5 +76,12 @@
 				}
 	       });
 	}
+	
+	function enterkey() {
+        if (window.event.keyCode == 13) {
+             document.getElementById("member-search-navigation").submit();
+        }
+	}
+	
 </script>
 </html>

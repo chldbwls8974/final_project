@@ -148,7 +148,7 @@ public class MemberController {
 	//마이페이지 - 회원조회
 	@GetMapping("/member/search")
 	public String searchMembers(Model model) {
-		List<MemberVO> memberList = memberService.getMemberList();
+		List<MemberVO> memberList = memberService.getMemberList(); //서비스에게 멤버리스트 요청
 		model.addAttribute("memberList", memberList);
 		return "/member/search";
 	}
@@ -158,17 +158,17 @@ public class MemberController {
 	 public Map<String, Object>searchMembers(@RequestParam String searchType, @RequestParam String keyword, Model model) {
 		 Map<String, Object> map = new HashMap<String, Object>();
 		 List<MemberVO> memberList; //회원목록 리스트 선언
-		 boolean res = false;
+		 boolean res = false; //검색 결과 변수 초기화
 		 
 		if("id".equals(searchType)) { //아이디로 검색하면 그 값을 memberList에 저장
 			memberList = memberService.searchMemberById(keyword);
-		}else {
+		}else { //이름으로 검색하면 그 값을 memberList에 저장
 			memberList = memberService.searchMemberByName(keyword);
-		}
+		} //검색결과가 있으면 res를 true로
 		if(memberList != null) {
 			res = true;
 		}
-		map.put("memberList",memberList);//jsp로 전달
+		map.put("memberList",memberList);//map에 저장 후 jsp로 전달
 		map.put("res",res);//jsp로 전달
 		return map;
 	}
@@ -182,18 +182,29 @@ public class MemberController {
 	@PostMapping("/member/myedit")
 	public String profileEdit(MemberVO member, MultipartFile file, HttpSession session,Model model) {
 		System.out.println(member);
-		MemberVO user = (MemberVO)session.getAttribute("user"); //세션에 저장된 user 정보 가져옴
+		MemberVO user = (MemberVO)session.getAttribute("user"); //세션에 저장된 현재 user 정보 가져옴
 		System.out.println(user);
 		boolean res = memberService.updateProfile(member, user, file); //새로 입력한 정보 업데이트
-		if(res) {
-			session.setAttribute("user", member); //업데이트된 사용자 정보 세션에 저장
-			model.addAttribute("msg", "프로필 수정 완료");
+		if(res) { //업데이트된 사용자 정보 세션에 저장
+			session.setAttribute("user", member); 
+			model.addAttribute("msg", "수정을 완료했습니다.");
 			model.addAttribute("url","/member/mypage");
-		}else {
-			model.addAttribute("msg", "프로필 수정 실패");
+		}else { //업데이트 실패시
+			model.addAttribute("msg", "수정에 실패했습니다.");
 			model.addAttribute("url","/member/myedit");
 		}
-		return "/message";
+		return "/member/mypage";
+	}
+	
+	
+	// 닉네임 입력 시, 입력한 닉네임의 회원이 존재하는지 확인
+	@ResponseBody
+	@GetMapping("/member/myedit/check")
+	public Map<String, Object> profilecheck(@RequestParam String check,  Model model){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO checked = memberService.isCheck2(check);
+		map.put("checked",checked);
+		return map;
 	}
 	
 }

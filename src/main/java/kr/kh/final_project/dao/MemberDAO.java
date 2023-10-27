@@ -24,4 +24,8 @@ public interface MemberDAO {
 
 	MemberVO selectMemberBySession(String me_session_id);
 
+	MemberVO selectMemberNumByNick2(String check);
+
+	boolean updateMemberProfile(MemberVO user);
+
 }

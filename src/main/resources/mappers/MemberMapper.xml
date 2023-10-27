@@ -41,4 +41,10 @@
 		where
 			me_session_id = #{me_session_id} and me_session_limit >= now() 
 	</select>
+	<select id="selectMemberNumByNick2" resultType="kr.kh.final_project.vo.MemberVO">
+		select * from member where me_nickname = #{check}
+	</select>
+	<update id="updateMemberProfile">
+		update member set me_profile = #{user.me_profile}
+	</update>
 </mapper>

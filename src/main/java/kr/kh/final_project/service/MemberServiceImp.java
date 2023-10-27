@@ -148,8 +148,16 @@ public class MemberServiceImp implements MemberService{
 
 	@Override
 	public boolean updateProfile(MemberVO member, MemberVO user, MultipartFile file) {
-		// TODO Auto-generated method stub
-		return false;
+		if(user == null || user.getMe_id() == null) {
+			return false;
+		}
+		return memberDao.updateMemberProfile(user);
+	}
+
+	@Override
+	public MemberVO isCheck2(String check) {
+		MemberVO dbMember = memberDao.selectMemberNumByNick2(check);
+		return dbMember;
 	}
 
 

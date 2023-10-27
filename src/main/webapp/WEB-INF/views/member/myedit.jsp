@@ -18,6 +18,7 @@
 	  <h1 class="h3 mb-3 fw-normal">내 정보 수정</h1>
 		<div class="myprofile">
 			<input type="file" name="profileImage" id="profileUpdate">
+			<img src="${user.me_profile}">
 		    <input type="submit" value="사진 수정">
 		    <input type="button" value="초기화" onclick="">
 		</div>	
@@ -27,13 +28,8 @@
 
         <div class="myprofile">
             <label for="nickname">닉네임</label>
-            <input type="text" class="form-control" value="${member.me_nickname}" oninput="nicknameModify()">
-            <span class="nickname_ok">사용 가능한 닉네임입니다.</span>
-            <span class="nickname_already">이미 사용 중인 닉네임입니다.</span>
-        </div>
-         <div class="myprofile">
-            <label for="age">나이</label>
-            <input type="text" class="form-control" id="age" readonly>
+            <input type="text" class="form-control" name="input-nickname" noninput="nicknameModify()" placeholder="${user.me_nickname}">
+  			<button type="button" class="form-control" name="check-btn">확인</button>
         </div>
         <div class="myprofile">
             <label for="gender">성별</label>
@@ -42,49 +38,66 @@
         </div>
         <div class="myprofile">
             <label for="email">이메일</label>
-            <input type="email" class="form-control" id="email" value="${member.me_email}">
+            <input type="email" class="form-control" id="email" placeholder="${user.me_email}">
         </div>
 		<div>
-		<button class="btn-update btn-outline-warning col-12" onclick="updateProfile()">수정</button>
+		<button class="btn-update col-12">수정</button>
 		</div>
 	</form>
 </body>
 <script type="text/javascript">
-	//수정버튼 누르면 업데이트
-	function updateProfile(){
-		$("#btn-update").on("click",()=>{
-			this.update();
-		});
-		let data = {
-			searchType = $("[name='profileImage']").val();	
-			id : $("#id").val(),
-			id : $("#nickname").val(),
-			id : $("#age").val(),
-			id : $("#gender").val(),
-			id : $("#email").val()
+
+	//존재하는 닉네임인지 아닌지 확인
+	let isSpanAdded = false;
+	$(document).on('click','[name=check-btn]',function(){
+		let check=$('[name=input-nickname]').val();
+		
+		// 입력값이 공백인지 확인
+	    if (check.trim() === '') {
+	        alert('닉네임을 입력해주세요.'); // 공백이면 메시지
+	        return;
+	    }
+		
+		data={
+				check : check
 		}
-		ajaxJsonToJson2(false, "post", "/member/myedit", data, (a)=>{
+		
+		var str = '';
+		ajaxJsonToJson2(false, 'get','/member/signup/check',data,(a)=>{
 			console.log(a)
-// 				if(a.res){
-// 					$('#membertable').empty();
-// 					str=``;
-					
-// 					for(me of a.memberList){
-// 						str += `
-// 							<li>
-// 								<a href="#" class="member-link">
-// 									<img src=""/>
-// 									<span>\${me.me_name}</span>
-// 									<span>\${me.me_id}</span>
-// 								</a>
-// 							</li>
-// 						`;
-// 					}
-// 					$('#membertable').html(str); 
-// 				}else{
-// 					alert('실패');
-// 				}
-	       });
-	}
+			if (!isSpanAdded) { //안내문구가 없으면
+				str = '<span id="nickname-message"></span>';
+				$(this).after(str); //확인버튼 뒤에 추가
+				isSpanAdded = true; //스팬 중복추가 방지
+			}
+				if(a.checked == null){
+					$('#nickname-message').text('사용 가능한 닉네임입니다.');
+				}else{
+		            $('#nickname-message').text('이미 사용 중인 닉네임입니다.');
+				}
+		});
+	});
+	
+	//성별정보
+	$(document).ready(function(){
+		// 회원의 성별정보를 가져옴
+	 	var savedGender = "${user.me_gender}";
+	 	console.log(savedGender);
+	
+		// 라디오 버튼을 가져옴
+		var genderBtn= document.getElementsByName("me_gender");
+	
+		// 저장된 성별 정보와 일치하는 버튼을 체크
+		for (var i = 0; i < genderBtn.length; i++) {
+		    if (genderBtn[i].value === savedGender) {
+		    	genderBtn[i].checked = true;
+		        // 일치하는 값을 찾으면 종료
+		        break;
+		    }
+		}
+	})
+	
+	
+	
 </script>
 </html>
