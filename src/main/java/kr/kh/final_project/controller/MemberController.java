@@ -154,7 +154,7 @@ public class MemberController {
 	}
 	
 	@ResponseBody
-	 @GetMapping("/member/searchfilter")
+	@PostMapping("/member/searchfilter")
 	 public Map<String, Object>searchMembers(@RequestParam String searchType, @RequestParam String keyword, Model model) {
 		 Map<String, Object> map = new HashMap<String, Object>();
 		 List<MemberVO> memberList; //회원목록 리스트 선언

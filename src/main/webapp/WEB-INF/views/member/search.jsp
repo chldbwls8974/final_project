@@ -53,7 +53,7 @@
 			keyword : keyword
 		}
 		
-		ajaxJsonToJson2(false, "get", "/member/searchfilter", data, (a)=>{
+		ajaxJsonToJson2(false, "post", "/member/searchfilter", data, (a)=>{
 			console.log(a)
 				if(a.res){
 					$('#membertable').empty();
