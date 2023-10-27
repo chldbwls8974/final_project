@@ -10,4 +10,6 @@ public interface PreferredRegionDAO {
 
 	List<PreferredRegionVO> selectPRListByMeNum(@Param("me_num")Integer me_num);
 
+	void insertPreferredRegion(@Param("me_num")int pr_me_num, @Param("rg_num")int pr1);
+
 }

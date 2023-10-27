@@ -4,6 +4,5 @@
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 <typeAliases>
-	<typeAlias type="kr.kh.final_project.vo.MemberVO" alias="MemberVO"/>
 </typeAliases>  
 </configuration>

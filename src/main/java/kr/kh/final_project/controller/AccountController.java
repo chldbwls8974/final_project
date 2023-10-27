@@ -24,7 +24,7 @@ public class AccountController {
 	AccountService accountService;
 	
 	@GetMapping("/insert")
-	public String insert(Model model, HttpSession session) {
+	public String insert(Model model, HttpSession session ) {
 		String url;
 		//세션에서 유저정보 가져와야 함
 		MemberVO user = (MemberVO)session.getAttribute("user");

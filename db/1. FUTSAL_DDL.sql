@@ -24,7 +24,7 @@ CREATE TABLE `member` (
 	`me_point`	int	NOT NULL	DEFAULT 0,
 	`me_state1`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 없음, 1 : 정지',
 	`me_state2`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 없음, 1 : 정지',
-	`me_session_id`	varchar(225)	NULL,
+    `me_session_id`	varchar(255)	NULL,
 	`me_session_limit`	datetime	NULL
 );
 
