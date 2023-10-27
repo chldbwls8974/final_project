@@ -169,8 +169,6 @@ public class MemberServiceImp implements MemberService{
 	
 	// 선호시간을 넣는 메서드
 	private void insertPrefferedTime(int div, int pr_me_num, int[] Time) {
-		int len = Time.length;
-		
 		for(int i : Time) {
 			// 평일이면
 						if(div == 0) {
