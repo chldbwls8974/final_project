@@ -14,7 +14,7 @@ BEGIN
         sc_st_num,
         sc_ti_num,
         sc_personnel,
-        if(st_available = 0, 0, if(date(adddate(now(), INTERVAL 21 DAY)) > av_notdate, 0, 2))
+        if(st_available = 0, 0, if(date(adddate(now(), INTERVAL 21 DAY)) >= av_notdate, 1, 0))
     FROM
 		futsal.schedule
 		join
