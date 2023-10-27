@@ -7,10 +7,12 @@ import kr.kh.final_project.vo.MemberVO;
 public interface MemberDAO {
 
 	MemberVO selectMember(@Param("me_id")String me_id);
+	
+	MemberVO selectMemberByEmail(@Param("me_email")String email);
 
 	boolean insertMember(@Param("m")MemberVO member);
 
-	MemberVO selectMemberNumByNick(@Param("check")String check);
+	MemberVO selectMemberByNickName(@Param("check")String check);
 
 	void updateMemberSession(@Param("user")MemberVO user);
 

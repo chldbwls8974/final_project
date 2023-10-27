@@ -2,15 +2,16 @@ package kr.kh.final_project.service;
 
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
+import kr.kh.final_project.vo.PreferredRegionVO;
 import kr.kh.final_project.vo.RegionVO;
+import kr.kh.final_project.vo.TimeVO;
 
 public interface MemberService {
 
-	boolean signup(MemberVO member);
+	boolean signup(MemberVO member, int[] pr_rg_num, int[] favoriteTime, int[] favoriteHoliTime);
 
 	MemberVO getMember(String me_id);
 
@@ -28,12 +29,17 @@ public interface MemberService {
 
 	void updateMemberSession(MemberVO user);
 
-
 	MemberVO userById(String name);
 
 	Object checkId(String id);
 	
 	boolean sendMail(String to, String title, String contents);
+
+	Object checkEmail(String email);
+
+	Object checkNickName(String nickname);
+
+	List<TimeVO> getAllTime();
 
 
 }
