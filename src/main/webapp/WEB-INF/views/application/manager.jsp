@@ -14,6 +14,12 @@
 	    <label for="bo_bt_num">게시글번호:</label>
 	    <input type="text" class="form-control" id="bo_bt_num" name="bo_bt_num" value="6" readonly>
 	  </div>
+	  
+	  <div class="form-group" >
+	    <label for="bo_me_num">회원번호</label>
+	    <input type="text" class="form-control" id="bo_me_num" name="bo_me_num" value="${user.me_num}" readonly>
+	  </div>
+	  
 	  <div class="form-group">
 	    <label>자기소개서 & 이력서 첨부</label> <br>
 	    <input type="file" class="form-control" name="files" required> <br>

@@ -36,7 +36,7 @@
 				<li class="nav-item">
 					<a class="nav-link" href="#">시설 조회</a>
 				</li>
-				</li>
+				
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 					관리자
@@ -56,7 +56,7 @@
 					사업자
 					</a>
 					<div class="dropdown-menu">
-						<a class="dropdown-item" href="<c:url value='/businessman/facility'/>">시설 관리</a>
+						<a class="dropdown-item" onclick="checkFacility();" href="<c:url value='/businessman/facility'/>">시설 관리</a>
 						<a class="dropdown-item" href="#">경기장 등록</a>
 					</div>
 			</li>
@@ -68,5 +68,6 @@
 			</li>
 		</ul>
 	</nav>
+				       	 
 </body>
 </html>
