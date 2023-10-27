@@ -7,6 +7,7 @@ import kr.kh.final_project.vo.ExtraVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.PreferredRegionVO;
 import kr.kh.final_project.vo.PreferredTimeVO;
+import kr.kh.final_project.vo.RegionVO;
 
 public interface MatchService {
 	
@@ -17,5 +18,11 @@ public interface MatchService {
 	List<PreferredRegionVO> selectPRListByMeNum(Integer me_num);
 
 	List<PreferredTimeVO> selectPTListByMeNum(Integer me_num);
+
+	List<RegionVO> selectMainRegion();
+
+	List<RegionVO> selectSubRegionByMainRegion(int rg_num);
+
+	List<RegionVO> selectRegionListByRgNum(int rg_num);
 
 }

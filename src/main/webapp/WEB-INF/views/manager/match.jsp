@@ -47,9 +47,9 @@
 	<div class="main-region-box">
 		<span>지역 : </span>
 		<select class="select-main">
-			<option value="0">선택 없음</option>
+			<option value="0">선호지역</option>
 			<c:forEach items="${mainRegion}" var="mr">
-				<option value="${mr.rg_main}">${mr.rg_main}</option>
+				<option value="${mr.rg_num}">${mr.rg_main}</option>
 			</c:forEach>
 		</select>
 	</div>
@@ -61,6 +61,7 @@
 	</div>
 	<script type="text/javascript">
 	let select_day = "${thirdWeek[0].date_str}"
+	let rg_num = 0;
 	
 	
 	$('.day-box').eq(0).children('.not-select-circle').toggleClass('select-circle');
@@ -69,6 +70,7 @@
 	
 	$(document).on('click', '.not-select-circle', function() {
 		select_day = $(this).children('.select-date-str').val();
+		rg_num = 0;
 		$(this).toggleClass('not-select-circle');
 		$(this).toggleClass('select-circle');
 		$(this).parents('.day-box').siblings('.day-box').children('.select-circle').toggleClass('not-select-circle');
@@ -78,12 +80,18 @@
 	});
 	
 	$(document).on('change', '.select-main', function() {
-		mainSelect($(this).val());
+		rg_num = $(this).val();
+		printSubSelect(rg_num);
+		printSelectMatch();
 	});
-	
+	$(document).on('change', '.select-sub', function() {
+		rg_num = $(this).val();
+		printSelectMatch();
+	});
 	function printSelectMatch() {
 		let data = {
-				mt_date : select_day
+				mt_date : select_day,
+				fa_rg_num : rg_num
 		}
 		let str = '';
 		$.ajax({
@@ -94,10 +102,11 @@
 			contentType : "application/json; charset=UTF-8",
 			dataType : 'json',
 			success : function(data) {
+				console.log(data.regionList)
 				for(match of data.matchList){
-					for(time of data.PTList){
-						if(match.mt_ti_num == time.pt_ti_num)
-							for(region of data.PRList){
+					for(time of data.timeList){
+						if(match.mt_ti_num == time.pt_ti_num){
+							for(region of data.regionList){
 								if(match.fa_rg_num == region.pr_rg_num){
 									str +=`
 									<span>\${match.ti_time_str}</span>
@@ -111,6 +120,7 @@
 									<span>\${match.st_max}vs\${match.st_max}</span>
 									<span>\${match.fa_note}</span><br>
 									`
+								}
 							}
 						}
 					}
@@ -119,17 +129,34 @@
 			}
 		});
 	}
-	function mainSelect(val) {
+	
+	function printSubSelect(rg_num) {
 		let str = ``;
-		if(val != 0){
-			str += `
-				<select class="select-sub">
-					<option>\${val}</option>
-				</select>
-			`;
+		if(rg_num != 0){
+			$.ajax({
+				async : false,
+				method : 'post',
+				url : '<c:url value="/manager/select/region"/>',
+				data : {rg_num : rg_num},
+				dataType : 'json',
+				success : function(data) {
+					str += `
+						<select class="select-sub">
+					`
+					for(sr of data.subRegion){
+						str += `
+								<option value="\${sr.rg_num}">\${sr.rg_sub}</option>
+						`
+					}
+					str += `
+						</select>
+					`;
+				}
+			});
 		}
 		$('.sub-region-box').html(str);
 	}
+		
 	</script>
 </body>
 </html>
