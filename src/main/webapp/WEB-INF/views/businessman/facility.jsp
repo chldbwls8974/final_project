@@ -63,15 +63,14 @@
 			</c:if>
 		</div>
 	  </div>
-		
-	    <div align="right" class="mt-3">
-			<a class="btn btn-float-right btn-outline-dark mt-1 col-3 "
-				href="/main/home" role="button">뒤로가기</a>
-		</div>
-		
+	  
 		<div align="right" class="mt-3">
-			<a class="btn btn-float-right btn-outline-dark mt-1 col-3 "
-				href="/businessman/facilityInsert" role="button">시설 등록하기</a>
+			<a class="btn btn-float-right btn btn-primary mt-1 col-3 "
+				 role="button" href="<c:url value='/businessman/facilityInsert'/>">시설 등록하기</a>
+		</div>
+	    <div align="right" class="mt-3">
+			<a class="btn btn-float-left btn btn-danger mt-1 col-3 "
+				role="button" href="<c:url value='/'/>">뒤로가기</a>
 		</div>
 
 </body>

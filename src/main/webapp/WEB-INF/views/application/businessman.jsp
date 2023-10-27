@@ -15,6 +15,11 @@
 	    <input type="text" class="form-control" id="bo_bt_num" name="bo_bt_num" value="7" readonly>
 	  </div>
 	  <br>
+	  <div class="form-group" >
+	    <label for="bo_me_num">회원번호:</label>
+	    <input type="text" class="form-control" id="bo_me_num" name="bo_me_num" value="${user.me_num}" readonly>
+	  </div>
+	  <br>
 	  <div class="form-group">
 	  	<label for="bo_contents" style="font-weight: bold;">대표자명 / 대표 전화번호 / 대표 이메일을 작성해주세요</label>
 	    <textarea class="form-control" id="bo_contents" name="bo_contents" rows="3">

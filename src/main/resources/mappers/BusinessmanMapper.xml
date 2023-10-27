@@ -6,10 +6,7 @@
 	<select id="selectFacilityList" resultType="kr.kh.final_project.vo.FacilityVO">
 			select * from facility order by fa_num desc
 	</select>
-	<insert id="" >
-		insert into facility(fa_bu_num, fa_name, fa_add, fa_add_detail, fa_phone, fa_locker,fa_toilet,
-			 fa_shower, fa_smoking, fa_machine, fa_note)
-		values (#{facility.fa_bu_num}, #{facility.fa_name}, #{facility.fa_add}, 
-			#{facility.fa_add_detail}, #{facility.fa_phone}, 0, 0, 0, 0, 0, 0)
-	</insert>
+	<select id="seletBusinessmanByNum" resultType="kr.kh.final_project.vo.BusinessmanVO">
+		select * from Businessman where bu_me_num = #{me_num}
+	</select>
 </mapper>
