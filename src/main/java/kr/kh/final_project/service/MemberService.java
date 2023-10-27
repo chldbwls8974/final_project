@@ -31,8 +31,6 @@ public interface MemberService {
 
 	boolean pointRefundApply(MemberVO user, MemberVO tmpUser, PointHistoryVO pointHistory);
 
-	int refundAblePoint(MemberVO user);
-
 	List<PointHistoryVO> getUserRefundHistoryList(MemberVO user);
 
 	boolean cancelRefundApply(PointHistoryVO ph);

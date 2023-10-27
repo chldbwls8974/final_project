@@ -147,12 +147,6 @@ public class MemberServiceImp implements MemberService{
 		pointHistory.setPh_price(-pointHistory.getPh_price());
 		return pointHistoryDao.insertPointHistory(pointHistory);
 	}
-	//환급신청 가능한 포인트를 반환하는 메서드
-	@Override
-	public int refundAblePoint(MemberVO user) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public List<PointHistoryVO> getUserRefundHistoryList(MemberVO user) {

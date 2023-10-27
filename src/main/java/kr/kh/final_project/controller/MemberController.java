@@ -116,15 +116,7 @@ public class MemberController {
 	
 	//포인트 환급 페이지
 	@GetMapping("/member/refund")
-	public String pointRefund(Model model, HttpSession session) {
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		
-		//환급 리스트 받아오는 메서드
-//		List<PointHistoryVO> phList = memberService.getUserRefundHistoryList(user);
-		
-		//환급신청가능한 포인트를 반환하는 메서드
-//		int point = memberService.refundAblePoint(user);
-		model.addAttribute("user", user);
+	public String pointRefund(HttpSession session) {
 		return "/member/refund";
 	}
 	@PostMapping("/member/refund")
@@ -137,7 +129,7 @@ public class MemberController {
 		System.out.println(tmpUser);
 		if(memberService.pointRefundApply(user,tmpUser, pointHistory)) {
 			msg = "환급 신청이 성공하였습니다.";
-			url = "/";
+			url = "/member/refund";
 		}else {
 			msg = "환급 신청이 실패하였습니다.";
 			url = "/"; 
