@@ -9,4 +9,15 @@
 	<select id="seletBusinessmanByNum" resultType="kr.kh.final_project.vo.BusinessmanVO">
 		select * from Businessman where bu_me_num = #{me_num}
 	</select>
+	<insert id="insertFacility">
+		insert into 
+			facility(fa_rg_num, fa_name, fa_add, fa_add_detail, 
+					fa_phone, fa_pay, fa_locker, fa_toilet, 
+					fa_shower, fa_smoking, fa_machine, fa_note)
+			values 
+				(#{facility.fa_rg_num}, #{facility.fa_name}, #{facility.fa_add}, 
+				#{facility.fa_add_detail}, #{facility.fa_phone}, #{facility.fa_pay}, 
+				#{facility.fa_locker}, #{facility.fa_toilet}, #{facility.fa_shower}, 
+				#{facility.fa_smoking}, #{facility.fa_machine}, #{facility.fa_note})
+	</insert>
 </mapper>

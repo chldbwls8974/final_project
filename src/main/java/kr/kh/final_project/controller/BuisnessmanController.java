@@ -16,11 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.final_project.service.BusinessmanService;
+import kr.kh.final_project.service.RegionService;
 import kr.kh.final_project.service.ScheduleService;
 import kr.kh.final_project.util.Message;
+import kr.kh.final_project.vo.BusinessmanVO;
 import kr.kh.final_project.vo.FacilityVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.OperatingVO;
+import kr.kh.final_project.vo.RegionVO;
 import kr.kh.final_project.vo.ScheduleVO;
 import kr.kh.final_project.vo.StadiumVO;
 import kr.kh.final_project.vo.TimeVO;
@@ -34,6 +37,9 @@ public class BuisnessmanController {
 	@Autowired
 	private BusinessmanService businessmanService;
 	
+	@Autowired
+	RegionService regionService;
+	
 	@GetMapping("/businessman/facility")
 	public String facility(Model model) {
 		//서비스에게 시설 리스트 가져오라고 시킴
@@ -44,13 +50,48 @@ public class BuisnessmanController {
 	}
 	
 	@GetMapping("/businessman/facilityInsert")
-	public String facilityInsert() {
+	public String facilityInsert(Model model, HttpSession session) {
+		//로그인한 회원 정보를 가져오고, 권한이 사업자일 경우에만 사업자가 등록한 시설 정보를 알 수 있음
+		//멤버와 사업자를 연결하기 위해 user 정보를 가져옴 (session은 로그인한 정보와 interceptor에 있는 정보만 가져오는 역할)
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		//user의 me_num을 가져와서 business에 저장 -> BusinessmanVO의 bu_num으로 facility 정보도 확인 가능
+		BusinessmanVO business = businessmanService.getBusinessmanByNum(user.getMe_num());
+		
+		//서비스에게 MainRegion메서드를 가져와서 MainRegion에 저장
+		List<RegionVO> MainRegion = businessmanService.getMainRegion();
+
+		//business에 저장된 user의 me_num을 화면에 보여줌
+		model.addAttribute("business", business);
+		model.addAttribute("MainRegion",MainRegion);
 		return "/businessman/facilityInsert";
 	}
+
+	@ResponseBody
+	@GetMapping("/businessman/facilityInsert/region")
+	public Map<String, Object> region(@RequestParam String rg_main,  Model model){
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<RegionVO> SubRegion = businessmanService.getSubRegionByMainRegion(rg_main);
+		map.put("SubRegion", SubRegion);
+		return map;
+	}
+	
 	@PostMapping("/businessman/facilityInsert")
-	public String insertfacility(FacilityVO facility) {
-		System.out.println(facility);
-		return "message";
+	public String insertfacility(Model model, FacilityVO facility, 
+			BusinessmanVO business, HttpSession session) {
+		//System.out.println(facility);
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		//Service에게 business, user, facility 정보를 주고 insertFacility 메서드로 저장
+		boolean res = businessmanService.insertFacility(business, user, facility);
+			if(res) {
+				model.addAttribute("msg", "시설 등록이 완료되었습니다.");
+				model.addAttribute("url", "/businessman/facility");
+			}else {
+				model.addAttribute("msg", "시설을 등록하지 못했습니다.");
+				model.addAttribute("url", "/");
+			}
+		return "/util/message";
 	}
 	
 	@GetMapping("/buisnessman/manage/schedule")

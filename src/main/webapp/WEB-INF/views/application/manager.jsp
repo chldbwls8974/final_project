@@ -15,7 +15,7 @@
 	    <input type="text" class="form-control" id="bo_bt_num" name="bo_bt_num" value="6" readonly>
 	  </div>
 	  
-	  <div class="form-group" >
+	  <div class="form-group" hidden="hidden">
 	    <label for="bo_me_num">회원번호</label>
 	    <input type="text" class="form-control" id="bo_me_num" name="bo_me_num" value="${user.me_num}" readonly>
 	  </div>

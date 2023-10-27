@@ -16,10 +16,23 @@
 	  </div>
 	  
 	  <div class="form-group">
-	    <label for="fa_rg_num">지역 번호:</label>
-	    <input type="text" class="form-control" id="fa_rg_num" name="fa_rg_num" >
+		<label>거주지</label> 
+		<select class="form-control rg_main">
+			<option value="0">지역을 선택하세요</option>
+				<c:forEach items="${MainRegion}" var="main">
+					<option value="${main.rg_main}">${main.rg_main}</option>
+				</c:forEach>
+		</select>
 	  </div>
-	  
+	  <div class="form-group">
+		<select class="form-control rg_sub" name="fa_rg_num">
+			<option value="0">지역을 선택하세요</option>
+				<c:forEach items="${SubRegion}" var="sub">
+					<option value="${sub.rg_num}">${sub.rg_sub}</option>
+				</c:forEach>
+		</select>
+	  </div>
+
 	  <div class="form-group">
 	    <label for="fa_name">시설명:</label>
 	    <input type="text" class="form-control" placeholder="시설명을 입력하세요" id="fa_name">
@@ -146,6 +159,28 @@
         		//숫자만 남은 문자열을 전화번호 형식으로 변환
         		.replace(/(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g, "$1-$2-$3");
 		}
+	
+		//지역 선택
+		 $(document).on('change','.rg_main',function(){
+			 let th = $(this);
+			 rg_main = th.val();
+			 console.log(rg_main)
+			 data={
+				 rg_main : rg_main
+			}
+			//각 지역별 도시 선택
+			ajaxJsonToJson2(false, 'get', '/businessman/facilityInsert/region', data, (a)=>{
+				var option = "";
+				th.parent().next().find('[name=fa_rg_num]').empty();
+				
+				for (var i in a.SubRegion){
+					var obj = a.SubRegion[i];
+					option = "<option value='" + obj.rg_num + "'>" + obj.rg_sub + "</option>";
+					th.parent().next().find('[name=fa_rg_num]').append(option)
+				}
+			})
+		   });
+		
 	</script>
 	
 </body>

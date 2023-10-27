@@ -13,4 +13,6 @@ public interface BusinessmanDAO {
 
 	BusinessmanVO seletBusinessmanByNum(@Param("me_num")Integer me_num);
 
+	boolean insertFacility(@Param("facility")FacilityVO facility);
+
 }
