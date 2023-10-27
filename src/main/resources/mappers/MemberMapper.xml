@@ -3,6 +3,16 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.final_project.dao.MemberDAO">
+	<select id="searchMemberById" resultType="kr.kh.final_project.vo.MemberVO">
+		SELECT * FROM Member WHERE me_id like concat('%', #{keyword}, '%');
+	</select>
+	<select id="searchMemberByName" resultType="kr.kh.final_project.vo.MemberVO">
+		SELECT * FROM Member WHERE me_name like concat('%', #{keyword}, '%');
+	</select>
+	<select id="selectMemberList" resultType="kr.kh.final_project.vo.MemberVO">
+		SELECT * FROM Member
+	</select>
+	
 	<select id="selectMember" resultType="kr.kh.final_project.vo.MemberVO">
 		select * from member where me_id = #{me_id}
 	</select>
@@ -46,4 +56,10 @@
 		select * from member 
 		where me_num= #{me_num}
 	</select>
+	<select id="selectMemberNumByNick2" resultType="kr.kh.final_project.vo.MemberVO">
+		select * from member where me_nickname = #{check}
+	</select>
+	<update id="updateMemberProfile">
+		update member set me_profile = #{user.me_profile}
+	</update>
 </mapper>

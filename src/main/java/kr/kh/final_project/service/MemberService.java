@@ -10,6 +10,12 @@ import kr.kh.final_project.vo.RegionVO;
 
 public interface MemberService {
 
+	List<MemberVO> searchMemberById(String keyword);
+
+	List<MemberVO> searchMemberByName(String keyword);
+
+	List<MemberVO> getMemberList();
+
 	boolean signup(MemberVO member);
 
 	MemberVO getMember(String me_id);
@@ -26,7 +32,6 @@ public interface MemberService {
 
 	void updateMemberSession(MemberVO user);
 
-
 	MemberVO userById(String name);
 
 	boolean pointRefundApply(MemberVO user, MemberVO tmpUser, PointHistoryVO pointHistory);
@@ -34,6 +39,13 @@ public interface MemberService {
 	List<PointHistoryVO> getUserRefundHistoryList(MemberVO user);
 
 	boolean cancelRefundApply(PointHistoryVO ph);
+
+	boolean updateProfile(MemberVO member, MemberVO user, MultipartFile file);
+
+	MemberVO isCheck2(String check);
+
+
+
 
 
 }

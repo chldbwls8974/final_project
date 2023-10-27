@@ -11,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.service.MemberService;
 import kr.kh.final_project.service.RegionService;
@@ -106,14 +108,6 @@ public class MemberController {
 	
 	
 	
-	@GetMapping("/member/mypage")
-	public String mepage(HttpSession session, Model model) {
-		String name = (String) session.getAttribute("name");
-		MemberVO user = memberService.userById(name);
-		model.addAttribute("user", user);
-		return "/member/mypage";
-	}
-	
 	//포인트 환급 페이지
 	@GetMapping("/member/refund")
 	public String pointRefund(HttpSession session) {
@@ -162,4 +156,75 @@ public class MemberController {
 		map.put("res", res);
 		return map;
 	}
+}
+	//마이페이지
+	@GetMapping("/member/mypage")
+	public String myPage(HttpSession session, Model model) {
+		MemberVO user = (MemberVO) session.getAttribute("user");
+		model.addAttribute("user", user);
+		return "/member/mypage";
+	}
+
+	//마이페이지 - 회원조회
+	@GetMapping("/member/search")
+	public String searchMembers(Model model) {
+		List<MemberVO> memberList = memberService.getMemberList(); //서비스에게 멤버리스트 요청
+		model.addAttribute("memberList", memberList);
+		return "/member/search";
+	}
+	
+	@ResponseBody
+	@PostMapping("/member/searchfilter")
+	 public Map<String, Object>searchMembers(@RequestParam String searchType, @RequestParam String keyword, Model model) {
+		 Map<String, Object> map = new HashMap<String, Object>();
+		 List<MemberVO> memberList; //회원목록 리스트 선언
+		 boolean res = false; //검색 결과 변수 초기화
+		 
+		if("id".equals(searchType)) { //아이디로 검색하면 그 값을 memberList에 저장
+			memberList = memberService.searchMemberById(keyword);
+		}else { //이름으로 검색하면 그 값을 memberList에 저장
+			memberList = memberService.searchMemberByName(keyword);
+		} //검색결과가 있으면 res를 true로
+		if(memberList != null) {
+			res = true;
+		}
+		map.put("memberList",memberList);//map에 저장 후 jsp로 전달
+		map.put("res",res);//jsp로 전달
+		return map;
+	}
+	
+	@GetMapping("/member/myedit")
+	public String myProfile() {
+		return "/member/myedit";
+	}
+	
+	
+	@PostMapping("/member/myedit")
+	public String profileEdit(MemberVO member, MultipartFile file, HttpSession session,Model model) {
+		System.out.println(member);
+		MemberVO user = (MemberVO)session.getAttribute("user"); //세션에 저장된 현재 user 정보 가져옴
+		System.out.println(user);
+		boolean res = memberService.updateProfile(member, user, file); //새로 입력한 정보 업데이트
+		if(res) { //업데이트된 사용자 정보 세션에 저장
+			session.setAttribute("user", member); 
+			model.addAttribute("msg", "수정을 완료했습니다.");
+			model.addAttribute("url","/member/mypage");
+		}else { //업데이트 실패시
+			model.addAttribute("msg", "수정에 실패했습니다.");
+			model.addAttribute("url","/member/myedit");
+		}
+		return "/member/mypage";
+	}
+	
+	
+	// 닉네임 입력 시, 입력한 닉네임의 회원이 존재하는지 확인
+	@ResponseBody
+	@GetMapping("/member/myedit/check")
+	public Map<String, Object> profilecheck(@RequestParam String check,  Model model){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO checked = memberService.isCheck2(check);
+		map.put("checked",checked);
+		return map;
+	}
+	
 }
