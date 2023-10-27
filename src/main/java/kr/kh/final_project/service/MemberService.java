@@ -2,10 +2,10 @@ package kr.kh.final_project.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
-import kr.kh.final_project.vo.PreferredRegionVO;
 import kr.kh.final_project.vo.RegionVO;
 import kr.kh.final_project.vo.TimeVO;
 
@@ -17,8 +17,6 @@ public interface MemberService {
 	List<MemberVO> searchMemberByName(String keyword);
 
 	List<MemberVO> getMemberList();
-
-	boolean signup(MemberVO member);
 
 	MemberVO getMember(String me_id);
 

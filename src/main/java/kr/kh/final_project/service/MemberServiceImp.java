@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.dao.MemberDAO;
+import kr.kh.final_project.dao.PointHistoryDAO;
 import kr.kh.final_project.dao.PreferredRegionDAO;
 import kr.kh.final_project.dao.PreferredTimeDAO;
-import kr.kh.final_project.dao.PointHistoryDAO;
 import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.dao.TimeDAO;
 import kr.kh.final_project.vo.MemberVO;
@@ -34,9 +34,6 @@ public class MemberServiceImp implements MemberService{
 	
 	@Autowired
 	private JavaMailSender mailSender;
-	
-	@Autowired
-	MemberDAO memberDao;
 	
 	@Autowired
 	RegionDAO regionDao;
@@ -362,6 +359,7 @@ public class MemberServiceImp implements MemberService{
 		MemberVO dbMember = memberDao.selectMemberNumByNick2(check);
 		return dbMember;
 	}
+
 
 
 //	@Override

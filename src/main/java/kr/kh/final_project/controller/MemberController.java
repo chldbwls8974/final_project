@@ -201,7 +201,7 @@ public class MemberController {
 		map.put("res", res);
 		return map;
 	}
-}
+
 	//마이페이지
 	@GetMapping("/member/mypage")
 	public String myPage(HttpSession session, Model model) {
