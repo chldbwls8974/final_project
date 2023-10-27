@@ -1,0 +1,24 @@
+package kr.kh.final_project.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import kr.kh.final_project.pagination.Criteria;
+import kr.kh.final_project.vo.ManagerVO;
+
+public interface BusinessDAO {
+
+	// 사업자신청 조회하기
+	List<ManagerVO> selectBusinessList(@Param("cri")Criteria cri);
+
+	// 사업자신청 수락버튼 (권한 바꾸기)
+	boolean updateBusinessByAuthority(@Param("manager")ManagerVO manager);
+
+	// 사업자신청 총 갯수 가져오기
+	int selectTotalCount(@Param("cri")Criteria cri);
+	
+
+	
+	
+}

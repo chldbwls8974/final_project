@@ -24,6 +24,7 @@ import kr.kh.final_project.util.Message;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.RegionVO;
+import kr.kh.final_project.vo.TimeVO;
 
 @Controller
 public class MemberController {
@@ -36,7 +37,9 @@ public class MemberController {
 	@GetMapping("/member/signup")
 	public String signup(Model model) {
 		List<RegionVO> MainRegion = memberService.getMainRegion();
+		List<TimeVO> time = memberService.getAllTime();
 		model.addAttribute("MainRegion",MainRegion);
+		model.addAttribute("time",time);
 		return "/member/signup";
 	}
 	
@@ -59,17 +62,59 @@ public class MemberController {
 		return map;
 	}
 	
+	//인증번호 전송
+	@ResponseBody
+	@GetMapping("/member/signup/checkmail")
+	public boolean checkmail(@RequestParam String to,@RequestParam String randomCode, Model model){
+		//Map<String, Object> map = new HashMap<String, Object>();
+		String title= "인증번호 메일 테스트";
+		String contents = 
+				"홈페이지를 방문해주셔서 감사합니다." + 	//html 형식으로 작성 ! 
+                "<br><br>" + 
+			    "인증 번호는 " + randomCode + "입니다." + 
+			    "<br>" + 
+			    "해당 인증번호를 인증번호 확인란에 기입하여 주세요."; //이메일 내용 삽입
+		return memberService.sendMail(to, title, contents);
+	}
+	
+	// 아이디 중복 체크
+	@ResponseBody
+	@PostMapping("/member/check/id")
+	public Object idCheck(@RequestParam("id")String id){
+		return memberService.checkId(id);
+	}
+	
+	// 이메일 중복 체크
+	@ResponseBody
+	@PostMapping("/member/check/email")
+	public Object emailCheck(@RequestParam("email")String email){
+		return memberService.checkEmail(email);
+	}
+	
+	// 닉네임 중복 체크
+	@ResponseBody
+	@PostMapping("/member/check/nickname")
+	public Object nickNameCheck(@RequestParam("nickname")String nickname){
+		return memberService.checkNickName(nickname);
+	}
+	
 	
 	@PostMapping("/member/signup")
-	public String signupPost(MemberVO member, Model model) {
+	public String signupPost(MemberVO member, Model model, int[] pr_rg_num,
+			 int[] favoriteTime
+			,  int[] favoriteHoliTime
+			) 
+		{
+		
 		Message msg = new Message("/member/signup", "회원 가입에 실패했습니다.");
 		
-		if(memberService.signup(member)) {
+		if(memberService.signup(member, pr_rg_num,favoriteTime,favoriteHoliTime)) {
 			msg = new Message("/", "회원 가입에 성공했습니다.");
 		}
 		model.addAttribute("msg", msg);
 		return "message";
 	}
+	
 	
 	@GetMapping(value="/member/login")
 	public String memberLogin() {
