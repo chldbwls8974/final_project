@@ -1,11 +1,17 @@
 package kr.kh.final_project.vo;
 
-import java.util.Date;
 import lombok.Data;
 
 @Data
 public class RegionVO {
-	int rg_num;
-	String rg_main;
-	String rg_sub;
+	private int rg_num;
+	private String rg_main;
+	private String rg_sub;
+	
+	private int pr_rg_num; 
+	
+	public int getPr_rg_num() {
+		pr_rg_num = rg_num;
+		return pr_rg_num;
+	}
 }

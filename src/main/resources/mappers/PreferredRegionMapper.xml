@@ -3,6 +3,14 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.final_project.dao.PreferredRegionDAO">
+	<select id="selectPRListByMeNum" resultType="kr.kh.final_project.vo.PreferredRegionVO">
+		select
+			*
+		from
+			preferred_region
+		where
+			pr_me_num = #{me_num}
+	</select>
 	<insert id="insertPreferredRegion">
 		insert into preferred_region(pr_me_num, pr_rg_num) values(#{me_num},#{rg_num})
 	</insert>

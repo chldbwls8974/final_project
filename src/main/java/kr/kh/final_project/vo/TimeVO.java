@@ -13,6 +13,7 @@ public class TimeVO {
 	private Date ti_time;
 	
 	private String ti_time_str;
+	private int pt_ti_num;
 	
 	public String getTi_time_str() {
 		if(ti_time == null) {

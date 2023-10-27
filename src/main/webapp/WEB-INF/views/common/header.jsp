@@ -51,29 +51,36 @@
 			<li class="nav-item">
 				<a class="nav-link" href="#">시설 조회</a>
 			</li>
-				<c:if test="${user != null && user.me_authority == 'ADMIN'}">
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-						관리자
-						</a>
-						<div class="dropdown-menu">
-							<a class="dropdown-item" href="<c:url value='/admin/member'/>">회원 관리</a>
-							<a class="dropdown-item" href="<c:url value='/admin/manager'/>">매니저 관리</a>
-							<a class="dropdown-item" href="<c:url value='/admin/business'/>">사업자 관리</a>
-							<a class="dropdown-item" href="#">게시판 관리</a>
-						</div>
-					</li>
-				</c:if>
-			<li class="nav-item">
-					<a class="nav-link" href="#">매니저</a>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+				관리자
+				</a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="<c:url value='/admin/member'/>">회원 관리</a>
+					<a class="dropdown-item" href="#">매니저 관리</a>
+					<a class="dropdown-item" href="#">사업자 관리</a>
+					<a class="dropdown-item" href="#">게시판 관리</a>
+				</div>
+			</li>
+			<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+					매니저
+					</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="<c:url value='/manager/select/match'/>">매치 신청</a>
+						<a class="dropdown-item" href="<c:url value='/manager/manage/schedule'/>">일정 관리</a>
+					</div>
 			</li>
 			<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 					사업자
 					</a>
 					<div class="dropdown-menu">
+						<a class="dropdown-item" href="#">시설 등록</a>
 						<a class="dropdown-item" href="<c:url value='/businessman/facility'/>">시설 관리</a>
 						<a class="dropdown-item" href="#">경기장 등록</a>
+						<a class="dropdown-item" href="<c:url value='/buisnessman/manage/schedule'/>">스케줄 관리</a>
+						<a class="dropdown-item" href="#">일정 관리</a>
 					</div>
 			</li>
 			<li class="nav-item">
