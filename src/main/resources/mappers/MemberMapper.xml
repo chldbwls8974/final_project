@@ -87,16 +87,29 @@
 				asc
 	</select>
 
+	<select id="searchMemberById" resultType="kr.kh.final_project.vo.MemberVO">
+		SELECT * FROM Member WHERE me_id like concat('%', #{keyword}, '%');
+	</select>
+	<select id="searchMemberByName" resultType="kr.kh.final_project.vo.MemberVO">
+		SELECT * FROM Member WHERE me_name like concat('%', #{keyword}, '%');
+	</select>
+	<select id="selectMemberList" resultType="kr.kh.final_project.vo.MemberVO">
+		SELECT * FROM Member
+	</select>
+	
 	<select id="selectMember" resultType="kr.kh.final_project.vo.MemberVO">
 		select * from member where me_id = #{me_id}
 	</select>
-	
-	<select id="selectMemberNumByNick" resultType="kr.kh.final_project.vo.MemberVO">
+	<select id="selectMemberByEmail" resultType="kr.kh.final_project.vo.MemberVO">
+		select * from member where me_email = #{me_email}
+	</select>
+	<select id="selectMemberByNickName" resultType="kr.kh.final_project.vo.MemberVO">
 		select * from member where me_nickname = #{check}
 	</select>
 	
 	<insert id="insertMember">
-		insert into member(me_id, me_pw, me_email) values(#{m.me_id},#{m.me_pw},#{m.me_email})
+		insert into member(me_id, me_pw, me_email, me_phone, me_name, me_gender, me_birthday, me_nickname, me_rg_num)
+		 values(#{m.me_id},#{m.me_pw},#{m.me_email},#{m.me_phone},#{m.me_name},#{m.me_gender},#{m.me_birthday},#{m.me_nickname},#{m.me_rg_num})
 	</insert>
 	<update id="updateMemberSession">
 		update
@@ -115,4 +128,25 @@
 		where
 			me_session_id = #{me_session_id} and me_session_limit >= now() 
 	</select>
+	<select id="selectManager" resultType="kr.kh.final_project.vo.MemberVO">
+		select * from member where me_num= #{me_num}
+	</select>
+	<update id="updateMemberPoint">
+		update
+			member
+		set
+			me_point = #{user.me_point}
+		where
+			me_num = #{user.me_num}
+	</update>
+	<select id="selectMemberByNum" resultType="kr.kh.final_project.vo.MemberVO">
+		select * from member 
+		where me_num= #{me_num}
+	</select>
+	<select id="selectMemberNumByNick2" resultType="kr.kh.final_project.vo.MemberVO">
+		select * from member where me_nickname = #{check}
+	</select>
+	<update id="updateMemberProfile">
+		update member set me_profile = #{user.me_profile}
+	</update>
 </mapper>

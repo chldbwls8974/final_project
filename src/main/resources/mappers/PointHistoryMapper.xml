@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.final_project.dao.PointHistoryDAO">
+
+	<insert id="insertPointHistory">
+		insert into point_history(ph_price, ph_source, ph_me_num) 
+			values(#{pointHistory.ph_price}, #{pointHistory.ph_source}, #{pointHistory.ph_me_num})
+	</insert>
+	<select id="selectPointRefundHistoryByUserNum" resultType="kr.kh.final_project.vo.PointHistoryVO">
+		select 
+			* 
+		from 
+			point_history 
+		where 
+			ph_me_num = #{user.me_num} and
+			(ph_source = '4' or ph_source = '5')
+        order by ph_num desc;
+	</select>
+	<delete id="deleteRefundPointHistory">
+		delete from point_history
+		where ph_num = ${pointHistory.ph_num};
+	</delete>
+	<select id="selectPointHistoryByNum" resultType="kr.kh.final_project.vo.PointHistoryVO">
+		select 
+			* 
+		from 
+			point_history 
+		where 
+			ph_num = #{ph_num}
+	</select>
+</mapper>

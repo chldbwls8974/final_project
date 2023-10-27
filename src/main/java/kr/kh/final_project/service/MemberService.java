@@ -8,14 +8,18 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.RegionVO;
+import kr.kh.final_project.vo.TimeVO;
 
 public interface MemberService {
 
-	boolean signup(MemberVO member);
+	boolean signup(MemberVO member, int[] pr_rg_num, int[] favoriteTime, int[] favoriteHoliTime);
+	List<MemberVO> searchMemberById(String keyword);
+
+	List<MemberVO> searchMemberByName(String keyword);
+
+	List<MemberVO> getMemberList();
 
 	MemberVO getMember(String me_id);
-
-	boolean pointRefundApply(MemberVO user, PointHistoryVO pointHistory);
 
 	List<RegionVO> getMainRegion();
 
@@ -29,8 +33,32 @@ public interface MemberService {
 
 	void updateMemberSession(MemberVO user);
 
-
 	MemberVO userById(String name);
 	
 	//List<MemberVO> getMemberList(Criteria cri);
+
+	Object checkId(String id);
+	
+	boolean sendMail(String to, String title, String contents);
+
+	Object checkEmail(String email);
+
+	Object checkNickName(String nickname);
+
+	List<TimeVO> getAllTime();
+
+	boolean pointRefundApply(MemberVO user, MemberVO tmpUser, PointHistoryVO pointHistory);
+
+	List<PointHistoryVO> getUserRefundHistoryList(MemberVO user);
+
+	boolean cancelRefundApply(PointHistoryVO ph);
+
+	boolean updateProfile(MemberVO member, MemberVO user, MultipartFile file);
+
+	MemberVO isCheck2(String check);
+
+
+
+
+
 }
