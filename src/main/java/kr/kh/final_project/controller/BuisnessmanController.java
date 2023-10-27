@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.kh.final_project.service.BusinessmanService;
 import kr.kh.final_project.service.ScheduleService;
 import kr.kh.final_project.util.Message;
+import kr.kh.final_project.vo.FacilityVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.OperatingVO;
 import kr.kh.final_project.vo.ScheduleVO;
@@ -29,6 +31,28 @@ public class BuisnessmanController {
 	@Autowired
 	ScheduleService scheduleBService;
 		
+	@Autowired
+	private BusinessmanService businessmanService;
+	
+	@GetMapping("/businessman/facility")
+	public String facility(Model model) {
+		//서비스에게 시설 리스트 가져오라고 시킴
+		List<FacilityVO> list = businessmanService.getFacilityList();
+		//가져온 리스트를 화면에 전송
+		model.addAttribute("list", list);
+		return "/businessman/facility";
+	}
+	
+	@GetMapping("/businessman/facilityInsert")
+	public String facilityInsert() {
+		return "/businessman/facilityInsert";
+	}
+	@PostMapping("/businessman/facilityInsert")
+	public String insertfacility(FacilityVO facility) {
+		System.out.println(facility);
+		return "message";
+	}
+	
 	@GetMapping("/buisnessman/manage/schedule")
 	public String insertSchedule(Model model, HttpSession session) {
 		MemberVO member = (MemberVO)session.getAttribute("user");
