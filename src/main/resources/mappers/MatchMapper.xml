@@ -34,6 +34,7 @@
 			where mn_me_num = #{me_num}) as T2 on T2.t2 = ti_num
 		where
 			mt_date = #{mt_date} and
+			mt_state1 != 1 and
 		    if(ifnull(mn_mt_num, 0) = 0, true, false) and
 		    if(ifnull(T1.t1, 0) = 0, true, false) and
 		    if(ifnull(T2.t2, 0) = 0, true, false)

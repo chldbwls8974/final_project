@@ -46,6 +46,10 @@
 		</c:forEach>
 	</div>
 	<br>
+	<div class="preferred-time-box">
+		<span>선호시간 : </span>
+		<input class="preferred-time-check" type="checkbox" checked="checked">
+	</div>
 	<div class="main-region-box">
 		<span>지역 : </span>
 		<select class="select-main">
@@ -64,6 +68,7 @@
 	<script type="text/javascript">
 	let select_day = "${thirdWeek[0].date_str}"
 	let rg_num = 0;
+	let check = true;
 	
 	
 	$('.day-box').eq(0).children('.not-select-circle').toggleClass('select-circle');
@@ -72,7 +77,7 @@
 	
 	$(document).on('click', '.not-select-circle', function() {
 		select_day = $(this).children('.select-date-str').val();
-		rg_num = 0;
+		
 		$(this).toggleClass('not-select-circle');
 		$(this).toggleClass('select-circle');
 		$(this).parents('.day-box').siblings('.day-box').children('.select-circle').toggleClass('not-select-circle');
@@ -90,21 +95,20 @@
 		rg_num = $(this).val();
 		printSelectMatch();
 	});
+	$(document).on('change', '.preferred-time-check', function() {
+		check = !check;
+		printSelectMatch()
+	})
 	function printSelectMatch() {
-		let data = {
-				mt_date : select_day,
-				fa_rg_num : rg_num
-		}
 		let str = '';
 		$.ajax({
 			async : false,
 			method : 'post',
 			url : '<c:url value="/manager/select/date"/>',
-			data : JSON.stringify(data),
-			contentType : "application/json; charset=UTF-8",
+			data : {mt_date:select_day, rg_num:rg_num, check:check},
 			dataType : 'json',
 			success : function(data) {
-				console.log(data.regionList)
+				console.log(data.timeList)
 				for(match of data.matchList){
 					for(time of data.timeList){
 						if(match.mt_ti_num == time.pt_ti_num){

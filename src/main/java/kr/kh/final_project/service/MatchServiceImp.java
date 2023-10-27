@@ -11,11 +11,13 @@ import kr.kh.final_project.dao.MatchDAO;
 import kr.kh.final_project.dao.PreferredRegionDAO;
 import kr.kh.final_project.dao.PreferredTimeDAO;
 import kr.kh.final_project.dao.RegionDAO;
+import kr.kh.final_project.dao.TimeDAO;
 import kr.kh.final_project.vo.ExtraVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.PreferredRegionVO;
 import kr.kh.final_project.vo.PreferredTimeVO;
 import kr.kh.final_project.vo.RegionVO;
+import kr.kh.final_project.vo.TimeVO;
 
 @Service
 public class MatchServiceImp implements MatchService{
@@ -34,6 +36,9 @@ public class MatchServiceImp implements MatchService{
 	
 	@Autowired
 	RegionDAO regionDao;
+	
+	@Autowired
+	TimeDAO timeDao;
 	
 	@Override
 	public List<ExtraVO> selectThirdWeekDayList() {
@@ -94,6 +99,15 @@ public class MatchServiceImp implements MatchService{
 			}
 		}
 		return region;
+	}
+
+
+	@Override
+	public List<TimeVO> selectTimeListByMtDate(Date mt_date) {
+		if(mt_date == null) {
+			return null;
+		}
+		return timeDao.selectTimeListByMtDate(mt_date);
 	}
 	
 	

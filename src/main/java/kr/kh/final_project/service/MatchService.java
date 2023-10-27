@@ -8,6 +8,7 @@ import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.PreferredRegionVO;
 import kr.kh.final_project.vo.PreferredTimeVO;
 import kr.kh.final_project.vo.RegionVO;
+import kr.kh.final_project.vo.TimeVO;
 
 public interface MatchService {
 	
@@ -24,5 +25,7 @@ public interface MatchService {
 	List<RegionVO> selectSubRegionByMainRegion(int rg_num);
 
 	List<RegionVO> selectRegionListByRgNum(int rg_num);
+
+	List<TimeVO> selectTimeListByMtDate(Date mt_date);
 
 }
