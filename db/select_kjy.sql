@@ -29,7 +29,7 @@ select
                 mt_date = '2023-11-10') as T1 on T1.t1 = mt_ti_num
             	left join -- 매치는 2시간동안 진행되므로 1시간 전 매치도 제외
 			(select
-                if(mt_ti_num + 1 < 168, mt_ti_num + 1, 0) as t2
+                mt_ti_num + 1 as t2
 			from
 				manager
 					join
@@ -48,7 +48,9 @@ select
 				mn_me_num = 3 and
                 mt_date = '2023-11-10') as T3 on T3.t3 = mt_ti_num
 		where
-			mt_date = '2023-11-10'
+			mt_date = '2023-11-10' and
+            mt_state1 = 0 and
+            if(ifnull(T1.t1, 0) + ifnull(T2.t2, 0) + ifnull(T3.t3, 0) + ifnull(mn_me_num, 0)= 0, true, false)
 		order by
 			ti_time asc;
 
