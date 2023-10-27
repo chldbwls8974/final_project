@@ -67,8 +67,14 @@
 			<li class="nav-item">
 					<a class="nav-link" href="#">매니저</a>
 			</li>
-			<li class="nav-item">
-					<a class="nav-link" href="#">사업자</a>
+			<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+					사업자
+					</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="<c:url value='/businessman/facility'/>">시설 관리</a>
+						<a class="dropdown-item" href="#">경기장 등록</a>
+					</div>
 			</li>
 			<li class="nav-item">
 					<a class="nav-link" href="<c:url value='/application/manager'/>">매니저 신청</a>
