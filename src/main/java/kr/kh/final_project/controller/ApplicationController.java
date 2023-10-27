@@ -29,7 +29,8 @@ public class ApplicationController {
 	}
 	
 	@PostMapping("/application/manager")
-	public String applyManager(Model model, BoardVO board, HttpSession session, MultipartFile[] files) {
+	public String applyManager(Model model, BoardVO board, HttpSession session, 
+			MultipartFile[] files) {
 		//System.out.println(board);
 		//user 정보를 주고 멤버VO에서 정보를 가져와서 멤버VO user에 저장
 		MemberVO user = (MemberVO)session.getAttribute("user");
@@ -55,7 +56,8 @@ public class ApplicationController {
 	}
 	
 	@PostMapping("/application/businessman")
-	public String applyBusinessman(Model model, BoardVO board, HttpSession session, MultipartFile[] files) {
+	public String applyBusinessman(Model model, BoardVO board, HttpSession session, 
+			MultipartFile[] files) {
 		//user 정보를 주고 멤버VO에서 정보를 가져와서 멤버VO user에 저장
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
