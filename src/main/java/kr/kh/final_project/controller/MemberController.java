@@ -141,9 +141,15 @@ public class MemberController {
 	
 	@ResponseBody
 	@PostMapping("/member/refund/list")
-	public Map<String, Object> refundList(@RequestBody MemberVO user){
+	public Map<String, Object> refundList(@RequestBody MemberVO user, HttpSession session){
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<PointHistoryVO> refundList = memberService.getUserRefundHistoryList(user);
+		//
+		MemberVO member = (MemberVO)session.getAttribute("user");
+		//dbMember 가져오는 메서드 작성해야함
+		String dbMember = "test";
+		
+		map.put("dbMember", dbMember);
 		map.put("refundList", refundList);
 		return map;
 	}

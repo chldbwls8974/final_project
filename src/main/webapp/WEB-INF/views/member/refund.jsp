@@ -15,7 +15,7 @@
 		<div class="form-group">
 			<h5>${user.me_name} 님의</h5>
 			<!-- 여기 작업해야 함. 유저가 로그인을 풀지않으면 변경포인트가 적용이 안됨. -->
-			<label>현재 보유 포인트는 ${user.me_point} 입니다.</label>
+			<span class="point">현재 보유 포인트는 ${user.me_point} 입니다.</span>
 			<input type="hidden" class="form-control" value="${user.me_num}" name="me_num">
 			<input type="hidden" class="form-control" value="${user.me_num}" name="ph_me_num">
 			<input type="hidden" class="form-control" value="4" name="ph_source">
@@ -52,8 +52,9 @@
 </body>
 
 <script type="text/javascript">
+
+	
 	    $(document).on("change", "#refundAmount", function(){
-	    	
 	        //입력한 금액을 변수에 저장
 	        var refundAmountValue = parseFloat($(this).val());
 	        if(refundAmountValue > 0){
@@ -70,6 +71,7 @@
 	    
 	/* 환급이력리스트를 가져오는 함수 */
 	$(document).ready(function() {
+		
    	 	getPointHistoryList();
 	});
 	
@@ -82,6 +84,7 @@
 		console.log(data);
 		
 		ajaxJsonToJson(false,'post','/member/refund/list', data ,(data)=>{
+			$('.point').text("현재 보유 포인트는 " + data.dbMember + " 입니다.");
 			createPointHistoryList(data.refundList, '.list-tbody');
 			console.log(data.refundList);
 		});
@@ -133,6 +136,7 @@
 			if(data.res){
 				alert('환급 신청이 취소되었습니다.')
 			}
+			
 			getPointHistoryList();
 		}); 
 	}
