@@ -20,6 +20,8 @@ public interface BoardDAO {
 	List<BoardVO> selectBoardList(@Param("cri")Criteria cri);
 	// 공지게시판글 총 갯수 가져오기
 	int selectTotalCount(@Param("cri")Criteria cri);
+	// 게시글 등록하기
+	boolean insertBoard(@Param("board")BoardVO board);
 
 
 }

@@ -18,5 +18,8 @@ public interface BoardService {
 	List<BoardVO> getBoardList(Criteria cri);
 	// 공지게시판 총 갯수 가져오기
 	int getTotalCount(Criteria cri);
+	
+	// 게시글 등록하기
+	boolean insertBoard(BoardVO board, MemberVO user, MultipartFile[] files);
 
 }
