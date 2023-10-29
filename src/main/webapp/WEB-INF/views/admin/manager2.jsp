@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>매니저 신청 관리</title>
+<title>매니저권한 조회</title>
 <style>
 	.btn-info{
 		color : outline-info;
@@ -17,14 +17,14 @@
 		color : white;
 	}
 	h1{
-		text-align : center;
+		text-align : center
 	}
 </style>
 </head>
 <body>
 <br>
-<h1> &#x270B 매니저신청 &#x270B;</h1>
-<!-- 매니저신청 조회 -->
+<h1> &#x2714 매니저 조회 &#x2714;</h1>
+<!-- 매니저권한 조회 -->
 <br>
 <div class="btn-group btn-group">
   <button type="button"
@@ -36,8 +36,8 @@
 				onclick="location.href='<c:url value='/admin/manager2'/>'"	    
 		>매니저권한 조회</button>
 </div>
-<!-- 매니저 신청 검색 기능 -->
-	<form action="<c:url value='/admin/manager'/>" method="get">
+<!-- 매니저 검색 기능 -->
+	<form action="<c:url value='/admin/manager2'/>" method="get">
 	<div class="input-group mb-3 mt-3">
 		<div class="input-group-prepend">
 		    <select class="form-control" id="me_authority" name="t">
@@ -55,7 +55,7 @@
 	    <button class="btn btn-outline-success btn-insert">찾기</button>
 	</div>
 	</form>
-<!-- 매니저신청 정보 출력 -->
+<!-- 매니저 정보 출력 -->
 <div class="container">
 	<table class="table table-hover">
 		<thead>
@@ -66,7 +66,7 @@
 				<th>제목</th>
 				<th>권한</th>
 				<th>작성날짜</th>
-				<th>매니저신청 수락</th>
+				<th>매니저권한 취소</th>
 			</tr>
 		</thead>
 		<tbody class="select-manager">
@@ -83,7 +83,7 @@
 					<td class="update">${ma.me_authority}</td>
 					<td>${ma.bo_reg_date_str}</td>
 					<td>
-						<button class="btn btn-outline-warning btn-update">신청수락</button>
+						<button class="btn btn-outline-danger btn-update">취소</button>
 					</td>
 				</tr>
 			</c:forEach>
@@ -94,23 +94,24 @@
 		<c:if test="${pm.prev}">
 			<li class="page-item">
 				<a class="page-link" 
-					href="<c:url value='/admin/manager${pm.cri.getUrl(pm.startPage-1) }'/>">이전</a>
+					href="<c:url value='/admin/manager2${pm.cri.getUrl(pm.startPage-1) }'/>">이전</a>
 			</li>
 		</c:if>
 		<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
 			<li class="page-item <c:if test='${pm.cri.page == i }'>active</c:if>">
 				<a class="page-link" 
-					href="<c:url value='/admin/manager${pm.cri.getUrl(i)}'/>">${i}</a>
+					href="<c:url value='/admin/manager2${pm.cri.getUrl(i)}'/>">${i}</a>
 			</li>
 		</c:forEach>
 		<c:if test="${pm.next}">
 			<li class="page-item">
 				<a class="page-link" 
-					href="<c:url value='/admin/manager${pm.cri.getUrl(pm.endPage+1) }'/>">다음</a>
+					href="<c:url value='/admin/manager2${pm.cri.getUrl(pm.endPage+1) }'/>">다음</a>
 			</li>
 		</c:if>
 	</ul>
 </div>
+</body>
 <script type="text/javascript">
 	/* 신청수락 수정버튼 */
 	$(document).on('click', '.btn-update', function(){
@@ -129,7 +130,7 @@
 			$.ajax({
 				async : false,
 				method : 'post',
-				url : '<c:url value="/admin/manager"/>',
+				url : '<c:url value="/admin/manager2"/>',
 				data : JSON.stringify(manager),
 				contentType : 'application/json; charset=utf-8',
 				dataType : 'json',
@@ -148,7 +149,7 @@
 									<td class="update">\${ma.me_authority}</td>
 									<td>\${ma.bo_reg_date_str}</td>
 									<td>
-										<button class="btn btn-outline-warning btn-update">신청수락</button>
+										<button class="btn btn-outline-warning btn-update">취소</button>
 									</td>
 								</tr>
 							`
@@ -162,5 +163,4 @@
 		}
 	})      
 </script>
-</body>
 </html>
