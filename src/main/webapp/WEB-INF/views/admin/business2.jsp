@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>매니저권한 조회</title>
+<title>사업자권한 조회</title>
 <style>
 	.btn-info{
 		color : outline-info;
@@ -23,21 +23,21 @@
 </head>
 <body>
 <br>
-<h1> &#x2714 매니저 조회 &#x2714;</h1>
-<!-- 매니저권한 조회 -->
+<h1> &#x1F3DF 사업자 조회 &#x1F3DF;</h1>
+<!-- 사업자권한 조회 -->
 <br>
 <div class="btn-group btn-group">
   <button type="button"
 			    class="btn btn-outline-info btn-info"
-				onclick="location.href='<c:url value='/admin/manager'/>'"	    
-		>매니저신청</button>
+				onclick="location.href='<c:url value='/admin/business'/>'"	    
+		>사업자신청</button>
   <button type="button"
 			    class="btn btn-outline-info btn-info"
-				onclick="location.href='<c:url value='/admin/manager2'/>'"	    
-		>매니저권한 조회</button>
+				onclick="location.href='<c:url value='/admin/business2'/>'"	    
+		>사업자권한 조회</button>
 </div>
-<!-- 매니저 검색 기능 -->
-	<form action="<c:url value='/admin/manager2'/>" method="get">
+<!-- 사업자 신청 검색 기능 -->
+	<form action="<c:url value='/admin/business2'/>" method="get">
 	<div class="input-group mb-3 mt-3">
 		<div class="input-group-prepend">
 		    <select class="form-control" id="me_authority" name="t">
@@ -55,7 +55,7 @@
 	    <button class="btn btn-outline-success btn-insert">찾기</button>
 	</div>
 	</form>
-<!-- 매니저 정보 출력 -->
+<!-- 사업자신청 정보 출력 -->
 <div class="container">
 	<table class="table table-hover">
 		<thead>
@@ -66,22 +66,22 @@
 				<th>제목</th>
 				<th>권한</th>
 				<th>작성날짜</th>
-				<th>매니저권한 취소</th>
+				<th>사업자권한 취소</th>
 			</tr>
 		</thead>
-		<tbody class="select-manager">
-		   <c:forEach items="${list}" var="ma">
+		<tbody class="select-business">
+		   <c:forEach items="${list}" var="bu">
 				<tr>
-					<td>${ma.me_num}</td>
-					<td class="id">${ma.me_nickname}</td>
+					<td>${bu.me_num}</td>
+					<td class="id">${bu.me_nickname}</td>
 					<td>
 						<c:choose>
-	        				<c:when test="${ma.bo_bt_num == 6}">매니저신청</c:when>
+	        				<c:when test="${bu.bo_bt_num == 7}">사업자신청</c:when>
 						</c:choose>
 					</td>
-					<td><a href="<c:url value='/admin/contents'/>">${ma.bo_title}</a></td>
-					<td class="update">${ma.me_authority}</td>
-					<td>${ma.bo_reg_date_str}</td>
+					<td><a href="<c:url value='/admin/contents'/>">${bu.bo_title}</a></td>
+					<td class="update">${bu.me_authority}</td>
+					<td>${bu.bo_reg_date_str}</td>
 					<td>
 						<button class="btn btn-outline-danger btn-update">취소</button>
 					</td>
@@ -94,24 +94,23 @@
 		<c:if test="${pm.prev}">
 			<li class="page-item">
 				<a class="page-link" 
-					href="<c:url value='/admin/manager2${pm.cri.getUrl(pm.startPage-1) }'/>">이전</a>
+					href="<c:url value='/admin/business2${pm.cri.getUrl(pm.startPage-1) }'/>">이전</a>
 			</li>
 		</c:if>
 		<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
 			<li class="page-item <c:if test='${pm.cri.page == i }'>active</c:if>">
 				<a class="page-link" 
-					href="<c:url value='/admin/manager2${pm.cri.getUrl(i)}'/>">${i}</a>
+					href="<c:url value='/admin/business2${pm.cri.getUrl(i)}'/>">${i}</a>
 			</li>
 		</c:forEach>
 		<c:if test="${pm.next}">
 			<li class="page-item">
 				<a class="page-link" 
-					href="<c:url value='/admin/manager2${pm.cri.getUrl(pm.endPage+1) }'/>">다음</a>
+					href="<c:url value='/admin/business2${pm.cri.getUrl(pm.endPage+1) }'/>">다음</a>
 			</li>
 		</c:if>
 	</ul>
 </div>
-</body>
 <script type="text/javascript">
 	/* 신청수락 수정버튼 */
 	$(document).on('click', '.btn-update', function(){
@@ -123,38 +122,39 @@
 			// 버튼을 클릭한 부모 tr에서 class가 update인 값을 me_authority로 넣어준다.
 			let me_authority = $(this).parents('tr').find('.update').text();
 			// 버튼을 누른 회원의 nickname과 authority값을 manager로 가져왔음 ( ex : 동해번쩍, USER )
-			let manager = {
+			let business = {
 					me_nickname : me_nickname,
 					me_authority : me_authority
 			}
+			console.log(business);
 			$.ajax({
 				async : false,
 				method : 'post',
-				url : '<c:url value="/admin/manager2"/>',
-				data : JSON.stringify(manager),
+				url : '<c:url value="/admin/business2"/>',
+				data : JSON.stringify(business),
 				contentType : 'application/json; charset=utf-8',
 				dataType : 'json',
 				success : function(data){
 					if(data.res){
 						alert('수정성공')
 						let str = ``;
-						/* var="ma"를 AdminController에서 만든 list데이터를 반복 */
-						for(ma of data.list){
+						/* var="bu"를 AdminController에서 만든 list데이터를 반복 */
+						for(bu of data.list){
 							str += `
 								<tr>
-									<td>\${ma.me_num}</td>
-									<td class="id">\${ma.me_nickname}</td>
-									<td>\${ma.bo_bt_num}</td>
-									<td>\${ma.bo_title}</td>
-									<td class="update">\${ma.me_authority}</td>
-									<td>\${ma.bo_reg_date_str}</td>
+									<td>\${bu.me_num}</td>
+									<td class="id">\${bu.me_nickname}</td>
+									<td>\${bu.bo_bt_num}</td>
+									<td>\${bu.bo_title}</td>
+									<td class="update">\${bu.me_authority}</td>
+									<td>\${bu.bo_reg_date_str}</td>
 									<td>
-										<button class="btn btn-outline-warning btn-update">취소</button>
+										<button class="btn btn-outline-danger btn-update">취소</button>
 									</td>
 								</tr>
 							`
 						}
-						$('.select-manager').html(str);
+						$('.select-business').html(str);
 					}else{
 						alert('수정실패')
 					}
@@ -163,4 +163,5 @@
 		}
 	})      
 </script>
+</body>
 </html>

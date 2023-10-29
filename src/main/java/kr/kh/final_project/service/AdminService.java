@@ -36,4 +36,11 @@ public interface AdminService {
 	// 사업자 정보 페이지네이션 (총 사업자신청 수 가져오기)
 	int getTotalCount4(Criteria cri);
 	
+	// 사업자 정보조회
+	List<ManagerVO> getBusinessList2(Criteria cri);
+	// 사업자 권한 바꾸기
+	boolean updateBusiness2(ManagerVO manager);
+	// 사업자 정보 페이지네이션( 총 사업자 수 가져오기)
+	int getTotalCount5(Criteria cri);
+	
 }
