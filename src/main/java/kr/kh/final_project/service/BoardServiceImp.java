@@ -139,9 +139,9 @@ public class BoardServiceImp implements BoardService{
 				// 서버에 업로드 후 업로드된 경로와 uuid가 포함된 파일명
 				String fi_name = UploadFileUtils.uploadFile(uploadPath, fi_ori_name, file.getBytes());
 				//파일 객체
-				//FileVO fileVo = new FileVO(board.getBo_num(), fi_name, fi_ori_name);
+				FileVO fileVo = new FileVO(board.getBo_num(), fi_name, fi_ori_name);
 				//업로드한 경로를 이용하여 다오에게 첨부파일 정보를 주면서 DB에 추가하라고 요청
-				//boardDao.insertFile(fileVo);
+				boardDao.insertFileByNotice(fileVo);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

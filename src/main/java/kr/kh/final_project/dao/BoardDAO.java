@@ -22,6 +22,8 @@ public interface BoardDAO {
 	int selectTotalCount(@Param("cri")Criteria cri);
 	// 게시글 등록하기
 	boolean insertBoard(@Param("board")BoardVO board);
+	// 첨부파일
+	void insertFileByNotice(@Param("file") FileVO fileVo);
 
 
 }

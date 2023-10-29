@@ -54,12 +54,12 @@ public class BoardController {
 							  MultipartFile[] files) {
 		// 게시글을 쓰고 있는 user에 대한 정보를 memberVO에서 가져와 user에 저장한다.
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		// boardService한테 board와 user, fileList정보를 주며 저장하라고 시킴 그걸 res에 저장하기
+		// boardService한테 board와 user, files정보를 주며 저장하라고 시킴 그걸 res에 저장하기
 		boolean res = boardService.insertBoard(board, user, files);
 		// 만약 결과가 true이면
 		if(res) {
 			model.addAttribute("msg", "게시글 등록 성공!");
-			model.addAttribute("url", "/board/list");
+			model.addAttribute("url", "/board/notice");
 		}else{
 			model.addAttribute("msg", "게시글 등록 실패!");
 			model.addAttribute("url", "/board/insert");
