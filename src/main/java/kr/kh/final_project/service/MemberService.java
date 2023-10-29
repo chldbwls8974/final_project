@@ -56,6 +56,8 @@ public interface MemberService {
 	boolean updateProfile(MemberVO member, MemberVO user, MultipartFile file);
 
 	MemberVO isCheck2(String check);
+	
+	int getMemberPoint(MemberVO user);
 
 
 

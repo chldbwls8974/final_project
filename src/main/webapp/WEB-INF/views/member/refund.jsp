@@ -9,6 +9,12 @@
 </style>
 <title>포인트 환급</title>
 </head>
+<style>
+	.error {
+		color: #f00;
+		display: block;
+	}
+</style>
 <body>
 	<h1>포인트 환급</h1>
 	<form action="<c:url value='/member/refund'/>" method="post">
@@ -24,13 +30,14 @@
 		<hr>
 		<div class="form-group">
 			<label>환급받을 금액</label>
+			<label id="check-point-error" class="error" for="point"></label>
 			<input type="number" class="form-control" id="refundAmount" name="ph_price" min="1000"  max="${user.me_point}" placeholder="1000원 단위로 입력" required>
 		</div>
 		<div class="form-group">
 			<label>환급 후 예정 포인트</label>
 			<input type="number" class="form-control" id="resultAmount" name="me_point" readonly required>
 		</div>
-		<button class="btn btn-outline-dark col-12">등록</button>
+		<button id="addBtn" class="btn btn-outline-dark col-12">등록</button>
 	</form>
 	<br>
 	<hr>
@@ -52,26 +59,45 @@
 </body>
 
 <script type="text/javascript">
+	const addBtn = document.getElementById("addBtn");
 
+	$(document).on('keyup','#refundAmount',function(){
+		let point = $(this).val();
+		
+		let flag = false;
+		
+		var regPoint = /\d*000$/;
+		
+		if(!regPoint.test(point)){
+			console.log("regex")
+			
+			addBtn.disabled = true;
+			$('#check-point-error').text('1000원 단위로 입력해 주세요.');
+			
+			return;
+		}else{
+			addBtn.disabled = false;
+			$('#check-point-error').text('');
+		}
+	})
 	
-	    $(document).on("change", "#refundAmount", function(){
-	        //입력한 금액을 변수에 저장
-	        var refundAmountValue = parseFloat($(this).val());
-	        if(refundAmountValue > 0){
-	        	//1000단위로 입력값 변경
-		        var num = Math.floor(parseFloat(refundAmountValue) / 1000) * 1000;
-	            $(this).val(num);
-		        //(유저의 현재 포인트 - 환급받을 금액)을 저장
-		        var userPoint = parseFloat('${user.me_point}');
-		        $("#resultAmount").val(userPoint - num);
-	        }
-	    });
+    $(document).on("change", "#refundAmount", function(){
+        //입력한 금액을 변수에 저장
+        var refundAmountValue = parseFloat($(this).val());
+        if(refundAmountValue > 0){
+        	//1000단위로 입력값 변경
+	        var num = Math.floor(parseFloat(refundAmountValue) / 1000) * 1000;
+            $(this).val(num);
+	        //(유저의 현재 포인트 - 환급받을 금액)을 저장
+	        var userPoint = parseFloat('${user.me_point}');
+	        $("#resultAmount").val(userPoint - num);
+        }
+    });
 	
 	    
 	    
 	/* 환급이력리스트를 가져오는 함수 */
 	$(document).ready(function() {
-		
    	 	getPointHistoryList();
 	});
 	
@@ -84,7 +110,7 @@
 		console.log(data);
 		
 		ajaxJsonToJson(false,'post','/member/refund/list', data ,(data)=>{
-			$('.point').text("현재 보유 포인트는 " + data.dbMember + " 입니다.");
+			$('.point').text("현재 보유 포인트는 " + data.dbMemberPoint + " 입니다.");
 			createPointHistoryList(data.refundList, '.list-tbody');
 			console.log(data.refundList);
 		});

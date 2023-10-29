@@ -53,6 +53,8 @@ public class MemberServiceImp implements MemberService{
 	
 	@Autowired
 	TimeDAO timeDao;
+	
+	@Autowired
 	PointHistoryDAO pointHistoryDao;
 
 	
@@ -332,6 +334,12 @@ public class MemberServiceImp implements MemberService{
 		//최종으로 환급신청중인 내역을 삭제
 		return pointHistoryDao.deleteRefundPointHistory(ph);
 	}
+	
+	@Override
+	public int getMemberPoint(MemberVO user) {
+		MemberVO dbMember = memberDao.selectMemberByNum(user.getMe_num());
+		return dbMember.getMe_point();
+	}
 
 	@Override
 	public boolean sendMail(String to, String title, String contents) {
@@ -377,6 +385,8 @@ public class MemberServiceImp implements MemberService{
 		MemberVO dbMember = memberDao.selectMemberNumByNick2(check);
 		return dbMember;
 	}
+
+	
 
 
 

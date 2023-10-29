@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -158,14 +157,12 @@ public class MemberController {
 	public String pointRefund(HttpSession session) {
 		return "/member/refund";
 	}
+	
 	@PostMapping("/member/refund")
 	public String pointRefundPost(Model model, HttpSession session, PointHistoryVO pointHistory, MemberVO tmpUser) {
 		String msg, url;
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		//포인트내역 테이블의 용도 속성정보를 서비스에서 추가해 줘야 함.
-		System.out.println(pointHistory);
-		System.out.println(user);
-		System.out.println(tmpUser);
+		//회원 테이블에 포인트 수정, 포인트이력 테이블에 데이터 추가
 		if(memberService.pointRefundApply(user,tmpUser, pointHistory)) {
 			msg = "환급 신청이 성공하였습니다.";
 			url = "/member/refund";
@@ -180,15 +177,14 @@ public class MemberController {
 	
 	@ResponseBody
 	@PostMapping("/member/refund/list")
-	public Map<String, Object> refundList(@RequestBody MemberVO user, HttpSession session){
+	public Map<String, Object> refundList(@RequestBody MemberVO user){
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<PointHistoryVO> refundList = memberService.getUserRefundHistoryList(user);
-		//
-		MemberVO member = (MemberVO)session.getAttribute("user");
-		//dbMember 가져오는 메서드 작성해야함
-		String dbMember = "test";
+		//유저 포인트 가져오는 메서드
+		int dbMemberPoint = memberService.getMemberPoint(user);
 		
-		map.put("dbMember", dbMember);
+		
+		map.put("dbMemberPoint", dbMemberPoint);
 		map.put("refundList", refundList);
 		return map;
 	}

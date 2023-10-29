@@ -20,7 +20,7 @@
 	</select>
 	<delete id="deleteRefundPointHistory">
 		delete from point_history
-		where ph_num = ${pointHistory.ph_num};
+		where ph_num = #{pointHistory.ph_num};
 	</delete>
 	<select id="selectPointHistoryByNum" resultType="kr.kh.final_project.vo.PointHistoryVO">
 		select 
