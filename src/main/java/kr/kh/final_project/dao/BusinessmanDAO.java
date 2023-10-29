@@ -15,4 +15,7 @@ public interface BusinessmanDAO {
 
 	boolean insertFacility(@Param("facility")FacilityVO facility);
 
+	FacilityVO selectFacilityByMeNum(@Param("me_num")Integer me_num);
+
+
 }

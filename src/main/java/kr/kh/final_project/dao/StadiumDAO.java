@@ -12,4 +12,6 @@ public interface StadiumDAO {
 
 	StadiumVO selectStadiumByStNum(@Param("st_num")Integer st_num);
 
+	List<StadiumVO> selectStadiumList();
+
 }

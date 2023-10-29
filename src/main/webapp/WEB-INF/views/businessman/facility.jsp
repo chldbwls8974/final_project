@@ -8,8 +8,7 @@
 <title>시설 리스트</title>
 </head>
 <body>
-	<h1>시설 리스트</h1>
-  	<p>현재 등록되어 있는 시설 리스트 입니다.</p>
+  	<h1>시설 리스트</h1>
 	  <div class="table-responsive">
 	    <table class="table table-bordered">
 	      <thead>
@@ -34,7 +33,7 @@
 	      	<c:forEach items="${list}" var="facility">
 		        <tr>
 		          <td>${facility.fa_num}</td>
-		          <td><a href="">${facility.fa_bu_num}</a></td>
+		          <td><a href="<c:url value='/businessman/stadium'/>">${facility.fa_bu_num}</a></td>
 		          <td>${facility.fa_rg_num}</td>
 		          <td>${facility.fa_name}</td>
 		          <td>${facility.fa_add}</td>
@@ -51,17 +50,6 @@
 		     </c:forEach>
 	      </tbody>
 	    </table>
-	    <div>
-			<c:if test="${pm.prev}">
-				<a href="<c:url value='/board/list${pm.cri.getUrl(pm.startPage-1) }'/>">이전</a>
-			</c:if>
-			<c:forEach begin="${pm.startPage }" end="${pm.endPage}" var="i">
-				<a href="<c:url value='/board/list${pm.cri.getUrl(i) }'/>">${i}</a>
-			</c:forEach>
-			<c:if test="${pm.next}">
-				<a href="<c:url value='/board/list${pm.cri.getUrl(pm.endPage+1) }'/>">다음</a>
-			</c:if>
-		</div>
 	  </div>
 	  
 		<div align="right" class="mt-3">

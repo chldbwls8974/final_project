@@ -29,7 +29,7 @@ import kr.kh.final_project.vo.StadiumVO;
 import kr.kh.final_project.vo.TimeVO;
 
 @Controller
-public class BuisnessmanController {
+public class BusinessmanController {
 	
 	@Autowired
 	ScheduleService scheduleBService;
@@ -41,23 +41,37 @@ public class BuisnessmanController {
 	RegionService regionService;
 	
 	@GetMapping("/businessman/facility")
-	public String facility(Model model) {
+	public String facility(Model model, HttpSession session) {
+		//로그인한 유저 정보를 가져와서 member에 저장
+		MemberVO member = (MemberVO)session.getAttribute("user");
+
+		//회원번호 정보로 시설 정보를 가져오는 메서드를 비즈니스서비스에게 가져와서 fa_num 변수에 저장
+		int fa_num = businessmanService.selectFaNumByMeNum(member.getMe_num());
+
+		//user의 등록된 시설이 0이면
+		if(fa_num == 0) {
+			//등록된 시설이 없다는 메세지가 뜨면서 시설 등록 페이지로 이동하게 됨
+	        Message msg = new Message("/businessman/facilityInsert", "등록된 시설이 없습니다. 시설을 등록해주세요");
+			model.addAttribute("msg", msg);
+			return "/message";
+		}
 		//서비스에게 시설 리스트 가져오라고 시킴
 		List<FacilityVO> list = businessmanService.getFacilityList();
+
 		//가져온 리스트를 화면에 전송
 		model.addAttribute("list", list);
 		return "/businessman/facility";
 	}
-	
+		
 	@GetMapping("/businessman/facilityInsert")
 	public String facilityInsert(Model model, HttpSession session) {
 		//로그인한 회원 정보를 가져오고, 권한이 사업자일 경우에만 사업자가 등록한 시설 정보를 알 수 있음
 		//멤버와 사업자를 연결하기 위해 user 정보를 가져옴 (session은 로그인한 정보와 interceptor에 있는 정보만 가져오는 역할)
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		
+		 
 		//user의 me_num을 가져와서 business에 저장 -> BusinessmanVO의 bu_num으로 facility 정보도 확인 가능
 		BusinessmanVO business = businessmanService.getBusinessmanByNum(user.getMe_num());
-		
+
 		//서비스에게 MainRegion메서드를 가져와서 MainRegion에 저장
 		List<RegionVO> MainRegion = businessmanService.getMainRegion();
 
@@ -77,24 +91,50 @@ public class BuisnessmanController {
 	}
 	
 	@PostMapping("/businessman/facilityInsert")
-	public String insertfacility(Model model, FacilityVO facility, 
-			BusinessmanVO business, HttpSession session) {
+	public String insertfacility(Model model, FacilityVO facility, HttpSession session) {
 		//System.out.println(facility);
-		MemberVO user = (MemberVO)session.getAttribute("user");
+		MemberVO member = (MemberVO)session.getAttribute("user");
 		
-		//Service에게 business, user, facility 정보를 주고 insertFacility 메서드로 저장
-		boolean res = businessmanService.insertFacility(business, user, facility);
+		int fa_num = businessmanService.selectFaNumByMeNum(member.getMe_num());
+
+		//Service에게 user, facility 정보를 주고 insertFacility 메서드로 저장
+		boolean res = businessmanService.insertFacility(member, facility, fa_num);
 			if(res) {
 				model.addAttribute("msg", "시설 등록이 완료되었습니다.");
 				model.addAttribute("url", "/businessman/facility");
 			}else {
 				model.addAttribute("msg", "시설을 등록하지 못했습니다.");
-				model.addAttribute("url", "/");
+				model.addAttribute("url", "/businessman/facilityInsert");
 			}
 		return "/util/message";
 	}
 	
-	@GetMapping("/buisnessman/manage/schedule")
+	@GetMapping("/businessman/stadium")
+	public String stadium(Model model, HttpSession session) {
+		MemberVO member = (MemberVO)session.getAttribute("user");
+
+		int fa_num = businessmanService.selectFaNumByMeNum(member.getMe_num());
+		
+		List<StadiumVO> stadiumList = businessmanService.getStadiumList();
+
+		model.addAttribute("stadiumList", stadiumList);
+		return "/businessman/stadium";
+	}
+	
+	@GetMapping("/businessman/stadiumInsert")
+	public String stadiumInsert(Model model, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		 
+		//user의 me_num을 가져와서 business에 저장 -> BusinessmanVO의 bu_num으로 facility 정보도 확인 가능
+		BusinessmanVO business = businessmanService.getBusinessmanByNum(user.getMe_num());
+
+		//business에 저장된 user의 me_num을 화면에 보여줌
+		model.addAttribute("business", business);
+		return "/businessman/stadiumInsert";
+	}
+
+	
+	@GetMapping("/businessman/manage/schedule")
 	public String insertSchedule(Model model, HttpSession session) {
 		MemberVO member = (MemberVO)session.getAttribute("user");
 		
@@ -116,7 +156,7 @@ public class BuisnessmanController {
 		model.addAttribute("stadiumList", stadiumList);
 		model.addAttribute("operatingList", operatingList);
 		model.addAttribute("timeList", timeList);
-		return "/buisnessman/schedule";
+		return "/businessman/schedule";
 	}
 	
 	@ResponseBody

@@ -6,6 +6,7 @@ import kr.kh.final_project.vo.BusinessmanVO;
 import kr.kh.final_project.vo.FacilityVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.RegionVO;
+import kr.kh.final_project.vo.StadiumVO;
 
 public interface BusinessmanService {
 
@@ -13,11 +14,16 @@ public interface BusinessmanService {
 
 	BusinessmanVO getBusinessmanByNum(Integer me_num);
 
-	boolean insertFacility(BusinessmanVO business, MemberVO user, FacilityVO facility);
+	boolean insertFacility(MemberVO user, FacilityVO facility, int fa_num);
 
 	List<RegionVO> getMainRegion();
 
 	List<RegionVO> getSubRegionByMainRegion(String rg_main);
+
+	int selectFaNumByMeNum(Integer me_num);
+
+	List<StadiumVO> getStadiumList();
+
 
 
 
