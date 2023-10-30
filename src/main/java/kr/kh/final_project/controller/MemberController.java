@@ -34,6 +34,11 @@ public class MemberController {
 	@Autowired
 	RegionService regionService;
 	
+	@GetMapping("/member/signup2")
+	public String signup2(Model model) {
+		return "/member/signup2";
+	}
+	
 	@GetMapping("/member/signup")
 	public String signup(Model model) {
 		List<RegionVO> MainRegion = memberService.getMainRegion();

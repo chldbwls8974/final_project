@@ -31,7 +31,7 @@
 
     function loginWithKakao() {
         Kakao.Auth.authorize({ 
-        redirectUri: 'http://localhost:8080/kakao_callback' 
+        redirectUri: 'http://localhost:8080/final_project/kakao_callback' 
         }); // 등록한 리다이렉트uri 입력
     }
 </script>
