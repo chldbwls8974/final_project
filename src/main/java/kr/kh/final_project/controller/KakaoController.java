@@ -63,6 +63,8 @@ public class KakaoController {
 		    long id =  kakaoResponse.getId();
 		    String me_id = String.valueOf(id);
 		    me_id  += 'k';
+		    
+		    // 회원가입한 카카오인지 가져옴
 		    MemberVO dbMember = memberDao.selectMember(me_id);
 		    
 		    
@@ -74,33 +76,30 @@ public class KakaoController {
 			    model.addAttribute("time",time);
 			    model.addAttribute("me_id",me_id);
 			    model.addAttribute("kakaoAccount",kakaoAccount);
-			    	
-		    	return "/kakao/signup_next";
 		    }
 		    // 회원가입이 되어있는 상태라면
 		    else {
-		    	Message msg = new Message("/kakao_callback", "로그인에 실패했습니다.");
 		    	MemberVO user = memberService.login(dbMember); 
 		    	if(user != null) {
-					msg = new Message("", "로그인에 성공했습니다.");
+		    		model.addAttribute("user", user);
 				}
 		    	System.out.println(user);
-		    	model.addAttribute("user", user);
-				model.addAttribute("msg", msg);
-		    	return "message";
+		    	
 		    }
 		} catch (IOException e) {
 		    e.printStackTrace();
 		}
-		return "redirect:/";
+		return "/kakao/signup_next";
 	}
 	
 	@PostMapping("/kakao_callback")
-	public String signupKakaoPost(MemberVO member, Model model, int[] pr_rg_num,
+	public String signupKakaoPost(MemberVO user,MemberVO member, Model model, int[] pr_rg_num,
 			 int[] favoriteTime
 			,  int[] favoriteHoliTime, int me_rg_num, String me_id
 			) 
 		{
+		
+		System.out.println(user);
 		System.out.println(member);
 		Message msg = new Message("/member/signup", "회원 가입에 실패했습니다.");
 		if(memberService.signup(member, pr_rg_num,favoriteTime,favoriteHoliTime)) {
