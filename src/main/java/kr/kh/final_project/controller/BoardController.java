@@ -15,6 +15,7 @@ import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.pagination.PageMaker;
 import kr.kh.final_project.service.BoardService;
 import kr.kh.final_project.vo.BoardVO;
+import kr.kh.final_project.vo.FileVO;
 import kr.kh.final_project.vo.MemberVO;
 
 @Controller
@@ -46,7 +47,7 @@ public class BoardController {
 	public String boardInsert() {
 		return "/board/insert";
 	}
-	// 게시글 등록하기 
+	// 게시글 등록하기 (첨부파일이랑 같이)
 	@PostMapping("/board/insert")
 	public String boardInsert(Model model, 
 							  BoardVO board, 
@@ -66,6 +67,65 @@ public class BoardController {
 		}
 		return "/util/message";
 	}
+	
+	//게시글 상세조회하기
+	@GetMapping("/board/detail")
+	public String boardDetail(Model model,  Integer bo_num) {
+		// 게시글을 가져오기 전에 서비스에게 게시글 번호를 주면서 조회수를 1증가하라고 요청한다.
+		boardService.updateViews(bo_num);
+		// 서비스에게 게시글 번호를 주면서 게시글을 가져오라고 시킨다.
+		BoardVO board = boardService.getBoard(bo_num);
+		// 등록된 첨부파일을 가져오라고 boardService한테 시키고 가져온 첨부파일을 fileList에 넣기
+		List<FileVO> fileList = boardService.getFileList(bo_num);
+		
+		
+		// 가져온 게시글을 화면에 전송해준다.
+		model.addAttribute("board", board);
+		model.addAttribute("fileList", fileList);
+		return "/board/detail";
+	}
+	
+	//게시글 삭제하기
+	@GetMapping("/board/delete")
+	public String boardDelete(Model model, HttpSession session, Integer bo_num) {
+		// memberVO에서 지금 로그인하고 있는 user의 정보를 가져와 user에 저장한다.
+		// 작성한 자신의 글만 삭제하기 위해서
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		// boardService한테 로그인한 user와 게시글 번호를 주면 삭제하라고 시킨 것을 res에 담는다.
+		boolean res = boardService.deleteBoard(bo_num, user);
+		// 만약 res가 true면 안내문구 출력
+		if(res) {
+			model.addAttribute("msg", "게시글을 삭제하였습니다.");
+		}else {
+			model.addAttribute("msg", "게시글을 삭제실패하였습니다.");
+		}
+		
+		model.addAttribute("url", "/board/notice");
+		return "/util/message";
+	}
+	
+
+	// 게시글 수정하기 화면 조회하기
+	@GetMapping("/board/update")
+	public String boardUpdate(Model model, Integer bo_num) {
+		
+		// 서비스에게 게시글 번호를 주면서 게시글을 가져오라고 시킴
+		BoardVO board = boardService.getBoard(bo_num);
+		// 가져온 게시글을 화면에 전송
+		model.addAttribute("board", board);
+		return "/board/update";
+	}
+	
+	/*
+	 * @PostMapping("/board/update") public String boardUpdatePost(Model model,
+	 * BoardVO board, HttpSession session) { MemberVO user =
+	 * (MemberVO)session.getAttribute("user"); boolean res =
+	 * boardService.update(board,user); if(res) { model.addAttribute("msg",
+	 * "게시글을 수정했습니다."); }else { model.addAttribute("msg", "게시글을 수정하지 못했습니다."); }
+	 * model.addAttribute("url", "/board/detail?bo_num="+board.getBo_num()); return
+	 * "/util/message"; }
+	 */
+	
 }
 	
 
