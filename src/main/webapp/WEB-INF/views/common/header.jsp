@@ -13,7 +13,7 @@
 		<a class="navbar-brand" href="/final_project">LOGO</a>
 		<ul class="navbar-nav">
 			<li class="nav-item">
-				<a class="nav-link " href="<c:url value='/member/signup2'/>">카카오</a>
+				<a class="nav-link " href="<c:url value='/member/signup2'/>">카카오로 회원가입</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link " href="<c:url value='/member/signup'/>">회원가입</a>

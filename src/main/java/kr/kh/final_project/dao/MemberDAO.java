@@ -43,4 +43,6 @@ public interface MemberDAO {
 
 	boolean updateMemberProfile(MemberVO user);
 
+	MemberVO selectMemberByKaKao(@Param("me_id")String me_id);
+
 }

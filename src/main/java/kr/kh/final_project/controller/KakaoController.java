@@ -56,13 +56,11 @@ public class KakaoController {
 		    System.out.println("ID: " + kakaoResponse.getId());
 		    // 토큰에 실린 정보
 		    KakaoAccount kakaoAccount = kakaoResponse.getKakao_account();
-		    System.out.println(kakaoAccount);
 		    long id =  kakaoResponse.getId();
 		    String me_id = String.valueOf(id);
 		    me_id  += 'k';
 		    model.addAttribute("me_id",me_id);
 		    model.addAttribute("kakaoAccount",kakaoAccount);
-		    System.out.println(kakaoAccount);
 		    
 		} catch (IOException e) {
 		    e.printStackTrace();
@@ -81,9 +79,9 @@ public class KakaoController {
 			,  int[] favoriteHoliTime, int me_rg_num, String me_id
 			) 
 		{
+		System.out.println(member);
 		Message msg = new Message("/member/signup", "회원 가입에 실패했습니다.");
-		if(true) {
-			System.out.println(member);
+		if(memberService.signup(member, pr_rg_num,favoriteTime,favoriteHoliTime)) {
 			msg = new Message("/", "회원 가입에 성공했습니다.");
 		}
 		model.addAttribute("msg", msg);

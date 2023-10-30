@@ -109,14 +109,43 @@ public class MemberServiceImp implements MemberService{
 		if(member == null) {
 			return false;
 		}
-		
-		// 아이디가 숫자로 시작하고 k로 끝나면 카카오 회원가입
-		if(member.getMe_id().matches("^\\d+.*k$")) {
-			signupKaKao(member);
-		}else {
-			//아니면 이메일 인증
-			signupEmail(member);
+		//아이디 중복 확인
+		MemberVO dbMember = memberDao.selectMember(member.getMe_id());
+		//가입하려는 아이디가 이미 가입된 경우
+		if(dbMember != null) {
+			return false;
 		}
+		
+		// 아이디가 숫자로 시작하고 k로 끝나지 않으면 이메일 인증이므로 정규화 검사 및 비밀번호 암호화
+		if(!member.getMe_id().matches("^\\d+.*k$")) {
+			//아이디, 비번 null 체크 + 유효성 검사
+			//아이디는 영문으로 시작하고, 6~10자
+			String idRegex = "^[a-zA-Z][a-zA-Z0-9]{5,9}$";
+			//비번은 영문,숫자,!@#$%로 이루어지고 10~20자 
+			String pwRegex = "^[a-zA-Z0-9!@#$%]{10,20}$";
+			
+			//아이디가 유효성에 맞지 않으면
+			if(!Pattern.matches(idRegex, member.getMe_id())) {
+				return false;
+			}
+			//비번이 유효성에 맞지 않으면
+			if(!Pattern.matches(pwRegex, member.getMe_pw())) {
+				return false;
+			}
+			
+			//비번 암호화 
+			String encPw = passwordEncoder.encode(member.getMe_pw());
+			member.setMe_pw(encPw);
+		}else {
+			//카카오는 성별을 female, male로 받아오기 때문에 처리해줘야함.
+			if(member.getMe_gender().equals("female")) {
+				member.setMe_gender("F");
+			}else {
+				member.setMe_gender("M");
+			}
+		}
+		// 회원 정보 입력
+		memberDao.insertMember(member);
 		
 		// 입력한 회원정보의 num값 가져오기
 		int pr_me_num = memberDao.selectMember(member.getMe_id()).getMe_num();
@@ -136,41 +165,7 @@ public class MemberServiceImp implements MemberService{
 		return true;
 	}
 	
-	// 카카오 회원가입
-	private void signupKaKao(MemberVO member) {
-		
-	}
 
-	// 이멜 인증 회원가입
-	private void signupEmail(MemberVO member) {
-		//아이디 중복 확인
-		MemberVO dbMember = memberDao.selectMember(member.getMe_id());
-		//가입하려는 아이디가 이미 가입된 경우
-		if(dbMember != null) {
-			return;
-		}
-		//아이디, 비번 null 체크 + 유효성 검사
-		//아이디는 영문으로 시작하고, 6~10자
-		String idRegex = "^[a-zA-Z][a-zA-Z0-9]{5,9}$";
-		//비번은 영문,숫자,!@#$%로 이루어지고 10~20자 
-		String pwRegex = "^[a-zA-Z0-9!@#$%]{10,20}$";
-		
-		//아이디가 유효성에 맞지 않으면
-		if(!Pattern.matches(idRegex, member.getMe_id())) {
-			return;
-		}
-		//비번이 유효성에 맞지 않으면
-		if(!Pattern.matches(pwRegex, member.getMe_pw())) {
-			return;
-		}
-		
-		//비번 암호화 
-		String encPw = passwordEncoder.encode(member.getMe_pw());
-		member.setMe_pw(encPw);
-		
-		// 회원 정보 입력
-		memberDao.insertMember(member);
-	}
 
 	
 	// 선호 지역을 넣는 메서드
