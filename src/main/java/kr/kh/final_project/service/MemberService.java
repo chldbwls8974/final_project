@@ -49,7 +49,7 @@ public interface MemberService {
 
 	boolean pointRefundApply(MemberVO user, MemberVO tmpUser, PointHistoryVO pointHistory);
 
-	List<PointHistoryVO> getUserRefundHistoryList(MemberVO user);
+	List<PointHistoryVO> getUserRefundHistoryList(MemberVO user, Criteria cri);
 
 	boolean cancelRefundApply(PointHistoryVO ph);
 
@@ -58,6 +58,8 @@ public interface MemberService {
 	MemberVO isCheck2(String check);
 	
 	int getMemberPoint(MemberVO user);
+	
+	int getTotalRefundCount(MemberVO user);
 
 
 

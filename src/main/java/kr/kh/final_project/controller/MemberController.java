@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.kh.final_project.pagination.Criteria;
+import kr.kh.final_project.pagination.PageMaker;
 import kr.kh.final_project.service.MemberService;
 import kr.kh.final_project.service.RegionService;
 import kr.kh.final_project.util.Message;
@@ -177,13 +179,18 @@ public class MemberController {
 	
 	@ResponseBody
 	@PostMapping("/member/refund/list")
-	public Map<String, Object> refundList(@RequestBody MemberVO user){
+	public Map<String, Object> refundList(HttpSession session, @RequestBody Criteria cri){
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<PointHistoryVO> refundList = memberService.getUserRefundHistoryList(user);
+		
+		System.out.println(cri);
+		List<PointHistoryVO> refundList = memberService.getUserRefundHistoryList(user, cri);
 		//유저 포인트 가져오는 메서드
 		int dbMemberPoint = memberService.getMemberPoint(user);
+		int totalCount = memberService.getTotalRefundCount(user);
+		PageMaker pm = new PageMaker(3, cri, totalCount);
 		
-		
+		map.put("pm", pm);
 		map.put("dbMemberPoint", dbMemberPoint);
 		map.put("refundList", refundList);
 		return map;

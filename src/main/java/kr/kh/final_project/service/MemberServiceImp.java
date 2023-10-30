@@ -1,6 +1,7 @@
 package kr.kh.final_project.service;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.mail.internet.MimeMessage;
 
@@ -12,19 +13,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.dao.MemberDAO;
-import kr.kh.final_project.pagination.Criteria;
-import java.util.regex.Pattern;
-
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-
-import kr.kh.final_project.dao.MemberDAO;
 import kr.kh.final_project.dao.PointHistoryDAO;
 import kr.kh.final_project.dao.PreferredRegionDAO;
 import kr.kh.final_project.dao.PreferredTimeDAO;
 import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.dao.TimeDAO;
+import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.RegionVO;
@@ -311,11 +305,14 @@ public class MemberServiceImp implements MemberService{
 	}
 
 	@Override
-	public List<PointHistoryVO> getUserRefundHistoryList(MemberVO user) {
+	public List<PointHistoryVO> getUserRefundHistoryList(MemberVO user, Criteria cri) {
 		if(user == null) {
 			return null;
 		}
-		return pointHistoryDao.selectPointRefundHistoryByUserNum(user);
+		if(cri == null) {
+			cri = new Criteria(); 
+		}
+		return pointHistoryDao.selectPointRefundHistoryByUserNum(user, cri);
 	}
 
 	@Override
@@ -340,7 +337,12 @@ public class MemberServiceImp implements MemberService{
 		MemberVO dbMember = memberDao.selectMemberByNum(user.getMe_num());
 		return dbMember.getMe_point();
 	}
-
+	
+	@Override
+	public int getTotalRefundCount(MemberVO user) {
+		return pointHistoryDao.selectRefundCount(user);
+	}
+	
 	@Override
 	public boolean sendMail(String to, String title, String contents) {
 		try {
@@ -385,6 +387,8 @@ public class MemberServiceImp implements MemberService{
 		MemberVO dbMember = memberDao.selectMemberNumByNick2(check);
 		return dbMember;
 	}
+
+	
 
 	
 

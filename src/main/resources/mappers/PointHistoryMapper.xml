@@ -16,7 +16,8 @@
 		where 
 			ph_me_num = #{user.me_num} and
 			(ph_source = '4' or ph_source = '5')
-        order by ph_num desc;
+        order by ph_num desc
+			limit #{cri.pageStart}, #{cri.perPageNum}
 	</select>
 	<delete id="deleteRefundPointHistory">
 		delete from point_history
@@ -29,5 +30,13 @@
 			point_history 
 		where 
 			ph_num = #{ph_num}
+	</select>
+	<select id="selectRefundCount" resultType="int">
+		select 
+			count(*)
+		from 
+			point_history 
+		where 
+			ph_me_num = #{user.me_num};
 	</select>
 </mapper>
