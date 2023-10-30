@@ -57,7 +57,7 @@ public class KakaoController {
 		try {
 		    KakaoResponse kakaoResponse = objectMapper.readValue(res, KakaoResponse.class);
 		    // 카카오 토큰 id
-		    System.out.println("ID: " + kakaoResponse.getId());
+		    //System.out.println("ID: " + kakaoResponse.getId());
 		    // 토큰에 실린 정보
 		    KakaoAccount kakaoAccount = kakaoResponse.getKakao_account();
 		    long id =  kakaoResponse.getId();
@@ -76,6 +76,8 @@ public class KakaoController {
 			    model.addAttribute("time",time);
 			    model.addAttribute("me_id",me_id);
 			    model.addAttribute("kakaoAccount",kakaoAccount);
+			    
+			    return "/kakao/signup_next";
 		    }
 		    // 회원가입이 되어있는 상태라면
 		    else {
@@ -83,28 +85,45 @@ public class KakaoController {
 		    	if(user != null) {
 		    		model.addAttribute("user", user);
 				}
-		    	System.out.println(user);
-		    	
+		    	return "/kakao/login";
 		    }
 		} catch (IOException e) {
 		    e.printStackTrace();
 		}
-		return "/kakao/signup_next";
+		return "";
+		
 	}
 	
 	@PostMapping("/kakao_callback")
-	public String signupKakaoPost(MemberVO user,MemberVO member, Model model, int[] pr_rg_num,
+	public String signupKakaoPost(MemberVO member, Model model, int[] pr_rg_num,
 			 int[] favoriteTime
 			,  int[] favoriteHoliTime, int me_rg_num, String me_id
 			) 
 		{
 		
-		System.out.println(user);
 		System.out.println(member);
 		Message msg = new Message("/member/signup", "회원 가입에 실패했습니다.");
 		if(memberService.signup(member, pr_rg_num,favoriteTime,favoriteHoliTime)) {
 			msg = new Message("/", "회원 가입에 성공했습니다.");
 		}
+		model.addAttribute("msg", msg);
+		return "message";
+	}
+	
+	@GetMapping("/kakao/login")
+	public String loginKakao() {
+		return "/kakao/login";
+	}
+	
+	
+	@PostMapping("/kakao/login")
+	public String loginKakaoPost(String user, Model model) 
+	{
+		// 여기 해야함. String 으로 받아온 유저 정보 객체로 뜯어서 처리를 하든
+		// 아예 가져올때 뜯어서 가져오든 해야함
+		Message msg = new Message("", "로그인에 성공했습니다.");
+		System.out.println(user);
+		model.addAttribute("user", user);
 		model.addAttribute("msg", msg);
 		return "message";
 	}
