@@ -89,22 +89,27 @@ public class BoardController {
 	// 게시글 수정하기 화면 조회하기
 	@GetMapping("/board/update")
 	public String boardUpdate(Model model, Integer bo_num) {
-		
 		// 서비스에게 게시글 번호를 주면서 게시글을 가져오라고 시킴
 		BoardVO board = boardService.getBoard(bo_num);
+		List<FileVO> fileList = boardService.getFileList(bo_num);
+		
 		// 가져온 게시글을 화면에 전송
 		model.addAttribute("board", board);
+		model.addAttribute("fileLsit", fileList);
 		return "/board/update";
 	}
-	/*
-	 * @PostMapping("/board/update") public String updatePost(Model model, BoardVO
-	 * board, MultipartFile[] files, Integer[] delFiles, HttpSession session) {
-	 * Message msg; MemberVO user = (MemberVO)session.getAttribute("user");
-	 * if(boardService.updateBoard(board, files, delFiles,user)) { msg = new
-	 * Message("/board/detail?bo_num="+board.getBo_num(), "게시글을 수정했습니다."); }else {
-	 * msg = new Message("/board/update?bo_num="+board.getBo_num(),
-	 * "게시글을 수정하지 못했습니다."); } model.addAttribute("msg", msg); return "message"; }
-	 */
+	@PostMapping("/board/update")
+	public String boardUpdatePost(Model model, BoardVO board, HttpSession session,MultipartFile[] files, int [] delNums ) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		boolean res = boardService.update(board,user, files, delNums);
+		if(res) {
+			model.addAttribute("msg", "게시글을 수정했습니다.");
+		}else {
+			model.addAttribute("msg", "게시글을 수정하지 못했습니다.");
+		}
+		model.addAttribute("url", "/board/detail?bo_num="+board.getBo_num());
+		return "/util/message";
+	}
 	
 	//게시글 삭제하기
 	@GetMapping("/board/delete")

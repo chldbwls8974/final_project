@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지게시글 상세보기</title>
+<title>공지게시글 수정하는 곳</title>
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 <style>
@@ -24,7 +24,8 @@
 <body>
 	<br>
 	<h1>&#x2709 수정하는 곳 &#x2709</h1>
-	<form action="<c:url value='/board/update'/>" method="post">
+	<form action="<c:url value='/board/update'/>" method="post"  enctype="multipart/form-data">
+		<input type="hidden" name="bo_num" value="${board.bo_num}">
 		<div class="form-group">
 			<label>제목</label>
 			<input type="text" class="form-control" name="bo_title" value="${board.bo_title}">
@@ -40,36 +41,32 @@
 			</textarea>
 		</div>
 		<div class="form-group">
-			<label>첨부파일</label>
-			<c:forEach items="${board.fileVoList}" var="file">
-				<a 	href="<c:url value='/download${file.fi_name }'/>"
-					class="form-control" 
-					download="${file.fi_ori_name}">${file.fi_ori_name } <span class="btn-del" data-num="${file.fi_num}">x</span></a>
+			<label>첨부파일 : </label>
+			<c:forEach items="${fileList}" var="file">
+				<a  href="<c:url value='/download${file.fi_name}'/>" 
+					download="${file.fi_ori_name }">${file.fi_ori_name }</a>
+				<a href="#" class="btn-del" data-num="${file.fi_num}"><button type="button">X</button></a>
 			</c:forEach>
-			<c:forEach begin="1" end="${3-board.fileVoList.size()}">
-				<input type="file" class="form-control" name="files">
+			<c:forEach begin="1" end="${3 - fileList.size() }">
+				<input type="file" name="files"> <br>
 			</c:forEach>
-		</div>
-			<button type="button"
-					class="btn btn-outline-warning col-12 btn-update"
-					onclick="location.href='<c:url value='/board/update'/>'">수정하기
-			</button><br>
+			<button class="btn btn-outline-warning col-12 btn-submit">수정하기</button><br>
 	</form>
 
-	<script>
-      $('#summernote').summernote({
+	<script type="text/javascript">
+     $('#summernote').summernote({
         placeholder: '내용을 입력하세요.',
         tabsize: 2,
         height: 400
-      });
+      })
       $('#summernote').summernote('code', '${board.bo_contents}');
       $('.btn-del').click(function(e){
     	  e.preventDefault();
     	  let fi_num = $(this).data('num');
-    	  $(this).parent().after('<input type="hidden" name="delFiles" value="'+fi_num+'">')
-    	  $(this).parent().remove();
-    	  $('#file').append('<input type="file" class="form-control" name="files">');
-      });
+    	 	$('.btn-submit').before('<input type="file" name="files"> <br>');
+			$('.btn-submit').before('<input type="hidden" name="delNums" value="'+fi_num+'"> <br>');
+			$(this).parent().remove();
+      })
     </script>
 </body>
 </html>

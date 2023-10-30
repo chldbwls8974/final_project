@@ -33,6 +33,8 @@ public interface BoardService {
 	//boolean updateBoard(BoardVO board, MultipartFile[] files, Integer[] delFiles, MemberVO user);
 	// 게시글 삭제하기
 	boolean deleteBoard(Integer bo_num, MemberVO user);
+	// 게시글 수정하기
+	boolean update(BoardVO board, MemberVO user, MultipartFile[] files, int[] delNums);
 
 
 }

@@ -1,6 +1,7 @@
 package kr.kh.final_project.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -160,7 +161,7 @@ public class BoardServiceImp implements BoardService{
 		if(bo_num == null) {
 			return null;
 		}
-		return boardDao.selectFileList2(bo_num);
+		return boardDao.selectFileList(bo_num);
 	}
 	
 	
@@ -179,42 +180,12 @@ public class BoardServiceImp implements BoardService{
 		}
 		// 첨부파일 삭제하기
 		// 게시글의 모든 첨부파일들을 가져온다.
-		List<FileVO> fileList = boardDao.selectFileList2(bo_num);
+		List<FileVO> fileList = boardDao.selectFileList(bo_num);
 		// 첨부파일 정보를 주면서 삭제하라고 요청한다.
 		deleteFiles(fileList);
 		// 다오한테 삭제하라고 시킴
 		return boardDao.deleteBoard(bo_num);
 	}
-	
-	// 게시글 수정하기
-	/*
-	 * @Override public boolean updateBoard(BoardVO board, MultipartFile[] files,
-	 * Integer[] delFiles, MemberVO user) { if(board == null ||
-	 * board.getBo_title()==null || board.getBo_title().length() == 0 ) { return
-	 * false; } //게시글 정보를 가져옴(로그인한 회원과 작성자가 같은지 확인을 위해) BoardVO dbBoard =
-	 * boardDao.selectBoard(board.getBo_num()); //db에 해당 게시글이 없거나 게시글 작성자와 로그인한 회원이
-	 * 다른 경우 if(board == null || !(board.getBo_me_num() == user.getMe_num())) {
-	 * return false; } if(!boardDao.updateBoard(board)) { return false; } //첨부파일
-	 * 업데이트 //추가된 첨부파일을 서버에 업로드 및 DB에 추가 uploadFiles(files, board.getBo_num());
-	 * 
-	 * 
-	 * //삭제된 첨부파일을 서버에서 제거 및 DB에서 제거 deleteFile(delFiles);
-	 * 
-	 * return true; }
-	 */
-		
-	// 수정 >> 첨부파일 삭제
-	/*
-	 * private void deleteFile(Integer[] delFiles) { if(delFiles == null ||
-	 * delFiles.length == 0) { return; }
-	 * 
-	 * for(Integer num : delFiles) { if(num == null) { continue; } //첨부파일 정보를 가져옴
-	 * FileVO fileVo = boardDao.selectFile(num); if(fileVo == null) { continue; }
-	 * UploadFileUtils.deleteFile(uploadPath, fileVo.getFi_name()); //DB에서 제거
-	 * boardDao.deleteFile(num); }
-	 * 
-	 * }
-	 */
 		
 	// 파일 삭제하기
 	private void deleteFiles(List<FileVO> fileList) {
@@ -229,6 +200,36 @@ public class BoardServiceImp implements BoardService{
 			boardDao.deleteFile(file.getFi_num());
 		}
 	}
-	
+	// 게시글 수정하기
+	@Override
+	public boolean update(BoardVO board, MemberVO user,MultipartFile[] files, int[] delNums) {
+		if(user == null || user.getMe_id() == null) {
+			return false;
+		}
+		if(board == null || board.getBo_title() == null || board.getBo_title().length() == 0) {
+			return false;
+		}
+		BoardVO dbBoard = boardDao.selectBoard(board.getBo_num());
+		if(dbBoard == null || !(board.getBo_me_num() == user.getMe_num())) {
+			return false;
+		}
+		//추가된 첨부파일 업로드 및 DB 추가
+		uploadFiles(files, board.getBo_num());
+		//삭제된 첨부파일 삭제 및 DB 제거
+		deleteFiles2(delNums);
+		boolean res = boardDao.updateBoard(board);
+		return res;
+	}
+	private void deleteFiles2(int[] delNums) {
+		if(delNums == null || delNums.length == 0) {
+			return ;
+		}
+		List<FileVO> fileList = new ArrayList<FileVO>();
+		for(int fi_num : delNums) {
+			FileVO fileVo = boardDao.selectFile(fi_num);
+			fileList.add(fileVo);
+		}
+		deleteFiles(fileList);
+	}
 
 }

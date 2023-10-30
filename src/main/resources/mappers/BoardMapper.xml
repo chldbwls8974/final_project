@@ -166,11 +166,7 @@
 	<delete id="deleteFile">
 		delete from file where fi_num = #{fi_num}
 	</delete>
-	
-	<!-- <select id="selectFile" resultType="kr.kh.spring.vo.FileVO">
-		select * from file where fi_num = #{fi_num}
-	</select> -->
-	<!-- <update id="updateBoard">
+	<update id="updateBoard">
 		update board
 		set
 			bo_title = #{board.bo_title},
@@ -178,5 +174,8 @@
 			bo_up_date = now()
 		where
 			bo_num = #{board.bo_num}
-	</update> -->
+	</update>
+	<select id="selectFile" resultType="kr.kh.final_project.vo.FileVO">
+		select * from file where fi_num = #{fi_num}
+	</select>
 </mapper>

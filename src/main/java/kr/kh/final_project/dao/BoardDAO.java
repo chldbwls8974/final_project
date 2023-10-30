@@ -28,7 +28,7 @@ public interface BoardDAO {
 	// 공지게시글 상세내용 불러오기
 	BoardVO selectBoard(@Param("bo_num")Integer bo_num);
 	// 공지게시글 상세내용 첨부파일 불러오기
-	List<FileVO> selectFileList2(@Param("bo_num")Integer bo_num);
+	List<FileVO> selectFileList(@Param("bo_num")Integer bo_num);
 	// 공지게시글 조회수 올리기
 	void updateBoardViews(@Param("bo_num")Integer bo_num);
 	// 공지게시글 삭제하기
@@ -39,6 +39,10 @@ public interface BoardDAO {
 	//boolean updateBoard(@Param("board")BoardVO board);
 	// 공지게시글 상세페이지 첨부파일 가져오기
 	//FileVO selectFile(@Param("fi_num")Integer num);
+	// 공지게시글 수정하기
+	boolean updateBoard(@Param("board")BoardVO board);
+	// 공지게시글 상세페이지 첨부파일 가져오기
+	FileVO selectFile(@Param("fi_num")int fi_num);
 
 
 }
