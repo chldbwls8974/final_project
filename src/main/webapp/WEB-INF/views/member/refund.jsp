@@ -102,7 +102,7 @@
 	
 	let cri = {
 			page : 1,
-			perPageNum : 2
+			perPageNum : 5
 	}    
 	    
 	/* 환급이력리스트를 가져오는 함수 */
@@ -138,7 +138,7 @@
 			str += `
 			<li class="page-item \${active}">
 				<a class="page-link" href="javascript:void(0);" onclick="cri.page=\${i};getPointHistoryList(cri)">\${i}</a>
-			</li>`;ㄴ
+			</li>`;
 		}
 		if(pm.next){
 			str += `<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="cri.page=\${pm.endPage+1};getPointHistoryList(cri)">다음</a></li>`;
