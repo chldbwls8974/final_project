@@ -83,8 +83,6 @@ public class KakaoController {
 		    	MemberVO user = memberService.login(dbMember); 
 		    	if(user != null) {
 					msg = new Message("", "로그인에 성공했습니다.");
-					//화면에서 선택/미선택한 자동로그인 여부를 user에 저장해서 인터셉터에게 전달 
-					user.setAutoLogin(dbMember.isAutoLogin());
 				}
 		    	System.out.println(user);
 		    	model.addAttribute("user", user);
