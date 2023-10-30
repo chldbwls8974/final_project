@@ -134,4 +134,9 @@ public class AdminController {
 		return map;
 	}
 		
+	
+	@GetMapping("/admin/refund")
+	public String refundManagement(Model model) {
+		return ("/admin/refund");
+	}
 }
