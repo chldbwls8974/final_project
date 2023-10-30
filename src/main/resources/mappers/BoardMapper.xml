@@ -163,4 +163,7 @@
 		where
 			bo_num = #{bo_num}
 	</delete>
+	<delete id="deleteFile">
+		delete from file where fi_num = #{fi_num}
+	</delete>
 </mapper>

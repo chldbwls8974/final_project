@@ -33,6 +33,8 @@ public interface BoardDAO {
 	void updateBoardViews(@Param("bo_num")Integer bo_num);
 	// 공지게시글 삭제하기
 	boolean deleteBoard(@Param("bo_num")Integer bo_num);
+	
+	void deleteFile(@Param("fi_num")int fi_num);
 
 
 }

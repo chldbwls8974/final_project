@@ -43,7 +43,7 @@
 			<label>첨부파일 : </label>
 				<c:forEach items="${fileList}" var="file">
 					<a  href="<c:url value='/download${file.fi_name}'/>" 
-						download="${file.fi_ori_name }">${file.fi_ori_name }</a><br>
+						download="${file.fi_ori_name}">${file.fi_ori_name }</a><br>
 				</c:forEach>
 		</div>
 		<button type="button"
@@ -53,7 +53,7 @@
 		<c:if test="${user != null && user.me_authority == 'ADMIN'}">
 			<button type="button"
 					class="btn btn-outline-warning col-12 btn-update"
-					onclick="location.href='<c:url value='/board/update'/>'">수정하기
+					onclick="location.href='<c:url value='/board/update?bo_num=${board.bo_num}'/>'">수정하기
 			</button><br>
 		</c:if>
 		<c:if test="${user != null && user.me_authority == 'ADMIN'}">

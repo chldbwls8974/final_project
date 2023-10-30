@@ -85,6 +85,18 @@ public class BoardController {
 		return "/board/detail";
 	}
 	
+	
+
+	// 게시글 수정하기 화면 조회하기
+	@GetMapping("/board/update")
+	public String boardUpdate(Model model, Integer bo_num) {
+		
+		// 서비스에게 게시글 번호를 주면서 게시글을 가져오라고 시킴
+		BoardVO board = boardService.getBoard(bo_num);
+		// 가져온 게시글을 화면에 전송
+		model.addAttribute("board", board);
+		return "/board/update";
+	}
 	//게시글 삭제하기
 	@GetMapping("/board/delete")
 	public String boardDelete(Model model, HttpSession session, Integer bo_num) {
@@ -102,18 +114,6 @@ public class BoardController {
 		
 		model.addAttribute("url", "/board/notice");
 		return "/util/message";
-	}
-	
-
-	// 게시글 수정하기 화면 조회하기
-	@GetMapping("/board/update")
-	public String boardUpdate(Model model, Integer bo_num) {
-		
-		// 서비스에게 게시글 번호를 주면서 게시글을 가져오라고 시킴
-		BoardVO board = boardService.getBoard(bo_num);
-		// 가져온 게시글을 화면에 전송
-		model.addAttribute("board", board);
-		return "/board/update";
 	}
 	
 	/*

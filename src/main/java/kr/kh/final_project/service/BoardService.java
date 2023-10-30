@@ -25,11 +25,11 @@ public interface BoardService {
 	// 게시글 조회수올리기
 	void updateViews(Integer bo_num);
 	
-	// 작성된 게시글 가져오기
+	// 작성된 게시글 가져오기 (상세글 가져오기)
 	BoardVO getBoard(Integer bo_num);
-	// 게시글 삭제하기
-	boolean deleteBoard(Integer bo_num, MemberVO user);
 	// 게시글 상세보기에 첨부된 첨부파일 가져오기
 	List<FileVO> getFileList(Integer bo_num);
+	// 게시글 삭제하기
+	boolean deleteBoard(Integer bo_num, MemberVO user);
 
 }

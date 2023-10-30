@@ -163,6 +163,7 @@ public class BoardServiceImp implements BoardService{
 		return boardDao.selectFileList2(bo_num);
 	}
 	
+	
 	//게시글 삭제하기
 	@Override
 	public boolean deleteBoard(Integer bo_num, MemberVO user) {
@@ -176,12 +177,27 @@ public class BoardServiceImp implements BoardService{
 		if(board == null || !(board.getBo_me_num() == user.getMe_num())) {
 			return false;
 		}
-		/*
-		 * //첨부파일을 삭제 //게시글의 모든 첨부파일들을 가져옴 List<FileVO> fileList =
-		 * boardDao.selectFileList(bo_num); //첨부파일 정보를 주면서 삭제하라고 요청
-		 * deleteFiles(fileList);
-		 */
+		// 첨부파일 삭제하기
+		// 게시글의 모든 첨부파일들을 가져온다.
+		List<FileVO> fileList = boardDao.selectFileList2(bo_num);
+		// 첨부파일 정보를 주면서 삭제하라고 요청한다.
+		deleteFiles(fileList);
+		// 다오한테 삭제하라고 시킴
 		return boardDao.deleteBoard(bo_num);
+	}
+	
+	// 파일 삭제하기
+	private void deleteFiles(List<FileVO> fileList) {
+		if(fileList == null | fileList.size() == 0) {
+			return;
+		}
+		for(FileVO file : fileList) {
+			if(file == null) {
+				continue;
+			}
+			UploadFileUtils.deleteFile(uploadPath, file.getFi_name());
+			boardDao.deleteFile(file.getFi_num());
+		}
 	}
 
 }
