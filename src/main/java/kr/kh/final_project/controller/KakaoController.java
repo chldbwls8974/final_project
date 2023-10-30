@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import kr.kh.final_project.dao.MemberDAO;
 import kr.kh.final_project.service.KakaoService;
 import kr.kh.final_project.service.MemberService;
 import kr.kh.final_project.util.Message;
@@ -41,6 +42,9 @@ public class KakaoController {
 	@Autowired
 	MemberService memberService;
 	
+	@Autowired
+	MemberDAO memberDao;
+	
 	@GetMapping("/kakao_callback")
 	public String Kakao(Model model,String code, String state) {
 		Kakao kakao = getKakaoAccessToken(code);
@@ -59,18 +63,38 @@ public class KakaoController {
 		    long id =  kakaoResponse.getId();
 		    String me_id = String.valueOf(id);
 		    me_id  += 'k';
-		    model.addAttribute("me_id",me_id);
-		    model.addAttribute("kakaoAccount",kakaoAccount);
+		    MemberVO dbMember = memberDao.selectMember(me_id);
 		    
+		    
+		    //회원가입이 안되어있는 상태라면
+		    if(dbMember==null) {
+		    	List<RegionVO> MainRegion = memberService.getMainRegion();
+			    List<TimeVO> time = memberService.getAllTime();
+			    model.addAttribute("MainRegion",MainRegion);
+			    model.addAttribute("time",time);
+			    model.addAttribute("me_id",me_id);
+			    model.addAttribute("kakaoAccount",kakaoAccount);
+			    	
+		    	return "/kakao/signup_next";
+		    }
+		    // 회원가입이 되어있는 상태라면
+		    else {
+		    	Message msg = new Message("/kakao_callback", "로그인에 실패했습니다.");
+		    	MemberVO user = memberService.login(dbMember); 
+		    	if(user != null) {
+					msg = new Message("", "로그인에 성공했습니다.");
+					//화면에서 선택/미선택한 자동로그인 여부를 user에 저장해서 인터셉터에게 전달 
+					user.setAutoLogin(dbMember.isAutoLogin());
+				}
+		    	System.out.println(user);
+		    	model.addAttribute("user", user);
+				model.addAttribute("msg", msg);
+		    	return "message";
+		    }
 		} catch (IOException e) {
 		    e.printStackTrace();
 		}
-		List<RegionVO> MainRegion = memberService.getMainRegion();
-		List<TimeVO> time = memberService.getAllTime();
-		model.addAttribute("MainRegion",MainRegion);
-		model.addAttribute("time",time);
-		
-		return "/kakao/signup_next";
+		return "redirect:/";
 	}
 	
 	@PostMapping("/kakao_callback")
