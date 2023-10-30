@@ -54,6 +54,10 @@ public class MatchVO {
 	
 	private String ti_time_str;
 	
+	private int rg_num;
+	private String rg_main;
+	private String rg_sub;
+	
 	private int mn_mt_num;
 	private int mn_me_num;
 	

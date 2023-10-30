@@ -83,4 +83,9 @@
 			me_num
 				asc
 	</select>
+	<insert id="insertManagerToMatch">
+		insert into manager(mn_me_num, mn_mt_num)
+		values
+			(#{me_num}, #{mt_num})
+	</insert>
 </mapper>

@@ -54,24 +54,20 @@ public class BuisnessmanController {
 	}
 	
 	@GetMapping("/buisnessman/manage/schedule")
-	public String insertSchedule(Model model, HttpSession session) {
-		MemberVO member = (MemberVO)session.getAttribute("user");
+	public String insertSchedule(Model model, HttpSession session, int fa_num) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		
-		if(member == null || !member.getMe_authority().equals("BUSINESS")) {
+		if(user == null || !user.getMe_authority().equals("BUSINESS")) {
 			Message msg = new Message("/", "사업자 권한이 필요합니다.");
 			model.addAttribute("msg", msg);
 			return "/message";
 		}
-		int fa_num = scheduleBService.selectFaNumByMeNum(member.getMe_num());
-		if(fa_num == 0) {
-			Message msg = new Message("/", "등록된 시설이 없습니다.");
-			model.addAttribute("msg", msg);
-			return "/message";
-		}
-		
+		List<FacilityVO> facilityList = scheduleBService.selectFaNumByMeNum(user.getMe_num());
 		List<StadiumVO> stadiumList = scheduleBService.selectStadiumListByFaNum(fa_num);
 		List<OperatingVO> operatingList = scheduleBService.selectOperatingListByFaNum(fa_num);
 		List<TimeVO> timeList = scheduleBService.selectTimeList();
+		model.addAttribute("fa_num", fa_num);
+		model.addAttribute("facilityList", facilityList);
 		model.addAttribute("stadiumList", stadiumList);
 		model.addAttribute("operatingList", operatingList);
 		model.addAttribute("timeList", timeList);

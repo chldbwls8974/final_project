@@ -17,6 +17,12 @@
 		.not-select-circle:hover{height: 70px; border-radius: 20%; background-color: yellow; cursor: pointer;}
 		.main-region-box{display: inline;}
 		.sub-region-box{display: inline;}
+		.match-box{height: 100px; border-bottom: 2px solid black;}
+		.match-box::after{clear: both; content: ''; display: block;}
+		.match-box:last-child{border-bottom: none}
+		.match-time-box{font-size: 40px; display: inline-block; line-height: 100px}
+		.match-info-box{display: inline-block;}
+		.btn-application{float: right; margin-top: 30px;}
 	</style>
 </head>
 <body>
@@ -98,7 +104,13 @@
 	$(document).on('change', '.preferred-time-check', function() {
 		check = !check;
 		printSelectMatch()
-	})
+	});
+	$(document).on('click', '.btn-application', function() {
+		let mt_num = $(this).val();
+		
+		insertManagerToMatch(mt_num)
+		printSelectMatch()
+	});
 	function printSelectMatch() {
 		let str = '';
 		$.ajax({
@@ -110,26 +122,18 @@
 			success : function(data) {
 				console.log(data.timeList)
 				for(match of data.matchList){
-					for(time of data.timeList){
-						if(match.mt_ti_num == time.pt_ti_num){
-							for(region of data.regionList){
-								if(match.fa_rg_num == region.pr_rg_num){
-									str +=`
-									<span>\${match.ti_time_str}</span>
-									<span>\${match.mt_num}</span>
-									<span>\${match.fa_name}</span>
-									<span>\${match.fa_add}</span>
-									<span>\${match.fa_add_detail}</span>
-									<span>\${match.fa_phone}</span>
-									<span>\${match.st_name}</span>
-									<span>\${match.st_locate}</span>
-									<span>\${match.st_max}vs\${match.st_max}</span>
-									<span>\${match.fa_note}</span><br>
-									`
-								}
-							}
-						}
-					}
+					str +=`
+					<div class="match-box">
+						<div class="match-time-box">
+							<span class="match-time">\${match.ti_time_str}</span>
+						</div>
+						<div class="match-info-box">
+							<span>\${match.rg_main} \${match.rg_sub}</span> <br>
+							<span>\${match.fa_name} \${match.st_name} \${match.st_max} vs \${match.st_max}</span>
+						</div>
+						<button class="btn btn-outline-primary btn-application" value="\${match.mt_num}">신청</button> <br>
+					</div>
+					`
 				}
 				$('.select-match-box').html(str)
 			}
@@ -162,7 +166,19 @@
 		}
 		$('.sub-region-box').html(str);
 	}
-		
+	
+	function insertManagerToMatch(mt_num) {
+		$.ajax({
+			async : false,
+			method : 'post',
+			url : '<c:url value="/manager/insert/match"/>',
+			data : {mt_num : mt_num},
+			dataType : 'json',
+			success : function(data) {
+				
+			}
+		});
+	}
 	</script>
 </body>
 </html>

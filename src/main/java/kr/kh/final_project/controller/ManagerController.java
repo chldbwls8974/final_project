@@ -17,21 +17,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.kh.final_project.service.ManagerService;
 import kr.kh.final_project.service.MatchService;
 import kr.kh.final_project.util.Message;
 import kr.kh.final_project.vo.ExtraVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
-import kr.kh.final_project.vo.PreferredRegionVO;
-import kr.kh.final_project.vo.PreferredTimeVO;
 import kr.kh.final_project.vo.RegionVO;
-import kr.kh.final_project.vo.TimeVO;
 
 @Controller
 public class ManagerController {
 	
 	@Autowired
 	MatchService matchService;
+	
+	@Autowired
+	ManagerService managerService;
 
 	@GetMapping("/manager/select/match")
 	public String searchMatchManager(Model model, HttpSession session) {
@@ -53,9 +54,14 @@ public class ManagerController {
 	
 	@ResponseBody
 	@PostMapping("/manager/select/date")
-	public Map<String, Object> selectStadium(@RequestParam("mt_date")String mt_date_str, @RequestParam("rg_num")int rg_num, @RequestParam("check")boolean check, HttpSession session){
+	public Map<String, Object> selectStadium(
+			@RequestParam("mt_date")String mt_date_str,
+			@RequestParam("rg_num")int rg_num,
+			@RequestParam("check")boolean check,
+			HttpSession session){
 		Map<String, Object> map = new HashMap<String, Object>();
-		MemberVO member = (MemberVO)session.getAttribute("user");
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
 		Date mt_date = null;
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		try {
@@ -63,39 +69,31 @@ public class ManagerController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		System.out.println(mt_date);
-		System.out.println(mt_date_str);
-		System.out.println(rg_num);
-		System.out.println(check);
+		
 		//match은 필터
 		//fa_rg_num은 지역필터, 0 : 선호 지역, rg_sub = '전체'이면 rg_main 의 모든 지역, 아니면 해당 지역
 		//mt_date는 날짜 필터
-		if(rg_num == 0) {
-			List<PreferredRegionVO> regionList = matchService.selectPRListByMeNum(member.getMe_num());
-			map.put("regionList", regionList);
-		}else {
-			List<RegionVO> regionList = matchService.selectRegionListByRgNum(rg_num);
-			map.put("regionList", regionList);
-		}
-		if(check) {
-			List<PreferredTimeVO> timeList = matchService.selectPTListByMeNum(member.getMe_num());
-			map.put("timeList", timeList);
-		}else {
-			List<TimeVO> timeList = matchService.selectTimeListByMtDate(mt_date);
-			map.put("timeList", timeList);
-		}
-		List<MatchVO> matchList = matchService.selectMatchListOfManager(member.getMe_num(), mt_date);
-		System.out.println(matchList);
+		List<MatchVO> matchList = matchService.selectMatchListOfManager(user.getMe_num(), mt_date, rg_num, check);
 		map.put("matchList", matchList);
 		return map;
 	}
 	
 	@ResponseBody
 	@PostMapping("/manager/select/region")
-	public Map<String, Object> selectMatchByRegion(@RequestParam("rg_num")int rg_num, HttpSession session){
+	public Map<String, Object> selectMatchByRegion(@RequestParam("rg_num")int rg_num){
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<RegionVO> subRegion = matchService.selectSubRegionByMainRegion(rg_num);
 		map.put("subRegion", subRegion);
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/manager/insert/match")
+	public Map<String, Object> insertManagerToMatch(@RequestParam("mt_num")int mt_num, HttpSession session){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		boolean res = managerService.insertManagerToMatch(mt_num, user.getMe_num());
+		map.put("res", res);
 		return map;
 	}
 	

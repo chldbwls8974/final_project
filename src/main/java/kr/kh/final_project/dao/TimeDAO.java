@@ -11,6 +11,6 @@ public interface TimeDAO {
 
 	List<TimeVO> selectTimeList();
 
-	List<TimeVO> selectTimeListByMtDate(@Param("mt_date")Date mt_date);
+	List<Integer> selectTiNumListByMtDate(@Param("mt_date")Date mt_date);
 
 }

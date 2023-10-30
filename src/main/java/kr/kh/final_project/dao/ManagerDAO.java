@@ -19,6 +19,8 @@ public interface ManagerDAO {
 	
 	// 매니저신청 totalCount 가져오라고 하기
 	int selectTotalCount(@Param("cri")Criteria cri);
+
+	boolean insertManagerToMatch(@Param("mt_num")int mt_num, @Param("me_num")Integer me_num);
 	
 	
 }

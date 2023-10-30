@@ -1,5 +1,6 @@
 package kr.kh.final_project.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,10 +15,7 @@ import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.dao.TimeDAO;
 import kr.kh.final_project.vo.ExtraVO;
 import kr.kh.final_project.vo.MatchVO;
-import kr.kh.final_project.vo.PreferredRegionVO;
-import kr.kh.final_project.vo.PreferredTimeVO;
 import kr.kh.final_project.vo.RegionVO;
-import kr.kh.final_project.vo.TimeVO;
 
 @Service
 public class MatchServiceImp implements MatchService{
@@ -29,10 +27,10 @@ public class MatchServiceImp implements MatchService{
 	MatchDAO matchDao;
 	
 	@Autowired
-	PreferredRegionDAO PreferredRegionDao;
+	PreferredRegionDAO preferredRegionDao;
 	
 	@Autowired
-	PreferredTimeDAO PreferredTimeDao;
+	PreferredTimeDAO preferredTimeDao;
 	
 	@Autowired
 	RegionDAO regionDao;
@@ -44,32 +42,6 @@ public class MatchServiceImp implements MatchService{
 	public List<ExtraVO> selectThirdWeekDayList() {
 		return extraDao.selectThirdWeekDayList();
 	}
-	
-
-	@Override
-	public List<MatchVO> selectMatchListOfManager(Integer me_num, Date mt_date) {
-		if(me_num == null || mt_date == null) {
-			return null;
-		}
-		return matchDao.selectMatchListOfManager(me_num, mt_date);
-	}
-
-	@Override
-	public List<PreferredRegionVO> selectPRListByMeNum(Integer me_num) {
-		if(me_num == null) {
-			return null;
-		}
-		return PreferredRegionDao.selectPRListByMeNum(me_num);
-	}
-
-	@Override
-	public List<PreferredTimeVO> selectPTListByMeNum(Integer me_num) {
-		if(me_num == null) {
-			return null;
-		}
-		return PreferredTimeDao.selectPTListByMeNum(me_num);
-	}
-
 
 	@Override
 	public List<RegionVO> selectMainRegion() {
@@ -85,30 +57,45 @@ public class MatchServiceImp implements MatchService{
 	}
 
 	@Override
-	public List<RegionVO> selectRegionListByRgNum(int rg_num) {
-		if(rg_num == 0) {
+	public List<MatchVO> selectMatchListOfManager(Integer me_num, Date mt_date, int rg_num, boolean check) {
+		if(me_num == null || mt_date == null) {
 			return null;
 		}
-		List<RegionVO> region = regionDao.selectRegionByRgNum(rg_num);
-		List<RegionVO> regionList = regionDao.selectMainRegion2();
-		for(RegionVO r : region) {
-			for(RegionVO rList : regionList) { 
-				if(r.getRg_num() == rList.getRg_num()){
-					return regionDao.selectSubRegionByMainRegion(r.getRg_num());
+		List<Integer> rgNumList = new ArrayList<Integer>();
+		List<Integer> tiNumList;
+		List<MatchVO> dbMatchList = matchDao.selectMatchListOfManager(me_num, mt_date);
+		List<MatchVO> matchList = new ArrayList<MatchVO>();
+		if(rg_num == 0) {
+			rgNumList = preferredRegionDao.selectPrRgNumListByMeNum(me_num);
+		}else {
+			List<Integer> rgMainList = regionDao.selectRgNumSubAll();
+			if(rgMainList.indexOf(rg_num) != -1) {
+				for(Integer rgNum : rgMainList) {
+					if(rg_num == rgNum) {
+						rgNumList = regionDao.selectSubRgNumByMainRgNum(rg_num);
+					}
+				}
+			}else {
+				rgNumList = regionDao.selectRgNumByRgNum(rg_num);
+			}
+		}
+		if(check) {
+			tiNumList = preferredTimeDao.selectPtTiNumListByMeNum(me_num);
+		}else {
+			tiNumList = timeDao.selectTiNumListByMtDate(mt_date);
+		}
+		for(MatchVO m : dbMatchList) {
+			for(Integer r : rgNumList) {
+				if(r == m.getFa_rg_num()) {
+					for(Integer t : tiNumList) {
+						if(t == m.getMt_ti_num()) {
+							matchList.add(m);
+						}
+					}
 				}
 			}
 		}
-		return region;
+		return matchList;
 	}
-
-
-	@Override
-	public List<TimeVO> selectTimeListByMtDate(Date mt_date) {
-		if(mt_date == null) {
-			return null;
-		}
-		return timeDao.selectTimeListByMtDate(mt_date);
-	}
-	
 	
 }

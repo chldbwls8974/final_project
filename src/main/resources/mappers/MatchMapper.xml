@@ -8,6 +8,7 @@
 			`match`.*,
             stadium.*,
             facility.*,
+            region.*,
             `time`.*,
             manager.mn_me_num
 		from
@@ -16,6 +17,8 @@
 			stadium on mt_st_num = st_num
 				join
 			facility on st_fa_num = fa_num
+				join
+			region on fa_rg_num = rg_num
 				join
 			`time` on mt_ti_num = ti_num
 				left join
@@ -57,4 +60,11 @@
 		order by
 			ti_time asc;
 	</select>
+	<update id="updateMatchMtRule">
+		update `match`
+		set
+			mt_rule = 1
+		where
+			mt_num = #{mt_num}
+	</update>
 </mapper>

@@ -3,6 +3,7 @@ select
 			`match`.*,
             stadium.*,
             facility.*,
+            region.*,
             `time`.*,
             manager.mn_me_num,
             if(ifnull(T1.t1, 0) + ifnull(T2.t2, 0) + ifnull(T3.t3, 0) + ifnull(mn_me_num, 0)= 0, true, false) as T,
@@ -13,6 +14,8 @@ select
 			stadium on mt_st_num = st_num
 				join
 			facility on st_fa_num = fa_num
+				join
+			region on fa_rg_num = rg_num
 				join
 			`time` on mt_ti_num = ti_num
 				left join

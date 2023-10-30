@@ -3,9 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.final_project.dao.PreferredRegionDAO">
-	<select id="selectPRListByMeNum" resultType="kr.kh.final_project.vo.PreferredRegionVO">
+	<select id="selectPrRgNumListByMeNum" resultType="int">
 		select
-			*
+			pr_rg_num
 		from
 			preferred_region
 		where
