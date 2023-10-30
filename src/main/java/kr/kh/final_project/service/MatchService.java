@@ -9,7 +9,7 @@ import kr.kh.final_project.vo.RegionVO;
 
 public interface MatchService {
 	
-	List<ExtraVO> selectThirdWeekDayList();
+	List<ExtraVO> selectWeekDayList(int i);
 
 	List<RegionVO> selectMainRegion();
 

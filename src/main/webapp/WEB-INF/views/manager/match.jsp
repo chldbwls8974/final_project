@@ -8,7 +8,7 @@
 		.day-box{
 		height: 70px; background-color: window; flex: 1; border-right: 3px solid black;
 		text-align: center;}
-		.day-box:nth-child(7){border-right: none}
+		.day-box:last-child{border-right: none}
 		.day-span{font-size: 30px;}
 		.day_of_week-span{font-size: 15px;}
 		.sat{color: blue;}
@@ -120,7 +120,6 @@
 			data : {mt_date:select_day, rg_num:rg_num, check:check},
 			dataType : 'json',
 			success : function(data) {
-				console.log(data.timeList)
 				for(match of data.matchList){
 					str +=`
 					<div class="match-box">
@@ -175,7 +174,11 @@
 			data : {mt_num : mt_num},
 			dataType : 'json',
 			success : function(data) {
-				
+				if(data.res){
+					alert("등록 성공");
+				}else{
+					alert("등록 실패");					
+				}
 			}
 		});
 	}

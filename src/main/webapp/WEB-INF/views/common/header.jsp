@@ -68,7 +68,7 @@
 					</a>
 					<div class="dropdown-menu">
 						<a class="dropdown-item" href="<c:url value='/manager/select/match'/>">매치 신청</a>
-						<a class="dropdown-item" href="<c:url value='/manager/manage/schedule'/>">일정 관리</a>
+						<a class="dropdown-item" href="<c:url value='/manager/manage/schedule?weekCount=0'/>">일정 관리</a>
 					</div>
 			</li>
 			<li class="nav-item dropdown">

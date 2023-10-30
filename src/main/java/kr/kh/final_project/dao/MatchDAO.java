@@ -11,6 +11,11 @@ public interface MatchDAO {
 
 	List<MatchVO> selectMatchListOfManager(@Param("me_num")Integer me_num, @Param("mt_date")Date mt_date);
 
-	void updateMatchMtRule(@Param("mt_num")int mt_num);
+	void updateMatchMtRuleTo1(@Param("mt_num")int mt_num);
+
+	void updateMatchMtRuleTo0(@Param("mt_num")int mt_num);
+
+	List<MatchVO> selectManagerMatchListByMtDate(@Param("me_num")Integer me_num, @Param("mt_date")Date mt_date);
+	
 
 }

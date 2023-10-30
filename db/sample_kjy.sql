@@ -125,7 +125,144 @@ VALUES
 (6, 108, 7), (6, 110, 7), (6, 112, 7), (6, 114, 7), (6, 116, 4),
 (6, 130, 5), (6, 132, 7), (6, 134, 7), (6, 136, 7), (6, 138, 7),
 (6, 140, 4), (6, 154, 5), (6, 156, 7), (6, 158, 7), (6, 160, 7),
-(6, 162, 7), (6, 164, 4);
+(6, 162, 7), (6, 164, 4), (7, 10, 5), (7, 12, 5), (7, 14, 5),
+(7, 16, 5), (7, 18, 5), (7, 20, 5), (7, 22, 5), (7, 24, 5),
+(7, 26, 5), (7, 34, 5), (7, 36, 5), (7, 38, 5), (7, 40, 5),
+(7, 42, 5), (7, 44, 5), (7, 46, 5), (7, 48, 5), (7, 50, 5),
+(7, 58, 5), (7, 60, 5), (7, 62, 5), (7, 64, 5), (7, 66, 5),
+(7, 68, 5), (7, 70, 5), (7, 72, 5), (7, 74, 5), (7, 82, 5),
+(7, 84, 5), (7, 86, 5), (7, 88, 5), (7, 90, 5), (7, 92, 5),
+(7, 94, 5), (7, 96, 5), (7, 98, 5), (7, 106, 5), (7, 108, 5),
+(7, 110, 5), (7, 112, 5), (7, 114, 5), (7, 116, 5), (7, 118, 5),
+(7, 120, 5), (7, 122, 5), (7, 124, 5), (7, 130, 5), (7, 134, 5),
+(7, 132, 5), (7, 136, 5), (7, 138, 5), (7, 140, 5), (7, 142, 5),
+(7, 144, 5), (7, 146, 5), (7, 148, 5), (7, 154, 5), (7, 156, 5),
+(7, 158, 5), (7, 160, 5), (7, 162, 5), (7, 164, 5), (7, 166, 5),
+(7, 168, 5), (7, 2, 5), (7, 4, 5), (8, 11, 6), (8, 13, 6),
+(8, 15, 6), (8, 17, 6), (8, 19, 6), (8, 21, 6), (8, 23, 6),
+(8, 1, 6), (8, 3, 6), (8, 25, 6), (8, 35, 6), (8, 37, 6),
+(8, 39, 6), (8, 41, 6), (8, 43, 6), (8, 45, 6), (8, 47, 6),
+(8, 59, 6), (8, 61, 6), (8, 63, 6), (8, 65, 6), (8, 67, 6),
+(8, 69, 6), (8, 71, 6), (8, 83, 6), (8, 107, 6), (8, 131, 6),
+(8, 155, 6), (8, 157, 6), (8, 159, 6), (8, 161, 6), (8, 163, 6),
+(8, 165, 6), (8, 167, 6), (8, 143, 6), (8, 119, 6), (8, 95, 6),
+(8, 93, 6), (8, 117, 6), (8, 141, 6), (8, 139, 6), (8, 115, 6),
+(8, 91, 6), (8, 89, 6), (8, 113, 6), (8, 137, 6), (8, 135, 6),
+(8, 111, 6), (8, 87, 6), (8, 85, 6), (8, 109, 6), (8, 133, 6),
+(8, 145, 6), (8, 147, 6), (8, 121, 6), (8, 123, 6), (8, 97, 6),
+(8, 73, 6), (8, 49, 6);
+INSERT INTO futsal.match (mt_date, mt_st_num, mt_ti_num, mt_personnel, mt_state1)
+SELECT
+	date(adddate(adddate(now(), INTERVAL 0 DAY), INTERVAL -7 DAY)),
+	sc_st_num,
+	sc_ti_num,
+	sc_personnel,
+	if(st_available = 0, 0, if(date(adddate(now(), INTERVAL -7 DAY)) >= av_notdate, 1, 0))
+FROM
+	futsal.schedule
+	join
+futsal.time on sc_ti_num = ti_num
+	join
+futsal.stadium on sc_st_num = st_num
+	left join
+futsal.availability on av_st_num = st_num
+WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(adddate(now(), INTERVAL 0 DAY)), 1));
+INSERT INTO futsal.match (mt_date, mt_st_num, mt_ti_num, mt_personnel, mt_state1)
+SELECT
+	date(adddate(adddate(now(), INTERVAL 1 DAY), INTERVAL -7 DAY)),
+	sc_st_num,
+	sc_ti_num,
+	sc_personnel,
+	if(st_available = 0, 0, if(date(adddate(now(), INTERVAL -7 DAY)) >= av_notdate, 1, 0))
+FROM
+	futsal.schedule
+	join
+futsal.time on sc_ti_num = ti_num
+	join
+futsal.stadium on sc_st_num = st_num
+	left join
+futsal.availability on av_st_num = st_num
+WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(adddate(now(), INTERVAL 1 DAY)), 1));
+INSERT INTO futsal.match (mt_date, mt_st_num, mt_ti_num, mt_personnel, mt_state1)
+SELECT
+	date(adddate(adddate(now(), INTERVAL 2 DAY), INTERVAL -7 DAY)),
+	sc_st_num,
+	sc_ti_num,
+	sc_personnel,
+	if(st_available = 0, 0, if(date(adddate(now(), INTERVAL -7 DAY)) >= av_notdate, 1, 0))
+FROM
+	futsal.schedule
+	join
+futsal.time on sc_ti_num = ti_num
+	join
+futsal.stadium on sc_st_num = st_num
+	left join
+futsal.availability on av_st_num = st_num
+WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(adddate(now(), INTERVAL 2 DAY)), 1));
+INSERT INTO futsal.match (mt_date, mt_st_num, mt_ti_num, mt_personnel, mt_state1)
+SELECT
+	date(adddate(adddate(now(), INTERVAL 3 DAY), INTERVAL -7 DAY)),
+	sc_st_num,
+	sc_ti_num,
+	sc_personnel,
+	if(st_available = 0, 0, if(date(adddate(now(), INTERVAL -7 DAY)) >= av_notdate, 1, 0))
+FROM
+	futsal.schedule
+	join
+futsal.time on sc_ti_num = ti_num
+	join
+futsal.stadium on sc_st_num = st_num
+	left join
+futsal.availability on av_st_num = st_num
+WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(adddate(now(), INTERVAL 3 DAY)), 1));
+INSERT INTO futsal.match (mt_date, mt_st_num, mt_ti_num, mt_personnel, mt_state1)
+SELECT
+	date(adddate(adddate(now(), INTERVAL 4 DAY), INTERVAL -7 DAY)),
+	sc_st_num,
+	sc_ti_num,
+	sc_personnel,
+	if(st_available = 0, 0, if(date(adddate(now(), INTERVAL -7 DAY)) >= av_notdate, 1, 0))
+FROM
+	futsal.schedule
+	join
+futsal.time on sc_ti_num = ti_num
+	join
+futsal.stadium on sc_st_num = st_num
+	left join
+futsal.availability on av_st_num = st_num
+WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(adddate(now(), INTERVAL 4 DAY)), 1));
+INSERT INTO futsal.match (mt_date, mt_st_num, mt_ti_num, mt_personnel, mt_state1)
+SELECT
+	date(adddate(adddate(now(), INTERVAL 5 DAY), INTERVAL -7 DAY)),
+	sc_st_num,
+	sc_ti_num,
+	sc_personnel,
+	if(st_available = 0, 0, if(date(adddate(now(), INTERVAL -7 DAY)) >= av_notdate, 1, 0))
+FROM
+	futsal.schedule
+	join
+futsal.time on sc_ti_num = ti_num
+	join
+futsal.stadium on sc_st_num = st_num
+	left join
+futsal.availability on av_st_num = st_num
+WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(adddate(now(), INTERVAL 5 DAY)), 1));
+INSERT INTO futsal.match (mt_date, mt_st_num, mt_ti_num, mt_personnel, mt_state1)
+SELECT
+	date(adddate(adddate(now(), INTERVAL 6 DAY), INTERVAL -7 DAY)),
+	sc_st_num,
+	sc_ti_num,
+	sc_personnel,
+	if(st_available = 0, 0, if(date(adddate(now(), INTERVAL -7 DAY)) >= av_notdate, 1, 0))
+FROM
+	futsal.schedule
+	join
+futsal.time on sc_ti_num = ti_num
+	join
+futsal.stadium on sc_st_num = st_num
+	left join
+futsal.availability on av_st_num = st_num
+WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(adddate(now(), INTERVAL 6 DAY)), 1));
 INSERT INTO futsal.match (mt_date, mt_st_num, mt_ti_num, mt_personnel, mt_state1)
 SELECT
 	date(adddate(adddate(now(), INTERVAL 0 DAY), INTERVAL 0 DAY)),
@@ -466,13 +603,16 @@ WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(adddate(now(), 
 
 insert into manager(mn_mt_num, mn_me_num)
 values
-(884, 3), (902, 3), (889, 4);
+(884, 3), (902, 3), (889, 4), (8, 3), (48, 3),
+(1337, 3), (1344, 3);
 
 update `match`
 set
 	mt_rule = 1
 where
-	mt_num = 884 or mt_num = 901 or mt_num = 889;
+	mt_num = 884 or mt_num = 902 or mt_num = 889 or
+	mt_num = 8 or mt_num = 48 or mt_num = 1337 or
+	mt_num = 1344 ;
 
 insert into preferred_region(pr_me_num, pr_rg_num)
 values

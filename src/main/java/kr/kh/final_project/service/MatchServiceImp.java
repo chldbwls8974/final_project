@@ -39,8 +39,8 @@ public class MatchServiceImp implements MatchService{
 	TimeDAO timeDao;
 	
 	@Override
-	public List<ExtraVO> selectThirdWeekDayList() {
-		return extraDao.selectThirdWeekDayList();
+	public List<ExtraVO> selectWeekDayList(int i) {
+		return extraDao.selectWeekDayList(i);
 	}
 
 	@Override

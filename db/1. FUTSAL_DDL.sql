@@ -650,7 +650,7 @@ REFERENCES `team` (
 );
 
 ALTER TABLE `manager` ADD CONSTRAINT `FK_match_TO_manager_1` FOREIGN KEY (
-	`mn_ga_num`
+	`mn_mt_num`
 )
 REFERENCES `match` (
 	`mt_num`

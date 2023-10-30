@@ -1,11 +1,13 @@
 package kr.kh.final_project.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.vo.ManagerVO;
+import kr.kh.final_project.vo.MatchVO;
 
 public interface ManagerDAO {
 	
@@ -21,6 +23,6 @@ public interface ManagerDAO {
 	int selectTotalCount(@Param("cri")Criteria cri);
 
 	boolean insertManagerToMatch(@Param("mt_num")int mt_num, @Param("me_num")Integer me_num);
-	
-	
+
+	boolean deleteManagerToMatch(@Param("mt_num")int mt_num, @Param("me_num")Integer me_num);
 }

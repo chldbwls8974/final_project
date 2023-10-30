@@ -44,7 +44,7 @@ public class ManagerController {
 			return "/message";
 		}
 		List<RegionVO> mainRegion = matchService.selectMainRegion();
-		List<ExtraVO> thirdWeek = matchService.selectThirdWeekDayList();
+		List<ExtraVO> thirdWeek = matchService.selectWeekDayList(2);
 		
 		model.addAttribute("mainRegion",mainRegion);
 		model.addAttribute("thirdWeek", thirdWeek);
@@ -89,7 +89,7 @@ public class ManagerController {
 	
 	@ResponseBody
 	@PostMapping("/manager/insert/match")
-	public Map<String, Object> insertManagerToMatch(@RequestParam("mt_num")int mt_num, HttpSession session){
+	public Map<String, Object> insertManagerMatch(@RequestParam("mt_num")int mt_num, HttpSession session){
 		Map<String, Object> map = new HashMap<String, Object>();
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		boolean res = managerService.insertManagerToMatch(mt_num, user.getMe_num());
@@ -98,7 +98,7 @@ public class ManagerController {
 	}
 	
 	@GetMapping("/manager/manage/schedule")
-	public String manageScheduleManager(Model model, HttpSession session) {
+	public String manageScheduleManager(Model model, HttpSession session, int weekCount) {
 		MemberVO member = (MemberVO)session.getAttribute("user");
 		
 		if(member == null || !member.getMe_authority().equals("MANAGER")) {
@@ -106,7 +106,37 @@ public class ManagerController {
 			model.addAttribute("msg", msg);
 			return "/message";
 		}
-		
+		List<ExtraVO> week = matchService.selectWeekDayList(weekCount);
+		model.addAttribute("weekCount", weekCount);
+		model.addAttribute("week", week);
 		return "/manager/schedule";
+	}
+	@ResponseBody
+	@PostMapping("/manager/manage/schedule")
+	public Map<String, Object> managerManagerMatch(@RequestParam("mt_date")String mt_date_str, HttpSession session){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		Date mt_date = null;
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			mt_date = format.parse(mt_date_str);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		List<MatchVO> matchList = managerService.selectManagerMatchListByMtDate(user.getMe_num(), mt_date);
+		map.put("matchList", matchList);
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/manager/delete/schedule")
+	public Map<String, Object> deleteManagerMatch(@RequestParam("mt_num")int mt_num, HttpSession session){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		boolean res = managerService.deleteManagerToMatch(mt_num, user.getMe_num());
+		map.put("res", res);
+		return map;
 	}
 }
