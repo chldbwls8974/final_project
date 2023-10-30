@@ -29,7 +29,10 @@ public interface BoardService {
 	BoardVO getBoard(Integer bo_num);
 	// 게시글 상세보기에 첨부된 첨부파일 가져오기
 	List<FileVO> getFileList(Integer bo_num);
+	// 게시글 수정하기
+	//boolean updateBoard(BoardVO board, MultipartFile[] files, Integer[] delFiles, MemberVO user);
 	// 게시글 삭제하기
 	boolean deleteBoard(Integer bo_num, MemberVO user);
+
 
 }

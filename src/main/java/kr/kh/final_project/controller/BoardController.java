@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.pagination.PageMaker;
 import kr.kh.final_project.service.BoardService;
+import kr.kh.final_project.util.Message;
 import kr.kh.final_project.vo.BoardVO;
 import kr.kh.final_project.vo.FileVO;
 import kr.kh.final_project.vo.MemberVO;
@@ -84,8 +85,6 @@ public class BoardController {
 		model.addAttribute("fileList", fileList);
 		return "/board/detail";
 	}
-	
-	
 
 	// 게시글 수정하기 화면 조회하기
 	@GetMapping("/board/update")
@@ -97,6 +96,16 @@ public class BoardController {
 		model.addAttribute("board", board);
 		return "/board/update";
 	}
+	/*
+	 * @PostMapping("/board/update") public String updatePost(Model model, BoardVO
+	 * board, MultipartFile[] files, Integer[] delFiles, HttpSession session) {
+	 * Message msg; MemberVO user = (MemberVO)session.getAttribute("user");
+	 * if(boardService.updateBoard(board, files, delFiles,user)) { msg = new
+	 * Message("/board/detail?bo_num="+board.getBo_num(), "게시글을 수정했습니다."); }else {
+	 * msg = new Message("/board/update?bo_num="+board.getBo_num(),
+	 * "게시글을 수정하지 못했습니다."); } model.addAttribute("msg", msg); return "message"; }
+	 */
+	
 	//게시글 삭제하기
 	@GetMapping("/board/delete")
 	public String boardDelete(Model model, HttpSession session, Integer bo_num) {
@@ -116,15 +125,6 @@ public class BoardController {
 		return "/util/message";
 	}
 	
-	/*
-	 * @PostMapping("/board/update") public String boardUpdatePost(Model model,
-	 * BoardVO board, HttpSession session) { MemberVO user =
-	 * (MemberVO)session.getAttribute("user"); boolean res =
-	 * boardService.update(board,user); if(res) { model.addAttribute("msg",
-	 * "게시글을 수정했습니다."); }else { model.addAttribute("msg", "게시글을 수정하지 못했습니다."); }
-	 * model.addAttribute("url", "/board/detail?bo_num="+board.getBo_num()); return
-	 * "/util/message"; }
-	 */
 	
 }
 	
