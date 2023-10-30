@@ -17,7 +17,7 @@
 </head>
 <body>
 	<div class="col-lg-12 text-center mt-3">
-    <button class="btn btn-block waves-effect waves-light btn-rounded btn-outline-info mb-3">로그인하기</button>
+    <button class="btn btn-block waves-effect waves-light btn-rounded btn-outline-info mb-3" >로그인하기</button>
     <img alt="카카오로그인" src="${pageContext.request.contextPath}/resources/assets/img/kakao_login_medium_wide.png" onclick="loginWithKakao()">
 </div>
 

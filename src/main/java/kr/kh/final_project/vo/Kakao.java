@@ -11,4 +11,5 @@ public class Kakao {
 	String scope;
 	int expires_in;
 	int refresh_token_expires_in;
+	KakaoAccount kakao_acount;
 }
