@@ -230,6 +230,20 @@
 			<artifactId>mail</artifactId>
 			<version>1.4.7</version> <!-- 수정 전 1.4.3 -->
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<!-- json 객체 -->
+		<dependency>
+		    <groupId>org.json</groupId>
+		    <artifactId>json</artifactId>
+		    <version>20160810</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+		<dependency>
+		    <groupId>com.googlecode.json-simple</groupId>
+		    <artifactId>json-simple</artifactId>
+		    <version>1.1.1</version>
+		</dependency>
+		
 	</dependencies>
 	<build>
 		<plugins>
