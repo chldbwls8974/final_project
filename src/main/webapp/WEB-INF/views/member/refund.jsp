@@ -75,7 +75,6 @@
 		var regPoint = /\d*000$/;
 		
 		if(!regPoint.test(point)){
-			console.log("regex")
 			
 			addBtn.disabled = true;
 			$('#check-point-error').text('1000원 단위로 입력해 주세요.');
@@ -114,10 +113,9 @@
 	
 	//포인트 환급 신청 이력을 받아오는 함수
 	function getPointHistoryList(cri){
-		let data = {
-			cri : cri
-		}
-		ajaxJsonToJson(false,'post','/member/refund/list', data ,(data)=>{
+		
+		console.log(cri);
+		ajaxJsonToJson(false,'post','/member/refund/list', cri ,(data)=>{
 			$('.point').text("현재 보유 포인트는 " + data.dbMemberPoint + " 입니다.");
 			//리스트를 생성
 			createPointHistoryList(data.refundList, '.list-tbody');
@@ -152,7 +150,6 @@
 			let btnStr = '';
 			let state = '';
 			let price = -parseInt(a.ph_price);
-			console.log(price);
 			if(a.ph_source == '4'){
 				state = '승인 대기중'
 				btnStr = `
@@ -185,7 +182,6 @@
 		let data = { 
 				ph_num : ph_num
 		}
-		console.log(ph_num)
 		 
 		ajaxJsonToJson(false,'post','/member/refund/delete', data ,(data)=>{
 			if(data.res){
