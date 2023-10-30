@@ -138,7 +138,7 @@
 			str += `
 			<li class="page-item \${active}">
 				<a class="page-link" href="javascript:void(0);" onclick="cri.page=\${i};getPointHistoryList(cri)">\${i}</a>
-			</li>`;
+			</li>`;ㄴ
 		}
 		if(pm.next){
 			str += `<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="cri.page=\${pm.endPage+1};getPointHistoryList(cri)">다음</a></li>`;
