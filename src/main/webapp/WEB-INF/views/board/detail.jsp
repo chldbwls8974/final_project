@@ -103,7 +103,6 @@
 							<button class="btn btn-outline-info btn-sm">삭제</button>
 						</li>
 					</ul>
-				
 			</div>
 			
 		<!-- 댓글 페이지네이션 -->
