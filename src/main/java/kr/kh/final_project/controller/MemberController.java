@@ -295,7 +295,6 @@ public class MemberController {
 		int totalCount = memberService.getMemberCouponListCount(user);
 		PageMaker pm = new PageMaker(3, cri, totalCount);
 		
-		
 		map.put("pm", pm);
 		map.put("hcList", hcList);
 		return map;
