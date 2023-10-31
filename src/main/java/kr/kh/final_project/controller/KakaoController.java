@@ -117,11 +117,13 @@ public class KakaoController {
 	
 	
 	@PostMapping("/kakao/login")
-	public String loginKakaoPost(String user, Model model) 
+	public String loginKakaoPost(String me_id, Model model) 
 	{
 		// 여기 해야함. String 으로 받아온 유저 정보 객체로 뜯어서 처리를 하든
 		// 아예 가져올때 뜯어서 가져오든 해야함
 		Message msg = new Message("", "로그인에 성공했습니다.");
+		MemberVO dbMember = memberDao.selectMember(me_id);
+		MemberVO user = memberService.login(dbMember); 
 		System.out.println(user);
 		model.addAttribute("user", user);
 		model.addAttribute("msg", msg);

@@ -8,16 +8,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-		
-		<h1>카카오 로그인</h1>
-		<form action="<c:url value='/kakao/login'/>" method="post" id="myForm">
-		<input name="user" value="${user }">
-		<button name="btn">-</button>
-		</form>
+	<form action="<c:url value='/kakao/login'/>" method="post" id="myForm">
+	<input name="me_id" value="${user.me_id }">
+	<button name="btn">-</button>
+	</form>
 </body>
-	<script type="text/javascript"> 
- 	window.onload = function() {
- 	    document.getElementById("myForm").submit();
- 	}
+ 	<script type="text/javascript"> 
+  	window.onload = function() {
+  	    document.getElementById("myForm").submit();
+  	}
  	</script> 
 </html>

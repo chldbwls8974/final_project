@@ -83,6 +83,7 @@ input[type='checkbox']:checked+label{
 	<form action="<c:url value='/kakao_callback'/>" method="post" id="myForm">
 		<div class="1p">
 			<input type="hidden" name="me_id" value="${me_id }">
+<%-- 			<input type="hidden" name="me_pw" value="kakao${me_id }"> --%>
 			<input type="hidden" name="me_email" value="${kakaoAccount.email }">
 			<input type="hidden" name="me_name" value="${kakaoAccount.name }">
 			<input type="hidden" name="me_gender" value="${kakaoAccount.gender }">
@@ -95,8 +96,8 @@ input[type='checkbox']:checked+label{
 					name="me_birthday" id="me_birthday" required>
 			</div>
 			<div class="form-group">
-				<label>거주지</label> <select class="form-control rg_main">
-					<option value="0">지역을 선택하세요</option>
+				<label>거주지</label> <select class="form-control rg_main" required>
+					<option value="">지역을 선택하세요</option>
 					<c:forEach items="${MainRegion}" var="main">
 						<option value="${main.rg_main}">${main.rg_main}</option>
 					</c:forEach>
@@ -104,8 +105,8 @@ input[type='checkbox']:checked+label{
 
 			</div>
 			<div class="form-group">
-				<select class="form-control rg_sub" name="me_rg_num">
-					<option value="0">지역을 선택하세요</option>
+				<select class="form-control rg_sub" name="me_rg_num" required>
+					<option value="">지역을 선택하세요</option>
 					<c:forEach items="${SubRegion}" var="sub">
 						<option value="${sub.rg_num}">${sub.rg_sub}</option>
 					</c:forEach>
@@ -327,14 +328,6 @@ input[type='checkbox']:checked+label{
 			</div>
 		</div>
 
-
-
-			
-		
-		
-		
-		
-		
 			<div class="prefer-area">
 				<div class="form-group">
 					<label>선호지역</label> <select class="form-control pre_rg_main">
