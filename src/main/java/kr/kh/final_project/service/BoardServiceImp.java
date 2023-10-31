@@ -210,7 +210,7 @@ public class BoardServiceImp implements BoardService{
 			return false;
 		}
 		BoardVO dbBoard = boardDao.selectBoard(board.getBo_num());
-		if(dbBoard == null || !(board.getBo_me_num() == user.getMe_num())) {
+		if(dbBoard == null || !(dbBoard.getBo_me_num() == user.getMe_num())) {
 			return false;
 		}
 		//추가된 첨부파일 업로드 및 DB 추가

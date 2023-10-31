@@ -95,13 +95,16 @@ public class BoardController {
 		
 		// 가져온 게시글을 화면에 전송
 		model.addAttribute("board", board);
-		model.addAttribute("fileLsit", fileList);
+		model.addAttribute("fileList", fileList);
 		return "/board/update";
 	}
+	// 게시글 수정하기
 	@PostMapping("/board/update")
 	public String boardUpdatePost(Model model, BoardVO board, HttpSession session,MultipartFile[] files, int [] delNums ) {
+		// 로그인한 회원정보를 user에 저장
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		boolean res = boardService.update(board,user, files, delNums);
+		// 게시글 정보, 로그인한 사용자정보, 새로 업로드된 파일, 삭제할 파일 정보 res에 저장
+		boolean res = boardService.update(board, user, files, delNums);
 		if(res) {
 			model.addAttribute("msg", "게시글을 수정했습니다.");
 		}else {
