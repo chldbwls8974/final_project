@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.pagination.PageMaker;
 import kr.kh.final_project.service.BoardService;
-import kr.kh.final_project.util.Message;
 import kr.kh.final_project.vo.BoardVO;
 import kr.kh.final_project.vo.FileVO;
 import kr.kh.final_project.vo.MemberVO;
@@ -85,6 +84,16 @@ public class BoardController {
 		model.addAttribute("fileList", fileList);
 		return "/board/detail";
 	}
+	/*
+	 * // 상세페이지 댓글 프로필사진 가져오기
+	 * 
+	 * @RequestMapping("/board/detail") public String boardComment(Model model,
+	 * MemberVO member) {
+	 * 
+	 * List<MemberVO> list = boardService.getUser(member);
+	 * 
+	 * model.addAttribute("list", list); return "/board/detail"; }
+	 */
 
 	// 게시글 수정하기 화면 조회하기
 	@GetMapping("/board/update")
@@ -132,7 +141,6 @@ public class BoardController {
 		model.addAttribute("url", "/board/notice");
 		return "/util/message";
 	}
-	
 	
 }
 	

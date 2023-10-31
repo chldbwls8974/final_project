@@ -36,5 +36,4 @@ public interface BoardService {
 	// 게시글 수정하기
 	boolean update(BoardVO board, MemberVO user, MultipartFile[] files, int[] delNums);
 
-
 }

@@ -43,4 +43,5 @@ public interface MemberDAO {
 
 	boolean updateMemberProfile(MemberVO user);
 
+
 }

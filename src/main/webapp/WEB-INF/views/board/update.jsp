@@ -43,6 +43,7 @@
 		<div class="form-group">
 			<label>첨부파일 : </label>
 			<c:forEach items="${fileList}" var="file">
+				<!-- 어디 까지가 부모인지 알아야하기 때문에 div태그로 감싸준다. -->
 				<div class="box">
 					<a  href="<c:url value='/download${file.fi_name}'/>" 
 						download="${file.fi_ori_name }">${file.fi_ori_name}

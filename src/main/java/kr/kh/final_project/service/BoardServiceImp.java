@@ -21,6 +21,7 @@ public class BoardServiceImp implements BoardService{
 	@Autowired
 	BoardDAO boardDao;
 	
+	
 	String uploadPath = "D:\\uploadfiles";
 
 
