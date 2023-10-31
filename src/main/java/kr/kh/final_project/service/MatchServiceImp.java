@@ -95,6 +95,12 @@ public class MatchServiceImp implements MatchService{
 		}
 		return region;
 	}
+
+
+	@Override
+	public List<MatchVO> getMatchList() {
+		return  matchDao.selectMatchList();
+	}
 	
 	
 }

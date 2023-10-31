@@ -11,16 +11,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.kh.final_project.service.MatchService;
 import kr.kh.final_project.service.MemberService;
 import kr.kh.final_project.service.RegionService;
 import kr.kh.final_project.util.Message;
+import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.RegionVO;
@@ -31,6 +32,8 @@ public class MemberController {
 
 	@Autowired
 	MemberService memberService;
+	@Autowired
+	MatchService matchService;
 	@Autowired
 	RegionService regionService;
 	
@@ -268,6 +271,20 @@ public class MemberController {
 		MemberVO checked = memberService.isCheck2(check);
 		map.put("checked",checked);
 		return map;
+	}
+	
+	//마이페이지-소속 클럽 페이지 조회
+	@GetMapping("/member/clublist")
+	public String myClub() {
+		return "/member/clublist";
+	}
+	
+	//마이페이지-신청 경기 페이지 조회
+	@GetMapping("/member/mymatch")
+	public String mymatch(Model model) {
+		List<MatchVO> matchList = matchService.getMatchList(); //서비스에게 매치리스트 요청
+		model.addAttribute("matchList", matchList);
+		return "/member/mymatch";
 	}
 	
 }

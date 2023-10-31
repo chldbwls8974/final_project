@@ -5,6 +5,7 @@ import java.util.List;
 import kr.kh.final_project.pagination.Criteria;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.RegionVO;

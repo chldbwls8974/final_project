@@ -6,21 +6,24 @@
 <head>
 <meta charset="UTF-8">
 <title>내 프로필 수정</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js"></script>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
+<style type="text/css">
+	.profileImage, .fileup-btn, .filereset-btn{
+		border-radius: 5px;
+		border: 1px solid #999;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+	}
+</style>
 </head>
 <body>
 	<form class="myprofile-photo" action="<c:url value='/member/myedit'/>" method="post" enctype="multipart/form-data">			
-	  <h1 class="h3 mb-3 fw-normal">내 정보 수정</h1>
+	  <h3>내 정보 수정</h3>
 		<div class="myprofile">
-			<input type="file" name="profileImage" id="profileUpdate">
+			<input type="file" name="profileImage" class="profileImage" id="profileUpdate">
 			<img src="${user.me_profile}">
-		    <input type="submit" value="사진 수정">
-		    <input type="button" value="초기화" onclick="">
+		    <input type="submit" class="fileup-btn" value="사진 수정" >
+		    <input type="button" class="filereset-btn" value="초기화" onclick="">
 		</div>	
         <hr>
 
@@ -28,7 +31,7 @@
 
         <div class="myprofile">
             <label for="nickname">닉네임</label>
-            <input type="text" class="form-control" name="input-nickname" noninput="nicknameModify()" placeholder="${user.me_nickname}">
+            <input type="text" class="form-control" name="input-nickname" placeholder="${user.me_nickname}">
   			<button type="button" class="form-control" name="check-btn">확인</button>
         </div>
         <div class="myprofile">

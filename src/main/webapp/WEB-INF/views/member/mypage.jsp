@@ -57,7 +57,7 @@
 			<div class="mymenu">
 				<ul class="mymenu-list">
 					<li>
-						<a href="#">
+						<a href="<c:url value='/member/mymatch'/>">
 						<img width="24px" height="24px" src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_myplab_color.svg" alt="신청 경기">
 						<p>신청 경기</p>
 						</a>
