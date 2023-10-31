@@ -22,6 +22,7 @@ import kr.kh.final_project.pagination.PageMaker;
 import kr.kh.final_project.service.MemberService;
 import kr.kh.final_project.service.RegionService;
 import kr.kh.final_project.util.Message;
+import kr.kh.final_project.vo.HoldingCouponVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.RegionVO;
@@ -272,6 +273,32 @@ public class MemberController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		MemberVO checked = memberService.isCheck2(check);
 		map.put("checked",checked);
+		return map;
+	}
+	
+	//회원 보유 쿠폰 조회
+	@GetMapping("/member/myCoupon")
+	public String myCoupon(HttpSession session, Model model) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		model.addAttribute("user",user );
+		return "/member/myCoupon";
+	}
+	//회원 보유 쿠폰 리스트
+	@ResponseBody
+	@PostMapping("/member/myCoupon")
+	public Map<String, Object> myCouponList(@RequestBody Criteria cri, HttpSession session){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		List<HoldingCouponVO> hcList = memberService.getMemberCouponList(user, cri);
+		int totalCount = memberService.getMemberCouponListCount(user);
+		PageMaker pm = new PageMaker(3, cri, totalCount);
+		
+		System.out.println(hcList);
+		
+		map.put("pm", pm);
+		map.put("hcList", hcList);
 		return map;
 	}
 	

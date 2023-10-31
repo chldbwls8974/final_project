@@ -5,6 +5,7 @@ import java.util.List;
 import kr.kh.final_project.pagination.Criteria;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.kh.final_project.vo.HoldingCouponVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.RegionVO;
@@ -60,6 +61,10 @@ public interface MemberService {
 	int getMemberPoint(MemberVO user);
 	
 	int getTotalRefundCount(MemberVO user);
+	
+	List<HoldingCouponVO> getMemberCouponList(MemberVO user, Criteria cri);
+	
+	int getMemberCouponListCount(MemberVO user);
 
 
 

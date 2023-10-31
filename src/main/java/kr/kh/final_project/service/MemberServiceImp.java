@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.kh.final_project.dao.HoldingCouponDAO;
 import kr.kh.final_project.dao.MemberDAO;
 import kr.kh.final_project.dao.PointHistoryDAO;
 import kr.kh.final_project.dao.PreferredRegionDAO;
@@ -19,6 +20,7 @@ import kr.kh.final_project.dao.PreferredTimeDAO;
 import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.dao.TimeDAO;
 import kr.kh.final_project.pagination.Criteria;
+import kr.kh.final_project.vo.HoldingCouponVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.RegionVO;
@@ -50,7 +52,9 @@ public class MemberServiceImp implements MemberService{
 	
 	@Autowired
 	PointHistoryDAO pointHistoryDao;
-
+	
+	@Autowired
+	HoldingCouponDAO holdingCouponDao;
 	
 	@Override
 	public List<MemberVO> searchMemberById(String keyword) {
@@ -386,6 +390,37 @@ public class MemberServiceImp implements MemberService{
 	public MemberVO isCheck2(String check) {
 		MemberVO dbMember = memberDao.selectMemberNumByNick2(check);
 		return dbMember;
+	}
+
+	@Override
+	public List<HoldingCouponVO> getMemberCouponList(MemberVO user, Criteria cri) {
+		if(user == null || user.getMe_num() == null) {
+			return null;
+		}
+		List<HoldingCouponVO> hcList = holdingCouponDao.selectMemberCouponList(user, cri);
+		if(hcList != null) {
+			for(HoldingCouponVO tmp : hcList) {
+				//추천인 번호가 null이 아닐때만 닉네임을 저장.
+				if(tmp.getHp_invited_num() != null) {
+					//추천인 회원번호를 이용해서 회원을 반환하는 메서드.
+					MemberVO invitedUser = memberDao.selectMemberByNum(tmp.getHp_invited_num());
+					//닉네임을 저장
+					tmp.setHp_invited_nickname(invitedUser.getMe_nickname());
+				}else {
+					tmp.setHp_invited_nickname("");
+				}
+			}
+			return hcList;
+		}
+		return null;
+	}
+
+	@Override
+	public int getMemberCouponListCount(MemberVO user) {
+		if(user == null || user.getMe_num() == null) {
+			return 0;
+		}
+		return holdingCouponDao.selectMemberCouPonListCount(user);
 	}
 
 	
