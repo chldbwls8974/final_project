@@ -1,12 +1,14 @@
 package kr.kh.final_project.vo;
 
+import java.util.List;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 public class FacilityVO {
-	private int fa_num;
+	private Integer fa_num;
 	private Integer fa_bu_num;
 	private Integer fa_rg_num;
 	private String fa_name;
@@ -21,5 +23,5 @@ public class FacilityVO {
 	private int fa_machine;
 	private String fa_note;
 	
-	
+	private List<FacilityVO> list;
 }

@@ -9,7 +9,9 @@
 </head>
 <body>
 	<h1>경기장 리스트</h1>
+	${facility}
 	  <div class="table-responsive">
+	  	<input type = "text" class="form-control" readonly value="${stadium}">
 	    <table class="table table-bordered">
 	      <thead>
 	        <tr>
@@ -24,6 +26,8 @@
 	          <th>이용가능여부</th>
 	          <th>특이사항</th>
 	          <th>시설번호</th>
+	          <th>수정</th>
+	          <th>삭제</th>
 	        </tr>
 	      </thead>
 		  <tbody>
@@ -40,20 +44,24 @@
 		          <td>${stadium.st_available}</td>
 		          <td>${stadium.st_note}</td>
 		          <td>${stadium.st_fa_num}</td>
+		          <td><a href="<c:url value='/businessman/stadiumUpdate?st_num=${stadium.st_num}'/>"
+							class="btn btn-outline-secondary" role="button">수정</a></td>
+			      <td>
+					<form action="<c:url value='/businessman/stadiumDelete'/>" method="post">
+						<button class="btn btn-outline-dark btn-businessman-stadiumDelete">삭제</button>
+						<input type="hidden" name="st_num" value="${stadium.st_num}">
+					</form>
 	         	 </tr>
 		     </c:forEach>
 	      </tbody>
 	    </table>
-	  </div>
 	  
 		<div align="right" class="mt-3">
 			<a class="btn btn-float-right btn btn-primary mt-1 col-3 "
-				 role="button" href="<c:url value='/businessman/stadiumInsert'/>">경기장 등록하기</a>
+				 role="button" href="<c:url value='/businessman/stadiumInsert/${facility.fa_num}'/>">경기장 등록하기</a>		
 		</div>
-	    <div align="right" class="mt-3">
-			<a class="btn btn-float-left btn btn-danger mt-1 col-3 "
-				role="button" href="<c:url value='/'/>">등록 취소</a>
-		</div>
+	  
+	  </div>
 
 </body>
 </html>

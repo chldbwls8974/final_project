@@ -4,32 +4,53 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.final_project.dao.BusinessmanDAO">
 	<select id="selectFacilityList" resultType="kr.kh.final_project.vo.FacilityVO">
-			select * from facility
+			select 
+				* 
+			from facility
+				 	join 
+				 businessman on fa_bu_num = bu_num 
+			where bu_me_num = #{member.me_num}
 	</select>
-	<select id="seletBusinessmanByNum" resultType="kr.kh.final_project.vo.BusinessmanVO">
-		select * from Businessman where bu_me_num = #{me_num}
+	<select id="selectBusinessmanByNum" resultType="kr.kh.final_project.vo.BusinessmanVO">
+		select * from businessman join member on bu_me_num = me_num where bu_me_num = #{me_num}
 	</select>
 	<insert id="insertFacility">
 		insert into 
-			facility(fa_rg_num, fa_name, fa_add, fa_add_detail, 
+			facility(fa_bu_num, fa_rg_num, fa_name, fa_add, fa_add_detail, 
 					fa_phone, fa_pay, fa_locker, fa_toilet, 
 					fa_shower, fa_smoking, fa_machine, fa_note)
 			select 
-				(#{facility.fa_rg_num}, #{facility.fa_name}, #{facility.fa_add}, 
-				#{facility.fa_add_detail}, #{facility.fa_phone}, #{facility.fa_pay}, 
-				#{facility.fa_locker}, #{facility.fa_toilet}, #{facility.fa_shower}, 
-				#{facility.fa_smoking}, #{facility.fa_machine}, #{facility.fa_note})
-			from facility
+				bu_num, #{facility.fa_rg_num}, 
+				#{facility.fa_name}, #{facility.fa_add}, #{facility.fa_add_detail}, 
+				#{facility.fa_phone}, #{facility.fa_pay}, #{facility.fa_locker}, 
+				#{facility.fa_toilet}, #{facility.fa_shower}, #{facility.fa_smoking}, 
+				#{facility.fa_machine}, #{facility.fa_note}
+			from businessman where bu_me_num = #{me_num};
 	</insert>
-	<select id="selectFacilityByMeNum" resultType="kr.kh.final_project.vo.FacilityVO">
-		select
-			*
-		from
-			facility
-				join
-			businessman on fa_bu_num = bu_num
-		where
-			bu_me_num = #{me_num}
+	<select id="selectBusinessListByFaNum" resultType="kr.kh.final_project.vo.BusinessmanVO">
+		select * from businessman where bu_me_num = #{me_num}
 	</select>
+	<select id="selectFacility" resultType="kr.kh.final_project.vo.FacilityVO">
+		 select * from facility where fa_num = #{fa_num}
+	</select>
+	<select id="selectFacilityNum" resultType="kr.kh.final_project.vo.FacilityVO">
+		 select * from facility where fa_num = #{fa_num}
+	</select>
+	<update id="updateFacility">
+		update facility set
+			fa_rg_num = #{facility.fa_rg_num}, 
+			fa_name = #{facility.fa_name}, 
+			fa_add = #{facility.fa_add}, 
+			fa_add_detail = #{facility.fa_add_detail}, 
+			fa_phone = #{facility.fa_phone}, 
+			fa_pay = #{facility.fa_pay}, 
+			fa_locker = #{facility.fa_locker}, 
+			fa_toilet = #{facility.fa_toilet}, 
+			fa_shower = #{facility.fa_shower}, 
+			fa_smoking = #{facility.fa_smoking}, 
+			fa_machine = #{facility.fa_machine}, 
+			fa_note = #{facility.fa_note}
+		where fa_num = #{facility.fa_num}
+	</update>
 
 </mapper>

@@ -9,13 +9,13 @@
 </head>
 <body>
   	<h1>시설 리스트</h1>
-	  <div class="table-responsive">
+  	  <div class="table-responsive">
 	    <table class="table table-bordered">
 	      <thead>
 	        <tr>
 	          <th>시설 번호</th>
 	          <th>사업자 번호</th>
-	          <th>지역 번호</th>
+	          <th>지역</th>
 	          <th>시설명</th>
 	          <th>주소</th>
 	          <th>상세주소</th>
@@ -27,13 +27,15 @@
 	          <th>흡연장</th>
 	          <th>자판기</th>
 	          <th>특이사항</th>
+	          <th>수정</th>
+	          <th>삭제</th>
 	        </tr>
 	      </thead>
 		  <tbody>
 	      	<c:forEach items="${list}" var="facility">
 		        <tr>
-		          <td>${facility.fa_num}</td>
-		          <td><a href="<c:url value='/businessman/stadium'/>">${facility.fa_bu_num}</a></td>
+		          <td><a href="<c:url value='/businessman/stadium/${facility.fa_num}'/>">${facility.fa_num}</a></td>
+		          <td>${facility.fa_bu_num}</td>
 		          <td>${facility.fa_rg_num}</td>
 		          <td>${facility.fa_name}</td>
 		          <td>${facility.fa_add}</td>
@@ -46,7 +48,15 @@
 		          <td>${facility.fa_smoking}</td>
 		          <td>${facility.fa_machine}</td>
 		          <td>${facility.fa_note}</td>
-	         	 </tr>
+		          <td><a href="<c:url value='/businessman/facilityUpdate?fa_num=${facility.fa_num}'/>"
+							class="btn btn-outline-secondary" role="button">수정</a></td>
+			      <td>
+					<form action="<c:url value='/businessman/facilityDelete'/>" method="post">
+						<button class="btn btn-outline-dark btn-businessman-facilityDelete">삭제</button>
+						<input type="hidden" name="fa_num" value="${facility.fa_num}">
+					</form>
+				  </td>
+	         	</tr>
 		     </c:forEach>
 	      </tbody>
 	    </table>
@@ -60,6 +70,5 @@
 			<a class="btn btn-float-left btn btn-danger mt-1 col-3 "
 				role="button" href="<c:url value='/'/>">뒤로가기</a>
 		</div>
-
 </body>
 </html>
