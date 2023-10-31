@@ -34,7 +34,7 @@ public class MatchServiceImp implements MatchService{
 	
 	@Autowired
 	RegionDAO regionDao;
-	
+		
 	@Override
 	public List<ExtraVO> selectThirdWeekDayList() {
 		return extraDao.selectThirdWeekDayList();

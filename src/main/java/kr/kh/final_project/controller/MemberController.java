@@ -247,10 +247,9 @@ public class MemberController {
 	
 	@PostMapping("/member/myedit")
 	public String profileEdit(MemberVO member, MultipartFile file, HttpSession session,Model model) {
-		System.out.println(member);
 		MemberVO user = (MemberVO)session.getAttribute("user"); //세션에 저장된 현재 user 정보 가져옴
-		System.out.println(user);
 		boolean res = memberService.updateProfile(member, user, file); //새로 입력한 정보 업데이트
+		System.out.println(member);
 		if(res) { //업데이트된 사용자 정보 세션에 저장
 			session.setAttribute("user", member); 
 			model.addAttribute("msg", "수정을 완료했습니다.");

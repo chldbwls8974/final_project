@@ -147,7 +147,9 @@
 		select * from member where me_nickname = #{check}
 	</select>
 	<update id="updateMemberProfile">
-		update member set me_profile = #{user.me_profile}
+		update member(me_profile, me_nickname, me_gender) set (#{user.me_profile},#{user.me_nickname},#{user.me_gender})
 	</update>
-
+	<update id="updateFile">
+		update file(fi_bo_num, fi_name, fi_ori_name) set (#{file.fi_bo_num}, #{file.fi_name}, #{file.fi_ori_name})
+	</update>
 </mapper>

@@ -14,6 +14,7 @@
 		-moz-appearance: none;
 		appearance: none;
 	}
+	.select-img{ width: 400px; margin: 20px 0;}
 </style>
 </head>
 <body>
@@ -21,9 +22,11 @@
 	  <h3>내 정보 수정</h3>
 		<div class="myprofile">
 			<input type="file" name="profileImage" class="profileImage" id="profileUpdate">
-			<img src="${user.me_profile}">
-		    <input type="submit" class="fileup-btn" value="사진 수정" >
-		    <input type="button" class="filereset-btn" value="초기화" onclick="">
+			<div class="select-img">
+				<img src="${user.me_profile}">
+			    <input type="hidden" class="myprofile" value="${user.me_profile}"/>
+			    <input type="hidden" class="myprofile-thumb" value="${user.me_profile}"/>
+			</div> 
 		</div>	
         <hr>
 
@@ -39,16 +42,22 @@
 			<input type="radio" name="me_gender" value="M">남
 			<input type="radio" name="me_gender" value="F">여
         </div>
-        <div class="myprofile">
-            <label for="email">이메일</label>
-            <input type="email" class="form-control" id="email" placeholder="${user.me_email}">
-        </div>
 		<div>
 		<button class="btn-update col-12">수정</button>
 		</div>
 	</form>
 </body>
 <script type="text/javascript">
+
+	$("#myprofile").change(function(){
+	   if(this.files && this.files[0]) {
+	    var reader = new FileReader;
+	    reader.onload = function(data) {
+	     $(".select_img img").attr("src", data.target.result).width(500);        
+	    }
+	    reader.readAsDataURL(this.files[0]);
+	   }
+	  });
 
 	//존재하는 닉네임인지 아닌지 확인
 	let isSpanAdded = false;
