@@ -34,11 +34,7 @@ public class MemberController {
 	@Autowired
 	RegionService regionService;
 	
-	@GetMapping("/member/signup2")
-	public String signup2(Model model) {
-		return "/member/signup2";
-	}
-	
+
 	@GetMapping("/member/signup")
 	public String signup(Model model) {
 		List<RegionVO> MainRegion = memberService.getMainRegion();
@@ -119,6 +115,14 @@ public class MemberController {
 	}
 	
 	
+	
+	// 회원 탈퇴
+	@GetMapping(value="/member/signout")
+	public String memberSignout() {
+		return "/member/signout";
+	}
+	
+	
 	@GetMapping(value="/member/login")
 	public String memberLogin() {
 		return "/member/login";
@@ -153,7 +157,6 @@ public class MemberController {
 		model.addAttribute("msg", msg);
 		return "message";
 	}
-	
 	
 	
 	//포인트 환급 페이지

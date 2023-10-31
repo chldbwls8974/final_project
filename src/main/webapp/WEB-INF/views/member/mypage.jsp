@@ -34,7 +34,9 @@
 			<div>
 				<div>
 					<div class="myprofile-image">
-						<img src="" alt="프로필 사진">
+						<c:if test="${user.me_profile ==null}">
+							<img src="${pageContext.request.contextPath}/resources/images/basic.jpg" alt="프로필 사진">
+						</c:if>
 					</div>
 					<div class="myprofile-name">
 						<h2>${user.me_name}</h2>

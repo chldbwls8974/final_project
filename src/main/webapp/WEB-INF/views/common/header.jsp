@@ -13,9 +13,6 @@
 		<a class="navbar-brand" href="/final_project">LOGO</a>
 		<ul class="navbar-nav">
 			<li class="nav-item">
-				<a class="nav-link " href="<c:url value='/member/signup2'/>">카카오</a>
-			</li>
-			<li class="nav-item">
 				<a class="nav-link " href="<c:url value='/member/signup'/>">회원가입</a>
 			</li>
 			<li class="nav-item">
@@ -24,6 +21,9 @@
 
 			<li class="nav-item">
 				<a class="nav-link " href="<c:url value='/member/logout'/>">로그아웃</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link " href="<c:url value='/member/signout'/>">회원탈퇴</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="<c:url value='/member/mypage'/>">마이페이지</a>
