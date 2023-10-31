@@ -9,9 +9,11 @@ import kr.kh.final_project.dao.BoardDAO;
 import kr.kh.final_project.dao.BusinessDAO;
 import kr.kh.final_project.dao.ManagerDAO;
 import kr.kh.final_project.dao.MemberDAO;
+import kr.kh.final_project.dao.PointHistoryDAO;
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.vo.ManagerVO;
 import kr.kh.final_project.vo.MemberVO;
+import kr.kh.final_project.vo.PointHistoryVO;
 
 @Service
 public class AdminServiceImp implements AdminService{
@@ -27,6 +29,9 @@ public class AdminServiceImp implements AdminService{
 	
 	@Autowired
 	BusinessDAO businessDao;
+	
+	@Autowired
+	PointHistoryDAO pointHistoryDao;
 	
 	// 회원정보 조회
 	//@Override
@@ -94,6 +99,27 @@ public class AdminServiceImp implements AdminService{
 			cri = new Criteria();
 		}
 		return businessDao.selectTotalCount(cri);
+	}
+	@Override
+	public List<PointHistoryVO> getRefundListBySearch(Criteria cri, String searchType1, String searchType2) {
+		if(cri == null) {
+			cri = new Criteria();
+		}
+		return pointHistoryDao.selectPointRefundHistoryBySearch(cri, searchType1, searchType2);
+	}
+	@Override
+	public int getRefundListBySearchCount(Criteria cri, String searchType1, String searchType2) {
+		if(cri == null) {
+			cri = new Criteria();
+		}
+		return pointHistoryDao.selectPointRefundHistoryCountBySearch(cri, searchType1, searchType2);
+	}
+	@Override
+	public boolean refundApproval(PointHistoryVO ph) {
+		if(ph == null || ph.getPh_num() == 0) {
+			return false;
+		}
+		return pointHistoryDao.updateRefundApproval(ph);
 	}
 	
 

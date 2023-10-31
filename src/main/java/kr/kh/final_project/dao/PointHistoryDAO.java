@@ -20,4 +20,10 @@ public interface PointHistoryDAO {
 
 	int selectRefundCount(@Param("user")MemberVO user);
 
+	List<PointHistoryVO> selectPointRefundHistoryBySearch(@Param("cri")Criteria cri, @Param("searchType1")String searchType1, @Param("searchType2")String searchType2);
+
+	int selectPointRefundHistoryCountBySearch(@Param("cri")Criteria cri,  @Param("searchType1")String searchType1,  @Param("searchType2")String searchType2);
+
+	boolean updateRefundApproval(@Param("ph")PointHistoryVO ph);
+
 }

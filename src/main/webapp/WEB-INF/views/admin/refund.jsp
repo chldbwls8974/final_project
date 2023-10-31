@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <style>
 </style>
-<title>포인트 환급</title>
+<title>포인트 환급 관리</title>
 </head>
 <style>
 	.error {
@@ -17,36 +17,40 @@
 </style>
 <body>
 	<h1>포인트 환급 관리</h1>
-	<form action="<c:url value='/member/refund'/>" method="post">
-		<div class="form-group">
-			<h5>${user.me_name} 님의</h5>
-			<!-- 여기 작업해야 함. 유저가 로그인을 풀지않으면 변경포인트가 적용이 안됨. -->
-			<span class="point">현재 보유 포인트는 ${user.me_point} 입니다.</span>
-			<input type="hidden" class="form-control" value="${user.me_num}" name="me_num">
-			<input type="hidden" class="form-control" value="${user.me_num}" name="ph_me_num">
-			<input type="hidden" class="form-control" value="4" name="ph_source">
-		</div>
-		<br>
-		<hr>
-		<div class="form-group">
-			<label>환급받을 금액</label>
-			<label id="check-point-error" class="error" for="point"></label>
-			<input type="number" class="form-control" id="refundAmount" name="ph_price" min="1000"  max="${user.me_point}" placeholder="1000원 단위로 입력" required>
-		</div>
-		<div class="form-group">
-			<label>환급 후 예정 포인트</label>
-			<input type="number" class="form-control" id="resultAmount" name="me_point" readonly required>
-		</div>
-		<button id="addBtn" class="btn btn-outline-dark col-12">등록</button>
-	</form>
 	<br>
 	<hr>
+	<form action="<c:url value='/admin/refund'/>" method="post">
+		<div class="input-group mb-3 mt-3">
+			<div class="input-group-prepend">
+			    <select class="form-control search-type-1">
+			      <option value="all">상태</option>
+			      <option value="second">미완료</option>
+			      <option value="third">완료</option>
+			    </select>
+			    <select class="form-control search-type-2">
+			      <option value="all">전체</option>
+			      <option value="second">아이디</option>
+			      <option value="third">닉네임</option>
+			      <option value="fourth">이름</option>
+			    </select>
+		    </div>
+	    <input type="text" class="form-control input-search" name="s" id="input-search" placeholder="검색어를 입력하세요." value="${pm.cri.s}">
+	    <button type="button" class="btn btn-outline-success btn-search">찾기</button>
+		</div>
+	</form>
 	<div>
 		<table class="table table-hover mt-4">
 			<thead>
-				<tr style="background: wheat; font-weight: bold;">
+				<tr>
+					<th>아이디</th>
+					<th>닉네임</th>
+					<th>이름</th>
+					<th>전화번호</th>
+					<th>보유 포인트</th>
 					<th>환급 신청 금액</th>
 					<th>상태</th>
+					<th>은행명</th>
+					<th>계좌번호</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -55,80 +59,97 @@
 			</tbody>
 		</table>
 	</div>
-	<c:if test=""></c:if>
+	<!-- 페이지네이션 -->
+	<ul class="pagination justify-content-center mt-3 pagination">
+	    <li class="page-item"><a class="page-link" href="javascript:void(0);">&lt;</a></li>
+	    <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
+	    <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+	    <li class="page-item"><a class="page-link" href="javascript:void(0);">&gt;</a></li>
+	</ul>
 </body>
 
 <script type="text/javascript">
-	const addBtn = document.getElementById("addBtn");
 
-	$(document).on('keyup','#refundAmount',function(){
-		let point = $(this).val();
-		
-		let flag = false;
-		
-		var regPoint = /\d*000$/;
-		
-		if(!regPoint.test(point)){
-			console.log("regex")
-			
-			addBtn.disabled = true;
-			$('#check-point-error').text('1000원 단위로 입력해 주세요.');
-			
-			return;
-		}else{
-			addBtn.disabled = false;
-			$('#check-point-error').text('');
-		}
+	let cri = {
+			page : 1,
+			perPageNum : 5
+	}   
+	let data = {
+		cri : {page : cri.page, perPageNum : cri.perPageNum, s : ''},
+		searchType1 : "all",
+		searchType2 : "all"
+	}   
+	
+	$(document).ready(function() {
+   	 	getPointHistoryListBySearch(data);
+   	 	console.log(data);
 	})
 	
-    $(document).on("change", "#refundAmount", function(){
-        //입력한 금액을 변수에 저장
-        var refundAmountValue = parseFloat($(this).val());
-        if(refundAmountValue > 0){
-        	//1000단위로 입력값 변경
-	        var num = Math.floor(parseFloat(refundAmountValue) / 1000) * 1000;
-            $(this).val(num);
-	        //(유저의 현재 포인트 - 환급받을 금액)을 저장
-	        var userPoint = parseFloat('${user.me_point}');
-	        $("#resultAmount").val(userPoint - num);
-        }
-    });
+	//이벤트 발생되면 리스트를 받아와서 생성
+	$(document).on('click','.btn-search',function(){
+		let data = createSearchData()
+		getPointHistoryListBySearch(data);
+	})
+	//이벤트 발생되면 리스트를 받아와서 생성
+	$(document).on('change','.search-type-1',function(){
+		let data = createSearchData()
+		getPointHistoryListBySearch(data);
+	})
+	//Data에 객체들의 정보를 저장해서 반환하는 메서드
+	function createSearchData() {
+	    let searchType1 = $('.search-type-1').val();
+	    let searchType2 = $('.search-type-2').val();
+	    let searchContents = $('.input-search').val();
+	    let data = {
+	        cri: { page: cri.page, perPageNum: cri.perPageNum, s: searchContents },
+	        searchType1: searchType1,
+	        searchType2: searchType2
+	    };
+	    return data;
+	}
+	//입력되어있는 필터값을 data에 저장해서 리스트를 생성하는 함수
+	function updatePage(page) {
+		console.log(page);
+	    data.cri.page = page;
+	    data.cri.s = $('.input-search').val();
+	    data.searchType1 = $('.search-type-1').val();
+	    data.searchType2 = $('.search-type-2').val();
+	    getPointHistoryListBySearch(data);
+	}
 	
-	    
-	    
-	/* 환급이력리스트를 가져오는 함수 */
-	$(document).ready(function() {
-   	 	getPointHistoryList();
-	});
-	
-	
-	
-	function getPointHistoryList(){
-		let data = {
-			me_num : ${user.me_num}
-		}
-		console.log(data);
+	function getPointHistoryListBySearch(data){
 		
-		ajaxJsonToJson(false,'post','/member/refund/list', data ,(data)=>{
-			$('.point').text("현재 보유 포인트는 " + data.dbMemberPoint + " 입니다.");
-			createPointHistoryList(data.refundList, '.list-tbody');
-			console.log(data.refundList);
+		ajaxJsonToJson(false, 'post', '/admin/refund/search', data ,(data)=>{
+			//테이블 생성
+			createPointHistoryListBySearch(data.refundList, '.list-tbody');
+			//페이지네이션 생성
+			createPagination(data.pm, '.pagination');
 		});
 	}
 	
+	function getPointHistoryListBySearch(data){
+		
+		ajaxJsonToJson(false, 'post', '/admin/refund/search', data ,(data)=>{
+			//테이블 생성
+			console.log(data.refundList);
+			createPointHistoryListBySearch(data.refundList, '.list-tbody');
+			//페이지네이션 생성
+			createPagination(data.pm, '.pagination');
+		});
+	}
 	
-	function createPointHistoryList(refundList, target){
+	//리스트를 받아서 테이블 생성하는 함수
+	function createPointHistoryListBySearch(refundList, target){
 		let str ='';
 		for(a of refundList){
 			let btnStr = '';
 			let state = '';
 			let price = -parseInt(a.ph_price);
-			console.log(price);
 			if(a.ph_source == '4'){
 				state = '승인 대기중'
 				btnStr = `
 					<div class="btn-group">
-						<button class="btn btn-outline-danger btn-delete"  onclick="deleteRefund(\${a.ph_num})" >취소</button>
+						<button class="btn btn-outline-success btn-approval"  onclick="approvalRefund(\${a.ph_num})" >승인</button>
 					</div>
 					`;
 			}else{
@@ -141,30 +162,65 @@
 			} 
 			str += `
 				<tr>
+					<td>\${a.me_id}</td>
+					<td>\${a.me_nickname}</td>
+					<td>\${a.me_name}</td>
+					<td>\${a.me_phone}</td>
+					<td>\${a.me_point}</td>
 					<td>\${price}</td>
 					<td>\${state}</td>
+					<td>\${a.ac_ba_name}</td>
+					<td>\${a.ac_num}</td>
 					<td>\${btnStr}</td>
 				</tr>
-				
 			`;
 		}
 		$(target).html(str);
 	}
 	
-	//환급을 취소하는 함수
-	function deleteRefund(ph_num){
+	//페이지네이션
+	function createPagination(pm, target){
+		let str = '';
+		if(pm.prev){
+			str += `<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="updatePage(\${pm.startPage - 1});">이전</a></li>`;
+		}
+		//현재페이지 = active 클래스 추가
+		for(i=pm.startPage; i<=pm.endPage; i++){
+			let active = pm.cri.page == i ? 'active' : '';
+			str += `
+			<li class="page-item \${active}">
+				<a class="page-link" href="javascript:void(0);" onclick="updatePage(\${i});">\${i}</a>
+			</li>`;
+		}
+		if(pm.next){
+			str += `<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="updatePage(\${pm.endPage + 1});">다음</a></li>`;
+		}
+		$(target).html(str);
+	}
+	
+	
+	//환급을 승인하는 함수
+	function approvalRefund(ph_num){
 		let data = { 
 				ph_num : ph_num
 		}
-		console.log(ph_num)
 		 
-		ajaxJsonToJson(false,'post','/member/refund/delete', data ,(data)=>{
+		ajaxJsonToJson(false,'post','/admin/refund/approval', data ,(data)=>{
 			if(data.res){
-				alert('환급 신청이 취소되었습니다.')
+				alert('환급완료 처리했습니다.')
+			}else{
+				alert('환급 처리에 실패했습니다.')
 			}
-			
-			getPointHistoryList();
 		}); 
-	}
+		let dbData = createSearchData()
+		getPointHistoryListBySearch(dbData);
+	}  
+	
+	//인풋태그에서 엔터시 폼 제출되는것 막기
+	document.getElementById("input-search").addEventListener("keypress", function(event) {
+	    if (event.key === "Enter") {
+	        event.preventDefault(); // 엔터 키 동작을 막음
+	    }
+	});
 </script>
 </html>
