@@ -1,6 +1,7 @@
 package kr.kh.final_project.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ public class BoardServiceImp implements BoardService{
 	
 	@Autowired
 	BoardDAO boardDao;
+	
 	
 	String uploadPath = "D:\\uploadfiles";
 
@@ -110,43 +112,125 @@ public class BoardServiceImp implements BoardService{
 		   board.getBo_contents() == null) {
 			return false;
 		}
-		// 작성자가 없으면 안됨
-		if(user == null) {
+		// 작성자가 없으면 안됨, 로그인을 해야 등록할 수 있음
+		if(user == null || user.getMe_id() == null) {
 			return false;
 		}
 		// 게시글 작성자를 로그인한 회원 아이디로 수정해야한다.
 		// memberVO에서 꺼내온 me_num을 boardVO bo_me_num을 넣어준다.
 		board.setBo_me_num(user.getMe_num());
+		// 다오한테 boardVO를 주면서 게시글을 등록하라하고 그걸 res에 넣는다.
 		// 게시글을 DB에 저장하기
 		boolean res = boardDao.insertBoard(board);
 		
+		// 결과가 false이면 false로 반환
 		if(!res) {
 			return false;
 		}
-		// 첨부파일 등록하기
-		if(files == null || files.length == 0) {
-			return true;
+		// 첨부파일 추가하기
+		uploadFiles(files, board.getBo_num());
+		return true;
+	}
+		
+	
+	// 작성된 게시글 가져오기 (게시글 상세보기)
+	@Override
+	public BoardVO getBoard(Integer bo_num) {
+		// 매개변수 체크하기
+		// 게시글 번호가 null이면 null로 return한다.
+		if(bo_num == null) {
+			return null;
 		}
-		// 내가 올린 파일들을 file에 저장
-		for(MultipartFile file : files) {
-			// 업로드한 파일이 없어도 계속진행
-			if(file == null || file.getOriginalFilename().length() == 0) {
+		// boardDao한테 게시글 번호를 주면서 게시글을 가져오라고 시킨다.
+		BoardVO board = boardDao.selectBoard(bo_num);
+		// 가져오면 반환
+		return board;
+	}
+	// 게시글 조회수 올리기
+	@Override
+	public void updateViews(Integer bo_num) {
+		// 매개변수 체크하기
+		if(bo_num == null) {
+			return;
+		}
+		// boardDao한테 게시글 번호를 주면서 조회수를 1증가해달라고 한다.
+		boardDao.updateBoardViews(bo_num);
+	}
+	// 등록된 게시글 첨부파일 가져오기
+	@Override
+	public List<FileVO> getFileList(Integer bo_num) {
+		if(bo_num == null) {
+			return null;
+		}
+		return boardDao.selectFileList(bo_num);
+	}
+	
+	
+	//게시글 삭제하기
+	@Override
+	public boolean deleteBoard(Integer bo_num, MemberVO user) {
+		if(user == null || user.getMe_id() == null) {
+			return false;
+		}
+		if(bo_num == null) {
+			return false;
+		}
+		BoardVO board = boardDao.selectBoard(bo_num);
+		if(board == null || !(board.getBo_me_num() == user.getMe_num())) {
+			return false;
+		}
+		// 첨부파일 삭제하기
+		// 게시글의 모든 첨부파일들을 가져온다.
+		List<FileVO> fileList = boardDao.selectFileList(bo_num);
+		// 첨부파일 정보를 주면서 삭제하라고 요청한다.
+		deleteFiles(fileList);
+		// 다오한테 삭제하라고 시킴
+		return boardDao.deleteBoard(bo_num);
+	}
+		
+	// 파일 삭제하기
+	private void deleteFiles(List<FileVO> fileList) {
+		if(fileList == null | fileList.size() == 0) {
+			return;
+		}
+		for(FileVO file : fileList) {
+			if(file == null) {
 				continue;
 			}
-			try {
-				//원래 파일명
-				String fi_ori_name = file.getOriginalFilename();
-				// 서버에 업로드 후 업로드된 경로와 uuid가 포함된 파일명
-				String fi_name = UploadFileUtils.uploadFile(uploadPath, fi_ori_name, file.getBytes());
-				//파일 객체
-				//FileVO fileVo = new FileVO(board.getBo_num(), fi_name, fi_ori_name);
-				//업로드한 경로를 이용하여 다오에게 첨부파일 정보를 주면서 DB에 추가하라고 요청
-				//boardDao.insertFile(fileVo);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			UploadFileUtils.deleteFile(uploadPath, file.getFi_name());
+			boardDao.deleteFile(file.getFi_num());
 		}
-		return true;
+	}
+	// 게시글 수정하기
+	@Override
+	public boolean update(BoardVO board, MemberVO user,MultipartFile[] files, int[] delNums) {
+		if(user == null || user.getMe_id() == null) {
+			return false;
+		}
+		if(board == null || board.getBo_title() == null || board.getBo_title().length() == 0) {
+			return false;
+		}
+		BoardVO dbBoard = boardDao.selectBoard(board.getBo_num());
+		if(dbBoard == null || !(dbBoard.getBo_me_num() == user.getMe_num())) {
+			return false;
+		}
+		//추가된 첨부파일 업로드 및 DB 추가
+		uploadFiles(files, board.getBo_num());
+		//삭제된 첨부파일 삭제 및 DB 제거
+		deleteFiles2(delNums);
+		boolean res = boardDao.updateBoard(board);
+		return res;
+	}
+	private void deleteFiles2(int[] delNums) {
+		if(delNums == null || delNums.length == 0) {
+			return ;
+		}
+		List<FileVO> fileList = new ArrayList<FileVO>();
+		for(int fi_num : delNums) {
+			FileVO fileVo = boardDao.selectFile(fi_num);
+			fileList.add(fileVo);
+		}
+		deleteFiles(fileList);
 	}
 
 }

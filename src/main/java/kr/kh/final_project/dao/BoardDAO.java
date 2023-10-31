@@ -20,8 +20,29 @@ public interface BoardDAO {
 	List<BoardVO> selectBoardList(@Param("cri")Criteria cri);
 	// 공지게시판글 총 갯수 가져오기
 	int selectTotalCount(@Param("cri")Criteria cri);
-	// 게시글 등록하기
+	// 공지게시글 등록하기
 	boolean insertBoard(@Param("board")BoardVO board);
+	// 공지게시글 첨부파일
+	//void insertFileByNotice(@Param("file") FileVO fileVo);
+
+	// 공지게시글 상세내용 불러오기
+	BoardVO selectBoard(@Param("bo_num")Integer bo_num);
+	// 공지게시글 상세내용 첨부파일 불러오기
+	List<FileVO> selectFileList(@Param("bo_num")Integer bo_num);
+	// 공지게시글 조회수 올리기
+	void updateBoardViews(@Param("bo_num")Integer bo_num);
+	// 공지게시글 삭제하기
+	boolean deleteBoard(@Param("bo_num")Integer bo_num);
+	// 공지게시글 파일삭제하기
+	void deleteFile(@Param("fi_num")int fi_num);
+	// 공지게시글 수정하기
+	//boolean updateBoard(@Param("board")BoardVO board);
+	// 공지게시글 상세페이지 첨부파일 가져오기
+	//FileVO selectFile(@Param("fi_num")Integer num);
+	// 공지게시글 수정하기
+	boolean updateBoard(@Param("board")BoardVO board);
+	// 공지게시글 상세페이지 첨부파일 가져오기
+	FileVO selectFile(@Param("fi_num")int fi_num);
 
 
 }

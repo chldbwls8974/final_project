@@ -30,8 +30,8 @@
 	<div style="display:flex; justify-content: flex-end;">
 		<button type="button"
 			    class="btn btn-outline-info btn-info"
-				onclick="location.href='<c:url value='/board/insert'/>'"	    
-		>공지글 쓰기</button>
+				onclick="location.href='<c:url value='/board/insert'/>'">공지글 쓰기
+		</button>
 	</div>	
 <!-- 공지게시판 검색 기능 -->
 	<form action="<c:url value='/board/notice'/>" method="get">

@@ -21,7 +21,7 @@
 <body>
 	<br>
 	<h1>&#x2709 공지글 쓰셈 &#x2709</h1>
-	<form action="<c:url value='/board/insert'/>" method="post">
+	<form action="<c:url value='/board/insert'/>" method="post" enctype="multipart/form-data">
 		<div class="form-group">
 			<label>제목</label>
 			<input type="text" class="form-control" name="bo_title">

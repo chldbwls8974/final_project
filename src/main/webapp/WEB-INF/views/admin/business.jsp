@@ -6,8 +6,36 @@
 <head>
 <meta charset="UTF-8">
 <title>사업자 신청 관리</title>
+<style>
+	.btn-info{
+		color : outline-info;
+		background-color : white;
+		border : 1px solid outline-info;
+	}
+	.btn-info:hover{
+		background-color : outline-info;
+		color : white;
+	}
+	h1{
+		text-align : center
+	}
+</style>
 </head>
 <body>
+<br>
+<h1> &#x1F3DF 사업자 조회 &#x1F3DF;</h1>
+<!-- 사업자권한 조회 -->
+<br>
+<div class="btn-group btn-group">
+  <button type="button"
+			    class="btn btn-outline-info btn-info"
+				onclick="location.href='<c:url value='/admin/business'/>'"	    
+		>사업자신청</button>
+  <button type="button"
+			    class="btn btn-outline-info btn-info"
+				onclick="location.href='<c:url value='/admin/business2'/>'"	    
+		>사업자권한 조회</button>
+</div>
 <!-- 사업자 신청 검색 기능 -->
 	<form action="<c:url value='/admin/business'/>" method="get">
 	<div class="input-group mb-3 mt-3">

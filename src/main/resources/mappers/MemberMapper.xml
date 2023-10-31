@@ -149,4 +149,5 @@
 	<update id="updateMemberProfile">
 		update member set me_profile = #{user.me_profile}
 	</update>
+
 </mapper>

@@ -6,8 +6,15 @@
 <head>
 <meta charset="UTF-8">
 <title>회원조회 검색</title>
+<style>
+	h1{
+		text-align : center
+	}
+</style>
 </head>
 <body>
+<br>
+<h1> &#x1F41F 회원 조회 &#x1F41F;</h1>
 <!-- 회원검색 기능 -->
 	<form action="<c:url value='/admin/member'/>" method="get">
 	<div class="input-group mb-3 mt-3">
