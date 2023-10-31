@@ -28,6 +28,9 @@
 			<li class="nav-item">
 				<a class="nav-link" href="<c:url value='/member/mypage'/>">마이페이지</a>
 			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="<c:url value='/admin/price'/>">가격수정</a>
+			</li>
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 				커뮤니티 게시판
