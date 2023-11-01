@@ -76,7 +76,7 @@
 	        <td>${bo.me_nickname}</td>
 	        <td>${bo.bo_reg_date_str}</td>
 	        <td>${bo.bo_count}</td>
-	        <td>${bo.bo_comment}</td>
+	        <td><a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_comment}</a></td>
 	      </tr>
       </c:forEach>
     </tbody>
