@@ -72,7 +72,7 @@
 					<p style="font-size:15px; font-weight: bold;">내 포인트</p>
 					<p style="font-size:18px; font-weight: bolder;">${user.me_point}원</p>
 					<div style="padding:20px; border-radius: 10px; background-color:#E9F6FF; float: right; position: absolute; right: 10px; top: 40px;">
-						<a href="#">충전하기</a>
+						<a href="<c:url value='/payment/main'/>">충전하기</a>
 					</div>
 				</div>
 			</div>

@@ -327,4 +327,9 @@ public class MemberController {
 		return "/member/mymatch";
 	}
 	
+	@GetMapping("/payment/main")
+	public String payment(Model model) {
+		return "/payment/main";
+	}
+	
 }
