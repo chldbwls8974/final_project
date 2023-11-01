@@ -7,27 +7,31 @@
 <head>
 <meta charset="UTF-8">
 <title>헤더</title>
+<style type="text/css">
+	
+	.navbar{ background-color: black; height: 100px;}
+	.navbar-brand{ font-weight: bolder; color: white; padding: 10px;}
+	.navbar-nav a{color: white; font-size: 15px; margin-right: 20px;}
+	.navbar-nav a:hover {color: white;}
+	.dropdown-menu a{background-color: black; color: white;}
+	
+</style>
 </head>
 <body>
-	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	<nav class="navbar navbar-expand-sm">
 		<a class="navbar-brand" href="/final_project">LOGO</a>
 		<ul class="navbar-nav">
 			<li class="nav-item">
-				<a class="nav-link " href="<c:url value='/member/signup'/>">회원가입</a>
+				<a class="nav-link" href="#">개인매치</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link " href="<c:url value='/member/login'/>">로그인</a>
-			</li>
-
+				<a class="nav-link" href="#">클럽매치</a>
 			<li class="nav-item">
-				<a class="nav-link " href="<c:url value='/member/logout'/>">로그아웃</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="<c:url value='/member/mypage'/>">마이페이지</a>
+				<a class="nav-link" href="#">시설 조회</a>
 			</li>
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-				커뮤니티 게시판
+				커뮤니티
 				</a>
 				<div class="dropdown-menu">
 					<c:if test="${user != null && user.me_authority == 'ADMIN'}">
@@ -42,14 +46,6 @@
 						<a class="dropdown-item" href="/board/block">게시판 관리</a>
 					</c:if>
 				</div>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="#">개인매치</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="#">클럽매치</a>
-			<li class="nav-item">
-				<a class="nav-link" href="#">시설 조회</a>
 			</li>
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
@@ -83,13 +79,28 @@
 						<a class="dropdown-item" href="#">일정 관리</a>
 					</div>
 			</li>
-			<li class="nav-item">
-					<a class="nav-link" href="<c:url value='/application/manager'/>">매니저 신청</a>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+				신청하기
+				</a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="<c:url value='/application/manager'/>">매니저 신청</a>
+					<a class="dropdown-item" href="<c:url value='/application/businessman'/>">사업자 신청</a>
+				</div>
 			</li>
 			<li class="nav-item">
-					<a class="nav-link" href="<c:url value='/application/businessman'/>">사업자 신청</a>
+				<a class="nav-link" href="<c:url value='/member/mypage'/>">마이페이지</a>
 			</li>
-		</ul>
+			<li class="nav-item">
+				<a class="nav-link " href="<c:url value='/member/signup'/>">회원가입</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link " href="<c:url value='/member/login'/>">로그인</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link " href="<c:url value='/member/logout'/>">로그아웃</a>
+			</li>
+		</ul>	
 	</nav>
 </body>
 </html>
