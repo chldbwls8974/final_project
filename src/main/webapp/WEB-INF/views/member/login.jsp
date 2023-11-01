@@ -10,35 +10,43 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style type="text/css">
+
 .error{
 	color:#f00;
 }
+body{height: 100%; justify-content: center; align-content: center;}
+.kakao-login{ width: 180px;}
+.form-control{border-radius: 30px; width: 500px;}
+.btn{border-radius: 30px; width: 500px; height: 35px; margin-top: 5px;
+	background-color: rgb(190, 226, 250); border-radius: 4px;}
+
 </style>
 </head>
 <body>
-	<h1>로그인</h1>
-	<form action="<c:url value='/member/login'/>" method="post">
-		<div class="form-group">
-			<label>아이디</label>
-			<input type="text" class="form-control" name="me_id">
+
+	<div >
+		<form action="<c:url value='/member/login'/>" method="post">
+			<div class="form-group">
+				<label>아이디</label>
+				<input type="text" class="form-control" name="me_id" placeholder="아이디">
+			</div>
+			<div class="form-group">
+				<label>비밀번호</label>
+				<input type="password" class="form-control" name="me_pw" id="pw" placeholder="비밀번호">
+			</div>
 			
-		</div>
-		<div class="form-group">
-			<label>비번</label>
-			<input type="password" class="form-control" name="me_pw" id="pw">
-		</div>
-		
-		<div class="form-check-inline">
-		  <label class="form-check-label">
-		    <input type="checkbox" class="form-check-input" value="true" name="autoLogin">자동로그인
-		  </label>
-		</div>
-		<button class="btn btn-outline-warning col-12">로그인</button>
-	</form>
-		<div class="col-lg-12 text-center mt-3">
-<!--     <button class="btn btn-block waves-effect waves-light btn-rounded btn-outline-info mb-3" >로그인하기</button> -->
-    <img alt="카카오로그인" src="${pageContext.request.contextPath}/resources/images/kakao_login_medium_wide.png" onclick="loginWithKakao()">
-</div>
+			<div class="form-check-inline" style="margin-bottom: 20px;">
+			  <label class="form-check-label">
+			    <input type="checkbox" class="form-check-input" value="true" name="autoLogin">자동로그인
+			  </label>
+			</div>
+			<button class="btn">로그인</button>
+		</form>
+			<div class="col-lg-12 text-center mt-3">
+	<!--     <button class="btn btn-block waves-effect waves-light btn-rounded btn-outline-info mb-3" >로그인하기</button> -->
+	  		  <img alt="카카오로그인" src="${pageContext.request.contextPath}/resources/images/kakao_login_medium_wide.png" onclick="loginWithKakao()" class="kakao-login">
+			</div>
+	</div>
 
 <!-- 카카오 로그인 -->
 <script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.min.js" charset="utf-8"></script>

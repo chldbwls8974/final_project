@@ -12,61 +12,97 @@
 <style type="text/css">
 	
 	body{color:black; font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;}
-	.body-double{ display: flex; margin-top: 50px;}
+	.body-double{ display: flex; margin-top: 40px;
+	}
+	.body-left{ 
+	}
+	.body-right{ background-color: #F8FAFB; border-radius: 30px; width: 60%;
+	}
 	.my{
-		position: relative; width: 60%; margin-right: 10px;
+		position: relative; width: 80%; margin-right: 10px;
 	}
 	.menu{
 		width: 100%;
 	}
-	img{ width: 24px; height: 24px; }
-	li{ list-style-type: none; padding: 12px 0;}
-	a{ text-decoration: none; color: black;}
-	a:hover { text-decoration: none; color: navy;}
-	img{float: left; padding-right: 0;}
+	img{ width: 24px; height: 24px;
+	}
+	li{ list-style-type: none; padding: 12px 0;
+	}
+	a{ text-decoration: none; color: black;
+	}
+	a:hover { text-decoration: none; color: navy;
+	}
+	img{float: left; padding-right: 0; margin-right: 10px;
+	}
 	.myprofile-image-thumb{ width: 70px; height: 70px; border-radius: 50%;
-	 margin-right: 10px;}
-	.mytier{background-color:#F8FAFB; border-radius:20px; padding:20px;
-	position: relative; width: 150px;}
-	.mytier-title{display: flex; align-items: center; justify-content: flex-end;
-	font-weight: bolder; text-align: center;}
-	.mytier-box{display: flex; align-items: center; justify-content: flex-end;}
+		 margin-right: 10px;}
+	 	
+	.mytier-thumb{ background-color:#F8FAFB; border-radius:20px; padding:20px;
+		position: relative; margin-bottom: 20px;
+	}
+	.mytier-title{ display: flex; align-items: center; justify-content: flex-start;
+		font-size:large; font-weight: bolder;
+	}
+	.mytier-box{
+		display: flex; justify-content: flex-end; letter-spacing:1px;
+		position: absolute; bottom: 30px; right: 30px;
+	}
+	
+	.myedit{
+		width: 150px; height: 50px; border-radius: 20px; background-color:#E9F6FF;
+		padding:10px; float: right;
+		position: absolute; top: 30px; right: 20px;
+	}
+	
+	.myclub-thumb{ width:400px; height:150px; border-radius:20px;
+		background-color:#F8FAFB; padding: 10px; margin: 20px 0 20px 0; 
+		}
+	
 	
 </style>
 
 </head>
 <body>
 <div class="body-double">
-		<section class="my">
+		<section class="my" style="width: 100%;">
 			<div class="body-left">
-				<div style="background-color: #F8FAFB; padding: 15px; border-radius: 30px; margin-bottom: 20px;">
-					<div class="myprofile-image">
-	                  <c:if test="${user.me_profile ==null}">
-	                     <img src="${pageContext.request.contextPath}/resources/images/basic.jpg" class="myprofile-image-thumb" alt="프로필 사진">
-	                  </c:if>
-               		</div>
-					<div class="myprofile-name" style="position: relative;">
-						<div style="font-size: 24px; font-weight:800;">${user.me_name}</div>
+				<div class="left-one">
+					<div style="background-color: #F8FAFB; padding: 15px; border-radius: 30px; margin-bottom: 20px; height:130px; padding: 30px 20px;">
+						<div class="myprofile-image">
+		                  <c:if test="${user.me_profile ==null}">
+		                     <img src="${pageContext.request.contextPath}/resources/images/basic.jpg" class="myprofile-image-thumb" alt="프로필 사진">
+		                  </c:if>
+	               		</div>
+						<div class="myprofile-name" style="position: relative;">
+							<div style="font-size: 24px; font-weight:800;">${user.me_name}</div>
+						</div>
+						<div class="myprofile-num">
+							<p style="color:#606060;">${user.me_id}</p>
+							<span class="myprofile-kakao"></span>
+						</div>
+						<div class="myedit">
+							<a href="<c:url value='/member/myedit'/>" class="myprofile-btn">
+								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg" alt="나의 포인트">
+								<p>프로필 수정</p>
+							</a>
+						</div>
 					</div>
-					<div class="myprofile-num">
-						<p style="color:#606060;">${user.me_id}</p>
-						<span class="myprofile-kakao"></span>
+					<div class="myclub-thumb">
+						<p style="font-size:15px; font-weight: bolder;">소속 클럽</p>
+						<a href="#" class="myprofile-btn">
+							<p style="font-size:18px; font-weight: bold;">팀1</p>
+							<img src="/resources/images/rogo.jpg" alt="나의 클럽" style="width: 30px; height: 30px;">
+						</a>
 					</div>
-				</div>
-				<div class="mytier">
+				</div>	
+				<div class="mytier-thumb">
 					<p class="mytier-title">내 티어</p>
 					<div class="mytier-box">
-						<div style="padding:3px; width:23px; height:27px; border-radius:5px; background-color: black;">
+						<div style="padding:0px; width:23px; height:25px; border-radius:5px; background-color: black;">
 							<div style="text-align:center; font-size:15px; padding:0; color: white; font-weight: bolder;">1</div>
 						</div>
 							<div style="margin-left:5px; font-weight: bolder; font-size: 15px; letter-spacing: 1px;">스타터</div>	
 					</div>
-				</div>
-				<div style="padding:20px; border-radius: 20px; background-color:#F8FAFB; margin:10px 0 20px 0;">
-					<a href="<c:url value='/member/myedit'/>" class="myprofile-btn">
-					<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg" alt="나의 포인트">
-					<p>내 프로필 수정</p>
-					</a>
 				</div>
 				<div style="padding:30px; border-radius: 30px; background-color: #F8FAFB; position: relative;">
 					<p style="font-size:15px; font-weight: bold;">내 포인트</p>
@@ -78,7 +114,7 @@
 			</div>
 		</section>
 		<section class="menu">
-			<div class="body-right" style="background-color: #F8FAFB; border-radius: 30px;">
+			<div class="body-right">
 				<div style="font-size: 18px; font-weight: bolder; margin-left:15px; padding: 20px;">나의 메뉴</div>
 				<div class="mymenu">
 					<ul class="mymenu-list">
