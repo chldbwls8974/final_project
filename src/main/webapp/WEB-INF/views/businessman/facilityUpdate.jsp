@@ -8,51 +8,53 @@
 <title>시설 정보 수정</title>
 </head>
 <body>
-	<h1>시설 정보 수정</h1> ${facility }
+	<h1 class="display-3"><span style="color: black; font-weight: bold;">시설 정보 수정</span></h1> <br>
 	<form action="<c:url value='/businessman/facilityUpdate'/>" method="post">
-	  <input name="fa_num" value="${facility.fa_num}">
-	  <div class="form-group">
-	    <label for="fa_bu_num">사업자 번호:</label>
-	    <input type="text" class="form-control" id="fa_bu_num" name="fa_bu_num" value="${business.bu_num}" readonly>
+	  <input name="fa_num" type="hidden" value="${facility.fa_num}">
+	  <div class="form-group" hidden="hidden">
+	    <label for="fa_bu_num">사업자 번호</label>
+	    <input type="text" class="form-control" id="fa_bu_num" name="fa_bu_num" value="${business.bu_num}">
 	  </div>
 	  
+	  <!--수정전 사항이 수정페이지에 그대로 나타나게 하기 위해 if문과 'selected'속성 사용함 -->
 	  <div class="form-group">
-		<label>지역</label> 
-		<select class="form-control rg_main">
-			<option value="0">지역을 선택하세요</option>
-				<c:forEach items="${MainRegion}" var="main">
-					<option value="${main.rg_main}">${main.rg_main}</option>
-				</c:forEach>
-		</select>
+	    <label>지역</label>
+	    <select class="form-control rg_main"> 
+	        <option value="0">지역을 선택하세요</option>
+	        <c:forEach items="${MainRegion}" var="main">
+    			<option value="${main.rg_main}" <c:if test="${facility.fa_rg_num == main.rg_main.toString()}">selected</c:if>>${main.rg_main}</option>
+			</c:forEach>
+	    </select>
 	  </div>
-	  
 	  <div class="form-group">
-		<select class="form-control rg_sub" name="fa_rg_num">
-			<option value="0">지역을 선택하세요</option>
-				<c:forEach items="${SubRegion}" var="sub">
-					<option value="${sub.rg_num}">${sub.rg_sub}</option>
-				</c:forEach>
-		</select>
+	    <select class="form-control rg_sub" name="fa_rg_num">
+	        <option value="0">지역을 선택하세요</option>
+	        <c:forEach items="${SubRegion}" var="sub">
+	            <option value="${main.rg_sub}" <c:if test="${facility.fa_rg_num == main.rg_sub.toString()}">selected</c:if>>${main.rg_sub}</option>
+	        </c:forEach>
+	    </select>
 	  </div>
 
+
 	  <div class="form-group">
-	    <label for="fa_name">시설명:</label>
-	    <input type="text" class="form-control" placeholder="시설명을 입력하세요" name="fa_name" id="fa_name" value="${facility.fa_name}">
+	    <label for="fa_name">시설명</label>
+	    <input type="text" class="form-control" placeholder="시설명을 입력하세요" name="fa_name" id="fa_name" value="${facility.fa_name}" required>
 	  </div>
 	  
 	  <div class="form-group">
-		<label for="fa_add">주소:</label>
-		  <input type="text" class="form-control" placeholder="주소를 입력하세요" name="fa_add" id="fa_add" value="${facility.fa_add}">
+		<label for="fa_add">주소</label>
+		  <input type="text" class="form-control" placeholder="주소를 입력하세요" name="fa_add" id="fa_add" value="${facility.fa_add}" required>
 	  </div>
 	  
 	  <div class="form-group">
-		  <label for="fa_add_detail">상세주소:</label>
-		  <input type="text" class="form-control" placeholder="상세 주소를 입력하세요" name="fa_add_detail" id="fa_add_detail" value="${facility.fa_add_detail}">
+		  <label for="fa_add_detail">상세주소</label>
+		  <input type="text" class="form-control" placeholder="상세 주소를 입력하세요" name="fa_add_detail" id="fa_add_detail" value="${facility.fa_add_detail}" required>
 	  </div>
 	 
 	  <div class="form-group">
-	    <label for="fa_phone">전화번호:</label>
-	    <input type="text" class="form-control" id="fa_phone" name="fa_phone" placeholder="-를 제외하고 입력하세요" oninput="autoHyphen(this)" maxlength="14" value="${facility.fa_phone}">
+	    <label for="fa_phone">전화번호</label>
+	    <input type="text" class="form-control" id="fa_phone" name="fa_phone" placeholder="-를 제외하고 입력하세요" 
+	    		oninput="autoHyphen(this)" maxlength="14" value="${facility.fa_phone}" required>
 	  </div>
 	  
 	  <h3>부대시설</h3>
@@ -238,10 +240,10 @@
 	  </div>
 
 	  <div class="form-group">
-		  <label for="fa_note">특이사항:</label>
+		  <label for="fa_note">특이사항</label>
 		  <textarea class="form-control" rows="5" id="fa_note" name="fa_note">${facility.fa_note}</textarea>
 	  </div>
-	  <button class="btn btn-outline-dark col-12">수정하기</button>
+	  <button class="btn btn-secondary btn-block">수정하기</button>
 	</form>
 
 	<script type="text/javascript">	
@@ -259,12 +261,12 @@
 		 $(document).on('change','.rg_main',function(){
 			 let th = $(this);
 			 rg_main = th.val();
-			 console.log(rg_main)
+			 
 			 data={
 				 rg_main : rg_main
 			}
-			//각 지역별 도시 선택 => 수정전 사항이 수정페이지에 그대로 나타나게 하기 위해 if문과 'selected'속성 사용함
-			ajaxJsonToJson2(false, 'get', '/businessman/facilityInsert/region', data, (a)=>{
+			//각 지역별 도시 선택 
+			ajaxJsonToJson2(false, 'get', '/businessman/facilityUpdate/region1', data, (a)=>{
 				var option = "";
 				th.parent().next().find('[name=fa_rg_num]').empty();
 				let region = '${facility.fa_rg_num}'

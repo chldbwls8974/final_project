@@ -8,20 +8,20 @@
 <title>경기장 등록</title>
 </head>
 <body>
-	<h1>경기장 등록</h1>
+	<h1 class="display-3"><span style="color: black; font-weight: bold;">경기장 등록</span></h1> <br>
 	<form action="<c:url value='/businessman/stadiumInsert'/>" method="post">
 	  <div class="form-group">
-	    <label for="st_fa_num">시설 번호:</label>
+	    <label for="st_fa_num">시설 번호</label>
  	    <input type="text" class="form-control" id="st_fa_num" name="st_fa_num" value="${fa_num}" readonly>
 	  </div>
 	  
 	  <div class="form-group">
-	    <label for="st_name">이름:</label>
+	    <label for="st_name">이름</label>
 	    <input type="text" class="form-control" placeholder="경기장 이름을 입력하세요" id="st_name" name="st_name" required>
 	  </div>
 	  
 	  <div class="form-group">
-		<label for="st_locate">위치:</label>
+		<label for="st_locate">위치</label>
 		  <input type="text" class="form-control" placeholder="경기장 위치를 입력하세요" id="st_locate" name="st_locate" required>
 	  </div>
 	  <br>
@@ -100,20 +100,21 @@
 	  <br>
 	  
 	  <div class="form-group-inline">
-	    <label for="st_max">최대인원:</label>
+	    <label for="st_max">최대인원</label>
    		<div class="input-group">
 		    <input type="number" class="form-control text-right" placeholder="최대인원"name="st_max"  id="st_max" oninput="numOnly2(this)" max="99" required>
 	  		<span class="input-group-text">명</span>
 	  	</div>
 	  </div>
+	  <br>
 	 
 	  <div class="form-group">
-		  <label for="st_note">특이사항:</label>
+		  <label for="st_note">특이사항</label>
 		  <textarea class="form-control" rows="5" id="st_note" name="st_note"></textarea>
 	  </div>
 	  
-	  <button class="btn btn-outline-dark col-12">등록</button>
-	  <button class="btn btn-outline-dark col-12">취소</button>
+	  <button class="btn btn-secondary btn-block">등록</button>
+	  <button class="btn btn-secondary btn-block">취소</button>
 	</form>
 
 	<script type="text/javascript">	

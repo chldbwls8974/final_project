@@ -23,22 +23,19 @@ public class ApplicationController {
 	@Autowired
 	BoardService boardService;
 	
+	//매니저 신청
 	@GetMapping("/application/manager")
 	public String Manager() {
 		return "/application/manager";
 	}
-	
 	@PostMapping("/application/manager")
 	public String applyManager(Model model, BoardVO board, HttpSession session, 
 			MultipartFile[] files) {
-		//System.out.println(board);
 		//user 정보를 주고 멤버VO에서 정보를 가져와서 멤버VO user에 저장
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		//System.out.println(user);
 		
 		//boardService를 통해 메서드를 호출하고, 매니저 신청 정보(board, member, files)를 전달
-		boolean res = boardService.insertMapplication(board, user, files);
-		//매니저 신청 시 결과에 따라 메시지 및 URL을 설정
+		boolean res = boardService.insertManagerApplication(board, user, files);
 		if(res) {
 			model.addAttribute("msg", "매니저 신청이 완료되었습니다.");
 			model.addAttribute("url", "/");
@@ -46,24 +43,20 @@ public class ApplicationController {
 			model.addAttribute("msg", "신청에 실패했습니다.");
 			model.addAttribute("url", "/application/manager");
 		}
-		
 		return "/util/message";
 	}
-	
+
+	//사업자 신청
 	@GetMapping("/application/businessman")
 	public String Businessman() {
 		return "/application/businessman";
 	}
-	
 	@PostMapping("/application/businessman")
 	public String applyBusinessman(Model model, BoardVO board, HttpSession session, 
 			MultipartFile[] files) {
-		//user 정보를 주고 멤버VO에서 정보를 가져와서 멤버VO user에 저장
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
-		//boardService를 통해 메서드를 호출하고, 사업자 신청 정보(board, member, files)를 전달
-		boolean res = boardService.insertBapplication(board, user, files);
-		//사업자 신청 시 결과에 따라 메시지 및 URL을 설정
+		boolean res = boardService.insertBusinessmanApplication(board, user, files);
 		if(res) {
 			model.addAttribute("msg", "사업자 신청이 완료되었습니다.");
 			model.addAttribute("url", "/");

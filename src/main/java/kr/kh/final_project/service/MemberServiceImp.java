@@ -470,26 +470,7 @@ public class MemberServiceImp implements MemberService{
 	
 
 
-
-//	@Override
-//	public boolean applyManager(MemberVO member, MemberVO user, MultipartFile[] files) {
-//		if(user == null || user.getMe_id() == null) {
-//			return false;
-//		}
-//		member.setMe_id(user.getMe_id());
-//		if(!memberDao.applyManager(member)) {
-//			return false;
-//		}
-//		//첨부파일을 업로드
-//		if(files == null || files.length == 0) {
-//			return true;
-//		}
-//		//첨부파일을 서버에 업로드 하고, DB에 저장
-//		uploadFileAndInsert(files, member.getMe_id());
-//		return memberDao.applyManager(member);
-//	}
-
-	}
+}
 
 
 
