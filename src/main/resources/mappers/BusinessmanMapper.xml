@@ -52,5 +52,4 @@
 			fa_note = #{facility.fa_note}
 		where fa_num = #{facility.fa_num}
 	</update>
-
 </mapper>

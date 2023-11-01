@@ -27,31 +27,28 @@
 	          <th>특이사항</th>
 	          <th>시설번호</th>
 	          <th>수정</th>
-	          <th>삭제</th>
 	        </tr>
 	      </thead>
 		  <tbody>
 	      	<c:forEach items="${stadiumList}" var="stadium">
-		        <tr>
-		          <td>${stadium.st_num}</td>
-		          <td>${stadium.st_name}</td>
-		          <td>${stadium.st_locate}</td>
-		          <td>${stadium.st_door}</td>
-		          <td>${stadium.st_floortype}</td>
-		          <td>${stadium.st_width}</td>
-		          <td>${stadium.st_height}</td>
-		          <td>${stadium.st_max}</td>
-		          <td>${stadium.st_available}</td>
-		          <td>${stadium.st_note}</td>
-		          <td>${stadium.st_fa_num}</td>
-		          <td><a href="<c:url value='/businessman/stadiumUpdate?st_num=${stadium.st_num}'/>"
-							class="btn btn-outline-secondary" role="button">수정</a></td>
-			      <td>
-					<form action="<c:url value='/businessman/stadiumDelete'/>" method="post">
-						<button class="btn btn-outline-dark btn-businessman-stadiumDelete">삭제</button>
-						<input type="hidden" name="st_num" value="${stadium.st_num}">
-					</form>
-	         	 </tr>
+		      	<!-- st_available 값이 '2(삭제)'아닌것만 화면에 보이게 함 -->
+		      	<c:if test="${stadium.st_available != 2}">
+			        <tr>
+			          <td>${stadium.st_num}</td>
+			          <td>${stadium.st_name}</td>
+			          <td>${stadium.st_locate}</td>
+			          <td>${stadium.st_door}</td>
+			          <td>${stadium.st_floortype}</td>
+			          <td>${stadium.st_width}</td>
+			          <td>${stadium.st_height}</td>
+			          <td>${stadium.st_max}</td>
+			          <td>${stadium.st_available}</td>
+			          <td>${stadium.st_note}</td>
+			          <td>${stadium.st_fa_num}</td>
+			          <td><a href="<c:url value='/businessman/stadiumUpdate?st_num=${stadium.st_num}'/>"
+								class="btn btn-outline-secondary" role="button">수정</a></td>
+		         	 </tr>
+    	         </c:if>
 		     </c:forEach>
 	      </tbody>
 	    </table>
@@ -60,7 +57,6 @@
 			<a class="btn btn-float-right btn btn-primary mt-1 col-3 "
 				 role="button" href="<c:url value='/businessman/stadiumInsert/${facility.fa_num}'/>">경기장 등록하기</a>		
 		</div>
-	  
 	  </div>
 
 </body>

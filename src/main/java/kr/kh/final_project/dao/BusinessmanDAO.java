@@ -23,4 +23,5 @@ public interface BusinessmanDAO {
 	List<FacilityVO> selectFacilityNum(@Param("fa_num")Integer fa_num);
 
 
+
 }

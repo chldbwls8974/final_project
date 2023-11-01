@@ -19,5 +19,6 @@ public interface StadiumDAO {
 	StadiumVO selectStadium(@Param("st_num")Integer st_num);
 
 	boolean updateStadium(@Param("stadium")StadiumVO stadium);
+	
 
 }

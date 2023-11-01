@@ -78,6 +78,11 @@
 		    <input type="radio" class="form-check-input" name="st_available" value="1" required>불가능
 		  </label>
 		</div>
+		<div class="form-check-inline">
+		  <label class="form-check-label">
+		    <input type="radio" class="form-check-input" name="st_available" value="2" required>삭제
+		  </label>
+		</div>
 	  </div>
 	  <br>
 	  

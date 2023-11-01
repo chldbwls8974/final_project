@@ -9,8 +9,8 @@
 </head>
 <body>
 	<h1>경기장 정보 수정</h1> ${stadium}
-	<input name="st_num" value="${stadium.st_num}">
 	<form action="<c:url value='/businessman/stadiumUpdate'/>" method="post">
+	<input name="st_num" value="${stadium.st_num}">
 	  <div class="form-group">
 	    <label for="st_fa_num">시설 번호:</label>
  	    <input type="text" class="form-control" id="st_fa_num" name="st_fa_num" value="${stadium.st_fa_num}" readonly>
@@ -130,6 +130,18 @@
 	                </c:when>
 	                <c:otherwise>
 	                    <input type="radio" class="form-check-input" name="st_available" value="1">불가능
+	                </c:otherwise>
+	            </c:choose>
+	        </label>
+	    </div>
+	    <div class="form-check-inline">
+	        <label class="form-check-label">
+	            <c:choose>
+	                <c:when test="${stadium.st_available == '2'}">
+	                    <input type="radio" class="form-check-input" name="st_available" value="2" checked>삭제
+	                </c:when>
+	                <c:otherwise>
+	                    <input type="radio" class="form-check-input" name="st_available" value="2">삭제
 	                </c:otherwise>
 	            </c:choose>
 	        </label>

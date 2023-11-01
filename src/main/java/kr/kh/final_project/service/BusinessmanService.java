@@ -32,9 +32,7 @@ public interface BusinessmanService {
 
 	StadiumVO getStadium(Integer st_num);
 
-	boolean updateStadium(StadiumVO stadium, FacilityVO facility);
-
-
+	boolean updateStadium(StadiumVO stadium);
 
 
 }

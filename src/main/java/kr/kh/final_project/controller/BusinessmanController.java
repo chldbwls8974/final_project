@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -163,6 +164,7 @@ public class BusinessmanController {
 		return "message";
 	}
 	
+
 	//==============================================================//
 	
 	@GetMapping("/businessman/stadium/{fa_num}")
@@ -232,18 +234,22 @@ public class BusinessmanController {
 	@PostMapping("/businessman/stadiumUpdate")
 	public String stadiumUpdate(Model model, StadiumVO stadium, FacilityVO facility, HttpSession session) {
 		System.out.println(stadium);
-		Message msg;
+		
+		//j에 해당 경기장 시설 번호 저장 
+		int j = stadium.getSt_fa_num();
 
-		int i = stadium.getSt_fa_num();
-	
-		if(businessmanService.updateStadium(stadium, facility)) {
-			msg = new Message("/businessman/stadium/" + i, "경기장 정보를 수정했습니다.");
+		boolean res = businessmanService.updateStadium(stadium);
+		if(res) {
+			model.addAttribute("msg", "경기장 수정이 완료되었습니다.");
+			//경기장 수정이 완료되면 등록한 시설의 경기장 목록으로 돌아가야 함
+			model.addAttribute("url", "/businessman/stadium/" + j);
 		}else {
-			msg = new Message("/businessman/stadiumUpdate?st_num="+stadium.getSt_num(), "경기장 정보를 수정하지 못했습니다."); 
+			model.addAttribute("msg", "경기장 수정에 실패했습니다.");
+			model.addAttribute("url", "/businessman/stadiumUpdate");
 		}
-		model.addAttribute("msg", msg);
-		return "message";
+	    return "/util/message";
 	}
+	
 	
 	//====================================================================//
 

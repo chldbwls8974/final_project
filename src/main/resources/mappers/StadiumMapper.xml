@@ -36,4 +36,5 @@
 			st_note = #{stadium.st_note}
 		where st_num = #{stadium.st_num}
 	</update>
+
 </mapper>
