@@ -36,6 +36,7 @@
 		list-style : none;
 		padding : 10px;
 		width : 100%;
+		margin-left : 10px;
 		
 		
 	}
@@ -127,9 +128,9 @@
 			</div>
 		<!-- 댓글 페이지네이션 -->
 			<div class="pagination justify-content-center">
-				<a href="#"> 이전</a>
-				<a href="#"> 1</a>
-				<a href="#"> 다음</a>
+				<a class="page-link" href="#"> 이전</a>
+				<a class="page-link" href="#"> 1</a>
+				<a class="page-link" href="#"> 다음</a>
 			</div>
 		</div>
 		<hr>
@@ -201,8 +202,8 @@
 					alert('댓글 등록 실패');
 				}
 			}
-		});
-	})
+		})
+	});
 	
 		/* 댓글 수정하기 이벤트 */
 		$(document).on('click', '.btn-update', function(){
@@ -334,17 +335,17 @@
 					str = '';
 					//이전버튼을 배치
 					if(pm.prev){
-						str += `<a href="javascript:void(0);" onclick="changePage(\${pm.startPage-1})"> 이전</a>`;
+						str += `<a class="page-link" href="javascript:void(0);" onclick="changePage(\${pm.startPage-1})"> 이전</a>`
 					}
 					//숫자버튼을 배치
 					for(i = pm.startPage; i<=pm.endPage; i++){
-						str += `<a href="javascript:void(0);" onclick="changePage(\${i})"> \${i}</a>`
+						str += `<a class="page-link" href="javascript:void(0);" onclick="changePage(\${i})"> \${i}</a>`
 					}
 					//다음버튼을 배치
 					if(pm.next){
-						str += `<a href="javascript:void(0);" onclick="changePage(\${pm.endPage+1})"> 다음</a>`
+						str += `<a class="page-link" href="javascript:void(0);" onclick="changePage(\${pm.endPage+1})"> 다음</a>`
 					}
-					$('.pagination justify-content-center').html(str);
+					$('.pagination').html(str);
 					
 				}
 			});
