@@ -103,13 +103,18 @@ public class MemberController {
 	
 	@PostMapping("/member/signup")
 	public String signupPost(MemberVO member, Model model, int[] pr_rg_num,
-			 int[] favoriteTime
-			,  int[] favoriteHoliTime
-			) 
-		{
+			int[] favoriteTime, int[] favoriteHoliTime, 
+			@RequestParam("recommed_check") String inviteMember){
+		//inviteMember = 추천인 닉네임	 
 		Message msg = new Message("/member/signup", "회원 가입에 실패했습니다.");
 		if(memberService.signup(member, pr_rg_num,favoriteTime,favoriteHoliTime)) {
 			msg = new Message("/", "회원 가입에 성공했습니다.");
+			//초대한 기존회원, 신규 회원에게 쿠폰 지급하는 메서드 (추천인 입력받았을 때만 실행)
+			if(inviteMember != null) {
+				if(memberService.signupCoupon(inviteMember, member)) {
+					System.out.println("쿠폰지급 성공");
+				}
+			}
 		}
 		model.addAttribute("msg", msg);
 		return "message";

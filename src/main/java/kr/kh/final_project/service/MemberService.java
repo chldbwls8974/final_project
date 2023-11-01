@@ -65,6 +65,8 @@ public interface MemberService {
 	List<HoldingCouponVO> getMemberCouponList(MemberVO user, Criteria cri);
 	
 	int getMemberCouponListCount(MemberVO user);
+	
+	boolean signupCoupon(String memberNickname, MemberVO newMember);
 
 
 

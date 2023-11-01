@@ -405,6 +405,25 @@ public class MemberServiceImp implements MemberService{
 		return holdingCouponDao.selectMemberCouPonListCount(user);
 	}
 
+	@Override
+	public boolean signupCoupon(String memberNickname, MemberVO newMember) {
+		if(memberNickname == null || newMember == null) {
+			return false;
+		} 
+		//닉네임으로 기존유저(추천인)정보 가져오는 메서드
+		MemberVO dbMember = memberDao.selectMemberByNickName(memberNickname);
+		if(dbMember == null) {
+			return false;
+		}
+		//회원테이블에 등록되면서 기본키(me_num)가 생기므로, MemberVO 다시 가져와야 함.
+		MemberVO dbNewMember = memberDao.selectMemberByNickName(newMember.getMe_nickname());
+		//쿠폰 등록
+		holdingCouponDao.insertSignupCouponOriginalMember(dbMember);
+		holdingCouponDao.insertSignupCouponNewMember(dbNewMember);
+		return true;
+	}
+
+
 	
 
 	

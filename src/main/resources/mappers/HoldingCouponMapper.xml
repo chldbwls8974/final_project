@@ -23,4 +23,20 @@
 		where
 			hp_me_num = #{user.me_num};
 	</select>
+	<insert id="insertSignupCouponOriginalMember">
+		insert into 
+			holding_coupon(hp_me_num, hp_cp_num, hp_state) 
+		values
+			(#{user.me_num}, 2, 1)
+	<!-- cp_num = 2는 초대보상(기존) -->
+	<!-- hp_state = 1는 비활성화 -->
+	</insert>
+	<insert id="insertSignupCouponNewMember">
+		insert into 
+			holding_coupon(hp_me_num, hp_cp_num, hp_state) 
+		values
+			(#{user.me_num}, 1, 0)
+	<!-- cp_num = 1는 초대보상(기존) -->
+	<!-- hp_state = 0는 비활성화 -->
+	</insert>
 </mapper>

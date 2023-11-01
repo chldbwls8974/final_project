@@ -14,5 +14,9 @@ public interface HoldingCouponDAO {
 
 	int selectMemberCouPonListCount(@Param("user")MemberVO user);
 
+	void insertSignupCouponOriginalMember(@Param("user")MemberVO dbMember);
+
+	void insertSignupCouponNewMember(@Param("user")MemberVO newMember);
+
 
 }
