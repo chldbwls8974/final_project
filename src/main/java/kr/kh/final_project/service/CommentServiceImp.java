@@ -75,7 +75,6 @@ public class CommentServiceImp implements CommentService{
 		return true;
 	}
 	// 댓글 수정하기
-	/*
 	@Override
 	public boolean updateComment(CommentVO comment, MemberVO user) {
 		if(user == null || user.getMe_num() == null) {
@@ -93,5 +92,5 @@ public class CommentServiceImp implements CommentService{
 		}
 		return commentDao.updateComment(comment);
 	}
-	*/
+
 }

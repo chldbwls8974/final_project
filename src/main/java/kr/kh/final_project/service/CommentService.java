@@ -17,6 +17,6 @@ public interface CommentService {
 	// 댓글 삭제하기
 	boolean deleteComment(CommentVO comment, MemberVO user);
 	// 댓글 수정하기
-	//boolean updateComment(CommentVO comment, MemberVO user);
+	boolean updateComment(CommentVO comment, MemberVO user);
 
 }

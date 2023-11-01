@@ -66,19 +66,18 @@ public class CommentController {
 		return map;
 	}
 	
-	/*
+
 	//댓글 수정하기
 	 @ResponseBody
 	 @PostMapping("/comment/update") 
 	 public Map<String, Object> update(@RequestBody CommentVO comment, HttpSession session){ 
-	Map<String,Object> map = new HashMap<String, Object>(); MemberVO user =
-	 (MemberVO)session.getAttribute("user");
+	 Map<String,Object> map = new HashMap<String, Object>(); 
+	 MemberVO user = (MemberVO)session.getAttribute("user");
 	 boolean res = commentService.updateComment(comment, user); 
 	 map.put("res", res);
 	 return map;
 	 }
 
-	*/
 }
 	
 

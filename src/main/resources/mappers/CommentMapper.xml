@@ -33,7 +33,7 @@
 		where
 			co_bo_num = #{bo_num}
 	</select>
-	<!-- 댓글수-->
+	<!-- 댓글 존재 확인-->
 	<select id="selectComment" resultType="kr.kh.final_project.vo.CommentVO">
 		select * from comment where co_num = #{co_num}
 	</select>
@@ -42,12 +42,11 @@
 		delete from comment where co_num = #{co_num}
 	</delete>
 	<!-- 댓글 수정하기 -->
-	<!-- <update id="updateComment">
+	<update id="updateComment">
 		update comment
 		set
-			co_comments = #{comment.co_comments},
-			co_up_date = now()
+			co_comments = #{comment.co_comments}
 		where 
 			co_num = #{comment.co_num}
-	</update> -->
+	</update>
 </mapper>

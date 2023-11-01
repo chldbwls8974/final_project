@@ -37,6 +37,7 @@
 		padding : 10px;
 		width : 100%;
 		
+		
 	}
 	/* 수정 삭제 버튼 */
 	.comment-item{
@@ -46,8 +47,14 @@
 	/* 날짜 */
 	.comment-date{
 		position : absolute;
-		transform: translateX(250px);
+		transform: translateX(580px);
+		transform: translateY(25px);
+		display : block;
 	}
+	.comment-1{
+		position : relative;
+	}
+	
 </style>    
 </head>
 </head>
@@ -202,7 +209,11 @@
 			// 클릭한 조상 클래스가 comment-list인 것을 찾아 list에 넣는다.
 			let th = $(this);
 			let list = $(this).parent().prev(); 
-			list.hide();
+			list.find('.comment-contents').hide();
+			list.find('.comment-writer').hide();
+			list.find('.comment-date').hide();
+			list.find('.btn-update').hide();
+			list.find('.btn-del').hide();
 
 			// 클릭한 데이터 숫자를 co_num에 넣는다.
 			let co_num = $(this).data('num');
@@ -211,15 +222,15 @@
 			
 			str = '';
 			str +=`
-				<div class="input-group-append">
-				<textarea class="form-control comment-update">\${co_contents}</textarea>
+				<div class="input-group-append" style="float : left; width:80%">
+				<textarea class="form-control comment-update" style="float : left">\${co_contents}</textarea>
 				</div>
 			`;
 			btn='';
 			btn=`
 				<button type="button" class="btn btn-complete btn-outline-info" data-num="\${co_num}">수정완료</button>			
 			`;
-			th.before(str)
+			list.find('.comment-contents').after(str)
 			th.hide(); // 버튼 박스 숨기기(수정버튼)
 			th.next().hide();
 			th.after(btn);
@@ -227,16 +238,14 @@
 		
 	
 		/* 댓글 수정완료 이벤트 */
-		/*
+
 		$(document).on('click','.btn-complete',function(){
 			let co_num = $(this).data('num');
 			let co_contents = $(this).parents('.comment-list').find('.comment-update').val();
 			let comment = {
 					co_num : co_num,
-					co_comments: co_contents,
-					co_up_date : co_up_date
+					co_comments: co_contents
 			}
-			
 			$.ajax({
 				async : false,
 				method: 'post',
@@ -256,7 +265,7 @@
 			});
 			
 		})
-		*/
+		
 		/* 댓글 삭제하기 이벤트 */
 		$(document).on('click', '.btn-del', function(){
 			
