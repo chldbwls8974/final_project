@@ -5,14 +5,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>시설 리스트</title>
+<title>시설 목록</title>
 </head>
 <body>
-  	<h1>시설 리스트</h1>
+  	<h1 class="display-3"><span style="color: black; font-weight: bold;">시설 목록</span></h1>
+	<br>
+	<br>
+  	<h5 style="color:blue;">[시설번호] 클릭 시, 경기장 목록으로 이동됩니다.</h5>
   	  <div class="table-responsive">
-	    <table class="table table-bordered">
+	    <table class="table table-light table-striped">
 	      <thead>
-	        <tr>
+	        <tr class="table-Info">
 	          <th>시설 번호</th>
 	          <th>사업자 번호</th>
 	          <th>지역</th>
@@ -28,7 +31,6 @@
 	          <th>자판기</th>
 	          <th>특이사항</th>
 	          <th>수정</th>
-	          <th>삭제</th>
 	        </tr>
 	      </thead>
 		  <tbody>
@@ -49,13 +51,7 @@
 		          <td>${facility.fa_machine}</td>
 		          <td>${facility.fa_note}</td>
 		          <td><a href="<c:url value='/businessman/facilityUpdate?fa_num=${facility.fa_num}'/>"
-							class="btn btn-outline-secondary" role="button">수정</a></td>
-			      <td>
-					<form action="<c:url value='/businessman/facilityDelete'/>" method="post">
-						<button class="btn btn-outline-dark btn-businessman-facilityDelete">삭제</button>
-						<input type="hidden" name="fa_num" value="${facility.fa_num}">
-					</form>
-				  </td>
+							class="btn btn-dark" role="button">수정</a></td>
 	         	</tr>
 		     </c:forEach>
 	      </tbody>
@@ -63,12 +59,8 @@
 	  </div>
 	  
 		<div align="right" class="mt-3">
-			<a class="btn btn-float-right btn btn-primary mt-1 col-3 "
-				 role="button" href="<c:url value='/businessman/facilityInsert'/>">시설 등록하기</a>
+			<a class="btn btn-secondary btn-block" role="button" href="<c:url value='/businessman/facilityInsert'/>">시설 등록하기</a>
 		</div>
-	    <div align="right" class="mt-3">
-			<a class="btn btn-float-left btn btn-danger mt-1 col-3 "
-				role="button" href="<c:url value='/'/>">뒤로가기</a>
-		</div>
+
 </body>
 </html>
