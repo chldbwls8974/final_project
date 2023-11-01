@@ -13,7 +13,7 @@ public class CommentVO {
 		private int co_bo_num;
 		private int co_me_num;
 		private int co_ori_num;
-		private Date co_date;
+		private String co_date;
 		private Date co_up_date;
 		private String co_delete;
 }

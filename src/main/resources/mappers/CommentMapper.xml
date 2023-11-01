@@ -7,9 +7,9 @@
 	<insert id="insertComment">
 		insert 
 			into 
-				comment(co_bo_num, co_me_num, co_comments)
+				comment(co_bo_num, co_me_num, co_comments, co_date)
 			values
-				(#{comment.co_bo_num},#{comment.co_me_num},#{comment.co_comments})
+				(#{comment.co_bo_num},#{comment.co_me_num},#{comment.co_comments},now())
 	</insert>
 	<!-- 댓글 리스트 가져오기 -->
 	<select id="selectCommentList" resultType="kr.kh.final_project.vo.CommentVO">
@@ -33,4 +33,20 @@
 		where
 			co_bo_num = #{bo_num}
 	</select>
+	<!-- 댓글 존재 확인-->
+	<select id="selectComment" resultType="kr.kh.final_project.vo.CommentVO">
+		select * from comment where co_num = #{co_num}
+	</select>
+	<!-- 댓글 삭제하기 -->
+	<delete id="deleteComment">
+		delete from comment where co_num = #{co_num}
+	</delete>
+	<!-- 댓글 수정하기 -->
+	<update id="updateComment">
+		update comment
+		set
+			co_comments = #{comment.co_comments}
+		where 
+			co_num = #{comment.co_num}
+	</update>
 </mapper>

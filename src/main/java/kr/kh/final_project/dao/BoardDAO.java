@@ -43,6 +43,9 @@ public interface BoardDAO {
 	boolean updateBoard(@Param("board")BoardVO board);
 	// 공지게시글 상세페이지 첨부파일 가져오기
 	FileVO selectFile(@Param("fi_num")int fi_num);
+	
+	// 게시글 댓글 수 업데이트하기
+	void updateBoardComment(@Param("bo_num")int co_bo_num);
 
 
 }
