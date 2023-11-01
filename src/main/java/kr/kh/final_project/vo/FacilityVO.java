@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FacilityVO {
 	private int fa_num;
-	private int fa_bu_num;
-	private int fa_rg_num;
+	private Integer fa_bu_num;
+	private Integer fa_rg_num;
 	private String fa_name;
 	private String fa_add;
 	private String fa_add_detail;
