@@ -18,6 +18,26 @@
 	.btn{
 		margin-bottom : 10px;
 	}
+	.comment-box{
+		display:flex;
+		align-items :center;
+	}
+	.profile-image {
+	    width: 60px; 
+	    height: 60px; 
+	    border-radius: 50%; /* 둥글두그륵 만들기 */
+	    object-fit: cover; /* 이미지가 찌그러지지 않도록 설정하는 것 */
+	}
+	.comment-list{
+		list-style : none;
+		padding-left:10px;
+		margin:0;
+		display : flex;
+	}
+	.comment-item{
+		margin-bottom : 10px;
+	}
+	
 </style>    
 </head>
 </head>
@@ -40,11 +60,19 @@
 		    </div>
 		</div>
 		<div class="form-group">
-			<label>첨부파일</label><br>
-				<c:forEach items="${fileList}" var="file">
-					<a  href="<c:url value='/download${file.fi_name}'/>" 
-						download="${file.fi_ori_name}">${file.fi_ori_name}</a><br>
-				</c:forEach>
+			<c:choose>
+				<c:when test="${fileList.size() != 0 }">
+					<label>첨부파일</label><br>
+						<c:forEach items="${fileList}" var="file">
+							<a  href="<c:url value='/download${file.fi_name}'/>" 
+								download="${file.fi_ori_name}">${file.fi_ori_name}</a><br>
+						</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<label>첨부파일 없음</label>
+					<hr>
+				</c:otherwise>
+			</c:choose>
 		</div>
 		<div class="comment-contaier mt-5">
 		<!-- 프로필사진 -->
@@ -65,24 +93,26 @@
 		    <button type="button"  class="btn btn-outline-success" id="btnCommentInsert">등록</button>
 		 </div>
 		<!-- 댓글 목록창 -->
-		<!-- <div class="box-comment">
-			<ul class="comment-list">
-				<li class="comment-item">
-					<span class="comment-contents">댓길1</span>
-					<span class="comment-writer">[작성자]</span>
-					<button >수정</button>
-					<button >삭제</button>
-				</li>
-			</ul>
-			<div class="pagination">
+		<div class="box-comment">
+			<div class="comment-box">
+					<ul class="comment-list">
+						<li class="comment-item">
+							<span class="comment-contents">${comment.co_comments}</span>
+							<span class="comment-writer">${comment.co_me_num}</span>
+							<button class="btn btn-outline-info btn-sm" >수정</button>
+							<button class="btn btn-outline-info btn-sm">삭제</button>
+						</li>
+					</ul>
+			</div>
+			
+		<!-- 댓글 페이지네이션 -->
+			<div class="pagination justify-content-center">
 				<a href="#"> 이전</a>
 				<a href="#"> 1</a>
 				<a href="#"> 다음</a>
 			</div>
-		</div> -->
-		<!-- 댓글 페이지네이션 -->
-		
 		</div>
+		<hr>
 		<button type="button"
 				class="btn btn-outline-info col-12 btn-return" 
 				onclick="location.href='<c:url value='/board/notice'/>'">돌아가기
@@ -134,7 +164,6 @@ $('#btnCommentInsert').click(function(){
 			co_me_num : co_me_num,
 			co_bo_num : co_bo_num
 	}
-	console.log(comment)
 	$.ajax({
 		async : false,
 		method: 'post',
@@ -152,9 +181,10 @@ $('#btnCommentInsert').click(function(){
 		}
 	})
 });
-		/* let cri = {
+		 let cri = {
 				page : 1
 		}
+		 // 게시글이 화면에 출력되고 이어서 댓글이 화면에 출력되어야 하기 때문에 이벤트 등록없이 바로 호출해준다.
 		getCommentList(cri);
 		
 		function getCommentList(cri){
@@ -169,17 +199,43 @@ $('#btnCommentInsert').click(function(){
 					let str ='';
 					for(comment of data.list){
 						str += `
-						<li class="comment-item">
-							<span class="comment-contents">\${comment.co_comments}</span>
-							<span class="comment-writer">[\${comment.co_me_num}]</span>
-							<button >수정</button>
-							<button >삭제</button>
-						</li>`
+							<img src="<c:url value='/resources/images/sample.jpg'/>" class="rounded-circle profile-image" alt="기본프로필 사진">
+							<ul class="comment-list">	
+								<li class="comment-item">
+									<span class="comment-contents">\${comment.co_comments}</span>
+									<span class="comment-writer">[\${comment.co_me_num}]</span>
+									<button class="btn btn-outline-info btn-sm" >수정</button>
+									<button class="btn btn-outline-info btn-sm">삭제</button>
+								</li>
+							</ul>
+							
+							`
 					}
 					$('.comment-list').html(str);
+					
+					let pm = data.pm;
+					str = '';
+					//이전버튼을 배치
+					if(pm.prev){
+						str += `<a href="javascript:void(0);" onclick="changePage(\${pm.startPage-1})"> 이전</a>`;
+					}
+					//숫자버튼을 배치
+					for(i = pm.startPage; i<=pm.endPage; i++){
+						str += `<a href="javascript:void(0);" onclick="changePage(\${i})"> \${i}</a>`
+					}
+					//다음버튼을 배치
+					if(pm.next){
+						str += `<a href="javascript:void(0);" onclick="changePage(\${pm.endPage+1})"> 다음</a>`
+					}
+					$('.pagination').html(str);
+					
 				}
-			})
-		} */
+			});
+		} 
+		function changePage(page){
+			cri.page = page;
+			getCommentList(cri);
+		}
 </script>
 </body>
 </html>

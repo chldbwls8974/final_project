@@ -46,5 +46,6 @@ public interface MemberDAO {
 
 	void updateFile(@Param("file")MultipartFile file);
 
+	MemberVO selectMemberByKaKao(@Param("me_id")String me_id);
 
 }
