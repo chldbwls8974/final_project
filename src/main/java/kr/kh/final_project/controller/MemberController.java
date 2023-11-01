@@ -20,9 +20,11 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.pagination.PageMaker;
 import kr.kh.final_project.service.MemberService;
+import kr.kh.final_project.service.MatchService;
 import kr.kh.final_project.service.RegionService;
 import kr.kh.final_project.util.Message;
 import kr.kh.final_project.vo.HoldingCouponVO;
+import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.RegionVO;
@@ -34,8 +36,11 @@ public class MemberController {
 	@Autowired
 	MemberService memberService;
 	@Autowired
+	MatchService matchService;
+	@Autowired
 	RegionService regionService;
 	
+
 	@GetMapping("/member/signup")
 	public String signup(Model model) {
 		List<RegionVO> MainRegion = memberService.getMainRegion();
@@ -121,6 +126,14 @@ public class MemberController {
 	}
 	
 	
+	
+	// 회원 탈퇴
+	@GetMapping(value="/member/signout")
+	public String memberSignout() {
+		return "/member/signout";
+	}
+	
+	
 	@GetMapping(value="/member/login")
 	public String memberLogin() {
 		return "/member/login";
@@ -155,7 +168,6 @@ public class MemberController {
 		model.addAttribute("msg", msg);
 		return "message";
 	}
-	
 	
 	
 	//포인트 환급 페이지
@@ -253,10 +265,9 @@ public class MemberController {
 	
 	@PostMapping("/member/myedit")
 	public String profileEdit(MemberVO member, MultipartFile file, HttpSession session,Model model) {
-		System.out.println(member);
 		MemberVO user = (MemberVO)session.getAttribute("user"); //세션에 저장된 현재 user 정보 가져옴
-		System.out.println(user);
 		boolean res = memberService.updateProfile(member, user, file); //새로 입력한 정보 업데이트
+		System.out.println(member);
 		if(res) { //업데이트된 사용자 정보 세션에 저장
 			session.setAttribute("user", member); 
 			model.addAttribute("msg", "수정을 완료했습니다.");
@@ -301,6 +312,19 @@ public class MemberController {
 		map.put("pm", pm);
 		map.put("hcList", hcList);
 		return map;
+	}
+	//마이페이지-소속 클럽 페이지 조회
+	@GetMapping("/member/clublist")
+	public String myClub() {
+		return "/member/clublist";
+	}
+	
+	//마이페이지-신청 경기 페이지 조회
+	@GetMapping("/member/mymatch")
+	public String mymatch(Model model) {
+		List<MatchVO> matchList = matchService.getMatchList(); //서비스에게 매치리스트 요청
+		model.addAttribute("matchList", matchList);
+		return "/member/mymatch";
 	}
 	
 }

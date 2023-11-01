@@ -9,7 +9,7 @@
 		from
 			facility
 				join
-			buisnessman on fa_bu_num = bu_num
+			businessman on fa_bu_num = bu_num
 		where
 			bu_me_num = #{me_num}
 	</select>

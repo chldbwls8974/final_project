@@ -3,6 +3,7 @@ package kr.kh.final_project.service;
 import java.util.List;
 
 import kr.kh.final_project.pagination.Criteria;
+import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ManagerVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
@@ -50,5 +51,9 @@ public interface AdminService {
 	boolean updateBusiness2(ManagerVO manager);
 	// 사업자 정보 페이지네이션( 총 사업자 수 가져오기)
 	int getTotalCount5(Criteria cri);
+	
+	List<ExpenseVO> getPriceList();
+	
+	boolean updatePrice(int[] price,String date);
 	
 }

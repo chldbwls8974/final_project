@@ -7,10 +7,12 @@ import org.springframework.stereotype.Service;
 
 import kr.kh.final_project.dao.BoardDAO;
 import kr.kh.final_project.dao.BusinessDAO;
+import kr.kh.final_project.dao.ExpenseDAO;
 import kr.kh.final_project.dao.ManagerDAO;
 import kr.kh.final_project.dao.MemberDAO;
 import kr.kh.final_project.dao.PointHistoryDAO;
 import kr.kh.final_project.pagination.Criteria;
+import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ManagerVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
@@ -32,6 +34,9 @@ public class AdminServiceImp implements AdminService{
 	
 	@Autowired
 	PointHistoryDAO pointHistoryDao;
+
+	@Autowired
+	ExpenseDAO expenseDao;
 	
 	// 회원정보 조회
 	//@Override
@@ -143,6 +148,22 @@ public class AdminServiceImp implements AdminService{
 			return false;
 		}
 		return pointHistoryDao.updateRefundApproval(ph);
+	}	
+	
+	@Override
+	public List<ExpenseVO> getPriceList() {
+		return expenseDao.selectExpense();
+	}
+	@Override
+	public boolean updatePrice(int[] price,String date) {
+		int count = 0;
+		
+		for(int i:price) {
+			count++;
+			expenseDao.updatePrice(count,i,date);
+			
+		}
+		return true;
 	}
 	
 	//사업자 권한 조회하기

@@ -3,9 +3,10 @@ package kr.kh.final_project.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.pagination.Criteria;
-
+import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 
 public interface MemberDAO {
@@ -41,7 +42,10 @@ public interface MemberDAO {
 	
 	MemberVO selectMemberNumByNick2(String check);
 
-	boolean updateMemberProfile(MemberVO user);
+	boolean updateMemberProfile(@Param("user")MemberVO user);
 
+	void updateFile(@Param("file")MultipartFile file);
+
+	MemberVO selectMemberByKaKao(@Param("me_id")String me_id);
 
 }
