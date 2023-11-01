@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.pagination.PageMaker;
 import kr.kh.final_project.service.AdminService;
+import kr.kh.final_project.util.Message;
+import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ManagerVO;
 import kr.kh.final_project.vo.MemberVO;
 
@@ -172,6 +172,22 @@ public class AdminController {
 		return map;
 	}
 	
+	@GetMapping("/admin/price")
+	public String priceUpdate(Model model) {
+		List<ExpenseVO> list = adminService.getPriceList();
+		model.addAttribute("list",list);
+		return "/admin/price";
+	}
+	
+	@PostMapping("/admin/price")
+	public String priceUpdatePost(Model model, int[] price,String date) {
+		Message msg = new Message("/admin/price", "가격 수정에 실패하였습니다.");
+		if(adminService.updatePrice(price,date)) {
+			msg = new Message("", "가격 수정에 성공하였습니다.");
+		}
+		model.addAttribute("msg", msg);
+		return "message";
+	}
 	// 사업자 조회하기, 페이지네이션 기능구현 (2)
 		@GetMapping("/admin/business2")
 		public String adminBusiness2(Model model, Criteria cri) {

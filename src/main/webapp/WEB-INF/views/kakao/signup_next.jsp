@@ -79,64 +79,21 @@ input[type='checkbox']:checked+label{
 </head>
 <body>
 	<h1>회원가입</h1>
-	<form action="<c:url value='/member/signup'/>" method="post" id="myForm">
-		
+	${kakaoAccount}
+	<form action="<c:url value='/kakao_callback'/>" method="post" id="myForm">
 		<div class="1p">
+			<input type="hidden" name="me_id" value="${me_id }">
+<%-- 			<input type="hidden" name="me_pw" value="kakao${me_id }"> --%>
+			<input type="hidden" name="me_email" value="${kakaoAccount.email }">
+			<input type="hidden" name="me_name" value="${kakaoAccount.name }">
+			<input type="hidden" name="me_gender" value="${kakaoAccount.gender }">
 			<div class="form-group">
-				<label>아이디</label> <label id="check-id-error" class="error"
-					for="me_id"></label> <input type="text" class="form-control"
-					name="me_id" id="me_id" required>
+				<label>닉네임</label> <label id="check-nickName-error" class="error" for="me_nickname"></label>
+				 <input type="text" class="form-control" name="me_nickname" maxlength="15" placeholder="${kakaoAccount.profile_nickname }" required>
 			</div>
-
-			<div class="form-group">
-				<label>비번</label> <label id="check-pw-error" class="error"
-					for="me_pw"></label> <input type="password" class="form-control"
-					name="me_pw" id="me_pw" required>
-			</div>
-
-			<div class="form-group">
-				<label>비번 확인</label> <label id="check-pw2-error" class="error"
-					for="me_pw2"></label> <input type="password" class="form-control"
-					name="me_pw2" id="me_pw2" required>
-			</div>
-
-			<div class="form-group">
-				<label>이메일</label> <label id="check-email-error" class="error"
-					for="me_email"></label> <input type="email" class="form-control"
-					name="me_email" id="me_email" required>
-				<button type="button" class="form-control" name="me_email_btn"
-					id="me_email_btn" disabled="disabled">인증번호 전송</button>
-				<input type="number" class="form-control" name="email_code"
-					id="email_code" required>
-				<button type="button" class="form-control" name="email_code_btn"
-					id="email_code_btn" disabled="disabled">인증번호 확인</button>
-				<div id="timer"></div>
-			</div>
-
-			<div class="form-group">
-				<label>전화번호</label> <input type="text" class="form-control"
-					name="me_phone" id="me_phone" required>
-			</div>
-
-			<div class="form-group">
-				<label>이름</label> <input type="text" class="form-control"
-					name="me_name" id="me_name" required>
-			</div>
-
-			<div class="form-group">
-				<label>성별</label> <input type="radio" name="me_gender" value="M">남
-				<input type="radio" name="me_gender" value="F">여
-			</div>
-
 			<div class="form-group">
 				<label>생년월일</label> <input type="text" class="form-control"
 					name="me_birthday" id="me_birthday" required>
-			</div>
-
-			<div class="form-group">
-				<label>닉네임</label> <label id="check-nickName-error" class="error"
-					for="me_nickname"></label> <input type="text" class="form-control"
-					name="me_nickname" maxlength="15" required>
 			</div>
 			<div class="form-group">
 				<label>거주지</label> <select class="form-control rg_main" required>
@@ -160,8 +117,7 @@ input[type='checkbox']:checked+label{
 
 		<!-- 다음버튼 -->
 		<div class="form-group">
-			<button type="button" class="btn next-btn form-control" id="next"
-				disabled="disabled">다음</button>
+			<button type="button" class="btn next-btn form-control" id="next">다음</button>
 		</div>
 
 		<!-- 2번째 페이지 -->
@@ -372,14 +328,6 @@ input[type='checkbox']:checked+label{
 			</div>
 		</div>
 
-
-
-			
-		
-		
-		
-		
-		
 			<div class="prefer-area">
 				<div class="form-group">
 					<label>선호지역</label> <select class="form-control pre_rg_main">
@@ -417,137 +365,14 @@ input[type='checkbox']:checked+label{
 			<button type="button" class="btn prev-btn form-control">이전</button>
 		</div>
 		<button class="btn btn-outline-warning col-12" id="signup"
-			disabled="disabled">회원가입</button>
+			>회원가입</button>
 	</form>
 	<script type="text/javascript">
 	
 
-	const password = document.getElementsByName("me_pw")[0].value;
-	const passwordConfirm = document.getElementsByName("me_pw2")[0].value;
-	const codeSendBtn = document.getElementById("me_email_btn");
-	const checkCode = document.getElementById("email_code");
-	const checkCodeBtn = document.getElementById("email_code_btn");
 	const nextBtn = document.getElementById("next");
 	const signUpBtn = document.getElementById("signup");
-	let randomCode;
-	let x;
 	let count = 0;
-	let time;
-	var min = ""; // 분
-	var sec=""; // 초
-	
-	// 6자리 난수 생성 함수
-    function generateRandomCode(length) {
-        const chars = "0123456789";
-        let randomCode = "";
-        for (let i = 0; i < length; i++) {
-            const index = Math.floor(Math.random() * chars.length);
-            randomCode += chars.charAt(index);
-        }
-        return randomCode;
-    }
-	
-	
-	
-	// 이메일 입력 시 중복이 아니면 전송 버튼 활성화
-	$(document).on('keyup','#me_email',function(){
-		let email = $(this).val();
-		
-		let flag = false;
-		
-		var regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-		
-		if(!regEmail.test(email)){
-			codeSendBtn.disabled = true;
-			$('#check-email-error').text('');
-			return;
-		}
-		
-		if(email != ''){
-			$.ajax({
-				async : false, 
-				type : 'post', 
-				url : '<c:url value="/member/check/email"/>', 
-				data : {email : email}, 
-				success : function(data){
-					if(data){
-						codeSendBtn.disabled = false;
-						$('#check-email-error').text('사용 가능한 이메일입니다.');
-						flag = true;
-						
-					}else{
-						codeSendBtn.disabled = true;
-						$('#check-email-error').text('이미 사용중인 이메일입니다.');
-					}
-				}
-			});
-		}
-		
-		
-	})
-	
-	
-	// 인증번호 전송 버튼을 누르면 서버로 이메일주소와 코드 보내주고 타이머 시작
-	$(document).on('click','[name=me_email_btn]',function(){
-		time = 30; // 유효시간 여기서 설정 - 지금은 테스트를 위해서 5초
-		randomCode = generateRandomCode(6); 
-		
-		// 타이머 시작
-		x = setInterval(function(){
-			min = parseInt(time/60);
-			sec = time % 60;
-			
-			document.getElementById("timer").innerHTML = min + "분" + sec + "초";
-			time--;
-			
-			if(time < 0){
-				clearInterval(x);
-				document.getElementById("timer").textContent ="시간초과";
-				checkCodeBtn.disabled = true;
-				codeSendBtn.innerHTML = "인증번호 재전송"
-			}
-		},1000);
-		
-		// 지워도 됨
-		console.log(randomCode)
-		
-		// 인증버튼 활성화
-		checkCodeBtn.disabled = false;
-		
-		// 값
-		const email = $('[name=me_email]').val();
-		const checkEmail = $('[name=email_code]').val();
-		
-		// ajax로 보내줄 data
-		data ={
-				to : email,
-				randomCode : randomCode
-		}
-		
-		// ajax
-		ajaxJsonToJson2(false, 'get','/member/signup/checkmail?email'+email,data,(a)=>{
-			
-		})
-	})
-	
-	
-	
-	// 인증번호가 맞는지 확인
-	$(document).on('click','[name=email_code_btn]',function(){
-		
-		let inputCode = $('[name=email_code]').val()
-		if(inputCode != randomCode){
-			alert('인증번호를 확인해주세요')
-		}else{
-			alert('인증되었습니다')
-			nextBtn.disabled = false;
-			signUpBtn.disabled = false;
-			clearInterval(x);
-			codeSendBtn.innerHTML = "인증완료"
-			document.getElementById("timer").textContent ="인증완료";
-		}
-	})
-	
 	
 	// 페이지 이전, 다음버튼
 	$('.2p').hide();
@@ -674,95 +499,6 @@ input[type='checkbox']:checked+label{
 		 }
 	 })
 	
-	
-	 // 데이트피커
-	 $(document).ready(function(){
-		$("#me_birthday").datepicker({
-			  showOn: "both", // 버튼과 텍스트 필드 모두 캘린더를 보여준다.
-              // buttonImage: "/application/db/jquery/images/calendar.gif", // 버튼 이미지
-              //buttonImageOnly: true, // 버튼에 있는 이미지만 표시한다.
-              changeMonth: true, // 월을 바꿀수 있는 셀렉트 박스를 표시한다.
-              changeYear: true, // 년을 바꿀 수 있는 셀렉트 박스를 표시한다.
-              minDate: '-100y', // 현재날짜로부터 100년이전까지 년을 표시한다.
-              maxDate: 'today',
-              nextText: '다음 달', // next 아이콘의 툴팁.
-              prevText: '이전 달', // prev 아이콘의 툴팁.
-              numberOfMonths: [1,1], // 한번에 얼마나 많은 월을 표시할것인가. [2,3] 일 경우, 2(행) x 3(열) = 6개의 월을 표시한다.
-              stepMonths: 1, // next, prev 버튼을 클릭했을때 얼마나 많은 월을 이동하여 표시하는가. 
-              yearRange: 'c-100:c+100', // 년도 선택 셀렉트박스를 현재 년도에서 이전, 이후로 얼마의 범위를 표시할것인가.
-              showButtonPanel: true, // 캘린더 하단에 버튼 패널을 표시한다. ( ...으로 표시되는부분이다.) 
-              closeText: '닫기',  // 닫기 버튼 패널
-              dateFormat: "yy-mm-dd", // 텍스트 필드에 입력되는 날짜 형식.
-              showAnim: "slide", //애니메이션을 적용한다.  
-              showMonthAfterYear: true , // 월, 년순의 셀렉트 박스를 년,월 순으로 바꿔준다. 
-              dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'], // 요일의 한글 형식.
-              monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] // 월의 한글 형식.
-	        })
-	        
-		})
-		
-		
-		
-		
-		// 아이디 중복 검사
-		let flag = false;
-		$('[name=me_id]').keyup(function(){
-			flag = false;
-			let id = $(this).val();
-			if(!/^[a-zA-Z]\w{5,9}$/.test(id)){
-				$('#check-id-error').text('');
-				return;
-			}
-			$.ajax({
-				async : false, 
-				type : 'post', 
-				url : '<c:url value="/member/check/id"/>', 
-				data : { id : id}, 
-				success : function(data){
-					if(data){
-						$('#check-id-error').text('사용 가능한 아이디입니다.');
-						flag = true;
-					}else{
-						$('#check-id-error').text('이미 사용중인 아이디입니다.');
-					}
-				}
-			});
-		})
-		
-		// 비밀번호 정규표현식 검사
-		$('[name=me_pw]').keyup(function(){
-			flag = false;
-			let pw = $(this).val();
-			var rePw = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#\$])[A-Za-z\d!@#\$]{10,20}$/
-				if(rePw.test(pw)){
-					$('#check-pw-error').text('');
-					return;
-				}else{
-					$('#check-pw-error').text('비밀번호는 영문,숫자,!@#$ 포함 10~20글자여야합니다.');
-				}
-		})
-		
-		// 비밀번호 일치 검사
-		$('[name=me_pw2]').keyup(function(){
-			flag = false;
-			let pw = $(this).val();
-			let rePw = $('[name=me_pw]').val();
-			if(rePw==pw){
-				$('#check-pw2-error').text('');
-				return;
-			}else{
-				$('#check-pw2-error').text('비밀번호가 일치하지 않습니다.');
-			}
-		})
-		
-		//비밀번호 확인 안되면 제출 못함
-		document.getElementById("myForm").addEventListener("submit", function(event) {
-		    if (password !== passwordConfirm) {
-		        alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
-		        event.preventDefault(); // 폼 제출을 막음
-		    }
-		});
-			
 		
 		// 닉네임 중복 검사
 		$('[name=me_nickname]').keyup(function(){
@@ -794,6 +530,32 @@ input[type='checkbox']:checked+label{
 			
 		})
 		
+		
+	 // 데이트피커
+	 $(document).ready(function(){
+		$("#me_birthday").datepicker({
+			  showOn: "both", // 버튼과 텍스트 필드 모두 캘린더를 보여준다.
+              // buttonImage: "/application/db/jquery/images/calendar.gif", // 버튼 이미지
+              //buttonImageOnly: true, // 버튼에 있는 이미지만 표시한다.
+              changeMonth: true, // 월을 바꿀수 있는 셀렉트 박스를 표시한다.
+              changeYear: true, // 년을 바꿀 수 있는 셀렉트 박스를 표시한다.
+              minDate: '-100y', // 현재날짜로부터 100년이전까지 년을 표시한다.
+              maxDate: 'today',
+              nextText: '다음 달', // next 아이콘의 툴팁.
+              prevText: '이전 달', // prev 아이콘의 툴팁.
+              numberOfMonths: [1,1], // 한번에 얼마나 많은 월을 표시할것인가. [2,3] 일 경우, 2(행) x 3(열) = 6개의 월을 표시한다.
+              stepMonths: 1, // next, prev 버튼을 클릭했을때 얼마나 많은 월을 이동하여 표시하는가. 
+              yearRange: 'c-100:c+100', // 년도 선택 셀렉트박스를 현재 년도에서 이전, 이후로 얼마의 범위를 표시할것인가.
+              showButtonPanel: true, // 캘린더 하단에 버튼 패널을 표시한다. ( ...으로 표시되는부분이다.) 
+              closeText: '닫기',  // 닫기 버튼 패널
+              dateFormat: "yy-mm-dd", // 텍스트 필드에 입력되는 날짜 형식.
+              showAnim: "slide", //애니메이션을 적용한다.  
+              showMonthAfterYear: true , // 월, 년순의 셀렉트 박스를 년,월 순으로 바꿔준다. 
+              dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'], // 요일의 한글 형식.
+              monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] // 월의 한글 형식.
+	        })
+	        
+		})
 		
 	
 	</script>

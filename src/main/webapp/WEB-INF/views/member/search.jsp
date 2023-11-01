@@ -6,39 +6,68 @@
 <head>
 <meta charset="UTF-8">
 <title>회원 검색</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js"></script>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
+<style type="text/css">
+	.searchType {
+		width: 150px;
+		padding: .8em .5em;
+		border: 1px solid #999;
+		font-family: inherit;
+		background: url('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F99761B495C84AA8716') no-repeat 95% 50%;
+		border-radius: 5px;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+		margin-top: 20px;
+	}
+	.keyword{
+		width: 500px;
+		padding: .8em .5em;
+		border-radius: 5px;
+		border: 1px solid #999;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+	}
+	.search-btn{
+		width: 80px;
+		padding: .8em .5em;
+		border-radius: 5px;
+		border: 1px solid #999;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+	}
+	li{list-style: none;}
+	p, span{text-decoration: none; color: black;}
+	p:hover, span:hover {text-decoration: none;}
+	
+	
+</style>
 </head>
 <body>
 	<div class="member-search">
-		<div class="member-search-navigation">
-				<h3>전체 회원 조회</h3>
-				<select  name="searchType">
+		<div class="member-search-navigation" style="text-align: center;">
+				<select class="searchType" name="searchType">
 					<option value="id">아이디</option>
 					<option value="name">이름</option>
 				</select>
-				<input type="search" name="keyword"></input>
-				<button type="submit" onclick="getSearchList()">
-					<i class="fa-solid fa-magnifying-glass"></i>
+				<input type="search" class="keyword" name="keyword"></input>
+				<button type="submit" class="search-btn" onclick="getSearchList()">검색
 				</button>
 		</div>
-		<div>
-			<ul id="membertable">
-				<c:forEach items="${memberList}" var="member">
-				<li>
-					<a href="#" class="member-link">
-						<img src=""/>
-						<span>${member.me_name}</span>
-						<span>${member.me_id}</span>
-					</a>
-				</li>
-				</c:forEach>
-			</ul>
-		</div>
+			<div>
+				<ul id="membertable">
+					<c:forEach items="${memberList}" var="member">
+					<li style="margin-left: 80px;">
+						<a href="#" class="member-link">
+							<img src=""/>
+							<p style="font-weight: bold; font-size: large;">${member.me_name}</p>
+							<span style="font-size: small; color: gray; margin-top: 0">${member.me_id}</span>
+						</a>
+					</li>
+					</c:forEach>
+				</ul>
+			</div>
 	</div>
 </body>
 <script type="text/javascript">
