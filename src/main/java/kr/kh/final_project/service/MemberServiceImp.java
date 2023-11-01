@@ -118,7 +118,7 @@ public class MemberServiceImp implements MemberService{
 		}
 		//아이디, 비번 null 체크 + 유효성 검사
 		//아이디는 영문으로 시작하고, 6~10자
-		String idRegex = "^[a-zA-Z][a-zA-Z0-9]{6,10}$";
+		String idRegex = "^[a-zA-Z][a-zA-Z0-9]{5,9}$";
 		//비번은 영문,숫자,!@#$%로 이루어지고 10~20자 
 		String pwRegex = "^[a-zA-Z0-9!@#$%]{10,20}$";
 		
@@ -140,12 +140,15 @@ public class MemberServiceImp implements MemberService{
 		
 		// 입력한 회원정보의 num값 가져오기
 		int pr_me_num = memberDao.selectMember(member.getMe_id()).getMe_num();
-		
 		// 선호 시간 (평일)
-		insertPrefferedTime(0,pr_me_num,favoriteTime);
+		if(favoriteTime !=null) {
+			insertPrefferedTime(0,pr_me_num,favoriteTime);
+		}
 		
 		// 선호 시간 (주말)
-		insertPrefferedTime(1,pr_me_num,favoriteHoliTime);
+		if(favoriteHoliTime != null) {
+			insertPrefferedTime(1,pr_me_num,favoriteHoliTime);
+		}
 		
 		// 선호 지역
 		insertPrefferedRegion(pr_me_num, pr_rg_num);
@@ -156,23 +159,10 @@ public class MemberServiceImp implements MemberService{
 	
 	// 선호 지역을 넣는 메서드
 	private void insertPrefferedRegion(int pr_me_num, int[] pr_rg_num) {
-		int pr1 = 0;
-		int pr2 = 0;
-		int pr3 = 0;
-		
-		if(pr_rg_num[0]==0) { return;}
-		
-		if(pr_rg_num.length > 0) {
-			pr1 = pr_rg_num[0];
-			prRegionDao.insertPreferredRegion(pr_me_num,pr1);
-		}
-		if(pr_rg_num.length > 1) {
-			pr2 = pr_rg_num[1];
-			prRegionDao.insertPreferredRegion(pr_me_num,pr2);
-		}
-		if(pr_rg_num.length > 2) {
-			pr3 = pr_rg_num[2];
-			prRegionDao.insertPreferredRegion(pr_me_num,pr3);
+		for(int i : pr_rg_num) {
+			if(i!=0) {
+				prRegionDao.insertPreferredRegion(pr_me_num,i);
+			}
 		}
 	}
 
@@ -181,46 +171,38 @@ public class MemberServiceImp implements MemberService{
 	private void insertPrefferedTime(int div, int pr_me_num, int[] Time) {
 		int len = Time.length;
 		
-		if(len==0) {
-			return;
-		}
-		
-		for(int i = 0 ; i <len ; i++) {
-			int t = Time[i];
-			
+		for(int i : Time) {
 			// 평일이면
-			if(div == 0) {
-				// 선호시간은 2시간 간격이기 때문에 for문이 2개 필요함
-				//월(0) ~ 금(4)까지 첫번째 시간을 넣기 위한 반복문 
-				for(int day = 0 ; day < 5; day++) {
-					int pt_num = (t+1) +(24*day); // 요일별 시간테이블의 숫자
-					prTimeDao.insertPreferredTime(pt_num, pr_me_num);
-				}
-				//월(0) ~ 금(4)까지 두번째 시간을 넣기 위한 반복문 
-				for(int day = 0 ; day < 5; day++) {
-					int pt_num = (t+2) +(24*day); // 요일별 시간테이블의 숫자
-					prTimeDao.insertPreferredTime(pt_num, pr_me_num);
-				}
-			}
-			
-			// 주말이면
-			else if(div == 1) {
-				// 선호시간은 2시간 간격이기 때문에 for문이 2개 필요함
-				//토(5), 일(6)첫번째 시간을 넣기 위한 반복문 
-				for(int day = 5 ; day < 7; day++) {
-					int pt_num = (t+1) +(24*day); // 요일별 시간테이블의 숫자
-					prTimeDao.insertPreferredTime(pt_num, pr_me_num);
-				}
-				//토(5), 일(6) 두번째 시간을 넣기 위한 반복문 
-				for(int day = 5 ; day < 7; day++) {
-					int pt_num = (t+2) +(24*day); // 요일별 시간테이블의 숫자
-					prTimeDao.insertPreferredTime(pt_num, pr_me_num);
-				}
-				
-			}
+						if(div == 0) {
+							// 선호시간은 2시간 간격이기 때문에 for문이 2개 필요함
+							//월(0) ~ 금(4)까지 첫번째 시간을 넣기 위한 반복문 
+							for(int day = 0 ; day < 5; day++) {
+								int pt_num = (i+1) +(24*day); // 요일별 시간테이블의 숫자
+								prTimeDao.insertPreferredTime(pt_num, pr_me_num);
+							}
+							//월(0) ~ 금(4)까지 두번째 시간을 넣기 위한 반복문 
+							for(int day = 0 ; day < 5; day++) {
+								int pt_num = (i+2) +(24*day); // 요일별 시간테이블의 숫자
+								prTimeDao.insertPreferredTime(pt_num, pr_me_num);
+							}
+						}
+						
+						// 주말이면
+						else if(div == 1) {
+							// 선호시간은 2시간 간격이기 때문에 for문이 2개 필요함
+							//토(5), 일(6)첫번째 시간을 넣기 위한 반복문 
+							for(int day = 5 ; day < 7; day++) {
+								int pt_num = (i+1) +(24*day); // 요일별 시간테이블의 숫자
+								prTimeDao.insertPreferredTime(pt_num, pr_me_num);
+							}
+							//토(5), 일(6) 두번째 시간을 넣기 위한 반복문 
+							for(int day = 5 ; day < 7; day++) {
+								int pt_num = (i+2) +(24*day); // 요일별 시간테이블의 숫자
+								prTimeDao.insertPreferredTime(pt_num, pr_me_num);
+							}
+						}
 			
 		}
-		
 	}
 	
 
@@ -354,7 +336,7 @@ public class MemberServiceImp implements MemberService{
 	        MimeMessageHelper messageHelper 
 	            = new MimeMessageHelper(message, true, "UTF-8");
 
-	        messageHelper.setFrom("stajun@naver.com");  // 보내는사람 생략하거나 하면 정상작동을 안함
+	        messageHelper.setFrom("khvkdlsjf1234@gmail.com");  // 보내는사람 생략하거나 하면 정상작동을 안함
 	        messageHelper.setTo(to);     // 받는사람 이메일
 	        messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
 	        messageHelper.setText(contents, true);  // 메일 내용

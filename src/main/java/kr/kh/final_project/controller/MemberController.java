@@ -107,9 +107,7 @@ public class MemberController {
 			,  int[] favoriteHoliTime
 			) 
 		{
-		
 		Message msg = new Message("/member/signup", "회원 가입에 실패했습니다.");
-		
 		if(memberService.signup(member, pr_rg_num,favoriteTime,favoriteHoliTime)) {
 			msg = new Message("/", "회원 가입에 성공했습니다.");
 		}

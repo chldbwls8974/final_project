@@ -23,6 +23,13 @@ public interface AdminService {
 	// 매니저 정보 페이지네이션 (총 매니저신청 수 가져오기)
 	int getTotalCount2(Criteria cri);
 	
+	// 매니저권한 조회
+	List<ManagerVO> getManagerList2(Criteria cri);
+	// 매니저 권한 바꾸기
+	boolean updateManager2(ManagerVO manager);
+	// 매니저 정보 페이지네이션 (총 매니저 수 가져오기)
+	int getTotalCount3(Criteria cri);
+	
 	// 사업자신청 정보조회
 	List<ManagerVO> getBusinessList(Criteria cri);
 	// 사업자신청 수락 버튼(권한 바꾸기)
@@ -35,5 +42,14 @@ public interface AdminService {
 	int getRefundListBySearchCount(Criteria cri, String searchType1, String searchType2);
 	//환급을 승인하는 메서드
 	boolean refundApproval(PointHistoryVO ph);
+	
+	int getTotalCount4(Criteria cri);
+	
+	// 사업자 정보조회
+	List<ManagerVO> getBusinessList2(Criteria cri);
+	// 사업자 권한 바꾸기
+	boolean updateBusiness2(ManagerVO manager);
+	// 사업자 정보 페이지네이션( 총 사업자 수 가져오기)
+	int getTotalCount5(Criteria cri);
 	
 }

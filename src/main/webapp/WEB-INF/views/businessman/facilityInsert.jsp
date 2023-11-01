@@ -10,19 +10,32 @@
 <body>
 	<h1>시설 등록</h1>
 	<form action="<c:url value='/businessman/facilityInsert'/>" method="post">
-	  <div class="form-group" required>
+	  <div class="form-group">
 	    <label for="fa_bu_num">사업자 번호:</label>
 	    <input type="text" class="form-control" id="fa_bu_num" name="fa_bu_num" value="${business.bu_num}" readonly>
 	  </div>
 	  
 	  <div class="form-group">
-	    <label for="fa_rg_num">지역 번호:</label>
-	    <input type="text" class="form-control" id="fa_rg_num" name="fa_rg_num" value="${region.rg_num}" readonly>
+		<label>거주지</label> 
+		<select class="form-control rg_main">
+			<option value="0">지역을 선택하세요</option>
+				<c:forEach items="${MainRegion}" var="main">
+					<option value="${main.rg_main}">${main.rg_main}</option>
+				</c:forEach>
+		</select>
 	  </div>
-	  
+	  <div class="form-group">
+		<select class="form-control rg_sub" name="fa_rg_num">
+			<option value="0">지역을 선택하세요</option>
+				<c:forEach items="${SubRegion}" var="sub">
+					<option value="${sub.rg_num}">${sub.rg_sub}</option>
+				</c:forEach>
+		</select>
+	  </div>
+
 	  <div class="form-group">
 	    <label for="fa_name">시설명:</label>
-	    <input type="email" class="form-control" placeholder="시설명을 입력하세요" id="fa_name">
+	    <input type="text" class="form-control" placeholder="시설명을 입력하세요" id="fa_name">
 	  </div>
 	  <div class="form-group">
 		<label for="fa_add">주소:</label>
@@ -41,7 +54,7 @@
 	  <h3>부대시설</h3>
 	  <div class="form-group">
 	    <label for="fa_pay">주차장</label>
-	    <div class="form-check-inline" name="fa_pay">
+	    <div class="form-check-inline">
 		  <label class="form-check-label">
 		  	<input type="radio" class="form-check-input" name="fa_pay" value="0">없음
 		  </label>
@@ -127,10 +140,14 @@
 		  <label for="fa_note">특이사항:</label>
 		  <textarea class="form-control" rows="5" id="fa_note" name="fa_note"></textarea>
 	  </div>
-	  
-	  <button type="submit" class="btn btn-primary">등록</button>
-	  <button type="button" class="btn btn-primary">취소</button>
+	  <button class="btn btn-outline-dark col-12">등록</button>
+
 	</form>
+	  <div align="right" class="mt-3">
+			<a class="btn btn-float-left btn btn-danger mt-1 col-3 "
+				role="button" href="<c:url value='/'/>">취소</a>
+	  </div>
+
 
 	<script type="text/javascript">	
 		//자동으로 하이픈(-)으로 구분된 전화번호 형식으로 변환하는 메서드
@@ -142,6 +159,28 @@
         		//숫자만 남은 문자열을 전화번호 형식으로 변환
         		.replace(/(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g, "$1-$2-$3");
 		}
+	
+		//지역 선택
+		 $(document).on('change','.rg_main',function(){
+			 let th = $(this);
+			 rg_main = th.val();
+			 console.log(rg_main)
+			 data={
+				 rg_main : rg_main
+			}
+			//각 지역별 도시 선택
+			ajaxJsonToJson2(false, 'get', '/businessman/facilityInsert/region', data, (a)=>{
+				var option = "";
+				th.parent().next().find('[name=fa_rg_num]').empty();
+				
+				for (var i in a.SubRegion){
+					var obj = a.SubRegion[i];
+					option = "<option value='" + obj.rg_num + "'>" + obj.rg_sub + "</option>";
+					th.parent().next().find('[name=fa_rg_num]').append(option)
+				}
+			})
+		   });
+		
 	</script>
 	
 </body>

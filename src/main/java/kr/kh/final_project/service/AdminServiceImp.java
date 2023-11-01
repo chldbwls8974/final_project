@@ -60,7 +60,7 @@ public class AdminServiceImp implements AdminService{
 	public List<ManagerVO> getManagerList(Criteria cri) {
 		return managerDao.selectManagerList(cri);
 	}
-	// 매니저신청 수락버튼 (권한 바꾸기)
+	// 매니저신청 수락버튼 (권한 MANAGER로 바꾸기)
 	@Override
 	public boolean updateManager(ManagerVO manager) {
 		if(manager == null || manager.getMe_nickname() == null || manager.getMe_authority() == null) {
@@ -75,6 +75,29 @@ public class AdminServiceImp implements AdminService{
 			cri = new Criteria();
 		}
 		return managerDao.selectTotalCount(cri);
+	}
+	
+	//매니저권한 조회
+	@Override
+	public List<ManagerVO> getManagerList2(Criteria cri) {
+		return managerDao.selectManagerList2(cri);
+	}
+	
+	// 매니저권한 삭제버튼(권한 USER로 바꾸기 )
+	@Override
+	public boolean updateManager2(ManagerVO manager) {
+		if(manager == null || manager.getMe_nickname() == null || manager.getMe_authority() == null) {
+			return false;
+		}
+		return managerDao.updateManagerByAuthority2(manager);
+	}
+	// 매니저 페이지네이션
+	@Override
+	public int getTotalCount3(Criteria cri) {
+		if(cri == null) {
+			cri = new Criteria();
+		}
+		return managerDao.selectTotalCount2(cri);
 	}
 	
 	
@@ -94,7 +117,7 @@ public class AdminServiceImp implements AdminService{
 	}
 	// 사업자신청 페이지네이션
 	@Override
-	public int getTotalCount3(Criteria cri) {
+	public int getTotalCount4(Criteria cri) {
 		if(cri == null) {
 			cri = new Criteria();
 		}
@@ -120,6 +143,29 @@ public class AdminServiceImp implements AdminService{
 			return false;
 		}
 		return pointHistoryDao.updateRefundApproval(ph);
+	}
+	
+	//사업자 권한 조회하기
+	@Override
+	public List<ManagerVO> getBusinessList2(Criteria cri) {
+		
+		return businessDao.selectBusinessList2(cri);
+	}
+	// 사업자권한 삭제버튼(권한 USER로 바꾸기 )
+	@Override
+	public boolean updateBusiness2(ManagerVO manager) {
+		if(manager == null || manager.getMe_nickname() == null || manager.getMe_authority() == null) {
+			return false;
+		}
+		return businessDao.updateBusinessByAuthority2(manager);
+	}
+	// 사업자 페이지네이션
+	@Override
+	public int getTotalCount5(Criteria cri) {
+		if(cri == null) {
+			cri = new Criteria();
+		}
+		return businessDao.selectTotalCount2(cri);
 	}
 	
 
