@@ -1,6 +1,7 @@
 package kr.kh.final_project.service;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.mail.internet.MimeMessage;
 
@@ -10,14 +11,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import kr.kh.final_project.dao.MemberDAO;
-import kr.kh.final_project.pagination.Criteria;
-import java.util.regex.Pattern;
-
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 
 import kr.kh.final_project.dao.MemberDAO;
 import kr.kh.final_project.dao.PointHistoryDAO;
@@ -55,6 +48,7 @@ public class MemberServiceImp implements MemberService{
 	TimeDAO timeDao;
 	PointHistoryDAO pointHistoryDao;
 
+	String uploadPath = "D:\\uploadfiles";
 	
 	@Override
 	public List<MemberVO> searchMemberById(String keyword) {
@@ -371,10 +365,26 @@ public class MemberServiceImp implements MemberService{
 
 	@Override
 	public boolean updateProfile(MemberVO member, MemberVO user, MultipartFile file) {
-		if(user == null || user.getMe_id() == null) {
+		//로그인 안하면 실패
+		if(user == null || user.getMe_nickname() == null) {
 			return false;
 		}
-		return memberDao.updateMemberProfile(user);
+		//수정된 내 정보를 DB에 저장
+		boolean res = memberDao.updateMemberProfile(user);
+		//업뎃 실패시 반환
+		if(!res) {
+			return false;
+		}
+		// 첨부파일 추가하기
+		uploadFile(file, member.getMe_num());
+		return true;
+	}
+
+	private void uploadFile(MultipartFile file, Integer me_num) {
+		if(me_num <= 0) {
+			return;
+		}
+		memberDao.updateFile(file);
 	}
 
 	@Override

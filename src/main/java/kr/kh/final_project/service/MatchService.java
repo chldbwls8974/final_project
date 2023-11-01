@@ -25,4 +25,6 @@ public interface MatchService {
 
 	List<RegionVO> selectRegionListByRgNum(int rg_num);
 
+	List<MatchVO> getMatchList();
+
 }

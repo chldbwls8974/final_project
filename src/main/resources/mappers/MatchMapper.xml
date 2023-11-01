@@ -40,4 +40,7 @@
 		order by
 			ti_time asc;
 	</select>
+	<select id="selectMatchList" resultType="kr.kh.final_project.vo.MatchVO">
+		select * FROM `match`
+	</select>
 </mapper>
