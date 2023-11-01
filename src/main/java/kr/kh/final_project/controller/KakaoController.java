@@ -56,10 +56,12 @@ public class KakaoController {
 		
 		try {
 		    KakaoResponse kakaoResponse = objectMapper.readValue(res, KakaoResponse.class);
+		    System.out.println(code);
 		    // 카카오 토큰 id
 		    //System.out.println("ID: " + kakaoResponse.getId());
 		    // 토큰에 실린 정보
 		    KakaoAccount kakaoAccount = kakaoResponse.getKakao_account();
+		    System.out.println(kakaoAccount);
 		    long id =  kakaoResponse.getId();
 		    String me_id = String.valueOf(id);
 		    me_id  += 'k';
@@ -199,6 +201,7 @@ public class KakaoController {
 	}
 	private String getUserForKakao(String accessToken) {
 		try {
+			System.out.println(accessToken);
 			log.info(accessToken);
 			String apiUrl = "https://kapi.kakao.com/v2/user/me";
             // URL 객체 생성
