@@ -16,6 +16,8 @@ public interface ClubService {
 	ClubVO getClub(Integer cl_num);
 
 	boolean joinClub(ClubMemberVO clubMember);
+
+	boolean updateClub(int me_num, ClubVO club, int[] age, int[] favoriteTime, int[] favoriteHoliTime);
 	
 }
 	

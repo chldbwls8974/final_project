@@ -90,6 +90,25 @@ public class ClubController {
 		model.addAttribute("msg", msg);
 		return "message";
 	}
+	
+	@GetMapping("/update")
+	public String updateClub(Model model, HttpSession session, Integer cl_num) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		ClubVO club = clubService.getClub(cl_num);
+		model.addAttribute("user",user);
+		model.addAttribute("club",club);
+		return "/club/update";
+	}
+	
+	@PostMapping("/update")
+	public String updateClubPost(Model model, ClubVO club, int[] favoriteTime, int[] favoriteHoliTime, int[] age,int me_num) {
+		Message msg = new Message("/club/upate", "클럽 수정에 실패하였습니다.");
+		if(clubService.updateClub(me_num,club, age,favoriteTime,favoriteHoliTime)) {
+			msg = new Message("/", "클럽 수정에 성공했습니다.");
+		}
+		model.addAttribute("msg", msg);
+		return "message";
+	}
 }
 	
 

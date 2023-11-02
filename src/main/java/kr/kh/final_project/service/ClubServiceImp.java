@@ -40,7 +40,6 @@ public class ClubServiceImp implements ClubService{
 		clubDao.insertClub(club);
 		int cl_num = clubDao.selectClubByName(club.getCl_name()).getCl_num();
 		
-		System.out.println(cl_num);
 		if(favoriteTime !=null) {
 			insertPrefferedTime(0,cl_num,favoriteTime);
 		}
@@ -121,6 +120,32 @@ public class ClubServiceImp implements ClubService{
 		}
 		clubMemberDao.insertClubMember(clubMember);
 		return true;
+	}
+
+//	여기해야함.. 클럽수정하기
+	@Override
+	public boolean updateClub(int me_num, ClubVO club, int[] age, int[] favoriteTime, int[] favoriteHoliTime) {
+//		if(club == null) {
+//			return false;
+//		}
+//		ClubVO dbClub =  clubDao.selectClubByNum(club.getCl_num());
+//		if(dbClub == null) {
+//			return false;
+//		}
+//		clubDao.updateClub(club);
+//		int cl_num = clubDao.selectClubByName(club.getCl_name()).getCl_num();
+//		if(favoriteTime !=null) {
+//			updatePrefferedTime(0,cl_num,favoriteTime);
+//		}
+//		if(favoriteHoliTime !=null) {
+//			updatePrefferedTime(1,cl_num,favoriteHoliTime);
+//		}
+//		if(age != null) {
+//			for(int i : age) {
+//				preAgeDao.insertPrefferedAge(i,cl_num);
+//			}
+//		}
+		return false;
 	}
 
 
