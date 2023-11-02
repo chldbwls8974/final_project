@@ -50,17 +50,19 @@
 					</c:if>
 				</div>
 			</li>
-			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-				관리자
-				</a>
-				<div class="dropdown-menu">
-					<a class="dropdown-item" href="<c:url value='/admin/member'/>">회원 관리</a>
-					<a class="dropdown-item" href="<c:url value='/admin/manager'/>">매니저 관리</a>
-					<a class="dropdown-item" href="<c:url value='/admin/business'/>">사업자 관리</a>
-					<a class="dropdown-item" href="#">게시판 관리</a>
-				</div>
-			</li>
+			<c:if test="${user != null && user.me_authority == 'ADMIN'}">
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+					관리자
+					</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="<c:url value='/admin/member'/>">회원 관리</a>
+						<a class="dropdown-item" href="<c:url value='/admin/manager'/>">매니저 관리</a>
+						<a class="dropdown-item" href="<c:url value='/admin/business'/>">사업자 관리</a>
+						<a class="dropdown-item" href="#">게시판 관리</a>
+					</div>
+				</li>
+			</c:if>
 			<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 					매니저

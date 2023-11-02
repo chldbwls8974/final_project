@@ -37,6 +37,17 @@ public class CommentController {
 		map.put("res", res);
 		return map;
 	}
+	// 답글 추가하기
+	@ResponseBody
+	@PostMapping("/comment/insert2")
+	// 받은 JSON형식의 데이터를 CommentVO로 변환
+	public Map<String,Object> commentInsert2(@RequestBody CommentVO comment){
+		// JSON 응답을 위한 빈 Map 객체를 생성한다. 이 Map에 데이터를 추가하여 클라이언트에 전달
+		Map<String, Object> map = new HashMap<String, Object>();
+		boolean res = commentService.insertComment2(comment);
+		map.put("res", res);
+		return map;
+	}
 	
 	// 댓글 조회하기
 	// @RespenseBody : 직렬로 클라이언트로 전송하는 역할
@@ -54,6 +65,16 @@ public class CommentController {
 		map.put("pm", pm);
 		return map;
 	}
+	
+		// 답글 조회하기
+		@ResponseBody
+		@PostMapping("/comment/list2/{bo_num}")
+		public Map<String, Object> list2(@RequestBody Criteria cri, @PathVariable("bo_num")int bo_num){
+			Map<String, Object> map = new HashMap<String, Object>();
+			List<CommentVO> list = commentService.getCommentList2(bo_num, cri);
+			map.put("list", list);
+			return map;
+		}	
 	
 	// 댓글 삭제하기
 	@ResponseBody
