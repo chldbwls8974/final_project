@@ -8,7 +8,4 @@ public interface ClubMemberDAO {
 
 	void insertClubMember(@Param("cl_num")int cl_num, @Param("me_num")int me_num, @Param("authority")String authority);
 
-
-
-
 }

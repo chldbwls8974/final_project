@@ -10,10 +10,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.final_project.service.ClubService;
 import kr.kh.final_project.service.MemberService;
 import kr.kh.final_project.util.Message;
+import kr.kh.final_project.vo.ClubMemberVO;
 import kr.kh.final_project.vo.ClubVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.RegionVO;
@@ -42,6 +45,47 @@ public class ClubController {
 		Message msg = new Message("/club/make", "클럽 생성에 실패하였습니다.");
 		if(clubService.insertClub(me_num,club, age,favoriteTime,favoriteHoliTime)) {
 			msg = new Message("/", "클럽 생성에 성공했습니다.");
+		}
+		model.addAttribute("msg", msg);
+		return "message";
+	}
+	
+	@ResponseBody
+	@PostMapping("/make/check")
+	public Object clubNameCheck(@RequestParam("name")String name){
+		return clubService.checkClubName(name);
+	}
+	
+	@GetMapping("/list")
+	public String listClub(Model model, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		List<ClubVO> list = clubService.getClubList();
+		model.addAttribute("user",user);
+		model.addAttribute("list",list);
+		return "/club/list";
+	}
+	
+	@GetMapping("/detail")
+	public String detailClub(Model model, HttpSession session, Integer cl_num) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		ClubVO club = clubService.getClub(cl_num);
+		model.addAttribute("user",user);
+		model.addAttribute("club",club);
+		return "/club/detail";
+	}
+	@GetMapping("/join")
+	public String joinClub(Model model, HttpSession session, Integer cl_num) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		ClubVO club = clubService.getClub(cl_num);
+		model.addAttribute("user",user);
+		model.addAttribute("club",club);
+		return "/club/join";
+	}
+	@PostMapping("/join")
+	public String joinClubPost(Model model, HttpSession session, ClubMemberVO clubMember) {
+		Message msg = new Message("/club/join", "클럽 신청에 실패하였습니다.");
+		if(clubService.joinClub(clubMember)) {
+			msg = new Message("/", "클럽 신청에 성공했습니다.");
 		}
 		model.addAttribute("msg", msg);
 		return "message";

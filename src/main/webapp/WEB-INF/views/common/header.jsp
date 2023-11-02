@@ -25,6 +25,9 @@
 				<a class="nav-link" href="<c:url value='/club/make'/>">클럽만들기</a>
 			</li>
 			<li class="nav-item">
+				<a class="nav-link" href="<c:url value='/club/list'/>">클럽조회</a>
+			</li>
+			<li class="nav-item">
 				<a class="nav-link" href="#">개인매치</a>
 			</li>
 			<li class="nav-item">

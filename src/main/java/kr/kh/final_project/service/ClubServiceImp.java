@@ -2,6 +2,8 @@ package kr.kh.final_project.service;
 
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +11,9 @@ import kr.kh.final_project.dao.ClubDAO;
 import kr.kh.final_project.dao.ClubMemberDAO;
 import kr.kh.final_project.dao.PreferredAgeDAO;
 import kr.kh.final_project.dao.TeamPreferredTimeDAO;
+import kr.kh.final_project.vo.ClubMemberVO;
 import kr.kh.final_project.vo.ClubVO;
+import kr.kh.final_project.vo.MemberVO;
 
 
 
@@ -34,7 +38,7 @@ public class ClubServiceImp implements ClubService{
 			return false;
 		}
 		clubDao.insertClub(club);
-		int cl_num = clubDao.selectClub(club).getCl_num();
+		int cl_num = clubDao.selectClubByName(club.getCl_name()).getCl_num();
 		
 		System.out.println(cl_num);
 		if(favoriteTime !=null) {
@@ -87,6 +91,36 @@ public class ClubServiceImp implements ClubService{
 			
 		}
 		
+	}
+
+	
+	
+	@Override
+	public Object checkClubName(String name) {
+		ClubVO dbClub = clubDao.selectClubByName(name);
+		return dbClub;
+	}
+
+	@Override
+	public List<ClubVO> getClubList() {
+		return clubDao.selectClubList();
+	}
+
+	@Override
+	public ClubVO getClub(Integer cl_num) {
+		if(cl_num == 0) {
+			return null;
+		}
+		return clubDao.selectClubByNum(cl_num);
+	}
+
+	@Override
+	public boolean joinClub(ClubMemberVO clubMember) {
+		if(clubMember == null) {
+			return false;
+		}
+		clubMemberDao.insertClubMember(clubMember.getCm_cl_num(),clubMember.getCm_me_num(),"ROOKIE");
+		return true;
 	}
 
 

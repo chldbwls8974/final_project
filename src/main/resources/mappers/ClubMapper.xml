@@ -3,8 +3,14 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.final_project.dao.ClubDAO">
-	<select id="selectClub" resultType="kr.kh.final_project.vo.ClubVO">
-		select * from club where cl_name = #{club.cl_name}
+	<select id="selectClubByName" resultType="kr.kh.final_project.vo.ClubVO">
+		select * from club where cl_name = #{cl_name}
+	</select>
+	<select id="selectClubList" resultType="kr.kh.final_project.vo.ClubVO">
+		select * from club
+	</select>
+	<select id="selectClubByNum" resultType="kr.kh.final_project.vo.ClubVO">
+		select * from club where cl_num = #{cl_num}
 	</select>
 	<insert id="insertClub">
 		insert into club(cl_name, cl_emblem, cl_price, cl_rule, cl_introduction, cl_url, cl_rg_num)

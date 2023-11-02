@@ -10,6 +10,9 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style type="text/css">
+.error {
+	color: #f00;
+}
 .time-box{
     margin-bottom: 30px;
     padding: 0;
@@ -75,7 +78,7 @@ li{
 <!-- 		</div> -->
 		<input type="text" class="form-control" name="me_num" value="${user.me_num }">
 		<div class="form-group">
-			<label>클럽명</label>
+			<label>클럽명</label><label id="check-name-error" class="error" for="cl_name"></label>
 			<input type="text" class="form-control" name="cl_name" id="cl_name">
 		</div>
 		<div class="form-group">
@@ -361,62 +364,6 @@ li{
 	
 	
 	<script type="text/javascript">
-// 	  document.addEventListener("DOMContentLoaded", function () {
-// 		    // "pre_time" 클래스를 가진 요소를 선택합니다.
-// 		    var preTimeContainer = document.querySelector(".pre_time");
-
-// 		    if (preTimeContainer) {
-// 		      // "pre_time" 클래스 내의 모든 체크박스를 선택하고 숨깁니다.
-// 		      var checkboxesInPreTime = preTimeContainer.querySelectorAll("input[type='checkbox']");
-// 		      for (var i = 0; i < checkboxesInPreTime.length; i++) {
-// 		        checkboxesInPreTime[i].style.display = "none";
-// 		      }
-// 		    }
-// 		  });
-	    
-// 	  document.addEventListener("DOMContentLoaded", function () {
-// 		    // "pre_time" 클래스를 가진 요소를 선택합니다.
-// 		    var preTimeContainer = document.querySelector(".pre_time");
-
-// 		    if (preTimeContainer) {
-// 		      // "pre_time" 클래스 내의 이미지와 관련된 체크박스를 선택합니다.
-// 		      var checkboxesInPreTime = preTimeContainer.querySelectorAll("input[type='checkbox']");
-// 		      var imagesInPreTime = preTimeContainer.querySelectorAll("img");
-
-// 		      // 이미지를 클릭할 때 체크박스 선택/해제 동작을 추가합니다.
-// 		      imagesInPreTime.forEach(function (image, index) {
-// 		        image.addEventListener("click", function () {
-// 		          checkboxesInPreTime[index].checked = !checkboxesInPreTime[index].checked;
-// 		        });
-// 		      });
-// 		    }
-// 		  });
-	  
-// 	  document.addEventListener("DOMContentLoaded", function () {
-// 		    // "pre_time" 클래스를 가진 요소를 선택합니다.
-// 		    var preTimeContainer = document.querySelector(".pre_time");
-
-// 		    if (preTimeContainer) {
-// 		      // "pre_time" 클래스 내의 이미지와 관련된 체크박스를 선택합니다.
-// 		      var checkboxesInPreTime = preTimeContainer.querySelectorAll("input[type='checkbox']");
-// 		      var imagesInPreTime = preTimeContainer.querySelectorAll("img");
-
-// 		      // 이미지를 클릭할 때 테두리 스타일을 변경하고 체크박스 선택/해제 동작을 추가합니다.
-// 		      imagesInPreTime.forEach(function (image, index) {
-// 		        image.addEventListener("click", function () {
-// 		          checkboxesInPreTime[index].checked = !checkboxesInPreTime[index].checked;
-
-// 		          // 이미지를 감싸는 div 요소의 클래스를 변경하여 테두리 스타일을 설정합니다.
-// 		          if (checkboxesInPreTime[index].checked) {
-// 		            image.parentNode.classList.add("selected-image");
-// 		          } else {
-// 		            image.parentNode.classList.remove("selected-image");
-// 		          }
-// 		        });
-// 		      });
-// 		    }
-// 		  });
-	  
 	$(document).on('check','[name=age]',function(){
 		console.log($(this).val())
 	})
@@ -442,6 +389,27 @@ li{
 		})
 		
 	   });
+	
+	// 팀이름
+	let flag = false;
+	$('[name=cl_name]').keyup(function(){
+		flag = false;
+		let name = $(this).val();
+		$.ajax({
+			async : false, 
+			type : 'post', 
+			url : '<c:url value="/club/make/check"/>', 
+			data : { name : name}, 
+			success : function(data){
+				if(data){
+					$('#check-name-error').text('이미 사용중인 클럽명입니다.');
+				}else{
+					$('#check-name-error').text('사용 가능한 클럽명입니다.');
+					flag = true;
+				}
+			}
+		});
+	})
 	</script>
 </body>
 </html>
