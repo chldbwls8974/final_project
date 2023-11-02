@@ -8,6 +8,12 @@
 		insert into point_history(ph_price, ph_source, ph_me_num) 
 			values(#{pointHistory.ph_price}, #{pointHistory.ph_source}, #{pointHistory.ph_me_num})
 	</insert>
+	<insert id="insertPointHistoryByPayment" parameterType="kr.kh.final_project.vo.PointHistoryVO" useGeneratedKeys="true" keyProperty="ph.ph_num" >
+		insert into 
+			point_history(ph_price, ph_source, ph_me_num) 
+		values
+			(#{ph.ph_price}, 0, #{ph.ph_me_num})
+	</insert>
 	<select id="selectPointRefundHistoryByUserNum" resultType="kr.kh.final_project.vo.PointHistoryVO">
 		select 
 			* 

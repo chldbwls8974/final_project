@@ -64,6 +64,7 @@
 		}
 	}
 	
+	//결제
 	function requestPay() {
 	    IMP.request_pay({
 	    	//필수 파라미터
@@ -77,23 +78,45 @@
 	        buyer_name : me_name
 	    }, function (rsp) { // callback함수
 	        if (rsp.success) {
-	        	//ajax
-	        	//let url = "/payment/validate/" + rsp.imp_uid;
-	        	//console.log(url);
 	        	let data = {
-        			imp_uid: rsp.imp_uid,            // 결제 고유번호
-                    merchant_uid: rsp.merchant_uid,   // 주문번호
+	        		imp_uid: rsp.imp_uid,            // 결제 고유번호
+                    //merchant_uid: rsp.merchant_uid,   // 주문번호
                     amount: rsp.paid_amount,
                     me_num : me_num
 	        	}
 	        	ajaxJsonToJson(false, 'post', "/payment/validate", data,(data)=>{
-	        		console.log("결제 ajax 성공")
+	        		if(data){
+	        			alert("결제 완료");
+	        		}else{
+	        			alert(data.responseText);
+	        			cancelPayments(rsp);
+	        		}
 				});
 	            console.log(rsp);
 	        } else {
+	        	console.log()
 	        	alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
 	        }
 	    });
+	}
+	
+	//결제 취소 (ajax가 실패했을 때)
+	function cancelPayments(temp){
+		let data = null;
+		data = {
+			impUid:temp.imp_uid,
+			reason:"결제 금액 위/변조 또는 중복결제로 인한 결제 취소.",
+		};
+	
+		ajaxJsonToJson(false, 'post', "cancelPayments", data,(data)=>{
+    		if(data){
+    			alert("결제가 취소되었습니다.");
+				//self.close();//팝업창닫기
+				//결제 취소화면으로 이동해주기.
+    		}else{
+    			alert("결제금액 환불못함. 이유: " + data.responseText);
+    		}
+		});
 	}
 	
 	//가격 클릭 이벤트
