@@ -17,7 +17,7 @@
 	      <thead>
 	        <tr class="table-Info">
 	          <th>시설 번호</th>
-	          <th>사업자 번호</th>
+	          <th hidden="hidden">사업자 번호</th>
 	          <th>지역</th>
 	          <th>시설명</th>
 	          <th>주소</th>
@@ -37,7 +37,7 @@
 	      	<c:forEach items="${list}" var="facility">
 		        <tr>
 		          <td><a href="<c:url value='/businessman/stadium/${facility.fa_num}'/>">${facility.fa_num}</a></td>
-		          <td>${facility.fa_bu_num}</td>
+		          <td hidden="hidden">${facility.fa_bu_num}</td>
 		          <td>${facility.fa_rg_num}</td>
 		          <td>${facility.fa_name}</td>
 		          <td>${facility.fa_add}</td>
