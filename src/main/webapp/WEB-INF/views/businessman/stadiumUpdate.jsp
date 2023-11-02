@@ -8,22 +8,22 @@
 <title>경기장 정보 수정</title>
 </head>
 <body>
-	<h1>경기장 정보 수정</h1> ${stadium}
+	<h1 class="display-3"><span style="color: black; font-weight: bold;">경기장 정보 수정</span></h1> <br>
 	<form action="<c:url value='/businessman/stadiumUpdate'/>" method="post">
-	<input name="st_num" value="${stadium.st_num}">
+	<input name="st_num" value="${stadium.st_num}" hidden="hidden">
 	  <div class="form-group">
-	    <label for="st_fa_num">시설 번호:</label>
- 	    <input type="text" class="form-control" id="st_fa_num" name="st_fa_num" value="${stadium.st_fa_num}" readonly>
+	    <label for="st_fa_num" hidden="hidden">시설 번호:</label>
+ 	    <input type="text" class="form-control" id="st_fa_num" name="st_fa_num" value="${stadium.st_fa_num}" hidden="hidden">
 	  </div>
 	  
 	  <div class="form-group">
-	    <label for="st_name">이름:</label>
-	    <input type="text" class="form-control" placeholder="경기장 이름을 입력하세요" id="st_name" name="st_name" value="${stadium.st_name}">
+	    <label for="st_name">이름</label>
+	    <input type="text" class="form-control" placeholder="경기장 이름을 입력하세요" id="st_name" name="st_name" value="${stadium.st_name}" required>
 	  </div>
 	  
 	  <div class="form-group">
-		<label for="st_locate">위치:</label>
-		  <input type="text" class="form-control" placeholder="경기장 위치를 입력하세요" id="st_locate" name="st_locate" value="${stadium.st_locate}">
+		<label for="st_locate">위치</label>
+		  <input type="text" class="form-control" placeholder="경기장 위치를 입력하세요" id="st_locate" name="st_locate" value="${stadium.st_locate}" required>
 	  </div>
 	  <br>
 	  
@@ -151,30 +151,34 @@
 	  <div class="form-group-inline">
 		 <label for="st_width">가로 x 세로(m)</label>
 		 <div class="input-group">
-		    <input type="number" class="form-control text-right" placeholder="가로" name="st_width" id="st_width" oninput="numOnly(this)" max="99999" value="${stadium.st_width}">
+		    <input type="number" class="form-control text-right" placeholder="가로" name="st_width" 
+		    		id="st_width" oninput="numOnly(this)" max="99999" value="${stadium.st_width}" required>
 		    <div class="input-group-append">
 		      <span class="input-group-text">x</span>
 		    </div>
-		    <input type="number" class="form-control text-right" placeholder="세로" name="st_height" id="st_height" oninput="numOnly(this)" max="99999" value="${stadium.st_height}">
+		    <input type="number" class="form-control text-right" placeholder="세로" name="st_height" 
+		    		id="st_height" oninput="numOnly(this)" max="99999" value="${stadium.st_height}" required>
 		    <span class="input-group-text">(m)</span>
 	     </div>
 	  </div>
 	  <br>
 	  
 	  <div class="form-group-inline">
-	    <label for="st_max">최대인원:</label>
+	    <label for="st_max">최대인원</label>
    		<div class="input-group">
-		    <input type="number" class="form-control text-right" placeholder="최대인원"name="st_max"  id="st_max" oninput="numOnly2(this)" max="99" value="${stadium.st_max}">
+		    <input type="number" class="form-control text-right" placeholder="최대인원"name="st_max"  
+		    		id="st_max" oninput="numOnly2(this)" max="99" value="${stadium.st_max}" required>
 	  		<span class="input-group-text">명</span>
 	  	</div>
 	  </div>
-	 
+	  <br>
+	  
 	  <div class="form-group">
-		  <label for="st_note">특이사항:</label>
+		  <label for="st_note">특이사항</label>
 		  <textarea class="form-control" rows="5" id="st_note" name="st_note">${stadium.st_note}</textarea>
 	  </div>
 	  
-	  <button class="btn btn-outline-dark col-12">수정</button>
+	  <button class="btn btn-secondary btn-block">수정</button>
 
 	</form>
 

@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.kh.final_project.dao.HoldingCouponDAO;
 import kr.kh.final_project.dao.MemberDAO;
 import kr.kh.final_project.dao.PointHistoryDAO;
 import kr.kh.final_project.dao.PreferredRegionDAO;
@@ -20,6 +21,8 @@ import kr.kh.final_project.dao.PreferredTimeDAO;
 import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.dao.TimeDAO;
 import kr.kh.final_project.util.UploadFileUtils;
+import kr.kh.final_project.pagination.Criteria;
+import kr.kh.final_project.vo.HoldingCouponVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.RegionVO;
@@ -48,7 +51,12 @@ public class MemberServiceImp implements MemberService{
 	
 	@Autowired
 	TimeDAO timeDao;
+	
+	@Autowired
 	PointHistoryDAO pointHistoryDao;
+	
+	@Autowired
+	HoldingCouponDAO holdingCouponDao;
 
 	String uploadPath = "D:\\uploadfiles";
 	
@@ -312,11 +320,14 @@ public class MemberServiceImp implements MemberService{
 	}
 
 	@Override
-	public List<PointHistoryVO> getUserRefundHistoryList(MemberVO user) {
+	public List<PointHistoryVO> getUserRefundHistoryList(MemberVO user, Criteria cri) {
 		if(user == null) {
 			return null;
 		}
-		return pointHistoryDao.selectPointRefundHistoryByUserNum(user);
+		if(cri == null) {
+			cri = new Criteria(); 
+		}
+		return pointHistoryDao.selectPointRefundHistoryByUserNum(user, cri);
 	}
 
 	@Override
@@ -335,7 +346,18 @@ public class MemberServiceImp implements MemberService{
 		//최종으로 환급신청중인 내역을 삭제
 		return pointHistoryDao.deleteRefundPointHistory(ph);
 	}
-
+	
+	@Override
+	public int getMemberPoint(MemberVO user) {
+		MemberVO dbMember = memberDao.selectMemberByNum(user.getMe_num());
+		return dbMember.getMe_point();
+	}
+	
+	@Override
+	public int getTotalRefundCount(MemberVO user) {
+		return pointHistoryDao.selectRefundCount(user);
+	}
+	
 	@Override
 	public boolean sendMail(String to, String title, String contents) {
 		try {
@@ -392,6 +414,60 @@ public class MemberServiceImp implements MemberService{
 //		}
 		return false;
 	}
+
+
+	public List<HoldingCouponVO> getMemberCouponList(MemberVO user, Criteria cri) {
+		if(user == null || user.getMe_num() == null) {
+			return null;
+		}
+		List<HoldingCouponVO> hcList = holdingCouponDao.selectMemberCouponList(user, cri);
+		if(hcList != null) {
+			for(HoldingCouponVO tmp : hcList) {
+				//추천인 번호가 null이 아닐때만 닉네임을 저장.
+				if(tmp.getHp_invited_num() != null) {
+					//추천인 회원번호를 이용해서 회원을 반환하는 메서드.
+					MemberVO invitedUser = memberDao.selectMemberByNum(tmp.getHp_invited_num());
+					//닉네임을 저장
+					tmp.setHp_invited_nickname(invitedUser.getMe_nickname());
+				}else {
+					tmp.setHp_invited_nickname("");
+				}
+			}
+			return hcList;
+		}
+		return null;
+	}
+
+	@Override
+	public int getMemberCouponListCount(MemberVO user) {
+		if(user == null || user.getMe_num() == null) {
+			return 0;
+		}
+		return holdingCouponDao.selectMemberCouPonListCount(user);
+	}
+
+	@Override
+	public boolean signupCoupon(String memberNickname, MemberVO newMember) {
+		if(memberNickname == null || newMember == null) {
+			return false;
+		} 
+		//닉네임으로 기존유저(추천인)정보 가져오는 메서드
+		MemberVO dbMember = memberDao.selectMemberByNickName(memberNickname);
+		if(dbMember == null) {
+			return false;
+		}
+		//회원테이블에 등록되면서 기본키(me_num)가 생기므로, MemberVO 다시 가져와야 함.
+		MemberVO dbNewMember = memberDao.selectMemberByNickName(newMember.getMe_nickname());
+		//쿠폰 등록
+		holdingCouponDao.insertSignupCouponOriginalMember(dbMember);
+		holdingCouponDao.insertSignupCouponNewMember(dbNewMember);
+		return true;
+	}
+
+
+	
+
+	
 
 
 }

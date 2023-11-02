@@ -46,7 +46,6 @@ public class AccountController {
 	@PostMapping("/insert")
 	public String insertPost(HttpSession session, Model model, AccountVO account) {
 		String msg , url;
-		// 1.세션에서 유저정보 가져오기 코드 추가
 		MemberVO user = (MemberVO)session.getAttribute("user");
 			
 		if(accountService.insertAccount(account, user)) {
@@ -63,7 +62,6 @@ public class AccountController {
 	@PostMapping("/change")
 	public String changePost(HttpSession session, Model model, AccountVO account) {
 		String msg , url;
-		// 1.세션에서 유저정보 가져오기 코드 추가
 		MemberVO user = (MemberVO)session.getAttribute("user");
 			
 		if(accountService.updateAccount(account, user)) {

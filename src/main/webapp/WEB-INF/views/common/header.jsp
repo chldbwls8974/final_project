@@ -65,6 +65,7 @@
 					<a class="dropdown-item" href="<c:url value='/admin/manager'/>">매니저 관리</a>
 					<a class="dropdown-item" href="<c:url value='/admin/business'/>">사업자 관리</a>
 					<a class="dropdown-item" href="#">게시판 관리</a>
+					<a class="dropdown-item" href="<c:url value='/admin/refund'/>">포인트 환급 관리</a>
 				</div>
 			</li>
 			<li class="nav-item dropdown">
@@ -83,8 +84,6 @@
 					<div class="dropdown-menu">
 						<a class="dropdown-item" href="<c:url value='/businessman/facilityInsert'/>">시설 등록</a>
 						<a class="dropdown-item" href="<c:url value='/businessman/facility'/>">시설 관리</a>
-						<a class="dropdown-item" href="<c:url value='/businessman/stadium'/>">경기장 목록</a>
-						<a class="dropdown-item" href="<c:url value='/businessman/stadiumInsert'/>">경기장 등록</a>
 						<a class="dropdown-item" href="<c:url value='/buisnessman/manage/schedule'/>">스케줄 관리</a>
 						<a class="dropdown-item" href="#">일정 관리</a>
 					</div>

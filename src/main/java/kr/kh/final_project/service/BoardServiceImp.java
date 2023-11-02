@@ -27,8 +27,8 @@ public class BoardServiceImp implements BoardService{
 
 
 	@Override
-	public boolean insertMapplication(BoardVO board, MemberVO user, MultipartFile[] files) {
-		//user 혹은 회원번호 객체가 null일 경우 false로 반환
+	//매니저 신청
+	public boolean insertManagerApplication(BoardVO board, MemberVO user, MultipartFile[] files) {
 		if(user == null || user.getMe_num() == null) {
 			return false;
 		}
@@ -36,7 +36,6 @@ public class BoardServiceImp implements BoardService{
 		board.setBo_me_num(user.getMe_num());
 		
 		//게시글 등록을 성공하면 첨부파일 등록
-		//DAO를 이용하여 insertManager(매니저 신청 '게시글' 등록) 메서드를 불러옴
 		boolean res = boardDao.insertManager(board);
 		if(!res) {
 			return false;
@@ -45,10 +44,10 @@ public class BoardServiceImp implements BoardService{
 		uploadFiles(files, board.getBo_num());
 		return true;
 	}
-
+	
 	@Override
-	public boolean insertBapplication(BoardVO board, MemberVO user, MultipartFile[] files) {
-		//user 혹은 회원번호 객체가 null일 경우 false로 반환
+	//사업자 신청
+	public boolean insertBusinessmanApplication(BoardVO board, MemberVO user, MultipartFile[] files) {
 		if(user == null || user.getMe_num() == null) {
 			return false;
 		}
@@ -61,7 +60,6 @@ public class BoardServiceImp implements BoardService{
 		if(!res) {
 			return false;
 		}
-		//첨부파일을 서버에 업로드 하고, DB에 저장
 		uploadFiles(files, board.getBo_num());
 		return true;
 	}	

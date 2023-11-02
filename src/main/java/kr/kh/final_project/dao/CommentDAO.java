@@ -14,6 +14,12 @@ public interface CommentDAO {
 	List<CommentVO> selectCommentList(@Param("bo_num")int bo_num, @Param("cri")Criteria cri);
 	// 해당 게시글의 총 댓글 수 가져오기
 	int selectCommentCount(@Param("bo_num")int bo_num);
-	
+
+	// 댓글 존재확인
+	CommentVO selectComment(@Param("co_num")int co_num);
+	// 댓글삭제하기
+	boolean deleteComment(@Param("co_num")int co_num);
+	// 댓글 수정하기
+	boolean updateComment(@Param("comment")CommentVO comment);
 	
 }

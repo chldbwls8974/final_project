@@ -16,38 +16,16 @@
 	}
 </style>
 <body>
-	<h1>포인트 환급</h1>
-	<form action="<c:url value='/member/refund'/>" method="post">
-		<div class="form-group">
-			<h5>${user.me_name} 님의</h5>
-			<!-- 여기 작업해야 함. 유저가 로그인을 풀지않으면 변경포인트가 적용이 안됨. -->
-			<span class="point">현재 보유 포인트는 ${user.me_point} 입니다.</span>
-			<input type="hidden" class="form-control" value="${user.me_num}" name="me_num">
-			<input type="hidden" class="form-control" value="${user.me_num}" name="ph_me_num">
-			<input type="hidden" class="form-control" value="4" name="ph_source">
-		</div>
-		<br>
-		<hr>
-		<div class="form-group">
-			<label>환급받을 금액</label>
-			<label id="check-point-error" class="error" for="point"></label>
-			<input type="number" class="form-control" id="refundAmount" name="ph_price" min="1000"  max="${user.me_point}" placeholder="1000원 단위로 입력" required>
-		</div>
-		<div class="form-group">
-			<label>환급 후 예정 포인트</label>
-			<input type="number" class="form-control" id="resultAmount" name="me_point" readonly required>
-		</div>
-		<button id="addBtn" class="btn btn-outline-dark col-12">등록</button>
-	</form>
-	<br>
-	<hr>
+	<h1>나의 쿠폰</h1>
+	
 	<div>
 		<table class="table table-hover mt-4">
 			<thead>
-				<tr style="background: wheat; font-weight: bold;">
-					<th>환급 신청 금액</th>
+				<tr>
+					<th>쿠폰 이름</th>
+					<th>할인 금액</th>
+					<th>추천인</th>
 					<th>상태</th>
-					<th></th>
 				</tr>
 			</thead>
 			<tbody class="list-tbody">
@@ -57,14 +35,74 @@
 	</div>
 	<!-- 페이지네이션 -->
 	<ul class="pagination justify-content-center mt-3 pagination">
-	    <li class="page-item"><a class="page-link" href="javascript:void(0);">&lt;</a></li>
-	    <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
-	    <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-	    <li class="page-item"><a class="page-link" href="javascript:void(0);">&gt;</a></li>
 	</ul>
 </body>
 
 <script type="text/javascript">
+	let cri = {
+		page : 1,
+		perPageNum : 5
+	}
+	
+	//환급이력리스트를 가져오는 함수
+	$(document).ready(function() {
+   	 	getUserCoupon(cri);
+   	 	
+	});
+	
+	function getUserCoupon(cri){
+		ajaxJsonToJson(false,'post','/member/myCoupon', cri ,(data)=>{
+			//리스트를 생성
+			createUserCouponList(data.hcList, '.list-tbody');
+			//페이지네이션 생성
+			createPagination(data.pm, '.pagination');
+		});
+	}
+	
+	//쿠폰 리스트 생성
+	function createUserCouponList(hcList, target){
+		let str ='';
+		for(a of hcList){
+			console.log(${a.hp_invited_nickname});
+			let state = '';
+			if(a.hp_state == '0'){
+				state = '사용 가능'
+			}else{
+				state = '사용 불가'
+			}
+			str += `
+				<tr>
+					<td>\${a.cp_source}</td>//쿠폰 이름
+					<td>\${a.cp_sale}</td>//할인 금액
+					<td>\${a.hp_invited_nickname}</td>//추천인
+					<td>\${state}</td>//상태
+				</tr>
+				
+			`;
+		}
+		$(target).html(str);
+	}
+	
+	//페이지네이션
+	function createPagination(pm, target){
+		let str = '';
+		if(pm.prev){
+			str += `<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="cri.page=\${pm.startPage-1};getUserCoupon(cri)">&lt;</a></li>`;
+		}
+		//현재페이지 = active 클래스 추가
+		for(i=pm.startPage; i<=pm.endPage; i++){
+			let active = pm.cri.page == i ? 'active' : '';
+			str += `
+			<li class="page-item \${active}">
+				<a class="page-link" href="javascript:void(0);" onclick="cri.page=\${i};getUserCoupon(cri)">\${i}</a>
+			</li>`;
+		}
+		if(pm.next){
+			str += `<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="cri.page=\${pm.endPage+1};getUserCoupon(cri)">&gt;</a></li>`;
+		}
+		$(target).html(str);
+	}
+/*
 	const addBtn = document.getElementById("addBtn");
 
 	$(document).on('keyup','#refundAmount',function(){
@@ -104,7 +142,7 @@
 			perPageNum : 5
 	}    
 	    
-	/* 환급이력리스트를 가져오는 함수 */
+	//환급이력리스트를 가져오는 함수
 	$(document).ready(function() {
    	 	getPointHistoryList(cri);
    	 	
@@ -191,5 +229,6 @@
 			getPointHistoryList(cri);
 		}); 
 	}
+*/
 </script>
 </html>

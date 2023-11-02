@@ -17,10 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.kh.final_project.service.MatchService;
+import kr.kh.final_project.pagination.Criteria;
+import kr.kh.final_project.pagination.PageMaker;
 import kr.kh.final_project.service.MemberService;
+import kr.kh.final_project.service.MatchService;
 import kr.kh.final_project.service.RegionService;
 import kr.kh.final_project.util.Message;
+import kr.kh.final_project.vo.HoldingCouponVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
@@ -105,13 +108,18 @@ public class MemberController {
 	
 	@PostMapping("/member/signup")
 	public String signupPost(MemberVO member, Model model, int[] pr_rg_num,
-			 int[] favoriteTime
-			,  int[] favoriteHoliTime
-			) 
-		{
+			int[] favoriteTime, int[] favoriteHoliTime, 
+			@RequestParam("recommed_check") String inviteMember){
+		//inviteMember = 추천인 닉네임	 
 		Message msg = new Message("/member/signup", "회원 가입에 실패했습니다.");
 		if(memberService.signup(member, pr_rg_num,favoriteTime,favoriteHoliTime)) {
 			msg = new Message("/", "회원 가입에 성공했습니다.");
+			//초대한 기존회원, 신규 회원에게 쿠폰 지급하는 메서드 (추천인 입력받았을 때만 실행)
+			if(inviteMember != null) {
+				if(memberService.signupCoupon(inviteMember, member)) {
+					System.out.println("쿠폰지급 성공");
+				}
+			}
 		}
 		model.addAttribute("msg", msg);
 		return "message";
@@ -167,14 +175,12 @@ public class MemberController {
 	public String pointRefund(HttpSession session) {
 		return "/member/refund";
 	}
+	
 	@PostMapping("/member/refund")
 	public String pointRefundPost(Model model, HttpSession session, PointHistoryVO pointHistory, MemberVO tmpUser) {
 		String msg, url;
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		//포인트내역 테이블의 용도 속성정보를 서비스에서 추가해 줘야 함.
-		System.out.println(pointHistory);
-		System.out.println(user);
-		System.out.println(tmpUser);
+		//회원 테이블에 포인트 수정, 포인트이력 테이블에 데이터 추가
 		if(memberService.pointRefundApply(user,tmpUser, pointHistory)) {
 			msg = "환급 신청이 성공하였습니다.";
 			url = "/member/refund";
@@ -189,15 +195,19 @@ public class MemberController {
 	
 	@ResponseBody
 	@PostMapping("/member/refund/list")
-	public Map<String, Object> refundList(@RequestBody MemberVO user, HttpSession session){
+	public Map<String, Object> refundList(HttpSession session, @RequestBody Criteria cri){
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<PointHistoryVO> refundList = memberService.getUserRefundHistoryList(user);
-		//
-		MemberVO member = (MemberVO)session.getAttribute("user");
-		//dbMember 가져오는 메서드 작성해야함
-		String dbMember = "test";
 		
-		map.put("dbMember", dbMember);
+		System.out.println(cri);
+		List<PointHistoryVO> refundList = memberService.getUserRefundHistoryList(user, cri);
+		//유저 포인트 가져오는 메서드
+		int dbMemberPoint = memberService.getMemberPoint(user);
+		int totalCount = memberService.getTotalRefundCount(user);
+		PageMaker pm = new PageMaker(3, cri, totalCount);
+		
+		map.put("pm", pm);
+		map.put("dbMemberPoint", dbMemberPoint);
 		map.put("refundList", refundList);
 		return map;
 	}
@@ -282,6 +292,29 @@ public class MemberController {
 		return map;
 	}
 	
+	//회원 보유 쿠폰 조회
+	@GetMapping("/member/myCoupon")
+	public String myCoupon(HttpSession session, Model model) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		model.addAttribute("user",user );
+		return "/member/myCoupon";
+	}
+	//회원 보유 쿠폰 리스트
+	@ResponseBody
+	@PostMapping("/member/myCoupon")
+	public Map<String, Object> myCouponList(@RequestBody Criteria cri, HttpSession session){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		List<HoldingCouponVO> hcList = memberService.getMemberCouponList(user, cri);
+		int totalCount = memberService.getMemberCouponListCount(user);
+		PageMaker pm = new PageMaker(3, cri, totalCount);
+		
+		map.put("pm", pm);
+		map.put("hcList", hcList);
+		return map;
+	}
 	//마이페이지-소속 클럽 페이지 조회
 	@GetMapping("/member/clublist")
 	public String myClub() {

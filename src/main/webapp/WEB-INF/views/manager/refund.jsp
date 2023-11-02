@@ -55,13 +55,7 @@
 			</tbody>
 		</table>
 	</div>
-	<!-- 페이지네이션 -->
-	<ul class="pagination justify-content-center mt-3 pagination">
-	    <li class="page-item"><a class="page-link" href="javascript:void(0);">&lt;</a></li>
-	    <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
-	    <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-	    <li class="page-item"><a class="page-link" href="javascript:void(0);">&gt;</a></li>
-	</ul>
+	<c:if test=""></c:if>
 </body>
 
 <script type="text/javascript">
@@ -75,6 +69,7 @@
 		var regPoint = /\d*000$/;
 		
 		if(!regPoint.test(point)){
+			console.log("regex")
 			
 			addBtn.disabled = true;
 			$('#check-point-error').text('1000원 단위로 입력해 주세요.');
@@ -99,50 +94,28 @@
         }
     });
 	
-	let cri = {
-			page : 1,
-			perPageNum : 5
-	}    
+	    
 	    
 	/* 환급이력리스트를 가져오는 함수 */
 	$(document).ready(function() {
-   	 	getPointHistoryList(cri);
-   	 	
+   	 	getPointHistoryList();
 	});
 	
 	
-	//포인트 환급 신청 이력을 받아오는 함수
-	function getPointHistoryList(cri){
+	
+	function getPointHistoryList(){
+		let data = {
+			me_num : ${user.me_num}
+		}
+		console.log(data);
 		
-		console.log(cri);
-		ajaxJsonToJson(false,'post','/member/refund/list', cri ,(data)=>{
+		ajaxJsonToJson(false,'post','/member/refund/list', data ,(data)=>{
 			$('.point').text("현재 보유 포인트는 " + data.dbMemberPoint + " 입니다.");
-			//리스트를 생성
 			createPointHistoryList(data.refundList, '.list-tbody');
-			//페이지네이션 생성
-			createPagination(data.pm, '.pagination');
+			console.log(data.refundList);
 		});
 	}
 	
-	//페이지네이션
-	function createPagination(pm, target){
-		let str = '';
-		if(pm.prev){
-			str += `<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="cri.page=\${pm.startPage-1};getPointHistoryList(cri)">이전</a></li>`;
-		}
-		//현재페이지 = active 클래스 추가
-		for(i=pm.startPage; i<=pm.endPage; i++){
-			let active = pm.cri.page == i ? 'active' : '';
-			str += `
-			<li class="page-item \${active}">
-				<a class="page-link" href="javascript:void(0);" onclick="cri.page=\${i};getPointHistoryList(cri)">\${i}</a>
-			</li>`;
-		}
-		if(pm.next){
-			str += `<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="cri.page=\${pm.endPage+1};getPointHistoryList(cri)">다음</a></li>`;
-		}
-		$(target).html(str);
-	}
 	
 	function createPointHistoryList(refundList, target){
 		let str ='';
@@ -150,6 +123,7 @@
 			let btnStr = '';
 			let state = '';
 			let price = -parseInt(a.ph_price);
+			console.log(price);
 			if(a.ph_source == '4'){
 				state = '승인 대기중'
 				btnStr = `
@@ -182,13 +156,14 @@
 		let data = { 
 				ph_num : ph_num
 		}
+		console.log(ph_num)
 		 
 		ajaxJsonToJson(false,'post','/member/refund/delete', data ,(data)=>{
 			if(data.res){
 				alert('환급 신청이 취소되었습니다.')
 			}
-			cri.page = 1;
-			getPointHistoryList(cri);
+			
+			getPointHistoryList();
 		}); 
 	}
 </script>

@@ -123,7 +123,7 @@
 							</a>
 						</li>
 						<li>
-							<a href="#">
+							<a href="<c:url value='/member/myCoupon'/>">
 							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_coupon_color.svg" width="24px" height="24px" alt="나의 쿠폰">
 							<p>나의 쿠폰</p>
 							</a>

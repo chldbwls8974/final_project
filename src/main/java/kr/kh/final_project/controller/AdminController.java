@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.pagination.PageMaker;
 import kr.kh.final_project.service.AdminService;
@@ -19,6 +23,7 @@ import kr.kh.final_project.util.Message;
 import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ManagerVO;
 import kr.kh.final_project.vo.MemberVO;
+import kr.kh.final_project.vo.PointHistoryVO;
 
 @Controller
 public class AdminController {
@@ -34,7 +39,7 @@ public class AdminController {
 		//int me_num = 1;
 		//List<MemberVO> list = adminService.getMemberList(me_num);
 		
-		
+		System.out.println(cri);
 		//페이지네이션
 		// perPageNum : 한페이지에서 보여줄 컨텐츠 개수
 		cri.setPerPageNum(5);
@@ -226,4 +231,49 @@ public class AdminController {
 			return map;
 		}
 		
+	
+	@GetMapping("/admin/refund")
+	public String refundManagement(Model model) {
+			
+		return ("/admin/refund");
+	}
+	
+	@ResponseBody
+	@PostMapping("/admin/refund/search")
+	public Map<String, Object> refundManagementSearch(@RequestBody ObjectNode saveObj) throws JsonProcessingException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		// JSON을 Object화 하기 위한 Jackson ObjectMapper 이용
+		ObjectMapper mapper = new ObjectMapper();   
+		Criteria cri = mapper.treeToValue(saveObj.get("cri"), Criteria.class);
+	    String searchType1 = saveObj.get("searchType1").asText();
+	    String searchType2 = saveObj.get("searchType2").asText();
+	    System.out.println(cri);
+	    System.out.println(searchType1);
+	    System.out.println(searchType2);
+	    //검색에 맞는 리스트 가져오는 메서드
+	    List<PointHistoryVO> refundList = adminService.getRefundListBySearch(cri, searchType1, searchType2);
+	    //totalCount 구하는 메서드
+	    int totalCount = adminService.getRefundListBySearchCount(cri, searchType1, searchType2);
+	    System.out.println(refundList);
+	    System.out.println("totalCount : " + totalCount);
+
+	    //보여줄 페이지 수 = 3
+	    PageMaker pm = new PageMaker(3, cri, totalCount);
+	    map.put("refundList", refundList);
+	    map.put("pm", pm);
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/admin/refund/approval")
+	public Map<String, Object> refundApproval(@RequestBody PointHistoryVO ph){
+		Map<String, Object> map = new HashMap<String, Object>();
+	    
+	    System.out.println(ph);
+	    
+	    boolean res = adminService.refundApproval(ph);
+	    
+	    map.put("res", res);
+		return map;
+	}
 }
