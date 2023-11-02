@@ -1,5 +1,6 @@
 package kr.kh.final_project.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -18,6 +19,7 @@ import kr.kh.final_project.dao.PreferredRegionDAO;
 import kr.kh.final_project.dao.PreferredTimeDAO;
 import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.dao.TimeDAO;
+import kr.kh.final_project.util.UploadFileUtils;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.RegionVO;
@@ -49,6 +51,8 @@ public class MemberServiceImp implements MemberService{
 	PointHistoryDAO pointHistoryDao;
 
 	String uploadPath = "D:\\uploadfiles";
+	
+	String uploadProfile = "D:\\uploadProfile";
 	
 	@Override
 	public List<MemberVO> searchMemberById(String keyword) {
@@ -363,29 +367,6 @@ public class MemberServiceImp implements MemberService{
 		return null;
 	}
 
-	@Override
-	public boolean updateProfile(MemberVO member, MemberVO user, MultipartFile file) {
-		//로그인 안하면 실패
-		if(user == null || user.getMe_nickname() == null) {
-			return false;
-		}
-		//수정된 내 정보를 DB에 저장
-		boolean res = memberDao.updateMemberProfile(user);
-		//업뎃 실패시 반환
-		if(!res) {
-			return false;
-		}
-		// 첨부파일 추가하기
-		uploadFile(file, member.getMe_num());
-		return true;
-	}
-
-	private void uploadFile(MultipartFile file, Integer me_num) {
-		if(me_num <= 0) {
-			return;
-		}
-		memberDao.updateFile(file);
-	}
 
 	@Override
 	public MemberVO isCheck2(String check) {
@@ -393,27 +374,27 @@ public class MemberServiceImp implements MemberService{
 		return dbMember;
 	}
 
-
-
-//	@Override
-//	public boolean applyManager(MemberVO member, MemberVO user, MultipartFile[] files) {
-//		if(user == null || user.getMe_id() == null) {
+	@Override
+	public boolean updateProfile(MemberVO user, MultipartFile profileImage) {
+		// 프로필 사진 만들어야함
+//		if(profileImage == null) {
 //			return false;
 //		}
-//		member.setMe_id(user.getMe_id());
-//		if(!memberDao.applyManager(member)) {
+//		if(user == null) {
 //			return false;
 //		}
-//		//첨부파일을 업로드
-//		if(files == null || files.length == 0) {
-//			return true;
+//		String fi_ori_name = profileImage.getOriginalFilename();
+//		try {
+//			String fi_name = UploadFileUtils.uploadFile(uploadProfile, fi_ori_name, profileImage.getBytes());
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
 //		}
-//		//첨부파일을 서버에 업로드 하고, DB에 저장
-//		uploadFileAndInsert(files, member.getMe_id());
-//		return memberDao.applyManager(member);
-//	}
-
+		return false;
 	}
+
+
+}
 
 
 

@@ -215,7 +215,9 @@ public class MemberController {
 	@GetMapping("/member/mypage")
 	public String myPage(HttpSession session, Model model) {
 		MemberVO user = (MemberVO) session.getAttribute("user");
+		String profile = user.getMe_profile();
 		model.addAttribute("user", user);
+		model.addAttribute("profile", profile);
 		return "/member/mypage";
 	}
 
@@ -254,9 +256,9 @@ public class MemberController {
 	
 	
 	@PostMapping("/member/myedit")
-	public String profileEdit(MemberVO member, MultipartFile file, HttpSession session,Model model) {
+	public String profileEdit(MemberVO member, MultipartFile profileImage, HttpSession session,Model model) {
 		MemberVO user = (MemberVO)session.getAttribute("user"); //세션에 저장된 현재 user 정보 가져옴
-		boolean res = memberService.updateProfile(member, user, file); //새로 입력한 정보 업데이트
+		boolean res = memberService.updateProfile(user, profileImage); //새로 입력한 정보 업데이트
 		System.out.println(member);
 		if(res) { //업데이트된 사용자 정보 세션에 저장
 			session.setAttribute("user", member); 

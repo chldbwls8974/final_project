@@ -41,9 +41,7 @@
 			<div class="body-left">
 				<div style="background-color: #F8FAFB; padding: 15px; border-radius: 30px; margin-bottom: 20px;">
 					<div class="myprofile-image">
-	                  <c:if test="${user.me_profile ==null}">
-	                     <img src="${pageContext.request.contextPath}/resources/images/basic.jpg" class="myprofile-image-thumb" alt="프로필 사진">
-	                  </c:if>
+	                     <img src="/final_project${user.me_profile}" class="myprofile-image-thumb" alt="프로필 사진">
                		</div>
 					<div class="myprofile-name" style="position: relative;">
 						<div style="font-size: 24px; font-weight:800;">${user.me_name}</div>

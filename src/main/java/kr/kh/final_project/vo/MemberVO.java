@@ -42,7 +42,7 @@ public class MemberVO {
 	
 	public String getMe_profile() {
 		if(me_profile ==null) {
-			me_profile = "/resources/images/basic.jpg";
+			me_profile = "/resources/profile/basic.jpg";
 		}
 		return me_profile;
 	}

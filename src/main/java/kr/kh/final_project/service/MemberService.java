@@ -54,7 +54,7 @@ public interface MemberService {
 
 	boolean cancelRefundApply(PointHistoryVO ph);
 
-	boolean updateProfile(MemberVO member, MemberVO user, MultipartFile file);
-
 	MemberVO isCheck2(String check);
+	
+	boolean updateProfile(MemberVO user, MultipartFile profileImage);
 }

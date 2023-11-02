@@ -199,7 +199,7 @@ $('#btnCommentInsert').click(function(){
 					let str ='';
 					for(comment of data.list){
 						str += `
-							<img src="<c:url value='/resources/images/sample.jpg'/>" class="rounded-circle profile-image" alt="기본프로필 사진">
+							<img src="<c:url value='/resources/profile/basic.jpg'/>" class="rounded-circle profile-image" alt="기본프로필 사진">
 							<ul class="comment-list">	
 								<li class="comment-item">
 									<span class="comment-contents">\${comment.co_comments}</span>

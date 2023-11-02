@@ -25,6 +25,7 @@ public class BoardServiceImp implements BoardService{
 	String uploadPath = "D:\\uploadfiles";
 
 
+
 	@Override
 	public boolean insertMapplication(BoardVO board, MemberVO user, MultipartFile[] files) {
 		//user 혹은 회원번호 객체가 null일 경우 false로 반환
