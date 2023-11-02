@@ -53,7 +53,7 @@ public class ClubServiceImp implements ClubService{
 			}
 		}
 		String authority = "LEADER";
-		clubMemberDao.insertClubMember(cl_num,me_num,authority);
+		clubMemberDao.insertClubLeader(cl_num,me_num,authority);
 		return true;
 	}
 
@@ -119,7 +119,7 @@ public class ClubServiceImp implements ClubService{
 		if(clubMember == null) {
 			return false;
 		}
-		clubMemberDao.insertClubMember(clubMember.getCm_cl_num(),clubMember.getCm_me_num(),"ROOKIE");
+		clubMemberDao.insertClubMember(clubMember);
 		return true;
 	}
 
