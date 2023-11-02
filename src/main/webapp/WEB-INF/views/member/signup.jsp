@@ -14,6 +14,12 @@
 	src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.12.0/validate.min.js"></script>
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- 데이트피커 디자인 -->	
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ko.js"></script>
 <style type="text/css">
 .error {
 	color: #f00;
@@ -75,11 +81,32 @@ input[type='checkbox']:checked+label{
 	color: #1570FF;
     border: 1px solid #1570FF;
 }
+
+
+.container{ background-color: #f0f0f0; padding: 30px 0 30px 0;}
+.form-control{border-radius: 30px; width: 500px;}
+.form-group{text-align: center;}
+.form-group label{display: inline-block; text-align: center;}
+.form-group button, .form-group select{margin: 0 auto;}
+.form-group input{display: block; margin: 0 auto;}
+
+.signup-btn{ width: 500px; margin: 0 auto;
+	border-radius: 10px; border: none;
+	background-color: #0c0c0c; height: 40px; color: white;}
+.next-btn{width: 500px; margin: 0 auto;
+	border-radius: 10px; border: none; height: 40px;
+	background-color: #c2f296; color: black;}
+
+input, progress {
+  accent-color: #0c0c0c;
+}
+
 </style>
 </head>
 <body>
-	<h1>회원가입</h1>
-	<form action="<c:url value='/member/signup'/>" method="post" id="myForm">
+<div class="container">
+	<p style="font-size: 45px; font-weight: bolder; text-align: center;">회원가입</p>
+	<form action="<c:url value='/member/signup'/>" method="post" id="myForm" style="text-align: center;">
 		
 		<div class="1p">
 			<div class="form-group">
@@ -105,8 +132,9 @@ input[type='checkbox']:checked+label{
 					for="me_email"></label> <input type="email" class="form-control"
 					name="me_email" id="me_email" required>
 				<button type="button" class="form-control" name="me_email_btn"
-					id="me_email_btn" disabled="disabled">인증번호 전송</button>
-				<input type="number" class="form-control" name="email_code"
+					id="me_email_btn" disabled="disabled" style="margin-bottom: 20px;">인증번호 전송</button>
+					
+				<label>이메일 인증번호</label> <input type="number" class="form-control" name="email_code"
 					id="email_code" required>
 				<button type="button" class="form-control" name="email_code_btn"
 					id="email_code_btn" disabled="disabled">인증번호 확인</button>
@@ -123,14 +151,20 @@ input[type='checkbox']:checked+label{
 					name="me_name" id="me_name" required>
 			</div>
 
-			<div class="form-group">
-				<label>성별</label> <input type="radio" name="me_gender" value="M">남
-				<input type="radio" name="me_gender" value="F">여
+			<div class="form-group1" style="text-align: center; margin-bottom: 20px;">
+				<label>성별</label>
+				<div style="display: flex; justify-content: center;">
+					<div style="padding-right: 25px;">
+						<input type="radio" name="me_gender" value="M">남
+					</div>
+					<input type="radio" name="me_gender" value="F">여
+				</div>
 			</div>
 
 			<div class="form-group">
 				<label>생년월일</label> <input type="text" class="form-control"
-					name="me_birthday" id="me_birthday" required>
+					name="me_birthday" id="me_birthday"
+					placeholder="날짜를 선택하세요." required>
 			</div>
 
 			<div class="form-group">
@@ -155,12 +189,11 @@ input[type='checkbox']:checked+label{
 					</c:forEach>
 				</select>
 			</div>
-
 		</div>
 
 		<!-- 다음버튼 -->
 		<div class="form-group">
-			<button type="button" class="btn next-btn form-control" id="next"
+			<button type="button" class="next-btn" id="next"
 				disabled="disabled">다음</button>
 		</div>
 
@@ -416,9 +449,11 @@ input[type='checkbox']:checked+label{
 		<div class="form-group">
 			<button type="button" class="btn prev-btn form-control">이전</button>
 		</div>
-		<button class="btn btn-outline-warning col-12" id="signup"
+		<button class="signup-btn" id="signup"
 			disabled="disabled">회원가입</button>
 	</form>
+</div>	
+	
 	<script type="text/javascript">
 	
 
@@ -677,10 +712,13 @@ input[type='checkbox']:checked+label{
 	
 	 // 데이트피커
 	 $(document).ready(function(){
-		$("#me_birthday").datepicker({
+		$("#me_birthday").flatpickr({
 			  showOn: "both", // 버튼과 텍스트 필드 모두 캘린더를 보여준다.
               // buttonImage: "/application/db/jquery/images/calendar.gif", // 버튼 이미지
               //buttonImageOnly: true, // 버튼에 있는 이미지만 표시한다.
+              locale: 'ko',
+              altInput: true, // 선택한 날짜를 입력란에 보여주도록 설정
+              altFormat: "yy-mm-dd", // 입력란에 표시될 날짜 형식 설정
               changeMonth: true, // 월을 바꿀수 있는 셀렉트 박스를 표시한다.
               changeYear: true, // 년을 바꿀 수 있는 셀렉트 박스를 표시한다.
               minDate: '-100y', // 현재날짜로부터 100년이전까지 년을 표시한다.
@@ -692,13 +730,9 @@ input[type='checkbox']:checked+label{
               yearRange: 'c-100:c+100', // 년도 선택 셀렉트박스를 현재 년도에서 이전, 이후로 얼마의 범위를 표시할것인가.
               showButtonPanel: true, // 캘린더 하단에 버튼 패널을 표시한다. ( ...으로 표시되는부분이다.) 
               closeText: '닫기',  // 닫기 버튼 패널
-              dateFormat: "yy-mm-dd", // 텍스트 필드에 입력되는 날짜 형식.
               showAnim: "slide", //애니메이션을 적용한다.  
               showMonthAfterYear: true , // 월, 년순의 셀렉트 박스를 년,월 순으로 바꿔준다. 
-              dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'], // 요일의 한글 형식.
-              monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] // 월의 한글 형식.
 	        })
-	        
 		})
 		
 		
@@ -793,9 +827,21 @@ input[type='checkbox']:checked+label{
 			}
 			
 		})
-		
-		
 	
 	</script>
+	<template>
+	
+	<div>
+	<el-date-picker 
+	       v-model="startDate" 
+	       type="date" 
+	       placeholder="시작일" 
+	       value-format="yyyyMMdd" 
+	       @change="changeDate('start')" 
+	       :picker-options="startDateOptions" 
+	></el-date-picker>
+	</div>
+	
+	</template>
 </body>
 </html>
