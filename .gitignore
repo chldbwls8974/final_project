@@ -94,3 +94,6 @@ log4j.xml
 
 #react
 node_modules
+
+#key
+SecretKey.java
