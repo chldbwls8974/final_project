@@ -10,10 +10,13 @@ import kr.kh.final_project.vo.FileVO;
 
 public interface BoardDAO {
 
+	//매니저 신청 게시글등록
 	boolean insertManager(@Param("board")BoardVO board);
-
+	
+	//첨부파일 등록
 	void insertFile(@Param("file") FileVO fileVo);
 
+	//사업자 신청 게시글등록	
 	boolean insertBusinessman(@Param("board")BoardVO board);
 
 	// 공지게시판글 리스트 가져오기

@@ -41,9 +41,7 @@
 			<div class="body-left">
 				<div style="background-color: #F8FAFB; padding: 15px; border-radius: 30px; margin-bottom: 20px;">
 					<div class="myprofile-image">
-	                  <c:if test="${user.me_profile ==null}">
-	                     <img src="${pageContext.request.contextPath}/resources/images/basic.jpg" class="myprofile-image-thumb" alt="프로필 사진">
-	                  </c:if>
+	                     <img src="/final_project${user.me_profile}" class="myprofile-image-thumb" alt="프로필 사진">
                		</div>
 					<div class="myprofile-name" style="position: relative;">
 						<div style="font-size: 24px; font-weight:800;">${user.me_name}</div>
@@ -125,7 +123,7 @@
 							</a>
 						</li>
 						<li>
-							<a href="#">
+							<a href="<c:url value='/member/myCoupon'/>">
 							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_coupon_color.svg" width="24px" height="24px" alt="나의 쿠폰">
 							<p>나의 쿠폰</p>
 							</a>

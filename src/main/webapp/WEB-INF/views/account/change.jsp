@@ -30,7 +30,7 @@ ${bankList }
 				</c:forEach>
 		    </select>
 			<label>계좌번호</label>
-			<input type="number" class="form-control" name="ac_num">
+			<input type="number" class="form-control" name="ac_num" value="${account.ac_num }">
 		</div>
 		<button class="btn btn-outline-dark col-12">등록</button>
 	</form>

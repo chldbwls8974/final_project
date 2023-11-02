@@ -5,6 +5,7 @@ import java.util.List;
 import kr.kh.final_project.pagination.Criteria;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.kh.final_project.vo.HoldingCouponVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
@@ -50,11 +51,26 @@ public interface MemberService {
 
 	boolean pointRefundApply(MemberVO user, MemberVO tmpUser, PointHistoryVO pointHistory);
 
-	List<PointHistoryVO> getUserRefundHistoryList(MemberVO user);
+	List<PointHistoryVO> getUserRefundHistoryList(MemberVO user, Criteria cri);
 
 	boolean cancelRefundApply(PointHistoryVO ph);
 
-	boolean updateProfile(MemberVO member, MemberVO user, MultipartFile file);
-
 	MemberVO isCheck2(String check);
+	
+	boolean updateProfile(MemberVO user, MultipartFile profileImage);
+	
+	int getMemberPoint(MemberVO user);
+	
+	int getTotalRefundCount(MemberVO user);
+	
+	List<HoldingCouponVO> getMemberCouponList(MemberVO user, Criteria cri);
+	
+	int getMemberCouponListCount(MemberVO user);
+	
+	boolean signupCoupon(String memberNickname, MemberVO newMember);
+
+
+
+
+
 }

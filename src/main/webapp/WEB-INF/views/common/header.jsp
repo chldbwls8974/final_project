@@ -22,6 +22,12 @@
 		<a class="navbar-brand" href="/final_project">LOGO</a>
 		<ul class="navbar-nav">
 			<li class="nav-item">
+				<a class="nav-link" href="<c:url value='/club/make'/>">클럽만들기</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="<c:url value='/club/list'/>">클럽조회</a>
+			</li>
+			<li class="nav-item">
 				<a class="nav-link" href="#">개인매치</a>
 			</li>
 			<li class="nav-item">
@@ -50,19 +56,18 @@
 					</c:if>
 				</div>
 			</li>
-			<c:if test="${user != null && user.me_authority == 'ADMIN'}">
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-					관리자
-					</a>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" href="<c:url value='/admin/member'/>">회원 관리</a>
-						<a class="dropdown-item" href="<c:url value='/admin/manager'/>">매니저 관리</a>
-						<a class="dropdown-item" href="<c:url value='/admin/business'/>">사업자 관리</a>
-						<a class="dropdown-item" href="#">게시판 관리</a>
-					</div>
-				</li>
-			</c:if>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+				관리자
+				</a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="<c:url value='/admin/member'/>">회원 관리</a>
+					<a class="dropdown-item" href="<c:url value='/admin/manager'/>">매니저 관리</a>
+					<a class="dropdown-item" href="<c:url value='/admin/business'/>">사업자 관리</a>
+					<a class="dropdown-item" href="#">게시판 관리</a>
+					<a class="dropdown-item" href="<c:url value='/admin/refund'/>">포인트 환급 관리</a>
+				</div>
+			</li>
 			<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 					매니저
@@ -79,8 +84,6 @@
 					<div class="dropdown-menu">
 						<a class="dropdown-item" href="<c:url value='/businessman/facilityInsert'/>">시설 등록</a>
 						<a class="dropdown-item" href="<c:url value='/businessman/facility'/>">시설 관리</a>
-						<a class="dropdown-item" href="<c:url value='/businessman/stadium'/>">경기장 목록</a>
-						<a class="dropdown-item" href="<c:url value='/businessman/stadiumInsert'/>">경기장 등록</a>
 						<a class="dropdown-item" href="<c:url value='/buisnessman/manage/schedule'/>">스케줄 관리</a>
 						<a class="dropdown-item" href="#">일정 관리</a>
 					</div>

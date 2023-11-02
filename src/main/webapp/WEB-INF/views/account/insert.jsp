@@ -15,7 +15,6 @@ ${bankList }
 	<h1>환급 계좌 등록</h1>
 	<form action="<c:url value='/account/insert'/>" method="post">
 		<div class="form-group">
-			<!-- (회원번호) 세션에서 회원번호 가져오도록 수정해야 함. -->
 			<input type="hidden" class="form-control" name="ac_me_num" value="${user.me_num}" >
 		</div>
 		<div class="form-group">

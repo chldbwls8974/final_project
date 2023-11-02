@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -99,7 +100,8 @@ public class KakaoController {
 	@PostMapping("/kakao_callback")
 	public String signupKakaoPost(MemberVO member, Model model, int[] pr_rg_num,
 			 int[] favoriteTime
-			,  int[] favoriteHoliTime, int me_rg_num, String me_id
+			,  int[] favoriteHoliTime, int me_rg_num, String me_id,
+			@RequestParam("recommed_check") String inviteMember
 			) 
 		{
 		
@@ -107,6 +109,12 @@ public class KakaoController {
 		Message msg = new Message("/member/signup", "회원 가입에 실패했습니다.");
 		if(memberService.signup(member, pr_rg_num,favoriteTime,favoriteHoliTime)) {
 			msg = new Message("/", "회원 가입에 성공했습니다.");
+			//초대한 기존회원, 신규 회원에게 쿠폰 지급하는 메서드 (추천인 입력받았을 때만 실행)
+			if(inviteMember != null) {
+				if(memberService.signupCoupon(inviteMember, member)) {
+					System.out.println("쿠폰지급 성공");
+				}
+			}
 		}
 		model.addAttribute("msg", msg);
 		return "message";
