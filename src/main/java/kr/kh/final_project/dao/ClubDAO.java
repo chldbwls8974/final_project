@@ -15,4 +15,6 @@ public interface ClubDAO {
 	List<ClubVO> selectClubList();
 
 	ClubVO selectClubByNum(@Param("cl_num")Integer cl_num);
+
+	List<ClubVO> selectMyClubList(@Param("me_num")Integer me_num,@Param("authority") String authority);
 }

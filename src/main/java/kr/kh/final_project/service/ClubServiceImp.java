@@ -148,6 +148,14 @@ public class ClubServiceImp implements ClubService{
 		return false;
 	}
 
+	@Override
+	public List<ClubVO> getMyClubList(Integer me_num,String authority) {
+		if(me_num == 0 || authority == null) {
+			return null;
+		}
+		return clubDao.selectMyClubList(me_num,authority);
+	}
+
 
 
 }

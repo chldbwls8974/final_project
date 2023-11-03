@@ -64,6 +64,16 @@ public class ClubController {
 		model.addAttribute("list",list);
 		return "/club/list";
 	}
+	@GetMapping("/mylist")
+	public String myClubList(Model model, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		List<ClubVO> rookielist = clubService.getMyClubList(user.getMe_num(),"ROOKIE");
+		List<ClubVO> memberlist = clubService.getMyClubList(user.getMe_num(),"MEMBER");
+		model.addAttribute("user",user);
+		model.addAttribute("rookielist",rookielist);
+		model.addAttribute("memberlist",memberlist);
+		return "/club/mylist";
+	}
 	
 	@GetMapping("/detail")
 	public String detailClub(Model model, HttpSession session, Integer cl_num) {
@@ -89,6 +99,16 @@ public class ClubController {
 		}
 		model.addAttribute("msg", msg);
 		return "message";
+	}
+	
+	@GetMapping("/manage")
+	public String manageClub(Model model, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		String authority = "LEADER";
+		List<ClubVO> list = clubService.getMyClubList(user.getMe_num(),authority);
+		model.addAttribute("user",user);
+		model.addAttribute("list",list);
+		return "/club/manage";
 	}
 	
 	@GetMapping("/update")

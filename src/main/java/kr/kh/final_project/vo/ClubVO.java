@@ -13,4 +13,10 @@ public class ClubVO {
 	private int cl_rg_num;
 	private String cl_url;
 	
+	// club_member와 조인할때
+	private int cm_num;
+	private int cm_me_num;
+	private int cm_cl_num;
+	private String cm_authority;
+	
 }
