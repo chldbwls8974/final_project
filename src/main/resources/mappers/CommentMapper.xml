@@ -19,11 +19,9 @@
 			comment
 		where
 			co_bo_num = #{bo_num}
-				and
-			co_ori_num is null
 		order by 
-			co_num 
-				desc
+			co_ori_num desc,
+			co_num asc
 		limit #{cri.pageStart}, #{cri.perPageNum}
 	</select>
 	<!-- 해당 게시글 총 댓글 수 가져오기 -->
@@ -60,7 +58,7 @@
 			values
 				(#{comment.co_bo_num},#{comment.co_me_num},#{comment.co_comments}, now(), #{comment.co_ori_num})
 	</insert>
-	<!-- 댓글 리스트 가져오기 -->
+	<!-- 답글 리스트 가져오기 -->
 	<select id="selectCommentList2" resultType="kr.kh.final_project.vo.CommentVO">
 		select 
 			* 
@@ -72,6 +70,6 @@
 			co_ori_num != null
 		order by 
 			co_num 
-				desc
+				asc
 	</select>
 </mapper>
