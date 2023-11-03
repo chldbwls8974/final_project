@@ -127,6 +127,7 @@ public class BusinessmanController {
 			model.addAttribute("msg", msg);
 			return "message";
 		}
+		System.out.println(MainRegion);
 		model.addAttribute("business", business);
 		model.addAttribute("facility", facility);
 		model.addAttribute("MainRegion", MainRegion);
@@ -136,8 +137,10 @@ public class BusinessmanController {
 	@ResponseBody
 	@GetMapping("/businessman/facilityUpdate/region1")
 	public Map<String, Object> region1(@RequestParam String rg_main, Model model){
+		System.out.println("region");
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<RegionVO> SubRegion = businessmanService.getSubRegionByMainRegion(rg_main);
+		System.out.println(SubRegion);
 		map.put("SubRegion", SubRegion);
 		return map;
 	}
@@ -174,7 +177,7 @@ public class BusinessmanController {
 		List<StadiumVO> stadiumList = businessmanService.getStadiumList(fa_num);
 		
 		if(stadiumList.size() == 0) {
-	        Message msg = new Message("/businessman/stadiumInsert", "등록된 경기장이 없습니다. 경기장을 등록해주세요");
+	        Message msg = new Message("/businessman/stadiumInsert/" + fa_num , "등록된 경기장이 없습니다. 경기장을 등록해주세요");
 			model.addAttribute("msg", msg);
 			return "/message";
 		}
@@ -189,9 +192,10 @@ public class BusinessmanController {
 		return "/businessman/stadiumInsert";
 	}
 	//경기장 등록
-	@PostMapping("/businessman/stadiumInsert/{fa_num}")
-	public String insertStadium(Model model, StadiumVO stadium, 
-			 HttpSession session) {
+	@PostMapping("/businessman/stadiumInsert")
+	public String insertStadium(Model model, 
+			StadiumVO stadium, HttpSession session) {
+
 		//'등록'버튼을 누르면 url에 저장한 시설의 번호(fa_num)가 표기되어야 해서 'i'에 시설 번호 저장
 		int i = stadium.getSt_fa_num();
 		

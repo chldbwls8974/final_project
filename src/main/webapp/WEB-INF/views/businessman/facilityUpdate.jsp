@@ -22,7 +22,7 @@
 	    <select class="form-control rg_main"> 
 	        <option value="0">지역을 선택하세요</option>
 	        <c:forEach items="${MainRegion}" var="main">
-    			<option value="${main.rg_main}" <c:if test="${facility.fa_rg_num == main.rg_main.toString()}">selected</c:if>>${main.rg_main}</option>
+    			<option value="${main.rg_main}"  >${main.rg_main}</option>
 			</c:forEach>
 	    </select>
 	  </div>
@@ -30,7 +30,7 @@
 	    <select class="form-control rg_sub" name="fa_rg_num">
 	        <option value="0">지역을 선택하세요</option>
 	        <c:forEach items="${SubRegion}" var="sub">
-	            <option value="${main.rg_sub}" <c:if test="${facility.fa_rg_num == main.rg_sub.toString()}">selected</c:if>>${main.rg_sub}</option>
+	            <option value="${main.rg_sub}" >${main.rg_sub}</option>
 	        </c:forEach>
 	    </select>
 	  </div>
