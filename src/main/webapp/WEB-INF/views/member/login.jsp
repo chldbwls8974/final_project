@@ -33,7 +33,8 @@ input, progress {
 </head>
 <body>
 <div class="container">
-	<p style="font-size: 45px; font-weight: bolder; text-align: center;">로그인</p>
+	<p style="font-size: 45px; font-weight: bolder; text-align: center;
+		 letter-spacing: -3px;">로그인</p>
 	<form action="<c:url value='/member/login'/>" method="post">
 		<div class="form-group">
 			<input type="text" class="form-control" name="me_id" placeholder="아이디">
