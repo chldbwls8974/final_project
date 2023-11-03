@@ -68,11 +68,15 @@ public class CommentController {
 	
 		// 답글 조회하기
 		@ResponseBody
-		@PostMapping("/comment/list2/{bo_num}")
-		public Map<String, Object> list2(@RequestBody Criteria cri, @PathVariable("bo_num")int bo_num){
+		@PostMapping("/reply/comment/list/{bo_num}")
+		public Map<String, Object> commentList(@RequestBody Criteria cri, @PathVariable("bo_num")int bo_num){
 			Map<String, Object> map = new HashMap<String, Object>();
+			cri.setPerPageNum(5);
 			List<CommentVO> list = commentService.getCommentList2(bo_num, cri);
+			int totalCount = commentService.getTotalCount(bo_num);
+			PageMaker pm = new PageMaker(3,cri, totalCount);
 			map.put("list", list);
+			map.put("pm", pm);
 			return map;
 		}	
 	

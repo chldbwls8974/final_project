@@ -7,9 +7,22 @@
 	<insert id="insertComment">
 		insert 
 			into 
-				comment(co_bo_num, co_me_num, co_comments, co_date)
-			values
-				(#{comment.co_bo_num},#{comment.co_me_num},#{comment.co_comments},now())
+				comment(
+						co_num,
+						co_bo_num, 
+						co_me_num, 
+						co_comments, 
+						co_date, 
+						co_ori_num)
+			select
+				ifnull(max(co_num),0)+1,
+				#{comment.co_bo_num},
+				#{comment.co_me_num},
+				#{comment.co_comments},
+				now(),
+				ifnull(max(co_num),0)+1
+			from
+				comment
 	</insert>
 	<!-- 댓글 리스트 가져오기 -->
 	<select id="selectCommentList" resultType="kr.kh.final_project.vo.CommentVO">
@@ -67,9 +80,10 @@
 		where
 			co_bo_num = #{bo_num}
 				and
-			co_ori_num != null
+			co_num == co_ori_num
+				
 		order by 
-			co_num 
-				asc
+			co_ori_num desc,
+			co_num asc
 	</select>
 </mapper>
