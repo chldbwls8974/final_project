@@ -51,11 +51,16 @@
 		display : block;
 		margin-left : 80px;
 	}
+	/* 댓글, 답글 내용,시간 */
 	.comment-1{
 		position : relative;
 	}
+	/* 댓글, 답글 내용만 */
 	.comment-contents{
 		margin-left : 20px;
+	}
+	.comment-list{
+	
 	}
 
 </style>    
@@ -114,7 +119,7 @@
 		 </div>
 		<!-- 댓글 목록창 -->
 		<div class="box-comment">
-			<div class="comment-box1">
+			<div class="comment-box1" >
 				<div class="comment-list">
 					<div class="comment-1">
 						<span class="comment-contents">${comment.co_comments}</span>
@@ -266,6 +271,7 @@
 					co_bo_num : co_bo_num,
 					co_comments : co_contents
 			}
+			console.log(comment)
 			$.ajax({
 				async : false,
 				method: 'post',
@@ -432,10 +438,10 @@
 					for(comment of data.list){
 						let btnStr = '';
 						if (comment.co_num == comment.co_ori_num){
-							btnStr ='<button type="button" class="btn btn-outline-primary btn-sm btn-reply" data-num="\${comment.co_num}" >답글</button>'}
+							btnStr =`<button type="button" class="btn btn-outline-primary btn-sm btn-reply" data-num="\${comment.co_num}" >답글</button>`}
 						str += `
 							<div class="box-comment">
-								<div class="comment-box">
+								<div class="comment-box" \${comment.co_num != comment.co_ori_num ? 'style="margin-left: 40px;"' : ''}>
 										<div class="comment-list">	
 											<img src="<c:url value='/resources/images/sample.jpg'/>" class="rounded-circle profile-image" alt="기본프로필 사진">
 											<div class="comment-1">
