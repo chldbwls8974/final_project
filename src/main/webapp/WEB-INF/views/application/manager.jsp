@@ -79,6 +79,7 @@
 
 <script type="text/javascript">
 
+//첨부파일 경로 이름 띄우기
 $("#file1, #file2, #file3").on('change',function(){
 	 //현재 업로드를 가져옴
     var fieldName = $(this).attr("id");
