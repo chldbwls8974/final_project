@@ -19,23 +19,43 @@
 		margin-bottom : 10px;
 	}
 	.comment-box{
-		display:flex;
-		align-items :center;
+		display : flex;
 	}
+	.comment-box1{
+		display : flex;
+	}
+	/* 프로필 사진 */
 	.profile-image {
 	    width: 60px; 
 	    height: 60px; 
 	    border-radius: 50%; /* 둥글두그륵 만들기 */
 	    object-fit: cover; /* 이미지가 찌그러지지 않도록 설정하는 것 */
+	    float:left;
 	}
+	/* 댓글 내용 */
 	.comment-list{
 		list-style : none;
-		padding-left:10px;
-		margin:0;
-		display : flex;
+		padding : 10px;
+		width : 100%;
 	}
+	/* 수정 삭제 버튼 */
 	.comment-item{
-		margin-bottom : 10px;
+		float : right;
+		position : relative;
+	}
+	/* 날짜 */
+	.comment-date{
+		position : absolute;
+		transform: translateX(580px);
+		transform: translateY(25px);
+		display : block;
+		margin-left : 80px;
+	}
+	.comment-1{
+		position : relative;
+	}
+	.comment-contents{
+		margin-left : 20px;
 	}
 	
 </style>    
@@ -94,22 +114,45 @@
 		 </div>
 		<!-- 댓글 목록창 -->
 		<div class="box-comment">
-			<div class="comment-box">
-					<ul class="comment-list">
-						<li class="comment-item">
-							<span class="comment-contents">${comment.co_comments}</span>
-							<span class="comment-writer">${comment.co_me_num}</span>
-							<button class="btn btn-outline-info btn-sm" >수정</button>
-							<button class="btn btn-outline-info btn-sm">삭제</button>
-						</li>
-					</ul>
+			<div class="comment-box1">
+				<div class="comment-list">
+					<div class="comment-1">
+						<span class="comment-contents">${comment.co_comments}</span>
+						<span class="comment-writer">${comment.co_me_num}</span>
+						<span class="comment-date">${comment.co_date}</span>	
+					</div>
+					<div class="comment-item">
+						<button type="button" class="btn btn-outline-info btn-sm btn-update" data-num="${comment.co_num}">수정</button>
+						<button type="button" class="btn btn-outline-info btn-sm btn-del" data-num="${comment.co_num}">삭제</button>
+						<button type="button" class="btn btn-outline-primary btn-sm btn-reply" value="${comment.co_num}">답글</button>						
+					</div>
+				</div>
 			</div>
-			
+			<c:forEach items="${list}" var="replyComment">	
+				<c:if test="${replyComment.co_ori_num eq comment.co_num}">		
+					 <div class="box-comment" style="margin-left:100px;">
+						<div class="comment-box">
+							<div class="comment-list">	
+								<img src="<c:url value='/resources/images/sample.jpg'/>" class="rounded-circle profile-image" alt="기본프로필 사진">
+								<div class="comment-1">
+									<span class="comment-contents">${replyComment.co_comments}</span>
+									<span class="comment-writer">[${replyComment.co_me_num}]</span>
+									<span class="comment-date">${replyComment.co_date}</span>
+								</div>	
+								<div class="comment-item">
+									<button type="button" class="btn btn-outline-info btn-sm btn-update" data-num="${replyComment.co_num}">수정</button>
+									<button type="button" class="btn btn-outline-info btn-sm btn-del" data-num="${replyComment.co_num}">삭제</button>
+								</div>
+							</div>
+						</div>
+					</div> 
+				</c:if>
+			</c:forEach>
 		<!-- 댓글 페이지네이션 -->
 			<div class="pagination justify-content-center">
-				<a href="#"> 이전</a>
-				<a href="#"> 1</a>
-				<a href="#"> 다음</a>
+				<a class="page-link" href="#"> 이전</a>
+				<a class="page-link" href="#"> 1</a>
+				<a class="page-link" href="#"> 다음</a>
 			</div>
 		</div>
 		<hr>
@@ -138,49 +181,237 @@
        height: 400
      });
 </script>
+
 <!-- 댓글 기능 자바스크립트 -->
 <script type="text/javascript">
 //등록버튼을 클릭하면 함수가 실행됨
-$('#btnCommentInsert').click(function(){
-	let co_contents = $('#inputComment').val();
-	let co_me_num = '${user.me_num}';
-	let co_bo_num = '${board.bo_num}';
-	
-	if(co_me_num == 0){
-		if(confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?')){
-			location.href = '<c:url value="/member/login"/>'
-		}
-		return;
-	}
-	if(co_contents.trim() == ''){
-		alert('댓글 내용을 입력하세요.');
-		// 사용자가 입력할 수 있게 focus를 맞춰줌
-		$('#inputComment').focus();
-		return;
-	}
-	
-	let comment = {
-			co_comments : co_contents,
-			co_me_num : co_me_num,
-			co_bo_num : co_bo_num
-	}
-	$.ajax({
-		async : false,
-		method: 'post',
-		url : '<c:url value="/comment/insert"/>',
-		data: JSON.stringify(comment),
-		contentType : 'application/json; charset=utf-8',
-		dataType : 'json',
-		success : function(data){
-			if(data.res){
-				alert('댓글 등록 성공');
-				$('#inputComment').val('');
-			}else{
-				alert('댓글 등록 실패');
+	$('#btnCommentInsert').click(function(){
+		let co_contents = $('#inputComment').val();
+		let co_me_num = '${user.me_num}';
+		let co_bo_num = '${board.bo_num}';
+		
+		if(co_me_num == 0){
+			if(confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?')){
+				location.href = '<c:url value="/member/login"/>'
 			}
+			return;
+		}
+		if(co_contents.trim() == ''){
+			alert('댓글 내용을 입력하세요.');
+			// 사용자가 입력할 수 있게 focus를 맞춰줌
+			$('#inputComment').focus();
+			return;
+		}
+		
+		let comment = {
+				co_comments : co_contents,
+				co_me_num : co_me_num,
+				co_bo_num : co_bo_num
+		}
+		$.ajax({
+			async : false,
+			method: 'post',
+			url : '<c:url value="/comment/insert"/>',
+			data: JSON.stringify(comment),
+			contentType : 'application/json; charset=utf-8',
+			dataType : 'json',
+			success : function(data){
+				if(data.res){
+					alert('댓글 등록 성공');
+					$('#inputComment').val('');
+					getCommentList(cri);
+				}else{
+					alert('댓글 등록 실패');
+				}
+			}
+		})
+	});
+		// 답글 버튼 클릭시 이벤트
+		$(document).on('click', '.comment-list .btn-reply', function(){
+			let co_ori_num = $(this).data('num');
+			let co_me_num = '${user.me_num}';
+			if(co_me_num == 0){
+				if(confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?')){
+					location.href = '<c:url value="/member/login"/>'
+				}
+				return;
+			}
+			// 원래 댓글 번호를 저장
+			let str = '';
+			str += `
+				<hr>
+					<div class="input-group-append mb-3 reply-box" >
+						 <textarea class="form-control" placeholder="답글을 입력해주세요." name="co_content_reply" id="inputComment2"></textarea>
+						 <button type="button" 
+						 		 class="btn btn-outline-primary btn-sm btn-reply-insert" 
+						 		 data-num="\${co_ori_num}">답글2</button>
+					</div>
+			`;
+			$(this).parents('.comment-box').after(str);
+			$(this).hide('.btn-reply');
+		});
+		
+		/* 답글 등록 버튼 클릭 이벤트  */
+		$(document).on('click','.btn-reply-insert', function(){
+// 			let co_ori_num = '${comment.co_num}';
+			let co_ori_num = $(this).data('num');
+			let co_me_num = '${user.me_num}';
+			let co_bo_num = '${board.bo_num}';
+			let co_contents = $('#inputComment2').val();
+			
+			let comment = {
+					co_ori_num : co_ori_num,
+					co_me_num : co_me_num,
+					co_bo_num : co_bo_num,
+					co_comments : co_contents
+			}
+			$.ajax({
+				async : false,
+				method: 'post',
+				url : '<c:url value="/comment/insert2"/>',
+				data: JSON.stringify(comment),
+				contentType : 'application/json; charset=utf-8',
+				dataType : 'json',
+				success : function(data){
+					if(data.res){
+						alert('답글 등록 성공');
+						$('#inputComment2').val('');
+						getCommentList2(cri);
+					}else{
+						alert('답글 등록 실패');
+					}
+				}
+			})
+		});
+		/* 답글 조회하기 */
+			function getCommentList2(cri){
+				$.ajax({
+					async : false,
+					method: 'post',
+					url : '<c:url value="/comment/list2/"/>'+'${board.bo_num}',
+					data: JSON.stringify(cri),
+					contentType : 'application/json; charset=utf-8',
+					dataType : 'json',
+					success : function(data){
+						let str ='';
+						for(comment of data.list){
+							str += `
+						<c:forEach items="\${list}" var="replyComment">	
+							<c:if test="\${replyComment.co_ori_num eq comment.co_num}">		
+								<div class="box-comment" style="margin-left:30px;">
+									<div class="comment-box">
+										<div class="comment-list">	
+											<img src="<c:url value='/resources/images/sample.jpg'/>" class="rounded-circle profile-image" alt="기본프로필 사진">
+											<div class="comment-1">
+												<span class="comment-contents">\${replyComment.co_comments}</span>
+												<span class="comment-writer">[\${replyComment.co_me_num}]</span>
+												<span class="comment-date">\${replyComment.co_date}</span>
+											</div>	
+											<div class="comment-item">
+												<button type="button" class="btn btn-outline-info btn-sm btn-update" data-num="\${replyComment.co_num}">수정</button>
+												<button type="button" class="btn btn-outline-info btn-sm btn-del" data-num="\${replyComment.co_num}">삭제</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</c:if>
+						</c:forEach>
+						`
+						}
+						$('.comment-list').html(str);
+					}
+				});
+			
+		} 
+		
+		/* 댓글 수정하기 이벤트 */
+		$(document).on('click', '.btn-update', function(){
+			// 클릭한 조상 클래스가 comment-list인 것을 찾아 list에 넣는다.
+			let th = $(this);
+			let list = $(this).parent().prev(); 
+			list.find('.comment-contents').hide();
+			list.find('.comment-writer').hide();
+			list.find('.comment-date').hide();
+			list.find('.btn-update').hide();
+			list.find('.btn-del').hide();
+			list.find('.btn-reply').hide();
+
+			// 클릭한 데이터 숫자를 co_num에 넣는다.
+			let co_num = $(this).data('num');
+			// 클릭한 데이터 list에서 클래스가 comment-contents의 값을 co_contents에 넣는다.
+			let co_contents = list.find('.comment-contents').text();
+			
+			str = '';
+			str +=`
+				<div class="input-group-append" style="float : left; width:80%">
+				<textarea class="form-control comment-update" style="float : left">\${co_contents}</textarea>
+				</div>
+			`;
+			btn='';
+			btn=`
+				<button type="button" class="btn btn-complete btn-outline-info" data-num="\${co_num}">수정완료</button>			
+			`;
+			list.find('.comment-contents').after(str)
+			th.hide(); // 버튼 박스 숨기기(수정버튼)
+			th.next().hide();
+			th.after(btn);
+		});
+		
+	
+		/* 댓글 수정완료 이벤트 */
+
+		$(document).on('click','.btn-complete',function(){
+			let co_num = $(this).data('num');
+			let co_contents = $(this).parents('.comment-list').find('.comment-update').val();
+			let comment = {
+					co_num : co_num,
+					co_comments: co_contents
+			}
+			$.ajax({
+				async : false,
+				method: 'post',
+				url : '<c:url value="/comment/update"/>',
+				data: JSON.stringify(comment),
+				contentType : 'application/json; charset=utf-8',
+				dataType : 'json',
+				success : function(data){
+					console.log(data)
+					if(data.res){
+						alert('댓글 수정 성공!')
+						getCommentList(cri);
+					}else{
+						alert('댓글 수정 실패!');
+					}
+				}
+			});
+		})
+		
+		/* 댓글 삭제하기 이벤트 */
+		$(document).on('click', '.btn-del', function(){
+			if(confirm("댓글을 정말 삭제하시겠습니까...?")){
+			let comment = {
+					co_num : $(this).data('num')
+			}
+			
+			//ajax로 서버에 전송
+			$.ajax({
+				async : false,
+				method: 'post',
+				url : '<c:url value="/comment/delete"/>',
+				data: JSON.stringify(comment),
+				contentType : 'application/json; charset=utf-8',
+				dataType : 'json',
+				success : function(data){
+					if(data.res){
+						alert('댓글 삭제 성공!')
+						getCommentList(cri);
+					}else{
+						alert('댓글 삭제 실패!');
+					}
+				}
+			});
 		}
 	})
-});
 		 let cri = {
 				page : 1
 		}
@@ -199,16 +430,44 @@ $('#btnCommentInsert').click(function(){
 					let str ='';
 					for(comment of data.list){
 						str += `
-							<img src="<c:url value='/resources/images/sample.jpg'/>" class="rounded-circle profile-image" alt="기본프로필 사진">
-							<ul class="comment-list">	
-								<li class="comment-item">
-									<span class="comment-contents">\${comment.co_comments}</span>
-									<span class="comment-writer">[\${comment.co_me_num}]</span>
-									<button class="btn btn-outline-info btn-sm" >수정</button>
-									<button class="btn btn-outline-info btn-sm">삭제</button>
-								</li>
-							</ul>
-							
+							<div class="box-comment">
+								<div class="comment-box">
+										<div class="comment-list">	
+											<img src="<c:url value='/resources/images/sample.jpg'/>" class="rounded-circle profile-image" alt="기본프로필 사진">
+											<div class="comment-1">
+												<span class="comment-contents">\${comment.co_comments}</span>
+												<span class="comment-writer">[\${comment.co_me_num}]</span>
+												<span class="comment-date">\${comment.co_date}</span>
+											</div>	
+											<div class="comment-item">
+												<button type="button" class="btn btn-outline-info btn-sm btn-update" data-num="\${comment.co_num}">수정</button>
+												<button type="button" class="btn btn-outline-info btn-sm btn-del" data-num="\${comment.co_num}">삭제</button>
+												<button type="button" class="btn btn-outline-primary btn-sm btn-reply" data-num="\${comment.co_num}" >답글</button>						
+											</div>
+										</div>
+									</div>
+								</div>
+							<c:forEach items="\${list}" var="replyComment">	
+								<c:if test="\${replyComment.co_ori_num eq comment.co_num}">		
+									<div class="box-comment" style="margin-left:30px;">
+										<div class="comment-box">
+											<div class="comment-list">	
+												<img src="<c:url value='/resources/images/sample.jpg'/>" class="rounded-circle profile-image" alt="기본프로필 사진">
+												<div class="comment-1">
+													<span class="comment-contents">\${replyComment.co_comments}</span>
+													<span class="comment-writer">[\${replyComment.co_me_num}]</span>
+													<span class="comment-date">\${replyComment.co_date}</span>
+												</div>	
+												<div class="comment-item">
+													<button type="button" class="btn btn-outline-info btn-sm btn-update" data-num="\${replyComment.co_num}">수정</button>
+													<button type="button" class="btn btn-outline-info btn-sm btn-del" data-num="\${replyComment.co_num}">삭제</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</c:if>
+							</c:forEach>
+							<hr>
 							`
 					}
 					$('.comment-list').html(str);
@@ -217,15 +476,15 @@ $('#btnCommentInsert').click(function(){
 					str = '';
 					//이전버튼을 배치
 					if(pm.prev){
-						str += `<a href="javascript:void(0);" onclick="changePage(\${pm.startPage-1})"> 이전</a>`;
+						str += `<a class="page-link" href="javascript:void(0);" onclick="changePage(\${pm.startPage-1})"> 이전</a>`
 					}
 					//숫자버튼을 배치
 					for(i = pm.startPage; i<=pm.endPage; i++){
-						str += `<a href="javascript:void(0);" onclick="changePage(\${i})"> \${i}</a>`
+						str += `<a class="page-link" href="javascript:void(0);" onclick="changePage(\${i})"> \${i}</a>`
 					}
 					//다음버튼을 배치
 					if(pm.next){
-						str += `<a href="javascript:void(0);" onclick="changePage(\${pm.endPage+1})"> 다음</a>`
+						str += `<a class="page-link" href="javascript:void(0);" onclick="changePage(\${pm.endPage+1})"> 다음</a>`
 					}
 					$('.pagination').html(str);
 					

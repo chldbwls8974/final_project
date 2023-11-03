@@ -16,11 +16,12 @@
 		where 
 			ph_me_num = #{user.me_num} and
 			(ph_source = '4' or ph_source = '5')
-        order by ph_num desc;
+        order by ph_num desc
+			limit #{cri.pageStart}, #{cri.perPageNum}
 	</select>
 	<delete id="deleteRefundPointHistory">
 		delete from point_history
-		where ph_num = ${pointHistory.ph_num};
+		where ph_num = #{pointHistory.ph_num};
 	</delete>
 	<select id="selectPointHistoryByNum" resultType="kr.kh.final_project.vo.PointHistoryVO">
 		select 
@@ -30,4 +31,116 @@
 		where 
 			ph_num = #{ph_num}
 	</select>
+	<select id="selectRefundCount" resultType="int">
+		select 
+			count(*)
+		from 
+			point_history 
+		where 
+			ph_me_num = #{user.me_num};
+	</select>
+	<select id="selectPointRefundHistoryBySearch" resultType="kr.kh.final_project.vo.PointHistoryVO">
+		select 
+			*
+		from 
+			point_history
+		left join
+			member on ph_me_num = me_num
+		left join 
+			account on ac_me_num = me_num
+		
+		<if test='searchType1 == "all"'>
+		where
+			(ph_source = '4' or '5')
+		</if>
+		<if test='searchType1 == "second"'>
+		where
+			(ph_source = '4')
+		</if>
+		<if test='searchType1 == "third"'>
+		where
+			(ph_source = '5')
+		</if>
+		<if test='searchType2 == "all"'>
+		and
+			(
+			me_id like concat('%', #{cri.s}, '%')
+				or
+			me_nickname like concat('%', #{cri.s}, '%')
+				or
+			me_name like concat('%', #{cri.s}, '%')
+			)
+		</if>
+		<if test='searchType2 == "second"'>
+		and
+			me_id like concat('%', #{cri.s}, '%')
+		</if>
+		<if test='searchType2 == "third"'>
+		and
+			me_nickname like concat('%', #{cri.s}, '%')
+		</if>
+		<if test='searchType2 == "fourth"'>
+		and
+			me_name like concat('%', #{cri.s}, '%')
+		</if>
+		
+		limit
+			#{cri.pageStart}, #{cri.perPageNum}
+			;
+	</select>
+	<select id="selectPointRefundHistoryCountBySearch" resultType="int">
+		select 
+			count(*)
+		from 
+			point_history
+		left join
+			member on ph_me_num = me_num
+		left join 
+			account on ac_me_num = me_num
+		
+		<if test='searchType1 == "all"'>
+		where
+			(ph_source = '4' or '5')
+		</if>
+		<if test='searchType1 == "second"'>
+		where
+			(ph_source = '4')
+		</if>
+		<if test='searchType1 == "third"'>
+		where
+			(ph_source = '5')
+		</if>
+		<if test='searchType2 == "all"'>
+		and
+			(
+			me_id like concat('%', #{cri.s}, '%')
+				or
+			me_nickname like concat('%', #{cri.s}, '%')
+				or
+			me_name like concat('%', #{cri.s}, '%')
+			)
+		</if>
+		<if test='searchType2 == "second"'>
+		and
+			me_id like concat('%', #{cri.s}, '%')
+		</if>
+		<if test='searchType2 == "third"'>
+		and
+			me_nickname like concat('%', #{cri.s}, '%')
+		</if>
+		<if test='searchType2 == "fourth"'>
+		and
+			me_name like concat('%', #{cri.s}, '%')
+		</if>;
+	</select>
+	
+	<update id="updateRefundApproval">
+		update
+			point_history
+		set
+			ph_source = 5
+		where
+			ph_num = #{ph.ph_num};
+	</update>
+	
 </mapper>

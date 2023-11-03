@@ -178,4 +178,20 @@
 	<select id="selectFile" resultType="kr.kh.final_project.vo.FileVO">
 		select * from file where fi_num = #{fi_num}
 	</select>
+	<!-- 게시판 댓글 수 표기하기 -->
+	<update id="updateBoardComment">
+		update board
+		set
+			bo_comment = (select count(*) from comment where co_bo_num = #{bo_num})
+		where
+			bo_num = #{bo_num}
+	</update>
+	<!-- 게시판 답글 수 표기하기 -->
+	<update id="updateBoardComment2">
+		update board
+		set
+			bo_comment = (select count(*) from comment where co_bo_num = #{bo_num})
+		where
+			bo_num = #{bo_num}
+	</update>
 </mapper>
