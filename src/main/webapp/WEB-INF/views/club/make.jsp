@@ -10,6 +10,12 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style type="text/css">
+
+.container{ background-color: #f0f0f0; height: 100%; padding: 50px 0 50px 0;
+}
+.form-control{border-radius: 30px; width: 400px;}
+.form-group{display:block; text-align: center;}
+.form-group input, .form-group select{ display: block; margin: 0 auto;}
 .error {
 	color: #f00;
 }
@@ -32,7 +38,7 @@ li{
     vertical-align: baseline;
 }
 .chip__item--3{
-	width: 33.333%;
+	width: 25%;
     position: relative;
     padding-right: 1px;
     box-sizing: border-box;
@@ -63,20 +69,27 @@ li{
     justify-content: center;
     flex-direction: column;
 }
+
 .chip__item-radio:checked+label{
+	display: inline-block;
 	color: #1570FF;
     border: 1px solid #1570FF;
 }
+input[type='checkbox']{
+	display : none;
+}
+
 </style>
 </head>
 <body>
-	<h1>클럽신청</h1>
+	<p style="font-size: 45px; font-weight: bolder; text-align: center; margin-bottom: 50px;
+		 letter-spacing: -3px;">클럽신청</p>
 	<form action="<c:url value='/club/make'/>" method="post">
 <!-- 		<div class="form-group"> -->
 <!-- 			<label>클럽 앰블럼</label> -->
 <!-- 			<input type="file" class="form-control" name="cl_emblem"> -->
 <!-- 		</div> -->
-		<input type="text" class="form-control" name="me_num" value="${user.me_num }">
+		<input type="text" class="form-control" name="me_num" value="${user.me_num }" style="margin: 0 auto;">
 		<div class="form-group">
 			<label>클럽명</label><label id="check-name-error" class="error" for="cl_name"></label>
 			<input type="text" class="form-control" name="cl_name" id="cl_name">
@@ -89,7 +102,6 @@ li{
 					<option value="${main.rg_main}">${main.rg_main}</option>
 				</c:forEach>
 			</select>
-
 		</div>
 		<div class="form-group">
 			<select class="form-control rg_sub" name="cl_rg_num" required>
@@ -100,11 +112,12 @@ li{
 			</select>
 		</div>
 		
-		<div class="form-group">
+		<div class="form-group" style="margin-top: 50px;">
 		 <label>선호시간</label>
 		    <div class="pre_time">
 				<div class="form-group time-box weekday-time">
-					<label>평일 선호 시간</label>
+					<label style="font-size: 20px; font-weight: bolder;
+						 margin-bottom: 10px;">평일 선호 시간</label>
 					<ul class="chip">
 						
 						<li class="chip__item--3">
@@ -206,7 +219,8 @@ li{
 	                </ul>
 				</div>
 				<div class="form-group time-box weekend-time">
-					<label>주말 선호 시간</label>
+					<label style="font-size: 20px; font-weight: bolder;
+						 margin-bottom: 10px;">주말 선호 시간</label>
 					<ul class="chip">
 						<li class="chip__item--3">
 							<input type="checkbox" id="holitime_6" name="favoriteHoliTime" class="chip__item-radio" value="6"> 
@@ -289,17 +303,17 @@ li{
 	               			</label>
 	               		</li>
 	                	<li  class="chip__item--3">
-	                		<input  type="checkbox" id="holitime_2" name="favoriteHoliTime" class="chip__item-radio" value="2"> 
-	                		<label  for="holitime_2" class="chip__item-label" style="height: 70px;">
+	                		<input type="checkbox" id="holitime_2" name="favoriteHoliTime" class="chip__item-radio" value="2"> 
+	                		<label for="holitime_2" class="chip__item-label" style="height: 70px;">
 	                			<div  style="margin-bottom: 5px;">
 	                				<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_midnight.svg">
 	               				</div> 02:00
 	                		</label>
 	                	</li>
 	                	<li  class="chip__item--3">
-	                		<input  type="checkbox" id="holitime_4" name="favoriteHoliTime" class="chip__item-radio" value="4"> 
-	                		<label  for="holitime_4" class="chip__item-label" style="height: 70px;">
-	                		<div  style="margin-bottom: 5px;">
+	                		<input type="checkbox" id="holitime_4" name="favoriteHoliTime" class="chip__item-radio" value="4"> 
+	                		<label for="holitime_4" class="chip__item-label" style="height: 70px;">
+	                		<div style="margin-bottom: 5px;">
 	                			<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_midnight.svg">
 	               			</div>  04:00
 	              			</label>
@@ -313,7 +327,7 @@ li{
 		<label>선호 연령</label><br>
 			<div class="form-check-inline">
 			  <label class="form-check-label">
-			    <input type="checkbox" class="form-check-input" name ="age" value="10">10
+			    <input type="checkbox" id="form-check-input" class="form-check-input" name ="age" value="10">10
 			  </label>
 			</div>
 			<div class="form-check-inline">
