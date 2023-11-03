@@ -22,4 +22,9 @@ public interface CommentDAO {
 	// 댓글 수정하기
 	boolean updateComment(@Param("comment")CommentVO comment);
 	
+	// 답글 등록하기
+	boolean insertComment2(@Param("comment")CommentVO comment);
+	// 답글 리스트 가져오기
+	List<CommentVO> selectCommentList2(@Param("bo_num")int bo_num, @Param("cri")Criteria cri);
+	
 }

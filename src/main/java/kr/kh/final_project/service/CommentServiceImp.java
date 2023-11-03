@@ -92,5 +92,34 @@ public class CommentServiceImp implements CommentService{
 		}
 		return commentDao.updateComment(comment);
 	}
+	
+	// 답글 등록하기
+	@Override
+	public boolean insertComment2(CommentVO comment) {
+		if(comment == null || 
+				   comment.getCo_me_num() == 0 || 
+				   comment.getCo_comments()==null) {
+					return false;
+			}
+				// 댓글 등록을 res에 저장
+				boolean res = commentDao.insertComment2(comment);
+				
+				if(!res) {
+					return false;
+				}
+				// 게시글의 댓글수를 수정한다.
+				boardDao.updateBoardComment2(comment.getCo_bo_num());
+			
+				return true;
+			}
+	
+	// 등록된 답글 목록 가져오기 (답글 조회하기)
+	@Override
+	public List<CommentVO> getCommentList2(int bo_num, Criteria cri) {
+		if(cri == null) {
+			cri = new Criteria();
+		}
+		return commentDao.selectCommentList2(bo_num, cri);
+	}
 
 }
