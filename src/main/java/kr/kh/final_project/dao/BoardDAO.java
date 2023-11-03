@@ -49,6 +49,8 @@ public interface BoardDAO {
 	
 	// 게시글 댓글 수 업데이트하기
 	void updateBoardComment(@Param("bo_num")int co_bo_num);
+	// 답글 댓글 수 업데이트하기
+	void updateBoardComment2(@Param("bo_num")int co_bo_num);
 
 
 }

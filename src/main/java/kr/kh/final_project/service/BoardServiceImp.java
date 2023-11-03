@@ -25,6 +25,7 @@ public class BoardServiceImp implements BoardService{
 	String uploadPath = "D:\\uploadfiles";
 
 
+
 	@Override
 	//매니저 신청
 	public boolean insertManagerApplication(BoardVO board, MemberVO user, MultipartFile[] files) {

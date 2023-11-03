@@ -18,5 +18,11 @@ public interface CommentService {
 	boolean deleteComment(CommentVO comment, MemberVO user);
 	// 댓글 수정하기
 	boolean updateComment(CommentVO comment, MemberVO user);
+	
+	// 답글 등록하기
+	boolean insertComment2(CommentVO comment);
+	// 등록된 답글 리스트 가져오기
+	List<CommentVO> getCommentList2(int bo_num, Criteria cri);
+	
 
 }
