@@ -21,20 +21,20 @@
 	.nav-link:hover {color: black;}
 	.dropdown-item{color: black; font-size: 15px; margin-top: 5px; }
 	.dropdown-item:hover {color: black;}
-	.nav-item .dropdown-menu {position: absolute;
+	.nav-item .dropdown-menu {position: absolute; z-index: 999;
 	}
 	
 </style>
 </head>
 <body>
 	<div class="navbar-brand">
-		<div style="width: 15%"></div>
-		<div style="width:70%; text-align: center; padding: 20px 0 20px 0; border-bottom: 1px black solid;">
+		<div style="width: 20%"></div>
+		<div style="width:60%; text-align: center; padding: 20px 0 20px 0; border-bottom: 1px solid #aaa;">
 			<a class="navbar-brand-link" href="/final_project">
-				<img alt="풋팅" src="https://ifh.cc/g/d23mzy.jpg" style="width: 100px">
+				<img alt="풋팅" src="https://ifh.cc/g/d23mzy.jpg" style="width: 120px">
 			</a>
 		</div>
-		<div style="width: 15%"></div>
+		<div style="width: 20%"></div>
 	</div>
 	<div class="navbar-nav">
 		<nav class="navbar">
