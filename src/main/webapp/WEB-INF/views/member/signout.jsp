@@ -18,11 +18,11 @@
 <body>
 	<h1>회원 탈퇴</h1>
 	<form action="<c:url value='/member/signout'/>" method="post" id="myPassword">
-		<div class="form-group">
+		<div class="form-group" hidden="hidden">
 			<label>회원번호</label> 
 			<input type="text" class="form-control" name="me_num" id="me_num" value="${user.me_num}"readonly>
 		</div>
- 		<div class="form-group">
+ 		<div class="form-group" hidden="hidden">
 			<label>포인트</label> 
 			<input type="text" class="form-control" name="me_point" id="me_point" value="${user.me_point}" readonly>
 		</div>
@@ -33,7 +33,7 @@
 			<input type="password" class="form-control" name="me_pw" id="me_pw" value="${user.me_pw}">
 		</div>
 		<div class="form-group">
-		    <label style="font-weight: bold;">비밀번호 확인</label>
+		    <label style="font-weight: bold;">비밀번호를 입력해주세요</label>
 		    <label id="check-pw2-error" class="error" for="me_pw2"></label>
 		    <input type="password" class="form-control" name="me_pw2" id="me_pw2" required>
 		</div>
@@ -92,7 +92,7 @@
 	        // 필수 사항을 모두 입력한 경우에만 포인트 체크
 	        var me_point = parseInt('${user.me_point}');
 	        if (me_point > 0) {
-	            if (confirm("포인트가 남아있습니다. 탈퇴를 진행하시겠습니까?")) {
+	            if (confirm("[${user.me_point}원] 포인트가 남아있습니다. 탈퇴를 진행하시겠습니까?")) {
 	            	return true
 	                // 탈퇴 완료되면 메인으로 이동
 	                //location.href = '<c:url value="/"/>'; 

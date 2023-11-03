@@ -48,4 +48,7 @@ public interface MemberDAO {
 
 	MemberVO selectMemberByKaKao(@Param("me_id")String me_id);
 
+	void updateEmailMember(@Param("me_id")String me_id);
+
+
 }

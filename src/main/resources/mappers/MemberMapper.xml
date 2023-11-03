@@ -152,4 +152,26 @@
 	<update id="updateFile">
 		update file(fi_bo_num, fi_name, fi_ori_name) set (#{file.fi_bo_num}, #{file.fi_name}, #{file.fi_ori_name})
 	</update>
+	<update id="updateEmailMember">
+		update 
+			member
+    	set
+        	me_id = NULL,
+        	me_pw = NULL,
+        	me_name = NULL,
+        	me_nickname = NULL, 
+			me_phone = NULL,
+			me_email = NULL,
+			me_gender = NULL,
+			me_birthday = NULL,
+			me_authority = '탈퇴한 회원입니다',
+			me_rating = 0,
+			me_profile = NULL,
+			me_point = 0,
+			me_state1 = 0, 
+			me_state2 = 0, 
+			me_session_id = NULL,
+			me_session_limit = NULL
+    	where me_id = #{me_id}
+	</update>
 </mapper>

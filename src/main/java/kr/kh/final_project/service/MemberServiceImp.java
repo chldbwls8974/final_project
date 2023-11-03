@@ -1,5 +1,6 @@
 package kr.kh.final_project.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -19,6 +20,7 @@ import kr.kh.final_project.dao.PreferredRegionDAO;
 import kr.kh.final_project.dao.PreferredTimeDAO;
 import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.dao.TimeDAO;
+import kr.kh.final_project.util.UploadFileUtils;
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.vo.HoldingCouponVO;
 import kr.kh.final_project.vo.MemberVO;
@@ -57,6 +59,8 @@ public class MemberServiceImp implements MemberService{
 	HoldingCouponDAO holdingCouponDao;
 
 	String uploadPath = "D:\\uploadfiles";
+	
+	String uploadProfile = "D:\\uploadProfile";
 	
 	@Override
 	public List<MemberVO> searchMemberById(String keyword) {
@@ -385,29 +389,6 @@ public class MemberServiceImp implements MemberService{
 		return null;
 	}
 
-	@Override
-	public boolean updateProfile(MemberVO member, MemberVO user, MultipartFile file) {
-		//로그인 안하면 실패
-		if(user == null || user.getMe_nickname() == null) {
-			return false;
-		}
-		//수정된 내 정보를 DB에 저장
-		boolean res = memberDao.updateMemberProfile(user);
-		//업뎃 실패시 반환
-		if(!res) {
-			return false;
-		}
-		// 첨부파일 추가하기
-		uploadFile(file, member.getMe_num());
-		return true;
-	}
-
-	private void uploadFile(MultipartFile file, Integer me_num) {
-		if(me_num <= 0) {
-			return;
-		}
-		memberDao.updateFile(file);
-	}
 
 	@Override
 	public MemberVO isCheck2(String check) {
@@ -416,6 +397,25 @@ public class MemberServiceImp implements MemberService{
 	}
 
 	@Override
+	public boolean updateProfile(MemberVO user, MultipartFile profileImage) {
+		// 프로필 사진 만들어야함
+//		if(profileImage == null) {
+//			return false;
+//		}
+//		if(user == null) {
+//			return false;
+//		}
+//		String fi_ori_name = profileImage.getOriginalFilename();
+//		try {
+//			String fi_name = UploadFileUtils.uploadFile(uploadProfile, fi_ori_name, profileImage.getBytes());
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		return false;
+	}
+
+
 	public List<HoldingCouponVO> getMemberCouponList(MemberVO user, Criteria cri) {
 		if(user == null || user.getMe_num() == null) {
 			return null;
@@ -463,14 +463,29 @@ public class MemberServiceImp implements MemberService{
 		holdingCouponDao.insertSignupCouponNewMember(dbNewMember);
 		return true;
 	}
-
-
 	
+	//이메일인증 회원탈퇴
+	@Override
+	public boolean emailMemberSignout(MemberVO member) {
+		if(member == null || member.getMe_id() == null || member.getMe_pw() == null) {
+				return false;
+			}
+			//아이디가 일치하는 회원 정보를 가져옴
+			MemberVO dbMember = memberDao.selectMember(member.getMe_id());
+			//회원정보가 없으면 탈퇴 불가
+			if(dbMember == null) {
+				return false;
+			}
+			//비번이 일치하지 않으면 탈퇴 불가
+			if(!dbMember.getMe_pw().equals(member.getMe_pw())) {
+				return false;
+			}
+			//primary key는 남겨두고, 모든 고객 정보를 null처리 하기 위해 delete가 아닌 update문 사용
+			memberDao.updateEmailMember(member.getMe_id());
+			return true;
+		}
 
 	
 
 
 }
-
-
-
