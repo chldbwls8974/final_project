@@ -40,6 +40,8 @@
 	li{list-style: none;}
 	p, span{text-decoration: none; color: black;}
 	p:hover, span:hover {text-decoration: none;}
+	#membertable{ background-color: #f0f0f0; width: 90%; height: 100%; 
+		padding: 100px 0 100px 0; margin: 30px auto; border-radius: 30px;}
 	
 	
 </style>
@@ -58,7 +60,7 @@
 			<div>
 				<ul id="membertable">
 					<c:forEach items="${memberList}" var="member">
-					<li style="margin-left: 80px;">
+					<li class="membertable-list" style="margin-left: 80px;">
 						<a href="#" class="member-link">
 							<img src=""/>
 							<p style="font-weight: bold; font-size: large;">${member.me_name}</p>
