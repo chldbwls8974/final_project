@@ -22,6 +22,12 @@
 		<a class="navbar-brand" href="/final_project">LOGO</a>
 		<ul class="navbar-nav">
 			<li class="nav-item">
+				<a class="nav-link" href="<c:url value='/club/make'/>">클럽만들기</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="<c:url value='/club/list'/>">클럽조회</a>
+			</li>
+			<li class="nav-item">
 				<a class="nav-link" href="#">개인매치</a>
 			</li>
 			<li class="nav-item">
@@ -103,7 +109,33 @@
 			<li class="nav-item">
 				<a class="nav-link " href="<c:url value='/member/logout'/>">로그아웃</a>
 			</li>
+			<li class="nav-item">
+				<a class="nav-link" id="email-signout" href="<c:url value='/member/signout'/>">회원탈퇴</a>
+			</li>
 		</ul>	
 	</nav>
+	
+	<script type="text/javascript">
+		//member 정보를 불러와서 변수에 저장(서버에서 JSP로 넘어오는 멤버 정보)
+		var member = "${member}";
+		//각각의 url을 변수로 저장
+		<c:url value="/kakao/signout" var="kakaoSignoutUrl" />
+		<c:url value="/member/signout" var="emailSignoutUrl" />
+		
+		// 이메일인증 회원인지 확인
+		$('#email-signout').click(function () {		
+		    // 아이디 형식에 맞으면 카카오인증 탈퇴페이지로 이동 or 이메일인증 탈퇴페이지로 이동
+		    if (member != null && member.me_id != null && member.me_id.match(/^\\d+.*k$/)) {
+		        // 카카오인증 회원의 탈퇴페이지로 이동
+		        alert("카카오인증 회원탈퇴 페이지로 이동됩니다");
+	            location.href = '${kakaoSignoutUrl}';
+		    } else {
+		        // 이메일 인증 회원의 탈퇴페이지로 이동
+		        alert("이메일인증 회원탈퇴 페이지로 이동됩니다.");
+	            location.href = '${emailSignoutUrl}';
+		    }
+		});
+	</script>
+	
 </body>
 </html>
