@@ -37,6 +37,45 @@
 	  <button type="button"
 				    class="btn btn-outline-info btn-info" onclick="location.href='<c:url value='/admin/matchReport'/>'">매치 신고</button>
 	</div>
+	
+	<form action="<c:url value='/admin/refund'/>" method="post">
+		<div class="input-group mb-3 mt-3">
+			<div class="input-group-prepend">
+			    <select class="form-control search-type-2">
+			      <option value="all">전체</option>
+			      <option value="second">아이디</option>
+			      <option value="third">닉네임</option>
+			      <option value="fourth">이름</option>
+			    </select>
+		    </div>
+	    <input type="text" class="form-control input-search" name="s" id="input-search" placeholder="검색어를 입력하세요." value="${pm.cri.s}">
+	    <button type="button" class="btn btn-outline-success btn-search">찾기</button>
+		</div>
+	</form>
+	<div>
+		<table class="table table-hover mt-4">
+			<thead>
+				<tr>
+					<th>카테고리</th>
+					<th>신고자 ID</th>
+					<th>피신고자 ID</th>
+					<th>상태</th>
+					<th>게시글 번호</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody class="list-tbody">
+			
+			</tbody>
+		</table>
+	</div>
+	<!-- 페이지네이션 -->
+	<ul class="pagination justify-content-center mt-3 pagination">
+	    <li class="page-item"><a class="page-link" href="javascript:void(0);">&lt;</a></li>
+	    <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
+	    <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+	    <li class="page-item"><a class="page-link" href="javascript:void(0);">&gt;</a></li>
+	</ul>
 </body>
 
 <script type="text/javascript">
