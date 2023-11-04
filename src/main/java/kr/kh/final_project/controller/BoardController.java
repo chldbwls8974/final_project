@@ -142,7 +142,51 @@ public class BoardController {
 		model.addAttribute("url", "/board/notice");
 		return "/util/message";
 	}
+
+	// ===================================================================================
 	
+	// 자유게시판 조회하기
+	@GetMapping("/board/free")
+	public String boardFree(Model model, Criteria cri) {
+		// 페이지네이션
+		cri.setPerPageNum(10);
+		int totalCount = boardService.getFreeTotalCount(cri);
+		final int DISPLAY_PAGE_NUM = 3;
+		PageMaker pm = new PageMaker(DISPLAY_PAGE_NUM, cri, totalCount);
+		// 자유게시판 조회하기
+		List<BoardVO> list = boardService.getBoardFreeList(cri);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("cri", cri);
+		model.addAttribute("pm", pm);
+		return "/board/free";
+	}
+	// 게시글쓰기 조회하기
+		@GetMapping("/board/insert2")
+		public String boardInsert2() {
+			return "/board/insert2";
+		}
+		// 게시글 등록하기 (첨부파일이랑 같이)
+		@PostMapping("/board/insert2")
+		public String boardInsert2(Model model, 
+								  BoardVO board, 
+								  HttpSession session,
+								  MultipartFile[] files) {
+			// 게시글을 쓰고 있는 user에 대한 정보를 memberVO에서 가져와 user에 저장한다.
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			// boardService한테 board와 user, files정보를 주며 저장하라고 시킴 그걸 res에 저장하기
+			boolean res = boardService.insertBoard2(board, user, files);
+			// 만약 결과가 true이면
+			System.out.println(board);
+			if(res) {
+				model.addAttribute("msg", "게시글 등록 성공!");
+				model.addAttribute("url", "/board/free");
+			}else{
+				model.addAttribute("msg", "게시글 등록 실패!");
+				model.addAttribute("url", "/board/insert2");
+			}
+			return "/util/message";
+		}
 }
 	
 

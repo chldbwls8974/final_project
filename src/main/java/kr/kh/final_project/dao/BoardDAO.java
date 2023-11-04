@@ -51,6 +51,13 @@ public interface BoardDAO {
 	void updateBoardComment(@Param("bo_num")int co_bo_num);
 	// 답글 댓글 수 업데이트하기
 	void updateBoardComment2(@Param("bo_num")int co_bo_num);
+	
+	// 자유게시판 리스트 가져오기 (+공지글)
+	List<BoardVO> selectBoardFreeList(@Param("cri")Criteria cri);
+	// 자유게시판 총 갯수 가져오기 (+공지글)
+	int selectFreeTotalCount(@Param("cri")Criteria cri);
+	// 자유게시판 등록하기
+	boolean insertBoard2(@Param("board")BoardVO board);
 
 
 }

@@ -37,5 +37,13 @@ public interface BoardService {
 	boolean deleteBoard(Integer bo_num, MemberVO user);
 	// 게시글 수정하기
 	boolean update(BoardVO board, MemberVO user, MultipartFile[] files, int[] delNums);
+	
+	// 자유게시판 가져오기 ( +공지게시판과 같이 )
+	List<BoardVO> getBoardFreeList(Criteria cri);
+	// 자유게시판 총 갯수 가져오기( +공지게시판과 같이)
+	int getFreeTotalCount(Criteria cri);
+	// 자유게시판 등록하기
+	boolean insertBoard2(BoardVO board, MemberVO user, MultipartFile[] files);
+
 
 }

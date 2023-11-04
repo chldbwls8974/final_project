@@ -68,7 +68,7 @@
 </head>
 <body>
 	<br>
-	<h1>&#x2709 공지글 보는 곳 &#x2709</h1>
+	<h1>&#x2709 상세보기 &#x2709</h1>
 	<form action="<c:url value='/board/detail'/>" method="post">
 		<div class="form-group">
 			<label>제목</label>
@@ -165,7 +165,7 @@
 		<hr>
 		<button type="button"
 				class="btn btn-outline-info col-12 btn-return" 
-				onclick="location.href='<c:url value='/board/notice'/>'">돌아가기
+				onclick="history.back()">돌아가기
 		</button>
 		<c:if test="${user != null && user.me_authority == 'ADMIN'}">
 			<button type="button"
