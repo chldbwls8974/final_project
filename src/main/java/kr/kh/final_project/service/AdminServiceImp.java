@@ -11,11 +11,13 @@ import kr.kh.final_project.dao.ExpenseDAO;
 import kr.kh.final_project.dao.ManagerDAO;
 import kr.kh.final_project.dao.MemberDAO;
 import kr.kh.final_project.dao.PointHistoryDAO;
+import kr.kh.final_project.dao.ReportDAO;
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ManagerVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
+import kr.kh.final_project.vo.ReportVO;
 
 @Service
 public class AdminServiceImp implements AdminService{
@@ -37,6 +39,9 @@ public class AdminServiceImp implements AdminService{
 
 	@Autowired
 	ExpenseDAO expenseDao;
+	
+	@Autowired
+	ReportDAO reportDao;
 	
 	// 회원정보 조회
 	//@Override
@@ -187,6 +192,34 @@ public class AdminServiceImp implements AdminService{
 			cri = new Criteria();
 		}
 		return businessDao.selectTotalCount2(cri);
+	}
+	@Override
+	public List<ReportVO> getReportListBySearch(Criteria cri, String reportType, String searchType1,
+			String searchType2) {
+		if(cri == null) {
+			cri = new Criteria();
+		}
+		return reportDao.selectReportListBySearch(cri, reportType, searchType1, searchType2);
+	}
+	@Override
+	public int getReportListBySearchCount(Criteria cri, String reportType, String searchType1, String searchType2) {
+		if(cri == null) {
+			cri = new Criteria();
+		}
+		return reportDao.selectReportListCountBySearch(cri, reportType, searchType1, searchType2);
+	}
+	@Override
+	public boolean boardReportHandle(ReportVO report) {
+		if(report == null) {
+			return false;
+		}
+		if(report.getRp_state().equals("0")) {
+			report.setRp_state("제재");
+		}else if(report.getRp_state().equals("1")) {
+			report.setRp_state("확인");
+		}
+		
+		return reportDao.updateReportState(report);
 	}
 	
 

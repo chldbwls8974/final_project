@@ -41,26 +41,36 @@
 	<form action="<c:url value='/admin/refund'/>" method="post">
 		<div class="input-group mb-3 mt-3">
 			<div class="input-group-prepend">
+				<select class="form-control search-type-1">
+			      <option value="all">상태</option>
+			      <option value="second">제재</option>
+			      <option value="third">확인</option>
+			      <option value="fourth">미확인</option>
+			    </select>
 			    <select class="form-control search-type-2">
 			      <option value="all">전체</option>
-			      <option value="second">아이디</option>
-			      <option value="third">닉네임</option>
-			      <option value="fourth">이름</option>
+			      <option value="second">신고자</option>
+			      <option value="third">대상자</option>
+			      <option value="fourth">카테고리</option>
+			      <option value="fifth">신고일</option>
 			    </select>
 		    </div>
 	    <input type="text" class="form-control input-search" name="s" id="input-search" placeholder="검색어를 입력하세요." value="${pm.cri.s}">
 	    <button type="button" class="btn btn-outline-success btn-search">찾기</button>
+	    
+	    
 		</div>
 	</form>
 	<div>
 		<table class="table table-hover mt-4">
 			<thead>
 				<tr>
+					<th>신고일</th>
 					<th>카테고리</th>
+					<th>게시글 번호</th>
 					<th>신고자 ID</th>
 					<th>피신고자 ID</th>
 					<th>상태</th>
-					<th>게시글 번호</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -71,28 +81,153 @@
 	</div>
 	<!-- 페이지네이션 -->
 	<ul class="pagination justify-content-center mt-3 pagination">
-	    <li class="page-item"><a class="page-link" href="javascript:void(0);">&lt;</a></li>
-	    <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
-	    <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-	    <li class="page-item"><a class="page-link" href="javascript:void(0);">&gt;</a></li>
+	
 	</ul>
 </body>
 
 <script type="text/javascript">
+	
+const unixTimestamp = 1699110000000; // Unix 시간값
+const date = new Date(unixTimestamp);
+console.log(date);
+	
+	let cri = {
+			page : 1,
+			perPageNum : 5
+	}
+	
+	
+	let data = {
+		cri : {page : cri.page, perPageNum : cri.perPageNum, s : ''},
+		searchType1 : "all",
+		searchType2 : "all",
+		reportType : "커뮤니티"
+	}   
+	
+	$(document).ready(function() {
+		 	getReportListBySearch(data);
+	})
+	
+	//처리상태를 변경하는 함수 (0 : 제재, 1 : 확인)
+	function changeState(rp_num, num){
+		let data = { 
+				rp_num : rp_num,
+				rp_state : num
+		}
+		console.log(data);
+		ajaxJsonToJson(false,'post','/admin/boardReport/Handle', data ,(data)=>{
+		}); 
+		let dbData = createSearchData()
+		getReportListBySearch(dbData); 
+	} 
+	
+	//이벤트 발생되면 리스트를 받아와서 생성
+	$(document).on('change','.search-type-1',function(){
+		let data = createSearchData()
+		getReportListBySearch(data);
+	})
+	
+	//검색버튼 이벤트발생되면 리스트를 받아와서 생성
+	$(document).on('click','.btn-search',function(){
+		let data = createSearchData()
+		getReportListBySearch(data);
+	})
+	
+	//이벤트 발생 시 데이터를 담아서 보내기 위한 함수
+	function createSearchData() {
+	    let searchType1 = $('.search-type-1').val();
+	    let searchType2 = $('.search-type-2').val();
+	    let searchContents = $('.input-search').val();
+	    let data = {
+	        cri: { page: cri.page, perPageNum: cri.perPageNum, s: searchContents },
+	        searchType1: searchType1,
+	        searchType2: searchType2,
+	        reportType : "커뮤니티"
+	    };
+	    return data;
+	}
+	
+	//입력되어있는 필터값을 data에 저장해서 리스트를 생성하는 함수
+	function updatePage(page) {
+	    data.cri.page = page;
+	    data.cri.s = $('.input-search').val();
+	    data.searchType1 = $('.search-type-1').val();
+	    data.searchType2 = $('.search-type-2').val();
+	    getReportListBySearch(data);
+	}
+	
+	function getReportListBySearch(data){
+		ajaxJsonToJson(false, 'post', '/admin/boardReport/search', data ,(data)=>{
+			//테이블 생성
+			createReportListBySearch(data.reportList, '.list-tbody');
+			//페이지네이션 생성
+			createPagination(data.pm, '.pagination');
+		});
+	}
+	
 
+	//리스트를 받아서 테이블 생성하는 함수
+	function createReportListBySearch(reportList, target){
+		let str ='';
+		
+		for(a of reportList){
+			let btnStr = '';
+			let state = '';
+			if(a.rp_state == '미확인'){
+				btnStr = `
+					<div class="btn-group">
+						<button class="btn btn-outline-success btn-state-change" onclick="changeState(\${a.rp_num}, 0)" >제재</button>
+					</div>
+					<div class="btn-group">
+						<button class="btn btn-outline-success btn-state-change" onclick="changeState(\${a.rp_num}, 1)" >확인</button>
+					</div>
+					`;
+			}else{
+				btnStr = `
+					<div class="btn-group">
+						<label class="btn btn-outline-dark disabled" >처리 완료</label>
+					</div>
+					`
+			}
+			str += `
+				<tr>
+					<td>\${a.rp_date}</td>
+					<td>\${a.rc_detail}</td>
+					<td>\${a.rp_bo_num}</td>
+					<td>\${a.me_id}</td>
+					<td>\${a.me_id2}</td>
+					<td>\${a.rp_state}</td>
+					<th>\${btnStr}</th>
+				</tr>
+			`;
+		}
+		$(target).html(str);
+	}
+	
+	
+	
 
-
-
-
-
-
-
-
-
-
-
-
-
+	//페이지네이션
+	function createPagination(pm, target){
+		let str = '';
+		if(pm.prev){
+			str += `<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="updatePage(\${pm.startPage - 1});">이전</a></li>`;
+		}
+		//현재페이지 = active 클래스 추가
+		for(i=pm.startPage; i<=pm.endPage; i++){
+			let active = pm.cri.page == i ? 'active' : '';
+			str += `
+			<li class="page-item \${active}">
+				<a class="page-link" href="javascript:void(0);" onclick="updatePage(\${i});">\${i}</a>
+			</li>`;
+		}
+		if(pm.next){
+			str += `<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="updatePage(\${pm.endPage + 1});">다음</a></li>`;
+		}
+		$(target).html(str);
+	}
+	
+	
 
 /* 
 	let cri = {
@@ -152,16 +287,6 @@
 		});
 	}
 	
-	function getPointHistoryListBySearch(data){
-		
-		ajaxJsonToJson(false, 'post', '/admin/refund/search', data ,(data)=>{
-			//테이블 생성
-			console.log(data.refundList);
-			createPointHistoryListBySearch(data.refundList, '.list-tbody');
-			//페이지네이션 생성
-			createPagination(data.pm, '.pagination');
-		});
-	}
 	
 	//리스트를 받아서 테이블 생성하는 함수
 	function createPointHistoryListBySearch(refundList, target){

@@ -1,6 +1,9 @@
 package kr.kh.final_project.vo;
 
-import java.util.Date;
+
+import java.sql.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 
@@ -13,6 +16,8 @@ public class ReportVO {
 	private int rp_me_num2;
 	private String rp_state;
 	private Integer bo_num;
+	@JsonFormat(pattern="yyyy-MM-dd")
+	private Date rp_date;
 	
 	//신고 카테고리
 	private int rc_num;
@@ -39,4 +44,7 @@ public class ReportVO {
 	int me_state2;
 	private String me_session_id;
 	private Date me_session_limit;
+	
+	//회원2
+	String me_id2;
 }

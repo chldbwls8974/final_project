@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -24,6 +26,7 @@ import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ManagerVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
+import kr.kh.final_project.vo.ReportVO;
 
 @Controller
 public class AdminController {
@@ -264,19 +267,53 @@ public class AdminController {
 		return ("/admin/boardReport");
 	}
 	
+	@ResponseBody
+	@PostMapping("/admin/boardReport/search")
+	public Map<String, Object> boardReportManagementSearch(@RequestBody ObjectNode saveObj) throws JsonProcessingException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		// json데이터를 객체로 만들기 위해서 ObjectMapper 이용
+		ObjectMapper mapper = new ObjectMapper();   
+		Criteria cri = mapper.treeToValue(saveObj.get("cri"), Criteria.class);
+	    String searchType1 = saveObj.get("searchType1").asText();
+	    String searchType2 = saveObj.get("searchType2").asText();
+	    String reportType = saveObj.get("reportType").asText();
+	    //검색에 맞는 리스트 가져오는 메서드
+	    List<ReportVO> reportList = adminService.getReportListBySearch(cri, reportType, searchType1, searchType2);
+	    //totalCount 구하는 메서드
+	    int totalCount = adminService.getReportListBySearchCount(cri, reportType, searchType1, searchType2);
+	    System.out.println(reportList);
+	    //보여줄 페이지 수 = 3
+	    PageMaker pm = new PageMaker(3, cri, totalCount);
+	    map.put("reportList", reportList);
+	    map.put("pm", pm);
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/admin/boardReport/Handle")
+	public Map<String, Object> boardReportHandle(@RequestBody ReportVO report) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println(report);
+		boolean res = false;
+		if(adminService.boardReportHandle(report)) {
+			res = true;
+		}
+		return map;
+	}
+	
 	@GetMapping("/admin/matchReport")
 	public String matchReportManagement(Model model) {
 		return ("/admin/matchReport");
 	}
-	
 	
 	@ResponseBody
 	@PostMapping("/admin/refund/approval")
 	public Map<String, Object> refundApproval(@RequestBody PointHistoryVO ph){
 		Map<String, Object> map = new HashMap<String, Object>();
 		//포인트 환급신청의 상태를 완료로 변경함
-	    boolean res = adminService.refundApproval(ph);
-	    map.put("res", res);
+		boolean res = adminService.refundApproval(ph);
+		map.put("res", res);
 		return map;
 	}
+	
 }
