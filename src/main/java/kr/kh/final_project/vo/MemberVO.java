@@ -40,4 +40,11 @@ public class MemberVO {
 	private String me_session_id;
 	private Date me_session_limit;
 	
+	public String getMe_profile() {
+		if(me_profile ==null) {
+			me_profile = "/resources/profile/basic.jpg";
+		}
+		return me_profile;
+	}
+	
 }

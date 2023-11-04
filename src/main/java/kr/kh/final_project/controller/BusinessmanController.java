@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -42,45 +41,48 @@ public class BusinessmanController {
 	@Autowired
 	RegionService regionService;
 	
+	//시설 목록
 	@GetMapping("/businessman/facility")
 	public String facility(Model model, HttpSession session) {
-		//로그인한 유저 정보를 가져와서 member에 저장
 		MemberVO member = (MemberVO)session.getAttribute("user");
-		
 		//서비스에게 user 정보를 주고 시설 리스트 가져오라고 시킴
 		List<FacilityVO> list = businessmanService.getFacilityList(member);
 
-		//시설이 0이면
+		if(member == null || !member.getMe_authority().equals("BUSINESS")) {
+			Message msg = new Message("/", "사업자 권한이 필요합니다.");
+			model.addAttribute("msg", msg);
+			return "/message";
+		}
 		if(list.size() == 0) {
-			//등록된 시설이 없다는 메세지가 뜨면서 시설 등록 페이지로 이동하게 됨
 	        Message msg = new Message("/businessman/facilityInsert", "등록된 시설이 없습니다. 시설을 등록해주세요");
 			model.addAttribute("msg", msg);
 			return "/message";
 		}
-		//가져온 리스트를 화면에 전송
 		model.addAttribute("list", list);
 		return "/businessman/facility";
-	}
-		
+	}		
+	//시설 등록
 	@GetMapping("/businessman/facilityInsert")
 	public String facilityInsert(Model model, FacilityVO facility, HttpSession session) {
-		//로그인한 회원 정보를 가져오고, 권한이 사업자일 경우에만 사업자가 등록한 시설 정보를 알 수 있음
-		//멤버와 사업자를 연결하기 위해 user 정보를 가져옴 (session은 로그인한 정보와 interceptor에 있는 정보만 가져오는 역할)
+		//멤버와 사업자를 연결하기 위해 user 정보를 가져옴 
 		MemberVO member = (MemberVO)session.getAttribute("user");
-		//System.out.println(member);
 		
 		//user의 me_num을 가져와서 business에 저장 -> BusinessmanVO의 bu_num으로 facility 정보도 확인 가능
-		BusinessmanVO business = businessmanService.getBusinessmanByNum(member.getMe_num());
+		BusinessmanVO business = businessmanService.getBusinessmanByMeNum(member.getMe_num());
 		
 		//서비스에게 MainRegion메서드를 가져와서 MainRegion에 저장
 		List<RegionVO> MainRegion = businessmanService.getMainRegion();
 
-		//business에 저장된 user의 me_num을 화면에 보여줌
+		if(member == null || !member.getMe_authority().equals("BUSINESS")) {
+			Message msg = new Message("/", "사업자 권한이 필요합니다.");
+			model.addAttribute("msg", msg);
+			return "/message";
+		}
 		model.addAttribute("business", business);
-		model.addAttribute("MainRegion",MainRegion);
+		model.addAttribute("MainRegion", MainRegion);
 		return "/businessman/facilityInsert";
-	}
-	
+	}	
+	//시설 등록 시 지역 선택(select box)
 	@ResponseBody
 	@GetMapping("/businessman/facilityInsert/region")
 	public Map<String, Object> region(@RequestParam String rg_main, Model model){
@@ -89,11 +91,10 @@ public class BusinessmanController {
 		map.put("SubRegion", SubRegion);
 		return map;
 	}
-	
+	//시설 등록
 	@PostMapping("/businessman/facilityInsert")
 	public String insertfacility(Model model, FacilityVO facility, HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		//System.out.println(member);
 
 		List<RegionVO> MainRegion = businessmanService.getMainRegion();
 
@@ -106,20 +107,18 @@ public class BusinessmanController {
 				model.addAttribute("msg", "시설을 등록하지 못했습니다.");
 				model.addAttribute("url", "/businessman/facilityInsert");
 			}
-		model.addAttribute("MainRegion",MainRegion);
+		model.addAttribute("MainRegion", MainRegion);
 		return "/util/message";
-	}
-	
+	}	
+	//시설 정보 수정
 	@GetMapping("/businessman/facilityUpdate")
 	public String updateFacility(Model model, Integer fa_num, 
 			HttpSession session) {
-		//System.out.println(fa_num);
 		MemberVO member = (MemberVO)session.getAttribute("user");
-		//System.out.println(member);
-		BusinessmanVO business = businessmanService.getBusinessmanByNum(member.getMe_num());
-
+		//회원번호로 사업자 정보 가져와서 저장
+		BusinessmanVO business = businessmanService.getBusinessmanByMeNum(member.getMe_num());
+		//시설번호로 시설 정보 가져와서 저장
 		FacilityVO facility = businessmanService.getFacility(fa_num);
-		//System.out.println(fa_num);
 		
 		List<RegionVO> MainRegion = businessmanService.getMainRegion();
 
@@ -128,29 +127,31 @@ public class BusinessmanController {
 			model.addAttribute("msg", msg);
 			return "message";
 		}
+		System.out.println(MainRegion);
 		model.addAttribute("business", business);
 		model.addAttribute("facility", facility);
-		model.addAttribute("MainRegion",MainRegion);
+		model.addAttribute("MainRegion", MainRegion);
 		return "/businessman/facilityUpdate";
 	}
-	
+	//시설 정보 수정 시 지역 수정 => region1로 메서드명 변경 (facilityInsert와 중복되어서 바꿈)
 	@ResponseBody
 	@GetMapping("/businessman/facilityUpdate/region1")
-	//region1로 메서드명 변경 (facilityInsert와 중복되어서 바꿈)
 	public Map<String, Object> region1(@RequestParam String rg_main, Model model){
+		System.out.println("region");
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<RegionVO> SubRegion = businessmanService.getSubRegionByMainRegion(rg_main);
+		System.out.println(SubRegion);
 		map.put("SubRegion", SubRegion);
 		return map;
 	}
 	
+	//시설 정보 수정
 	@PostMapping("/businessman/facilityUpdate")
 	public String facilityUpdate(Model model, FacilityVO facility, HttpSession session) {
-		System.out.println(facility);
 		Message msg;
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		BusinessmanVO business = businessmanService.getBusinessmanByNum(user.getMe_num());
-		//System.out.println(business);
+		//회원번호로 사업자 정보 가져와서 business에 저장
+		BusinessmanVO business = businessmanService.getBusinessmanByMeNum(user.getMe_num());
 		
 		List<RegionVO> MainRegion = businessmanService.getMainRegion();
 		
@@ -159,30 +160,24 @@ public class BusinessmanController {
 		}else {
 			msg = new Message("/businessman/facilityUpdate?fa_num="+facility.getFa_num(), "시설 정보를 수정하지 못했습니다."); 
 		}
-		model.addAttribute("MainRegion",MainRegion);
+		model.addAttribute("MainRegion", MainRegion);
 		model.addAttribute("msg", msg);
 		return "message";
 	}
 	
-
-	//==============================================================//
 	
+	//경기장 목록
 	@GetMapping("/businessman/stadium/{fa_num}")
 	public String stadium(Model model, @PathVariable("fa_num")Integer fa_num, 
 			HttpSession session) {
-		//System.out.println(fa_num);
-		
 		//시설 번호를 통해 시설 정보를 가져와서 facility에 저장
 		FacilityVO facility = businessmanService.getFacility(fa_num);
-		//System.out.println(facility);
 		
 		//시설 번호를 주고 해당 시설번호에 등록된 경기장 리스트를 저장
 		List<StadiumVO> stadiumList = businessmanService.getStadiumList(fa_num);
 		
-		//시설이 0이면
 		if(stadiumList.size() == 0) {
-			//등록된 경기장이 없다는 메세지가 뜨면서 경기장 등록 페이지로 이동하게 됨
-	        Message msg = new Message("/businessman/stadiumInsert", "등록된 경기장이 없습니다. 경기장을 등록해주세요");
+	        Message msg = new Message("/businessman/stadiumInsert/" + fa_num , "등록된 경기장이 없습니다. 경기장을 등록해주세요");
 			model.addAttribute("msg", msg);
 			return "/message";
 		}
@@ -190,22 +185,18 @@ public class BusinessmanController {
 		model.addAttribute("stadiumList", stadiumList);
 		return "/businessman/stadium";
 	}
-	
+	//경기장 등록
 	@GetMapping("/businessman/stadiumInsert/{fa_num}")
 	public String stadiumInsertGet(Model model, @PathVariable("fa_num")Integer fa_num, 
 			FacilityVO facility, HttpSession session) {
-		//System.out.println(fa_num);
 		return "/businessman/stadiumInsert";
 	}
+	//경기장 등록
+	@PostMapping("/businessman/stadiumInsert")
+	public String insertStadium(Model model, 
+			StadiumVO stadium, HttpSession session) {
 
-	@PostMapping("/businessman/stadiumInsert/{fa_num}")
-	public String insertStadium(Model model, StadiumVO stadium, 
-			 HttpSession session) {
-		//stadiumInsert.jsp에 이미 st_fa_num이 넘겨져 있기 때문에 fa_num불러오는 것 생략 가능
-		//System.out.println(stadium);
-		
-		//경기장 등록 시 해당 fa_num에 등록을 했기 때문에 '등록'버튼을 누르면 url에 fa_num
-		//이 표기되어야 해서 'i'에 시설 번호를 저장
+		//'등록'버튼을 누르면 url에 저장한 시설의 번호(fa_num)가 표기되어야 해서 'i'에 시설 번호 저장
 		int i = stadium.getSt_fa_num();
 		
 		//Service에게 stadium 정보를 주고 메서드로 가져와서 res에 저장
@@ -220,28 +211,24 @@ public class BusinessmanController {
 			}
 		return "/util/message";
 	}
-	
+	//경기장 정보 수정
 	@GetMapping("/businessman/stadiumUpdate")
 	public String updateStadium(Model model, Integer st_num, HttpSession session) {
 		//st_num을 통해서 경기장 정보를 가져오고 stadium에 저장(st_fa_num 정보도 포함됨)
 		StadiumVO stadium= businessmanService.getStadium(st_num);
-		//System.out.println(stadium);
 		
 		model.addAttribute("stadium", stadium);
 		return "/businessman/stadiumUpdate";
 	}
-	
+	//경기장 정보 수정
 	@PostMapping("/businessman/stadiumUpdate")
 	public String stadiumUpdate(Model model, StadiumVO stadium, FacilityVO facility, HttpSession session) {
-		System.out.println(stadium);
-		
-		//j에 해당 경기장 시설 번호 저장 
+		//'j'에 해당 경기장의 '시설 번호' 저장 
 		int j = stadium.getSt_fa_num();
 
 		boolean res = businessmanService.updateStadium(stadium);
 		if(res) {
 			model.addAttribute("msg", "경기장 수정이 완료되었습니다.");
-			//경기장 수정이 완료되면 등록한 시설의 경기장 목록으로 돌아가야 함
 			model.addAttribute("url", "/businessman/stadium/" + j);
 		}else {
 			model.addAttribute("msg", "경기장 수정에 실패했습니다.");
@@ -251,7 +238,6 @@ public class BusinessmanController {
 	}
 	
 	
-	//====================================================================//
 
 	@GetMapping("/buisnessman/manage/schedule")
 	public String insertSchedule(Model model, HttpSession session) {

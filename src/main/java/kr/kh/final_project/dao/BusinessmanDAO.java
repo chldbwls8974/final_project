@@ -10,18 +10,16 @@ import kr.kh.final_project.vo.MemberVO;
 
 public interface BusinessmanDAO {
 
+	//시설 리스트 가져오기
 	List<FacilityVO> selectFacilityList(@Param("member")MemberVO member);
-
-	BusinessmanVO selectBusinessmanByNum(@Param("me_num")Integer me_num);
-
+	//회원번호로 사업자정보 가져오기
+	BusinessmanVO selectBusinessmanByMeNum(@Param("me_num")Integer me_num);
+	//시설 등록
 	boolean insertFacility(@Param("facility")FacilityVO facility, @Param("me_num")Integer me_num);
-
+	//시설 정보 수정
 	boolean updateFacility(@Param("facility")FacilityVO facility);
-
+	//시설번호로 시설 정보 가져오기
 	FacilityVO selectFacility(@Param("fa_num")Integer fa_num);
-
-	List<FacilityVO> selectFacilityNum(@Param("fa_num")Integer fa_num);
-
 
 
 }

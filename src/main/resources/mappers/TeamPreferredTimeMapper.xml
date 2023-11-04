@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.final_project.dao.TeamPreferredTimeDAO">
+<!-- 	<select id="selectPTListByMeNum" resultType="kr.kh.final_project.vo.TeamPreferredTimeVO"> -->
+<!-- 		select -->
+<!-- 			* -->
+<!-- 		from -->
+<!-- 			preferred_time -->
+<!-- 		where -->
+<!-- 			pt_me_num = #{me_num} -->
+<!-- 	</select> -->
+	<insert id="insertPreferredTime">
+		insert into team_preferred_time(tt_cl_num, tt_ti_num) values(#{cl_num},#{pt_num})
+	</insert>
+</mapper>

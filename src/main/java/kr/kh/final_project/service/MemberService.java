@@ -55,9 +55,9 @@ public interface MemberService {
 
 	boolean cancelRefundApply(PointHistoryVO ph);
 
-	boolean updateProfile(MemberVO member, MemberVO user, MultipartFile file);
-
 	MemberVO isCheck2(String check);
+	
+	boolean updateProfile(MemberVO user, MultipartFile profileImage);
 	
 	int getMemberPoint(MemberVO user);
 	
@@ -68,8 +68,8 @@ public interface MemberService {
 	int getMemberCouponListCount(MemberVO user);
 	
 	boolean signupCoupon(String memberNickname, MemberVO newMember);
-
-
+	
+	boolean emailMemberSignout(MemberVO member);
 
 
 

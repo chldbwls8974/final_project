@@ -11,9 +11,11 @@ import kr.kh.final_project.vo.MemberVO;
 
 public interface BoardService {
 
-	boolean insertMapplication(BoardVO board, MemberVO user, MultipartFile[] files);
-
-	boolean insertBapplication(BoardVO board, MemberVO user, MultipartFile[] files);
+	//매니저 신청
+	boolean insertManagerApplication(BoardVO board, MemberVO user, MultipartFile[] files);
+	
+	//사업자 신청
+	boolean insertBusinessmanApplication(BoardVO board, MemberVO user, MultipartFile[] files);
 	
 	// 공지게시판 가져오기
 	List<BoardVO> getBoardList(Criteria cri);
