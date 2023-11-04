@@ -33,8 +33,8 @@
 <h1>  &#x1F54A 자유게시판  &#x1F54A;</h1>
 	<div style="display:flex; justify-content: flex-end;">
 		<button type="button"
-			    class="btn btn-outline-info btn-info"
-				onclick="location.href='<c:url value='/board/insert2'/>'">글쓰기
+			    class="btn btn-outline-info btn-info btn-free"
+				>글쓰기
 		</button>
 	</div>	
 <!-- 자유게시판 검색 기능 -->
@@ -123,11 +123,17 @@
 	</ul>
  </div>
  <script type="text/javascript">
- 	/* $(document).on('click', '.btn-info', function(){
- 		var url = '<c:url value="/board/insert"/>';
- 		
- 		window.location.href = url;
- 	}); */
+ $(document).on('click', '.btn-free', function(){
+		let co_me_num = '${user.me_num}';
+		if(co_me_num == 0 ){
+			if(confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?')){
+				location.href = '<c:url value="/member/login"/>'
+			}
+			return
+		}else{
+			location.href = '<c:url value="/board/insert2"/>'
+		}
+	});
  </script>
 </body>
 </html>

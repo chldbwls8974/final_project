@@ -127,8 +127,10 @@
 						<span class="comment-date">${comment.co_date}</span>	
 					</div>
 					<div class="comment-item">
-						<button type="button" class="btn btn-outline-info btn-sm btn-update" data-num="${comment.co_num}">수정</button>
-						<button type="button" class="btn btn-outline-info btn-sm btn-del" data-num="${comment.co_num}">삭제</button>
+						<c:if test="${user.me_num == comment.me_num}">
+							<button type="button" class="btn btn-outline-info btn-sm btn-update" data-num="${comment.co_num}">수정</button>
+							<button type="button" class="btn btn-outline-info btn-sm btn-del" data-num="${comment.co_num}">삭제</button>
+						</c:if>
 						<c:if test="${comment.co_num == comment.co_ori_num}">						
 							<button type="button" class="btn btn-outline-primary btn-sm btn-reply" value="${comment.co_num}">답글</button>						
 						</c:if>	
@@ -167,13 +169,13 @@
 				class="btn btn-outline-info col-12 btn-return" 
 				onclick="history.back()">돌아가기
 		</button>
-		<c:if test="${user != null && user.me_authority == 'ADMIN'}">
+		<c:if test="${user != null && user.me_num == board.bo_me_num}">
 			<button type="button"
 					class="btn btn-outline-warning col-12 btn-update"
 					onclick="location.href='<c:url value='/board/update?bo_num=${board.bo_num}'/>'">수정하기
 			</button><br>
 		</c:if>
-		<c:if test="${user != null && user.me_authority == 'ADMIN'}">
+		<c:if test="${user != null && user.me_num == board.bo_me_num}">
 			<button type="button"
 					class="btn btn-outline-danger col-12 btn-delete"
 					onclick="location.href='<c:url value='/board/delete?bo_num=${board.bo_num}'/>'">삭제하기
@@ -439,6 +441,7 @@
 						let btnStr = '';
 						if (comment.co_num == comment.co_ori_num){
 							btnStr =`<button type="button" class="btn btn-outline-primary btn-sm btn-reply" data-num="\${comment.co_num}" >답글</button>`}
+						
 						str += `
 							<div class="box-comment">
 								<div class="comment-box" \${comment.co_num != comment.co_ori_num ? 'style="margin-left: 40px;"' : ''}>

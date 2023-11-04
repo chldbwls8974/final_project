@@ -59,5 +59,14 @@ public interface BoardDAO {
 	// 자유게시판 등록하기
 	boolean insertBoard2(@Param("board")BoardVO board);
 
+	
+	// 문의게시판 리스트 가져오기
+	List<BoardVO> selectBoardInquiryList(@Param("cri")Criteria cri);
+	// 문의게시판 총 갯수 가져오기
+	int selectInquiryTotalCount(@Param("cri")Criteria cri);
+	// 문의게시판 등록하기
+	boolean insertBoard5(@Param("board")BoardVO board);
+	
+
 
 }
