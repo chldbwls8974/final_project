@@ -26,6 +26,6 @@ public interface PointHistoryDAO {
 
 	boolean updateRefundApproval(@Param("ph")PointHistoryVO ph);
 
-	void insertPointHistoryByPayment(@Param("ph")PointHistoryVO ph);
+	boolean insertPointHistoryByPayment(@Param("ph")PointHistoryVO ph);
 
 }

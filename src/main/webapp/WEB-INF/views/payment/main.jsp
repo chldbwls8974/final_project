@@ -51,7 +51,6 @@
 		me_email = '${user.me_email}';
 		me_name = '${user.me_name}';
 		me_num = ${user.me_num};
-		console.log(me_num);
 	});
 	
 	
@@ -87,12 +86,14 @@
 	        	ajaxJsonToJson(false, 'post', "/payment/validate", data,(data)=>{
 	        		if(data){
 	        			alert("결제 완료");
+	        			console.log(rsp);
 	        		}else{
+	        			alert("결제 실패");
 	        			alert(data.responseText);
 	        			cancelPayments(rsp);
 	        		}
 				});
-	            console.log(rsp);
+	            
 	        } else {
 	        	console.log()
 	        	alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);

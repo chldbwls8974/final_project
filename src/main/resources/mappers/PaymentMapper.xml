@@ -16,4 +16,10 @@
 		where 
 			pm_imp_uid = #{payment.pm_imp_uid};
 	</select>
+	<insert id="insertPayment">
+		insert into 
+			payment(pm_imp_uid, pm_amount, pm_ph_num) 
+		values
+			(#{payment.pm_imp_uid}, #{payment.pm_amount},#{payment.pm_ph_num})
+	</insert>
 </mapper>

@@ -45,33 +45,16 @@ public class PaymentController {
 		//아임포트 서버쪽에 결제된 정보 조회.
 		//paymentByImpUid 는 아임포트에 제공해주는 api인 결제내역 조회(/payments/{imp_uid})의 역할을 함. 
 		IamportResponse<Payment> irsp = paymentLookup(impUid);
-
-		paymentService.verifyIamportService(irsp, amount, me_num);
 		
+		//서비스에서 결제 검증
+		// 성공 : DB에 등록
+		// 실패 : DB에 등록하지 않고 false 반환
+		paymentService.verifyIamportService(irsp, amount, me_num);
 		return irsp;
 	}
 	
-	/**
-	 * impUid로 결제내역 조회.
-	 * @param impUid
-	 * @return
-	 * @throws IamportResponseException
-	 * @throws IOException
-	 */
-	public IamportResponse<Payment> paymentLookup(String impUid) throws IamportResponseException, IOException{
-		return iamportClientApi.paymentByImpUid(impUid);
-	}
-	
-	/**
-	 * 결제한 금액을 취소요청이 들어오면 실행되는 메서드<br>
-	 * 환불될 금액과 아임포트 서버에서 조회한 결제 금액이 다르면 환불 or 취소 안됨.
-	 * @param map
-	 * @param principal
-	 * @return
-	 * @throws IamportResponseException
-	 * @throws IOException
-	 * @throws RefundAmountIsDifferent
-	 */
+	//결제 취소 메서드
+	// 결제에 실패한 impUid를 이용해 결제취소에 필요한 값을 가져와서 취소하는 메서드
 	@PostMapping("cancelPayments")
 	public IamportResponse<Payment> cancelPayments(@RequestBody Map<String,String> map) throws IamportResponseException, IOException {
 		
@@ -89,5 +72,13 @@ public class PaymentController {
 		
 		return cancel;
 	}
+	
+	
+	//impUid로 결제내역 조회
+	public IamportResponse<Payment> paymentLookup(String impUid) throws IamportResponseException, IOException{
+		return iamportClientApi.paymentByImpUid(impUid);
+	}
+	
+	
 	
 }

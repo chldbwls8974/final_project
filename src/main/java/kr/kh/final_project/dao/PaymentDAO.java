@@ -8,4 +8,6 @@ public interface PaymentDAO {
 
 	PaymentVO getPaymentByImpUid(@Param("impUid")String impUid);
 
+	boolean insertPayment(@Param("payment")PaymentVO payment);
+
 }
