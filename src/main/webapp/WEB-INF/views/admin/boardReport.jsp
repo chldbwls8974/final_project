@@ -7,69 +7,55 @@
 <meta charset="UTF-8">
 <style>
 </style>
-<title>포인트 환급 관리</title>
+<title>커뮤니티 신고 관리</title>
 </head>
 <style>
+	.btn-info{
+		color : outline-info;
+		background-color : white;
+		border : 1px solid outline-info;
+	}
+	.btn-info:hover{
+		background-color : outline-info;
+		color : white;
+	}
+	h1{
+		text-align : center
+	}
 	.error {
 		color: #f00;
 		display: block;
 	}
 </style>
 <body>
-	<h1>포인트 환급 관리</h1>
+	<h1>커뮤니티 신고 관리</h1>
 	<br>
 	<hr>
-	<form action="<c:url value='/admin/refund'/>" method="post">
-		<div class="input-group mb-3 mt-3">
-			<div class="input-group-prepend">
-			    <select class="form-control search-type-1">
-			      <option value="all">상태</option>
-			      <option value="second">미완료</option>
-			      <option value="third">완료</option>
-			    </select>
-			    <select class="form-control search-type-2">
-			      <option value="all">전체</option>
-			      <option value="second">아이디</option>
-			      <option value="third">닉네임</option>
-			      <option value="fourth">이름</option>
-			    </select>
-		    </div>
-	    <input type="text" class="form-control input-search" name="s" id="input-search" placeholder="검색어를 입력하세요." value="${pm.cri.s}">
-	    <button type="button" class="btn btn-outline-success btn-search">찾기</button>
-		</div>
-	</form>
-	<div>
-		<table class="table table-hover mt-4">
-			<thead>
-				<tr>
-					<th>아이디</th>
-					<th>닉네임</th>
-					<th>이름</th>
-					<th>전화번호</th>
-					<th>보유 포인트</th>
-					<th>환급 신청 금액</th>
-					<th>상태</th>
-					<th>은행명</th>
-					<th>계좌번호</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody class="list-tbody">
-			
-			</tbody>
-		</table>
+	<div class="btn-group btn-group">
+	  <button type="button"
+				    class="btn btn-outline-info btn-info" onclick="location.href='<c:url value='/admin/boardReport'/>'">커뮤니티 신고</button>
+	  <button type="button"
+				    class="btn btn-outline-info btn-info" onclick="location.href='<c:url value='/admin/matchReport'/>'">매치 신고</button>
 	</div>
-	<!-- 페이지네이션 -->
-	<ul class="pagination justify-content-center mt-3 pagination">
-	    <li class="page-item"><a class="page-link" href="javascript:void(0);">&lt;</a></li>
-	    <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
-	    <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-	    <li class="page-item"><a class="page-link" href="javascript:void(0);">&gt;</a></li>
-	</ul>
 </body>
 
 <script type="text/javascript">
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 
 	let cri = {
 			page : 1,
 			perPageNum : 5
@@ -221,6 +207,6 @@
 	    if (event.key === "Enter") {
 	        event.preventDefault(); // 엔터 키 동작을 막음
 	    }
-	});
+	}); */
 </script>
 </html>

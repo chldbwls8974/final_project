@@ -107,7 +107,6 @@
 	/* 환급이력리스트를 가져오는 함수 */
 	$(document).ready(function() {
    	 	getPointHistoryList(cri);
-   	 	
 	});
 	
 	

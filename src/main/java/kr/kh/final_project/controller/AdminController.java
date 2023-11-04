@@ -234,7 +234,6 @@ public class AdminController {
 	
 	@GetMapping("/admin/refund")
 	public String refundManagement(Model model) {
-			
 		return ("/admin/refund");
 	}
 	
@@ -242,37 +241,41 @@ public class AdminController {
 	@PostMapping("/admin/refund/search")
 	public Map<String, Object> refundManagementSearch(@RequestBody ObjectNode saveObj) throws JsonProcessingException {
 		Map<String, Object> map = new HashMap<String, Object>();
-		// JSON을 Object화 하기 위한 Jackson ObjectMapper 이용
+		// json데이터를 객체로 만들기 위해서 ObjectMapper 이용
 		ObjectMapper mapper = new ObjectMapper();   
 		Criteria cri = mapper.treeToValue(saveObj.get("cri"), Criteria.class);
 	    String searchType1 = saveObj.get("searchType1").asText();
 	    String searchType2 = saveObj.get("searchType2").asText();
-	    System.out.println(cri);
-	    System.out.println(searchType1);
-	    System.out.println(searchType2);
 	    //검색에 맞는 리스트 가져오는 메서드
 	    List<PointHistoryVO> refundList = adminService.getRefundListBySearch(cri, searchType1, searchType2);
 	    //totalCount 구하는 메서드
 	    int totalCount = adminService.getRefundListBySearchCount(cri, searchType1, searchType2);
-	    System.out.println(refundList);
-	    System.out.println("totalCount : " + totalCount);
 
 	    //보여줄 페이지 수 = 3
 	    PageMaker pm = new PageMaker(3, cri, totalCount);
 	    map.put("refundList", refundList);
+	    System.out.println(refundList);
 	    map.put("pm", pm);
 		return map;
 	}
+	
+	@GetMapping("/admin/boardReport")
+	public String boardReportManagement(Model model) {
+		return ("/admin/boardReport");
+	}
+	
+	@GetMapping("/admin/matchReport")
+	public String matchReportManagement(Model model) {
+		return ("/admin/matchReport");
+	}
+	
 	
 	@ResponseBody
 	@PostMapping("/admin/refund/approval")
 	public Map<String, Object> refundApproval(@RequestBody PointHistoryVO ph){
 		Map<String, Object> map = new HashMap<String, Object>();
-	    
-	    System.out.println(ph);
-	    
+		//포인트 환급신청의 상태를 완료로 변경함
 	    boolean res = adminService.refundApproval(ph);
-	    
 	    map.put("res", res);
 		return map;
 	}

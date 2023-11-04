@@ -57,7 +57,7 @@
 		
 		<if test='searchType1 == "all"'>
 		where
-			(ph_source = '4' or '5')
+			ph_source in('4', '5')
 		</if>
 		<if test='searchType1 == "second"'>
 		where
@@ -106,7 +106,7 @@
 		
 		<if test='searchType1 == "all"'>
 		where
-			(ph_source = '4' or '5')
+			ph_source in('4', '5')
 		</if>
 		<if test='searchType1 == "second"'>
 		where

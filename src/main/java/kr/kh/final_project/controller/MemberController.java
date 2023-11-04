@@ -196,6 +196,7 @@ public class MemberController {
 	@ResponseBody
 	@PostMapping("/member/refund/list")
 	public Map<String, Object> refundList(HttpSession session, @RequestBody Criteria cri){
+		System.out.println("asd");
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		Map<String, Object> map = new HashMap<String, Object>();
 		

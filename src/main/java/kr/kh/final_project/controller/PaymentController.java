@@ -37,7 +37,7 @@ public class PaymentController {
 	MemberService memberService;
 	
 	@PostMapping("/payment/validate")
-	public IamportResponse<Payment> verifyIamport(@RequestBody Map<String,String> map) throws IamportResponseException, IOException {
+	public IamportResponse<Payment> verifyIamport(@RequestBody Map<String,String> map) throws IamportResponseException, IOException, CustomException {
 		String impUid = map.get("imp_uid");//실제 결제금액 조회위한 아임포트 서버쪽에서 id
 		int me_num = Integer.parseInt(map.get("me_num")); //유저번호
 		int amount = Integer.parseInt(map.get("amount"));//실제로 유저가 결제한 금액
@@ -46,11 +46,12 @@ public class PaymentController {
 		//paymentByImpUid 는 아임포트에 제공해주는 api인 결제내역 조회(/payments/{imp_uid})의 역할을 함. 
 		IamportResponse<Payment> irsp = paymentLookup(impUid);
 		
-		//서비스에서 결제 검증
-		// 성공 : DB에 등록
-		// 실패 : DB에 등록하지 않고 false 반환
-		paymentService.verifyIamportService(irsp, amount, me_num);
-		return irsp;
+		//서비스에서 결제 검증 //실패시 예외 발생
+		if (!paymentService.verifyIamportService(irsp, amount, me_num)) {
+			throw new CustomException("결제 검증 실패");
+		}else {
+			return irsp;
+		}
 	}
 	
 	//결제 취소 메서드

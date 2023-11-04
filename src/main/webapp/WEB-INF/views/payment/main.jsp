@@ -83,17 +83,23 @@
                     amount: rsp.paid_amount,
                     me_num : me_num
 	        	}
-	        	ajaxJsonToJson(false, 'post', "/payment/validate", data,(data)=>{
-	        		if(data){
-	        			alert("결제 완료");
-	        			console.log(rsp);
-	        		}else{
-	        			alert("결제 실패");
-	        			alert(data.responseText);
-	        			cancelPayments(rsp);
-	        		}
+	        	$.ajax({
+					type:"post",
+					url:'<c:url value="/payment/validate"/>',
+					data:JSON.stringify(data),
+					contentType:"application/json; charset=utf-8",
+					dataType:"json",
+					success: function(data) {
+						alert("결제 완료");
+						console.log(rsp);
+						//self.close();
+					},
+					error: function(data){
+						alert("결제 실패");
+						alert(data.responseText);
+						cancelPayments(rsp);
+					}
 				});
-	            
 	        } else {
 	        	console.log()
 	        	alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
