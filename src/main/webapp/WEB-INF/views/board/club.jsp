@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>개인매치 게시판</title>
+<title>클럽매치 게시판</title>
 <style>
 	.btn-info{
 		color : outline-info;
@@ -31,15 +31,15 @@
 </head>
 <body>
 <br>
-<h1>  &#x1F388 개인매치 게시판  &#x1F388;</h1>
+<h1>  &#x1F37E 클럽매치 게시판  &#x1F37E;</h1>
 	<div style="display:flex; justify-content: flex-end;">
 		<button type="button"
-			    class="btn btn-outline-info btn-info btn-individual"
+			    class="btn btn-outline-info btn-info btn-club"
 				>글쓰기
 		</button>
 	</div>	
 <!-- 개인매치 게시판 검색 기능 -->
-	<form action="<c:url value='/board/individual'/>" method="get">
+	<form action="<c:url value='/board/club'/>" method="get">
 	<div class="input-group mb-3 mt-3">
 		<div class="input-group-prepend">
 		    <select class="form-control" id="me_authority" name="t">
@@ -110,7 +110,7 @@
 		        <td><a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_comment}</a></td>
 		      </tr>
 		    </c:when>
-		    <c:when test="${bo.bo_bt_num == 3}">
+		    <c:when test="${bo.bo_bt_num == 4}">
 		      <tr>
 		      	<td>${bo.bo_num}</td>
 		      	<td><a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_title}</a></td>
@@ -129,25 +129,25 @@
 		<c:if test="${pm.prev}">
 			<li class="page-item">
 				<a class="page-link" 
-					href="<c:url value='/board/individual${pm.cri.getUrl(pm.startPage-1) }'/>">이전</a>
+					href="<c:url value='/board/club${pm.cri.getUrl(pm.startPage-1) }'/>">이전</a>
 			</li>
 		</c:if>
 		<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
 			<li class="page-item <c:if test='${pm.cri.page == i }'>active</c:if>">
 				<a class="page-link" 
-					href="<c:url value='/board/individual${pm.cri.getUrl(i)}'/>">${i}</a>
+					href="<c:url value='/board/club${pm.cri.getUrl(i)}'/>">${i}</a>
 			</li>
 		</c:forEach>
 		<c:if test="${pm.next}">
 			<li class="page-item">
 				<a class="page-link" 
-					href="<c:url value='/board/individual${pm.cri.getUrl(pm.endPage+1) }'/>">다음</a>
+					href="<c:url value='/board/club${pm.cri.getUrl(pm.endPage+1) }'/>">다음</a>
 			</li>
 		</c:if>
 	</ul>
  </div>
  <script type="text/javascript">
- $(document).on('click', '.btn-individual', function(){
+ $(document).on('click', '.btn-club', function(){
 		let co_me_num = '${user.me_num}';
 		if(co_me_num == 0 ){
 			if(confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?')){
@@ -155,7 +155,7 @@
 			}
 			return
 		}else{
-			location.href = '<c:url value="/board/insert3"/>'
+			location.href = '<c:url value="/board/insert4"/>'
 		}
 	});
  </script>

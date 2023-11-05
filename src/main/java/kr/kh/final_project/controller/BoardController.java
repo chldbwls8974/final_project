@@ -24,7 +24,7 @@ public class BoardController {
 	@Autowired
 	BoardService boardService;
 	
-	// 공지게시판 조회하기 & 페이지네이션
+	// 공지게시판 조회하기 & 페이지네이션 (1)
 	@GetMapping("/board/notice")
 	public String boardNotice(Model model, Criteria cri) {
 		
@@ -145,7 +145,7 @@ public class BoardController {
 
 	// ===================================================================================
 	
-	// 자유게시판 조회하기
+	// 자유게시판 조회하기 (2)
 	@GetMapping("/board/free")
 	public String boardFree(Model model, Criteria cri) {
 		// 페이지네이션
@@ -177,7 +177,6 @@ public class BoardController {
 		// boardService한테 board와 user, files정보를 주며 저장하라고 시킴 그걸 res에 저장하기
 		boolean res = boardService.insertBoard2(board, user, files);
 		// 만약 결과가 true이면
-		System.out.println(board);
 		if(res) {
 			model.addAttribute("msg", "게시글 등록 성공!");
 			model.addAttribute("url", "/board/free");
@@ -189,7 +188,99 @@ public class BoardController {
 	}
 	// ===================================================================================
 	
-	// 문의게시판 조회하기
+	// 개인매치 게시판 조회하기 (3)
+	@GetMapping("/board/individual")
+	public String boardIndividual (Model model, Criteria cri) {
+		// 페이지네이션
+		cri.setPerPageNum(10);
+		int totalCount = boardService.getIndividualTotalCount(cri);
+		final int DISPLAY_PAGE_NUM = 3;
+		PageMaker pm = new PageMaker(DISPLAY_PAGE_NUM, cri, totalCount);
+		// 자유게시판 조회하기
+		List<BoardVO> list = boardService.getBoardIndividualList(cri);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("cri", cri);
+		model.addAttribute("pm", pm);
+		return "/board/individual";
+	}
+	// 게시글쓰기 조회하기
+		@GetMapping("/board/insert3")
+		public String boardInsert3() {
+			return "/board/insert3";
+		}
+		// 게시글 등록하기 (첨부파일이랑 같이) (3)
+		@PostMapping("/board/insert3")
+		public String boardInsert3(Model model, 
+								  BoardVO board, 
+								  HttpSession session,
+								  MultipartFile[] files) {
+			// 게시글을 쓰고 있는 user에 대한 정보를 memberVO에서 가져와 user에 저장한다.
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			// boardService한테 board와 user, files정보를 주며 저장하라고 시킴 그걸 res에 저장하기
+			boolean res = boardService.insertBoard3(board, user, files);
+			// 만약 결과가 true이면
+			if(res) {
+				model.addAttribute("msg", "게시글 등록 성공!");
+				model.addAttribute("url", "/board/individual");
+			}else{
+				model.addAttribute("msg", "게시글 등록 실패!");
+				model.addAttribute("url", "/board/insert3");
+			}
+			return "/util/message";
+		}
+	
+	
+	// ===================================================================================
+
+		
+	// 개인매치 게시판 조회하기 (4)
+	@GetMapping("/board/club")
+	public String boardClub (Model model, Criteria cri) {
+		// 페이지네이션
+		cri.setPerPageNum(10);
+		int totalCount = boardService.getClubTotalCount(cri);
+		final int DISPLAY_PAGE_NUM = 3;
+		PageMaker pm = new PageMaker(DISPLAY_PAGE_NUM, cri, totalCount);
+		// 자유게시판 조회하기
+		List<BoardVO> list = boardService.getBoardClubList(cri);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("cri", cri);
+		model.addAttribute("pm", pm);
+		return "/board/club";
+	}
+	// 게시글쓰기 조회하기
+		@GetMapping("/board/insert4")
+		public String boardInsert4() {
+			return "/board/insert4";
+		}
+		// 게시글 등록하기 (첨부파일이랑 같이) (3)
+		@PostMapping("/board/insert4")
+		public String boardInsert4(Model model, 
+								  BoardVO board, 
+								  HttpSession session,
+								  MultipartFile[] files) {
+			// 게시글을 쓰고 있는 user에 대한 정보를 memberVO에서 가져와 user에 저장한다.
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			// boardService한테 board와 user, files정보를 주며 저장하라고 시킴 그걸 res에 저장하기
+			boolean res = boardService.insertBoard4(board, user, files);
+			// 만약 결과가 true이면
+			if(res) {
+				model.addAttribute("msg", "게시글 등록 성공!");
+				model.addAttribute("url", "/board/individual");
+			}else{
+				model.addAttribute("msg", "게시글 등록 실패!");
+				model.addAttribute("url", "/board/insert3");
+			}
+			return "/util/message";
+		}
+		
+		
+// ===================================================================================	
+		
+		
+	// 문의게시판 조회하기 (5)
 	@GetMapping("/board/inquiry")
 	public String boardInquiry(Model model, Criteria cri) {
 		// 페이지네이션

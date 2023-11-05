@@ -59,6 +59,19 @@ public interface BoardDAO {
 	// 자유게시판 등록하기
 	boolean insertBoard2(@Param("board")BoardVO board);
 
+	// 개인매치 리스트 가져오기 ( +공지글 )
+	List<BoardVO> selectBoardIndividualList(@Param("cri")Criteria cri);
+	// 개인매치 리스트 총 갯수 가져오기 ( +공지글 )
+	int selectIndividualTotalCount(@Param("cri")Criteria cri);
+	// 개인매치 게시판 등록하기
+	boolean insertBoard3(@Param("board")BoardVO board);
+	
+	// 클럽매치 리스트 가져오기 ( +공지글 )
+	List<BoardVO> selectBoardClubList(@Param("cri")Criteria cri);
+	// 클럽매치 리스트 총 갯수 가져오기 ( +공지글 )
+	int selectClubTotalCount(@Param("cri")Criteria cri);
+	// 클럽매치 게시판 등록하기
+	boolean insertBoard4(@Param("board")BoardVO board);
 	
 	// 문의게시판 리스트 가져오기
 	List<BoardVO> selectBoardInquiryList(@Param("cri")Criteria cri);
@@ -66,6 +79,10 @@ public interface BoardDAO {
 	int selectInquiryTotalCount(@Param("cri")Criteria cri);
 	// 문의게시판 등록하기
 	boolean insertBoard5(@Param("board")BoardVO board);
+	
+
+	
+	
 	
 
 

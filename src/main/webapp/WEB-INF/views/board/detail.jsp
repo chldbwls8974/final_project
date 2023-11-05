@@ -127,7 +127,7 @@
 						<span class="comment-date">${comment.co_date}</span>	
 					</div>
 					<div class="comment-item">
-						<c:if test="${user.me_num == comment.me_num}">
+						<c:if test="${comment.co_me_num == user.me_num}">
 							<button type="button" class="btn btn-outline-info btn-sm btn-update" data-num="${comment.co_num}">수정</button>
 							<button type="button" class="btn btn-outline-info btn-sm btn-del" data-num="${comment.co_num}">삭제</button>
 						</c:if>
@@ -441,7 +441,8 @@
 						let btnStr = '';
 						if (comment.co_num == comment.co_ori_num){
 							btnStr =`<button type="button" class="btn btn-outline-primary btn-sm btn-reply" data-num="\${comment.co_num}" >답글</button>`}
-						
+					
+				        
 						str += `
 							<div class="box-comment">
 								<div class="comment-box" \${comment.co_num != comment.co_ori_num ? 'style="margin-left: 40px;"' : ''}>
@@ -454,7 +455,7 @@
 											</div>	
 											<div class="comment-item">
 												<button type="button" class="btn btn-outline-info btn-sm btn-update" data-num="\${comment.co_num}">수정</button>
-												<button type="button" class="btn btn-outline-info btn-sm btn-del" data-num="\${comment.co_num}">삭제</button>
+									            <button type="button" class="btn btn-outline-info btn-sm btn-del" data-num="\${comment.co_num}">삭제</button>
 												\${btnStr}
 											</div>
 										</div>

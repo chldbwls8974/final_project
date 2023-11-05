@@ -274,15 +274,110 @@ public class BoardServiceImp implements BoardService{
 				
 				return true;
 	}
+// ===================================================================================
 	
+		// 개인매치 게시판 리스트 가져오기
+		@Override
+		public List<BoardVO> getBoardIndividualList(Criteria cri) {
+			return boardDao.selectBoardIndividualList(cri);
+		}
+		// 개인매치 게시글 총 갯수 가져오기
+		@Override
+		public int getIndividualTotalCount(Criteria cri) {
+			if(cri == null) {
+				cri = new Criteria();
+			}
+			return boardDao.selectIndividualTotalCount(cri);
+		}
+		// 자유게시판 등록하기
+		@Override
+		public boolean insertBoard3(BoardVO board, MemberVO user, MultipartFile[] files) {
+			if(board == null || 
+			   board.getBo_title() == null||
+			   board.getBo_title().trim().length() == 0 ||
+			   board.getBo_contents() == null) {
+				return false;
+			}
+			// 작성자가 없으면 안됨, 로그인을 해야 등록할 수 있음
+			if(user == null || user.getMe_id() == null) {
+				return false;
+			}
+			if(board.getBo_rg_num() == 0) {
+				return false;
+			}
+			// 게시글 작성자를 로그인한 회원 아이디로 수정해야한다.
+			// memberVO에서 꺼내온 me_num을 boardVO bo_me_num을 넣어준다.
+			board.setBo_me_num(user.getMe_num());
+			// 다오한테 boardVO를 주면서 게시글을 등록하라하고 그걸 res에 넣는다.
+			// 게시글을 DB에 저장하기
+			boolean res = boardDao.insertBoard3(board);
+			
+			// 결과가 false이면 false로 반환
+			if(!res) {
+				return false;
+			}
+			// 첨부파일 추가하기
+			uploadFiles(files, board.getBo_num());
+			
+			return true;
+		}
+		
+// ===================================================================================
+	
+		// 클럽매치 게시판 리스트 가져오기
+		@Override
+		public List<BoardVO> getBoardClubList(Criteria cri) {
+			return boardDao.selectBoardIndividualList(cri);
+		}
+		// 클럽매치 게시글 총 갯수 가져오기
+		@Override
+		public int getClubTotalCount(Criteria cri) {
+			if(cri == null) {
+				cri = new Criteria();
+			}
+			return boardDao.selectClubTotalCount(cri);
+		}
+		// 클럽게시판 등록하기
+		@Override
+		public boolean insertBoard4(BoardVO board, MemberVO user, MultipartFile[] files) {
+			if(board == null || 
+			   board.getBo_title() == null||
+			   board.getBo_title().trim().length() == 0 ||
+			   board.getBo_contents() == null) {
+				return false;
+			}
+			// 작성자가 없으면 안됨, 로그인을 해야 등록할 수 있음
+			if(user == null || user.getMe_id() == null) {
+				return false;
+			}
+			if(board.getBo_rg_num() == 0) {
+				return false;
+			}
+			// 게시글 작성자를 로그인한 회원 아이디로 수정해야한다.
+			// memberVO에서 꺼내온 me_num을 boardVO bo_me_num을 넣어준다.
+			board.setBo_me_num(user.getMe_num());
+			// 다오한테 boardVO를 주면서 게시글을 등록하라하고 그걸 res에 넣는다.
+			// 게시글을 DB에 저장하기
+			boolean res = boardDao.insertBoard4(board);
+			
+			// 결과가 false이면 false로 반환
+			if(!res) {
+				return false;
+			}
+			// 첨부파일 추가하기
+			uploadFiles(files, board.getBo_num());
+			
+			return true;
+		}
+		
 // ===================================================================================
 		
-	//공지게시판 가져오기
+	//문의게시판 가져오기
 	@Override
 	public List<BoardVO> getBoardInquiryList(Criteria cri) {
 		return boardDao.selectBoardInquiryList(cri);
 	}
-	// 공지게시판 총갯수 가져오기
+	// 문의게시판 총갯수 가져오기
 	@Override
 	public int getInquiryTotalCount(Criteria cri) {
 		if(cri == null) {
@@ -319,4 +414,6 @@ public class BoardServiceImp implements BoardService{
 				
 				return true;
 	}
+
+	
 }
