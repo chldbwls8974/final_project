@@ -261,13 +261,18 @@ public class AdminController {
 		return map;
 	}
 	
+	//신고 관리 페이지
 	@GetMapping("/admin/boardReport")
 	public String boardReportManagement(Model model) {
 		return ("/admin/boardReport");
 	}
-	
+	@GetMapping("/admin/matchReport")
+	public String matchReportManagement(Model model) {
+		return ("/admin/matchReport");
+	}
+	//검색 조건에 맞는 신고리스트를 반환하는 메서드
 	@ResponseBody
-	@PostMapping("/admin/boardReport/search")
+	@PostMapping("/admin/report/search")
 	public Map<String, Object> boardReportManagementSearch(@RequestBody ObjectNode saveObj) throws JsonProcessingException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		// json데이터를 객체로 만들기 위해서 ObjectMapper 이용
@@ -287,8 +292,9 @@ public class AdminController {
 		return map;
 	}
 	
+	//화면에서 받아온 값으로 신고를 확인, 제재 상태로 변경하는 메서드
 	@ResponseBody
-	@PostMapping("/admin/boardReport/Handle")
+	@PostMapping("/admin/report/handle")
 	public Map<String, Object> boardReportHandle(@RequestBody ReportVO report) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		boolean res = adminService.boardReportHandle(report);
@@ -296,10 +302,7 @@ public class AdminController {
 		return map;
 	}
 	
-	@GetMapping("/admin/matchReport")
-	public String matchReportManagement(Model model) {
-		return ("/admin/matchReport");
-	}
+	
 	
 	@ResponseBody
 	@PostMapping("/admin/refund/approval")

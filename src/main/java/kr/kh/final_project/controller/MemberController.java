@@ -239,7 +239,16 @@ public class MemberController {
 		map.put("res", res);
 		return map;
 	}
-
+	//유저포인트 ajax로 보내주기 (실시간 업데이트를 위해서)
+	@ResponseBody
+	@PostMapping("/member/information")
+	public Map<String, Object> memberInformation(@RequestBody MemberVO user){
+		Map<String, Object> map = new HashMap<String, Object>();
+		int userPoint = memberService.getMemberPoint(user);
+		map.put("userPoint", userPoint);
+		return map;
+	}
+	
 	//마이페이지
 	@GetMapping("/member/mypage")
 	public String myPage(HttpSession session, Model model) {

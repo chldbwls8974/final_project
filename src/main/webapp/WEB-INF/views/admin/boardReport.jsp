@@ -10,6 +10,12 @@
 <title>커뮤니티 신고 관리</title>
 </head>
 <style>
+	h1{
+		text-align : center
+	}
+	tr{
+		text-align : center
+	}
 	.btn-info{
 		color : outline-info;
 		background-color : white;
@@ -18,9 +24,6 @@
 	.btn-info:hover{
 		background-color : outline-info;
 		color : white;
-	}
-	h1{
-		text-align : center
 	}
 	.error {
 		color: #f00;
@@ -42,7 +45,7 @@
 				    class="btn btn-outline-info btn-info" onclick="location.href='<c:url value='/admin/matchReport'/>'">매치 신고</button>
 	</div>
 	
-	<form action="<c:url value='/admin/refund'/>" method="post">
+	<form>
 		<div class="input-group mb-3 mt-3">
 			<div class="input-group-prepend">
 				<select class="form-control search-type-1">
@@ -73,7 +76,7 @@
 					<th>신고일</th>
 					<th>카테고리</th>
 					<th>게시글 번호</th>
-					<th></th>
+					<th>내용</th>
 					<th>신고자 ID</th>
 					<th>피신고자 ID</th>
 					<th>상태</th>
@@ -118,7 +121,7 @@
 				rp_num : rp_num,
 				rp_state : num
 		}
-		ajaxJsonToJson(false,'post','/admin/boardReport/Handle', data ,(data)=>{
+		ajaxJsonToJson(false,'post','/admin/report/handle', data ,(data)=>{
 		}); 
 		let dbData = createSearchData()
 		getReportListBySearch(dbData); 
@@ -162,7 +165,7 @@
 	}
 	//리스트를 가져오는 함수
 	function getReportListBySearch(data){
-		ajaxJsonToJson(false, 'post', '/admin/boardReport/search', data ,(data)=>{
+		ajaxJsonToJson(false, 'post', '/admin/report/search', data ,(data)=>{
 			//테이블 생성
 			createReportListBySearch(data.reportList, '.list-tbody');
 			//페이지네이션 생성
@@ -191,7 +194,7 @@
 			}else{
 				btnStr = `
 					<div class="btn-group">
-						<label class="btn btn-outline-dark disabled" >처리 완료</label>
+						<label class="btn btn-outline-dark disabled">처리 완료</label>
 					</div>
 					`
 			}

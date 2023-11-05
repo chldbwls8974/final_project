@@ -24,7 +24,7 @@
 		 <li data-value="100" class="list-group-item col-4 ">100,000 포인트</li>
 	</ul>
 	<button class="btn btn-outline-dark col-4" onclick="btnOnclick(selectedAmount)">결제하기</button>
-	<span>보유 포인트 ${user.me_point}</span>
+	<span class="point">보유 포인트 : </span>
 	
 </body>
 
@@ -51,8 +51,15 @@
 		me_email = '${user.me_email}';
 		me_name = '${user.me_name}';
 		me_num = ${user.me_num};
+		getUserInformation()
 	});
-	
+	//유저정보를 가져오는 ajax
+	function getUserInformation() {
+		num = { me_num : ${user.me_num}}
+		ajaxJsonToJson(false, 'post', "/member/information", num,(data)=>{
+			$('.point').text("보유 포인트 : " + data.userPoint );
+		});
+	}
 	
 	function btnOnclick(selectedAmount){
 		if(selectedAmount == 0){
@@ -92,6 +99,8 @@
 					success: function(data) {
 						alert("결제 완료");
 						console.log(rsp);
+						//유저포인트 갱신
+						getUserInformation()
 						//self.close();
 					},
 					error: function(data){
