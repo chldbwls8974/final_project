@@ -62,7 +62,7 @@
 	<div class="dropdown">
 	  <button class="btn btn-outline-warning dropdown-toggle" type="button" data-toggle="dropdown">모든지역</button>
 	  <li class="dropdown-menu">
-	    <a href="#">서울</a>
+	    <a href="<c:url value='/board/club?bo_rg_num=1'/>">서울</a>
 	    <a href="#">부산</a>
 	    <a href="#">대구</a>
 	    <a href="#">인천</a>
