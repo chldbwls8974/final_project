@@ -26,6 +26,10 @@
 		color: #f00;
 		display: block;
 	}
+	.content-row {
+	color : #4A90E2;
+    display: none;
+	}
 </style>
 <body>
 	<h1>커뮤니티 신고 관리</h1>
@@ -65,9 +69,11 @@
 		<table class="table table-hover mt-4">
 			<thead>
 				<tr>
+					<th>번호</th>
 					<th>신고일</th>
 					<th>카테고리</th>
 					<th>게시글 번호</th>
+					<th></th>
 					<th>신고자 ID</th>
 					<th>피신고자 ID</th>
 					<th>상태</th>
@@ -86,16 +92,13 @@
 </body>
 
 <script type="text/javascript">
-	
-const unixTimestamp = 1699110000000; // Unix 시간값
-const date = new Date(unixTimestamp);
-console.log(date);
-	
+	//날짜로 변환
+	const unixTimestamp = 1699110000000; // Unix 시간값
+	const date = new Date(unixTimestamp);
 	let cri = {
 			page : 1,
 			perPageNum : 5
 	}
-	
 	
 	let data = {
 		cri : {page : cri.page, perPageNum : cri.perPageNum, s : ''},
@@ -108,13 +111,13 @@ console.log(date);
 		 	getReportListBySearch(data);
 	})
 	
+	//버튼을 누를때 페이지네이션의 페이지값을 같이 보내야 함?
 	//처리상태를 변경하는 함수 (0 : 제재, 1 : 확인)
 	function changeState(rp_num, num){
 		let data = { 
 				rp_num : rp_num,
 				rp_state : num
 		}
-		console.log(data);
 		ajaxJsonToJson(false,'post','/admin/boardReport/Handle', data ,(data)=>{
 		}); 
 		let dbData = createSearchData()
@@ -132,14 +135,16 @@ console.log(date);
 		let data = createSearchData()
 		getReportListBySearch(data);
 	})
-	
+			
 	//이벤트 발생 시 데이터를 담아서 보내기 위한 함수
 	function createSearchData() {
 	    let searchType1 = $('.search-type-1').val();
 	    let searchType2 = $('.search-type-2').val();
 	    let searchContents = $('.input-search').val();
+	    let currentPage = $('.active').data('page');
+	    console.log(currentPage);
 	    let data = {
-	        cri: { page: cri.page, perPageNum: cri.perPageNum, s: searchContents },
+	        cri: { page: currentPage, perPageNum: cri.perPageNum, s: searchContents },
 	        searchType1: searchType1,
 	        searchType2: searchType2,
 	        reportType : "커뮤니티"
@@ -155,7 +160,7 @@ console.log(date);
 	    data.searchType2 = $('.search-type-2').val();
 	    getReportListBySearch(data);
 	}
-	
+	//리스트를 가져오는 함수
 	function getReportListBySearch(data){
 		ajaxJsonToJson(false, 'post', '/admin/boardReport/search', data ,(data)=>{
 			//테이블 생성
@@ -172,7 +177,8 @@ console.log(date);
 		
 		for(a of reportList){
 			let btnStr = '';
-			let state = '';
+			let toggleBtnStr = '';
+			let content = a.rp_content == null ? '없음' : a.rp_content;
 			if(a.rp_state == '미확인'){
 				btnStr = `
 					<div class="btn-group">
@@ -189,188 +195,69 @@ console.log(date);
 					</div>
 					`
 			}
+			toggleBtnStr = `
+				<div class="btn-group">
+				<button class="btn btn-outline-success btn-content-toggle" >상세보기</button>
+				</div>
+			`;
 			str += `
 				<tr>
+					<td>\${a.rp_num}</td>
 					<td>\${a.rp_date}</td>
 					<td>\${a.rc_detail}</td>
 					<td>\${a.rp_bo_num}</td>
+					<td>\${toggleBtnStr}</td>
 					<td>\${a.me_id}</td>
 					<td>\${a.me_id2}</td>
 					<td>\${a.rp_state}</td>
-					<th>\${btnStr}</th>
-				</tr>
-			`;
-		}
-		$(target).html(str);
-	}
-	
-	
-	
-
-	//페이지네이션
-	function createPagination(pm, target){
-		let str = '';
-		if(pm.prev){
-			str += `<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="updatePage(\${pm.startPage - 1});">이전</a></li>`;
-		}
-		//현재페이지 = active 클래스 추가
-		for(i=pm.startPage; i<=pm.endPage; i++){
-			let active = pm.cri.page == i ? 'active' : '';
-			str += `
-			<li class="page-item \${active}">
-				<a class="page-link" href="javascript:void(0);" onclick="updatePage(\${i});">\${i}</a>
-			</li>`;
-		}
-		if(pm.next){
-			str += `<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="updatePage(\${pm.endPage + 1});">다음</a></li>`;
-		}
-		$(target).html(str);
-	}
-	
-	
-
-/* 
-	let cri = {
-			page : 1,
-			perPageNum : 5
-	}   
-	let data = {
-		cri : {page : cri.page, perPageNum : cri.perPageNum, s : ''},
-		searchType1 : "all",
-		searchType2 : "all"
-	}   
-	
-	$(document).ready(function() {
-   	 	getPointHistoryListBySearch(data);
-   	 	console.log(data);
-	})
-	
-	//이벤트 발생되면 리스트를 받아와서 생성
-	$(document).on('click','.btn-search',function(){
-		let data = createSearchData()
-		getPointHistoryListBySearch(data);
-	})
-	//이벤트 발생되면 리스트를 받아와서 생성
-	$(document).on('change','.search-type-1',function(){
-		let data = createSearchData()
-		getPointHistoryListBySearch(data);
-	})
-	//Data에 객체들의 정보를 저장해서 반환하는 메서드
-	function createSearchData() {
-	    let searchType1 = $('.search-type-1').val();
-	    let searchType2 = $('.search-type-2').val();
-	    let searchContents = $('.input-search').val();
-	    let data = {
-	        cri: { page: cri.page, perPageNum: cri.perPageNum, s: searchContents },
-	        searchType1: searchType1,
-	        searchType2: searchType2
-	    };
-	    return data;
-	}
-	//입력되어있는 필터값을 data에 저장해서 리스트를 생성하는 함수
-	function updatePage(page) {
-		console.log(page);
-	    data.cri.page = page;
-	    data.cri.s = $('.input-search').val();
-	    data.searchType1 = $('.search-type-1').val();
-	    data.searchType2 = $('.search-type-2').val();
-	    getPointHistoryListBySearch(data);
-	}
-	
-	function getPointHistoryListBySearch(data){
-		
-		ajaxJsonToJson(false, 'post', '/admin/refund/search', data ,(data)=>{
-			//테이블 생성
-			createPointHistoryListBySearch(data.refundList, '.list-tbody');
-			//페이지네이션 생성
-			createPagination(data.pm, '.pagination');
-		});
-	}
-	
-	
-	//리스트를 받아서 테이블 생성하는 함수
-	function createPointHistoryListBySearch(refundList, target){
-		let str ='';
-		for(a of refundList){
-			let btnStr = '';
-			let state = '';
-			let price = -parseInt(a.ph_price);
-			if(a.ph_source == '4'){
-				state = '처리중'
-				btnStr = `
-					<div class="btn-group">
-						<button class="btn btn-outline-success btn-approval"  onclick="approvalRefund(\${a.ph_num})" >승인</button>
-					</div>
-					`;
-			}else{
-				state = '환급 완료'
-				btnStr = `
-					<div class="btn-group">
-						<label class="btn btn-outline-dark disabled" >완료</label>
-					</div>
-					`
-			} 
-			str += `
-				<tr>
-					<td>\${a.me_id}</td>
-					<td>\${a.me_nickname}</td>
-					<td>\${a.me_name}</td>
-					<td>\${a.me_phone}</td>
-					<td>\${a.me_point}</td>
-					<td>\${price}</td>
-					<td>\${state}</td>
-					<td>\${a.ac_ba_name}</td>
-					<td>\${a.ac_num}</td>
 					<td>\${btnStr}</td>
 				</tr>
+				<tr class="content-row">
+               		<td colspan="9">내용 : \${content}</td>
+            	</tr>
 			`;
 		}
 		$(target).html(str);
 	}
 	
+	
+	
+
 	//페이지네이션
+	//좌,우 버튼 또는 숫자를 클릭했을 때 updataPage함수 실행됨.
+	//li태그에 현재 페이지의 숫자 data-page로 저장
 	function createPagination(pm, target){
 		let str = '';
 		if(pm.prev){
-			str += `<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="updatePage(\${pm.startPage - 1});">이전</a></li>`;
+			str += `<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="updatePage(\${pm.startPage - 1});">&lt;</a></li>`;
 		}
 		//현재페이지 = active 클래스 추가
 		for(i=pm.startPage; i<=pm.endPage; i++){
 			let active = pm.cri.page == i ? 'active' : '';
 			str += `
-			<li class="page-item \${active}">
+			<li class="page-item \${active}" data-page="\${i}" >
 				<a class="page-link" href="javascript:void(0);" onclick="updatePage(\${i});">\${i}</a>
 			</li>`;
 		}
 		if(pm.next){
-			str += `<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="updatePage(\${pm.endPage + 1});">다음</a></li>`;
+			str += `<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="updatePage(\${pm.endPage + 1});">&gt;</a></li>`;
 		}
 		$(target).html(str);
 	}
 	
+	 
 	
-	//환급을 승인하는 함수
-	function approvalRefund(ph_num){
-		let data = { 
-				ph_num : ph_num
-		}
-		 
-		ajaxJsonToJson(false,'post','/admin/refund/approval', data ,(data)=>{
-			if(data.res){
-				alert('환급완료 처리했습니다.')
-			}else{
-				alert('환급 처리에 실패했습니다.')
-			}
-		}); 
-		let dbData = createSearchData()
-		getPointHistoryListBySearch(dbData);
-	}  
-	
+    // 버튼 클릭 토글
+	$(document).ready(function() {
+	    $(document).on("click", ".btn-content-toggle", function() {
+	        $(this).closest("tr").next(".content-row").toggle();
+	    });
+	});
 	//인풋태그에서 엔터시 폼 제출되는것 막기
 	document.getElementById("input-search").addEventListener("keypress", function(event) {
 	    if (event.key === "Enter") {
 	        event.preventDefault(); // 엔터 키 동작을 막음
 	    }
-	}); */
+	});
 </script>
 </html>

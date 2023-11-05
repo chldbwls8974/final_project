@@ -96,8 +96,9 @@
 	    let searchType1 = $('.search-type-1').val();
 	    let searchType2 = $('.search-type-2').val();
 	    let searchContents = $('.input-search').val();
+	    let currentPage = $('.active').data('page');
 	    let data = {
-	        cri: { page: cri.page, perPageNum: cri.perPageNum, s: searchContents },
+	        cri: { page: currentPage, perPageNum: cri.perPageNum, s: searchContents },
 	        searchType1: searchType1,
 	        searchType2: searchType2
 	    };
@@ -184,7 +185,7 @@
 		for(i=pm.startPage; i<=pm.endPage; i++){
 			let active = pm.cri.page == i ? 'active' : '';
 			str += `
-			<li class="page-item \${active}">
+			<li class="page-item \${active}" data-page="\${i}">
 				<a class="page-link" href="javascript:void(0);" onclick="updatePage(\${i});">\${i}</a>
 			</li>`;
 		}

@@ -257,7 +257,6 @@ public class AdminController {
 	    //보여줄 페이지 수 = 3
 	    PageMaker pm = new PageMaker(3, cri, totalCount);
 	    map.put("refundList", refundList);
-	    System.out.println(refundList);
 	    map.put("pm", pm);
 		return map;
 	}
@@ -281,7 +280,6 @@ public class AdminController {
 	    List<ReportVO> reportList = adminService.getReportListBySearch(cri, reportType, searchType1, searchType2);
 	    //totalCount 구하는 메서드
 	    int totalCount = adminService.getReportListBySearchCount(cri, reportType, searchType1, searchType2);
-	    System.out.println(reportList);
 	    //보여줄 페이지 수 = 3
 	    PageMaker pm = new PageMaker(3, cri, totalCount);
 	    map.put("reportList", reportList);
@@ -293,11 +291,8 @@ public class AdminController {
 	@PostMapping("/admin/boardReport/Handle")
 	public Map<String, Object> boardReportHandle(@RequestBody ReportVO report) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println(report);
-		boolean res = false;
-		if(adminService.boardReportHandle(report)) {
-			res = true;
-		}
+		boolean res = adminService.boardReportHandle(report);
+		map.put("res", res);
 		return map;
 	}
 	
