@@ -44,10 +44,10 @@
 				</div>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#">개인매치</a>
+				<a class="nav-link" href="<c:url value='/match/search/solo'/>">개인매치</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#">클럽매치</a>
+				<a class="nav-link" href="<c:url value='/match/search/club?weekCount=0'/>">클럽매치</a>
 			<li class="nav-item">
 				<a class="nav-link" href="#">시설 조회</a>
 			</li>
