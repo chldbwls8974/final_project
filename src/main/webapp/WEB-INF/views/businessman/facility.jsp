@@ -10,7 +10,18 @@
 <body>
   	<h1 class="display-3"><span style="color: black; font-weight: bold;">시설 목록</span></h1>
 	<br>
-	<br>
+	<form action="<c:url value='/businessman/facility'/>" method="get">
+		<div class="input-group mb-3">
+			<select class="form-control" name="t">
+				<option value="all" <c:if test="${pm.cri.t == 'all'}">selected</c:if>>전체</option>
+				<option value="total" <c:if test="${pm.cri.t == 'total'}">selected</c:if>>시설명 + 주소</option>
+				<option value="phone" <c:if test="${pm.cri.t == 'phone'}">selected</c:if>>전화번호</option>
+			</select>
+			<input type="text" class="form-control" name="s" value="${pm.cri.s}">
+			<button class="btn btn-outline-dark">검색</button>
+		</div>
+	</form>
+  	
   	<h5 style="color:blue;">[시설번호] 클릭 시, 경기장 목록으로 이동됩니다.</h5>
   	  <div class="table-responsive">
 	    <table class="table table-light table-striped">
@@ -54,13 +65,32 @@
 							class="btn btn-dark" role="button">수정</a></td>
 	         	</tr>
 		     </c:forEach>
-	      </tbody>
-	    </table>
-	  </div>
-	  
-		<div align="right" class="mt-3">
-			<a class="btn btn-secondary btn-block" role="button" href="<c:url value='/businessman/facilityInsert'/>">시설 등록하기</a>
-		</div>
+	       </tbody>
+	     </table>
+	   </div>
+	   <ul class="pagination justify-content-center">
+			<c:if test="${pm.prev}">
+				<li class="page-item">
+					<a class="page-link" 
+						href="<c:url value='/businessman/facility${pm.cri.getUrl(pm.startPage-1) }'/>">이전</a>
+				</li>
+			</c:if>
+			<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
+				<li class="page-item <c:if test='${pm.cri.page == i }'>active</c:if>">
+					<a class="page-link" 
+						href="<c:url value='/businessman/facility${pm.cri.getUrl(i)}'/>">${i}</a>
+				</li>
+			</c:forEach>
+			<c:if test="${pm.next}">
+				<li class="page-item">
+					<a class="page-link" 
+						href="<c:url value='/businessman/facility${pm.cri.getUrl(pm.endPage+1) }'/>">다음</a>
+				</li>
+			</c:if>
+	   </ul>
+	   <div align="right" class="mt-3">
+		   <a class="btn btn-secondary btn-block" role="button" href="<c:url value='/businessman/facilityInsert'/>">시설 등록하기</a>
+	   </div>
 
 </body>
 </html>

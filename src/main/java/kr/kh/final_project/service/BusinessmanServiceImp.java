@@ -9,6 +9,7 @@ import kr.kh.final_project.dao.BusinessmanDAO;
 import kr.kh.final_project.dao.PreferredRegionDAO;
 import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.dao.StadiumDAO;
+import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.vo.BusinessmanVO;
 import kr.kh.final_project.vo.FacilityVO;
 import kr.kh.final_project.vo.MemberVO;
@@ -32,9 +33,12 @@ public class BusinessmanServiceImp implements BusinessmanService{
 
 	//시설 리스트 가져오기
 	@Override
-	public List<FacilityVO> getFacilityList(MemberVO member) {
+	public List<FacilityVO> getFacilityList(MemberVO member, Criteria cri) {
+		if(cri == null) {
+			cri = new Criteria();
+		}
 		//다오에게 시설 리스트를 가져오라고 시키고
-		List<FacilityVO> list = businessmanDao.selectFacilityList(member);
+		List<FacilityVO> list = businessmanDao.selectFacilityList(member, cri);
 		//가져오면 반환
 		return list;
 	}
@@ -138,6 +142,14 @@ public class BusinessmanServiceImp implements BusinessmanService{
 		}
 		boolean res = stadiumDao.updateStadium(stadium);
 		return res;
+	}
+	//현재 페이지 정보에 맞는 전체 게시글 수 가져오는 메서드
+	@Override
+	public int getTotalCount(Criteria cri, MemberVO member) {
+		if(cri == null) {
+			cri = new Criteria();
+		}
+		return businessmanDao.selectCountList(cri, member);
 	}
 	
 	

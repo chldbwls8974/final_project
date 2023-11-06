@@ -2,6 +2,7 @@ package kr.kh.final_project.service;
 
 import java.util.List;
 
+import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.vo.BusinessmanVO;
 import kr.kh.final_project.vo.FacilityVO;
 import kr.kh.final_project.vo.MemberVO;
@@ -11,7 +12,7 @@ import kr.kh.final_project.vo.StadiumVO;
 public interface BusinessmanService {
 
 	//시설 리스트 가져오기
-	List<FacilityVO> getFacilityList(MemberVO member);
+	List<FacilityVO> getFacilityList(MemberVO member, Criteria cri);
 	//회원번호로 사업자정보 가져오기
 	BusinessmanVO getBusinessmanByMeNum(Integer me_num);
 	//시설 등록
@@ -32,6 +33,8 @@ public interface BusinessmanService {
 	StadiumVO getStadium(Integer st_num);
 	//경기장 정보 수정
 	boolean updateStadium(StadiumVO stadium);
+	
+	int getTotalCount(Criteria cri, MemberVO member);
 
 
 }

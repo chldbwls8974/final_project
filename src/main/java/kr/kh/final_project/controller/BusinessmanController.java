@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.kh.final_project.pagination.Criteria;
+import kr.kh.final_project.pagination.PageMaker;
 import kr.kh.final_project.service.BusinessmanService;
 import kr.kh.final_project.service.RegionService;
 import kr.kh.final_project.service.ScheduleService;
@@ -43,11 +45,19 @@ public class BusinessmanController {
 	
 	//시설 목록
 	@GetMapping("/businessman/facility")
-	public String facility(Model model, HttpSession session) {
+	public String facility(Model model, HttpSession session, Criteria cri) {
 		MemberVO member = (MemberVO)session.getAttribute("user");
 		//서비스에게 user 정보를 주고 시설 리스트 가져오라고 시킴
-		List<FacilityVO> list = businessmanService.getFacilityList(member);
-
+		//현재 페이지 정보에 맞는 게시글을 가져오라고 서비스에게 시킴
+		List<FacilityVO> list = businessmanService.getFacilityList(member, cri);
+		
+		//현재 페이지 정보(검색어, 타입)에 맞는 전체 게시글 수를 가져옴
+		int totalCount = businessmanService.getTotalCount(cri, member);
+		//페이지네이션 페이지수
+		final int DISPLAY_PAGE_NUM = 3;
+		
+		PageMaker pm = new PageMaker(DISPLAY_PAGE_NUM, cri, totalCount);
+		
 		if(member == null || !member.getMe_authority().equals("BUSINESS")) {
 			Message msg = new Message("/", "사업자 권한이 필요합니다.");
 			model.addAttribute("msg", msg);
@@ -59,6 +69,7 @@ public class BusinessmanController {
 			return "/message";
 		}
 		model.addAttribute("list", list);
+		model.addAttribute("pm", pm);
 		return "/businessman/facility";
 	}		
 	//시설 등록
@@ -95,7 +106,7 @@ public class BusinessmanController {
 	@PostMapping("/businessman/facilityInsert")
 	public String insertfacility(Model model, FacilityVO facility, HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
-
+		System.out.println(user);
 		List<RegionVO> MainRegion = businessmanService.getMainRegion();
 
 		//Service에게 user, facility 정보를 주고 insertFacility 메서드로 저장
