@@ -61,9 +61,30 @@ public class MatchServiceImp implements MatchService{
 		if(me_num == null || mt_date == null) {
 			return null;
 		}
+		List<MatchVO> dbMatchList = matchDao.selectMatchListOfManager(me_num, mt_date);
+		return filterMatch(me_num, mt_date, rg_num, check, dbMatchList);
+	}
+
+	@Override
+	public List<MatchVO> selectMatchListOfSolo(Integer me_num, Date mt_date, int rg_num, boolean check) {
+		if(me_num == null || mt_date == null) {
+			return null;
+		}
+		List<MatchVO> dbMatchList = matchDao.selectMatchListOfSolo(me_num, mt_date);
+		return filterMatch(me_num, mt_date, rg_num, check, dbMatchList);
+	}
+
+	@Override
+	public List<MatchVO> selectMatchListOfClub(Integer me_num, Date mt_date, int rg_num, boolean check) {
+		if(me_num == null || mt_date == null) {
+			return null;
+		}
+		return null;
+	}
+	
+	public List<MatchVO> filterMatch(Integer me_num, Date mt_date, int rg_num, boolean check, List<MatchVO> dbMatchList){
 		List<Integer> rgNumList = new ArrayList<Integer>();
 		List<Integer> tiNumList;
-		List<MatchVO> dbMatchList = matchDao.selectMatchListOfManager(me_num, mt_date);
 		List<MatchVO> matchList = new ArrayList<MatchVO>();
 		if(rg_num == 0) {
 			rgNumList = preferredRegionDao.selectPrRgNumListByMeNum(me_num);
@@ -95,7 +116,7 @@ public class MatchServiceImp implements MatchService{
 				}
 			}
 		}
+		System.out.println(matchList);
 		return matchList;
 	}
-	
 }

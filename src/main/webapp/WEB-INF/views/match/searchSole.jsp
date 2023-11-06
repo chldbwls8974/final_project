@@ -116,7 +116,7 @@
 		$.ajax({
 			async : false,
 			method : 'post',
-			url : '<c:url value="/manager/select/date"/>',
+			url : '<c:url value="/match/searchList/solo"/>',
 			data : {mt_date:select_day, rg_num:rg_num, check:check},
 			dataType : 'json',
 			success : function(data) {

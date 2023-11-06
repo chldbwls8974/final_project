@@ -54,7 +54,7 @@ public class ManagerController {
 	
 	@ResponseBody
 	@PostMapping("/manager/select/date")
-	public Map<String, Object> selectStadium(
+	public Map<String, Object> selectMatchListOfManager(
 			@RequestParam("mt_date")String mt_date_str,
 			@RequestParam("rg_num")int rg_num,
 			@RequestParam("check")boolean check,

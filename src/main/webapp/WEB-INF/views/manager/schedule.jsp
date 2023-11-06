@@ -106,7 +106,7 @@
 						</div>
 						<div class="match-info-box">
 							<span>\${match.rg_main} \${match.rg_sub}</span> <br>
-							<span>\${match.fa_name} \${match.st_name} \${match.st_max} vs \${match.st_max}</span>
+							<span>\${match.fa_name} \${match.st_name} \${match.mt_personnel} vs \${match.mt_personnel}</span>
 						</div>
 					`;
 					if(${weekCount == 2}){

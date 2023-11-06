@@ -17,4 +17,8 @@ public interface MatchService {
 
 	List<MatchVO> selectMatchListOfManager(Integer me_num, Date mt_date, int rg_num, boolean check);
 
+	List<MatchVO> selectMatchListOfSolo(Integer me_num, Date mt_date, int rg_num, boolean check);
+
+	List<MatchVO> selectMatchListOfClub(Integer me_num, Date mt_date, int rg_num, boolean check);
+
 }
