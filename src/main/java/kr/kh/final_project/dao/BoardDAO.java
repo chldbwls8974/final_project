@@ -60,16 +60,16 @@ public interface BoardDAO {
 	boolean insertBoard2(@Param("board")BoardVO board);
 
 	// 개인매치 리스트 가져오기 ( +공지글 )
-	List<BoardVO> selectBoardIndividualList(@Param("cri")Criteria cri);
+	List<BoardVO> selectBoardIndividualList(@Param("cri")Criteria cri, @Param("board")BoardVO board);
 	// 개인매치 리스트 총 갯수 가져오기 ( +공지글 )
-	int selectIndividualTotalCount(@Param("cri")Criteria cri);
+	int selectIndividualTotalCount(@Param("cri")Criteria cri, @Param("board")BoardVO board);
 	// 개인매치 게시판 등록하기
 	boolean insertBoard3(@Param("board")BoardVO board);
 	
 	// 클럽매치 리스트 가져오기 ( +공지글 )
-	List<BoardVO> selectBoardClubList(@Param("cri")Criteria cri);
+	List<BoardVO> selectBoardClubList(@Param("cri")Criteria cri,  @Param("board")BoardVO board);
 	// 클럽매치 리스트 총 갯수 가져오기 ( +공지글 )
-	int selectClubTotalCount(@Param("cri")Criteria cri);
+	int selectClubTotalCount(@Param("cri")Criteria cri, @Param("board")BoardVO board);
 	// 클럽매치 게시판 등록하기
 	boolean insertBoard4(@Param("board")BoardVO board);
 	
@@ -79,6 +79,11 @@ public interface BoardDAO {
 	int selectInquiryTotalCount(@Param("cri")Criteria cri);
 	// 문의게시판 등록하기
 	boolean insertBoard5(@Param("board")BoardVO board);
+
+	// 지역필터 리스트 가져오기
+	List<BoardVO> selectBoardRegionList(@Param("bo_num")int bo_num,@Param("cri") Criteria cri);
+	// 지역게시판 총 갯수 가져오기
+	int selectBoardRegionTotalCount(@Param("bo_num")int bo_rg_num);
 	
 
 	

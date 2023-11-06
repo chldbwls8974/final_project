@@ -1,6 +1,8 @@
 package kr.kh.final_project.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -8,13 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.pagination.PageMaker;
 import kr.kh.final_project.service.BoardService;
 import kr.kh.final_project.vo.BoardVO;
+import kr.kh.final_project.vo.CommentVO;
 import kr.kh.final_project.vo.FileVO;
 import kr.kh.final_project.vo.MemberVO;
 
@@ -190,14 +196,14 @@ public class BoardController {
 	
 	// 개인매치 게시판 조회하기 (3)
 	@GetMapping("/board/individual")
-	public String boardIndividual (Model model, Criteria cri) {
+	public String boardIndividual (Model model, Criteria cri, BoardVO board ) {
 		// 페이지네이션
 		cri.setPerPageNum(10);
-		int totalCount = boardService.getIndividualTotalCount(cri);
+		int totalCount = boardService.getIndividualTotalCount(cri, board);
 		final int DISPLAY_PAGE_NUM = 3;
 		PageMaker pm = new PageMaker(DISPLAY_PAGE_NUM, cri, totalCount);
-		// 자유게시판 조회하기
-		List<BoardVO> list = boardService.getBoardIndividualList(cri);
+		// 자유게시판 조회하기 (매개변수 board추가)
+		List<BoardVO> list = boardService.getBoardIndividualList(cri, board);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("cri", cri);
@@ -229,21 +235,19 @@ public class BoardController {
 			}
 			return "/util/message";
 		}
-	
-	
-	// ===================================================================================
+// ===================================================================================
 
 		
-	// 개인매치 게시판 조회하기 (4)
+	// 클럽매치 게시판 조회하기 (4)
 	@GetMapping("/board/club")
-	public String boardClub (Model model, Criteria cri) {
+	public String boardClub (Model model, Criteria cri, BoardVO board) {
 		// 페이지네이션
 		cri.setPerPageNum(10);
-		int totalCount = boardService.getClubTotalCount(cri);
+		int totalCount = boardService.getClubTotalCount(cri, board);
 		final int DISPLAY_PAGE_NUM = 3;
 		PageMaker pm = new PageMaker(DISPLAY_PAGE_NUM, cri, totalCount);
 		// 자유게시판 조회하기
-		List<BoardVO> list = boardService.getBoardClubList(cri);
+		List<BoardVO> list = boardService.getBoardClubList(cri, board);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("cri", cri);
@@ -268,10 +272,10 @@ public class BoardController {
 			// 만약 결과가 true이면
 			if(res) {
 				model.addAttribute("msg", "게시글 등록 성공!");
-				model.addAttribute("url", "/board/individual");
+				model.addAttribute("url", "/board/club");
 			}else{
 				model.addAttribute("msg", "게시글 등록 실패!");
-				model.addAttribute("url", "/board/insert3");
+				model.addAttribute("url", "/board/insert4");
 			}
 			return "/util/message";
 		}
@@ -322,6 +326,23 @@ public class BoardController {
 		}
 		return "/util/message";
 	}
-}
-	
 
+	
+//===================================================================================	
+	
+// 필터 적용하기 (조회하기)
+@ResponseBody
+@PostMapping("/board/list")
+public Map<String, Object> list(@RequestBody Criteria cri, int bo_rg_num){
+	Map<String, Object> map = new HashMap<String, Object>();
+	// 페이지당 항목수 10개로 잡음
+	cri.setPerPageNum(10);
+	List<BoardVO> list = boardService.getBoardRegionList(bo_rg_num, cri);
+	// 이 게시글의 총 게시글 갯수를 가져와라
+	int totalCount = boardService.getRegionTotalCount(bo_rg_num);
+	PageMaker pm = new PageMaker(3, cri, totalCount);
+	map.put("list", list);
+	map.put("pm", pm);
+	return map;
+	}
+}

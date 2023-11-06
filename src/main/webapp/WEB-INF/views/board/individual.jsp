@@ -26,6 +26,7 @@
 	.notionBoard{
 		background-color : #B0B0B0
 	}
+	
 
 </style>
 </head>
@@ -56,31 +57,58 @@
 	   		</select>
 	    </div>
 	    <input type="text" class="form-control input-search" name="s" id="me_title" placeholder="검색어를 입력하세요." value="${pm.cri.s}">
-	    <button class="btn btn-outline-success btn-insert">찾기</button>
+	    <input type="hidden" class="form-control region-input" name="bo_rg_num"   value="0">
+	    <button class="btn btn-outline-success btn-insert">찾기</button>   
 	</div>
 	</form>
-	<div class="dropdown">
-	  <button class="btn btn-outline-warning dropdown-toggle" type="button" data-toggle="dropdown">모든지역</button>
+	<div class="input-group mb-3 mt-3">
+		<div class="input-group-prepend">
+			<select class="form-control select-region" >
+				  <option class="region" value="0">전체</option>
+			      <option class="region" value="1">서울</option>
+		 		  <option class="region" value="27">부산</option>
+		 		  <option class="region" value="44">대구</option>
+		 		  <option class="region" value="54">인천</option>
+		 		  <option class="region" value="65">광주</option>
+		 		  <option class="region" value="71">대전</option>
+		 		  <option class="region" value="77">울산</option>
+		 		  <option class="region" value="83">세종</option>
+		 		  <option class="region" value="84">경기</option>
+		 		  <option class="region" value="116">강원</option>
+		 		  <option class="region" value="135">충북</option>
+		 		  <option class="region" value="147">충남</option>
+		 		  <option class="region" value="163">전북</option>
+		 		  <option class="region" value="178">전남</option>
+		 		  <option class="region" value="201">경북</option>
+		 		  <option class="region" value="224">경남</option>
+		 		  <option class="region" value="243">제주</option>
+		   	</select>
+		</div>
+	</div> 
+	
+	
+	<!-- <div class="dropdown">
+	  <button class="btn btn-outline-warning dropdown-toggle" type="button"  data-toggle="dropdown">모든지역</button>
 	  <li class="dropdown-menu">
-	    <a href="<c:url value='/board/individual?bo_rg_num=1'/>">서울</a>
-	    <a href="#">부산</a>
-	    <a href="#">대구</a>
-	    <a href="#">인천</a>
-	    <a href="#">광주</a>
-	    <a href="#">대전</a>
-	    <a href="#">울산</a>
-	    <a href="#">세종</a>
-	    <a href="#">경기</a>
-	    <a href="#">강원</a>
-	    <a href="#">충북</a>
-	    <a href="#">충남</a>
-	    <a href="#">전북</a>
-	    <a href="#">전남</a>
-	    <a href="#">경북</a>
-	    <a href="#">경남</a>
-	    <a href="#">제주</a>
+	    <a class="region"  href="#" data-num="1" >서울</a>
+	    <a class="region" href="#" data-num="27">부산</a>
+	    <a class="region" href="#" data-num="44">대구</a>
+	    <a class="region" href="#" data-num="54">인천</a>
+	    <a class="region" href="#" data-num="65">광주</a>
+	    <a class="region" href="#" data-num="71">대전</a>
+	    <a class="region" href="#" data-num="77">울산</a>
+	    <a class="region" href="#" data-num="83">세종</a>
+	    <a class="region" href="#" data-num="84">경기</a>
+	    <a class="region" href="#" data-num="116">강원</a>
+	    <a class="region" href="#" data-num="135">충북</a>
+	    <a class="region" href="#" data-num="147">충남</a>
+	    <a class="region" href="#" data-num="163">전북</a>
+	    <a class="region" href="#" data-num="178">전남</a>
+	    <a class="region" href="#" data-num="201">경북</a>
+	    <a class="region" href="#" data-num="224">경남</a>
+	    <a class="region" href="#" data-num="243">제주</a>
 	  </li>
-	</div>
+	</div> -->
 
 <br>
 <!-- 공지게시판 출력 -->
@@ -110,8 +138,8 @@
 		        <td><a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_comment}</a></td>
 		      </tr>
 		    </c:when>
-		    <c:when test="${bo.bo_bt_num == 3}">
-		      <tr>
+		    <c:when test="${bo.bo_bt_num == 3}" >
+		      <tr class="boardRegion" data-num="${bo.bo_rg_num}">
 		      	<td>${bo.bo_num}</td>
 		      	<td><a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_title}</a></td>
 		        <td>${bo.me_nickname}</td>
@@ -158,6 +186,60 @@
 			location.href = '<c:url value="/board/insert3"/>'
 		}
 	});
- </script>
+
+
+ // 지역 필터 번호 넣기  
+$(document).on('click', '.select-region', function(){
+	let bo_rg_num = $(this).val();
+	console.log(bo_rg_num);
+	$('.region-input').val(bo_rg_num);
+});
+ 
+ /* function getBoardList(cri){
+	 console.log(cri);
+	$.ajax({
+		async : false,
+		method: 'post',
+		url : '<c:url value="/board/list"/>',
+		data: JSON.stringify(cri),
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json',
+		success : function(data){
+			let str ='';
+			for(bo of data.list){
+				alert(data)
+				str += `
+				  <tr class="boardRegion" data-num="${bo.bo_rg_num}">
+			      	<td>${bo.bo_num}</td>
+			      	<td><a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_title}</a></td>
+			        <td>${bo.me_nickname}</td>
+			        <td>${bo.bo_reg_date_str}</td>
+			        <td>${bo.bo_count}</td>
+			        <td><a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_comment}</a></td>
+			      </tr>
+				`
+			}
+			//$('.boardRegion').html(str);
+			
+			let pm = data.pm;
+			str = '';
+			//이전버튼을 배치
+			if(pm.prev){
+				str += `<a class="page-link" href="javascript:void(0);" onclick="changePage(\${pm.startPage-1})"> 이전</a>`
+			}
+			//숫자버튼을 배치
+			for(i = pm.startPage; i<=pm.endPage; i++){
+				str += `<a class="page-link" href="javascript:void(0);" onclick="changePage(\${i})"> \${i}</a>`
+			}
+			//다음버튼을 배치
+			if(pm.next){
+				str += `<a class="page-link" href="javascript:void(0);" onclick="changePage(\${pm.endPage+1})"> 다음</a>`
+			}
+			$('.pagination').html(str);
+		}
+	});
+}  */
+ 		
+</script>
 </body>
 </html>

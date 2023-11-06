@@ -312,10 +312,16 @@
 			member
 				on bo_me_num = me_num
 		where
+			(
 			bo_bt_num = 1
 				or
 			bo_bt_num = 3
+			)
 				and
+		<if test="board.bo_rg_num != 0">
+			bo_rg_num = #{board.bo_rg_num}
+				and
+		</if>
 		<if test="cri.t == 'all'">
 			(
 				bo_num like concat('%', #{cri.s}, '%')
@@ -385,7 +391,7 @@
 				bo_reg_date like concat('%', #{cri.s}, '%')
 		</if>
 	</select>
-	<!-- 자유게시글 등록하기 -->
+	<!-- 개인게시글 등록하기 -->
 	<insert id="insertBoard3" useGeneratedKeys="true" keyProperty="board.bo_num">
 		insert 
 			into 
@@ -423,6 +429,10 @@
 				or
 			bo_bt_num = 4
 				and
+		<if test="board.bo_rg_num != 0">
+			bo_rg_num = #{board.bo_rg_num}
+				and
+		</if>
 		<if test="cri.t == 'all'">
 			(
 				bo_num like concat('%', #{cri.s}, '%')
@@ -454,7 +464,7 @@
 		limit
 			#{cri.pageStart}, #{cri.perPageNum}
 	</select>
-	<!-- 개인매치 게시판 총 갯수 가져오기 -->
+	<!-- 클럽매치 게시판 총 갯수 가져오기 -->
 	<select id="selectClubTotalCount" resultType="int">
 		select
 			count(*)
@@ -492,7 +502,7 @@
 				bo_reg_date like concat('%', #{cri.s}, '%')
 		</if>
 	</select>
-	<!-- 자유게시글 등록하기 -->
+	<!-- 클럽게시글 등록하기 -->
 	<insert id="insertBoard4" useGeneratedKeys="true" keyProperty="board.bo_num">
 		insert 
 			into 
@@ -616,4 +626,27 @@
     				#{board.bo_count},
     				#{board.bo_comment})
 	</insert>
+	<!-- 지역필터 게시글 리스트 가져오기 -->
+	<select id="selectBoardRegionList" resultType="kr.kh.final_project.vo.BoardVO">
+		select 
+			* 
+		from 
+			board
+		where
+			bo_num = #{bo_num}
+				and
+			bo_bt_num = 3
+				and
+			bo_rg_num = #{bo_rg_num}
+
+	</select>
+	<!-- 해당 게시글 총 갯수 가져오기 -->
+	<select id="selectCommentCount" resultType="int">
+		select 
+			count(*) 
+		from 
+			board
+		where
+			bo_rg_num = #{bo_rg_num}
+	</select>
 </mapper>

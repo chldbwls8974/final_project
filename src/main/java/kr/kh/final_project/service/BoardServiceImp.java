@@ -278,16 +278,16 @@ public class BoardServiceImp implements BoardService{
 	
 		// 개인매치 게시판 리스트 가져오기
 		@Override
-		public List<BoardVO> getBoardIndividualList(Criteria cri) {
-			return boardDao.selectBoardIndividualList(cri);
+		public List<BoardVO> getBoardIndividualList(Criteria cri, BoardVO board) {
+			return boardDao.selectBoardIndividualList(cri, board);
 		}
 		// 개인매치 게시글 총 갯수 가져오기
 		@Override
-		public int getIndividualTotalCount(Criteria cri) {
+		public int getIndividualTotalCount(Criteria cri, BoardVO board) {
 			if(cri == null) {
 				cri = new Criteria();
 			}
-			return boardDao.selectIndividualTotalCount(cri);
+			return boardDao.selectIndividualTotalCount(cri, board);
 		}
 		// 자유게시판 등록하기
 		@Override
@@ -326,16 +326,16 @@ public class BoardServiceImp implements BoardService{
 	
 		// 클럽매치 게시판 리스트 가져오기
 		@Override
-		public List<BoardVO> getBoardClubList(Criteria cri) {
-			return boardDao.selectBoardIndividualList(cri);
+		public List<BoardVO> getBoardClubList(Criteria cri, BoardVO board) {
+			return boardDao.selectBoardClubList(cri, board);
 		}
 		// 클럽매치 게시글 총 갯수 가져오기
 		@Override
-		public int getClubTotalCount(Criteria cri) {
+		public int getClubTotalCount(Criteria cri, BoardVO board) {
 			if(cri == null) {
 				cri = new Criteria();
 			}
-			return boardDao.selectClubTotalCount(cri);
+			return boardDao.selectClubTotalCount(cri, board);
 		}
 		// 클럽게시판 등록하기
 		@Override
@@ -413,6 +413,23 @@ public class BoardServiceImp implements BoardService{
 				uploadFiles(files, board.getBo_num());
 				
 				return true;
+	}
+
+	// ===================================================================================
+	
+	// 지역필터 적용 조회하기
+	@Override
+	public List<BoardVO> getBoardRegionList(int bo_rg_num, Criteria cri) {
+		if(cri == null) {
+			cri = new Criteria();
+		}
+		return boardDao.selectBoardRegionList(bo_rg_num, cri);
+	}
+
+	@Override
+	public int getRegionTotalCount(int bo_rg_num) {
+		
+		return boardDao.selectBoardRegionTotalCount(bo_rg_num);
 	}
 
 	

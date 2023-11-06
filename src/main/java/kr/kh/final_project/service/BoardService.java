@@ -46,16 +46,16 @@ public interface BoardService {
 	boolean insertBoard2(BoardVO board, MemberVO user, MultipartFile[] files);
 
 	// 개인매치 게시판 리스트 가져오기 ( + 공지게시판과 같이 )
-	List<BoardVO> getBoardIndividualList(Criteria cri);
+	List<BoardVO> getBoardIndividualList(Criteria cri, BoardVO board);
 	// 개인매치 게시판 총 갯수 가져오기 ( + 공지게시판과 같이 )
-	int getIndividualTotalCount(Criteria cri);
+	int getIndividualTotalCount(Criteria cri, BoardVO board);
 	// 개인매치 게시판 등록하기
 	boolean insertBoard3(BoardVO board, MemberVO user, MultipartFile[] files);
 	
 	// 클럽매치 게시판 리스트 가져오기 ( +공지게시판과 같이 )
-	List<BoardVO> getBoardClubList(Criteria cri);
+	List<BoardVO> getBoardClubList(Criteria cri, BoardVO board);
 	// 클럽매치 게시판 총 갯수 가져오기 ( +공지게시판과 같이 )
-	int getClubTotalCount(Criteria cri);
+	int getClubTotalCount(Criteria cri, BoardVO board);
 	// 클럽매치 게시판 등록하기
 	boolean insertBoard4(BoardVO board, MemberVO user, MultipartFile[] files);
 	
@@ -65,6 +65,12 @@ public interface BoardService {
 	int getInquiryTotalCount(Criteria cri);
 	// 문의게시판 등록하기
 	boolean insertBoard5(BoardVO board, MemberVO user, MultipartFile[] files);
+
+
+	// 지역필터 조회하기
+	List<BoardVO> getBoardRegionList(int bo_rg_num, Criteria cri);
+	// 지역 필터 게시글 총 갯수 가져오기
+	int getRegionTotalCount(int bo_rg_num);
 	
 	
 	
