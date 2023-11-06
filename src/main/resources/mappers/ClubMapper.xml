@@ -22,4 +22,10 @@
 		insert into club(cl_name, cl_emblem, cl_price, cl_rule, cl_introduction, cl_url, cl_rg_num)
 		 values(#{club.cl_name},#{club.cl_emblem},#{club.cl_price},#{club.cl_rule},#{club.cl_introduction},#{club.cl_url},#{club.cl_rg_num})
 	</insert>
+	<select id="selectClubAgeList" resultType="kr.kh.final_project.vo.ClubVO">
+		select * from preferred_age
+	</select>
+	<select id="selectClubTimeList" resultType="kr.kh.final_project.vo.ClubVO">
+	 	select * from team_preferred_time
+	</select>
 </mapper>

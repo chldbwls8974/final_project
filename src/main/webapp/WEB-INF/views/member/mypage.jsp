@@ -38,10 +38,12 @@
 	.myedit{ width: 170px; height: 50px; border-radius: 20px;
 		padding:20px;
 	}
-	.myclub-thumb{ width: 50%; height:150px; border-radius:20px;
-		background-color: #f0f0f0; padding: 20px; margin: 20px 20px 20px 0; 
-	}
-		
+	
+	
+	.mypoint-thumb{
+		width: 50%; height: 150px; border-radius: 20px; margin: 20px 20px 20px 0;
+		padding: 20px; background-color: #f0f0f0; position: relative;
+	}	
 	.mytier-thumb{ background-color: #f0f0f0; border-radius:20px; padding:20px;
 		position: relative; margin: 20px 0 20px 0; width: 50%; height: 150px;
 	}
@@ -50,6 +52,9 @@
 	}
 	.mytier-box{
 		display: flex; justify-content: flex-start; margin-top: 20px;
+	}
+	.myclub-thumb{ width: 100%; height: auto; border-radius:20px;
+		background-color: #f0f0f0; padding: 20px; margin: 0 20px 20px 0; 
 	}
 	.mymenu-list li{ text-align: left;}
 	
@@ -86,12 +91,16 @@
 						</div>
 					</div>
 					<div style="display: flex;">
-						<div class="myclub-thumb">
-							<p style="font-size:large; font-weight: bolder; margin-bottom: 20px;">소속 클럽</p>
-							<a href="#" class="myclub-link" style="display: flex;">
-								<img src="https://ifh.cc/g/OTACaX.jpg" alt="나의 클럽" style="width: 30px; height: 30px; border-radius: 10px;">
-								<p style="font-weight: bolder; font-size: 15px;">팀1</p>
-							</a>
+						<div class="mypoint-thumb">
+							<p style="font-size:large; font-weight: bolder; margin-bottom: 20px;">내 포인트</p>
+							<div style="width: 25%;">
+								<p style="font-size:large; font-weight: bolder;">${user.me_point}원</p>
+							</div>
+							<div style="width: 75%;">
+							<div style="width: 110px; padding:20px; border-radius: 10px; background-color:#c2f296;">
+								<a href="#"><p>충전하기</p></a>
+							</div>
+							</div>
 						</div>
 						<div class="mytier-thumb">
 							<p class="mytier-title">내 티어</p>
@@ -103,12 +112,14 @@
 							</div>
 						</div>
 					</div>	
-					<div style="padding:30px; border-radius: 20px; background-color: #f0f0f0; position: relative;">
-						<p style="font-size:15px; font-weight: bold;">내 포인트</p>
-						<p style="font-size:large; font-weight: bolder;">${user.me_point}원</p>
-						<div style="padding:20px; border-radius: 10px; background-color:#c2f296; float: right; position: absolute; right: 20px; top: 40px;">
-							<a href="#">충전하기</a>
-						</div>
+					<div class="myclub-thumb">
+						<p style="font-size:large; font-weight: bolder; margin-bottom: 20px;">소속 클럽</p>
+						<c:forEach items="${list}" var="list">
+							<a href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>" class="myclub-link" style="display: flex;">
+								<img src="" alt="나의 클럽" style="width: 30px; height: 30px; border-radius: 10px;">
+								<p style="font-weight: bolder; font-size: 15px;">${list.cl_name }</p>
+							</a>
+						</c:forEach>
 					</div>
 				</div>	
 			</div>

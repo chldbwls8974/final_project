@@ -19,10 +19,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.pagination.PageMaker;
+import kr.kh.final_project.service.ClubService;
 import kr.kh.final_project.service.MatchService;
 import kr.kh.final_project.service.MemberService;
 import kr.kh.final_project.service.RegionService;
 import kr.kh.final_project.util.Message;
+import kr.kh.final_project.vo.ClubVO;
 import kr.kh.final_project.vo.HoldingCouponVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
@@ -39,6 +41,8 @@ public class MemberController {
 	MatchService matchService;
 	@Autowired
 	RegionService regionService;
+	@Autowired
+	ClubService clubService;
 	
 
 	@GetMapping("/member/signup")
@@ -225,8 +229,10 @@ public class MemberController {
 	@GetMapping("/member/mypage")
 	public String myPage(HttpSession session, Model model) {
 		MemberVO user = (MemberVO) session.getAttribute("user");
+		List<ClubVO> list = clubService.getClubList();
 		String profile = user.getMe_profile();
 		model.addAttribute("user", user);
+		model.addAttribute("list",list);
 		model.addAttribute("profile", profile);
 		return "/member/mypage";
 	}

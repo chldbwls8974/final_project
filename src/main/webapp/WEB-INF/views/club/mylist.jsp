@@ -13,45 +13,66 @@
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style type="text/css">
+
+.container{ padding: 50px 0 50px 0;}
+.body-container{
+	display: flex; justify-content: center; text-align: center;
+}
+
+.memberlist-box, .rookielist-box{ margin: 20px; text-align: center;}
+.title{ font-size: 30px; font-weight: bolder; text-align: center;
+		 letter-spacing: -3px;
+}
+.memberlist-control, .rookielist-control{
+	padding: 20px; background-color: #f0f0f0; border-radius: 40px;
+	margin-bottom: 30px;
+}
+.memberlist-link, .rookielist-link{ display:inline-block; }
+
+
 </style>
 </head>
 <body>
-	<div class="container">
+	<div class="body-container">
 		<div class="memberlist-box">
-			<h3>여기는 내가 member로 속해있는 클럽 리스트</h3>
-			<ul>
+			<p class="title">‘MEMBER’ 등급인 클럽</p>
+			<ul class="memberlist-control">
 				<c:forEach items="${memberlist}" var="list">
-					<li><a
-						href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>">
-							<div>
-								<img alt="팀프로필넣고싶어"
-									src="<c:url value='/resource/profile/basic'/>">
+					<li class="memberlist-link">
+						<a href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>">
+							<div class="emblem">
+								<img alt="엠블럼"
+									src="<c:url value='https://ifh.cc/g/v9LAF1.jpg'/>"
+									style="width: 70px; height: 70px; border-radius: 50%">
 							</div>
 							<div>
 								<span>${list.cl_name }</span> <span>${list.cl_rg_num }</span>
+								<span>$</span>
 							</div>
-					</a></li>
+						</a>
+					</li>
 				</c:forEach>
 			</ul>
 		</div>
 		<div class="rookielist-box">
-			<h3>여기는 내가 rookie로 속해있는 클럽 리스트</h3>
-			<ul>
+			<p class="title">‘ROOKIE’ 등급인 클럽</p>
+			<ul class="rookielist-control">
 				<c:forEach items="${rookielist}" var="list">
-					<li><a
-						href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>">
+					<li class="rookielist-link">
+						<a href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>">
 							<div>
-								<img alt="팀프로필넣고싶어"
-									src="<c:url value='/resource/profile/basic'/>">
+								<img alt="엠블럼"
+									src="<c:url value='https://ifh.cc/g/RyG30R.jpg'/>"
+									style="width: 70px; height: 70px; border-radius: 50%">
 							</div>
 							<div>
 								<span>${list.cl_name }</span> <span>${list.cl_rg_num }</span>
 							</div>
-					</a></li>
+						</a>
+					</li>
 				</c:forEach>
 			</ul>
 		</div>
-
 	</div>
 </body>
 </html>

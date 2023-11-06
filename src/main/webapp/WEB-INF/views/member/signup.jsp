@@ -31,7 +31,7 @@
     border: 0;
     vertical-align: baseline;
 }
-ul{
+.chip{
 	display: flex; 
 	flex-wrap: wrap; 
 	overflow: hidden; 
@@ -39,17 +39,15 @@ ul{
 	list-style: none;
 	padding: 20px;
 }
-li{
-	box-shadow: none;	
-    margin: 0;
-    vertical-align: baseline;
-}
 .chip__item--3{
 	width: 25%;
     position: relative;
     box-sizing: border-box;
     outline: none;
     margin: 0 auto;
+    box-shadow: none;	
+    margin: 0;
+    vertical-align: baseline;
 }
 .chip_item-radio{
 	position: absolute;
@@ -121,13 +119,13 @@ input, progress {
 			</div>
 
 			<div class="form-group">
-				<label>비번</label> <input type="password" class="form-control"
+				<label>비밀번호</label> <input type="password" class="form-control"
 					name="me_pw" id="me_pw" required> <label id="check-pw-error" class="error"
 					for="me_pw"></label>
 			</div>
 
 			<div class="form-group">
-				<label>비번 확인</label> <input type="password" class="form-control"
+				<label>비밀번호 확인</label> <input type="password" class="form-control"
 					name="me_pw2" id="me_pw2" required> <label id="check-pw2-error" class="error"
 					for="me_pw2"></label>
 			</div>
@@ -410,14 +408,6 @@ input, progress {
 			</div>
 		</div>
 
-
-
-			
-		
-		
-		
-		
-		
 			<div class="prefer-area">
 				<div class="form-group">
 					<label>선호지역</label> <select class="form-control pre_rg_main">
