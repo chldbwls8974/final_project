@@ -94,16 +94,10 @@
 		 	where 
 		 		fa_num = #{fa_num}
 	</select>
-	
 	<update id="facilityDelete" parameterType="int">
-	    UPDATE facility
-	    SET fa_deleted = 1
-	    WHERE fa_num = #{fa_num}
-	</update>
-	<update id="updateStadiumAvailability" parameterType="int">
-	    UPDATE stadium
-	    SET st_available = 2
-	    WHERE st_fa_num = #{fa_num}
+	    update facility
+	    set fa_deleted = 1
+	    where fa_num = #{fa_num}
 	</update>
 	
 </mapper>
