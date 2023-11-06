@@ -43,7 +43,7 @@ public class BusinessmanController {
 	@Autowired
 	RegionService regionService;
 	
-	//시설 목록
+	//시설 목록, 페이지네이션, 검색창
 	@GetMapping("/businessman/facility")
 	public String facility(Model model, HttpSession session, Criteria cri) {
 		MemberVO member = (MemberVO)session.getAttribute("user");
@@ -177,7 +177,7 @@ public class BusinessmanController {
 	}
 	
 	
-	//경기장 목록
+	//경기장 목록, 페이지네이션, 검색창
 	@GetMapping("/businessman/stadium/{fa_num}")
 	public String stadium(Model model, @PathVariable("fa_num")Integer fa_num, 
 			HttpSession session, Criteria cri) {
