@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.vo.BoardVO;
 import kr.kh.final_project.vo.FileVO;
+import kr.kh.final_project.vo.ManagerVO;
 
 public interface BoardDAO {
 
@@ -84,6 +85,12 @@ public interface BoardDAO {
 	List<BoardVO> selectBoardRegionList(@Param("bo_num")int bo_num,@Param("cri") Criteria cri);
 	// 지역게시판 총 갯수 가져오기
 	int selectBoardRegionTotalCount(@Param("bo_num")int bo_rg_num);
+	
+	
+	// 매니저신청 게시글 가져오기
+	ManagerVO selectBoardManager(@Param("manager")ManagerVO manager, @Param("user")ManagerVO user);
+	// 매니저신청 게시글 삭제하기
+	boolean deleteBoardManager(@Param("manager")ManagerVO manager, @Param("user")ManagerVO user);
 	
 
 	

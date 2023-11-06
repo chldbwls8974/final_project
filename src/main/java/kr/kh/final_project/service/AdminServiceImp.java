@@ -12,6 +12,7 @@ import kr.kh.final_project.dao.ManagerDAO;
 import kr.kh.final_project.dao.MemberDAO;
 import kr.kh.final_project.dao.PointHistoryDAO;
 import kr.kh.final_project.pagination.Criteria;
+import kr.kh.final_project.vo.BoardVO;
 import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ManagerVO;
 import kr.kh.final_project.vo.MemberVO;
@@ -95,6 +96,22 @@ public class AdminServiceImp implements AdminService{
 			return false;
 		}
 		return managerDao.updateManagerByAuthority2(manager);
+	}
+	// 매니저 신청서 삭제하기
+	@Override
+	public boolean deleteBoardManagerList(ManagerVO manager,ManagerVO user) {
+		if(user == null || user.getMe_id() == null) {
+			return false;			
+		}
+		if(manager.getBo_num() == 0) {
+			return false;
+		}
+		ManagerVO board = boardDao.selectBoardManager(manager,user);
+		if(board == null || !(board.getBo_me_num() == user.getMe_num())) {
+			return false;
+		}
+		return boardDao.deleteBoardManager(manager, user);
+		
 	}
 	// 매니저 페이지네이션
 	@Override
@@ -188,6 +205,7 @@ public class AdminServiceImp implements AdminService{
 		}
 		return businessDao.selectTotalCount2(cri);
 	}
+	
 	
 
 	
