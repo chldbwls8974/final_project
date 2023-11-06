@@ -24,5 +24,10 @@ public interface BusinessmanDAO {
 	//시설번호로 시설 정보 가져오기
 	FacilityVO selectFacility(@Param("fa_num")Integer fa_num);
 
+	//시설 삭제(화면에서만)
+	int facilityDelete(@Param("fa_num")Integer fa_num);
+	//시설 삭제 시 경기장 삭제(화면에서만)
+	void updateStadiumAvailability(@Param("fa_num")Integer fa_num);
+
 
 }

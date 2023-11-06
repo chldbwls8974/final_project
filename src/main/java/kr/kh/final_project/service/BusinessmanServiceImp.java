@@ -118,6 +118,7 @@ public class BusinessmanServiceImp implements BusinessmanService{
 		//가져오면 반환
 		return stadiumList;
 	}
+	
 	//현재 페이지 정보(검색어, 타입)에 맞는 전체 경기장 수를 가져옴
 	@Override
 	public int getTotalStadiumCount(Criteria cri, Integer fa_num) {
@@ -161,6 +162,23 @@ public class BusinessmanServiceImp implements BusinessmanService{
 		}
 		boolean res = stadiumDao.updateStadium(stadium);
 		return res;
+	}
+	
+	//시설 삭제
+	@Override
+	public boolean facilityDelete(Integer fa_num, MemberVO user, BusinessmanVO business) {
+		if (fa_num == null) {
+	        return false;
+	    }
+	    // 시설을 삭제한 것처럼 표시 (DB에는 실제로 삭제하지 않음)
+	    int deletedRows = businessmanDao.facilityDelete(fa_num);
+	    
+	    if (deletedRows > 0) {
+	        // 여기에서 경기장의 상태를 업데이트할 수 있음 (st_available를 3으로 업데이트)
+	        businessmanDao.updateStadiumAvailability(fa_num);
+	        return true;
+	    }
+	    return false;
 	}
 	
 	

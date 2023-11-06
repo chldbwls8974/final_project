@@ -20,6 +20,7 @@ public class FacilityVO {
 	private int fa_smoking;
 	private int fa_machine;
 	private String fa_note;
-	
+	private int fa_deleted;
+
 	private String fa_rg_main;
 }

@@ -173,7 +173,22 @@ public class BusinessmanController {
 		model.addAttribute("msg", msg);
 		return "message";
 	}
+	//시설 삭제 => 해당 시설의 경기장도 삭제(화면에서만 삭제)
+	@GetMapping("/businessman/facilityDelete")
+	public String deleteFacility(@RequestParam Integer fa_num, Model model, 
+			BusinessmanVO business, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
 
+		boolean res = businessmanService.facilityDelete(fa_num, user, business);
+		if(res) {
+			model.addAttribute("msg", "시설 삭제가 완료되었습니다.");
+		}else {
+			model.addAttribute("msg", "시설을 삭제하지 못했습니다.");
+		}
+	    model.addAttribute("url", "/businessman/facility");
+	    return "/util/message";
+	}
+	
 	
 	//경기장 목록, 페이지네이션, 검색창
 	@GetMapping("/businessman/stadium/{fa_num}")

@@ -27,6 +27,8 @@ public interface BusinessmanService {
 	boolean updateFacility(FacilityVO facility, BusinessmanVO business);
 	//시설번호로 시설 정보 가져오기
 	FacilityVO getFacility(Integer fa_num);
+	//시설 삭제 => 해당 시설의 경기장도 삭제(화면에서만 삭제)
+	boolean facilityDelete(Integer fa_num, MemberVO user, BusinessmanVO business);
 	
 	//시설번호로 경기장 리스트 가져오기
 	List<StadiumVO> getStadiumList(Integer fa_num, Criteria cri);

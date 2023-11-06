@@ -42,28 +42,33 @@
 	          <th>자판기</th>
 	          <th>특이사항</th>
 	          <th>수정</th>
+	          <th>삭제</th>
 	        </tr>
 	      </thead>
 		  <tbody>
 	      	<c:forEach items="${list}" var="facility">
-		        <tr>
-		          <td><a href="<c:url value='/businessman/stadium/${facility.fa_num}'/>">${facility.fa_num}</a></td>
-		          <td hidden="hidden">${facility.fa_bu_num}</td>
-		          <td>${facility.fa_rg_num}</td>
-		          <td>${facility.fa_name}</td>
-		          <td>${facility.fa_add}</td>
-		          <td>${facility.fa_add_detail}</td>
-		          <td>${facility.fa_phone}</td>
-		          <td>${facility.fa_pay}</td>
-		          <td>${facility.fa_locker}</td>
-		          <td>${facility.fa_toilet}</td>
-		          <td>${facility.fa_shower}</td>
-		          <td>${facility.fa_smoking}</td>
-		          <td>${facility.fa_machine}</td>
-		          <td>${facility.fa_note}</td>
-		          <td><a href="<c:url value='/businessman/facilityUpdate?fa_num=${facility.fa_num}'/>"
-							class="btn btn-dark" role="button">수정</a></td>
-	         	</tr>
+	      		<c:if test="${facility.fa_deleted != 1}">
+			        <tr>
+			          <td><a href="<c:url value='/businessman/stadium/${facility.fa_num}'/>">${facility.fa_num}</a></td>
+			          <td hidden="hidden">${facility.fa_bu_num}</td>
+			          <td>${facility.fa_rg_num}</td>
+			          <td>${facility.fa_name}</td>
+			          <td>${facility.fa_add}</td>
+			          <td>${facility.fa_add_detail}</td>
+			          <td>${facility.fa_phone}</td>
+			          <td>${facility.fa_pay}</td>
+			          <td>${facility.fa_locker}</td>
+			          <td>${facility.fa_toilet}</td>
+			          <td>${facility.fa_shower}</td>
+			          <td>${facility.fa_smoking}</td>
+			          <td>${facility.fa_machine}</td>
+			          <td>${facility.fa_note}</td>
+			          <td><a href="<c:url value='/businessman/facilityUpdate?fa_num=${facility.fa_num}'/>"
+								class="btn btn-dark" role="button">수정</a></td>
+					  <td><a href="<c:url value='/businessman/facilityDelete?fa_num=${facility.fa_num}'/>"
+						    	class="btn btn-danger" role="button">삭제</a></td>
+		         	</tr>
+	         	</c:if>
 		     </c:forEach>
 	       </tbody>
 	     </table>
