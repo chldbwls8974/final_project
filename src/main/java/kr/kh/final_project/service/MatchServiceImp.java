@@ -7,12 +7,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.kh.final_project.dao.ExpenseDAO;
 import kr.kh.final_project.dao.ExtraDAO;
 import kr.kh.final_project.dao.MatchDAO;
 import kr.kh.final_project.dao.PreferredRegionDAO;
 import kr.kh.final_project.dao.PreferredTimeDAO;
 import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.dao.TimeDAO;
+import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ExtraVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.RegionVO;
@@ -22,6 +24,9 @@ public class MatchServiceImp implements MatchService{
 
 	@Autowired
 	ExtraDAO extraDao;
+	
+	@Autowired
+	ExpenseDAO expenseDao;
 	
 	@Autowired
 	MatchDAO matchDao;
@@ -79,9 +84,40 @@ public class MatchServiceImp implements MatchService{
 		if(me_num == null || mt_date == null) {
 			return null;
 		}
+		List<MatchVO> dbMatchList = matchDao.selectMatchListOfClub(me_num, mt_date);
+		return filterMatch(me_num, mt_date, rg_num, check, dbMatchList);
+	}
+
+	@Override
+	public MatchVO selectMatchByMtNum(int mt_num) {
+		if(mt_num == 0) {
+			return null;
+		}
+		return matchDao.selectMatchByMtNum(mt_num);
+	}
+
+	@Override
+	public ExpenseVO selectPrice(int type, String ti_day) {
+		if((type != 0 && type != 1) || ti_day == null) {
+			return null;
+		}
+		List<ExpenseVO> expenseList = expenseDao.selectPriceList();
+		if(type == 0) {
+			if(!ti_day.equals("토") && !ti_day.equals("일")) {
+				return expenseList.get(0);
+			}else {
+				return expenseList.get(1);
+			}
+		}else if(type == 1){
+			if(!ti_day.equals("토") && !ti_day.equals("일")) {
+				return expenseList.get(2);
+			}else {
+				return expenseList.get(3);
+			}			
+		}
 		return null;
 	}
-	
+
 	public List<MatchVO> filterMatch(Integer me_num, Date mt_date, int rg_num, boolean check, List<MatchVO> dbMatchList){
 		List<Integer> rgNumList = new ArrayList<Integer>();
 		List<Integer> tiNumList;
@@ -117,13 +153,5 @@ public class MatchServiceImp implements MatchService{
 			}
 		}
 		return matchList;
-	}
-
-	@Override
-	public MatchVO selectMatchByMtNum(int mt_num) {
-		if(mt_num == 0) {
-			return null;
-		}
-		return matchDao.selectMatchByMtNum(mt_num);
 	}
 }

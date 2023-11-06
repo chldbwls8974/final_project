@@ -26,7 +26,7 @@
 		.match-box:last-child{border-bottom: none}
 		.match-time-box{font-size: 40px; display: inline-block; line-height: 100px}
 		.match-info-box{display: inline-block;}
-		.btn-application{float: right; margin-top: 30px;}
+		.btn{float: right; margin-top: 30px;}
 	</style>
 </head>
 <body>
@@ -83,7 +83,7 @@
 	</div>
 	<script type="text/javascript">
 	let type = 1;
-	let select_day = "${thirdWeek[0].date_str}";
+	let select_day = "${week[0].date_str}";
 	let rg_num = 0;
 	let check = true;
 	
@@ -124,15 +124,14 @@
 	$(document).on('click', '.btn-application', function() {
 		let mt_num = $(this).val();
 		
-		insertManagerToMatch(mt_num)
-		printSelectMatch()
+		location.href='<c:url value="/match/application?mt_num="/>'+ mt_num + '&type=' + type;
 	});
 	function printSelectMatch() {
 		let str = '';
 		$.ajax({
 			async : false,
 			method : 'post',
-			url : '<c:url value="/match/searchList/club"/>',
+			url : '<c:url value="/match/searchList/solo"/>',
 			data : {mt_date:select_day, rg_num:rg_num, check:check},
 			dataType : 'json',
 			success : function(data) {
@@ -143,12 +142,33 @@
 							<span class="match-time">\${match.ti_time_str}</span>
 						</div>
 						<div class="match-info-box">
-							<span>\${match.rg_main} \${match.rg_sub}</span> <br>
-							<span>\${match.fa_name} \${match.st_name} \${match.st_max} vs \${match.st_max}</span>
+							<span>\${match.rg_main} \${match.rg_sub} \${match.fa_name} \${match.st_name} </span> <br>
+							<span>개인 `;
+					if(match.mt_rule == 0){
+						str +=	`친선전 \${match.mt_personnel} vs \${match.mt_personnel} \${match.entry_count}/\${match.mt_personnel * 2}</span>
+							</div>
+						`;
+					}else if(match.mt_rule == 1){
+						str +=	`경쟁전 \${match.mt_personnel} vs \${match.mt_personnel} \${match.entry_count}/\${match.mt_personnel * 3}</span>
+							</div>
+						`;						
+					}
+					if(match.application_able == 1){
+						str +=	`
+							<button class="btn btn-outline-primary btn-application" value="\${match.mt_num}">참가 신청</button> <br>
 						</div>
-						<button class="btn btn-outline-primary btn-application" value="\${match.mt_num}">신청</button> <br>
-					</div>
-					`
+						`;
+					}else if(match.application_able == 0 && match.application == 0){
+						str +=	`
+							<button class="btn btn-outline-secondary" value="\${match.mt_num}" disabled>참가 불가</button> <br>
+						</div>
+						`;					
+					}else if(match.application_able == 0 && match.application == 1){
+						str +=	`
+							<button class="btn btn-outline-danger btn-application-delete" value="\${match.mt_num}">참가 취소</button> <br>
+						</div>
+						`;					
+					}
 				}
 				$('.select-match-box').html(str)
 			}
@@ -180,23 +200,6 @@
 			});
 		}
 		$('.sub-region-box').html(str);
-	}
-	
-	function insertManagerToMatch(mt_num) {
-		$.ajax({
-			async : false,
-			method : 'post',
-			url : '<c:url value="/manager/insert/match"/>',
-			data : {mt_num : mt_num},
-			dataType : 'json',
-			success : function(data) {
-				if(data.res){
-					alert("등록 성공");
-				}else{
-					alert("등록 실패");					
-				}
-			}
-		});
 	}
 	</script>
 </body>

@@ -112,9 +112,6 @@
 		location.href='<c:url value="/match/application?mt_num="/>'+ mt_num + '&type=' + type;
 	});
 	function printSelectMatch() {
-		console.log(select_day);
-		console.log(rg_num);
-		console.log(check);
 		let str = '';
 		$.ajax({
 			async : false,
