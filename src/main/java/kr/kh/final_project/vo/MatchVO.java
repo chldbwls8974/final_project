@@ -61,6 +61,8 @@ public class MatchVO {
 	private int mn_mt_num;
 	private int mn_me_num;
 	
+	private int entry_count;
+	
 	public String getMt_date_str() {
 		if(mt_date == null) {
 			return "";	

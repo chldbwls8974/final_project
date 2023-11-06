@@ -115,7 +115,7 @@
 						`;
 					}else if(${weekCount >= 0}){
 						str += `
-							<button class="btn btn-outline-warning btn-wait btn-manager-match" value="\${match.mt_num}">매칭 대기중<br>0/\${match.mt_personnel * 3}</button> <br>
+							<button class="btn btn-outline-warning btn-wait btn-manager-match" value="\${match.mt_num}">매칭 대기중<br>\${match.entry_count}/\${match.mt_personnel * 3}</button> <br>
 						`;
 					}else if(${weekCount < 0}){
 						str += `
