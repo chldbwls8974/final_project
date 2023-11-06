@@ -116,7 +116,14 @@ public class MatchServiceImp implements MatchService{
 				}
 			}
 		}
-		System.out.println(matchList);
 		return matchList;
+	}
+
+	@Override
+	public MatchVO selectMatchByMtNum(int mt_num) {
+		if(mt_num == 0) {
+			return null;
+		}
+		return matchDao.selectMatchByMtNum(mt_num);
 	}
 }

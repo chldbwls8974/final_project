@@ -82,7 +82,8 @@
 		
 	</div>
 	<script type="text/javascript">
-	let select_day = "${thirdWeek[0].date_str}"
+	let type = 1;
+	let select_day = "${thirdWeek[0].date_str}";
 	let rg_num = 0;
 	let check = true;
 	

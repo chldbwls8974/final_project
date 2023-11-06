@@ -21,4 +21,6 @@ public interface MatchService {
 
 	List<MatchVO> selectMatchListOfClub(Integer me_num, Date mt_date, int rg_num, boolean check);
 
+	MatchVO selectMatchByMtNum(int mt_num);
+
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.final_project.service.MatchService;
+import kr.kh.final_project.util.Message;
 import kr.kh.final_project.vo.ExtraVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
@@ -106,5 +107,15 @@ public class MatchController {
 		List<MatchVO> matchList = matchService.selectMatchListOfClub(user.getMe_num(), mt_date, rg_num, check);
 		map.put("matchList", matchList);
 		return map;
+	}
+	
+	@GetMapping("/match/application")
+	public String matchApplicationPage(Model model, HttpSession session, int mt_num, int type) {
+		MemberVO member = (MemberVO)session.getAttribute("user");
+		MatchVO match = matchService.selectMatchByMtNum(mt_num);
+		
+		
+		model.addAttribute("match", match);
+		return "/match/application";
 	}
 }

@@ -18,6 +18,8 @@ public interface MatchDAO {
 	List<MatchVO> selectManagerMatchListByMtDate(@Param("me_num")Integer me_num, @Param("mt_date")Date mt_date);
 
 	List<MatchVO> selectMatchListOfSolo(@Param("me_num")Integer me_num, @Param("mt_date")Date mt_date);
+
+	MatchVO selectMatchByMtNum(@Param("mt_num")int mt_num);
 	
 
 }

@@ -603,16 +603,15 @@ WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(adddate(now(), 
 
 insert into manager(mn_mt_num, mn_me_num)
 values
-(884, 3), (902, 3), (889, 4), (463, 3), (8, 3), (48, 3),
+(884, 3), (902, 3), (889, 4), (463, 3) ,(524, 3), (8, 3), (48, 3),
 (1337, 3), (1344, 3);
 
 update `match`
 set
 	mt_rule = 1
 where
-	mt_num = 884 or mt_num = 902 or mt_num = 889 or
-	mt_num = 8 or mt_num = 48 or mt_num = 1337 or
-	mt_num = 1344 ;
+	mt_num = 884 or mt_num = 902 or mt_num = 889 or mt_num = 463 or
+	mt_num = 524 or mt_num = 8 or mt_num = 48 or mt_num = 1337 or mt_num = 1344 ;
 
 insert into preferred_region(pr_me_num, pr_rg_num)
 values
