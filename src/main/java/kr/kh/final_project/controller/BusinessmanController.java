@@ -138,7 +138,6 @@ public class BusinessmanController {
 			model.addAttribute("msg", msg);
 			return "message";
 		}
-		System.out.println(MainRegion);
 		model.addAttribute("business", business);
 		model.addAttribute("facility", facility);
 		model.addAttribute("MainRegion", MainRegion);
@@ -155,7 +154,6 @@ public class BusinessmanController {
 		map.put("SubRegion", SubRegion);
 		return map;
 	}
-	
 	//시설 정보 수정
 	@PostMapping("/businessman/facilityUpdate")
 	public String facilityUpdate(Model model, FacilityVO facility, HttpSession session) {
@@ -175,7 +173,7 @@ public class BusinessmanController {
 		model.addAttribute("msg", msg);
 		return "message";
 	}
-	
+
 	
 	//경기장 목록, 페이지네이션, 검색창
 	@GetMapping("/businessman/stadium/{fa_num}")

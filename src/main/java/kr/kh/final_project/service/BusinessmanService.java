@@ -38,4 +38,5 @@ public interface BusinessmanService {
 	boolean updateStadium(StadiumVO stadium);
     //현재 페이지 정보(검색어, 타입)에 맞는 전체 경기장 수를 가져옴
 	int getTotalStadiumCount(Criteria cri, Integer fa_num);
+
 }

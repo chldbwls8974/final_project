@@ -162,7 +162,6 @@ public class BusinessmanServiceImp implements BusinessmanService{
 		boolean res = stadiumDao.updateStadium(stadium);
 		return res;
 	}
-   
 	
 	
 }

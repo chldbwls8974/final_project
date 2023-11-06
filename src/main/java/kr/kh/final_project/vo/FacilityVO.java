@@ -1,7 +1,5 @@
 package kr.kh.final_project.vo;
 
-import java.util.List;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -23,5 +21,5 @@ public class FacilityVO {
 	private int fa_machine;
 	private String fa_note;
 	
-	private List<FacilityVO> list;
+	private String fa_rg_main;
 }
