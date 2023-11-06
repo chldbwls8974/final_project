@@ -171,10 +171,10 @@ public class BusinessmanServiceImp implements BusinessmanService{
 	        return false;
 	    }
 	    // 시설을 삭제한 것처럼 표시 (DB에는 실제로 삭제하지 않음)
-	    int deletedRows = businessmanDao.facilityDelete(fa_num);
+	    int fa_deleted = businessmanDao.facilityDelete(fa_num);
 	    
-	    if (deletedRows > 0) {
-	        // 여기에서 경기장의 상태를 업데이트할 수 있음 (st_available를 3으로 업데이트)
+	    if (fa_deleted == 1) {
+	        //경기장 상태 '2:삭제'로 업데이트
 	        businessmanDao.updateStadiumAvailability(fa_num);
 	        return true;
 	    }
