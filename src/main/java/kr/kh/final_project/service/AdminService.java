@@ -31,8 +31,6 @@ public interface AdminService {
 	boolean updateManager2(ManagerVO manager);
 	// 매니저 정보 페이지네이션 (총 매니저 수 가져오기)
 	int getTotalCount3(Criteria cri);
-	// 매니저신청서 삭제하기
-	boolean deleteBoardManagerList(ManagerVO manager, ManagerVO user);
 	
 	// 사업자신청 정보조회
 	List<ManagerVO> getBusinessList(Criteria cri);

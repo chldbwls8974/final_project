@@ -128,21 +128,16 @@ public class AdminController {
 		@ResponseBody
 		@PostMapping("/admin/manager2")
 		public Map<String, Object>updateManager2(@RequestBody ManagerVO manager, 
-															Criteria cri,
-															HttpSession session){
+															Criteria cri
+															){
 			// 결과 데이터를 넣기 위한 map을 만듬
 			Map<String, Object> map = new HashMap<String, Object>();
 			//ManagerVO user = (ManagerVO)session.getAttribute("user");
 			boolean res = adminService.updateManager2(manager);
 			
-			// 로그인한 user의 정보를 가져온다.
-			ManagerVO user = (ManagerVO)session.getAttribute("user");
-			boolean boardList = adminService.deleteBoardManagerList(manager,user);
-			
 			if(res) {
 				List<ManagerVO> list = adminService.getManagerList2(cri);
 				map.put("list", list);
-				map.put("boardList", boardList);
 			}
 			map.put("res", res);
 			return map;

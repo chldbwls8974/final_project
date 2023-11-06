@@ -95,24 +95,14 @@ public class AdminServiceImp implements AdminService{
 		if(manager == null || manager.getMe_nickname() == null || manager.getMe_authority() == null) {
 			return false;
 		}
-		return managerDao.updateManagerByAuthority2(manager);
-	}
-	// 매니저 신청서 삭제하기
-	@Override
-	public boolean deleteBoardManagerList(ManagerVO manager,ManagerVO user) {
-		if(user == null || user.getMe_id() == null) {
-			return false;			
-		}
-		if(manager.getBo_num() == 0) {
-			return false;
-		}
-		ManagerVO board = boardDao.selectBoardManager(manager,user);
-		if(board == null || !(board.getBo_me_num() == user.getMe_num())) {
-			return false;
-		}
-		return boardDao.deleteBoardManager(manager, user);
+		// managerDao한테 매니저신청한 게시글을 지우라고 시킨다.
+		boolean boardListDeleted = managerDao.deleteBoardManagerList(manager);
+		// managerDao한테 매니저 권한을 User로 바꾸라고 시킨다.
+		boolean authorityUpdated =  managerDao.updateManagerByAuthority2(manager);
 		
+		return boardListDeleted && authorityUpdated;
 	}
+	
 	// 매니저 페이지네이션
 	@Override
 	public int getTotalCount3(Criteria cri) {
@@ -195,7 +185,13 @@ public class AdminServiceImp implements AdminService{
 		if(manager == null || manager.getMe_nickname() == null || manager.getMe_authority() == null) {
 			return false;
 		}
-		return businessDao.updateBusinessByAuthority2(manager);
+		
+		// managerDao한테 사업자신청한 게시글을 지우라고 시킨다.
+		boolean boardListDeletedByBusiness = businessDao.deleteBoardBusinessList(manager);
+		// managerDao한테 사업자 권한을 User로 바꾸라고 시킨다.
+		boolean authorityUpdatedByBusiness =  businessDao.updateBusinessByAuthority2(manager);
+		
+		return boardListDeletedByBusiness && authorityUpdatedByBusiness;
 	}
 	// 사업자 페이지네이션
 	@Override
