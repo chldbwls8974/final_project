@@ -23,6 +23,8 @@ public interface StadiumDAO {
 	StadiumVO selectStadium(@Param("st_num")Integer st_num);
 	//경기장 정보 수정
 	boolean updateStadium(@Param("stadium")StadiumVO stadium);
+	//시설 삭제 시 경기장 삭제(화면에서만)
+	void updateStadiumAvailability(@Param("fa_num")Integer fa_num);
 	
 
 }

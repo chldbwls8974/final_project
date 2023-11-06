@@ -107,6 +107,23 @@ public class BusinessmanServiceImp implements BusinessmanService{
 		}
 		return businessmanDao.selectFacility(fa_num);
 	}
+	//시설 삭제
+	@Override
+	public boolean facilityDelete(Integer fa_num, MemberVO user, BusinessmanVO business) {
+		if (fa_num == null) {
+	        return false;
+	    }
+	    // 시설을 삭제한 것처럼 표시 (DB에는 실제로 삭제하지 않음)
+	    int fa_deleted = businessmanDao.facilityDelete(fa_num);
+	    
+	    if (fa_deleted == 1) {
+	        //경기장 상태 '2:삭제'로 업데이트
+	        stadiumDao.updateStadiumAvailability(fa_num);
+	        return true;
+	    }
+	    return false;
+	}
+	
 	
 	//시설번호로 경기장 리스트 가져오기
 	@Override
@@ -162,23 +179,6 @@ public class BusinessmanServiceImp implements BusinessmanService{
 		}
 		boolean res = stadiumDao.updateStadium(stadium);
 		return res;
-	}
-	
-	//시설 삭제
-	@Override
-	public boolean facilityDelete(Integer fa_num, MemberVO user, BusinessmanVO business) {
-		if (fa_num == null) {
-	        return false;
-	    }
-	    // 시설을 삭제한 것처럼 표시 (DB에는 실제로 삭제하지 않음)
-	    int fa_deleted = businessmanDao.facilityDelete(fa_num);
-	    
-	    if (fa_deleted == 1) {
-	        //경기장 상태 '2:삭제'로 업데이트
-	        businessmanDao.updateStadiumAvailability(fa_num);
-	        return true;
-	    }
-	    return false;
 	}
 	
 	
