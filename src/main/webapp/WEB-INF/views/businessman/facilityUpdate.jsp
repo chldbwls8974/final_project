@@ -16,8 +16,6 @@
 	    <input type="text" class="form-control" id="fa_bu_num" name="fa_bu_num" value="${business.bu_num}">
 	  </div>
 	  
-	  
-	  ${facility }
 	  <!--수정전 사항이 수정페이지에 그대로 나타나게 하기 위해 if문과 'selected'속성 사용함 -->
 	  <div class="form-group">
 	    <label>지역</label>
@@ -36,8 +34,6 @@
 	        </c:forEach>
 	    </select>
 	  </div>
-
-
 
 	  <div class="form-group">
 	    <label for="fa_name">시설명</label>
