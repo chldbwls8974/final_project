@@ -10,7 +10,42 @@
 		select * from stadium where st_num = #{st_num}
 	</select>
 	<select id="selectStadiumList" resultType="kr.kh.final_project.vo.StadiumVO">
-		select * from stadium where st_fa_num = #{fa_num}
+		select * from stadium 
+		<where>
+			<choose>
+				<when test='cri.t == "all"'>
+					(st_name like concat('%', #{cri.s}, '%')
+					or st_locate like concat('%', #{cri.s}, '%'))
+				</when>
+				<when test='cri.t == "name"'>
+					(st_name like concat('%', #{cri.s}, '%'))
+				</when>
+				<when test='cri.t == "locate"'>
+					(st_locate like concat('%', #{cri.s}, '%'))
+				</when>
+			</choose>
+			and st_fa_num = #{fa_num}
+		</where>
+			order by st_name asc
+			limit #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<select id="selectCountStadiumList" resultType="int">
+		select count(*) from stadium 
+		<where>
+			<choose>
+				<when test='cri.t == "all"'>
+					(st_name like concat('%', #{cri.s}, '%')
+					or st_locate like concat('%', #{cri.s}, '%'))
+				</when>
+				<when test='cri.t == "name"'>
+					(st_name like concat('%', #{cri.s}, '%'))
+				</when>
+				<when test='cri.t == "locate"'>
+					(st_locate like concat('%', #{cri.s}, '%'))
+				</when>
+			</choose>
+			and st_fa_num = #{fa_num}
+		</where>
 	</select>
 	<insert id="insertStadium">
 		insert into stadium(st_num, st_name, st_locate, st_door, st_floortype, st_width,
