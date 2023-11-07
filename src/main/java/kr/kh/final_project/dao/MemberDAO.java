@@ -50,5 +50,9 @@ public interface MemberDAO {
 
 	void updateEmailMember(@Param("me_id")String me_id);
 
+	boolean updateUserBoardBanState(@Param("me_num")int me_num, @Param("i")int i);
+
+	boolean updateUserMatchBanState(@Param("me_num")int me_num, @Param("i")int i);
+
 
 }

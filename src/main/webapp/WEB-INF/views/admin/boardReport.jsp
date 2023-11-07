@@ -78,7 +78,7 @@
 					<th>게시글 번호</th>
 					<th>내용</th>
 					<th>신고자 ID</th>
-					<th>피신고자 ID</th>
+					<th>대상자 ID</th>
 					<th>상태</th>
 					<th></th>
 				</tr>

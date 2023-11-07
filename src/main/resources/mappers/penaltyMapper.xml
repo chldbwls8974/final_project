@@ -32,7 +32,8 @@
 			penalty
 		set
 			pn_warning = #{penalty.pn_warning},
-			pn_stop = #{penalty.pn_stop}
+			pn_stop = #{penalty.pn_stop},
+			pn_end = #{penalty.pn_end}
 		where
 			pn_num = #{penalty.pn_num}
 	</update>
