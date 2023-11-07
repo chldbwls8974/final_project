@@ -11,15 +11,4 @@ public class EntryVO {
 	private int en_num;
 	private int en_me_num;
 	private int en_te_num;
-	
-	private int entry_count;
-
-	private int te_num;
-	private int te_mt_num;
-	private int te_type;
-
-	private int mt_num;
-	private int mt_type;
-	private int mt_rule;
-	private int mt_personnel;
 }

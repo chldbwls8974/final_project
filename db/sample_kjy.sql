@@ -1,15 +1,15 @@
-INSERT INTO MEMBER(ME_ID, ME_PW, ME_RG_NUM, ME_NICKNAME, ME_AUTHORITY)
+INSERT INTO MEMBER(ME_ID, ME_PW, ME_RG_NUM, ME_NICKNAME, ME_AUTHORITY, ME_POINT)
 VALUES
-('user1', 'user1', 2, 'B-1', 'BUSINESS'), ('user2', 'user2', 2, 'B-2', 'BUSINESS'), ('user3', 'user3', 2, 'M-1', 'MANAGER'),
-('user4', 'user4', 2, 'M-2', 'MANAGER'), ('user5', 'user5', 2, 'U-1', 'USER'), ('user6', 'user6', 2, 'U-2', 'USER'),
-('user7', 'user7', 2, 'U-3', 'USER'), ('user8', 'user8', 2, 'U-4', 'USER'), ('user9', 'user9', 2, 'U-5', 'USER'),
-('user10', 'user10', 2, 'U-6', 'USER'), ('user11', 'user11', 2, 'U-7', 'USER'), ('user12', 'user12', 2, 'U-8', 'USER'),
-('user13', 'user13', 2, 'U-9', 'USER'), ('user14', 'user14', 2, 'U-10', 'USER'), ('user15', 'user15', 2, 'U-11', 'USER'),
-('user16', 'user16', 2, 'U-12', 'USER'), ('user17', 'user17', 2, 'U-13', 'USER'), ('user18', 'user18', 2, 'U-14', 'USER'),
-('user19', 'user19', 2, 'U-15', 'USER'), ('user20', 'user20', 2, 'U-16', 'USER'),('user21', 'user21', 3, 'U-17', 'USER'),
-('user22', 'user22', 3, 'U-18', 'USER'), ('user23', 'user23', 3, 'U-19', 'USER'), ('user24', 'user24', 4, 'U-20', 'USER'),
-('user25', 'user25', 4, 'U-21', 'USER'), ('user26', 'user26', 4, 'U-22', 'USER'), ('user27', 'user27', 5, 'U-23', 'USER'),
-('user28', 'user28', 6, 'U-24', 'USER'), ('user29', 'user29', 7, 'U-25', 'USER'), ('user30', 'user30', 8, 'B-30', 'BUSINESS');
+('user1', 'user1', 2, 'B-1', 'BUSINESS', 30000), ('user2', 'user2', 2, 'B-2', 'BUSINESS', 30000), ('user3', 'user3', 2, 'M-1', 'MANAGER', 30000),
+('user4', 'user4', 2, 'M-2', 'MANAGER', 30000), ('user5', 'user5', 2, 'U-1', 'USER', 30000), ('user6', 'user6', 2, 'U-2', 'USER', 30000),
+('user7', 'user7', 2, 'U-3', 'USER', 30000), ('user8', 'user8', 2, 'U-4', 'USER', 30000), ('user9', 'user9', 2, 'U-5', 'USER', 30000),
+('user10', 'user10', 2, 'U-6', 'USER', 30000), ('user11', 'user11', 2, 'U-7', 'USER', 30000), ('user12', 'user12', 2, 'U-8', 'USER', 30000),
+('user13', 'user13', 2, 'U-9', 'USER', 30000), ('user14', 'user14', 2, 'U-10', 'USER', 30000), ('user15', 'user15', 2, 'U-11', 'USER', 30000),
+('user16', 'user16', 2, 'U-12', 'USER', 30000), ('user17', 'user17', 2, 'U-13', 'USER', 30000), ('user18', 'user18', 2, 'U-14', 'USER', 30000),
+('user19', 'user19', 2, 'U-15', 'USER', 30000), ('user20', 'user20', 2, 'U-16', 'USER', 30000),('user21', 'user21', 3, 'U-17', 'USER', 30000),
+('user22', 'user22', 3, 'U-18', 'USER', 30000), ('user23', 'user23', 3, 'U-19', 'USER', 30000), ('user24', 'user24', 4, 'U-20', 'USER', 30000),
+('user25', 'user25', 4, 'U-21', 'USER', 30000), ('user26', 'user26', 4, 'U-22', 'USER', 30000), ('user27', 'user27', 5, 'U-23', 'USER', 30000),
+('user28', 'user28', 6, 'U-24', 'USER', 30000), ('user29', 'user29', 7, 'U-25', 'USER', 30000), ('user30', 'user30', 8, 'B-30', 'BUSINESS', 30000);
 
 INSERT INTO BUSINESSMAN(BU_ME_NUM)
 VALUES
@@ -665,3 +665,12 @@ values
 
 insert into holding_coupon(hp_me_num, hp_cp_num)
 values(5, 3), (5, 4), (5, 5);
+
+insert into team(te_mt_num, te_type)
+values(524, 0);
+
+insert into entry(en_me_num, en_te_num)
+values
+(5, 3), (6, 3), (7, 3), (8, 3), (9, 3),
+(10, 3), (11, 3), (12, 3), (13, 3), (14, 3),
+(15, 3), (16, 3), (17, 3), (18, 3), (19, 3);

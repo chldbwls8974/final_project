@@ -12,9 +12,11 @@ import kr.kh.final_project.dao.EntryDAO;
 import kr.kh.final_project.dao.ExpenseDAO;
 import kr.kh.final_project.dao.ExtraDAO;
 import kr.kh.final_project.dao.MatchDAO;
+import kr.kh.final_project.dao.PointHistoryDAO;
 import kr.kh.final_project.dao.PreferredRegionDAO;
 import kr.kh.final_project.dao.PreferredTimeDAO;
 import kr.kh.final_project.dao.RegionDAO;
+import kr.kh.final_project.dao.TeamDAO;
 import kr.kh.final_project.dao.TimeDAO;
 import kr.kh.final_project.vo.CouponVO;
 import kr.kh.final_project.vo.EntryVO;
@@ -22,7 +24,9 @@ import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ExtraVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
+import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.RegionVO;
+import kr.kh.final_project.vo.TeamVO;
 
 @Service
 public class MatchServiceImp implements MatchService{
@@ -53,6 +57,12 @@ public class MatchServiceImp implements MatchService{
 	
 	@Autowired
 	EntryDAO entryDao;
+	
+	@Autowired
+	TeamDAO teamDao;
+	
+	@Autowired
+	PointHistoryDAO pointHistoryDao;
 	
 	@Override
 	public List<ExtraVO> selectWeekDayList(int i) {
@@ -175,11 +185,53 @@ public class MatchServiceImp implements MatchService{
 	}
 
 	@Override
-	public boolean insertMatchSolo(MemberVO user, int mt_num, int point, int cp_num) {
+	public boolean applicationMatchSolo(MemberVO user, int mt_num, int point, int hp_num) {
 		if(user == null || mt_num == 0) {
 			return false;
 		}
-		//EntryVO dbEntry = entryDao.select
+		
+		TeamVO dbTeam = teamDao.selectListTeamByMtNum(mt_num);
+		if(dbTeam == null) {
+			teamDao.insertListTeamByMtNum(mt_num);
+			dbTeam = teamDao.selectListTeamByMtNum(mt_num);
+		}
+		if(dbTeam.getEntry_count() < (dbTeam.getMt_rule() == 0 ? dbTeam.getMt_personnel()*2 : dbTeam.getMt_personnel()*3)) {
+			if(entryDao.selectEntryByMeNum(dbTeam.getTe_num(), user.getMe_num()) == null) {
+				if(entryDao.insertEntry(dbTeam.getTe_num(), user.getMe_num())) {
+					pointHistoryDao.insertPointHistorySoloMatch(point, 1, mt_num, user.getMe_num());
+					if(dbTeam.getMt_type() == 0) {
+						matchDao.updateMatchMtTypeTo1(mt_num);
+					}
+					if(hp_num != 0) {
+						couponDao.deleteCoupon(hp_num);
+					}
+					return true;
+				}		
+			}
+		}
+		
+		return false;
+	}
+
+	@Override
+	public boolean canselMatchSolo(Integer me_num, int mt_num) {
+		if(me_num == null || mt_num == 0) {
+			return false;
+		}
+		PointHistoryVO dbPH = pointHistoryDao.selectPointHistoryApplicationMatch(me_num, mt_num);
+		TeamVO dbTeam = teamDao.selectListTeamByMtNum(mt_num);
+		EntryVO dbEntry = entryDao.selectEntryByMeNum(dbTeam.getTe_num(), me_num);
+		if(dbPH != null) {
+			if(pointHistoryDao.insertPointHistorySoloMatch(dbPH.getPh_price(), 2, mt_num, me_num)){
+				if(entryDao.deleteEntry(dbEntry.getEn_num())) {
+					dbTeam = teamDao.selectListTeamByMtNum(mt_num);
+					if(dbTeam.getEntry_count() == 0) {
+						matchDao.updateMatchMtTypeTo0(mt_num);
+					}
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 }

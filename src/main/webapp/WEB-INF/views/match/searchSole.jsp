@@ -138,7 +138,17 @@
 							</div>
 						`;						
 					}
-					if(match.application_able == 1){
+					if(match.application_able == 0 && match.application == 1){
+						str +=	`
+							<button class="btn btn-outline-danger btn-matchPage" value="\${match.mt_num}">참가 취소</button> <br>
+						</div>
+						`;					
+					}else if(match.entry_count == (match.mt_rule == 0 ? match.mt_personnel * 2 : match.mt_personnel * 3)){
+						str +=	`
+							<button class="btn btn-dark" value="\${match.mt_num}" disabled>참가 마감</button> <br>
+						</div>
+						`;					
+					}else if(match.application_able == 1){
 						str +=	`
 							<button class="btn btn-outline-primary btn-matchPage" value="\${match.mt_num}">참가 신청</button> <br>
 						</div>
@@ -146,11 +156,6 @@
 					}else if(match.application_able == 0 && match.application == 0){
 						str +=	`
 							<button class="btn btn-outline-secondary" value="\${match.mt_num}" disabled>참가 불가</button> <br>
-						</div>
-						`;					
-					}else if(match.application_able == 0 && match.application == 1){
-						str +=	`
-							<button class="btn btn-outline-danger btn-matchPage" value="\${match.mt_num}">참가 취소</button> <br>
 						</div>
 						`;					
 					}

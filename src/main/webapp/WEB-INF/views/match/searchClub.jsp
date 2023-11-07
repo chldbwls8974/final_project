@@ -131,7 +131,7 @@
 		$.ajax({
 			async : false,
 			method : 'post',
-			url : '<c:url value="/match/searchList/solo"/>',
+			url : '<c:url value="/match/searchList/club"/>',
 			data : {mt_date:select_day, rg_num:rg_num, check:check},
 			dataType : 'json',
 			success : function(data) {
@@ -143,7 +143,7 @@
 						</div>
 						<div class="match-info-box">
 							<span>\${match.rg_main} \${match.rg_sub} \${match.fa_name} \${match.st_name} </span> <br>
-							<span>개인 `;
+							<span>클럽 `;
 					if(match.mt_rule == 0){
 						str +=	`친선전 \${match.mt_personnel} vs \${match.mt_personnel} \${match.entry_count}/\${match.mt_personnel * 2}</span>
 							</div>

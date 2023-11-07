@@ -7,7 +7,7 @@ public class PointHistoryVO {
 	private int ph_num;
 	private int ph_price;
 	private int ph_source;
-	private int ph_ga_num;
+	private int ph_mt_num;
 	private int ph_me_num;
 	
 }

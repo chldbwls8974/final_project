@@ -14,6 +14,12 @@ public interface MatchDAO {
 	void updateMatchMtRuleTo1(@Param("mt_num")int mt_num);
 
 	void updateMatchMtRuleTo0(@Param("mt_num")int mt_num);
+	
+	void updateMatchMtTypeTo0(@Param("mt_num")int mt_num);
+
+	void updateMatchMtTypeTo1(@Param("mt_num")int mt_num);
+	
+	void updateMatchMtTypeTo2(@Param("mt_num")int mt_num);
 
 	List<MatchVO> selectManagerMatchListByMtDate(@Param("me_num")Integer me_num, @Param("mt_date")Date mt_date);
 
@@ -22,6 +28,5 @@ public interface MatchDAO {
 	MatchVO selectMatchByMtNum(@Param("mt_num")int mt_num, @Param("me_num")Integer me_num);
 
 	List<MatchVO> selectMatchListOfClub(@Param("me_num")Integer me_num, @Param("mt_date")Date mt_date);
-	
 
 }

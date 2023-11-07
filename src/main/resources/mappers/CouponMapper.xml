@@ -14,4 +14,8 @@
 			hp_me_num = #{me_num} and
 			hp_state = 0
 	</select>
+	<delete id="deleteCoupon">
+		delete from holding_coupon
+		where hp_num = #{hp_num};
+	</delete>
 </mapper>

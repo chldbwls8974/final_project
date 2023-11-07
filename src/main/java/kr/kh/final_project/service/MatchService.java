@@ -30,6 +30,8 @@ public interface MatchService {
 
 	List<CouponVO> selectCouponListByMeNum(Integer me_num);
 
-	boolean insertMatchSolo(MemberVO user, int mt_num, int point, int cp_num);
+	boolean applicationMatchSolo(MemberVO user, int mt_num, int point, int hp_num);
+
+	boolean canselMatchSolo(Integer me_num, int mt_num);
 
 }

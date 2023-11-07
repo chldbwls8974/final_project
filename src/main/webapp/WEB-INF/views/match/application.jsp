@@ -65,17 +65,20 @@
 	</nav>
 	<script type="text/javascript">
 	let type = ${type};
-	let cp_num = 0;
+	let hp_num = 0;
 	let total_price = ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre};
 	let mt_num = ${match.mt_num}
 	$(document).on('click', '[name=coupon]', function() {
-		cp_num = $(this).val();
+		hp_num = $(this).val();
 		total_price = ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre} - $(this).siblings('.sale-point').val();
 
 		$('.total-price').val(total_price);
 	});
 	$(document).on('click', '.btn-application', function() {
 		application()
+	});
+	$(document).on('click', '.btn-cansel', function() {
+		cansel()
 	});
 	
 	function application() {
@@ -84,11 +87,12 @@
 				async : false,
 				method : 'post',
 				url : '<c:url value="/match/application/solo"/>',
-				data : {mt_num:mt_num, total_price:total_price, cp_num:cp_num},
+				data : {mt_num:mt_num, total_price:total_price, hp_num:hp_num},
 				dataType : 'json',
 				success : function(data) {
 					if(data.res){
-						alert("성공");
+						alert(data.msg);
+						location.href='<c:url value="/match/application?mt_num="/>'+ ${match.mt_num} + '&type=' + ${type};
 					}else{
 						alert(data.msg);
 					}
@@ -99,10 +103,40 @@
 				async : false,
 				method : 'post',
 				url : '<c:url value="/match/application/club"/>',
-				data : {mt_num:mt_num, total_price:total_price, cp_num:cp_num},
+				data : {},
 				dataType : 'json',
 				success : function(data) {
 				
+				}
+			});
+		}
+	}
+	function cansel() {
+		if(type == 0){
+			$.ajax({
+				async : false,
+				method : 'post',
+				url : '<c:url value="/match/cansel/solo"/>',
+				data : {mt_num:mt_num},
+				dataType : 'json',
+				success : function(data) {
+					if(data.res){
+						alert(data.msg);
+						location.href='<c:url value="/match/application?mt_num="/>'+ ${match.mt_num} + '&type=' + ${type};
+					}else{
+						alert(data.msg);
+					}
+				}
+			});
+		}else if(type == 1){
+			$.ajax({
+				async : false,
+				method : 'post',
+				url : '<c:url value="/match/cansel/clup"/>',
+				data : {},
+				dataType : 'json',
+				success : function(data) {
+					
 				}
 			});
 		}

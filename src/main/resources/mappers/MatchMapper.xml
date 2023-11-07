@@ -60,6 +60,13 @@
 		order by
 			ti_time asc;
 	</select>
+	<update id="updateMatchMtRuleTo0">
+		update `match`
+		set
+			mt_rule = 0
+		where
+			mt_num = #{mt_num}
+	</update>
 	<update id="updateMatchMtRuleTo1">
 		update `match`
 		set
@@ -67,10 +74,24 @@
 		where
 			mt_num = #{mt_num}
 	</update>
-	<update id="updateMatchMtRuleTo0">
+	<update id="updateMatchMtTypeTo0">
 		update `match`
 		set
-			mt_rule = 0
+			mt_Type = 0
+		where
+			mt_num = #{mt_num}
+	</update>
+	<update id="updateMatchMtTypeTo1">
+		update `match`
+		set
+			mt_Type = 1
+		where
+			mt_num = #{mt_num}
+	</update>
+	<update id="updateMatchMtTypeTo2">
+		update `match`
+		set
+			mt_Type = 2
 		where
 			mt_num = #{mt_num}
 	</update>

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.final_project.service.MatchService;
+import kr.kh.final_project.service.MemberService;
 import kr.kh.final_project.vo.CouponVO;
 import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ExtraVO;
@@ -30,6 +31,9 @@ public class MatchController {
 	
 	@Autowired
 	MatchService matchService;
+	
+	@Autowired
+	MemberService memberService;
 
 	@GetMapping("/match/search/solo")
 	public String searchMatchSolo(Model model, HttpSession session) {
@@ -123,25 +127,50 @@ public class MatchController {
 	
 	@ResponseBody
 	@PostMapping("/match/application/solo")
-	public Map<String, Object> insertMatchSolo(
+	public Map<String, Object> applicationMatchSolo(
 			@RequestParam("mt_num")int mt_num,
 			@RequestParam("total_price")int point,
-			@RequestParam("cp_num")int cp_num,
+			@RequestParam("hp_num")int hp_num,
 			HttpSession session){
 		Map<String, Object> map = new HashMap<String, Object>();
 		MemberVO user = (MemberVO)session.getAttribute("user");
+		MemberVO dbMember = memberService.getMember(user.getMe_id());
+		
 		boolean res = false;
 		String msg = "신청 실패";
-		System.out.println(user.getMe_point());
-		System.out.println(point);
+		
 		if(user.getMe_point() < point) {
 			msg = "포인트가 부족합니다.";
 			map.put("msg", msg);
 			map.put("res", res);
 			return map;
 		}
-		res = matchService.insertMatchSolo(user, mt_num, point, cp_num);
+		res = matchService.applicationMatchSolo(dbMember, mt_num, point, hp_num);
+		if(res) {
+			msg = "신청 성공";
+		}
 		
+		map.put("msg", msg);
+		map.put("res", res);
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/match/cansel/solo")
+	public Map<String, Object> canselMatchSolo(@RequestParam("mt_num")int mt_num, HttpSession session){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		boolean res = false;
+		String msg = "취소 실패";
+		
+		res = matchService.canselMatchSolo(user.getMe_num(), mt_num);
+		if(res) {
+			msg = "취소 성공";
+		}
+		
+		map.put("msg", msg);
+		map.put("res", res);
 		return map;
 	}
 }
