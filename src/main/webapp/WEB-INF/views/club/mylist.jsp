@@ -47,7 +47,6 @@
 							</div>
 							<div>
 								<span>${list.cl_name }</span> <span>${list.cl_rg_num }</span>
-								<span>$</span>
 							</div>
 						</a>
 					</li>

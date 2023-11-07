@@ -37,34 +37,40 @@
 		-moz-appearance: none;
 		appearance: none;
 	}
-	li{list-style: none;}
+	li{list-style: none; text-align: start;}
 	p, span{text-decoration: none; color: black;}
 	p:hover, span:hover {text-decoration: none;}
 	#membertable{ background-color: #f0f0f0; width: 90%; height: 100%; 
 		padding: 100px 0 100px 0; margin: 30px auto; border-radius: 30px;}
-	
+	.membertable-list{
+		margin: 0 80px 50px 80px; display: flex; border-bottom: 1px solid rgba(0,0,0,.1);
+	}
+	.myprofile-image-thumb{
+		width: 70px; height: 70px; border-radius: 50%;
+		 margin-right: 10px;
+	}
 	
 </style>
 </head>
 <body>
 	<div class="member-search">
-		<div class="member-search-navigation" style="text-align: center;">
+		<div class="member-search-navigation" style="margin-top: 50px; text-align: center;">
 				<select class="searchType" name="searchType">
 					<option value="id">아이디</option>
 					<option value="name">이름</option>
 				</select>
-				<input type="search" class="keyword" name="keyword"></input>
+				<input type="search" class="keyword" name="keyword" placeholder="검색할 회원을 입력하세요."></input>
 				<button type="submit" class="search-btn" onclick="getSearchList()">검색
 				</button>
 		</div>
 			<div>
 				<ul id="membertable">
 					<c:forEach items="${memberList}" var="member">
-					<li class="membertable-list" style="margin-left: 80px;">
+					<li class="membertable-list">
 						<a href="#" class="member-link">
-							<img src=""/>
-							<p style="font-weight: bold; font-size: large;">${member.me_name}</p>
-							<span style="font-size: small; color: gray; margin-top: 0">${member.me_id}</span>
+							<img src="/final_project${user.me_profile}" class="myprofile-image-thumb" alt="프로필 사진">
+							<span style="font-weight: bold; font-size: large;">${member.me_name}</span>
+							<span style="font-size: small; color: gray;">${member.me_id}</span>
 						</a>
 					</li>
 					</c:forEach>
@@ -92,11 +98,11 @@
 					//검색값을 반복
 					for(me of a.memberList){
 						str += `
-							<li>
+							<li style="margin: 0 80px 50px 80px; display: flex; border-bottom: 1px solid rgba(0,0,0,.1);">
 								<a href="#" class="member-link">
-									<img src=""/>
-									<span>\${me.me_name}</span>
-									<span>\${me.me_id}</span>
+									<img src="/final_project${user.me_profile}" class="myprofile-image-thumb" alt="프로필 사진">
+									<span style="font-weight: bold; font-size: large;">\${me.me_name}</span>
+									<span style="font-size: small; color: gray;">\${me.me_id}</span>
 								</a>
 							</li>
 						`;

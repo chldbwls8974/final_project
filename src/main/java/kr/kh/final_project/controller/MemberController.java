@@ -335,4 +335,16 @@ public class MemberController {
 		return "/member/mymatch";
 	}
 	
+	//마이페이지- 내 프로필 상세조회
+	@GetMapping("/member/myprofile")
+	public String myprofile(Model model, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		RegionVO region = (RegionVO)session.getAttribute("region");	
+		TimeVO time = (TimeVO)session.getAttribute("time");	
+		
+		model.addAttribute("user",user );
+		model.addAttribute("region",region );
+		model.addAttribute("time",time );
+		return "/member/myprofile";
+	}
 }

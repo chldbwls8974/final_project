@@ -15,7 +15,9 @@
 	color:#f00;
 }
 body{height: 100%; justify-content: center; align-content: center;}
-.container{ background-color: #f0f0f0; height: 100%; padding: 100px 0 100px 0;
+.container-body{
+	background-color: #f0f0f0; height: 100%; padding: 150px 0 100px 0;
+	border-radius: 40px;
 }
 .kakao-login{ width: 180px; display: block; margin: 0 auto;}
 .container{ height: 50%;}
@@ -29,10 +31,14 @@ input, progress {
   accent-color: #0c0c0c;
 }
 
+.basic-btn{
+	
+}
+
 </style>
 </head>
 <body>
-<div class="container">
+<div class="container-body">
 	<p style="font-size: 45px; font-weight: bolder; text-align: center;
 		 letter-spacing: -3px;">로그인</p>
 	<form action="<c:url value='/member/login'/>" method="post">

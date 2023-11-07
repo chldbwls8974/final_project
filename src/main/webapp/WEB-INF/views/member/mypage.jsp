@@ -66,22 +66,23 @@
 		<section class="my">
 			<div class="body-left">
 				<div class="left-one">
-					<div style="background-color: #f0f0f0; padding: 15px; border-radius: 20px; height:130px; padding: 30px 20px; display: flex;  justify-content: space-between;">
+					<div style="background-color: #f0f0f0; padding: 15px; 
+					border-radius: 20px; height:130px; padding: 30px 20px; display: flex; justify-content: space-between;">
 						<div style="display: flex;">
-							<div class="myprofile-image">
-			                  <c:if test="${user.me_profile ==null}">
-			                     <img src="${pageContext.request.contextPath}/resources/images/basic.jpg" class="myprofile-image-thumb" alt="프로필 사진">
-			                  </c:if>
-		               		</div>
-		               		<div>
-								<div class="myprofile-name" style="">
-									<div style="font-size: 24px; font-weight:800;">${user.me_name}</div>
+								<div class="myprofile-image">
+				                    <img src="/final_project${user.me_profile}" class="myprofile-image-thumb" alt="프로필 사진">
+			              		 </div>
+							<a href="<c:url value='/member/myprofile'/>" class="myprofile-info">
+			              	 	<div style="margin-left: 10px;">
+									<div class="myprofile-name" style="position: relative;">
+										<div style="font-size: 24px; font-weight:800;">${user.me_name}</div>
+									</div>
+									<div class="myprofile-num">
+										<p style="color:#606060;">${user.me_id}</p>
+										<span class="myprofile-kakao"></span>
+									</div>
 								</div>
-								<div class="myprofile-num">
-									<p style="color:#606060;">${user.me_id}</p>
-									<span class="myprofile-kakao"></span>
-								</div>
-							</div>
+							</a>
 						</div>
 						<div class="myedit">
 							<a href="<c:url value='/member/myedit'/>" class="myprofile-btn">
@@ -92,15 +93,18 @@
 					</div>
 					<div style="display: flex;">
 						<div class="mypoint-thumb">
-							<p style="font-size:large; font-weight: bolder; margin-bottom: 20px;">내 포인트</p>
-							<div style="width: 25%;">
-								<p style="font-size:large; font-weight: bolder;">${user.me_point}원</p>
-							</div>
-							<div style="width: 75%;">
-							<div style="width: 110px; padding:20px; border-radius: 10px; background-color:#c2f296;">
-								<a href="#"><p>충전하기</p></a>
-							</div>
-							</div>
+						<p style="font-size:large; font-weight: bolder; margin-bottom: 20px;">내 포인트</p>
+							<div style="display: flex; justify-content: space-between;">		
+								<div style="width: 75%;">
+									<p style="font-size:large; font-weight: bolder;">${user.me_point}원</p>
+								</div>
+								<div style="width: 25%; position: relative;">
+									<div style=" position: absolute; bottom: 5px; right: 0px; text-align: center;
+										 padding: 10px; border-radius: 10px; background-color:#c2f296;">
+										<a href="#"><p style="margin: 0 auto;">충전하기</p></a>
+									</div>
+								</div>
+							</div>	
 						</div>
 						<div class="mytier-thumb">
 							<p class="mytier-title">내 티어</p>
@@ -117,7 +121,7 @@
 						<c:forEach items="${list}" var="list">
 							<a href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>" class="myclub-link" style="display: flex;">
 								<img src="" alt="나의 클럽" style="width: 30px; height: 30px; border-radius: 10px;">
-								<p style="font-weight: bolder; font-size: 15px;">${list.cl_name }</p>
+								<p style="font-size: 15px;">${list.cl_name }</p>
 							</a>
 						</c:forEach>
 					</div>
@@ -148,7 +152,7 @@
 						</a>
 						</li>
 						<li>
-							<a href="<c:url value='/member/clublist'/>">
+							<a href="<c:url value='/club/mylist'/>">
 							<img src="https://cdn.icon-icons.com/icons2/2556/PNG/512/team_friends_partners_partner_icon_153084.png" width="24px" height="24px" alt="소속 클럽">
 							<p>소속 클럽</p>
 							</a>
