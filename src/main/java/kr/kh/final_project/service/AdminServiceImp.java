@@ -237,14 +237,57 @@ public class AdminServiceImp implements AdminService{
 	public boolean penaltyToMember(ReportVO report) {
 		//rp_num으로 report객체를 가져오는 메서드
 		ReportVO dbReport = reportDao.selectReportBynum(report);
+		System.out.println(dbReport);
 		int me_num = dbReport.getRp_me_num2();
 		//패널티 테이블에 있는지 확인
 		List<PenaltyVO> pnList = penaltyDao.selectPenaltyByMemberNum(me_num);
-		// 패널티 테이블에 없으면
+		// 패널티 테이블에 없으면 생성
 		if(pnList.size() == 0) {
-			//penaltyDao.insertBoardPenalty(me_num);
-			System.out.println("asd");
+			String pn_type = "경기";
+			penaltyDao.insertNewPenalty(me_num, pn_type);
+			pn_type = "커뮤니티";
+			penaltyDao.insertNewPenalty(me_num, pn_type);
+			System.out.println("데이터생성");
 		}
+		
+		//신고의 종류(경기 / 커뮤니티)
+		String rc_name = dbReport.getRc_name();
+		// 해당하는 타입(경기/커뮤니티)의 패널티 객체를 가져오는 메서드
+		PenaltyVO penalty = penaltyDao.selectPenaltyByMemberNumAndType(me_num, rc_name);
+		int penaltyCount = penalty.getPn_warning();
+		//rc_num은 신고 카테고리번호    //(1/ 6/ 7/ 8)은 경고없이 영구정지 처리
+		int rc_num = dbReport.getRp_rc_num();
+		if(rc_num == 1 || rc_num == 6 || rc_num == 7 || rc_num == 8) {
+			penaltyCount += 8;
+		}else {
+			penaltyCount ++;
+		}
+		System.out.println(penaltyCount);
+		//경고 횟수를 증가
+		penalty.setPn_warning(penaltyCount);
+		System.out.println(penalty);
+		//패널티를 업데이트 하는 메서드
+		if(!penaltyDao.updatePenalty(penalty)) {
+			return false;
+		}
+		//업데이트 한 penalty 다시 가져옴
+		penalty = penaltyDao.selectPenaltyByMemberNumAndType(me_num, rc_name);
+		System.out.println(penalty);
+		penaltyCount = penalty.getPn_warning();
+		//Date pn_end = now(); 현재 날짜
+		if(penaltyCount/2 == 1) {
+			penalty.setPn_stop(1);
+			// 현재날짜 +7일을 세터로 pn_end 바꿈
+			// 패널티 업데이트
+				// 유저를 정지상태로 변경(경기 or 커뮤니티)
+		}else if(penaltyCount/2 == 2) {
+			//14일 정지
+		}else if(penaltyCount/2 == 3) {
+			//28일 정지
+		}else if(penaltyCount/2 >= 4) {
+			//영구정지
+		}
+		//회원 정지될 때 pn_stop 증가시킴
 		
 		return true;
 	}

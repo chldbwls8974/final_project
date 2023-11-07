@@ -11,4 +11,40 @@
 		where
 			pn_me_num = #{me_num};
 	</select>
+	<select id="selectPenaltyByMemberNumAndType" resultType="kr.kh.final_project.vo.PenaltyVO">
+		select
+			*
+		from
+			penalty
+		where
+			pn_me_num = #{me_num}
+		and
+			pn_type = #{rc_name};
+	</select>
+	<insert id="insertNewPenalty">
+		insert into
+			penalty(pn_type, pn_me_num)
+		values
+			(#{pn_type}, #{me_num})
+	</insert>
+	<update id="updatePenalty">
+		update
+			penalty
+		set
+			pn_warning = #{penalty.pn_warning},
+			pn_stop = #{penalty.pn_stop}
+		where
+			pn_num = #{penalty.pn_num}
+	</update>
+	
+	
+	<update id="updateMemberSession">
+		update
+			member
+		set
+			me_session_id = #{user.me_session_id},
+			me_session_limit = #{user.me_session_limit}
+		where
+			me_id = #{user.me_id}
+	</update>
 </mapper>

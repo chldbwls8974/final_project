@@ -10,6 +10,13 @@ public interface PenaltyDAO {
 
 	List<PenaltyVO> selectPenaltyByMemberNum(@Param("me_num")int me_num);
 
+	PenaltyVO selectPenaltyByMemberNumAndType(@Param("me_num")int me_num, @Param("rc_name")String rc_name);
+	
+	void insertNewPenalty(@Param("me_num")int me_num, @Param("pn_type")String pn_type);
+
+	boolean updatePenalty(@Param("penalty")PenaltyVO penalty);
+
+
 
 
 

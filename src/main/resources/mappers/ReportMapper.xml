@@ -8,6 +8,10 @@
 		    *
 		from 
 		    report
+		join 
+			report_category 
+		on 
+			rp_rc_num = rc_num
 		where
 			rp_num = #{report.rp_num}
 	</select>
