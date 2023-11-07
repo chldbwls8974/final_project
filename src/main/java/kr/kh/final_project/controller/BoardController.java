@@ -1,5 +1,6 @@
 package kr.kh.final_project.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,9 +18,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.pagination.PageMaker;
+import kr.kh.final_project.service.BlockService;
 import kr.kh.final_project.service.BoardService;
+import kr.kh.final_project.vo.BlockVO;
 import kr.kh.final_project.vo.BoardVO;
-import kr.kh.final_project.vo.CommentVO;
 import kr.kh.final_project.vo.FileVO;
 import kr.kh.final_project.vo.MemberVO;
 
@@ -29,6 +30,9 @@ public class BoardController {
 	
 	@Autowired
 	BoardService boardService;
+	
+	@Autowired
+	BlockService blockService;
 	
 	// 공지게시판 조회하기 & 페이지네이션 (1)
 	@GetMapping("/board/notice")
@@ -153,18 +157,45 @@ public class BoardController {
 	
 	// 자유게시판 조회하기 (2)
 	@GetMapping("/board/free")
-	public String boardFree(Model model, Criteria cri) {
+	public String boardFree(Model model, Criteria cri, HttpSession session) {
 		// 페이지네이션
 		cri.setPerPageNum(10);
 		int totalCount = boardService.getFreeTotalCount(cri);
 		final int DISPLAY_PAGE_NUM = 3;
 		PageMaker pm = new PageMaker(DISPLAY_PAGE_NUM, cri, totalCount);
-		// 자유게시판 조회하기
-		List<BoardVO> list = boardService.getBoardFreeList(cri);
 		
-		model.addAttribute("list", list);
-		model.addAttribute("cri", cri);
-		model.addAttribute("pm", pm);
+		//현재 로그인한 사용자 정보 가져오기
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		// 현재 로그인한 사람이 null이 아니라면
+		if( user != null ) {
+			// 차단 목록 list로 가져오기 (여러명일 수 있으므로 list로 가져온다.)
+			List<BlockVO> blockList = blockService.getBlockList(user.getMe_num());
+			
+			List<Integer>blockedUserIds = new ArrayList<Integer>();
+			
+			for(BlockVO block : blockList) {
+				blockedUserIds.add(block.getBl_blocked_num());
+			}	
+			// 자유게시판 리스트를 가져오라고 boardService에게 시킨다.
+			List<BoardVO> list = boardService.getBoardFreeList(cri);
+			
+			// 차단된 사용자의 게시글을 필터링해준다.
+			List<BoardVO> filteredList = new ArrayList<BoardVO>();
+			for(BoardVO board : list) {
+				if(!blockedUserIds.contains(board.getBo_me_num())) {
+					filteredList.add(board);
+				}
+			}
+			model.addAttribute("list" , filteredList);// 필터링된 게시글 리스트를 모델에 추가
+		}else {
+			// 로그인 되지 않은 경우 모든 게시글을 표시해준다.
+			// 자유게시판 조회하기
+			List<BoardVO>list = boardService.getBoardFreeList(cri);
+			model.addAttribute("list", list); // 모든 게시글을 모델에 추가
+		}
+		model.addAttribute("cri", cri); // 페이지 정보를 모델에 추가
+		model.addAttribute("pm", pm); 
 		return "/board/free";
 	}
 	// 게시글쓰기 조회하기
@@ -196,16 +227,46 @@ public class BoardController {
 	
 	// 개인매치 게시판 조회하기 (3)
 	@GetMapping("/board/individual")
-	public String boardIndividual (Model model, Criteria cri, BoardVO board ) {
+	public String boardIndividual (Model model, Criteria cri, BoardVO board, HttpSession session ) {
 		// 페이지네이션
 		cri.setPerPageNum(10);
 		int totalCount = boardService.getIndividualTotalCount(cri, board);
 		final int DISPLAY_PAGE_NUM = 3;
 		PageMaker pm = new PageMaker(DISPLAY_PAGE_NUM, cri, totalCount);
-		// 자유게시판 조회하기 (매개변수 board추가)
-		List<BoardVO> list = boardService.getBoardIndividualList(cri, board);
 		
-		model.addAttribute("list", list);
+		// 현재 로그인한 사용자 정보를 가져온다.
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		// 현재 로그인한 사람이 null이 아니라면 
+		if( user != null ) {
+			// 차단 목록을 list로 가져오라고 blockService한테 시킨다. (여러명일 수 있으므로 list로 가져온다.)
+			List<BlockVO> blockList = blockService.getBlockList(user.getMe_num());
+			// 차단된 아이디 들을 list로 만들어준다. me_num은 정수이므로 Integer로 list를 만든다.
+			List<Integer>blockedUserIds = new ArrayList<Integer>();
+			
+			// blockList의 각항목을 순회 하면서 blockVO의 객체(block)에서 bl_blocked_num값(차단된 me_num)을
+			// 가져와서 blockedUserIds리스트에 추가해준다.
+			for(BlockVO block : blockList) {
+				blockedUserIds.add(block.getBl_blocked_num());
+				}
+			// 차단된 회원의 정보를 blockedUserIds에 저장한 후
+			// 개인매치게시글 리스트를 가져오라고 서비스에게 시킨다.
+			List<BoardVO> list = boardService.getBoardIndividualList(cri, board);
+			
+			// 차단된 사용자의 게시글을 필터링 해준다.
+			// 필터링된 리스트를 만들어준다.
+			List<BoardVO> filteredList = new ArrayList<BoardVO>();
+			for(BoardVO board1 : list) {
+				if(!blockedUserIds.contains(board1.getBo_me_num())) {
+					filteredList.add(board1);
+				}
+			}
+			model.addAttribute("list", filteredList);
+		}else{
+		// 자유게시판 조회하기 (매개변수 board추가)
+			List<BoardVO> list = boardService.getBoardIndividualList(cri, board);
+			model.addAttribute("list", list);		
+		}
 		model.addAttribute("cri", cri);
 		model.addAttribute("pm", pm);
 		return "/board/individual";
@@ -240,16 +301,46 @@ public class BoardController {
 		
 	// 클럽매치 게시판 조회하기 (4)
 	@GetMapping("/board/club")
-	public String boardClub (Model model, Criteria cri, BoardVO board) {
+	public String boardClub (Model model, Criteria cri, BoardVO board, HttpSession session) {
 		// 페이지네이션
 		cri.setPerPageNum(10);
 		int totalCount = boardService.getClubTotalCount(cri, board);
 		final int DISPLAY_PAGE_NUM = 3;
 		PageMaker pm = new PageMaker(DISPLAY_PAGE_NUM, cri, totalCount);
-		// 자유게시판 조회하기
-		List<BoardVO> list = boardService.getBoardClubList(cri, board);
 		
-		model.addAttribute("list", list);
+		// 현재 로그인한 사용자 정보를 가져온다.
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		// 현재 로그인한 사람이 null이 아니라면 
+		if( user != null ) {
+			// 차단 목록을 list로 가져오라고 blockService한테 시킨다. (여러명일 수 있으므로 list로 가져온다.)
+			List<BlockVO> blockList = blockService.getBlockList(user.getMe_num());
+			// 차단된 아이디 들을 list로 만들어준다. me_num은 정수이므로 Integer로 list를 만든다.
+			List<Integer>blockedUserIds = new ArrayList<Integer>();
+			
+			// blockList의 각항목을 순회 하면서 blockVO의 객체(block)에서 bl_blocked_num값(차단된 me_num)을
+			// 가져와서 blockedUserIds리스트에 추가해준다.
+			for(BlockVO block : blockList) {
+				blockedUserIds.add(block.getBl_blocked_num());
+				}
+			// 차단된 회원의 정보를 blockedUserIds에 저장한 후
+			// 개인매치게시글 리스트를 가져오라고 서비스에게 시킨다.
+			List<BoardVO> list = boardService.getBoardIndividualList(cri, board);
+			
+			// 차단된 사용자의 게시글을 필터링 해준다.
+			// 필터링된 리스트를 만들어준다.
+			List<BoardVO> filteredList = new ArrayList<BoardVO>();
+			for(BoardVO board1 : list) {
+				if(!blockedUserIds.contains(board1.getBo_me_num())) {
+					filteredList.add(board1);
+				}
+			}
+			model.addAttribute("list", filteredList);
+		}else{
+		// 자유게시판 조회하기 (매개변수 board추가)
+			List<BoardVO> list = boardService.getBoardIndividualList(cri, board);
+			model.addAttribute("list", list);		
+		}
 		model.addAttribute("cri", cri);
 		model.addAttribute("pm", pm);
 		return "/board/club";
