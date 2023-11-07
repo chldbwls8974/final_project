@@ -76,7 +76,7 @@
    	 <c:forEach items="${list}" var="bo">
    	 	<c:choose>
    	 		<c:when test="${bo.bo_bt_num == 1}">
-   	 			<!-- 상단에 최신 공지글 모두 표시 -->
+   	 			<!-- 상단에 최신 공지글 3개 표시 -->
 		      <tr class="notionBoard">
 		      	<td>${bo.bo_num}</td>
 		      	<td><a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>" style="color:red">${bo.bo_title}</a></td>

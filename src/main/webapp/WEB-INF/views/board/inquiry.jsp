@@ -19,6 +19,9 @@
 	h1{
 		text-align : center;
 	}
+	.noneInquiry{
+		text-align : center;
+	}
 </style>
 </head>
 <body>
@@ -65,28 +68,31 @@
         <th>댓글수</th>
       </tr>
     </thead>
-    <tbody>
-   	 <c:forEach items="${list}" var="bo">
-   	 	<c:choose>
-		    <c:when test="${bo.bo_me_num == user.me_num || user.me_authority == 'ADMIN' }">
-		      <tr>
-		      	<td>${bo.bo_num}</td>
-		      	<td><a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_title}</a></td>
-		        <td>${bo.me_nickname}</td>
-		        <td>${bo.bo_reg_date_str}</td>
-		        <td>${bo.bo_count}</td>
-		        <td><a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_comment}</a></td>
-		      </tr>
-		    </c:when>
-		    <c:when test="${empty list}">
-		    	<tr>
-		    		<td>문의 내용이 없습니다.</td>
-		    	</tr>
-		    </c:when>
-		 </c:choose>
-      </c:forEach>
-    </tbody>
-  </table>
+			<tbody>
+				<c:forEach items="${list}" var="bo">
+					<c:choose>
+						<c:when
+							test="${bo.bo_me_num == user.me_num || user.me_authority == 'ADMIN' }">
+							<tr>
+								<td>${bo.bo_num}</td>
+								<td><a
+									href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_title}</a></td>
+								<td>${bo.me_nickname}</td>
+								<td>${bo.bo_reg_date_str}</td>
+								<td>${bo.bo_count}</td>
+								<td><a
+									href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_comment}</a></td>
+							</tr>
+						</c:when>
+					</c:choose>
+				</c:forEach>
+				<c:if test="${empty list}">
+					<tr>
+						<td colspan="6" class="noneInquiry">문의 내용이 없습니다.</td>
+					</tr>
+				</c:if>
+			</tbody>
+		</table>
   <!-- 페이지네이션 적용 -->
   <ul class="pagination justify-content-center">
 		<c:if test="${pm.prev}">

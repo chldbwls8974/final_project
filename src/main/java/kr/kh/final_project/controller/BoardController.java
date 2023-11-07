@@ -146,10 +146,15 @@ public class BoardController {
 		if(res) {
 			model.addAttribute("msg", "게시글을 삭제하였습니다.");
 		}else {
-			model.addAttribute("msg", "게시글을 삭제실패하였습니다.");
+			model.addAttribute("msg", "게시글을 삭제 실패하였습니다.");
 		}
+		// 사용자가 이전에 보고 있던 페이지로 리다이렉트
+		// user정보를 가져왔던거 처럼 preBoard로 이전에 있던 위치를 session으로 가져온다.
+		String preBoard = (String)session.getAttribute("preBoard");
+		// 이전에 위치가 null이 아니거나 이전위치가 empty가 아닐 때를 redirectUrl에 저장하기
+		String redirectUrl = (preBoard != null && !preBoard.isEmpty()? "/board/"+preBoard : "/");
 		
-		model.addAttribute("url", "/board/notice");
+		model.addAttribute("url", redirectUrl);
 		return "/util/message";
 	}
 

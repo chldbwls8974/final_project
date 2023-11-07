@@ -169,7 +169,7 @@
 		<c:if test="${board.bo_bt_num == 1}">
 			<button type="button"
 					class="btn btn-outline-info col-12 btn-return" 
-					onclick="location.href='<c:url value='/board/notion?bo_num=${board.bo_num}'/>'">돌아가기
+					onclick="history.back()">돌아가기
 			</button>
 		</c:if>	
 		<c:if test="${board.bo_bt_num == 2}">
@@ -517,6 +517,7 @@
 			cri.page = page;
 			getCommentList(cri);
 		}
+	
 </script>
 </body>
 </html>
