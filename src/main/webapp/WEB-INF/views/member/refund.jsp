@@ -21,7 +21,7 @@
 		<div class="form-group">
 			<h5>${user.me_name} 님의</h5>
 			<!-- 여기 작업해야 함. 유저가 로그인을 풀지않으면 변경포인트가 적용이 안됨. -->
-			<span class="point">현재 보유 포인트는 ${user.me_point} 입니다.</span>
+			<span>현재 보유 포인트는 <span class="point"></span> 입니다.</span>
 			<input type="hidden" class="form-control" value="${user.me_num}" name="me_num">
 			<input type="hidden" class="form-control" value="${user.me_num}" name="ph_me_num">
 			<input type="hidden" class="form-control" value="4" name="ph_source">
@@ -31,7 +31,7 @@
 		<div class="form-group">
 			<label>환급받을 금액</label>
 			<label id="check-point-error" class="error" for="point"></label>
-			<input type="number" class="form-control" id="refundAmount" name="ph_price" min="1000"  max="${user.me_point}" placeholder="1000원 단위로 입력" required>
+			<input type="number" class="form-control" id="refundAmount" name="ph_price" min="1000"  max="" placeholder="1000원 단위로 입력" required>
 		</div>
 		<div class="form-group">
 			<label>환급 후 예정 포인트</label>
@@ -94,7 +94,7 @@
 	        var num = Math.floor(parseFloat(refundAmountValue) / 1000) * 1000;
             $(this).val(num);
 	        //(유저의 현재 포인트 - 환급받을 금액)을 저장
-	        var userPoint = parseFloat('${user.me_point}');
+	        var userPoint = parseFloat($('.point').text());
 	        $("#resultAmount").val(userPoint - num);
         }
     });
@@ -107,7 +107,6 @@
 	/* 환급이력리스트를 가져오는 함수 */
 	$(document).ready(function() {
    	 	getPointHistoryList(cri);
-   	 	
 	});
 	
 	
@@ -116,7 +115,10 @@
 		
 		console.log(cri);
 		ajaxJsonToJson(false,'post','/member/refund/list', cri ,(data)=>{
-			$('.point').text("현재 보유 포인트는 " + data.dbMemberPoint + " 입니다.");
+			//유저 포인트 갱신
+			$('.point').text(data.dbMemberPoint);
+			//max 속성 값을 변경
+			$('#refundAmount').attr('max', data.dbMemberPoint);
 			//리스트를 생성
 			createPointHistoryList(data.refundList, '.list-tbody');
 			//페이지네이션 생성

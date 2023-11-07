@@ -10,7 +10,19 @@
 <body>
 	<h1 class="display-3"><span style="color: black; font-weight: bold;">[${facility.fa_name}] 경기장 목록</span></h1> <br>
 	<br>
-	  <div class="table-responsive" style="color: green;">
+	<form action="<c:url value='/businessman/stadium/${facility.fa_num}'/>" method="get">
+		<div class="input-group mb-3">
+			<select class="form-control" name="t">
+				<option value="all" <c:if test="${pm.cri.t == 'all'}">selected</c:if>>전체</option>
+				<option value="name" <c:if test="${pm.cri.t == 'name'}">selected</c:if>>경기장 이름</option>
+				<option value="locate" <c:if test="${pm.cri.t == 'locate'}">selected</c:if>>경기장 위치</option>
+			</select>
+			<input type="text" class="form-control" name="s" value="${pm.cri.s}">
+			<button class="btn btn-outline-dark">검색</button>
+		</div>
+	</form>
+	
+	<div class="table-responsive" style="color: green;">
 	  	<input type = "text" class="form-control" hidden="hidden" value="${stadium}">
 	    <table class="table table-light table-striped">
 	      <thead>
@@ -52,11 +64,32 @@
 		     </c:forEach>
 	      </tbody>
 	    </table>
-	  
+	    
+	    <ul class="pagination justify-content-center">
+			<c:if test="${pm.prev}">
+				<li class="page-item">
+					<a class="page-link" 
+						href="<c:url value='/businessman/stadium/${facility.fa_num}${pm.cri.getUrl(pm.startPage-1) }'/>">이전</a>
+				</li>
+			</c:if>
+			<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
+				<li class="page-item <c:if test='${pm.cri.page == i }'>active</c:if>">
+					<a class="page-link" 
+						href="<c:url value='/businessman/stadium/${facility.fa_num}${pm.cri.getUrl(i)}'/>">${i}</a>
+				</li>
+			</c:forEach>
+			<c:if test="${pm.next}">
+				<li class="page-item">
+					<a class="page-link" 
+						href="<c:url value='/businessman/stadium/${facility.fa_num}${pm.cri.getUrl(pm.endPage+1) }'/>">다음</a>
+				</li>
+			</c:if>
+	    </ul>
+	    
 		<div align="right" class="mt-3">
 			<a class="btn btn-secondary btn-block" role="button" href="<c:url value='/businessman/stadiumInsert/${facility.fa_num}'/>">경기장 등록하기</a>		
 		</div>
-	  </div>
+	</div>
 
 </body>
 </html>

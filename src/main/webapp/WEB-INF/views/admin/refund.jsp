@@ -61,10 +61,6 @@
 	</div>
 	<!-- 페이지네이션 -->
 	<ul class="pagination justify-content-center mt-3 pagination">
-	    <li class="page-item"><a class="page-link" href="javascript:void(0);">&lt;</a></li>
-	    <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
-	    <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-	    <li class="page-item"><a class="page-link" href="javascript:void(0);">&gt;</a></li>
 	</ul>
 </body>
 
@@ -100,8 +96,9 @@
 	    let searchType1 = $('.search-type-1').val();
 	    let searchType2 = $('.search-type-2').val();
 	    let searchContents = $('.input-search').val();
+	    let currentPage = $('.active').data('page');
 	    let data = {
-	        cri: { page: cri.page, perPageNum: cri.perPageNum, s: searchContents },
+	        cri: { page: currentPage, perPageNum: cri.perPageNum, s: searchContents },
 	        searchType1: searchType1,
 	        searchType2: searchType2
 	    };
@@ -146,7 +143,7 @@
 			let state = '';
 			let price = -parseInt(a.ph_price);
 			if(a.ph_source == '4'){
-				state = '승인 대기중'
+				state = '처리중'
 				btnStr = `
 					<div class="btn-group">
 						<button class="btn btn-outline-success btn-approval"  onclick="approvalRefund(\${a.ph_num})" >승인</button>
@@ -188,7 +185,7 @@
 		for(i=pm.startPage; i<=pm.endPage; i++){
 			let active = pm.cri.page == i ? 'active' : '';
 			str += `
-			<li class="page-item \${active}">
+			<li class="page-item \${active}" data-page="\${i}">
 				<a class="page-link" href="javascript:void(0);" onclick="updatePage(\${i});">\${i}</a>
 			</li>`;
 		}

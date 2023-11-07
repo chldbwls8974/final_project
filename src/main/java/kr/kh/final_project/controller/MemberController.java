@@ -214,6 +214,7 @@ public class MemberController {
 	@ResponseBody
 	@PostMapping("/member/refund/list")
 	public Map<String, Object> refundList(HttpSession session, @RequestBody Criteria cri){
+		System.out.println("asd");
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		Map<String, Object> map = new HashMap<String, Object>();
 		
@@ -238,7 +239,16 @@ public class MemberController {
 		map.put("res", res);
 		return map;
 	}
-
+	//유저포인트 ajax로 보내주기 (실시간 업데이트를 위해서)
+	@ResponseBody
+	@PostMapping("/member/information")
+	public Map<String, Object> memberInformation(@RequestBody MemberVO user){
+		Map<String, Object> map = new HashMap<String, Object>();
+		int userPoint = memberService.getMemberPoint(user);
+		map.put("userPoint", userPoint);
+		return map;
+	}
+	
 	//마이페이지
 	@GetMapping("/member/mypage")
 	public String myPage(HttpSession session, Model model) {
@@ -345,6 +355,11 @@ public class MemberController {
 		List<MatchVO> matchList = matchService.getMatchList(); //서비스에게 매치리스트 요청
 		model.addAttribute("matchList", matchList);
 		return "/member/mymatch";
+	}
+	
+	@GetMapping("/payment/main")
+	public String payment(Model model) {
+		return "/payment/main";
 	}
 	
 }
