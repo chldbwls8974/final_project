@@ -70,7 +70,7 @@ li{
 </style>
 </head>
 <body>
-	<h1>클럽신청</h1>
+	<h1>클럽수정</h1>
 	<form action="<c:url value='/club/update'/>" method="post">
 <!-- 		<div class="form-group"> -->
 <!-- 			<label>클럽 앰블럼</label> -->
