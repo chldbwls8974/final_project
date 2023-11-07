@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.kh.final_project.dao.CouponDAO;
 import kr.kh.final_project.dao.ExpenseDAO;
 import kr.kh.final_project.dao.ExtraDAO;
 import kr.kh.final_project.dao.MatchDAO;
@@ -14,6 +15,7 @@ import kr.kh.final_project.dao.PreferredRegionDAO;
 import kr.kh.final_project.dao.PreferredTimeDAO;
 import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.dao.TimeDAO;
+import kr.kh.final_project.vo.CouponVO;
 import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ExtraVO;
 import kr.kh.final_project.vo.MatchVO;
@@ -42,6 +44,9 @@ public class MatchServiceImp implements MatchService{
 	
 	@Autowired
 	TimeDAO timeDao;
+	
+	@Autowired
+	CouponDAO couponDao;
 	
 	@Override
 	public List<ExtraVO> selectWeekDayList(int i) {
@@ -89,11 +94,11 @@ public class MatchServiceImp implements MatchService{
 	}
 
 	@Override
-	public MatchVO selectMatchByMtNum(int mt_num) {
-		if(mt_num == 0) {
+	public MatchVO selectMatchByMtNum(int mt_num, Integer me_num) {
+		if(mt_num == 0 || me_num == null) {
 			return null;
 		}
-		return matchDao.selectMatchByMtNum(mt_num);
+		return matchDao.selectMatchByMtNum(mt_num, me_num);
 	}
 
 	@Override
@@ -153,5 +158,13 @@ public class MatchServiceImp implements MatchService{
 			}
 		}
 		return matchList;
+	}
+
+	@Override
+	public List<CouponVO> selectCouponListByMeNum(Integer me_num) {
+		if(me_num == null) {
+			return null;
+		}
+		return couponDao.selectCouponListByMeNum(me_num);
 	}
 }

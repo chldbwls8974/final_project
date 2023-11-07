@@ -12,6 +12,7 @@ public class ExpenseVO {
 	private int ex_price;
 	private int ex_pre;
 	private Date ex_date;
+	private int ex_state;
 	
 	private String ex_date_str;
 	

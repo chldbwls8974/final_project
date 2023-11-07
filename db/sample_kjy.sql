@@ -11,7 +11,7 @@ VALUES
 ('user25', 'user25', 4, 'U-21', 'USER'), ('user26', 'user26', 4, 'U-22', 'USER'), ('user27', 'user27', 5, 'U-23', 'USER'),
 ('user28', 'user28', 6, 'U-24', 'USER'), ('user29', 'user29', 7, 'U-25', 'USER'), ('user30', 'user30', 8, 'B-30', 'BUSINESS');
 
-INSERT INTO BUISNESSMAN(BU_ME_NUM)
+INSERT INTO BUSINESSMAN(BU_ME_NUM)
 VALUES
 (1), (2), (30);
 
@@ -662,3 +662,6 @@ insert into entry(en_me_num, en_te_num)
 values
 (5, 1), (6, 1), (7, 1), (8, 1), (9, 1), (10, 1), (11, 1), (12, 1),
 (5, 2), (6, 2), (7, 2), (8, 2), (9, 2), (10, 2), (11, 2), (12, 2);
+
+insert into holding_coupon(hp_me_num, hp_cp_num)
+values(5, 3), (5, 4), (5, 5);

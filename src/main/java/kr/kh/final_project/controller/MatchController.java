@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.final_project.service.MatchService;
+import kr.kh.final_project.vo.CouponVO;
 import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ExtraVO;
 import kr.kh.final_project.vo.MatchVO;
@@ -32,8 +33,6 @@ public class MatchController {
 
 	@GetMapping("/match/search/solo")
 	public String searchMatchSolo(Model model, HttpSession session) {
-		MemberVO member = (MemberVO)session.getAttribute("user");
-		
 		List<RegionVO> mainRegion = matchService.selectMainRegion();
 		List<ExtraVO> week = matchService.selectWeekDayList(0);
 
@@ -71,8 +70,6 @@ public class MatchController {
 	
 	@GetMapping("/match/search/club")
 	public String searchMatchClub(Model model, HttpSession session, int weekCount) {
-		MemberVO member = (MemberVO)session.getAttribute("user");
-		
 		List<RegionVO> mainRegion = matchService.selectMainRegion();
 		List<ExtraVO> week = matchService.selectWeekDayList(weekCount);
 		
@@ -111,11 +108,15 @@ public class MatchController {
 	
 	@GetMapping("/match/application")
 	public String matchApplicationPage(Model model, HttpSession session, int mt_num, int type) {
-		MemberVO member = (MemberVO)session.getAttribute("user");
-		MatchVO match = matchService.selectMatchByMtNum(mt_num);
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		MatchVO match = matchService.selectMatchByMtNum(mt_num, user.getMe_num());
 		ExpenseVO expense = matchService.selectPrice(type, match.getTi_day());
-		System.out.println(expense);
+		List<CouponVO> couponList = matchService.selectCouponListByMeNum(user.getMe_num());
+		
+		model.addAttribute("user", user);
 		model.addAttribute("match", match);
+		model.addAttribute("expense", expense);
+		model.addAttribute("couponList", couponList);
 		return "/match/application";
 	}
 }
