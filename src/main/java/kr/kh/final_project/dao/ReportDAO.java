@@ -21,5 +21,7 @@ public interface ReportDAO {
 
 	boolean updateReportState(@Param("report")ReportVO report);
 
+	ReportVO selectReportBynum(@Param("report")ReportVO report);
+
 
 }

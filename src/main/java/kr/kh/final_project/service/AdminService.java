@@ -3,6 +3,7 @@ package kr.kh.final_project.service;
 import java.util.List;
 
 import kr.kh.final_project.pagination.Criteria;
+import kr.kh.final_project.vo.BoardVO;
 import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ManagerVO;
 import kr.kh.final_project.vo.MemberVO;
@@ -60,7 +61,10 @@ public interface AdminService {
 	List<ReportVO> getReportListBySearch(Criteria cri, String reportType, String searchType1, String searchType2);
 	
 	int getReportListBySearchCount(Criteria cri, String reportType, String searchType1, String searchType2);
+	//신고를 처리 하는 메서드
+	boolean reportHandle(ReportVO report);
 	
-	boolean boardReportHandle(ReportVO report);
+	
+	
 	
 }
