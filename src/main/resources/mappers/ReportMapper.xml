@@ -3,7 +3,15 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.final_project.dao.ReportDAO">
-
+	<select id="selectReportBynum" resultType="kr.kh.final_project.vo.ReportVO">
+		select 
+		    *
+		from 
+		    report
+		where
+			rp_num = #{report.rp_num}
+	</select>
+	
 	<update id="updateReportState">
 		update
 			report

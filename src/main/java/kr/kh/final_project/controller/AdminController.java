@@ -295,9 +295,10 @@ public class AdminController {
 	//화면에서 받아온 값으로 신고를 확인, 제재 상태로 변경하는 메서드
 	@ResponseBody
 	@PostMapping("/admin/report/handle")
-	public Map<String, Object> boardReportHandle(@RequestBody ReportVO report) {
+	public Map<String, Object> reportHandle(@RequestBody ReportVO report) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		boolean res = adminService.boardReportHandle(report);
+		System.out.println(report);
+		boolean res = adminService.reportHandle(report);
 		map.put("res", res);
 		return map;
 	}

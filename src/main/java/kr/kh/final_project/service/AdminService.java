@@ -60,7 +60,7 @@ public interface AdminService {
 	List<ReportVO> getReportListBySearch(Criteria cri, String reportType, String searchType1, String searchType2);
 	
 	int getReportListBySearchCount(Criteria cri, String reportType, String searchType1, String searchType2);
-	
-	boolean boardReportHandle(ReportVO report);
+	//신고를 처리 하는 메서드
+	boolean reportHandle(ReportVO report);
 	
 }

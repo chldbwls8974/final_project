@@ -10,12 +10,14 @@ import kr.kh.final_project.dao.BusinessDAO;
 import kr.kh.final_project.dao.ExpenseDAO;
 import kr.kh.final_project.dao.ManagerDAO;
 import kr.kh.final_project.dao.MemberDAO;
+import kr.kh.final_project.dao.PenaltyDAO;
 import kr.kh.final_project.dao.PointHistoryDAO;
 import kr.kh.final_project.dao.ReportDAO;
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ManagerVO;
 import kr.kh.final_project.vo.MemberVO;
+import kr.kh.final_project.vo.PenaltyVO;
 import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.ReportVO;
 
@@ -42,6 +44,9 @@ public class AdminServiceImp implements AdminService{
 	
 	@Autowired
 	ReportDAO reportDao;
+	
+	@Autowired
+	PenaltyDAO penaltyDao;
 	
 	// 회원정보 조회
 	//@Override
@@ -209,19 +214,39 @@ public class AdminServiceImp implements AdminService{
 		return reportDao.selectReportListCountBySearch(cri, reportType, searchType1, searchType2);
 	}
 	@Override
-	public boolean boardReportHandle(ReportVO report) {
+	public boolean reportHandle(ReportVO report) {
 		if(report == null) {
 			return false;
 		}
 		if(report.getRp_state().equals("0")) {
-			report.setRp_state("제재");
+			if(penaltyToMember(report)) {
+
+				//제재처리 메소드
+				
+				report.setRp_state("제재");
+			}
 		}else if(report.getRp_state().equals("1")) {
 			report.setRp_state("확인");
+		}else {
+			report.setRp_state("미확인");
 		}
 		
 		return reportDao.updateReportState(report);
 	}
 	
-
+	public boolean penaltyToMember(ReportVO report) {
+		//rp_num으로 report객체를 가져오는 메서드
+		ReportVO dbReport = reportDao.selectReportBynum(report);
+		int me_num = dbReport.getRp_me_num2();
+		//패널티 테이블에 있는지 확인
+		List<PenaltyVO> pnList = penaltyDao.selectPenaltyByMemberNum(me_num);
+		// 패널티 테이블에 없으면
+		if(pnList.size() == 0) {
+			//penaltyDao.insertBoardPenalty(me_num);
+			System.out.println("asd");
+		}
+		
+		return true;
+	}
 	
 }
