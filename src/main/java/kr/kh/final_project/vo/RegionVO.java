@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class RegionVO {
-	private int rg_num;
+	private Integer rg_num;
 	private String rg_main;
 	private String rg_sub;
 	

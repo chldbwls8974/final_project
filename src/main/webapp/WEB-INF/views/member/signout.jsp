@@ -57,7 +57,7 @@
         </div>
 		<br>
 		
-		<button class="btn btn-outline-primary" id="signout" name="signout" onclick="checkInfo()">회원탈퇴</button>
+		<button class="btn btn-outline-primary" id="signout" name="signout">회원탈퇴</button>
 	</form>
 	
 	<script type="text/javascript">

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.kh.final_project.pagination.Criteria;
+import kr.kh.final_project.pagination.PageMaker;
 import kr.kh.final_project.service.BusinessmanService;
 import kr.kh.final_project.service.RegionService;
 import kr.kh.final_project.service.ScheduleService;
@@ -41,13 +43,21 @@ public class BusinessmanController {
 	@Autowired
 	RegionService regionService;
 	
-	//시설 목록
+	//시설 목록, 페이지네이션, 검색창
 	@GetMapping("/businessman/facility")
-	public String facility(Model model, HttpSession session) {
+	public String facility(Model model, HttpSession session, Criteria cri) {
 		MemberVO member = (MemberVO)session.getAttribute("user");
 		//서비스에게 user 정보를 주고 시설 리스트 가져오라고 시킴
-		List<FacilityVO> list = businessmanService.getFacilityList(member);
-
+		//현재 페이지 정보에 맞는 게시글을 가져오라고 서비스에게 시킴
+		List<FacilityVO> list = businessmanService.getFacilityList(member, cri);
+		
+		//현재 페이지 정보(검색어, 타입)에 맞는 전체 게시글 수를 가져옴
+		int totalCount = businessmanService.getTotalCount(cri, member);
+		//페이지네이션 페이지수
+		final int DISPLAY_PAGE_NUM = 3;
+		
+		PageMaker pm = new PageMaker(DISPLAY_PAGE_NUM, cri, totalCount);
+		
 		if(member == null || !member.getMe_authority().equals("BUSINESS")) {
 			Message msg = new Message("/", "사업자 권한이 필요합니다.");
 			model.addAttribute("msg", msg);
@@ -59,6 +69,7 @@ public class BusinessmanController {
 			return "/message";
 		}
 		model.addAttribute("list", list);
+		model.addAttribute("pm", pm);
 		return "/businessman/facility";
 	}		
 	//시설 등록
@@ -95,7 +106,7 @@ public class BusinessmanController {
 	@PostMapping("/businessman/facilityInsert")
 	public String insertfacility(Model model, FacilityVO facility, HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
-
+		System.out.println(user);
 		List<RegionVO> MainRegion = businessmanService.getMainRegion();
 
 		//Service에게 user, facility 정보를 주고 insertFacility 메서드로 저장
@@ -127,7 +138,6 @@ public class BusinessmanController {
 			model.addAttribute("msg", msg);
 			return "message";
 		}
-		System.out.println(MainRegion);
 		model.addAttribute("business", business);
 		model.addAttribute("facility", facility);
 		model.addAttribute("MainRegion", MainRegion);
@@ -144,7 +154,6 @@ public class BusinessmanController {
 		map.put("SubRegion", SubRegion);
 		return map;
 	}
-	
 	//시설 정보 수정
 	@PostMapping("/businessman/facilityUpdate")
 	public String facilityUpdate(Model model, FacilityVO facility, HttpSession session) {
@@ -164,17 +173,38 @@ public class BusinessmanController {
 		model.addAttribute("msg", msg);
 		return "message";
 	}
+	//시설 삭제 => 해당 시설의 경기장도 삭제(화면에서만 삭제)
+	@GetMapping("/businessman/facilityDelete")
+	public String deleteFacility(@RequestParam Integer fa_num, Model model, 
+			BusinessmanVO business, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+
+		boolean res = businessmanService.facilityDelete(fa_num, user, business);
+		if(res) {
+			model.addAttribute("msg", "시설 삭제가 완료되었습니다.");
+		}else {
+			model.addAttribute("msg", "시설을 삭제하지 못했습니다.");
+		}
+	    model.addAttribute("url", "/businessman/facility");
+	    return "/util/message";
+	}
 	
 	
-	//경기장 목록
+	//경기장 목록, 페이지네이션, 검색창
 	@GetMapping("/businessman/stadium/{fa_num}")
 	public String stadium(Model model, @PathVariable("fa_num")Integer fa_num, 
-			HttpSession session) {
+			HttpSession session, Criteria cri) {
 		//시설 번호를 통해 시설 정보를 가져와서 facility에 저장
 		FacilityVO facility = businessmanService.getFacility(fa_num);
 		
 		//시설 번호를 주고 해당 시설번호에 등록된 경기장 리스트를 저장
-		List<StadiumVO> stadiumList = businessmanService.getStadiumList(fa_num);
+		List<StadiumVO> stadiumList = businessmanService.getStadiumList(fa_num, cri);
+		//현재 페이지 정보(검색어, 타입)에 맞는 전체 경기장 수를 가져옴
+		int totalCount = businessmanService.getTotalStadiumCount(cri, fa_num);
+		//페이지네이션 페이지수
+		final int DISPLAY_PAGE_NUM = 3;
+		
+		PageMaker pm = new PageMaker(DISPLAY_PAGE_NUM, cri, totalCount);
 		
 		if(stadiumList.size() == 0) {
 	        Message msg = new Message("/businessman/stadiumInsert/" + fa_num , "등록된 경기장이 없습니다. 경기장을 등록해주세요");
@@ -183,6 +213,7 @@ public class BusinessmanController {
 		}
 		model.addAttribute("facility", facility);
 		model.addAttribute("stadiumList", stadiumList);
+		model.addAttribute("pm", pm);
 		return "/businessman/stadium";
 	}
 	//경기장 등록
