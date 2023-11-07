@@ -113,10 +113,35 @@ public class MatchController {
 		ExpenseVO expense = matchService.selectPrice(type, match.getTi_day());
 		List<CouponVO> couponList = matchService.selectCouponListByMeNum(user.getMe_num());
 		
+		model.addAttribute("type", type);
 		model.addAttribute("user", user);
 		model.addAttribute("match", match);
 		model.addAttribute("expense", expense);
 		model.addAttribute("couponList", couponList);
 		return "/match/application";
+	}
+	
+	@ResponseBody
+	@PostMapping("/match/application/solo")
+	public Map<String, Object> insertMatchSolo(
+			@RequestParam("mt_num")int mt_num,
+			@RequestParam("total_price")int point,
+			@RequestParam("cp_num")int cp_num,
+			HttpSession session){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		boolean res = false;
+		String msg = "신청 실패";
+		System.out.println(user.getMe_point());
+		System.out.println(point);
+		if(user.getMe_point() < point) {
+			msg = "포인트가 부족합니다.";
+			map.put("msg", msg);
+			map.put("res", res);
+			return map;
+		}
+		res = matchService.insertMatchSolo(user, mt_num, point, cp_num);
+		
+		return map;
 	}
 }

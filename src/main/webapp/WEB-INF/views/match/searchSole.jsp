@@ -106,7 +106,7 @@
 		check = !check;
 		printSelectMatch()
 	});
-	$(document).on('click', '.btn-application', function() {
+	$(document).on('click', '.btn-matchPage', function() {
 		let mt_num = $(this).val();
 		
 		location.href='<c:url value="/match/application?mt_num="/>'+ mt_num + '&type=' + type;
@@ -140,7 +140,7 @@
 					}
 					if(match.application_able == 1){
 						str +=	`
-							<button class="btn btn-outline-primary btn-application" value="\${match.mt_num}">참가 신청</button> <br>
+							<button class="btn btn-outline-primary btn-matchPage" value="\${match.mt_num}">참가 신청</button> <br>
 						</div>
 						`;
 					}else if(match.application_able == 0 && match.application == 0){
@@ -150,7 +150,7 @@
 						`;					
 					}else if(match.application_able == 0 && match.application == 1){
 						str +=	`
-							<button class="btn btn-outline-danger btn-application-delete" value="\${match.mt_num}">참가 취소</button> <br>
+							<button class="btn btn-outline-danger btn-matchPage" value="\${match.mt_num}">참가 취소</button> <br>
 						</div>
 						`;					
 					}

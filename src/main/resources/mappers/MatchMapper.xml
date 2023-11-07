@@ -183,7 +183,8 @@
 		where
 			mt_date = #{mt_date} and
             mt_state1 = 0 and
-            (mt_type = 0 or mt_type = 1)
+            (mt_type = 0 or mt_type = 1) and
+            ti_time >= if(mt_date = date(now()), time(now()), '00:00:00')
 		group by
 			mt_num
 		order by
@@ -302,7 +303,8 @@
 		where
 			mt_date = #{mt_date} and
             mt_state1 = 0 and
-            (mt_type = 0 or mt_type = 2)
+            (mt_type = 0 or mt_type = 2) and
+            ti_time >= if(mt_date = date(now()), time(now()), '00:00:00')
 		group by
 			mt_num
 		order by

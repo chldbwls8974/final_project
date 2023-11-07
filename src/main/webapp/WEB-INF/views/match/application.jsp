@@ -30,39 +30,83 @@
 			</div>
 		</div>
 		<div class="contents-box right-box">
-			<c:if test="${match.entry_res == 0}">
-				<div class="application-box right-side-box">
-					<h4>신청</h4>
-					<span>비용 : ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}포인트/2시간</span>
-					<input type="text" class="total-price" disabled value="${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}">
-					<button class="btn btn-outline-primary btn-application">신청</button>
-				</div>
-				<div class="coupon-box right-side-box">
-					<h4>보유 쿠폰</h4>
-					<c:forEach items="${couponList}" var="co">
-						<div>
-							<input type="radio" name="coupon" value="${co.hp_num}">${co.cp_source}(${co.cp_sale}) <br>
-							<input type="text" class="sale-point" value="${co.cp_sale}" hidden>
-						</div>
-					</c:forEach>
-				</div>
+			<c:if test="${(match.mt_type == 0 && type == 0) || (match.mt_type == 1 && type == 0)}">
+				<c:if test="${match.entry_res == 0}">
+					<div class="application-box right-side-box">
+						<h4>신청</h4>
+						<span>비용 : ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}포인트/2시간</span>
+						<input type="text" class="total-price" disabled value="${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}"> <br>
+						<button class="btn btn-outline-primary btn-application">신청</button>
+					</div>
+					<div class="coupon-box right-side-box">
+						<h4>보유 쿠폰</h4>
+						<c:forEach items="${couponList}" var="co">
+							<div>
+								<input type="radio" name="coupon" value="${co.hp_num}">${co.cp_source}(${co.cp_sale}) <br>
+								<input type="text" class="sale-point" value="${co.cp_sale}" hidden>
+							</div>
+						</c:forEach>
+					</div>
+				</c:if>
+				<c:if test="${match.entry_res != 0}">
+					<div class="cansel-box right-side-box">
+						<h4>취소</h4>
+						<button class="btn btn-outline-danger btn-cansel">취소</button>
+					</div>
+				</c:if>
 			</c:if>
-			<c:if test="${match.entry_res != 0}">
-				<div class="cansel-box right-side-box">
-					<button class="btn btn-outline-danger btn-cansel">취소</button>
-				</div>
+			<c:if test="${(match.mt_type == 0 && type == 1) || (match.mt_type == 2 && type == 1)}">
+				<h1>그룹 매치</h1>
+			</c:if>
+			<c:if test="${(match.mt_type == 1 && type == 1) || (match.mt_type == 2 && type == 0)}">
+				<h1>잘못된 접근입니다.</h1>			
 			</c:if>
 		</div>
 	</nav>
 	<script type="text/javascript">
-	let cp_num;
-	let total_price;
+	let type = ${type};
+	let cp_num = 0;
+	let total_price = ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre};
+	let mt_num = ${match.mt_num}
 	$(document).on('click', '[name=coupon]', function() {
 		cp_num = $(this).val();
 		total_price = ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre} - $(this).siblings('.sale-point').val();
 
 		$('.total-price').val(total_price);
 	});
+	$(document).on('click', '.btn-application', function() {
+		application()
+	});
+	
+	function application() {
+		if(type == 0){
+			$.ajax({
+				async : false,
+				method : 'post',
+				url : '<c:url value="/match/application/solo"/>',
+				data : {mt_num:mt_num, total_price:total_price, cp_num:cp_num},
+				dataType : 'json',
+				success : function(data) {
+					if(data.res){
+						alert("성공");
+					}else{
+						alert(data.msg);
+					}
+				}
+			});
+		}else if(type == 1){
+			$.ajax({
+				async : false,
+				method : 'post',
+				url : '<c:url value="/match/application/club"/>',
+				data : {mt_num:mt_num, total_price:total_price, cp_num:cp_num},
+				dataType : 'json',
+				success : function(data) {
+				
+				}
+			});
+		}
+	}
 	</script>
 </body>
 </html>

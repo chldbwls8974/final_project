@@ -7,6 +7,7 @@ import kr.kh.final_project.vo.CouponVO;
 import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ExtraVO;
 import kr.kh.final_project.vo.MatchVO;
+import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.RegionVO;
 
 public interface MatchService {
@@ -28,5 +29,7 @@ public interface MatchService {
 	ExpenseVO selectPrice(int type, String ti_day);
 
 	List<CouponVO> selectCouponListByMeNum(Integer me_num);
+
+	boolean insertMatchSolo(MemberVO user, int mt_num, int point, int cp_num);
 
 }

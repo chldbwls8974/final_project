@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.final_project.dao.CouponDAO;
+import kr.kh.final_project.dao.EntryDAO;
 import kr.kh.final_project.dao.ExpenseDAO;
 import kr.kh.final_project.dao.ExtraDAO;
 import kr.kh.final_project.dao.MatchDAO;
@@ -16,9 +17,11 @@ import kr.kh.final_project.dao.PreferredTimeDAO;
 import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.dao.TimeDAO;
 import kr.kh.final_project.vo.CouponVO;
+import kr.kh.final_project.vo.EntryVO;
 import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ExtraVO;
 import kr.kh.final_project.vo.MatchVO;
+import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.RegionVO;
 
 @Service
@@ -47,6 +50,9 @@ public class MatchServiceImp implements MatchService{
 	
 	@Autowired
 	CouponDAO couponDao;
+	
+	@Autowired
+	EntryDAO entryDao;
 	
 	@Override
 	public List<ExtraVO> selectWeekDayList(int i) {
@@ -166,5 +172,14 @@ public class MatchServiceImp implements MatchService{
 			return null;
 		}
 		return couponDao.selectCouponListByMeNum(me_num);
+	}
+
+	@Override
+	public boolean insertMatchSolo(MemberVO user, int mt_num, int point, int cp_num) {
+		if(user == null || mt_num == 0) {
+			return false;
+		}
+		//EntryVO dbEntry = entryDao.select
+		return false;
 	}
 }
