@@ -17,10 +17,10 @@
 </head>
 <body>
 	<div class="container">
-		<div class="memberlist-box">
-			<h3>여기는 내가 member로 속해있는 클럽 리스트</h3>
+		<div class="rookielist-box">
+			<h3>여기는 내가 rookie로 속해있는 클럽 리스트</h3>
 			<ul>
-				<c:forEach items="${memberlist}" var="list">
+				<c:forEach items="${rookielist}" var="list">
 					<li><a
 						href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>">
 							<div>
@@ -34,6 +34,7 @@
 				</c:forEach>
 			</ul>
 		</div>
+
 	</div>
 </body>
 </html>

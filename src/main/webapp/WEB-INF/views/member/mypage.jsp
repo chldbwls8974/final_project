@@ -99,13 +99,13 @@
 						</a>
 						</li>
 						<li>
-							<a href="<c:url value='/member/clublist'/>">
+							<a href="<c:url value='/club/mylist'/>">
 							<img src="https://cdn.icon-icons.com/icons2/2556/PNG/512/team_friends_partners_partner_icon_153084.png" width="24px" height="24px" alt="소속 클럽">
 							<p>소속 클럽</p>
 							</a>
 						</li>
 						<li>
-							<a href="">
+							<a href="<c:url value='/club/rookielist'/>">
 							<img src="https://d31wz4d3hgve8q.cloudfront.net/media/ic_nav_team_recruit_member.svg" width="24px" height="24px" alt="승인 대기 중 클럽">
 							<p>승인 대기 중 클럽</p>
 							</a>

@@ -67,20 +67,28 @@ public class ClubController {
 	@GetMapping("/mylist")
 	public String myClubList(Model model, HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		List<ClubVO> rookielist = clubService.getMyClubList(user.getMe_num(),"ROOKIE");
 		List<ClubVO> memberlist = clubService.getMyClubList(user.getMe_num(),"MEMBER");
 		model.addAttribute("user",user);
-		model.addAttribute("rookielist",rookielist);
 		model.addAttribute("memberlist",memberlist);
 		return "/club/mylist";
+	}
+	@GetMapping("/rookielist")
+	public String rookieClubList(Model model, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		List<ClubVO> rookielist = clubService.getMyClubList(user.getMe_num(),"ROOKIE");
+		model.addAttribute("user",user);
+		model.addAttribute("rookielist",rookielist);
+		return "/club/rookielist";
 	}
 	
 	@GetMapping("/detail")
 	public String detailClub(Model model, HttpSession session, Integer cl_num) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		ClubVO club = clubService.getClub(cl_num);
+		ClubMemberVO authority = clubService.getMyAuthorityByClub(cl_num, user.getMe_num());
 		model.addAttribute("user",user);
 		model.addAttribute("club",club);
+		model.addAttribute("authority",authority);
 		return "/club/detail";
 	}
 	@GetMapping("/join")

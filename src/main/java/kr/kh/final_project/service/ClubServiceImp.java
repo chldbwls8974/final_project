@@ -156,6 +156,14 @@ public class ClubServiceImp implements ClubService{
 		return clubDao.selectMyClubList(me_num,authority);
 	}
 
+	@Override
+	public ClubMemberVO getMyAuthorityByClub(Integer cl_num, Integer me_num) {
+		if(cl_num == 0 || me_num == 0) {
+			return null;
+		}
+		return clubMemberDao.selecMytAuthorityByClub(cl_num, me_num);
+	}
+
 
 
 }

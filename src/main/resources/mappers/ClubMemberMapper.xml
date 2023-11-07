@@ -10,4 +10,8 @@
 		insert into club_member(cm_me_num, cm_cl_num,cm_introduction) 
 		values(#{member.cm_me_num},#{member.cm_cl_num},#{member.cm_introduction})
 	</insert>
+	<select id="selecMytAuthorityByClub" resultType="kr.kh.final_project.vo.ClubMemberVO">
+		select * from club_member
+		where cm_cl_num = #{cl_num} and cm_me_num = #{me_num}
+	</select>
 </mapper>

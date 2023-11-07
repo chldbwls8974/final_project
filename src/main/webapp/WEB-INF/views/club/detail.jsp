@@ -14,13 +14,23 @@
 </head>
 <body>
 ${club }
+<hr>
+${authority.cm_authority }
 	<div class="container">
-	<a href="<c:url value='/club/join?cl_num=${club.cl_num}'/>">
-	 	<button type="button" class="btn btn-outline-success">가입신청하기</button>
-	 </a>
-	<a href="<c:url value='/club/update?cl_num=${club.cl_num}'/>">
-	 	<button type="button" class="btn btn-outline-success">수정하기</button>
-	 </a>
+	<c:if test="${authority.cm_authority != 'LEADER' && authority.cm_authority != 'ROOKIE' && authority.cm_authority != 'MEMBER'}">
+		<a href="<c:url value='/club/join?cl_num=${club.cl_num}'/>">
+		 	<button type="button" class="btn btn-outline-success">가입신청하기</button>
+		 </a>
+	</c:if>
+	
+	 <c:if test="${authority.cm_authority == 'ROOKIE'}">
+	 	<button type="button" class="btn btn-outline-success">승인대기중</button>
+	 </c:if>
+	 <c:if test="${authority.cm_authority == 'LEADER'}">
+		<a href="<c:url value='/club/update?cl_num=${club.cl_num}'/>">
+		 	<button type="button" class="btn btn-outline-success">수정하기</button>
+		 </a>
+	 </c:if>
 	</div>
 </body>
 </html>

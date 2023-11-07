@@ -76,7 +76,7 @@ li{
 <!-- 			<label>클럽 앰블럼</label> -->
 <!-- 			<input type="file" class="form-control" name="cl_emblem"> -->
 <!-- 		</div> -->
-		<input type="text" class="form-control" name="me_num" value="${user.me_num }">
+		<input type="hidden" class="form-control" name="me_num" value="${user.me_num }">
 		<div class="form-group">
 			<label>클럽명</label><label id="check-name-error" class="error" for="cl_name"></label>
 			<input type="text" class="form-control" name="cl_name" id="cl_name">

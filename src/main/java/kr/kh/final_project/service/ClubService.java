@@ -20,6 +20,8 @@ public interface ClubService {
 	boolean updateClub(int me_num, ClubVO club, int[] age, int[] favoriteTime, int[] favoriteHoliTime);
 
 	List<ClubVO> getMyClubList(Integer me_num, String authority);
+
+	ClubMemberVO getMyAuthorityByClub(Integer cl_num, Integer me_num);
 	
 }
 	
