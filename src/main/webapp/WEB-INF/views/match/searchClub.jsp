@@ -62,22 +62,6 @@
 		</c:if>
 	</div>
 	<br>
-	<div class="preferred-time-box">
-		<span>선호시간 : </span>
-		<input class="preferred-time-check" type="checkbox" checked="checked">
-	</div>
-	<div class="main-region-box">
-		<span>지역 : </span>
-		<select class="select-main">
-			<option value="0">선호지역</option>
-			<c:forEach items="${mainRegion}" var="mr">
-				<option value="${mr.rg_num}">${mr.rg_main}</option>
-			</c:forEach>
-		</select>
-	</div>
-	<div class="sub-region-box">
-		
-	</div>
 	<div class="select-match-box">
 		
 	</div>
@@ -107,19 +91,6 @@
 	});
 	$('.next-week').click(function() {
 		location.href = "<c:url value='/match/search/club?weekCount='/>" + ${weekCount + 1};
-	});
-	$(document).on('change', '.select-main', function() {
-		rg_num = $(this).val();
-		printSubSelect(rg_num);
-		printSelectMatch();
-	});
-	$(document).on('change', '.select-sub', function() {
-		rg_num = $(this).val();
-		printSelectMatch();
-	});
-	$(document).on('change', '.preferred-time-check', function() {
-		check = !check;
-		printSelectMatch()
 	});
 	$(document).on('click', '.btn-application', function() {
 		let mt_num = $(this).val();
@@ -173,33 +144,6 @@
 				$('.select-match-box').html(str)
 			}
 		});
-	}
-	
-	function printSubSelect(rg_num) {
-		let str = ``;
-		if(rg_num != 0){
-			$.ajax({
-				async : false,
-				method : 'post',
-				url : '<c:url value="/manager/select/region"/>',
-				data : {rg_num : rg_num},
-				dataType : 'json',
-				success : function(data) {
-					str += `
-						<select class="select-sub">
-					`
-					for(sr of data.subRegion){
-						str += `
-								<option value="\${sr.rg_num}">\${sr.rg_sub}</option>
-						`
-					}
-					str += `
-						</select>
-					`;
-				}
-			});
-		}
-		$('.sub-region-box').html(str);
 	}
 	</script>
 </body>

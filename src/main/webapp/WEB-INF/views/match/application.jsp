@@ -33,7 +33,7 @@
 			<c:if test="${(match.mt_type == 0 && type == 0) || (match.mt_type == 1 && type == 0)}">
 				<c:if test="${match.entry_res == 0}">
 					<div class="application-box right-side-box">
-						<h4>신청</h4>
+						<h4>개인 매치 신청</h4>
 						<span>비용 : ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}포인트/2시간</span>
 						<input type="text" class="total-price" disabled value="${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}"> <br>
 						<button class="btn btn-outline-primary btn-application">신청</button>
@@ -51,12 +51,17 @@
 				<c:if test="${match.entry_res != 0}">
 					<div class="cansel-box right-side-box">
 						<h4>취소</h4>
-						<button class="btn btn-outline-danger btn-cansel">취소</button>
+						<button class="btn btn-outline-danger btn-cansel">신청 완료</button>
 					</div>
 				</c:if>
 			</c:if>
 			<c:if test="${(match.mt_type == 0 && type == 1) || (match.mt_type == 2 && type == 1)}">
-				<h1>그룹 매치</h1>
+				<div class="application-box right-side-box">
+					<h4>클럽 매치 신청</h4>
+					<span>비용 : ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}포인트/2시간</span>
+					<input type="text" class="total-price" disabled value="${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}"> <br>
+					<button class="btn btn-outline-primary btn-application">신청</button>
+				</div>
 			</c:if>
 			<c:if test="${(match.mt_type == 1 && type == 1) || (match.mt_type == 2 && type == 0)}">
 				<h1>잘못된 접근입니다.</h1>			

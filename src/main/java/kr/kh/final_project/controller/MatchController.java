@@ -74,10 +74,8 @@ public class MatchController {
 	
 	@GetMapping("/match/search/club")
 	public String searchMatchClub(Model model, HttpSession session, int weekCount) {
-		List<RegionVO> mainRegion = matchService.selectMainRegion();
 		List<ExtraVO> week = matchService.selectWeekDayList(weekCount);
 		
-		model.addAttribute("mainRegion",mainRegion);
 		model.addAttribute("week", week);
 		model.addAttribute("weekCount", weekCount);
 		
