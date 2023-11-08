@@ -68,8 +68,9 @@ public interface MemberService {
 	int getMemberCouponListCount(MemberVO user);
 	
 	boolean signupCoupon(String memberNickname, MemberVO newMember);
-
-
+	
+	List<MemberVO> getMemberRegion(MemberVO user);
+	
 
 
 

@@ -128,7 +128,7 @@ input[type='checkbox']{
 </head>
 <body>
 	<p style="font-size: 45px; font-weight: bolder; text-align: center; margin-bottom: 20px;
-		 letter-spacing: -3px;">클럽신청</p>
+		 letter-spacing: -3px;">클럽 생성</p>
 	<form action="<c:url value='/club/make'/>" method="post" style="text-align: center;">
 <!-- 		<div class="form-group"> -->
 <!-- 			<label>클럽 앰블럼</label> -->

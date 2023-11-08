@@ -22,6 +22,14 @@
 	.a{
 		color : red;
 	}
+	.notice-thead{
+		display: flex; justify-content: space-between; padding: 0 0 16px 0;
+		border-bottom: 1px solid rgba(0,0,0,.1);
+	}
+/* 	.notice-tbody{ justify-content: space-between;} */
+	
+	.tbody-list{display: flex; justify-content: space-between;}
+	
 </style>
 </head>
 <body>
@@ -57,30 +65,42 @@
 <!-- 공지게시판 출력 -->
 <br>
 <div class="container">
-  <table class="table table-hover">
-    <thead>
-      <tr>
-      	<th>게시글번호</th>
-      	<th>제목</th>
-        <th>작성자 닉네임</th>
-        <th>작성일</th>
-        <th>조회수</th>
-        <th>댓글수</th>
-      </tr>
-    </thead>
-    <tbody>
-   	 <c:forEach items="${list}" var="bo" >
-	      <tr>
-	      	<td>${bo.bo_num}</td>
-	      	<td><a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>" style="color:red">${bo.bo_title}</a></td>
-	        <td>${bo.me_nickname}</td>
-	        <td>${bo.bo_reg_date_str}</td>
-	        <td>${bo.bo_count}</td>
-	        <td><a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_comment}</a></td>
-	      </tr>
-      </c:forEach>
-    </tbody>
-  </table>
+  <div class="table">
+    <ul class="notice-thead">
+		<li>게시글번호</li>
+		<li>제목</li>
+		<li>작성자 닉네임</li>
+		<li>작성일</li>
+		<li>조회수</li>
+		<li>댓글수</li>
+    </ul>
+    <div style="display: inline-block;">
+	    <ul class="notice-tbody">
+	   	 <c:forEach items="${list}" var="bo" >
+			<li>
+				<div class="tbody-list">${bo.bo_num}</div>
+			</li>
+			<li>
+				<div class="tbody-list"><a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>" 
+						style="color:red">${bo.bo_title}</a></div>
+			</li>
+			<li>
+				<div class="tbody-list">${bo.me_nickname}</div>
+			</li>
+			<li>
+				<div class="tbody-list">${bo.bo_reg_date_str}</div>
+			</li>
+			<li>
+				<div class="tbody-list">${bo.bo_count}</div>
+			</li>
+			<li>
+				<div class="tbody-list"><a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">
+					${bo.bo_comment}</a></div>
+	    	</li>
+	      </c:forEach>
+	    </ul>
+    </div>
+  </div>
   <!-- 페이지네이션 적용 -->
   <ul class="pagination justify-content-center">
 		<c:if test="${pm.prev}">

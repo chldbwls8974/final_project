@@ -9,7 +9,7 @@
 
 .container{ height: 100%; padding: 70px 0 70px 0;
 }
-.title{ width:20%; font-size: 40px; font-weight: bolder; text-align: center; letter-spacing: -3px;
+.title{ width:20%; font-size: 35px; font-weight: bolder; text-align: center; letter-spacing: -3px;
 	border-bottom: 8px solid #c2f296; padding-bottom: 10px;  margin: 0 auto; margin-bottom: 30px;}
 .form-group{ text-align: center;}
 .form-group label{ text-align: center; display: block; margin: 0 auto;}

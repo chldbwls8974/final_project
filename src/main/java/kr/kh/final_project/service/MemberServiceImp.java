@@ -464,12 +464,15 @@ public class MemberServiceImp implements MemberService{
 		return true;
 	}
 
+	@Override
+	public List<MemberVO> getMemberRegion(MemberVO user) {
+		// TODO Auto-generated method stub
+		return memberDao.selectMemberRegion(user);
+	}
+
+
 
 	
-
-	
-
-
 }
 
 

@@ -17,4 +17,8 @@ public interface RegionDAO {
 	List<RegionVO> selectSubRegionByMainRegion(@Param("rg_num")int rg_num);
 
 	List<RegionVO> selectRegionByRgNum(@Param("rg_num")int rg_num);
+
+	List<RegionVO> selectMemberRegion();
+
+	List<RegionVO> selectUserRegion(Integer me_num);
 }

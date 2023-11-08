@@ -48,4 +48,6 @@ public interface MemberDAO {
 
 	MemberVO selectMemberByKaKao(@Param("me_id")String me_id);
 
+	List<MemberVO> selectMemberRegion(@Param("user") MemberVO user);
+
 }

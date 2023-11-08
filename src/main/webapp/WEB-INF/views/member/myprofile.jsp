@@ -58,8 +58,8 @@
 			<p>${user.me_tr_name}</p>
 		</div>
 		<div class="form-group">
-			<label>선호시간</label>
-			<p>${user.me_rg_num}</p>
+			<label>거주 지역</label>
+			<p>${userRegion}</p>
 		</div>
 	</div>
 	<div class="profile-footer">

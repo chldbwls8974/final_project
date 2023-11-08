@@ -29,6 +29,8 @@ import kr.kh.final_project.vo.HoldingCouponVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
+import kr.kh.final_project.vo.PreferredRegionVO;
+import kr.kh.final_project.vo.PreferredTimeVO;
 import kr.kh.final_project.vo.RegionVO;
 import kr.kh.final_project.vo.TimeVO;
 
@@ -330,7 +332,8 @@ public class MemberController {
 	//마이페이지-신청 경기 페이지 조회
 	@GetMapping("/member/mymatch")
 	public String mymatch(Model model) {
-		List<MatchVO> matchList = matchService.getMatchList(); //서비스에게 매치리스트 요청
+		//서비스에게 매치리스트 요청
+		List<MatchVO> matchList = matchService.getMatchList(); 
 		model.addAttribute("matchList", matchList);
 		return "/member/mymatch";
 	}
@@ -338,13 +341,28 @@ public class MemberController {
 	//마이페이지- 내 프로필 상세조회
 	@GetMapping("/member/myprofile")
 	public String myprofile(Model model, HttpSession session) {
+		//로그인한 회원 가져오기
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		RegionVO region = (RegionVO)session.getAttribute("region");	
-		TimeVO time = (TimeVO)session.getAttribute("time");	
+		System.out.println(user);
+		
+//		List<RegionVO> list = regionService.getUserRegionList(user);
+		//회원의 거주지역 가져오기
+		List<MemberVO> userRegion = memberService.getMemberRegion(user);
+		System.out.println(userRegion);
 		
 		model.addAttribute("user",user );
-		model.addAttribute("region",region );
-		model.addAttribute("time",time );
+//		model.addAttribute("list",list );
+		model.addAttribute("userRegion", userRegion );
 		return "/member/myprofile";
+	}
+	
+	//마이페이지-즐찾 및 차단조회 페이지
+	@GetMapping("/member/friendlist")
+	public String friendlist() {
+		return "/member/friendlist";
+	}
+	@GetMapping("/member/blocklist")
+	public String blocklist() {
+		return "/member/blocklist";
 	}
 }

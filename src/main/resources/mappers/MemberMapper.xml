@@ -152,4 +152,14 @@
 	<update id="updateFile">
 		update file(fi_bo_num, fi_name, fi_ori_name) set (#{file.fi_bo_num}, #{file.fi_name}, #{file.fi_ori_name})
 	</update>
+	<select id="selectMemberRegion" resultType="kr.kh.final_project.vo.MemberVO">
+		select 
+           *
+       from 
+           member 
+          left join
+           region on me_rg_num = rg_num
+       where
+           me_num = #{user.me_num}
+	</select>
 </mapper>

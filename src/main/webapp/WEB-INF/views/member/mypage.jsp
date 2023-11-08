@@ -99,7 +99,7 @@
 									<p style="font-size:large; font-weight: bolder;">${user.me_point}원</p>
 								</div>
 								<div style="width: 25%; position: relative;">
-									<div style=" position: absolute; bottom: 5px; right: 0px; text-align: center;
+									<div style=" position: relative; bottom: 30px; right: 5px; text-align: center;
 										 padding: 10px; border-radius: 10px; background-color:#c2f296;">
 										<a href="#"><p style="margin: 0 auto;">충전하기</p></a>
 									</div>
@@ -166,13 +166,19 @@
 						<li>
 							<a href="<c:url value='/member/search'/>">
 							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_profile.svg" width="24px" height="24px" alt="회원 조회">
-							<p>회원 조회</p>
+							<p>회원 찾기</p>
 							</a>
 						</li>
 						<li>
-							<a href="#">
-							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_point_color.svg" width="24px" height="24px" alt="나의 포인트">
-							<p>나의 포인트</p>
+							<a href="<c:url value='/member/friendlist'/>">
+							<img src="https://d31wz4d3hgve8q.cloudfront.net/media/ic_nav_team_recruit_guest.svg" width="24px" height="24px" alt="회원 조회">
+							<p>즐겨찾기 회원 조회</p>
+							</a>
+						</li>
+						<li>
+							<a href="<c:url value='/member/blocklist'/>">
+							<img src="https://d31wz4d3hgve8q.cloudfront.net/media/ic_nav_team_recruit_guest.svg" width="24px" height="24px" alt="회원 조회">
+							<p>차단 회원 조회</p>
 							</a>
 						</li>
 						<li>
@@ -185,6 +191,12 @@
 							<a href="<c:url value='/account/insert'/>">
 							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_new_team.svg" width="24px" height="24px" alt="환급 계좌 등록">
 							<p>환급 계좌 등록</p>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_point_color.svg" width="24px" height="24px" alt="나의 포인트">
+							<p>나의 포인트</p>
 							</a>
 						</li>
 						<li>

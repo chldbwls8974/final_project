@@ -1,14 +1,12 @@
 package kr.kh.final_project.vo;
 
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import lombok.Data;
 
 @Data
 @NoArgsConstructor
@@ -36,6 +34,11 @@ public class MemberVO {
 	String membertable; //검색타입
 	String keyword;		//검색내용
 	
+	int rg_num;
+	String rg_main;
+	String rg_sub;
+	
+	
 	private boolean autoLogin;
 	private String me_session_id;
 	private Date me_session_limit;
@@ -46,5 +49,6 @@ public class MemberVO {
 		}
 		return me_profile;
 	}
+	
 	
 }
