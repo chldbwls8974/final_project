@@ -62,6 +62,8 @@ public class MatchVO {
 	private int mn_me_num;
 	
 	private int entry_count;
+	private int team_entry_count;
+	private int team_count;
 	private int application;
 	private int application_able;
 	private int entry_res;

@@ -30,7 +30,7 @@
 			</div>
 		</div>
 		<div class="contents-box right-box">
-			<c:if test="${(match.mt_type == 0 && type == 0) || (match.mt_type == 1 && type == 0)}">
+			<c:if test="${(match.mt_type == 0 && cl_num == 0) || (match.mt_type == 1 && cl_num == 0)}">
 				<c:if test="${match.entry_res == 0}">
 					<div class="application-box right-side-box">
 						<h4>개인 매치 신청</h4>
@@ -51,25 +51,33 @@
 				<c:if test="${match.entry_res != 0}">
 					<div class="cansel-box right-side-box">
 						<h4>취소</h4>
-						<button class="btn btn-outline-danger btn-cansel">신청 완료</button>
+						<button class="btn btn-outline-danger btn-cansel">취소</button>
 					</div>
 				</c:if>
 			</c:if>
-			<c:if test="${(match.mt_type == 0 && type == 1) || (match.mt_type == 2 && type == 1)}">
-				<div class="application-box right-side-box">
-					<h4>클럽 매치 신청</h4>
-					<span>비용 : ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}포인트/2시간</span>
-					<input type="text" class="total-price" disabled value="${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}"> <br>
-					<button class="btn btn-outline-primary btn-application">신청</button>
-				</div>
+			<c:if test="${(match.mt_type == 0 && cl_num != 0) || (match.mt_type == 2 && cl_num != 0)}">
+				<c:if test="${match.entry_res == 0}">
+					<div class="application-box right-side-box">
+						<h4>클럽 매치 신청</h4>
+						<span>비용 : ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}포인트/2시간</span>
+						<input type="text" class="total-price" disabled value="${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}"> <br>
+						<button class="btn btn-outline-primary btn-application">신청</button>
+					</div>
+				</c:if>
+				<c:if test="${match.entry_res != 0}">
+					<div class="cansel-box right-side-box">
+						<h4>취소</h4>
+						<button class="btn btn-outline-danger btn-cansel">취소</button>
+					</div>
+				</c:if>
 			</c:if>
-			<c:if test="${(match.mt_type == 1 && type == 1) || (match.mt_type == 2 && type == 0)}">
+			<c:if test="${(match.mt_type == 1 && cl_num != 0) || (match.mt_type == 2 && cl_num == 0)}">
 				<h1>잘못된 접근입니다.</h1>			
 			</c:if>
 		</div>
 	</nav>
 	<script type="text/javascript">
-	let type = ${type};
+	let cl_num = ${cl_num};
 	let hp_num = 0;
 	let total_price = ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre};
 	let mt_num = ${match.mt_num}
@@ -87,7 +95,7 @@
 	});
 	
 	function application() {
-		if(type == 0){
+		if(cl_num == 0){
 			$.ajax({
 				async : false,
 				method : 'post',
@@ -97,27 +105,32 @@
 				success : function(data) {
 					if(data.res){
 						alert(data.msg);
-						location.href='<c:url value="/match/application?mt_num="/>'+ ${match.mt_num} + '&type=' + ${type};
+						location.href='<c:url value="/match/application?mt_num="/>'+ mt_num + '&cl_num=' + cl_num;
 					}else{
 						alert(data.msg);
 					}
 				}
 			});
-		}else if(type == 1){
+		}else if(cl_num != 0){
 			$.ajax({
 				async : false,
 				method : 'post',
 				url : '<c:url value="/match/application/club"/>',
-				data : {},
+				data : {mt_num:mt_num, total_price:total_price, cl_num:cl_num},
 				dataType : 'json',
 				success : function(data) {
-				
+					if(data.res){
+						alert(data.msg);
+						location.href='<c:url value="/match/application?mt_num="/>'+ mt_num + '&cl_num=' + cl_num;
+					}else{
+						alert(data.msg);
+					}
 				}
 			});
 		}
 	}
 	function cansel() {
-		if(type == 0){
+		if(cl_num == 0){
 			$.ajax({
 				async : false,
 				method : 'post',
@@ -127,13 +140,13 @@
 				success : function(data) {
 					if(data.res){
 						alert(data.msg);
-						location.href='<c:url value="/match/application?mt_num="/>'+ ${match.mt_num} + '&type=' + ${type};
+						location.href='<c:url value="/match/application?mt_num="/>'+ mt_num + '&cl_num=' + cl_num;
 					}else{
 						alert(data.msg);
 					}
 				}
 			});
-		}else if(type == 1){
+		}else if(cl_num != 0){
 			$.ajax({
 				async : false,
 				method : 'post',

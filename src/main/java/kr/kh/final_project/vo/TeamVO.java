@@ -1,9 +1,5 @@
 package kr.kh.final_project.vo;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import lombok.Data;
 
 @Data
@@ -18,4 +14,7 @@ public class TeamVO {
 	private int mt_type;
 	private int mt_rule;
 	private int mt_personnel;
+	
+	private int ct_te_num;
+	private int ct_cl_num;
 }

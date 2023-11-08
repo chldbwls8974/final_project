@@ -3,6 +3,8 @@ package kr.kh.final_project.service;
 import java.util.Date;
 import java.util.List;
 
+import kr.kh.final_project.vo.ClubMemberVO;
+import kr.kh.final_project.vo.ClubVO;
 import kr.kh.final_project.vo.CouponVO;
 import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ExtraVO;
@@ -22,16 +24,22 @@ public interface MatchService {
 
 	List<MatchVO> selectMatchListOfSolo(Integer me_num, Date mt_date, int rg_num, boolean check);
 
-	List<MatchVO> selectMatchListOfClub(Integer me_num, Date mt_date, int rg_num, boolean check);
+	List<MatchVO> selectMatchListOfClub(int cl_num, Date mt_date);
 
-	MatchVO selectMatchByMtNum(int mt_num, Integer me_num);
+	MatchVO selectMatchByMtNum(int mt_num, Integer me_num, int cl_num);
 
-	ExpenseVO selectPrice(int type, String ti_day);
+	ExpenseVO selectPrice(int cl_num, String ti_day);
 
 	List<CouponVO> selectCouponListByMeNum(Integer me_num);
 
 	boolean applicationMatchSolo(MemberVO user, int mt_num, int point, int hp_num);
 
 	boolean canselMatchSolo(Integer me_num, int mt_num);
+
+	List<ClubVO> selectClubListByMeNum(Integer me_num);
+
+	ClubMemberVO selectClubMemberByMeNum(Integer me_num, int cl_num);
+
+	boolean applicationMatchClub(MemberVO user, int cl_num, int mt_num, int point);
 
 }

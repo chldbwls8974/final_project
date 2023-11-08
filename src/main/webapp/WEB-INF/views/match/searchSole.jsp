@@ -74,6 +74,7 @@
 	<script type="text/javascript">
 	let type = 0;
 	let select_day = "${week[0].date_str}";
+	let cl_num = 0;
 	let rg_num = 0;
 	let check = true;
 	
@@ -109,7 +110,7 @@
 	$(document).on('click', '.btn-matchPage', function() {
 		let mt_num = $(this).val();
 		
-		location.href='<c:url value="/match/application?mt_num="/>'+ mt_num + '&type=' + type;
+		location.href='<c:url value="/match/application?mt_num="/>'+ mt_num + '&cl_num=' + cl_num;
 	});
 	function printSelectMatch() {
 		let str = '';

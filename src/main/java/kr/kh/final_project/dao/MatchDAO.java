@@ -25,8 +25,10 @@ public interface MatchDAO {
 
 	List<MatchVO> selectMatchListOfSolo(@Param("me_num")Integer me_num, @Param("mt_date")Date mt_date);
 
-	MatchVO selectMatchByMtNum(@Param("mt_num")int mt_num, @Param("me_num")Integer me_num);
+	MatchVO selectMatchByMeNum(@Param("mt_num")int mt_num, @Param("me_num")Integer me_num);
 
-	List<MatchVO> selectMatchListOfClub(@Param("me_num")Integer me_num, @Param("mt_date")Date mt_date);
+	List<MatchVO> selectMatchListOfClub(@Param("cl_num")int me_num, @Param("mt_date")Date mt_date);
+
+	MatchVO selectMatchByClNum(@Param("mt_num")int mt_num, @Param("cl_num")int cl_num);
 
 }

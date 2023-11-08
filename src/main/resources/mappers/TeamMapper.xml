@@ -24,4 +24,44 @@
 		insert into team(te_mt_num, te_type)
 		values(#{mt_num}, 0)
 	</insert>
+	<select id="selectTeamByClNum" resultType="kr.kh.final_project.vo.TeamVO">
+		SELECT
+			team.*,
+			`match`.*
+		FROM
+			team
+				join
+			`match` on te_mt_num = mt_num
+		    	join
+			club_team on ct_te_num = te_num
+				left join
+			entry on en_te_num = te_num
+		where
+			te_mt_num = #{mt_num} and
+			te_type = 1 and
+		    ct_cl_num = #{cl_num}
+		group by
+			te_num
+	</select>
+	<insert id="insertTeam">
+		insert into team(te_mt_num, te_type)
+		values(#{mt_num}, 1)
+	</insert>
+	<select id="selectTeamByMtNum" resultType="kr.kh.final_project.vo.TeamVO">
+		select
+			*
+		from
+			team
+		where
+			te_mt_num = #{mt_num} and
+			te_type = 1
+		order by
+			te_num desc
+		limit
+			1
+	</select>
+	<insert id="insertClubTeam">
+		insert into club_team(ct_te_num, ct_cl_num)
+		values(#{te_num}, #{cl_num})
+	</insert>
 </mapper>

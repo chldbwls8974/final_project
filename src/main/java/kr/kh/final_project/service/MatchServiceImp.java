@@ -7,6 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.kh.final_project.dao.ClubDAO;
+import kr.kh.final_project.dao.ClubMemberDAO;
 import kr.kh.final_project.dao.CouponDAO;
 import kr.kh.final_project.dao.EntryDAO;
 import kr.kh.final_project.dao.ExpenseDAO;
@@ -18,6 +20,8 @@ import kr.kh.final_project.dao.PreferredTimeDAO;
 import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.dao.TeamDAO;
 import kr.kh.final_project.dao.TimeDAO;
+import kr.kh.final_project.vo.ClubMemberVO;
+import kr.kh.final_project.vo.ClubVO;
 import kr.kh.final_project.vo.CouponVO;
 import kr.kh.final_project.vo.EntryVO;
 import kr.kh.final_project.vo.ExpenseVO;
@@ -64,6 +68,12 @@ public class MatchServiceImp implements MatchService{
 	@Autowired
 	PointHistoryDAO pointHistoryDao;
 	
+	@Autowired
+	ClubDAO clubDao;
+	
+	@Autowired
+	ClubMemberDAO clubMemberDao;
+	
 	@Override
 	public List<ExtraVO> selectWeekDayList(int i) {
 		return extraDao.selectWeekDayList(i);
@@ -101,35 +111,40 @@ public class MatchServiceImp implements MatchService{
 	}
 
 	@Override
-	public List<MatchVO> selectMatchListOfClub(Integer me_num, Date mt_date, int rg_num, boolean check) {
-		if(me_num == null || mt_date == null) {
+	public List<MatchVO> selectMatchListOfClub(int cl_num, Date mt_date){
+		if(cl_num == 0 || mt_date == null) {
 			return null;
 		}
-		List<MatchVO> dbMatchList = matchDao.selectMatchListOfClub(me_num, mt_date);
-		return filterMatch(me_num, mt_date, rg_num, check, dbMatchList);
+		List<MatchVO> dbMatchList = matchDao.selectMatchListOfClub(cl_num, mt_date);
+		return filterMatch(cl_num, dbMatchList);
 	}
 
 	@Override
-	public MatchVO selectMatchByMtNum(int mt_num, Integer me_num) {
+	public MatchVO selectMatchByMtNum(int mt_num, Integer me_num, int cl_num) {
 		if(mt_num == 0 || me_num == null) {
 			return null;
 		}
-		return matchDao.selectMatchByMtNum(mt_num, me_num);
+		if(cl_num == 0) {
+			return matchDao.selectMatchByMeNum(mt_num, me_num);			
+		}else if(cl_num != 0) {
+			return matchDao.selectMatchByClNum(mt_num, cl_num);
+		}
+		return null;
 	}
 
 	@Override
-	public ExpenseVO selectPrice(int type, String ti_day) {
-		if((type != 0 && type != 1) || ti_day == null) {
+	public ExpenseVO selectPrice(int cl_num, String ti_day) {
+		if(ti_day == null) {
 			return null;
 		}
 		List<ExpenseVO> expenseList = expenseDao.selectPriceList();
-		if(type == 0) {
+		if(cl_num == 0) {
 			if(!ti_day.equals("토") && !ti_day.equals("일")) {
 				return expenseList.get(0);
 			}else {
 				return expenseList.get(1);
 			}
-		}else if(type == 1){
+		}else if(cl_num != 0){
 			if(!ti_day.equals("토") && !ti_day.equals("일")) {
 				return expenseList.get(2);
 			}else {
@@ -150,7 +165,7 @@ public class MatchServiceImp implements MatchService{
 			if(rgMainList.indexOf(rg_num) != -1) {
 				for(Integer rgNum : rgMainList) {
 					if(rg_num == rgNum) {
-						rgNumList = regionDao.selectSubRgNumByMainRgNum(rg_num);
+						rgNumList = regionDao.selectSubRgNumByMainRgNum(rgNum);
 					}
 				}
 			}else {
@@ -170,6 +185,29 @@ public class MatchServiceImp implements MatchService{
 							matchList.add(m);
 						}
 					}
+				}
+			}
+		}
+		return matchList;
+	}
+	private List<MatchVO> filterMatch(int cl_num, List<MatchVO> dbMatchList) {
+		List<Integer> rgNumList = new ArrayList<Integer>();
+		List<MatchVO> matchList = new ArrayList<MatchVO>();
+		ClubVO dbClub = clubDao.selectClubByNum(cl_num);
+		List<Integer> rgMainList = regionDao.selectRgNumSubAll();
+		if(rgMainList.indexOf(dbClub.getCl_rg_num()) != -1) {
+			for(Integer rgNum : rgMainList) {
+				if(dbClub.getCl_rg_num() == rgNum) {
+					rgNumList = regionDao.selectSubRgNumByMainRgNum(rgNum);
+				}
+			}
+		}else {
+			rgNumList = regionDao.selectRgNumByRgNum(dbClub.getCl_rg_num());
+		}
+		for(MatchVO m : dbMatchList) {
+			for(Integer r : rgNumList) {
+				if(r == m.getFa_rg_num()) {
+					matchList.add(m);
 				}
 			}
 		}
@@ -231,6 +269,36 @@ public class MatchServiceImp implements MatchService{
 					return true;
 				}
 			}
+		}
+		return false;
+	}
+
+	@Override
+	public List<ClubVO> selectClubListByMeNum(Integer me_num) {
+		if(me_num == null) {
+			return null;
+		}
+		return clubDao.selectClubListByMeNum(me_num);
+	}
+
+	@Override
+	public ClubMemberVO selectClubMemberByMeNum(Integer me_num, int cl_num) {
+		if(me_num == null || cl_num == 0) {
+			return null;
+		}
+		return clubMemberDao.selectClubMemberByMeNum(me_num, cl_num);
+	}
+
+	@Override
+	public boolean applicationMatchClub(MemberVO user, int cl_num, int mt_num, int point) {
+		if(user == null || cl_num == 0 || mt_num == 0) {
+			return false;
+		}
+		TeamVO dbTeam = teamDao.selectTeamByClNum(mt_num, cl_num);
+		if(dbTeam == null) {
+			teamDao.insertTeam(mt_num);
+			dbTeam = teamDao.selectTeamByMtNum(mt_num);
+			teamDao.insertClubTeam(dbTeam.getTe_num(), cl_num);
 		}
 		return false;
 	}

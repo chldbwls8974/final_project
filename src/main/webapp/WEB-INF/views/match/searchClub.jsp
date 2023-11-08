@@ -62,15 +62,22 @@
 		</c:if>
 	</div>
 	<br>
+	<div class="club-select-box">
+		<span>클럽 : </span>
+		<select class="select-club">
+			<option value="0">선택</option>
+			<c:forEach items="${clubList}" var="cl">
+				<option value="${cl.cl_num}">${cl.cl_name}</option>
+			</c:forEach>
+		</select>
+	</div>
 	<div class="select-match-box">
 		
 	</div>
 	<script type="text/javascript">
 	let type = 1;
 	let select_day = "${week[0].date_str}";
-	let rg_num = 0;
-	let check = true;
-	
+	let cl_num = 0;
 	
 	$('.day-box').eq(0).children('.not-select-circle').toggleClass('select-circle');
 	$('.day-box').eq(0).children('.not-select-circle').toggleClass('not-select-circle');
@@ -92,58 +99,73 @@
 	$('.next-week').click(function() {
 		location.href = "<c:url value='/match/search/club?weekCount='/>" + ${weekCount + 1};
 	});
-	$(document).on('click', '.btn-application', function() {
+	$(document).on('change', '.select-club', function() {
+		cl_num = $(this).val();
+
+		printSelectMatch();
+	})
+	$(document).on('click', '.btn-matchPage', function() {
 		let mt_num = $(this).val();
 		
-		location.href='<c:url value="/match/application?mt_num="/>'+ mt_num + '&type=' + type;
+		location.href='<c:url value="/match/application?mt_num="/>'+ mt_num + '&cl_num=' + cl_num;
 	});
 	function printSelectMatch() {
-		let str = '';
-		$.ajax({
-			async : false,
-			method : 'post',
-			url : '<c:url value="/match/searchList/club"/>',
-			data : {mt_date:select_day, rg_num:rg_num, check:check},
-			dataType : 'json',
-			success : function(data) {
-				for(match of data.matchList){
-					str +=`
-					<div class="match-box">
-						<div class="match-time-box">
-							<span class="match-time">\${match.ti_time_str}</span>
-						</div>
-						<div class="match-info-box">
-							<span>\${match.rg_main} \${match.rg_sub} \${match.fa_name} \${match.st_name} </span> <br>
-							<span>클럽 `;
-					if(match.mt_rule == 0){
-						str +=	`친선전 \${match.mt_personnel} vs \${match.mt_personnel} \${match.entry_count}/\${match.mt_personnel * 2}</span>
+		let str = ``;
+		if(cl_num == 0){
+			str += `<h2>클럽을 선택해주세요</h2>`;
+		}else{
+			$.ajax({
+				async : false,
+				method : 'post',
+				url : '<c:url value="/match/searchList/club"/>',
+				data : {mt_date:select_day, cl_num:cl_num},
+				dataType : 'json',
+				success : function(data) {
+					console.log(data);
+					for(match of data.matchList){
+						str +=`
+						<div class="match-box">
+							<div class="match-time-box">
+								<span class="match-time">\${match.ti_time_str}</span>
 							</div>
-						`;
-					}else if(match.mt_rule == 1){
-						str +=	`경쟁전 \${match.mt_personnel} vs \${match.mt_personnel} \${match.entry_count}/\${match.mt_personnel * 3}</span>
+							<div class="match-info-box">
+								<span>\${match.rg_main} \${match.rg_sub} \${match.fa_name} \${match.st_name} </span> <br>
+								<span>클럽 `;
+						if(match.mt_rule == 0){
+							str +=	`친선전 \${match.mt_personnel} vs \${match.mt_personnel} \${match.entry_count}/\${match.mt_personnel * 2}</span>
+								</div>
+							`;
+						}else if(match.mt_rule == 1){
+							str +=	`경쟁전 \${match.mt_personnel} vs \${match.mt_personnel} \${match.entry_count}/\${match.mt_personnel * 3}</span>
+								</div>
+							`;						
+						}
+						if(match.application_able == 0 && match.application == 1){
+							str +=	`
+								<button class="btn btn-outline-danger btn-matchPage" value="\${match.mt_num}">참가 취소</button> <br>
 							</div>
-						`;						
-					}
-					if(match.application_able == 1){
-						str +=	`
-							<button class="btn btn-outline-primary btn-application" value="\${match.mt_num}">참가 신청</button> <br>
-						</div>
-						`;
-					}else if(match.application_able == 0 && match.application == 0){
-						str +=	`
-							<button class="btn btn-outline-secondary" value="\${match.mt_num}" disabled>참가 불가</button> <br>
-						</div>
-						`;					
-					}else if(match.application_able == 0 && match.application == 1){
-						str +=	`
-							<button class="btn btn-outline-danger btn-application-delete" value="\${match.mt_num}">참가 취소</button> <br>
-						</div>
-						`;					
+							`;					
+						}else if(match.team_count == (match.mt_rule == 0 ? 2 : 3)){
+							str +=	`
+								<button class="btn btn-dark" value="\${match.mt_num}" disabled>참가 마감</button> <br>
+							</div>
+							`;					
+						}else if(match.application_able == 1){
+							str +=	`
+								<button class="btn btn-outline-primary btn-matchPage" value="\${match.mt_num}">참가 신청</button> <br>
+							</div>
+							`;
+						}else if(match.application_able == 0 && match.application == 0){
+							str +=	`
+								<button class="btn btn-outline-secondary" value="\${match.mt_num}" disabled>참가 불가</button> <br>
+							</div>
+							`;					
+						}
 					}
 				}
-				$('.select-match-box').html(str)
-			}
-		});
+			});
+		}
+		$('.select-match-box').html(str)
 	}
 	</script>
 </body>
