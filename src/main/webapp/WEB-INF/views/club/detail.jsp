@@ -36,7 +36,7 @@ ${club }
 				</a>
 				<div class="dropdown-menu">
 						<a class="dropdown-item" href="<c:url value='/club/update?cl_num=${club.cl_num}'/>">수정</a>
-						<a class="dropdown-item" href="">회원관리</a>
+						<a class="dropdown-item" href="<c:url value='/club/manage?cl_num=${club.cl_num}'/>">멤버관리</a>
 				</div>
 			</li>
 			</ul>

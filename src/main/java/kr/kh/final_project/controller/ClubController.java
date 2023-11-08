@@ -110,7 +110,7 @@ public class ClubController {
 	}
 	
 	@GetMapping("/manage")
-	public String manageClub(Model model, HttpSession session) {
+	public String manageClub(Model model, HttpSession session, Integer cl_num) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		String authority = "LEADER";
 		List<ClubVO> list = clubService.getMyClubList(user.getMe_num(),authority);
@@ -137,6 +137,8 @@ public class ClubController {
 		model.addAttribute("msg", msg);
 		return "message";
 	}
+	
+
 }
 	
 
