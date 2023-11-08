@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.dao.BoardDAO;
+import kr.kh.final_project.dao.MemberDAO;
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.util.UploadFileUtils;
 import kr.kh.final_project.vo.BoardVO;
@@ -20,6 +21,9 @@ public class BoardServiceImp implements BoardService{
 	
 	@Autowired
 	BoardDAO boardDao;
+	
+	@Autowired
+	MemberDAO memberDao;
 	
 	
 	String uploadPath = "D:\\uploadfiles";
@@ -431,6 +435,8 @@ public class BoardServiceImp implements BoardService{
 		
 		return boardDao.selectBoardRegionTotalCount(bo_rg_num);
 	}
+
+
 
 	
 }

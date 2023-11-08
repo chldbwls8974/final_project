@@ -8,6 +8,7 @@ import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.vo.BoardVO;
 import kr.kh.final_project.vo.FileVO;
 import kr.kh.final_project.vo.ManagerVO;
+import kr.kh.final_project.vo.MemberVO;
 
 public interface BoardDAO {
 
@@ -91,6 +92,8 @@ public interface BoardDAO {
 	ManagerVO selectBoardManager(@Param("manager")ManagerVO manager, @Param("user")ManagerVO user);
 	// 매니저신청 게시글 삭제하기
 	boolean deleteBoardManager(@Param("manager")ManagerVO manager, @Param("user")ManagerVO user);
+	
+	
 	
 
 	

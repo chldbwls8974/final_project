@@ -89,7 +89,6 @@ public class BoardController {
 		// 등록된 첨부파일을 가져오라고 boardService한테 시키고 가져온 첨부파일을 fileList에 넣기
 		List<FileVO> fileList = boardService.getFileList(bo_num);
 		
-		
 		// 가져온 게시글을 화면에 전송해준다.
 		model.addAttribute("board", board);
 		model.addAttribute("fileList", fileList);

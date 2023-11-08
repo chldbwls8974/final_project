@@ -27,15 +27,22 @@
 	<!-- 댓글 리스트 가져오기 -->
 	<select id="selectCommentList" resultType="kr.kh.final_project.vo.CommentVO">
 		select 
-			* 
-		from 
-			comment
-		where
-			co_bo_num = #{bo_num}
-		order by 
-			co_ori_num desc,
-			co_num asc
-		limit #{cri.pageStart}, #{cri.perPageNum}
+        	comment.*,
+        	member.me_nickname,
+        	block.*
+    	from 
+        	comment 
+    			left join
+        	member on comment.co_me_num = member.me_num
+        		left join
+        	(select * from block where bl_me_num = #{user.me_num}) as block on bl_blocked_num = co_me_num
+    	where
+        	comment.co_bo_num = #{bo_num}
+        
+    	order by 
+        	comment.co_ori_num desc,
+        	comment.co_num asc
+   		 limit #{cri.pageStart}, #{cri.perPageNum}
 	</select>
 	<!-- 해당 게시글 총 댓글 수 가져오기 -->
 	<select id="selectCommentCount" resultType="int">

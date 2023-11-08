@@ -69,27 +69,29 @@ public class CommentController {
 		// 로그인한 사용자 정보를 가져온다.
 		MemberVO user =(MemberVO)session.getAttribute("user");
 		
-		List<CommentVO> list = commentService.getCommentList(bo_num, cri);
+		List<CommentVO> list = commentService.getCommentList(bo_num, cri, user);
 		// 이 게시글의 총 댓글 갯수를 가져와라
 		int totalCount = commentService.getTotalCount(bo_num);
 		PageMaker pm = new PageMaker(3, cri, totalCount);
 		
 		// 차단된 사람의 me_num을 가져온다.
 		// 차단된 사람들의 me_num을 담을 list를 blockedUserIds로 만들어준다.
-		List<Integer> blockedUserIds = new ArrayList<Integer>();
+//		List<Integer> blockedUserIds = new ArrayList<Integer>();
 		// 만약 사용자가 null이 아닐 때
-		if( user != null ) {
+		//if( user != null ) {
 			// blockService한테 로그인한 회원의 me_num을 주면서 차단된 회원의 리스트를 가져오라고 시킨다.
-			List<BlockVO> blockList = blockService.getBlockList(user.getMe_num());
+//			List<BlockVO> blockList = blockService.getBlockList(user.getMe_num());
 			// BlockVO의 객체인 block이 blockList를 반복해서 본다.
-			for(BlockVO block : blockList) {
-				blockedUserIds.add(block.getBl_blocked_num());
-			}
-		}
-		// 만약 차단된 아이디가 없는게 아니라면 (차단된 사람이 있다면)
-		if(!blockedUserIds.isEmpty()) {
-			map.put("message", "내가차단한 사람의 댓글입니다.");
-		}
+			//for(BlockVO block : blockList) {
+				//blockedUserIds.add(block.getBl_blocked_num());
+			//}
+		//}
+//		// 만약 차단된 아이디가 없는게 아니라면 (차단된 사람이 있다면)
+//		if(!blockedUserIds.isEmpty()) {
+//			map.put("message", "내가차단한 사람의 댓글입니다.");
+//		}
+		System.out.println(list);
+//		map.put("blockList", blockList);
 		map.put("list", list);
 		map.put("pm", pm);
 		return map;
