@@ -27,6 +27,7 @@ public class FacilityVO {
 	//시설 지역수정 시 사용
 	private String fa_rg_main;
 	
+	//시설 : 운영시간 리스트
     private List<OperatingVO> operatingList;
 
 }
