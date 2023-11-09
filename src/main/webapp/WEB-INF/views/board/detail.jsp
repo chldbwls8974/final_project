@@ -20,7 +20,7 @@
 	}
 	.comment-box{
 		background-color: #f2f2f2;
-		border-radius: 20px; padding: 10px; margin-bottom: 20px;
+		border-radius: 20px; padding: 10px; margin: 0 0 20px 0;
 		display : flex;
 	}
 	.comment-box1{
@@ -125,7 +125,7 @@
 							<span class="comment-nickname">${comment.me_nickname}</span>
 							<span class="comment-contents">${comment.co_comments}</span>
 <%-- 						<span class="comment-writer">${comment.co_me_num}</span> --%>
-							<span class="comment-date">${comment.co_date}</span>	
+							<span class="comment-date" style="color: #5b5b5b">${comment.co_date}</span>	
 						</div>
 						<div class="comment-item">
 							<c:if test="${comment.co_me_num == user.me_num}">
@@ -458,7 +458,7 @@
 						
 			            str += `
 							<div class="box-comment">
-								<div class="comment-box" \${comment.co_num != comment.co_ori_num ? 'style="margin-left: 40px;"' : ''}>
+								<div class="comment-box" \${comment.co_num != comment.co_ori_num ? '' : ''}>
 										<div class="comment-list">	
 											<img src="/final_project${user.me_profile}" class="rounded-circle profile-image" alt="기본프로필 사진">
 											<div class="comment-1">
