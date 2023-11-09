@@ -56,7 +56,8 @@
 			<c:forEach begin="1" end="${3 - fileList.size() }">
 				<input type="file" name="files"> <br>
 			</c:forEach>
-			<button class="btn btn-outline-warning col-12 btn-submit">수정하기</button><br>
+			<button class="btn btn-outline-warning col-12 btn-submit">수정하기</button>
+			<br>
 		</div>
 	</form>
 	<script type="text/javascript">

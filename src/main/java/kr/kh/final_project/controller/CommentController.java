@@ -90,7 +90,6 @@ public class CommentController {
 //		if(!blockedUserIds.isEmpty()) {
 //			map.put("message", "내가차단한 사람의 댓글입니다.");
 //		}
-		System.out.println(list);
 //		map.put("blockList", blockList);
 		map.put("list", list);
 		map.put("pm", pm);

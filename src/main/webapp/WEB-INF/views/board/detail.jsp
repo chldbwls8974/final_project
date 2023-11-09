@@ -75,7 +75,7 @@
 		</div>
 		<div class="form-group">
 			<label>작성자</label>
-			<input type="text" class="form-control" name="bo_me_id" value="${user.me_id}" readonly>
+			<input type="text" class="form-control" name="bo_me_id" value="${board.me_nickname}" readonly>
 		</div>
 		<div class="input-group mb-3">
 		    <div class="input-group">
@@ -122,7 +122,7 @@
 						<div class="comment-1">
 							<span class="comment-nickname">${comment.me_nickname}</span>
 							<span class="comment-contents">${comment.co_comments}</span>
-<%-- 							<span class="comment-writer">${comment.co_me_num}</span> --%>
+<%-- 						<span class="comment-writer">${comment.co_me_num}</span> --%>
 							<span class="comment-date">${comment.co_date}</span>	
 						</div>
 						<div class="comment-item">
@@ -165,41 +165,10 @@
 			</div>
 		</div>
 		<hr>
-		<!-- 되돌아가기 버튼  -->
-		<c:if test="${board.bo_bt_num == 1}">
-			<button type="button"
-					class="btn btn-outline-info col-12 btn-return" 
-					onclick="history.back()">돌아가기
-			</button>
-		</c:if>	
-		<c:if test="${board.bo_bt_num == 2}">
-			<button type="button"
-					class="btn btn-outline-info col-12 btn-return" 
-					onclick="location.href='<c:url value='/board/freel?bo_num=${board.bo_num}'/>'">돌아가기
-			</button>
-		</c:if>	
-		<c:if test="${board.bo_bt_num == 3}">
-			<button type="button"
-					class="btn btn-outline-info col-12 btn-return" 
-					onclick="location.href='<c:url value='/board/individual?bo_num=${board.bo_num}'/>'">돌아가기
-			</button>
-		</c:if>	
-		<c:if test="${board.bo_bt_num == 4}">
-			<button type="button"
-					class="btn btn-outline-info col-12 btn-return" 
-					onclick="location.href='<c:url value='/board/club?bo_num=${board.bo_num}'/>'">돌아가기
-			</button>
-		</c:if>	
-		<c:if test="${board.bo_bt_num == 5}">
-			<button type="button"
-					class="btn btn-outline-info col-12 btn-return" 
-					onclick="location.href='<c:url value='/board/inquiry?bo_num=${board.bo_num}'/>'">돌아가기
-			</button>
-		</c:if>	
 		<!-- 자신이 쓴 게시글만 수정,삭제 버튼 나오게 -->
 		<c:if test="${user != null && user.me_num == board.bo_me_num}">
 			<button type="button"
-					class="btn btn-outline-warning col-12 btn-update"
+					class="btn btn-outline-warning col-12 btn-board-update"
 					onclick="location.href='<c:url value='/board/update?bo_num=${board.bo_num}'/>'">수정하기
 			</button><br>
 		</c:if>

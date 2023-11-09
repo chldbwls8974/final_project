@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.dao.BoardDAO;
+import kr.kh.final_project.dao.CommentDAO;
 import kr.kh.final_project.dao.MemberDAO;
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.util.UploadFileUtils;
 import kr.kh.final_project.vo.BoardVO;
+import kr.kh.final_project.vo.CommentVO;
 import kr.kh.final_project.vo.FileVO;
 import kr.kh.final_project.vo.MemberVO;
 
@@ -24,6 +26,9 @@ public class BoardServiceImp implements BoardService{
 	
 	@Autowired
 	MemberDAO memberDao;
+	
+	@Autowired
+	CommentDAO commentDao;
 	
 	
 	String uploadPath = "D:\\uploadfiles";
@@ -176,6 +181,7 @@ public class BoardServiceImp implements BoardService{
 		if(bo_num == null) {
 			return false;
 		}
+		// 게시글 번호를 부면서 삭제할 게시글 가져와서 board에다 저장
 		BoardVO board = boardDao.selectBoard(bo_num);
 		if(board == null || !(board.getBo_me_num() == user.getMe_num())) {
 			return false;
@@ -183,9 +189,13 @@ public class BoardServiceImp implements BoardService{
 		// 첨부파일 삭제하기
 		// 게시글의 모든 첨부파일들을 가져온다.
 		List<FileVO> fileList = boardDao.selectFileList(bo_num);
-		// 첨부파일 정보를 주면서 삭제하라고 요청한다.
+		
+		// 게시물 & 게시물에 달린 댓글들을 삭제한다.
+		//List<CommentVO> commentsDelete = commentDao.deleteCommentsByBoard(bo_num);
+		
+		// 파일 지우기
 		deleteFiles(fileList);
-		// 다오한테 삭제하라고 시킴
+		
 		return boardDao.deleteBoard(bo_num);
 	}
 		

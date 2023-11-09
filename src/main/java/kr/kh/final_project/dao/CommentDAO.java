@@ -28,4 +28,8 @@ public interface CommentDAO {
 	// 답글 리스트 가져오기
 	List<CommentVO> selectCommentList2(@Param("bo_num")int bo_num, @Param("cri")Criteria cri);
 	
+	// 게시글 삭제할 때 해당 게시글에 관련된 댓글 삭제
+	//List<CommentVO> deleteCommentsByBoard(@Param("bo_num")Integer bo_num);
+	
+	
 }
