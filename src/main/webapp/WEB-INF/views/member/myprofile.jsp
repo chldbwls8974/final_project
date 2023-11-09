@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +20,7 @@
 	width: 110px; height: 110px; border-radius: 50%; margin: 0 auto;
 }
 .profile-body{ 
-	background-color: #f0f0f0; border-radius: 40px; margin: 0 auto 30px;
+	background-color: #f2f2f2; border-radius: 40px; margin: 0 auto 30px;
 	height: auto; width: 600px; text-align: center; padding: 20px;
 }
 
@@ -59,7 +61,18 @@
 		</div>
 		<div class="form-group">
 			<label>거주 지역</label>
-			<p>${userRegion}</p>
+			<p>${userRegion.rg_main}  ${userRegion.rg_sub}</p>
+		</div>
+		<div class="form-group">
+			<label>선호 지역</label>
+			<p>${userPRegion.rg_main} ${userPRegion.rg_sub}</p>
+		</div>
+		<div class="form-group">
+			<label>선호 시간대</label>
+			<div style="display: flex; justify-content: center;">
+				<p>${userPTime.ti_day}요일 </p>
+				<p id="timeParagraph">${userPTime.ti_time}시</p>
+			</div>
 		</div>
 	</div>
 	<div class="profile-footer">
@@ -68,5 +81,23 @@
 	</div>
 	<hr>
 </div>	   
+<script type="text/javascript">
+
+	//ready 함수를 사용하여 문서가 준비되면 실행
+	$(document).ready(function() {
+    // jQuery를 사용하여 시간 형식 변경
+    var timeString = "${userPTime.ti_time}";
+    
+    // Date 객체를 사용하여 문자열을 파싱
+    var time = new Date("1970-01-01 " + timeString);
+    
+    // 시간 부분만 추출하여 p 태그에 추가
+    var hours = time.getHours();
+    
+    // jQuery를 사용하여 p 태그에 시간 추가
+    $("#timeParagraph").text(hours + "시");
+});
+
+</script>
 </body>
 </html>

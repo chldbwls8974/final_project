@@ -1,8 +1,11 @@
 package kr.kh.final_project.vo;
 
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
@@ -12,31 +15,42 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MemberVO {
-	Integer me_num;
-	String me_id; 
-	String me_pw;
-	String me_name;
-	String me_nickname;
-	int me_rg_num;
-	String me_phone; 
-	String me_email;
-	String me_gender;
-	String me_birthday;
-	String me_authority;
-	int me_rating; 
-	String me_profile; 
-	String me_tr_name;
-	Integer me_point;
-	int me_state1; 
-	int me_state2;
+	private Integer me_num;
+	private String me_id; 
+	private String me_pw;
+	private String me_name;
+	private String me_nickname;
+	private int me_rg_num;
+	private String me_phone; 
+	private String me_email;
+	private String me_gender;
+	private String me_birthday;
+	private String me_authority;
+	private int me_rating; 
+	private String me_profile; 
+	private String me_tr_name;
+	private Integer me_point;
+	private int me_state1; 
+	private int me_state2;
 	
 	//회원조회 검색필터
-	String membertable; //검색타입
-	String keyword;		//검색내용
+	private String membertable; //검색타입
+	private String keyword;		//검색내용
 	
-	int rg_num;
-	String rg_main;
-	String rg_sub;
+	private int rg_num;
+	private String rg_main;
+	private String rg_sub;
+	private int pr_num;
+	private String pr_me_num;
+	private String pr_rg_num;
+	private int ti_num;
+	private String ti_day;
+	
+	private Time ti_time;
+	
+	private int pt_num;
+	private int pt_ti_num;
+	private int pt_me_num;
 	
 	
 	private boolean autoLogin;

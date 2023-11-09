@@ -30,7 +30,7 @@
 		width: 100%;
 	}
 	.body-double{ }
-	.body-right{ background-color: #f0f0f0; border-radius: 20px; 
+	.body-right{ background-color: #f2f2f2; border-radius: 20px; 
 		width: 100%; height: auto; padding: 20px;
 	}
 	.myprofile-image-thumb{ width: 70px; height: 70px; border-radius: 50%;
@@ -42,9 +42,9 @@
 	
 	.mypoint-thumb{
 		width: 50%; height: 150px; border-radius: 20px; margin: 20px 20px 20px 0;
-		padding: 20px; background-color: #f0f0f0; position: relative;
+		padding: 20px; background-color: #f2f2f2; position: relative;
 	}	
-	.mytier-thumb{ background-color: #f0f0f0; border-radius:20px; padding:20px;
+	.mytier-thumb{ background-color: #f2f2f2; border-radius:20px; padding:20px;
 		position: relative; margin: 20px 0 20px 0; width: 50%; height: 150px;
 	}
 	.mytier-title{ display: flex; align-items: center; justify-content: flex-start;
@@ -54,7 +54,7 @@
 		display: flex; justify-content: flex-start; margin-top: 20px;
 	}
 	.myclub-thumb{ width: 100%; height: auto; border-radius:20px;
-		background-color: #f0f0f0; padding: 20px; margin: 0 20px 20px 0; 
+		background-color: #f2f2f2; padding: 20px; margin: 0 20px 20px 0; 
 	}
 	.mymenu-list li{ text-align: left;}
 	

@@ -343,16 +343,19 @@ public class MemberController {
 	public String myprofile(Model model, HttpSession session) {
 		//로그인한 회원 가져오기
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		System.out.println(user);
 		
-//		List<RegionVO> list = regionService.getUserRegionList(user);
 		//회원의 거주지역 가져오기
-		List<MemberVO> userRegion = memberService.getMemberRegion(user);
-		System.out.println(userRegion);
+		MemberVO userRegion = memberService.getMemberRegion(user);
+		
+		//회원의 선호지역, 선호시간대 가져오기
+		MemberVO userPRegion = memberService.getMemberPRegion(user);
+		MemberVO userPTime = memberService.getMemberPTime(user);
 		
 		model.addAttribute("user",user );
-//		model.addAttribute("list",list );
 		model.addAttribute("userRegion", userRegion );
+		model.addAttribute("userPRegion", userPRegion );
+		model.addAttribute("userPTime", userPTime );
+		System.out.println(userPTime);
 		return "/member/myprofile";
 	}
 	

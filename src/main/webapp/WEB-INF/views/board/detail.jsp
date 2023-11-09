@@ -9,8 +9,8 @@
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 <style>
-	h1{
-		text-align : center;
+	form{
+		margin-top: 50px;
 	}
 	.form-control{
 		margin-bottom : 10px;
@@ -19,6 +19,8 @@
 		margin-bottom : 10px;
 	}
 	.comment-box{
+		background-color: #f2f2f2;
+		border-radius: 20px; padding: 10px; margin-bottom: 20px;
 		display : flex;
 	}
 	.comment-box1{
@@ -28,7 +30,7 @@
 	.profile-image {
 	    width: 60px; 
 	    height: 60px; 
-	    border-radius: 50%; /* 둥글두그륵 만들기 */
+	    border-radius: 50%; /* 둥글게 만들기 */
 	    object-fit: cover; /* 이미지가 찌그러지지 않도록 설정하는 것 */
 	    float:left;
 	}
@@ -63,7 +65,6 @@
 </head>
 <body>
 	<br>
-	<h1>&#x2709 공지글 보는 곳 &#x2709</h1>
 	<form action="<c:url value='/board/detail'/>" method="post">
 		<div class="form-group">
 			<label>제목</label>
@@ -107,10 +108,11 @@
 				</c:choose>
 			</c:forEach> --%>
 		<!-- 댓글 입력창  -->
-		<label>댓글</label><br>
+		<br>
 		<div class="input-group-append mb-3">
 			<textarea class="form-control" placeholder="댓글을 입력해주세요." id="inputComment"></textarea>
-		    <button type="button"  class="btn btn-outline-success" id="btnCommentInsert">등록</button>
+		    <button type="button"  class="btn" id="btnCommentInsert"
+		    	style="background-color: #c2f296; border-radius: 5px; width: 70px;">등록</button>
 		 </div>
 		<!-- 댓글 목록창 -->
 		<div class="box-comment">
@@ -122,9 +124,10 @@
 						<span class="comment-date">${comment.co_date}</span>	
 					</div>
 					<div class="comment-item">
-						<button type="button" class="btn btn-outline-info btn-sm btn-update" data-num="${comment.co_num}">수정</button>
-						<button type="button" class="btn btn-outline-info btn-sm btn-del" data-num="${comment.co_num}">삭제</button>
-						<button type="button" class="btn btn-outline-primary btn-sm btn-reply" value="${comment.co_num}">답글</button>						
+						<button type="button" class="btn btn-update" data-num="${comment.co_num}"
+							style="background-color: #c2f296; border-radius: 5px;">수정</button>
+						<button type="button" class="btn btn-del" data-num="${comment.co_num}">삭제</button>
+						<button type="button" class="btn btn-reply" value="${comment.co_num}">답글</button>						
 					</div>
 				</div>
 			</div>
@@ -133,15 +136,15 @@
 					 <div class="box-comment" style="margin-left:100px;">
 						<div class="comment-box">
 							<div class="comment-list">	
-								<img src="<c:url value='/resources/images/sample.jpg'/>" class="rounded-circle profile-image" alt="기본프로필 사진">
+								<img src="/final_project${user.me_profile}" class="rounded-circle profile-image" alt="기본프로필 사진">
 								<div class="comment-1">
 									<span class="comment-contents">${replyComment.co_comments}</span>
 									<span class="comment-writer">[${replyComment.co_me_num}]</span>
 									<span class="comment-date">${replyComment.co_date}</span>
 								</div>	
 								<div class="comment-item">
-									<button type="button" class="btn btn-outline-info btn-sm btn-update" data-num="${replyComment.co_num}">수정</button>
-									<button type="button" class="btn btn-outline-info btn-sm btn-del" data-num="${replyComment.co_num}">삭제</button>
+									<button type="button" class="btn btn-sm btn-update" data-num="${replyComment.co_num}">수정</button>
+									<button type="button" class="btn btn-sm btn-del" data-num="${replyComment.co_num}">삭제</button>
 								</div>
 							</div>
 						</div>
@@ -155,23 +158,24 @@
 				<a class="page-link" href="#"> 다음</a>
 			</div>
 		</div>
-		<hr>
-		<button type="button"
-				class="btn btn-outline-info col-12 btn-return" 
-				onclick="location.href='<c:url value='/board/notice'/>'">돌아가기
-		</button>
-		<c:if test="${user != null && user.me_authority == 'ADMIN'}">
-			<button type="button"
-					class="btn btn-outline-warning col-12 btn-update"
-					onclick="location.href='<c:url value='/board/update?bo_num=${board.bo_num}'/>'">수정하기
-			</button><br>
-		</c:if>
-		<c:if test="${user != null && user.me_authority == 'ADMIN'}">
-			<button type="button"
-					class="btn btn-outline-danger col-12 btn-delete"
-					onclick="location.href='<c:url value='/board/delete?bo_num=${board.bo_num}'/>'">삭제하기
-			</button><br>
-		</c:if>
+		<div style="text-align: center; margin-top: 30px;">
+			<c:if test="${user != null && user.me_authority == 'ADMIN'}">
+				<button type="button"
+						class="btn btn-update"
+						onclick="location.href='<c:url value='/board/update?bo_num=${board.bo_num}'/>'"
+						style="background-color: #c2f296; border-radius: 20px; border: none; color: black; width: 500px; height: 50px;">
+						수정하기
+				</button><br>
+			</c:if>
+			<c:if test="${user != null && user.me_authority == 'ADMIN'}">
+				<button type="button"
+						class="btn btn-delete"
+						onclick="location.href='<c:url value='/board/delete?bo_num=${board.bo_num}'/>'"
+						style="background-color: #f2f2f2; border-radius: 20px; border: none; color: black; width: 500px; height: 50px;">
+						삭제하기
+				</button><br>
+			</c:if>
+		</div>
 	</form>
 
 <script type="text/javascript">
@@ -239,7 +243,6 @@
 			// 원래 댓글 번호를 저장
 			let str = '';
 			str += `
-				<hr>
 					<div class="input-group-append mb-3 reply-box" >
 						 <textarea class="form-control" placeholder="답글을 입력해주세요." name="co_content_reply" id="inputComment2"></textarea>
 						 <button type="button" 
@@ -433,7 +436,7 @@
 							<div class="box-comment">
 								<div class="comment-box">
 										<div class="comment-list">	
-											<img src="<c:url value='/resources/images/sample.jpg'/>" class="rounded-circle profile-image" alt="기본프로필 사진">
+											<img src="/final_project${user.me_profile}" class="rounded-circle profile-image" alt="기본프로필 사진">
 											<div class="comment-1">
 												<span class="comment-contents">\${comment.co_comments}</span>
 												<span class="comment-writer">[\${comment.co_me_num}]</span>
@@ -467,7 +470,6 @@
 									</div>
 								</c:if>
 							</c:forEach>
-							<hr>
 							`
 					}
 					$('.comment-list').html(str);

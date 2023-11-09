@@ -85,7 +85,10 @@ input[type='checkbox']:checked+label{
 }
 
 
-.container{ background-color: #f0f0f0; padding: 10px; z-index: 1;}
+.container{ 
+	background-color: #f2f2f2; padding: 30px; z-index: 1;
+	margin-top: 20px; border-radius: 20px;
+}
 .form-control{border-radius: 30px; width: 500px;}
 .form-group{text-align: center;}
 .form-group label{display: inline-block; text-align: center;}
@@ -107,7 +110,7 @@ input, progress {
 </head>
 <body>
 <div class="container">
-	<p class="title" style="font-size: 45px; font-weight: bolder;
+	<p class="title" style="font-size: 45px; font-weight: bolder; padding-bottom: 30px;
 		text-align: center; letter-spacing: -3px;">회원가입</p>
 	<form action="<c:url value='/member/signup'/>" method="post" id="myForm" style="text-align: center;">
 		

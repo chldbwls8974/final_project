@@ -162,4 +162,26 @@
        where
            me_num = #{user.me_num}
 	</select>
+	<select id="selectMemberPRegion" resultType="kr.kh.final_project.vo.MemberVO">
+		select 
+           *
+       from 
+           member 
+          left join
+           preferred_region on pr_me_num = me_num
+		  left join region on pr_rg_num = rg_num
+       where
+           me_num = #{user.me_num}
+	</select>
+	<select id="selectMemberPTime" resultType="kr.kh.final_project.vo.MemberVO">
+		select 
+           *
+       from 
+           member 
+          left join
+           preferred_time on pt_me_num = me_num
+		  left join time on pt_ti_num = ti_num
+       where
+           me_num = #{user.me_num}
+	</select>
 </mapper>

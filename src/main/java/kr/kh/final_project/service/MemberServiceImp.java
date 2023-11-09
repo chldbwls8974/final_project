@@ -464,10 +464,21 @@ public class MemberServiceImp implements MemberService{
 		return true;
 	}
 
+	
+	//회원 거주지역,선호지역,선호시간 조회
 	@Override
-	public List<MemberVO> getMemberRegion(MemberVO user) {
-		// TODO Auto-generated method stub
+	public MemberVO getMemberRegion(MemberVO user) {
 		return memberDao.selectMemberRegion(user);
+	}
+
+	@Override
+	public MemberVO getMemberPRegion(MemberVO user) {
+		return memberDao.selectMemberPRegion(user);
+	}
+
+	@Override
+	public MemberVO getMemberPTime(MemberVO user) {
+		return memberDao.selectMemberPTime(user);
 	}
 
 
