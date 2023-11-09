@@ -77,7 +77,6 @@ public interface MemberService {
 	
 	MemberVO getMemberPTime(MemberVO user);
 	
-
-
+	boolean emailMemberSignout(MemberVO member);
 
 }

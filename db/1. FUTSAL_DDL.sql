@@ -396,6 +396,11 @@ CREATE TABLE `holding coupon` (
 	`hp_invited_num`	int	NULL,
 	`hp_state`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 활성, 1 : 비활성'
 );
+CREATE TABLE `payment` (
+   `pm_imp_uid`   varchar(20) PRIMARY KEY   NOT NULL,
+   `pm_amount`   int   NOT NULL,
+   `pm_ph_num`   int   NOT NULL
+);
 
 ALTER TABLE `member` ADD CONSTRAINT `FK_region_TO_member_1` FOREIGN KEY (
 	`me_rg_num`
@@ -774,5 +779,10 @@ ALTER TABLE `holding coupon` ADD CONSTRAINT `FK_coupon_TO_holding coupon_1` FORE
 REFERENCES `coupon` (
 	`cp_num`
 );
-
+ALTER TABLE `payment` ADD CONSTRAINT `FK_point_history_TO_payment_1` FOREIGN KEY (
+   `pm_ph_num`
+)
+REFERENCES `point_history` (
+   `ph_num`
+);
 

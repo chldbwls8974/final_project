@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.final_project.dao.ReportDAO">
+	<select id="selectReportBynum" resultType="kr.kh.final_project.vo.ReportVO">
+		select 
+		    *
+		from 
+		    report
+		where
+			rp_num = #{report.rp_num}
+	</select>
+	
+	<update id="updateReportState">
+		update
+			report
+		set
+			rp_state = #{report.rp_state}
+		where
+			rp_num = #{report.rp_num}
+	</update>
+
+	<select id="selectReportListBySearch" resultType="kr.kh.final_project.vo.ReportVO">
+		select 
+		    report.*,
+		    member1.me_id AS me_id,
+		    member2.me_id AS me_id2,
+		    report_category.*
+		from 
+		    report
+		left join
+		    member AS member1 on report.rp_me_num = member1.me_num
+		left join
+		    member AS member2 on report.rp_me_num2 = member2.me_num
+		left join
+		    report_category on rc_num = rp_rc_num
+		<if test='reportType == "커뮤니티"'>
+		where
+			rc_name in('커뮤니티')
+		</if>
+		<if test='reportType == "경기"'>
+		where
+			rc_name in('경기')
+		</if>
+		<if test='searchType1 == "all"'>
+		and
+			rp_state in('제재', '확인', '미확인')
+		</if>
+		<if test='searchType1 == "second"'>
+		and
+			rp_state in('제재')
+		</if>
+		<if test='searchType1 == "third"'>
+		and
+			rp_state in('확인')
+		</if>
+		<if test='searchType1 == "fourth"'>
+		and
+			rp_state in('미확인')
+		</if>
+		<if test='searchType2 == "all"'>
+		and
+			(
+			member1.me_id like concat('%', #{cri.s}, '%')
+				or
+			member2.me_id like concat('%', #{cri.s}, '%')
+				or
+			rc_detail like concat('%', #{cri.s}, '%')
+				or
+			rp_date like concat('%', #{cri.s}, '%')
+			)
+		</if>
+		<if test='searchType2 == "second"'>
+		and
+			member1.me_id like concat('%', #{cri.s}, '%')
+		</if>
+		<if test='searchType2 == "third"'>
+		and
+			member2.me_id like concat('%', #{cri.s}, '%')
+		</if>
+		<if test='searchType2 == "fourth"'>
+		and
+			rc_detail like concat('%', #{cri.s}, '%')
+		</if>
+		<if test='searchType2 == "fifth"'>
+		and
+			rp_date like concat('%', #{cri.s}, '%')
+		</if>
+		order by
+        	rp_date desc, rp_num desc
+		limit
+			#{cri.pageStart}, #{cri.perPageNum}
+			;
+	</select>
+	
+	<select id="selectReportListCountBySearch" resultType="int">
+		select 
+		    count(*)
+		from 
+		    report
+		left join
+		    member AS member1 on report.rp_me_num = member1.me_num
+		left join
+		    member AS member2 on report.rp_me_num2 = member2.me_num
+		left join
+		    report_category on rc_num = rp_rc_num
+		<if test='reportType == "커뮤니티"'>
+		where
+			rc_name in('커뮤니티')
+		</if>
+		<if test='reportType == "경기"'>
+		where
+			rc_name in('경기')
+		</if>
+		<if test='searchType1 == "all"'>
+		and
+			rp_state in('제재', '확인', '미확인')
+		</if>
+		<if test='searchType1 == "second"'>
+		and
+			rp_state in('제재')
+		</if>
+		<if test='searchType1 == "third"'>
+		and
+			rp_state in('확인')
+		</if>
+		<if test='searchType1 == "fourth"'>
+		and
+			rp_state in('미확인')
+		</if>
+		<if test='searchType2 == "all"'>
+		and
+			(
+			member1.me_id like concat('%', #{cri.s}, '%')
+				or
+			member2.me_id like concat('%', #{cri.s}, '%')
+				or
+			rc_detail like concat('%', #{cri.s}, '%')
+				or
+			rp_date like concat('%', #{cri.s}, '%')
+			)
+		</if>
+		<if test='searchType2 == "second"'>
+		and
+			member1.me_id like concat('%', #{cri.s}, '%')
+		</if>
+		<if test='searchType2 == "third"'>
+		and
+			member2.me_id like concat('%', #{cri.s}, '%')
+		</if>
+		<if test='searchType2 == "fourth"'>
+		and
+			rc_detail like concat('%', #{cri.s}, '%')
+		</if>
+		<if test='searchType2 == "fifth"'>
+		and
+			rp_date like concat('%', #{cri.s}, '%')
+		</if>
+	</select>
+	
+	
+</mapper>

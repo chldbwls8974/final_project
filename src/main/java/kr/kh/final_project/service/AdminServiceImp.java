@@ -10,12 +10,17 @@ import kr.kh.final_project.dao.BusinessDAO;
 import kr.kh.final_project.dao.ExpenseDAO;
 import kr.kh.final_project.dao.ManagerDAO;
 import kr.kh.final_project.dao.MemberDAO;
+import kr.kh.final_project.dao.PenaltyDAO;
 import kr.kh.final_project.dao.PointHistoryDAO;
+import kr.kh.final_project.dao.ReportDAO;
 import kr.kh.final_project.pagination.Criteria;
+import kr.kh.final_project.vo.BoardVO;
 import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ManagerVO;
 import kr.kh.final_project.vo.MemberVO;
+import kr.kh.final_project.vo.PenaltyVO;
 import kr.kh.final_project.vo.PointHistoryVO;
+import kr.kh.final_project.vo.ReportVO;
 
 @Service
 public class AdminServiceImp implements AdminService{
@@ -37,6 +42,12 @@ public class AdminServiceImp implements AdminService{
 
 	@Autowired
 	ExpenseDAO expenseDao;
+	
+	@Autowired
+	ReportDAO reportDao;
+	
+	@Autowired
+	PenaltyDAO penaltyDao;
 	
 	// 회원정보 조회
 	//@Override
@@ -94,8 +105,14 @@ public class AdminServiceImp implements AdminService{
 		if(manager == null || manager.getMe_nickname() == null || manager.getMe_authority() == null) {
 			return false;
 		}
-		return managerDao.updateManagerByAuthority2(manager);
+		// managerDao한테 매니저신청한 게시글을 지우라고 시킨다.
+		boolean boardListDeleted = managerDao.deleteBoardManagerList(manager);
+		// managerDao한테 매니저 권한을 User로 바꾸라고 시킨다.
+		boolean authorityUpdated =  managerDao.updateManagerByAuthority2(manager);
+		
+		return boardListDeleted && authorityUpdated;
 	}
+	
 	// 매니저 페이지네이션
 	@Override
 	public int getTotalCount3(Criteria cri) {
@@ -178,7 +195,13 @@ public class AdminServiceImp implements AdminService{
 		if(manager == null || manager.getMe_nickname() == null || manager.getMe_authority() == null) {
 			return false;
 		}
-		return businessDao.updateBusinessByAuthority2(manager);
+		
+		// managerDao한테 사업자신청한 게시글을 지우라고 시킨다.
+		boolean boardListDeletedByBusiness = businessDao.deleteBoardBusinessList(manager);
+		// managerDao한테 사업자 권한을 User로 바꾸라고 시킨다.
+		boolean authorityUpdatedByBusiness =  businessDao.updateBusinessByAuthority2(manager);
+		
+		return boardListDeletedByBusiness && authorityUpdatedByBusiness;
 	}
 	// 사업자 페이지네이션
 	@Override
@@ -188,7 +211,55 @@ public class AdminServiceImp implements AdminService{
 		}
 		return businessDao.selectTotalCount2(cri);
 	}
-	
+	@Override
+	public List<ReportVO> getReportListBySearch(Criteria cri, String reportType, String searchType1,
+			String searchType2) {
+		if(cri == null) {
+			cri = new Criteria();
+		}
+		return reportDao.selectReportListBySearch(cri, reportType, searchType1, searchType2);
+	}
+	@Override
+	public int getReportListBySearchCount(Criteria cri, String reportType, String searchType1, String searchType2) {
+		if(cri == null) {
+			cri = new Criteria();
+		}
+		return reportDao.selectReportListCountBySearch(cri, reportType, searchType1, searchType2);
+	}
+	@Override
+	public boolean reportHandle(ReportVO report) {
+		if(report == null) {
+			return false;
+		}
+		if(report.getRp_state().equals("0")) {
+			if(penaltyToMember(report)) {
 
+				//제재처리 메소드
+				
+				report.setRp_state("제재");
+			}
+		}else if(report.getRp_state().equals("1")) {
+			report.setRp_state("확인");
+		}else {
+			report.setRp_state("미확인");
+		}
+		
+		return reportDao.updateReportState(report);
+	}
+	
+	public boolean penaltyToMember(ReportVO report) {
+		//rp_num으로 report객체를 가져오는 메서드
+		ReportVO dbReport = reportDao.selectReportBynum(report);
+		int me_num = dbReport.getRp_me_num2();
+		//패널티 테이블에 있는지 확인
+		List<PenaltyVO> pnList = penaltyDao.selectPenaltyByMemberNum(me_num);
+		// 패널티 테이블에 없으면
+		if(pnList.size() == 0) {
+			//penaltyDao.insertBoardPenalty(me_num);
+			System.out.println("asd");
+		}
+		
+		return true;
+	}
 	
 }

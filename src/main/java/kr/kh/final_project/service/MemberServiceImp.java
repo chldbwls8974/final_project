@@ -482,6 +482,26 @@ public class MemberServiceImp implements MemberService{
 	}
 
 
+	//이메일인증 회원탈퇴
+	@Override
+	public boolean emailMemberSignout(MemberVO member) {
+		if(member == null || member.getMe_id() == null || member.getMe_pw() == null) {
+				return false;
+			}
+			//아이디가 일치하는 회원 정보를 가져옴
+			MemberVO dbMember = memberDao.selectMember(member.getMe_id());
+			//회원정보가 없으면 탈퇴 불가
+			if(dbMember == null) {
+				return false;
+			}
+			//비번이 일치하지 않으면 탈퇴 불가
+			if(!dbMember.getMe_pw().equals(member.getMe_pw())) {
+				return false;
+			}
+			//primary key는 남겨두고, 모든 고객 정보를 null처리 하기 위해 delete가 아닌 update문 사용
+			memberDao.updateEmailMember(member.getMe_id());
+			return true;
+		}
 
 	
 }

@@ -79,7 +79,7 @@
 	        				<c:when test="${ma.bo_bt_num == 6}">매니저신청</c:when>
 						</c:choose>
 					</td>
-					<td><a href="<c:url value='/admin/contents'/>">${ma.bo_title}</a></td>
+					<td><a href="<c:url value='/board/detail?bo_num=${ma.bo_num}'/>">${ma.bo_title}</a></td>
 					<td class="update">${ma.me_authority}</td>
 					<td>${ma.bo_reg_date_str}</td>
 					<td>

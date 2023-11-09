@@ -26,6 +26,8 @@ public interface ManagerDAO {
 	boolean updateManagerByAuthority2(@Param("manager")ManagerVO manager);
 	// 매니저 totalCount 가져오라고 하기
 	int selectTotalCount2(@Param("cri")Criteria cri);
+	// 매니저신청 게시글을 삭제하기
+	boolean deleteBoardManagerList(@Param("manager")ManagerVO manager);
 	
 	
 }

@@ -10,12 +10,12 @@
 <body>
 	<h1 class="display-3"><span style="color: black; font-weight: bold;">시설 등록</span></h1> <br>
 	<form action="<c:url value='/businessman/facilityInsert'/>" method="post">
-	  <div class="form-group" hidden="hidden">
+	  <div class="form-group">
 	    <label for="fa_bu_num">사업자 번호</label>
 	    <input type="text" class="form-control" id="fa_bu_num" name="fa_bu_num" value="${business.bu_num}" readonly>
 	  </div>
 	  
-	   <div class="form-group">
+	  <div class="form-group">
 		<label>지역</label> 
 		<select class="form-control rg_main" required>
 			<option value="0">지역을 선택하세요</option>
@@ -155,7 +155,6 @@
         		//숫자만 남은 문자열을 전화번호 형식으로 변환
         		.replace(/(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g, "$1-$2-$3");
 		}
-	
 		//지역 선택
 		 $(document).on('change','.rg_main',function(){
 			 let th = $(this);

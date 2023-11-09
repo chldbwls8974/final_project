@@ -47,19 +47,23 @@
 	}
 	/* 날짜 */
 	.comment-date{
-		position : absolute;
-		transform: translateX(580px);
-		transform: translateY(25px);
+		
 		display : block;
 		margin-left : 80px;
-	}
-	.comment-1{
-		position : relative;
-	}
-	.comment-contents{
-		margin-left : 20px;
+		padding-top : 50px;
 	}
 	
+	/* 댓글, 답글 내용만 */
+	.comment-contents{
+		margin-left : 80px;
+		margin-top : 20px;
+		display : flex;
+	}
+	.comment-nickname{
+		margin-left : 20px;
+		font-weight : bold;
+	}
+
 </style>    
 </head>
 </head>
@@ -72,7 +76,7 @@
 		</div>
 		<div class="form-group">
 			<label>작성자</label>
-			<input type="text" class="form-control" name="bo_me_id" value="${user.me_id}" readonly>
+			<input type="text" class="form-control" name="bo_me_id" value="${board.me_nickname}" readonly>
 		</div>
 		<div class="input-group mb-3">
 		    <div class="input-group">
@@ -95,7 +99,6 @@
 				</c:otherwise>
 			</c:choose>
 		</div>
-		<div class="comment-contaier mt-5">
 		<!-- 프로필사진 -->
 			<%-- <c:forEach items="${list}" var="ma">
 				<c:choose>
@@ -116,41 +119,46 @@
 		 </div>
 		<!-- 댓글 목록창 -->
 		<div class="box-comment">
-			<div class="comment-box1">
-				<div class="comment-list">
-					<div class="comment-1">
-						<span class="comment-contents">${comment.co_comments}</span>
-						<span class="comment-writer">${comment.co_me_num}</span>
-						<span class="comment-date">${comment.co_date}</span>	
+			<div class="comment-box1" >
+					<div class="comment-list">
+						<div class="comment-1">
+							<span class="comment-nickname">${comment.me_nickname}</span>
+							<span class="comment-contents">${comment.co_comments}</span>
+<%-- 						<span class="comment-writer">${comment.co_me_num}</span> --%>
+							<span class="comment-date">${comment.co_date}</span>	
+						</div>
+						<div class="comment-item">
+							<c:if test="${comment.co_me_num == user.me_num}">
+								<button type="button" class="btn btn-outline-info btn-sm btn-update" data-num="${comment.co_num}">수정</button>
+								<button type="button" class="btn btn-outline-info btn-sm btn-del" data-num="${comment.co_num}">삭제</button>
+							</c:if>
+							<c:if test="${comment.co_num == comment.co_ori_num}">						
+								<button type="button" class="btn btn-outline-primary btn-sm btn-reply" value="${comment.co_num}">답글</button>						
+							</c:if>	
+							
+						</div>
 					</div>
-					<div class="comment-item">
-						<button type="button" class="btn btn-update" data-num="${comment.co_num}"
-							style="background-color: #c2f296; border-radius: 5px;">수정</button>
-						<button type="button" class="btn btn-del" data-num="${comment.co_num}">삭제</button>
-						<button type="button" class="btn btn-reply" value="${comment.co_num}">답글</button>						
-					</div>
-				</div>
 			</div>
-			<c:forEach items="${list}" var="replyComment">	
-				<c:if test="${replyComment.co_ori_num eq comment.co_num}">		
-					 <div class="box-comment" style="margin-left:100px;">
-						<div class="comment-box">
-							<div class="comment-list">	
+			<%-- <c:forEach items="${list}" var="replyComment">	
+				<c:if test="${replyComment.co_ori_num != replyComment.co_num}">		
+					 <div class="box-comment-reply" >
+						<div class="comment-box-reply">
+							<div class="comment-list2" style="margin-left:100px">	
 								<img src="/final_project${user.me_profile}" class="rounded-circle profile-image" alt="기본프로필 사진">
-								<div class="comment-1">
-									<span class="comment-contents">${replyComment.co_comments}</span>
-									<span class="comment-writer">[${replyComment.co_me_num}]</span>
-									<span class="comment-date">${replyComment.co_date}</span>
+								<div class="comment-1-reply">
+									<span class="comment-contents-reply">${replyComment.co_comments}</span>
+									<span class="comment-writer-reply">[${replyComment.co_me_num}]</span>
+									<span class="comment-date-reply">${replyComment.co_date}</span>
 								</div>	
 								<div class="comment-item">
-									<button type="button" class="btn btn-sm btn-update" data-num="${replyComment.co_num}">수정</button>
-									<button type="button" class="btn btn-sm btn-del" data-num="${replyComment.co_num}">삭제</button>
+									<button type="button" class="btn btn-outline-info btn-sm btn-update-reply" data-num="${replyComment.co_num}">수정</button>
+									<button type="button" class="btn btn-outline-info btn-sm btn-del-reply" data-num="${replyComment.co_num}">삭제</button>
 								</div>
 							</div>
 						</div>
 					</div> 
 				</c:if>
-			</c:forEach>
+			</c:forEach> --%>
 		<!-- 댓글 페이지네이션 -->
 			<div class="pagination justify-content-center">
 				<a class="page-link" href="#"> 이전</a>
@@ -158,26 +166,21 @@
 				<a class="page-link" href="#"> 다음</a>
 			</div>
 		</div>
-		<div style="text-align: center; margin-top: 30px;">
-			<c:if test="${user != null && user.me_authority == 'ADMIN'}">
-				<button type="button"
-						class="btn btn-update"
-						onclick="location.href='<c:url value='/board/update?bo_num=${board.bo_num}'/>'"
-						style="background-color: #c2f296; border-radius: 20px; border: none; color: black; width: 500px; height: 50px;">
-						수정하기
-				</button><br>
-			</c:if>
-			<c:if test="${user != null && user.me_authority == 'ADMIN'}">
-				<button type="button"
-						class="btn btn-delete"
-						onclick="location.href='<c:url value='/board/delete?bo_num=${board.bo_num}'/>'"
-						style="background-color: #f2f2f2; border-radius: 20px; border: none; color: black; width: 500px; height: 50px;">
-						삭제하기
-				</button><br>
-			</c:if>
-		</div>
+		<hr>
+		<!-- 자신이 쓴 게시글만 수정,삭제 버튼 나오게 -->
+		<c:if test="${user != null && user.me_num == board.bo_me_num}">
+			<button type="button"
+					class="btn btn-outline-warning col-12 btn-board-update"
+					onclick="location.href='<c:url value='/board/update?bo_num=${board.bo_num}'/>'">수정하기
+			</button><br>
+		</c:if>
+		<c:if test="${user != null && user.me_num == board.bo_me_num}">
+			<button type="button"
+					class="btn btn-outline-danger col-12 btn-delete"
+					onclick="location.href='<c:url value='/board/delete?bo_num=${board.bo_num}'/>'">삭제하기
+			</button><br>
+		</c:if>
 	</form>
-
 <script type="text/javascript">
      $('#summernote').summernote({
        placeholder: '내용을 입력하세요.',
@@ -256,7 +259,6 @@
 		
 		/* 답글 등록 버튼 클릭 이벤트  */
 		$(document).on('click','.btn-reply-insert', function(){
-// 			let co_ori_num = '${comment.co_num}';
 			let co_ori_num = $(this).data('num');
 			let co_me_num = '${user.me_num}';
 			let co_bo_num = '${board.bo_num}';
@@ -268,6 +270,7 @@
 					co_bo_num : co_bo_num,
 					co_comments : co_contents
 			}
+			console.log(comment)
 			$.ajax({
 				async : false,
 				method: 'post',
@@ -279,7 +282,7 @@
 					if(data.res){
 						alert('답글 등록 성공');
 						$('#inputComment2').val('');
-						getCommentList2(cri);
+						getCommentList(cri);
 					}else{
 						alert('답글 등록 실패');
 					}
@@ -287,11 +290,11 @@
 			})
 		});
 		/* 답글 조회하기 */
-			function getCommentList2(cri){
+			/* function getCommentList2(cri){
 				$.ajax({
 					async : false,
 					method: 'post',
-					url : '<c:url value="/comment/list2/"/>'+'${board.bo_num}',
+					url : '<c:url value="/reply/comment/list/"/>'+'${board.bo_num}',
 					data: JSON.stringify(cri),
 					contentType : 'application/json; charset=utf-8',
 					dataType : 'json',
@@ -301,18 +304,18 @@
 							str += `
 						<c:forEach items="\${list}" var="replyComment">	
 							<c:if test="\${replyComment.co_ori_num eq comment.co_num}">		
-								<div class="box-comment" style="margin-left:30px;">
-									<div class="comment-box">
-										<div class="comment-list">	
+								<div class="box-comment-reply">
+									<div class="comment-box-reply">
+										<div class="comment-list2">	
 											<img src="<c:url value='/resources/images/sample.jpg'/>" class="rounded-circle profile-image" alt="기본프로필 사진">
-											<div class="comment-1">
-												<span class="comment-contents">\${replyComment.co_comments}</span>
-												<span class="comment-writer">[\${replyComment.co_me_num}]</span>
-												<span class="comment-date">\${replyComment.co_date}</span>
+											<div class="comment-1-reply">
+												<span class="comment-contents-reply">\${replyComment.co_comments}</span>
+												<span class="comment-writer-reply">[\${replyComment.co_me_num}]</span>
+												<span class="comment-date-reply">\${replyComment.co_date}</span>
 											</div>	
-											<div class="comment-item">
-												<button type="button" class="btn btn-outline-info btn-sm btn-update" data-num="\${replyComment.co_num}">수정</button>
-												<button type="button" class="btn btn-outline-info btn-sm btn-del" data-num="\${replyComment.co_num}">삭제</button>
+											<div class="comment-item-reply">
+												<button type="button" class="btn btn-outline-info btn-sm btn-update-reply" data-num="\${replyComment.co_num}">수정</button>
+												<button type="button" class="btn btn-outline-info btn-sm btn-de-replyl" data-num="\${replyComment.co_num}">삭제</button>
 											</div>
 										</div>
 									</div>
@@ -321,19 +324,20 @@
 						</c:forEach>
 						`
 						}
-						$('.comment-list').html(str);
+						
+						$('.comment-list2').html(str);
 					}
 				});
-			
-		} 
+			}   */
 		
 		/* 댓글 수정하기 이벤트 */
 		$(document).on('click', '.btn-update', function(){
 			// 클릭한 조상 클래스가 comment-list인 것을 찾아 list에 넣는다.
 			let th = $(this);
 			let list = $(this).parent().prev(); 
+			list.find('.comment-nickname').hide();
 			list.find('.comment-contents').hide();
-			list.find('.comment-writer').hide();
+// 			list.find('.comment-writer').hide();
 			list.find('.comment-date').hide();
 			list.find('.btn-update').hide();
 			list.find('.btn-del').hide();
@@ -346,7 +350,7 @@
 			
 			str = '';
 			str +=`
-				<div class="input-group-append" style="float : left; width:80%">
+				<div class="input-group-append" style="float : left; width:80%; margin-left : 5px">
 				<textarea class="form-control comment-update" style="float : left">\${co_contents}</textarea>
 				</div>
 			`;
@@ -420,7 +424,7 @@
 		}
 		 // 게시글이 화면에 출력되고 이어서 댓글이 화면에 출력되어야 하기 때문에 이벤트 등록없이 바로 호출해준다.
 		getCommentList(cri);
-		
+	
 		function getCommentList(cri){
 			$.ajax({
 				async : false,
@@ -430,50 +434,51 @@
 				contentType : 'application/json; charset=utf-8',
 				dataType : 'json',
 				success : function(data){
+					
 					let str ='';
 					for(comment of data.list){
-						str += `
+						let btnStr = '';
+						if (comment.co_num == comment.co_ori_num){
+							btnStr =`<button type="button" class="btn btn-outline-primary btn-sm btn-reply" data-num="\${comment.co_num}" >답글</button>`
+							}
+						
+						 let updateButton = '';
+			             let deleteButton = '';
+			             if (comment.co_me_num == '${user.me_num}') {
+			                    updateButton = `<button type="button" class="btn btn-outline-info btn-sm btn-update" data-num="\${comment.co_num}">수정</button>`;
+			                    deleteButton = `<button type="button" class="btn btn-outline-info btn-sm btn-del" data-num="\${comment.co_num}">삭제</button>`;
+			                }
+			            
+			             let comments = ''; 
+			            if (comment.bl_blocked_num == 0){
+			            	comments = `<span class="comment-contents">\${comment.co_comments}</span>`
+			            }else{
+			            	comments = `<span class="comment-contents">차단된 사람의 댓글입니다.</span>`
+			            }
+						
+			            str += `
 							<div class="box-comment">
-								<div class="comment-box">
+								<div class="comment-box" \${comment.co_num != comment.co_ori_num ? 'style="margin-left: 40px;"' : ''}>
 										<div class="comment-list">	
 											<img src="/final_project${user.me_profile}" class="rounded-circle profile-image" alt="기본프로필 사진">
 											<div class="comment-1">
-												<span class="comment-contents">\${comment.co_comments}</span>
-												<span class="comment-writer">[\${comment.co_me_num}]</span>
+												<span class="comment-nickname">\${comment.me_nickname}</span>
+												\${comments}
 												<span class="comment-date">\${comment.co_date}</span>
 											</div>	
 											<div class="comment-item">
-												<button type="button" class="btn btn-outline-info btn-sm btn-update" data-num="\${comment.co_num}">수정</button>
-												<button type="button" class="btn btn-outline-info btn-sm btn-del" data-num="\${comment.co_num}">삭제</button>
-												<button type="button" class="btn btn-outline-primary btn-sm btn-reply" data-num="\${comment.co_num}" >답글</button>						
+											  	\${updateButton}
+			                                    \${deleteButton}
+												\${btnStr}
 											</div>
 										</div>
 									</div>
 								</div>
-							<c:forEach items="\${list}" var="replyComment">	
-								<c:if test="\${replyComment.co_ori_num eq comment.co_num}">		
-									<div class="box-comment" style="margin-left:30px;">
-										<div class="comment-box">
-											<div class="comment-list">	
-												<img src="<c:url value='/resources/images/sample.jpg'/>" class="rounded-circle profile-image" alt="기본프로필 사진">
-												<div class="comment-1">
-													<span class="comment-contents">\${replyComment.co_comments}</span>
-													<span class="comment-writer">[\${replyComment.co_me_num}]</span>
-													<span class="comment-date">\${replyComment.co_date}</span>
-												</div>	
-												<div class="comment-item">
-													<button type="button" class="btn btn-outline-info btn-sm btn-update" data-num="\${replyComment.co_num}">수정</button>
-													<button type="button" class="btn btn-outline-info btn-sm btn-del" data-num="\${replyComment.co_num}">삭제</button>
-												</div>
-											</div>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-							`
-					}
+							<hr>
+							`;
+			             }
+						
 					$('.comment-list').html(str);
-					
 					let pm = data.pm;
 					str = '';
 					//이전버튼을 배치
@@ -497,6 +502,7 @@
 			cri.page = page;
 			getCommentList(cri);
 		}
+	
 </script>
 </body>
 </html>

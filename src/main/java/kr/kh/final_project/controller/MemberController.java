@@ -132,11 +132,29 @@ public class MemberController {
 	}
 	
 	
-	
-	// 회원 탈퇴
+	//이메일인증 회원탈퇴
 	@GetMapping(value="/member/signout")
-	public String memberSignout() {
+	public String emailMemberSignout(Model model, HttpSession session) {
+		MemberVO member = (MemberVO)session.getAttribute("user");
+		model.addAttribute("member", member);
 		return "/member/signout";
+	}
+	//이메일인증 회원탈퇴
+	@PostMapping(value="/member/signout")
+	public String emailMemberSignoutPost(Model model, HttpSession session) {
+		MemberVO member = (MemberVO)session.getAttribute("user");
+		System.out.println(member);
+		
+		boolean res = memberService.emailMemberSignout(member);
+		if(res) {
+			model.addAttribute("msg", "회원 탈퇴가 완료되었습니다.");
+			model.addAttribute("url", "/");
+		}else {
+			model.addAttribute("msg", "회원 탈퇴에 실패했습니다.");
+			model.addAttribute("url", "/member/signout");
+		}
+		model.addAttribute("member", member);
+		return "/util/message";
 	}
 	
 	
@@ -202,6 +220,7 @@ public class MemberController {
 	@ResponseBody
 	@PostMapping("/member/refund/list")
 	public Map<String, Object> refundList(HttpSession session, @RequestBody Criteria cri){
+		System.out.println("asd");
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		Map<String, Object> map = new HashMap<String, Object>();
 		
@@ -226,7 +245,16 @@ public class MemberController {
 		map.put("res", res);
 		return map;
 	}
-
+	//유저포인트 ajax로 보내주기 (실시간 업데이트를 위해서)
+	@ResponseBody
+	@PostMapping("/member/information")
+	public Map<String, Object> memberInformation(@RequestBody MemberVO user){
+		Map<String, Object> map = new HashMap<String, Object>();
+		int userPoint = memberService.getMemberPoint(user);
+		map.put("userPoint", userPoint);
+		return map;
+	}
+	
 	//마이페이지
 	@GetMapping("/member/mypage")
 	public String myPage(HttpSession session, Model model) {
@@ -368,4 +396,10 @@ public class MemberController {
 	public String blocklist() {
 		return "/member/blocklist";
 	}
+	
+	@GetMapping("/payment/main")
+	public String payment(Model model) {
+		return "/payment/main";
+	}
+	
 }

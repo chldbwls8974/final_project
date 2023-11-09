@@ -11,7 +11,7 @@ import kr.kh.final_project.vo.MemberVO;
 
 public interface MemberDAO {
 
-	//List<MemberVO> selectMemberList(int me_num);
+	
 	List<MemberVO> selectMemberListBySearch(@Param("cri")Criteria cri);
 
 	int selectTotalCount(@Param("cri")Criteria cri);
@@ -53,5 +53,7 @@ public interface MemberDAO {
 	MemberVO selectMemberPRegion(@Param("user") MemberVO user);
 
 	MemberVO selectMemberPTime(@Param("user") MemberVO user);
+
+	void updateEmailMember(@Param("me_id")String me_id);
 
 }
