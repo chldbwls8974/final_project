@@ -106,13 +106,13 @@ public class BusinessmanController {
 	@PostMapping("/businessman/facilityInsert")
 	public String insertfacility(Model model, FacilityVO facility, HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		System.out.println(user);
+		//System.out.println(user);
 		List<RegionVO> MainRegion = businessmanService.getMainRegion();
 
 		//Service에게 user, facility 정보를 주고 insertFacility 메서드로 저장
 		boolean res = businessmanService.insertFacility(user, facility);
 			if(res) {
-				model.addAttribute("msg", "시설 등록이 완료되었습니다.");
+				model.addAttribute("msg", "시설 등록이 완료되었습니다. 시설목록에서 '운영시간'을 입력해주세요.");
 				model.addAttribute("url", "/businessman/facility");
 			}else {
 				model.addAttribute("msg", "시설을 등록하지 못했습니다.");
@@ -188,6 +188,49 @@ public class BusinessmanController {
 	    model.addAttribute("url", "/businessman/facility");
 	    return "/util/message";
 	}
+	
+	//운영시간 페이지
+	@GetMapping("/businessman/operating/{fa_num}")
+	public String operating(Model model, @PathVariable("fa_num")Integer fa_num, 
+			HttpSession session) {
+		//시설 번호를 통해 시설 정보를 가져와서 facility에 저장
+		FacilityVO facility = businessmanService.getFacility(fa_num);
+		
+		List<OperatingVO> operatingList = businessmanService.getOperatingListByFaNum(fa_num);
+		
+		if(operatingList.size() == 0) {
+	        Message msg = new Message("/businessman/operatingInsert/" + fa_num , "등록된 운영시간이 없습니다. 운영시간을 등록해주세요");
+			model.addAttribute("msg", msg);
+			return "/message";
+		}
+		model.addAttribute("facility", facility);
+		model.addAttribute("operatingList", operatingList);
+		return "/businessman/operating";
+	}
+	//운영시간 등록
+	@GetMapping("/businessman/operatingInsert/{fa_num}")
+	public String operatingInsertGet(Model model, @PathVariable("fa_num")Integer fa_num, 
+			FacilityVO facility, HttpSession session) {
+		return "/businessman/operatingInsert";
+	}
+	//운영시간 등록
+	@PostMapping("/businessman/operatingInsert")
+	public String insertStadium(Model model, 
+			OperatingVO operating, HttpSession session) {
+
+		int i = operating.getOp_fa_num();
+		
+		boolean res = businessmanService.insertOperating(operating);
+			if(res) {
+				model.addAttribute("msg", "운영시간 등록이 완료되었습니다.");
+				//운영시간 등록이 완료되면 등록한 시설의 운영시간 목록으로 돌아가야 함
+				model.addAttribute("url", "/businessman/operating/" + i);
+			}else {
+				model.addAttribute("msg", "운영시간을 등록하지 못했습니다.");
+				model.addAttribute("url", "/businessman/operatingInsert");
+			}
+		return "/util/message";
+	}	
 	
 	
 	//경기장 목록, 페이지네이션, 검색창

@@ -6,6 +6,7 @@ import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.vo.BusinessmanVO;
 import kr.kh.final_project.vo.FacilityVO;
 import kr.kh.final_project.vo.MemberVO;
+import kr.kh.final_project.vo.OperatingVO;
 import kr.kh.final_project.vo.RegionVO;
 import kr.kh.final_project.vo.StadiumVO;
 
@@ -40,5 +41,13 @@ public interface BusinessmanService {
 	boolean updateStadium(StadiumVO stadium);
     //현재 페이지 정보(검색어, 타입)에 맞는 전체 경기장 수를 가져옴
 	int getTotalStadiumCount(Criteria cri, Integer fa_num);
+	
+	//운영시간
+	List<OperatingVO> getOperatingListByFaNum(Integer fa_num);
+	//운영시간 등록
+	boolean insertOperating(OperatingVO operating);
+	
+	
+
 
 }

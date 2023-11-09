@@ -22,5 +22,6 @@ public class FacilityVO {
 	private String fa_note;
 	private int fa_deleted;
 
+	//시설 지역수정 시 사용
 	private String fa_rg_main;
 }

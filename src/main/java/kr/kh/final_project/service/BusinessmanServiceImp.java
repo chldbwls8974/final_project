@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.final_project.dao.BusinessmanDAO;
+import kr.kh.final_project.dao.OperatingDAO;
 import kr.kh.final_project.dao.PreferredRegionDAO;
 import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.dao.StadiumDAO;
@@ -13,6 +14,7 @@ import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.vo.BusinessmanVO;
 import kr.kh.final_project.vo.FacilityVO;
 import kr.kh.final_project.vo.MemberVO;
+import kr.kh.final_project.vo.OperatingVO;
 import kr.kh.final_project.vo.RegionVO;
 import kr.kh.final_project.vo.StadiumVO;
 
@@ -30,6 +32,9 @@ public class BusinessmanServiceImp implements BusinessmanService{
 	
 	@Autowired
 	StadiumDAO stadiumDao;
+	
+	@Autowired
+	OperatingDAO operatingDao;
 
 	//시설 리스트 가져오기
 	@Override
@@ -69,8 +74,8 @@ public class BusinessmanServiceImp implements BusinessmanService{
 			return false;
 		}
 		boolean res = businessmanDao.insertFacility(facility, user.getMe_num());
-		return res;
-	}
+	    return res;
+		}
 	//Main 지역리스트
 	@Override
 	public List<RegionVO> getMainRegion() {
@@ -181,5 +186,24 @@ public class BusinessmanServiceImp implements BusinessmanService{
 		return res;
 	}
 	
+	//운영시간
+	@Override
+	public List<OperatingVO> getOperatingListByFaNum(Integer fa_num) {
+		if(fa_num == 0) {
+			return null;			
+		}
+		List<OperatingVO> operatingList = operatingDao.selectOperatingListByFaNum(fa_num);
+		return operatingList;
+	}
+	//운영시간 등록
+	@Override
+	public boolean insertOperating(OperatingVO operating) {
+		if(operating == null 
+				|| operating.getOp_fa_num() == null) {
+				return false;
+			}
+			return operatingDao.insertOperating(operating);
+	}
+
 	
 }

@@ -26,7 +26,7 @@
 			</choose>
 			and bu_me_num = #{member.me_num}
 		</where>
-			order by fa_num desc
+			order by fa_num asc
 			limit #{cri.pageStart}, #{cri.perPageNum}
 	</select>
 	<select id="selectCountFacilityList" resultType="int">
