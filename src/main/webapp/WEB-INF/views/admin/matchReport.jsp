@@ -94,9 +94,6 @@
 </body>
 
 <script type="text/javascript">
-	//날짜로 변환
-	const unixTimestamp = 1699110000000; // Unix 시간값
-	const date = new Date(unixTimestamp);
 	let cri = {
 			page : 1,
 			perPageNum : 5
