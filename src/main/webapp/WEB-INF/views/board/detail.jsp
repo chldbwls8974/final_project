@@ -68,7 +68,7 @@
 </head>
 <body>
 	<br>
-	<h1>&#x2709 공지글 보는 곳 &#x2709</h1>
+	<h1>&#x2709 상세보기 &#x2709</h1>
 	<form action="<c:url value='/board/detail'/>" method="post">
 		<div class="form-group">
 			<label>제목</label>
@@ -127,8 +127,10 @@
 						<span class="comment-date">${comment.co_date}</span>	
 					</div>
 					<div class="comment-item">
-						<button type="button" class="btn btn-outline-info btn-sm btn-update" data-num="${comment.co_num}">수정</button>
-						<button type="button" class="btn btn-outline-info btn-sm btn-del" data-num="${comment.co_num}">삭제</button>
+						<c:if test="${comment.co_me_num == user.me_num}">
+							<button type="button" class="btn btn-outline-info btn-sm btn-update" data-num="${comment.co_num}">수정</button>
+							<button type="button" class="btn btn-outline-info btn-sm btn-del" data-num="${comment.co_num}">삭제</button>
+						</c:if>
 						<c:if test="${comment.co_num == comment.co_ori_num}">						
 							<button type="button" class="btn btn-outline-primary btn-sm btn-reply" value="${comment.co_num}">답글</button>						
 						</c:if>	
@@ -163,17 +165,45 @@
 			</div>
 		</div>
 		<hr>
-		<button type="button"
-				class="btn btn-outline-info col-12 btn-return" 
-				onclick="location.href='<c:url value='/board/notice'/>'">돌아가기
-		</button>
-		<c:if test="${user != null && user.me_authority == 'ADMIN'}">
+		<!-- 되돌아가기 버튼  -->
+		<c:if test="${board.bo_bt_num == 1}">
+			<button type="button"
+					class="btn btn-outline-info col-12 btn-return" 
+					onclick="history.back()">돌아가기
+			</button>
+		</c:if>	
+		<c:if test="${board.bo_bt_num == 2}">
+			<button type="button"
+					class="btn btn-outline-info col-12 btn-return" 
+					onclick="location.href='<c:url value='/board/freel?bo_num=${board.bo_num}'/>'">돌아가기
+			</button>
+		</c:if>	
+		<c:if test="${board.bo_bt_num == 3}">
+			<button type="button"
+					class="btn btn-outline-info col-12 btn-return" 
+					onclick="location.href='<c:url value='/board/individual?bo_num=${board.bo_num}'/>'">돌아가기
+			</button>
+		</c:if>	
+		<c:if test="${board.bo_bt_num == 4}">
+			<button type="button"
+					class="btn btn-outline-info col-12 btn-return" 
+					onclick="location.href='<c:url value='/board/club?bo_num=${board.bo_num}'/>'">돌아가기
+			</button>
+		</c:if>	
+		<c:if test="${board.bo_bt_num == 5}">
+			<button type="button"
+					class="btn btn-outline-info col-12 btn-return" 
+					onclick="location.href='<c:url value='/board/inquiry?bo_num=${board.bo_num}'/>'">돌아가기
+			</button>
+		</c:if>	
+		<!-- 자신이 쓴 게시글만 수정,삭제 버튼 나오게 -->
+		<c:if test="${user != null && user.me_num == board.bo_me_num}">
 			<button type="button"
 					class="btn btn-outline-warning col-12 btn-update"
 					onclick="location.href='<c:url value='/board/update?bo_num=${board.bo_num}'/>'">수정하기
 			</button><br>
 		</c:if>
-		<c:if test="${user != null && user.me_authority == 'ADMIN'}">
+		<c:if test="${user != null && user.me_num == board.bo_me_num}">
 			<button type="button"
 					class="btn btn-outline-danger col-12 btn-delete"
 					onclick="location.href='<c:url value='/board/delete?bo_num=${board.bo_num}'/>'">삭제하기
@@ -439,6 +469,8 @@
 						let btnStr = '';
 						if (comment.co_num == comment.co_ori_num){
 							btnStr =`<button type="button" class="btn btn-outline-primary btn-sm btn-reply" data-num="\${comment.co_num}" >답글</button>`}
+					
+				        
 						str += `
 							<div class="box-comment">
 								<div class="comment-box" \${comment.co_num != comment.co_ori_num ? 'style="margin-left: 40px;"' : ''}>
@@ -451,7 +483,7 @@
 											</div>	
 											<div class="comment-item">
 												<button type="button" class="btn btn-outline-info btn-sm btn-update" data-num="\${comment.co_num}">수정</button>
-												<button type="button" class="btn btn-outline-info btn-sm btn-del" data-num="\${comment.co_num}">삭제</button>
+									            <button type="button" class="btn btn-outline-info btn-sm btn-del" data-num="\${comment.co_num}">삭제</button>
 												\${btnStr}
 											</div>
 										</div>
@@ -485,6 +517,7 @@
 			cri.page = page;
 			getCommentList(cri);
 		}
+	
 </script>
 </body>
 </html>

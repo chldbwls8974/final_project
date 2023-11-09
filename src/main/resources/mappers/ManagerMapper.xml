@@ -167,4 +167,16 @@
 			me_num
 				asc
 	</select>
+	<delete id="deleteBoardManagerList">
+		delete
+			from
+				board
+			where
+				bo_me_num = ( select
+									me_num 
+								from 
+									member
+								where
+									 me_nickname =#{manager.me_nickname})
+	</delete>
 </mapper>

@@ -92,4 +92,5 @@ public class ManagerController {
 		
 		return "/manager/schedule";
 	}
+	
 }

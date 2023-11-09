@@ -4,12 +4,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -20,10 +24,12 @@ import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.pagination.PageMaker;
 import kr.kh.final_project.service.AdminService;
 import kr.kh.final_project.util.Message;
+import kr.kh.final_project.vo.BoardVO;
 import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ManagerVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
+import kr.kh.final_project.vo.ReportVO;
 
 @Controller
 public class AdminController {
@@ -124,12 +130,14 @@ public class AdminController {
 	// 매니저권한 취소버튼 (회원정보 수정) (2)
 		@ResponseBody
 		@PostMapping("/admin/manager2")
-		public Map<String, Object>updateManager2(@RequestBody ManagerVO manager, Criteria cri){
+		public Map<String, Object>updateManager2(@RequestBody ManagerVO manager, 
+															Criteria cri
+															){
 			// 결과 데이터를 넣기 위한 map을 만듬
 			Map<String, Object> map = new HashMap<String, Object>();
 			//ManagerVO user = (ManagerVO)session.getAttribute("user");
-			
 			boolean res = adminService.updateManager2(manager);
+			
 			if(res) {
 				List<ManagerVO> list = adminService.getManagerList2(cri);
 				map.put("list", list);
@@ -234,7 +242,6 @@ public class AdminController {
 	
 	@GetMapping("/admin/refund")
 	public String refundManagement(Model model) {
-			
 		return ("/admin/refund");
 	}
 	
@@ -242,20 +249,15 @@ public class AdminController {
 	@PostMapping("/admin/refund/search")
 	public Map<String, Object> refundManagementSearch(@RequestBody ObjectNode saveObj) throws JsonProcessingException {
 		Map<String, Object> map = new HashMap<String, Object>();
-		// JSON을 Object화 하기 위한 Jackson ObjectMapper 이용
+		// json데이터를 객체로 만들기 위해서 ObjectMapper 이용
 		ObjectMapper mapper = new ObjectMapper();   
 		Criteria cri = mapper.treeToValue(saveObj.get("cri"), Criteria.class);
 	    String searchType1 = saveObj.get("searchType1").asText();
 	    String searchType2 = saveObj.get("searchType2").asText();
-	    System.out.println(cri);
-	    System.out.println(searchType1);
-	    System.out.println(searchType2);
 	    //검색에 맞는 리스트 가져오는 메서드
 	    List<PointHistoryVO> refundList = adminService.getRefundListBySearch(cri, searchType1, searchType2);
 	    //totalCount 구하는 메서드
 	    int totalCount = adminService.getRefundListBySearchCount(cri, searchType1, searchType2);
-	    System.out.println(refundList);
-	    System.out.println("totalCount : " + totalCount);
 
 	    //보여줄 페이지 수 = 3
 	    PageMaker pm = new PageMaker(3, cri, totalCount);
@@ -264,16 +266,58 @@ public class AdminController {
 		return map;
 	}
 	
+	//신고 관리 페이지
+	@GetMapping("/admin/boardReport")
+	public String boardReportManagement(Model model) {
+		return ("/admin/boardReport");
+	}
+	@GetMapping("/admin/matchReport")
+	public String matchReportManagement(Model model) {
+		return ("/admin/matchReport");
+	}
+	//검색 조건에 맞는 신고리스트를 반환하는 메서드
+	@ResponseBody
+	@PostMapping("/admin/report/search")
+	public Map<String, Object> boardReportManagementSearch(@RequestBody ObjectNode saveObj) throws JsonProcessingException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		// json데이터를 객체로 만들기 위해서 ObjectMapper 이용
+		ObjectMapper mapper = new ObjectMapper();   
+		Criteria cri = mapper.treeToValue(saveObj.get("cri"), Criteria.class);
+	    String searchType1 = saveObj.get("searchType1").asText();
+	    String searchType2 = saveObj.get("searchType2").asText();
+	    String reportType = saveObj.get("reportType").asText();
+	    //검색에 맞는 리스트 가져오는 메서드
+	    List<ReportVO> reportList = adminService.getReportListBySearch(cri, reportType, searchType1, searchType2);
+	    //totalCount 구하는 메서드
+	    int totalCount = adminService.getReportListBySearchCount(cri, reportType, searchType1, searchType2);
+	    //보여줄 페이지 수 = 3
+	    PageMaker pm = new PageMaker(3, cri, totalCount);
+	    map.put("reportList", reportList);
+	    map.put("pm", pm);
+		return map;
+	}
+	
+	//화면에서 받아온 값으로 신고를 확인, 제재 상태로 변경하는 메서드
+	@ResponseBody
+	@PostMapping("/admin/report/handle")
+	public Map<String, Object> reportHandle(@RequestBody ReportVO report) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println(report);
+		boolean res = adminService.reportHandle(report);
+		map.put("res", res);
+		return map;
+	}
+	
+	
+	
 	@ResponseBody
 	@PostMapping("/admin/refund/approval")
 	public Map<String, Object> refundApproval(@RequestBody PointHistoryVO ph){
 		Map<String, Object> map = new HashMap<String, Object>();
-	    
-	    System.out.println(ph);
-	    
-	    boolean res = adminService.refundApproval(ph);
-	    
-	    map.put("res", res);
+		//포인트 환급신청의 상태를 완료로 변경함
+		boolean res = adminService.refundApproval(ph);
+		map.put("res", res);
 		return map;
 	}
+	
 }
