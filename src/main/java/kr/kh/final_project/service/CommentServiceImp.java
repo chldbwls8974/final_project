@@ -46,11 +46,11 @@ public class CommentServiceImp implements CommentService{
 	}
 	// 등록된 댓글 목록 가져오기 (댓글 조회하기)
 	@Override
-	public List<CommentVO> getCommentList(int bo_num, Criteria cri) {
+	public List<CommentVO> getCommentList(int bo_num, Criteria cri, MemberVO user) {
 		if(cri == null) {
 			cri = new Criteria();
 		}
-		return commentDao.selectCommentList(bo_num, cri);
+		return commentDao.selectCommentList(bo_num, cri, user);
 	}
 	// 댓글 페이지네이션 (해당 게시글의 총 댓글 수 가져오기)
 	@Override

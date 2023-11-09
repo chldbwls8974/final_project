@@ -8,6 +8,7 @@ import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.vo.BoardVO;
 import kr.kh.final_project.vo.FileVO;
 import kr.kh.final_project.vo.ManagerVO;
+import kr.kh.final_project.vo.MemberVO;
 
 public interface BoardDAO {
 
@@ -20,32 +21,36 @@ public interface BoardDAO {
 	//사업자 신청 게시글등록	
 	boolean insertBusinessman(@Param("board")BoardVO board);
 
-	// 공지게시판글 리스트 가져오기
+	// 게시판글 리스트 가져오기
 	List<BoardVO> selectBoardList(@Param("cri")Criteria cri);
-	// 공지게시판글 총 갯수 가져오기
+	// 게시판글 총 갯수 가져오기
 	int selectTotalCount(@Param("cri")Criteria cri);
-	// 공지게시글 등록하기
+	// 게시글 등록하기
 	boolean insertBoard(@Param("board")BoardVO board);
-	// 공지게시글 첨부파일
+	// 게시글 첨부파일
 	//void insertFileByNotice(@Param("file") FileVO fileVo);
 
-	// 공지게시글 상세내용 불러오기
+	// 게시글 상세내용 불러오기
 	BoardVO selectBoard(@Param("bo_num")Integer bo_num);
-	// 공지게시글 상세내용 첨부파일 불러오기
+	// 게시글 상세내용 첨부파일 불러오기
 	List<FileVO> selectFileList(@Param("bo_num")Integer bo_num);
-	// 공지게시글 조회수 올리기
+	// 게시글 조회수 올리기
 	void updateBoardViews(@Param("bo_num")Integer bo_num);
-	// 공지게시글 삭제하기
+	// 게시글 삭제하기
 	boolean deleteBoard(@Param("bo_num")Integer bo_num);
-	// 공지게시글 파일삭제하기
+	// 게시글 파일삭제하기
 	void deleteFile(@Param("fi_num")int fi_num);
+	// 게시글 삭제할 때 댓글도 같이 삭제하기
+	//boolean deleteCommentsByBoard(@Param("bo_num")Integer bo_num);
+	
+	
 	// 공지게시글 수정하기
 	//boolean updateBoard(@Param("board")BoardVO board);
 	// 공지게시글 상세페이지 첨부파일 가져오기
 	//FileVO selectFile(@Param("fi_num")Integer num);
-	// 공지게시글 수정하기
+	// 게시글 수정하기
 	boolean updateBoard(@Param("board")BoardVO board);
-	// 공지게시글 상세페이지 첨부파일 가져오기
+	// 게시글 상세페이지 첨부파일 가져오기
 	FileVO selectFile(@Param("fi_num")int fi_num);
 	
 	// 게시글 댓글 수 업데이트하기
@@ -91,6 +96,13 @@ public interface BoardDAO {
 	ManagerVO selectBoardManager(@Param("manager")ManagerVO manager, @Param("user")ManagerVO user);
 	// 매니저신청 게시글 삭제하기
 	boolean deleteBoardManager(@Param("manager")ManagerVO manager, @Param("user")ManagerVO user);
+	
+	
+
+	
+	
+	
+	
 	
 
 	

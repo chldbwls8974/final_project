@@ -16,4 +16,10 @@ public class CommentVO {
 		private String co_date;
 		private Date co_up_date;
 		private String co_delete;
+		
+		private int me_num;
+		private String me_nickname;
+		
+		private int bl_me_num;
+		private int bl_blocked_num;
 }
