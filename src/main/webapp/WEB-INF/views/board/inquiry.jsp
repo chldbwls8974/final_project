@@ -85,12 +85,12 @@
 							</tr>
 						</c:when>
 					</c:choose>
-					<c:if test="${bo.bo_me_num != user.me_num && user.me_authority != 'ADMIN'}">
-						<tr>
-							<td colspan="6" class="noneInquiry">문의 내용이 없습니다.</td>
-						</tr>
-					</c:if>
 				</c:forEach>
+				<c:if test="${list empty}">
+					<tr>
+						<td colspan="6" class="noneInquiry">문의 내용이 없습니다.</td>
+					</tr>
+				</c:if>
 			</tbody>
 		</table>
   <!-- 페이지네이션 적용 -->

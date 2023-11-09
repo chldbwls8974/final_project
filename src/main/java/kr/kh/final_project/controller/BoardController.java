@@ -382,7 +382,8 @@ public class BoardController {
 		
 	// 문의게시판 조회하기 (5)
 	@GetMapping("/board/inquiry")
-	public String boardInquiry(Model model, Criteria cri) {
+	public String boardInquiry(Model model, Criteria cri, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		// 페이지네이션
 		cri.setPerPageNum(5);
 		int totalCount = boardService.getInquiryTotalCount(cri);
@@ -390,6 +391,8 @@ public class BoardController {
 		PageMaker pm = new PageMaker(DISPLAY_PAGE_NUM, cri, totalCount);
 		// 문의게시판 조회하기
 		List<BoardVO> list = boardService.getBoardInquiryList(cri);
+		
+		
 		
 		model.addAttribute("list", list);
 		model.addAttribute("cri", cri);

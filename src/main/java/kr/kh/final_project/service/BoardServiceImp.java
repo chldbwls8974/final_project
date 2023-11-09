@@ -101,7 +101,7 @@ public class BoardServiceImp implements BoardService{
 	public List<BoardVO> getBoardList(Criteria cri) {
 		return boardDao.selectBoardList(cri);
 	}
-	//공지게시판글 총 갯수 가져오기
+	//게시판글 총 갯수 가져오기
 	@Override
 	public int getTotalCount(Criteria cri) {
 		if(cri == null) {
