@@ -1,5 +1,7 @@
 package kr.kh.final_project.vo;
 
+import java.util.List;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,4 +26,7 @@ public class FacilityVO {
 
 	//시설 지역수정 시 사용
 	private String fa_rg_main;
+	
+    private List<OperatingVO> operatingList;
+
 }

@@ -197,12 +197,16 @@ public class BusinessmanServiceImp implements BusinessmanService{
 	}
 	//운영시간 등록
 	@Override
-	public boolean insertOperating(OperatingVO operating) {
-		if(operating == null 
-				|| operating.getOp_fa_num() == null) {
+	public boolean insertOperating(List<OperatingVO> operatingList, int fa_num) {
+		if(operatingList == null ){
 				return false;
 			}
-			return operatingDao.insertOperating(operating);
+		for(OperatingVO tmp : operatingList) {
+			tmp.setOp_fa_num(fa_num);
+			System.out.println(tmp);
+			operatingDao.insertOperating(tmp);
+		}
+			return true;
 	}
 
 	

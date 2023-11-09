@@ -45,7 +45,7 @@ public interface BusinessmanService {
 	//운영시간
 	List<OperatingVO> getOperatingListByFaNum(Integer fa_num);
 	//운영시간 등록
-	boolean insertOperating(OperatingVO operating);
+	boolean insertOperating(List<OperatingVO> operatingList, int fa_num);
 	
 	
 

@@ -10,7 +10,7 @@
 <body>
   	<h1 class="display-3"><span style="color: black; font-weight: bold;">운영시간</span></h1>
 	<br>
-	<form action="<c:url value='/businessman/operating/${facility.fa_num}'/>" method="get">
+	<form action="<c:url value='/businessman/operating'/>" method="get">
   	  <div class="table-responsive">
 	    <table class="table table-light table-striped">
 	      <thead>

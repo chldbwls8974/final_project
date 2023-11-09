@@ -215,16 +215,18 @@ public class BusinessmanController {
 	}
 	//운영시간 등록
 	@PostMapping("/businessman/operatingInsert")
-	public String insertStadium(Model model, 
-			OperatingVO operating, HttpSession session) {
+	public String insertStadium(Model model, FacilityVO facility, HttpSession session) {
+		//System.out.println(facility);
+		//facilityVO에서 운영시간 정보를 불러와서 operatingList 변수에 저장
+		List<OperatingVO> operatingList = facility.getOperatingList();
+		int fa_num = facility.getFa_num();
 
-		int i = operating.getOp_fa_num();
-		
-		boolean res = businessmanService.insertOperating(operating);
-			if(res) {
+		boolean res = businessmanService.insertOperating(operatingList, fa_num);
+		if(res) {
 				model.addAttribute("msg", "운영시간 등록이 완료되었습니다.");
 				//운영시간 등록이 완료되면 등록한 시설의 운영시간 목록으로 돌아가야 함
-				model.addAttribute("url", "/businessman/operating/" + i);
+				model.addAttribute("url", "/businessman/operating/" + fa_num);
+				System.out.println("sadasd");
 			}else {
 				model.addAttribute("msg", "운영시간을 등록하지 못했습니다.");
 				model.addAttribute("url", "/businessman/operatingInsert");

@@ -12,13 +12,12 @@
 	<form action="<c:url value='/businessman/operatingInsert'/>" method="post">
 	 	<div class="form-group" hidden="hidden">
 			<label for="op_fa_num">시설 번호</label>
-		    <input type="text" class="form-control" id="op_fa_num" name="op_fa_num" value="${fa_num}">
+		    <input type="text" class="form-control" id="op_fa_num" name="fa_num" value="${fa_num}">
 		</div>
 		
 	    <div class="form-group">
 			<c:forEach var="i" begin="1" end="7">
 				<div class="form-check-inline">
-	            	<input type="checkbox" class="day_checkbox" id="checkbox_${i}" data-target="${i}">
 					<c:choose>
 				        <c:when test="${i == 1}">
 				            <c:set var="day" value="월" />
@@ -44,21 +43,21 @@
 				    </c:choose>
 				    
 				    <label for="op_day_${i}" >요일 선택:</label>
-				    <select class="form-control op_day" name="op_day" id="op_day_${i}" disabled>
+				    <select class="form-control op_day" name="operatingList[${i-1 }].op_day" id="op_day_${i}">
 				        <option value="${day}">${day}</option>
 				    </select>
 				    
 					<label >오픈시간:</label>
-					<select class="form-control op_open" name="op_open" id="op_open_${i}" disabled>
+					<select class="form-control op_open" name="operatingList[${i-1 }].op_open" id="op_open_${i}">
 					    <c:forEach var="h" begin="0" end="23" step="1">
-					        <option><c:out value="${h < 10 ? '0' : ''}${h}:00" /></option>
+					        <option><c:out value="${h}" /></option>
 					    </c:forEach>
 					</select>
 					
 					<label>종료시간:</label>
-					<select class="form-control op_close" name="op_close" id="op_close_${i}" disabled>
+					<select class="form-control op_close" name="operatingList[${i-1 }].op_close" id="op_close_${i}">
 					    <c:forEach var="h" begin="0" end="23" step="1">
-					        <option><c:out value="${h < 10 ? '0' : ''}${h}:00" /></option>
+					        <option><c:out value="${h}" /></option>
 					    </c:forEach>
 					</select>
 				</div>
@@ -70,24 +69,7 @@
 
 
 	<script type="text/javascript">	
-		//체크박스에 체크하지 않은 요일은 비활성화(체크한 것만 활성화)
-		 $(document).on('click', '.day_checkbox', function() {
-			    var target = $(this).data('target');
-			    var op_day_select = $('#op_day_' + target);
-			    var op_open_select = $('#op_open_' + target);
-			    var op_close_select = $('#op_close_' + target);
-				
-			    //체크박스에 체크가 되면 활성화
-			    if ($(this).is(':checked')) {
-			        op_day_select.prop('disabled', false);
-			        op_open_select.prop('disabled', false);
-			        op_close_select.prop('disabled', false);
-			    } else {//체크박스에 체크가 해제되면 비활성화
-			        op_day_select.prop('disabled', true);
-			        op_open_select.prop('disabled', true);
-			        op_close_select.prop('disabled', true);
-			    }
-			});
+		
 
 		
 	</script>

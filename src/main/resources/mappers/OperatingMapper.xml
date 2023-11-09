@@ -10,8 +10,8 @@
 			insert into 
 				operating(op_day, op_open, op_close, op_fa_num)
 			values
-				#{operating.op_day}, #{operating.op_open}, 
-				#{operating.op_close}, #{operating.op_fa_num}
+				(#{operating.op_day}, #{operating.op_open}, 
+				#{operating.op_close}, #{operating.op_fa_num})
 	</insert>
 
 </mapper>
