@@ -233,7 +233,30 @@ public class BusinessmanController {
 			}
 		return "/util/message";
 	}	
-	
+	//운영시간 수정
+	@GetMapping("/businessman/operatingUpdate")
+	public String updateOperating(Model model, FacilityVO facility, Integer op_fa_num, HttpSession session) {
+		List<OperatingVO> operatingList = businessmanService.getOperatingListByFaNum(op_fa_num);		
+		model.addAttribute("operatingList", operatingList);
+		return "/businessman/operatingUpdate";
+	}
+	//운영시간 수정
+	@PostMapping("/businessman/operatingUpdate")
+	public String operatingUpdate(Model model, StadiumVO stadium, FacilityVO facility, HttpSession session) {
+		
+		/*int fa_num = facility.getFa_num();
+
+		boolean res = businessmanService.updateStadium(stadium);
+		if(res) {
+			model.addAttribute("msg", "시설 운영시간 수정이 완료되었습니다.");
+			model.addAttribute("url", "/businessman/operating/" + fa_num);
+		}else {
+			model.addAttribute("msg", "시설 운영시간 수정에 실패했습니다.");
+			model.addAttribute("url", "/businessman/operatingUpdate");
+		}*/
+	    return "/util/message";
+	}
+		
 	
 	//경기장 목록, 페이지네이션, 검색창
 	@GetMapping("/businessman/stadium/{fa_num}")

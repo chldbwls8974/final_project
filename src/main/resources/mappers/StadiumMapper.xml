@@ -25,6 +25,7 @@
 				</when>
 			</choose>
 			and st_fa_num = #{fa_num}
+			and stadium.st_available != 2
 		</where>
 			order by st_name asc
 			limit #{cri.pageStart}, #{cri.perPageNum}
@@ -45,6 +46,7 @@
 				</when>
 			</choose>
 			and st_fa_num = #{fa_num}
+			and stadium.st_available != 2
 		</where>
 	</select>
 	<insert id="insertStadium">
