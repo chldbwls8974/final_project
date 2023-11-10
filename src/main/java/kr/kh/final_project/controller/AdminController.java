@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +24,7 @@ import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.pagination.PageMaker;
 import kr.kh.final_project.service.AdminService;
 import kr.kh.final_project.util.Message;
+import kr.kh.final_project.vo.BoardVO;
 import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ManagerVO;
 import kr.kh.final_project.vo.MemberVO;
@@ -127,12 +130,14 @@ public class AdminController {
 	// 매니저권한 취소버튼 (회원정보 수정) (2)
 		@ResponseBody
 		@PostMapping("/admin/manager2")
-		public Map<String, Object>updateManager2(@RequestBody ManagerVO manager, Criteria cri){
+		public Map<String, Object>updateManager2(@RequestBody ManagerVO manager, 
+															Criteria cri
+															){
 			// 결과 데이터를 넣기 위한 map을 만듬
 			Map<String, Object> map = new HashMap<String, Object>();
 			//ManagerVO user = (ManagerVO)session.getAttribute("user");
-			
 			boolean res = adminService.updateManager2(manager);
+			
 			if(res) {
 				List<ManagerVO> list = adminService.getManagerList2(cri);
 				map.put("list", list);

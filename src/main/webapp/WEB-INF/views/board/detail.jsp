@@ -45,22 +45,21 @@
 	}
 	/* 날짜 */
 	.comment-date{
-		position : absolute;
-		transform: translateX(580px);
-		transform: translateY(25px);
+		
 		display : block;
 		margin-left : 80px;
+		padding-top : 50px;
 	}
-	/* 댓글, 답글 내용,시간 */
-	.comment-1{
-		position : relative;
-	}
+	
 	/* 댓글, 답글 내용만 */
 	.comment-contents{
-		margin-left : 20px;
+		margin-left : 80px;
+		margin-top : 20px;
+		display : flex;
 	}
-	.comment-list{
-	
+	.comment-nickname{
+		margin-left : 20px;
+		font-weight : bold;
 	}
 
 </style>    
@@ -68,7 +67,7 @@
 </head>
 <body>
 	<br>
-	<h1>&#x2709 공지글 보는 곳 &#x2709</h1>
+	<h1>&#x2709 상세보기 &#x2709</h1>
 	<form action="<c:url value='/board/detail'/>" method="post">
 		<div class="form-group">
 			<label>제목</label>
@@ -76,7 +75,7 @@
 		</div>
 		<div class="form-group">
 			<label>작성자</label>
-			<input type="text" class="form-control" name="bo_me_id" value="${user.me_id}" readonly>
+			<input type="text" class="form-control" name="bo_me_id" value="${board.me_nickname}" readonly>
 		</div>
 		<div class="input-group mb-3">
 		    <div class="input-group">
@@ -99,7 +98,6 @@
 				</c:otherwise>
 			</c:choose>
 		</div>
-		<div class="comment-contaier mt-5">
 		<!-- 프로필사진 -->
 			<%-- <c:forEach items="${list}" var="ma">
 				<c:choose>
@@ -120,20 +118,24 @@
 		<!-- 댓글 목록창 -->
 		<div class="box-comment">
 			<div class="comment-box1" >
-				<div class="comment-list">
-					<div class="comment-1">
-						<span class="comment-contents">${comment.co_comments}</span>
-						<span class="comment-writer">${comment.co_me_num}</span>
-						<span class="comment-date">${comment.co_date}</span>	
+					<div class="comment-list">
+						<div class="comment-1">
+							<span class="comment-nickname">${comment.me_nickname}</span>
+							<span class="comment-contents">${comment.co_comments}</span>
+<%-- 						<span class="comment-writer">${comment.co_me_num}</span> --%>
+							<span class="comment-date">${comment.co_date}</span>	
+						</div>
+						<div class="comment-item">
+							<c:if test="${comment.co_me_num == user.me_num}">
+								<button type="button" class="btn btn-outline-info btn-sm btn-update" data-num="${comment.co_num}">수정</button>
+								<button type="button" class="btn btn-outline-info btn-sm btn-del" data-num="${comment.co_num}">삭제</button>
+							</c:if>
+							<c:if test="${comment.co_num == comment.co_ori_num}">						
+								<button type="button" class="btn btn-outline-primary btn-sm btn-reply" value="${comment.co_num}">답글</button>						
+							</c:if>	
+							
+						</div>
 					</div>
-					<div class="comment-item">
-						<button type="button" class="btn btn-outline-info btn-sm btn-update" data-num="${comment.co_num}">수정</button>
-						<button type="button" class="btn btn-outline-info btn-sm btn-del" data-num="${comment.co_num}">삭제</button>
-						<c:if test="${comment.co_num == comment.co_ori_num}">						
-							<button type="button" class="btn btn-outline-primary btn-sm btn-reply" value="${comment.co_num}">답글</button>						
-						</c:if>	
-					</div>
-				</div>
 			</div>
 			<%-- <c:forEach items="${list}" var="replyComment">	
 				<c:if test="${replyComment.co_ori_num != replyComment.co_num}">		
@@ -163,24 +165,20 @@
 			</div>
 		</div>
 		<hr>
-		<button type="button"
-				class="btn btn-outline-info col-12 btn-return" 
-				onclick="location.href='<c:url value='/board/notice'/>'">돌아가기
-		</button>
-		<c:if test="${user != null && user.me_authority == 'ADMIN'}">
+		<!-- 자신이 쓴 게시글만 수정,삭제 버튼 나오게 -->
+		<c:if test="${user != null && user.me_num == board.bo_me_num}">
 			<button type="button"
-					class="btn btn-outline-warning col-12 btn-update"
+					class="btn btn-outline-warning col-12 btn-board-update"
 					onclick="location.href='<c:url value='/board/update?bo_num=${board.bo_num}'/>'">수정하기
 			</button><br>
 		</c:if>
-		<c:if test="${user != null && user.me_authority == 'ADMIN'}">
+		<c:if test="${user != null && user.me_num == board.bo_me_num}">
 			<button type="button"
 					class="btn btn-outline-danger col-12 btn-delete"
 					onclick="location.href='<c:url value='/board/delete?bo_num=${board.bo_num}'/>'">삭제하기
 			</button><br>
 		</c:if>
 	</form>
-
 <script type="text/javascript">
      $('#summernote').summernote({
        placeholder: '내용을 입력하세요.',
@@ -336,8 +334,9 @@
 			// 클릭한 조상 클래스가 comment-list인 것을 찾아 list에 넣는다.
 			let th = $(this);
 			let list = $(this).parent().prev(); 
+			list.find('.comment-nickname').hide();
 			list.find('.comment-contents').hide();
-			list.find('.comment-writer').hide();
+// 			list.find('.comment-writer').hide();
 			list.find('.comment-date').hide();
 			list.find('.btn-update').hide();
 			list.find('.btn-del').hide();
@@ -350,7 +349,7 @@
 			
 			str = '';
 			str +=`
-				<div class="input-group-append" style="float : left; width:80%">
+				<div class="input-group-append" style="float : left; width:80%; margin-left : 5px">
 				<textarea class="form-control comment-update" style="float : left">\${co_contents}</textarea>
 				</div>
 			`;
@@ -424,7 +423,7 @@
 		}
 		 // 게시글이 화면에 출력되고 이어서 댓글이 화면에 출력되어야 하기 때문에 이벤트 등록없이 바로 호출해준다.
 		getCommentList(cri);
-		
+	
 		function getCommentList(cri){
 			$.ajax({
 				async : false,
@@ -434,34 +433,51 @@
 				contentType : 'application/json; charset=utf-8',
 				dataType : 'json',
 				success : function(data){
+					
 					let str ='';
 					for(comment of data.list){
 						let btnStr = '';
 						if (comment.co_num == comment.co_ori_num){
-							btnStr =`<button type="button" class="btn btn-outline-primary btn-sm btn-reply" data-num="\${comment.co_num}" >답글</button>`}
-						str += `
+							btnStr =`<button type="button" class="btn btn-outline-primary btn-sm btn-reply" data-num="\${comment.co_num}" >답글</button>`
+							}
+						
+						 let updateButton = '';
+			             let deleteButton = '';
+			             if (comment.co_me_num == '${user.me_num}') {
+			                    updateButton = `<button type="button" class="btn btn-outline-info btn-sm btn-update" data-num="\${comment.co_num}">수정</button>`;
+			                    deleteButton = `<button type="button" class="btn btn-outline-info btn-sm btn-del" data-num="\${comment.co_num}">삭제</button>`;
+			                }
+			            
+			             let comments = ''; 
+			            if (comment.bl_blocked_num == 0){
+			            	comments = `<span class="comment-contents">\${comment.co_comments}</span>`
+			            }else{
+			            	comments = `<span class="comment-contents">차단된 사람의 댓글입니다.</span>`
+			            }
+						
+			            str += `
 							<div class="box-comment">
 								<div class="comment-box" \${comment.co_num != comment.co_ori_num ? 'style="margin-left: 40px;"' : ''}>
 										<div class="comment-list">	
 											<img src="<c:url value='/resources/images/sample.jpg'/>" class="rounded-circle profile-image" alt="기본프로필 사진">
 											<div class="comment-1">
-												<span class="comment-contents">\${comment.co_comments}</span>
-												<span class="comment-writer">[\${comment.co_me_num}]</span>
+												<span class="comment-nickname">\${comment.me_nickname}</span>
+												\${comments}
 												<span class="comment-date">\${comment.co_date}</span>
 											</div>	
 											<div class="comment-item">
-												<button type="button" class="btn btn-outline-info btn-sm btn-update" data-num="\${comment.co_num}">수정</button>
-												<button type="button" class="btn btn-outline-info btn-sm btn-del" data-num="\${comment.co_num}">삭제</button>
+											  	\${updateButton}
+			                                    \${deleteButton}
 												\${btnStr}
 											</div>
 										</div>
 									</div>
 								</div>
 							<hr>
-							`
-					}
+							`;
+			             }
+						
 					$('.comment-list').html(str);
-					
 					let pm = data.pm;
 					str = '';
 					//이전버튼을 배치
@@ -485,6 +501,7 @@
 			cri.page = page;
 			getCommentList(cri);
 		}
+	
 </script>
 </body>
 </html>

@@ -11,7 +11,7 @@ import kr.kh.final_project.vo.MemberVO;
 
 public interface MemberDAO {
 
-	//List<MemberVO> selectMemberList(int me_num);
+	
 	List<MemberVO> selectMemberListBySearch(@Param("cri")Criteria cri);
 
 	int selectTotalCount(@Param("cri")Criteria cri);
@@ -53,6 +53,7 @@ public interface MemberDAO {
 	boolean updateUserBoardBanState(@Param("me_num")int me_num, @Param("i")int i);
 
 	boolean updateUserMatchBanState(@Param("me_num")int me_num, @Param("i")int i);
+
 
 
 }

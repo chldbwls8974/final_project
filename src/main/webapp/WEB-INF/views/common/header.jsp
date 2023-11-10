@@ -49,7 +49,7 @@
 					</c:if>	
 						<a class="dropdown-item" href="<c:url value='/board/free'/>">자유게시판</a>
 						<a class="dropdown-item" href="<c:url value='/board/individual'/>">개인 매칭</a>
-						<a class="dropdown-item" href="<c:url value='/board/clue'/>">클럽 매칭</a>
+						<a class="dropdown-item" href="<c:url value='/board/club'/>">클럽 매칭</a>
 						<a class="dropdown-item" href="<c:url value='/board/inquiry'/>">문의게시판</a>
 					<c:if test="${user != null && user.me_authority == 'ADMIN'}">
 						<a class="dropdown-item" href="/board/block">게시판 관리</a>

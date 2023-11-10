@@ -9,6 +9,7 @@ public class Criteria {
 //=====================================================
 	private String s;
 	private String t;
+	private String r;
 	
 	public Criteria() {
 		page = 1;
