@@ -149,7 +149,7 @@ public class MatchController {
 		}
 		List<TeamVO> teamList = matchService.selectTeamByMtNum(mt_num);
 		List<EntryVO> entryList = matchService.selectEntryByMtNum(mt_num);
-		List<ClubMemberVO> CMList = matchService.selectClubListByMtNum(mt_num);
+		//List<ClubMemberVO> CMList = matchService.selectClubListByMtNum(mt_num);
 		
 		model.addAttribute("cl_num", cl_num);
 		model.addAttribute("user", user);
