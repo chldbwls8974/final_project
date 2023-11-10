@@ -9,59 +9,83 @@
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 <style>
-	h1{
-		text-align : center;
-	}
-	.form-control{
-		margin-bottom : 10px;
-	}
-	.btn{
-		margin-bottom : 10px;
-	}
-	.comment-box{
-		display : flex;
-	}
-	.comment-box1{
-		display : flex;
-	}
-	/* 프로필 사진 */
-	.profile-image {
-	    width: 60px; 
-	    height: 60px; 
-	    border-radius: 50%; /* 둥글두그륵 만들기 */
-	    object-fit: cover; /* 이미지가 찌그러지지 않도록 설정하는 것 */
-	    float:left;
-	}
-	/* 댓글 내용 */
-	.comment-list{
-		list-style : none;
-		padding : 10px;
-		width : 100%;
-	}
-	/* 수정 삭제 버튼 */
-	.comment-item{
-		float : right;
-		position : relative;
-	}
-	/* 날짜 */
-	.comment-date{
-		
-		display : block;
-		margin-left : 80px;
-		padding-top : 50px;
-	}
-	
-	/* 댓글, 답글 내용만 */
-	.comment-contents{
-		margin-left : 80px;
-		margin-top : 20px;
-		display : flex;
-	}
-	.comment-nickname{
-		margin-left : 20px;
-		font-weight : bold;
-	}
+h1 {
+	text-align: center;
+}
 
+.form-control {
+	margin-bottom: 10px;
+}
+
+.btn {
+	margin-bottom: 10px;
+}
+
+.comment-box {
+	display: flex;
+}
+
+.comment-box1 {
+	display: flex;
+}
+/* 프로필 사진 */
+.profile-image {
+	width: 60px;
+	height: 60px;
+	border-radius: 50%; /* 둥글두그륵 만들기 */
+	object-fit: cover; /* 이미지가 찌그러지지 않도록 설정하는 것 */
+	float: left;
+}
+/* 댓글 내용 */
+.comment-list {
+	list-style: none;
+	padding: 10px;
+	width: 100%;
+}
+/* 수정 삭제 버튼 */
+.comment-item {
+	float: right;
+	position: relative;
+}
+/* 날짜 */
+.comment-date {
+	display: block;
+	margin-left: 80px;
+	padding-top: 50px;
+}
+
+/* 댓글, 답글 내용만 */
+.comment-contents {
+	margin-left: 80px;
+	margin-top: 20px;
+	display: flex;
+}
+
+.comment-nickname {
+	margin-left: 20px;
+	font-weight: bold;
+}
+
+/* 모달 */
+.modal--bg {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	justify-content: center;
+	align-items: center;
+}
+
+.modal--content {
+	background-color: white;
+	padding: 20px;
+	border-radius: 5px;
+	max-width: 400px;
+	margin: 0 auto;
+}
 </style>    
 </head>
 </head>
@@ -83,6 +107,7 @@
 					 style="height : 600px; overflow-y: auto; text-align: center;" >${board.bo_contents}</div>
 		    </div>
 		</div>
+		
 		<div class="form-group">
 			<c:choose>
 				<c:when test="${fileList.size() != 0 }">
@@ -165,6 +190,10 @@
 			</div>
 		</div>
 		<hr>
+		
+		
+		<!-- 모달버튼 -->
+		<button type="button" class="btn btn-outline-warning button--open" data-value="${board.bo_num}">게시글 신고</button>
 		<!-- 자신이 쓴 게시글만 수정,삭제 버튼 나오게 -->
 		<c:if test="${user != null && user.me_num == board.bo_me_num}">
 			<button type="button"
@@ -179,6 +208,17 @@
 			</button><br>
 		</c:if>
 	</form>
+	<!-- 모달창 -->
+	<div class="modal--bg">
+		<div class="modal--content">
+			<p>신고하기</p>
+			<form action="<c:url value='/admin/boardReport/insert'/>" method="post">
+				<input type="text" class="form-control" name="rp_bo_num" value="${board.bo_num}" readonly>
+				<button class="btn btn-outline-dark button--close">신고</button> 
+			</form> 
+			<button type="button" class="btn btn-outline-dark button--close">닫기</button> 
+		</div>
+	</div>
 <script type="text/javascript">
      $('#summernote').summernote({
        placeholder: '내용을 입력하세요.',
@@ -502,6 +542,25 @@
 			getCommentList(cri);
 		}
 	
+		
+		 //모달 
+		 $(document).ready(function() {
+		        $('.button--open').click(function() {
+		            showModal();
+		        });
+
+		        $('.button--close').click(function() {
+		            closeModal();
+		        });
+
+		        function showModal() {
+		            $('.modal--bg').fadeIn();
+		        }
+
+		        function closeModal() {
+		            $('.modal--bg').fadeOut();
+		        }
+		    });
 </script>
 </body>
 </html>

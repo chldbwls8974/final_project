@@ -308,6 +308,14 @@ public class AdminController {
 		return map;
 	}
 	
+	//유저가 신고 했을 때
+	@PostMapping("/admin/boardReport/insert")
+	public String boardReportInsert(Model model, ReportVO report) {
+		System.out.println(report);
+		//신고추가
+		//중복신고 못하게 해야함 (같은 사람이 같은 게시글에 신고 x)
+		return "/board/free";
+	}
 	
 	
 	@ResponseBody
