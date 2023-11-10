@@ -358,7 +358,7 @@
 				team on te_mt_num = mt_num
 			where
 				mt_date = #{mt_date} and
-				te_type = 1
+				te_type != 0
 			group by
 				mt_num) as TC on TC.mt = mt_num
 		where
@@ -388,7 +388,7 @@
 				team on te_mt_num = mt_num
 			where
 				mt_num = #{mt_num} and
-				te_type = 1) as team_count,
+				te_type != 0) as team_count,
 			if(count(t1) = 0, 0, 1) as entry_res
 		from
 			`match`
@@ -427,7 +427,7 @@
 			where
 				te_mt_num = #{mt_num} and
 				ct_cl_num = #{cl_num} and
-				te_type = 1) as T1 on T1.t1 = te_num
+				te_type != 0) as T1 on T1.t1 = te_num
 		where
 			mt_num = #{mt_num}
 		group by

@@ -42,4 +42,6 @@ public interface MatchService {
 
 	boolean applicationMatchClub(MemberVO user, int cl_num, int mt_num, int point);
 
+	boolean canselMatchClub(Integer me_num, int mt_num, int cl_num);
+
 }

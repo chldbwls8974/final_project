@@ -17,7 +17,9 @@ public interface PointHistoryDAO {
 
 	PointHistoryVO selectPointHistoryByNum(@Param("ph_num")int ph_num);
 
-	boolean insertPointHistorySoloMatch(@Param("point")int point, @Param("source")int source, @Param("mt_num")int mt_num, @Param("me_num")Integer me_num);
+	boolean insertPointHistoryApplicationMatch(@Param("point")int point, @Param("mt_num")int mt_num, @Param("me_num")Integer me_num);
+	
+	boolean insertPointHistoryCanselMatch(@Param("point")int point, @Param("mt_num")int mt_num, @Param("me_num")Integer me_num);
 
 	PointHistoryVO selectPointHistoryApplicationMatch(@Param("me_num")Integer me_num, @Param("mt_num")int mt_num);
 

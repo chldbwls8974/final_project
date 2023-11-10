@@ -13,4 +13,7 @@
 	<delete id="deleteEntry">
 		delete from entry where en_num = #{en_num}
 	</delete>
+	<delete id="deleteEntryByTeNum">
+		delete from entry where en_te_num = #{te_num}
+	</delete>
 </mapper>

@@ -150,11 +150,16 @@
 			$.ajax({
 				async : false,
 				method : 'post',
-				url : '<c:url value="/match/cansel/clup"/>',
-				data : {},
+				url : '<c:url value="/match/cansel/club"/>',
+				data : {mt_num:mt_num, cl_num:cl_num},
 				dataType : 'json',
 				success : function(data) {
-					
+					if(data.res){
+						alert(data.msg);
+						location.href='<c:url value="/match/application?mt_num="/>'+ mt_num + '&cl_num=' + cl_num;
+					}else{
+						alert(data.msg);
+					}
 				}
 			});
 		}

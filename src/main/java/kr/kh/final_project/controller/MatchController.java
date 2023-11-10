@@ -242,14 +242,23 @@ public class MatchController {
 	
 	@ResponseBody
 	@PostMapping("/match/cansel/club")
-	public Map<String, Object> canselMatchClub(@RequestParam("mt_num")int mt_num, HttpSession session){
+	public Map<String, Object> canselMatchClub(@RequestParam("mt_num")int mt_num, @RequestParam("cl_num")int cl_num, HttpSession session){
 		Map<String, Object> map = new HashMap<String, Object>();
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		
+		ClubMemberVO dbCM = matchService.selectClubMemberByMeNum(user.getMe_num(), cl_num);
+
 		boolean res = false;
 		String msg = "취소 실패";
 		
-		res = matchService.canselMatchSolo(user.getMe_num(), mt_num);
+		if(dbCM == null || !dbCM.getCm_authority().equals("LEADER")) {
+			msg = "클럽장만 취소 가능합니다.";
+			
+			map.put("msg", msg);
+			map.put("res", res);
+			return map;
+		}
+		
+		res = matchService.canselMatchClub(user.getMe_num(), mt_num, cl_num);
 		if(res) {
 			msg = "취소 성공";
 		}

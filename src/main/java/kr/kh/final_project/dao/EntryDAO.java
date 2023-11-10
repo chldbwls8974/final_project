@@ -12,4 +12,6 @@ public interface EntryDAO {
 
 	boolean deleteEntry(@Param("en_num")int en_num);
 
+	void deleteEntryByTeNum(@Param("te_num")int te_num);
+
 }

@@ -30,10 +30,15 @@
 		where 
 			ph_num = #{ph_num}
 	</select>
-	<insert id="insertPointHistorySoloMatch">
+	<insert id="insertPointHistoryApplicationMatch">
 		insert into point_history(ph_price, ph_source, ph_mt_num, ph_me_num)
 		values
-		(-#{point} * if(#{source} = 1, 1, (
+		(-#{point}, 1, #{mt_num}, #{me_num})
+	</insert>
+	<insert id="insertPointHistoryCanselMatch">
+		insert into point_history(ph_price, ph_source, ph_mt_num, ph_me_num)
+		values
+		(-#{point} * (
 				select
 					case
 						when
@@ -50,8 +55,8 @@
 						join
 					time on mt_ti_num = ti_num
 				where
-					mt_num = #{mt_num}))
-		, #{source}, #{mt_num}, #{me_num})
+					mt_num = #{mt_num})
+		, 2, #{mt_num}, #{me_num})
 	</insert>
 	<select id="selectPointHistoryApplicationMatch" resultType="kr.kh.final_project.vo.PointHistoryVO">
 		select

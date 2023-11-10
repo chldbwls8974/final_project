@@ -236,7 +236,7 @@ public class MatchServiceImp implements MatchService{
 		if(dbTeam.getEntry_count() < (dbTeam.getMt_rule() == 0 ? dbTeam.getMt_personnel()*2 : dbTeam.getMt_personnel()*3)) {
 			if(entryDao.selectEntryByMeNum(dbTeam.getTe_num(), user.getMe_num()) == null) {
 				if(entryDao.insertEntry(dbTeam.getTe_num(), user.getMe_num())) {
-					pointHistoryDao.insertPointHistorySoloMatch(point, 1, mt_num, user.getMe_num());
+					pointHistoryDao.insertPointHistoryApplicationMatch(point, mt_num, user.getMe_num());
 					if(dbTeam.getMt_type() == 0) {
 						matchDao.updateMatchMtTypeTo1(mt_num);
 					}
@@ -260,7 +260,7 @@ public class MatchServiceImp implements MatchService{
 		TeamVO dbTeam = teamDao.selectListTeamByMtNum(mt_num);
 		EntryVO dbEntry = entryDao.selectEntryByMeNum(dbTeam.getTe_num(), me_num);
 		if(dbPH != null) {
-			if(pointHistoryDao.insertPointHistorySoloMatch(dbPH.getPh_price(), 2, mt_num, me_num)){
+			if(pointHistoryDao.insertPointHistoryCanselMatch(dbPH.getPh_price(), mt_num, me_num)){
 				if(entryDao.deleteEntry(dbEntry.getEn_num())) {
 					dbTeam = teamDao.selectListTeamByMtNum(mt_num);
 					if(dbTeam.getEntry_count() == 0) {
@@ -297,8 +297,40 @@ public class MatchServiceImp implements MatchService{
 		TeamVO dbTeam = teamDao.selectTeamByClNum(mt_num, cl_num);
 		if(dbTeam == null) {
 			teamDao.insertTeam(mt_num);
-			dbTeam = teamDao.selectTeamByMtNum(mt_num);
+			dbTeam = teamDao.selectNewTeamByMtNum(mt_num);
+			System.out.println(dbTeam);
 			teamDao.insertClubTeam(dbTeam.getTe_num(), cl_num);
+			pointHistoryDao.insertPointHistoryApplicationMatch(point, mt_num, user.getMe_num());
+			if(dbTeam.getMt_type() == 0) {
+				matchDao.updateMatchMtTypeTo2(mt_num);
+			}
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean canselMatchClub(Integer me_num, int mt_num, int cl_num) {
+		if(me_num == null || mt_num == 0 || cl_num == 0) {
+			return false;
+		}
+		PointHistoryVO dbPH = pointHistoryDao.selectPointHistoryApplicationMatch(me_num, mt_num);
+		List<TeamVO> teamList = teamDao.selectTeamByMtNum(mt_num);
+		boolean res = false;
+		for(TeamVO t:teamList) {
+			if(res) {
+				teamDao.updateTeamTeType(t.getTe_num());
+			}
+			if(t.getCt_cl_num() == cl_num) {
+				entryDao.deleteEntryByTeNum(t.getTe_num());
+				teamDao.deleteClubTeamByTeNum(t.getTe_num());
+				teamDao.deleteTeam(t.getTe_num());
+				res = true;
+			}
+		}
+		if(res) {
+			pointHistoryDao.insertPointHistoryCanselMatch(dbPH.getPh_price(), mt_num, me_num);
+			return res;
 		}
 		return false;
 	}
