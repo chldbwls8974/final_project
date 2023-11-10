@@ -1,15 +1,15 @@
-INSERT INTO MEMBER(ME_ID, ME_PW, ME_RG_NUM, ME_NICKNAME, ME_AUTHORITY, ME_POINT)
+INSERT INTO MEMBER(ME_ID, ME_PW, ME_RG_NUM, ME_NICKNAME, ME_AUTHORITY, ME_POINT, ME_RATING, ME_TR_NAME)
 VALUES
-('user1', 'user1', 2, 'B-1', 'BUSINESS', 300000), ('user2', 'user2', 2, 'B-2', 'BUSINESS', 30000), ('user3', 'user3', 2, 'M-1', 'MANAGER', 30000),
-('user4', 'user4', 2, 'M-2', 'MANAGER', 30000), ('user5', 'user5', 2, 'U-1', 'USER', 30000), ('user6', 'user6', 2, 'U-2', 'USER', 30000),
-('user7', 'user7', 2, 'U-3', 'USER', 30000), ('user8', 'user8', 2, 'U-4', 'USER', 30000), ('user9', 'user9', 2, 'U-5', 'USER', 30000),
-('user10', 'user10', 2, 'U-6', 'USER', 30000), ('user11', 'user11', 2, 'U-7', 'USER', 300000), ('user12', 'user12', 2, 'U-8', 'USER', 30000),
-('user13', 'user13', 2, 'U-9', 'USER', 30000), ('user14', 'user14', 2, 'U-10', 'USER', 30000), ('user15', 'user15', 2, 'U-11', 'USER', 30000),
-('user16', 'user16', 2, 'U-12', 'USER', 30000), ('user17', 'user17', 2, 'U-13', 'USER', 30000), ('user18', 'user18', 2, 'U-14', 'USER', 30000),
-('user19', 'user19', 2, 'U-15', 'USER', 30000), ('user20', 'user20', 2, 'U-16', 'USER', 30000),('user21', 'user21', 3, 'U-17', 'USER', 300000),
-('user22', 'user22', 3, 'U-18', 'USER', 30000), ('user23', 'user23', 3, 'U-19', 'USER', 30000), ('user24', 'user24', 4, 'U-20', 'USER', 30000),
-('user25', 'user25', 4, 'U-21', 'USER', 30000), ('user26', 'user26', 4, 'U-22', 'USER', 30000), ('user27', 'user27', 5, 'U-23', 'USER', 30000),
-('user28', 'user28', 6, 'U-24', 'USER', 30000), ('user29', 'user29', 7, 'U-25', 'USER', 30000), ('user30', 'user30', 8, 'B-30', 'BUSINESS', 30000);
+('user1', 'user1', 2, 'B-1', 'BUSINESS', 300000, 900, '브론즈'), ('user2', 'user2', 2, 'B-2', 'BUSINESS', 30000, 1900, '실버'), ('user3', 'user3', 2, 'M-1', 'MANAGER', 30000, 2900, '골드'),
+('user4', 'user4', 2, 'M-2', 'MANAGER', 30000, 3900, '플래티넘'), ('user5', 'user5', 2, 'U-1', 'USER', 30000, 4900, '다이아'), ('user6', 'user6', 2, 'U-2', 'USER', 30000, null, '스타터'),
+('user7', 'user7', 2, 'U-3', 'USER', 30000, 900, '브론즈'), ('user8', 'user8', 2, 'U-4', 'USER', 30000, 1900, '실버'), ('user9', 'user9', 2, 'U-5', 'USER', 30000, 2900, '골드'),
+('user10', 'user10', 2, 'U-6', 'USER', 30000, 3900, '플래티넘'), ('user11', 'user11', 2, 'U-7', 'USER', 300000, 4900, '다이아'), ('user12', 'user12', 2, 'U-8', 'USER', 30000, null, '스타터'),
+('user13', 'user13', 2, 'U-9', 'USER', 30000, 900, '브론즈'), ('user14', 'user14', 2, 'U-10', 'USER', 30000, 1900, '실버'), ('user15', 'user15', 2, 'U-11', 'USER', 30000, 2900, '골드'),
+('user16', 'user16', 2, 'U-12', 'USER', 30000, 3900, '플래티넘'), ('user17', 'user17', 2, 'U-13', 'USER', 30000, 4900, '다이아'), ('user18', 'user18', 2, 'U-14', 'USER', 30000, null, '스타터'),
+('user19', 'user19', 2, 'U-15', 'USER', 30000, 900, '브론즈'), ('user20', 'user20', 2, 'U-16', 'USER', 30000, 1900, '실버'),('user21', 'user21', 3, 'U-17', 'USER', 300000, 2900, '골드'),
+('user22', 'user22', 3, 'U-18', 'USER', 30000, 3900, '플래티넘'), ('user23', 'user23', 3, 'U-19', 'USER', 30000, 4900, '다이아'), ('user24', 'user24', 4, 'U-20', 'USER', 30000, null, '스타터'),
+('user25', 'user25', 4, 'U-21', 'USER', 30000, 900, '브론즈'), ('user26', 'user26', 4, 'U-22', 'USER', 30000, 1900, '실버'), ('user27', 'user27', 5, 'U-23', 'USER', 30000, 2900, '골드'),
+('user28', 'user28', 6, 'U-24', 'USER', 30000, 3900, '플래티넘'), ('user29', 'user29', 7, 'U-25', 'USER', 30000, 4900, '다이아'), ('user30', 'user30', 8, 'B-30', 'BUSINESS', 30000, null, '스타터');
 
 INSERT INTO BUSINESSMAN(BU_ME_NUM)
 VALUES
@@ -649,7 +649,7 @@ values
 (155 , 5), (156 , 5), (162 , 5), (163 , 5), (164 , 5);
 
 insert into team(te_mt_num, te_type)
-values(463, 0), (902, 0), (524, 0), (465, 1), (519, 1), (519, 2);
+values(463, 0), (902, 0), (524, 0), (465, 1), (526, 1), (526, 2);
 
 update `match`
 set
@@ -734,4 +734,4 @@ SET
 	mt_type = 2,
 	mt_rule = 1
 WHERE
-	mt_num = 465 or mt_num = 519;
+	mt_num = 465 or mt_num = 526;

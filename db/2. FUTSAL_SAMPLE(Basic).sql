@@ -20,6 +20,7 @@ VALUES
 
 INSERT INTO TIER(TR_NAME, TR_MIN_RATING)
 VALUES
+('스타터', null),
 ('브론즈', 0),
 ('실버', 1000),
 ('골드', 2000),

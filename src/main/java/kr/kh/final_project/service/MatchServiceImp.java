@@ -288,6 +288,14 @@ public class MatchServiceImp implements MatchService{
 		}
 		return clubMemberDao.selectClubMemberByMeNum(me_num, cl_num);
 	}
+	
+	@Override
+	public List<TeamVO> selectTeamByMtNum(int mt_num) {
+		if(mt_num == 0) {
+			return null;
+		}
+		return teamDao.selectTeamByMtNum(mt_num);
+	}
 
 	@Override
 	public boolean applicationMatchClub(MemberVO user, int cl_num, int mt_num, int point) {
@@ -298,7 +306,6 @@ public class MatchServiceImp implements MatchService{
 		if(dbTeam == null) {
 			teamDao.insertTeam(mt_num);
 			dbTeam = teamDao.selectNewTeamByMtNum(mt_num);
-			System.out.println(dbTeam);
 			teamDao.insertClubTeam(dbTeam.getTe_num(), cl_num);
 			pointHistoryDao.insertPointHistoryApplicationMatch(point, mt_num, user.getMe_num());
 			if(dbTeam.getMt_type() == 0) {
@@ -334,4 +341,13 @@ public class MatchServiceImp implements MatchService{
 		}
 		return false;
 	}
+
+	@Override
+	public List<EntryVO> selectEntryByMtNum(int mt_num) {
+		if(mt_num == 0) {
+			return null;
+		}
+		return entryDao.selectEntryByMtNum(mt_num);
+	}
+
 }

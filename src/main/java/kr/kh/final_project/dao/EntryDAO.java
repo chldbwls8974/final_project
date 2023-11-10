@@ -1,5 +1,7 @@
 package kr.kh.final_project.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import kr.kh.final_project.vo.EntryVO;
@@ -13,5 +15,7 @@ public interface EntryDAO {
 	boolean deleteEntry(@Param("en_num")int en_num);
 
 	void deleteEntryByTeNum(@Param("te_num")int te_num);
+
+	List<EntryVO> selectEntryByMtNum(@Param("mt_num")int mt_num);
 
 }

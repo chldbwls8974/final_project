@@ -6,11 +6,13 @@ import java.util.List;
 import kr.kh.final_project.vo.ClubMemberVO;
 import kr.kh.final_project.vo.ClubVO;
 import kr.kh.final_project.vo.CouponVO;
+import kr.kh.final_project.vo.EntryVO;
 import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ExtraVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.RegionVO;
+import kr.kh.final_project.vo.TeamVO;
 
 public interface MatchService {
 	
@@ -39,9 +41,13 @@ public interface MatchService {
 	List<ClubVO> selectClubListByMeNum(Integer me_num);
 
 	ClubMemberVO selectClubMemberByMeNum(Integer me_num, int cl_num);
+	
+	List<TeamVO> selectTeamByMtNum(int mt_num);
 
 	boolean applicationMatchClub(MemberVO user, int cl_num, int mt_num, int point);
 
 	boolean canselMatchClub(Integer me_num, int mt_num, int cl_num);
+
+	List<EntryVO> selectEntryByMtNum(int mt_num);
 
 }

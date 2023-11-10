@@ -10,4 +10,9 @@ public class ClubMemberVO {
 	private String cm_authority;
 	private String cm_introduction;
 	
+	private String me_nickname;
+	private int me_rating;
+	private String me_tr_name;
+	
+    private int en_num;
 }

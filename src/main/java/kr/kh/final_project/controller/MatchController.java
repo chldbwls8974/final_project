@@ -23,11 +23,13 @@ import kr.kh.final_project.util.Message;
 import kr.kh.final_project.vo.ClubMemberVO;
 import kr.kh.final_project.vo.ClubVO;
 import kr.kh.final_project.vo.CouponVO;
+import kr.kh.final_project.vo.EntryVO;
 import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ExtraVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.RegionVO;
+import kr.kh.final_project.vo.TeamVO;
 
 @Controller
 public class MatchController {
@@ -145,11 +147,16 @@ public class MatchController {
 				return "/message";
 			}
 		}
+		List<TeamVO> teamList = matchService.selectTeamByMtNum(mt_num);
+		List<EntryVO> entryList = matchService.selectEntryByMtNum(mt_num);
+		List<ClubMemberVO> CMList = matchService.selectClubListByMtNum(mt_num);
 		
 		model.addAttribute("cl_num", cl_num);
 		model.addAttribute("user", user);
 		model.addAttribute("match", match);
 		model.addAttribute("expense", expense);
+		model.addAttribute("teamList", teamList);
+		model.addAttribute("entryList", entryList);
 		return "/match/application";
 	}
 	

@@ -20,7 +20,7 @@ CREATE TABLE `member` (
 	`me_authority`	varchar(10)	NOT NULL	DEFAULT 'USER'	COMMENT 'USER, ADMIN, MANAGER, BUSINESS',
 	`me_rating`	int	NULL,
 	`me_profile`	varchar(255)	NULL	COMMENT '이미지',
-	`me_tr_name`	varchar(10)	NULL,
+	`me_tr_name`	varchar(10)	NULL	DEFAULT '스타터',
 	`me_point`	int	NOT NULL	DEFAULT 0,
 	`me_state1`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 없음, 1 : 정지',
 	`me_state2`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 없음, 1 : 정지',
@@ -233,7 +233,7 @@ DROP TABLE IF EXISTS `tier`;
 
 CREATE TABLE `tier` (
 	`tr_name`	varchar(10)  PRIMARY KEY	NOT NULL	COMMENT '브론즈, 실버, 골드, 플래티넘, 다이아',
-	`tr_min_rating`	int	NOT NULL	COMMENT '0, 1000, 2000, 3000, 4000'
+	`tr_min_rating`	int NULL	COMMENT '0, 1000, 2000, 3000, 4000'
 );
 
 DROP TABLE IF EXISTS `mark`;

@@ -9,6 +9,7 @@ public class TeamVO {
 	private int te_type;
 
 	private int entry_count;
+	private int club_entry_count;
 
 	private int mt_num;
 	private int mt_type;
@@ -17,4 +18,7 @@ public class TeamVO {
 	
 	private int ct_te_num;
 	private int ct_cl_num;
+
+	private int cl_num;
+	private String cl_name;
 }

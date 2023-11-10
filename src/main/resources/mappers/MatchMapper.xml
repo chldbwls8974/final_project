@@ -260,7 +260,7 @@
             region.*,
             `time`.*,
             count(en_num) as entry_count,
-            count(e1) as team_entry_count,
+            count(e1) as club_entry_count,
             ifnull(team_count, 0) as team_count,
             ifnull(T0.t0 = mt_num, 0) as application,
             if(ifnull(T1.t1, 0) + ifnull(T2.t2, 0) + ifnull(T3.t3, 0) = 0, true, false) as application_able
@@ -416,7 +416,7 @@
 					join
 				club_team on ct_te_num = te_num
 			where
-				ct_cl_num = 2) as E1 on E1.e1 = en_num
+				ct_cl_num = #{cl_num}) as E1 on E1.e1 = en_num
 				left join
 			(select
 				te_num as t1

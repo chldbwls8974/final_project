@@ -17,6 +17,9 @@
 	width: 100%; height: 200px; float: right; margin-bottom: 10px;
 	border: 3px solid black; box-sizing: border-box;
 	}
+	.team-box{display: flex; background-color: black;}
+	.teamList-box{flex: 1; margin-right: 3px; background-color: white;}
+	.teamList-box:last-child {margin-right: 0;}
 	</style>
 </head>
 <body>
@@ -26,8 +29,38 @@
 			<div class="info-box match-box">
 			${match}
 			</div>
-			<div class="info-box factility-box">
-			</div>
+			<c:if test="${cl_num != 0}">
+				<div class="info-box team-box">
+					<c:forEach items="${teamList}" var="tl">
+						<div class="teamList-box">
+							<table>
+								<thead>
+									<tr>
+										<th>
+											${tl.te_type}팀:${tl.cl_name} ${tl.club_entry_count}/${match.mt_personnel}
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:if test="${tl.ct_cl_num == cl_num}">
+										<c:forEach items="${entryList}" var="el">
+											<c:if test="${tl.te_num == el.en_te_num }">
+												<tr>
+													<td>
+														<span>
+															${el.me_nickname}(${el.me_tr_name})
+														</span>
+													</td>
+												</tr>
+											</c:if>
+										</c:forEach>
+									</c:if>
+								</tbody>
+							</table>
+						</div>
+					</c:forEach>
+				</div>
+			</c:if>
 		</div>
 		<div class="contents-box right-box">
 			<c:if test="${(match.mt_type == 0 && cl_num == 0) || (match.mt_type == 1 && cl_num == 0)}">
@@ -68,6 +101,9 @@
 					<div class="cansel-box right-side-box">
 						<h4>취소</h4>
 						<button class="btn btn-outline-danger btn-cansel">취소</button>
+					</div>
+					<div class="club-list-box right-side-box">
+						<h4>미참가 클럽멤버 리스트</h4>
 					</div>
 				</c:if>
 			</c:if>
