@@ -135,13 +135,18 @@
     				#{board.bo_count},
     				#{board.bo_comment})
 	</insert>
+	<!-- 게시글 상세보기 가져오기 -->
 	<select id="selectBoard" resultType="kr.kh.final_project.vo.BoardVO">
 		select
-			*
+			board.*,
+			member.me_nickname
 		from
 			board
+				join
+			member on bo_me_num = me_num
 		where
 			bo_num = #{bo_num}
+			
 	</select>
 	<!-- 게시글 조회수 올리기 -->
 	<update id="updateBoardViews">
@@ -163,9 +168,11 @@
 		where
 			bo_num = #{bo_num}
 	</delete>
+	<!-- 파일 삭제하기 -->
 	<delete id="deleteFile">
 		delete from file where fi_num = #{fi_num}
 	</delete>
+
 	<update id="updateBoard">
 		update board
 		set
