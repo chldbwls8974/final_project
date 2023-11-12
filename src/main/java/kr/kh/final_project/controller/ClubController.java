@@ -1,6 +1,8 @@
 package kr.kh.final_project.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -112,9 +114,9 @@ public class ClubController {
 	@GetMapping("/manage")
 	public String manageClub(Model model, HttpSession session, Integer cl_num) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		String authority = "LEADER";
-		List<ClubVO> list = clubService.getMyClubList(user.getMe_num(),authority);
-		model.addAttribute("user",user);
+		ClubVO club = clubService.getClub(cl_num);
+		List<ClubMemberVO> list = clubService.getClubMemberList(cl_num);
+		model.addAttribute("club",club);
 		model.addAttribute("list",list);
 		return "/club/manage";
 	}
@@ -137,8 +139,14 @@ public class ClubController {
 		model.addAttribute("msg", msg);
 		return "message";
 	}
-	
 
+	@ResponseBody
+	@PostMapping("/mbmanage")
+	public Map<String, Object> region(@RequestParam String type, @RequestParam String authority, @RequestParam int cl_num, @RequestParam int me_num,  Model model){
+		Map<String, Object> map = new HashMap<String, Object>();
+		// 여기해야함!!!! 
+		return map;
+	}
 }
 	
 

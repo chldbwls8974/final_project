@@ -14,4 +14,10 @@
 		select * from club_member
 		where cm_cl_num = #{cl_num} and cm_me_num = #{me_num}
 	</select>
+	<select id="selectClubMemberList" resultType="kr.kh.final_project.vo.ClubMemberVO">
+		select * from club_member
+		join member on cm_me_num = me_num
+		join club on cm_cl_num = cl_num
+		where cm_cl_num = #{cl_num}
+	</select>
 </mapper>

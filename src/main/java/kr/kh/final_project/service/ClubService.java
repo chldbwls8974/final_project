@@ -22,6 +22,8 @@ public interface ClubService {
 	List<ClubVO> getMyClubList(Integer me_num, String authority);
 
 	ClubMemberVO getMyAuthorityByClub(Integer cl_num, Integer me_num);
+
+	List<ClubMemberVO> getClubMemberList(Integer cl_num);
 	
 }
 	
