@@ -78,19 +78,21 @@
 			<label>작성자</label>
 			<input type="text" class="form-control" name="bo_me_id" value="${board.me_nickname}" readonly>
 		</div>
-		<div class="input-group mb-3">
-		    <div class="input-group">
-		    	<div class="form-control"
-					 style="height : 600px; overflow-y: auto; text-align: center;" >${board.bo_contents}</div>
-		    </div>
-		</div>
+		<c:if test="${board.bo_contents != null}">
+			<div class="input-group mb-3">
+			    <div class="input-group">
+			    	<div class="form-control"
+						 style="height : 600px; overflow-y: auto; text-align: center;" >${board.bo_contents}</div>
+			    </div>
+			</div>
+		</c:if>
 		<div class="form-group">
 			<c:choose>
 				<c:when test="${fileList.size() != 0 }">
 					<label>첨부파일</label><br>
 						<c:forEach items="${fileList}" var="file">
-							<a  href="<c:url value='/download${file.fi_name}'/>" 
-								download="${file.fi_ori_name}">${file.fi_ori_name}</a><br>
+							<a  href="<c:url value='/download${file.fi_ori_name}'/>" 
+								download="${file.fi_name}">${file.fi_name}</a><br>
 						</c:forEach>
 				</c:when>
 				<c:otherwise>
@@ -110,13 +112,15 @@
 				 	</c:otherwise>
 				</c:choose>
 			</c:forEach> --%>
-		<!-- 댓글 입력창  -->
-		<br>
-		<div class="input-group-append mb-3">
-			<textarea class="form-control" placeholder="댓글을 입력해주세요." id="inputComment"></textarea>
-		    <button type="button"  class="btn" id="btnCommentInsert"
-		    	style="background-color: #c2f296; border-radius: 5px; width: 70px;">등록</button>
-		 </div>
+		<c:if test="${board.bo_bt_num != 6 && board.bo_bt_num != 7}">
+			<!-- 댓글 입력창  -->
+			<label>댓글</label><br>
+			<div class="input-group-append mb-3">
+				<textarea class="form-control" placeholder="댓글을 입력해주세요." id="inputComment"></textarea>
+			    <button type="button"  class="btn btn-outline-success" id="btnCommentInsert"
+					style="background-color: #c2f296; border-radius: 5px; width: 70px;">등록</button>
+			 </div>
+		</c:if>
 		<!-- 댓글 목록창 -->
 		<div class="box-comment">
 			<div class="comment-box1" >
@@ -166,20 +170,21 @@
 				<a class="page-link" href="#"> 다음</a>
 			</div>
 		</div>
-		<hr>
+		<br>
 		<!-- 자신이 쓴 게시글만 수정,삭제 버튼 나오게 -->
-		<c:if test="${user != null && user.me_num == board.bo_me_num}">
-			<button type="button"
-					class="btn btn-outline-warning col-12 btn-board-update"
-					onclick="location.href='<c:url value='/board/update?bo_num=${board.bo_num}'/>'">수정하기
-			</button><br>
-		</c:if>
-		<c:if test="${user != null && user.me_num == board.bo_me_num}">
-			<button type="button"
-					class="btn btn-outline-danger col-12 btn-delete"
-					onclick="location.href='<c:url value='/board/delete?bo_num=${board.bo_num}'/>'">삭제하기
-			</button><br>
-		</c:if>
+			<c:if test="${user != null && user.me_num == board.bo_me_num}">
+				<button type="button"
+						class="btn btn-outline-warning col-12 btn-board-update"
+						onclick="location.href='<c:url value='/board/update?bo_num=${board.bo_num}'/>'">수정하기
+				</button><br>
+			</c:if>
+			<c:if test="${user != null && user.me_num == board.bo_me_num}">
+				<button type="button"
+						class="btn btn-outline-danger col-12 btn-delete"
+						onclick="location.href='<c:url value='/board/delete?bo_num=${board.bo_num}'/>'">삭제하기
+				</button><br>
+			</c:if>
+		
 	</form>
 <script type="text/javascript">
      $('#summernote').summernote({
@@ -250,7 +255,7 @@
 						 <textarea class="form-control" placeholder="답글을 입력해주세요." name="co_content_reply" id="inputComment2"></textarea>
 						 <button type="button" 
 						 		 class="btn btn-outline-primary btn-sm btn-reply-insert" 
-						 		 data-num="\${co_ori_num}">답글2</button>
+						 		 data-num="\${co_ori_num}">답글</button>
 					</div>
 			`;
 			$(this).parents('.comment-box').after(str);
@@ -270,7 +275,6 @@
 					co_bo_num : co_bo_num,
 					co_comments : co_contents
 			}
-			console.log(comment)
 			$.ajax({
 				async : false,
 				method: 'post',

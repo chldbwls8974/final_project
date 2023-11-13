@@ -68,7 +68,6 @@ public class BoardController {
 		// boardService한테 board와 user, files정보를 주며 저장하라고 시킴 그걸 res에 저장하기
 		boolean res = boardService.insertBoard(board, user, files);
 		// 만약 결과가 true이면
-		System.out.println(board);
 		if(res) {
 			model.addAttribute("msg", "게시글 등록 성공!");
 			model.addAttribute("url", "/board/notice");
@@ -86,7 +85,6 @@ public class BoardController {
 		boardService.updateViews(bo_num);
 		// 서비스에게 게시글 번호를 주면서 게시글을 가져오라고 시킨다.
 		BoardVO board = boardService.getBoard(bo_num);
-		System.out.println(board);
 		// 등록된 첨부파일을 가져오라고 boardService한테 시키고 가져온 첨부파일을 fileList에 넣기
 		List<FileVO> fileList = boardService.getFileList(bo_num);
 		
@@ -382,14 +380,15 @@ public class BoardController {
 		
 	// 문의게시판 조회하기 (5)
 	@GetMapping("/board/inquiry")
-	public String boardInquiry(Model model, Criteria cri) {
+	public String boardInquiry(Model model, Criteria cri, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		// 페이지네이션
 		cri.setPerPageNum(5);
-		int totalCount = boardService.getInquiryTotalCount(cri);
+		int totalCount = boardService.getInquiryTotalCount(cri, user);
 		final int DISPLAY_PAGE_NUM = 3;
 		PageMaker pm = new PageMaker(DISPLAY_PAGE_NUM, cri, totalCount);
 		// 문의게시판 조회하기
-		List<BoardVO> list = boardService.getBoardInquiryList(cri);
+		List<BoardVO> list = boardService.getBoardInquiryList(cri, user);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("cri", cri);

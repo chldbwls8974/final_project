@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>회원조회 검색</title>
 <style>
-	h1{
+	h1,th,td{
 		text-align : center
 	}
 </style>
@@ -99,14 +99,5 @@
 		</c:if>
 	</ul>
  </div>
- <script type="text/javascript">
- 	$(document).on('change', '.select-type', function() {
-		if($(this).val() == 'fifth'){
-			$('.input-search').prop('placeholder', '일반회원 검색 : 0, 정지회원 검색 : 1');
-		}else{
-			$('.input-search').prop('placeholder', '검색어를 입력하세요.');			
-		}
-	});
- </script>
 </body>
 </html>

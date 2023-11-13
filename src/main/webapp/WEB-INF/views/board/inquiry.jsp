@@ -68,54 +68,56 @@
         <th>댓글수</th>
       </tr>
     </thead>
-			<tbody>
-				<c:forEach items="${list}" var="bo">
-					<c:choose>
-						<c:when
-							test="${bo.bo_me_num == user.me_num || user.me_authority == 'ADMIN' }">
-							<tr>
-								<td>${bo.bo_num}</td>
-								<td><a
-									href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_title}</a></td>
-								<td>${bo.me_nickname}</td>
-								<td>${bo.bo_reg_date_str}</td>
-								<td>${bo.bo_count}</td>
-								<td><a
-									href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_comment}</a></td>
-							</tr>
-						</c:when>
-					</c:choose>
-					<c:if test="${bo.bo_me_num != user.me_num && user.me_authority != 'ADMIN'}">
-						<tr>
-							<td colspan="6" class="noneInquiry">문의 내용이 없습니다.</td>
-						</tr>
-					</c:if>
-				</c:forEach>
-			</tbody>
-		</table>
+		<tbody>
+			<c:choose>	
+				<c:when test="${not empty list}">
+					<c:forEach items="${list}" var="bo">
+						<c:choose>
+							<c:when
+								test="${bo.bo_me_num == user.me_num || user.me_authority == 'ADMIN' }">
+								<tr>
+									<td>${bo.bo_num}</td>
+									<td><a
+										href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_title}</a></td>
+									<td>${bo.me_nickname}</td>
+									<td>${bo.bo_reg_date_str}</td>
+									<td>${bo.bo_count}</td>
+									<td><a
+										href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_comment}</a></td>
+								</tr>
+							</c:when>
+						</c:choose>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="6" class="noneInquiry">문의 내용이 없습니다.</td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
+		</tbody>
+</table>
   <!-- 페이지네이션 적용 -->
-  
-			<ul class="pagination justify-content-center">
-				<c:if test="${pm.prev}">
-					<li class="page-item">
-						<a class="page-link" 
-							href="<c:url value='/board/inquiry${pm.cri.getUrl(pm.startPage-1) }'/>">이전</a>
-					</li>
-				</c:if>
-				<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
-					<li class="page-item <c:if test='${pm.cri.page == i }'>active</c:if>">
-						<a class="page-link" 
-							href="<c:url value='/board/inquiry${pm.cri.getUrl(i)}'/>">${i}</a>
-					</li>
-				</c:forEach>
-				<c:if test="${pm.next}">
-					<li class="page-item">
-						<a class="page-link" 
-							href="<c:url value='/board/inquiry${pm.cri.getUrl(pm.endPage+1) }'/>">다음</a>
-					</li>
-				</c:if>
-			</ul>
-		
+		<ul class="pagination justify-content-center">
+			<c:if test="${pm.prev}">
+				<li class="page-item">
+					<a class="page-link" 
+						href="<c:url value='/board/inquiry${pm.cri.getUrl(pm.startPage-1) }'/>">이전</a>
+				</li>
+			</c:if>
+			<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
+				<li class="page-item <c:if test='${pm.cri.page == i }'>active</c:if>">
+					<a class="page-link" 
+						href="<c:url value='/board/inquiry${pm.cri.getUrl(i)}'/>">${i}</a>
+				</li>
+			</c:forEach>
+			<c:if test="${pm.next}">
+				<li class="page-item">
+					<a class="page-link" 
+						href="<c:url value='/board/inquiry${pm.cri.getUrl(pm.endPage+1) }'/>">다음</a>
+				</li>
+			</c:if>
+		</ul>	
  </div>
  <script type="text/javascript">
 	 $(document).on('click', '.btn-inquiry', function(){

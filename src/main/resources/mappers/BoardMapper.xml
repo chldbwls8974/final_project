@@ -545,6 +545,13 @@
 		where
 			bo_bt_num = 5
 				and
+		<if test="user.me_authority != 'ADMIN'">
+			bo_me_num = #{user.me_num}
+		</if>
+		<if test="user.me_authority == 'ADMIN'">
+			bo_me_num != #{user.me_num}
+		</if>
+				and
 		<if test="cri.t == 'all'">
 			(
 				bo_num like concat('%', #{cri.s}, '%')
@@ -585,6 +592,13 @@
 				on bo_me_num = me_num
 		where
 			bo_bt_num = 5
+				and
+		<if test="user.me_authority != 'ADMIN'">
+			bo_me_num = #{user.me_num}
+		</if>
+		<if test="user.me_authority == 'ADMIN'">
+			bo_me_num != #{user.me_num}
+		</if>
 				and
 		<if test="cri.t == 'all'">
 			(
