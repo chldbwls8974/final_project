@@ -10,140 +10,147 @@
 <body>
 	<h1 class="display-3"><span style="color: black; font-weight: bold;">시설 등록</span></h1> <br>
 	<form action="<c:url value='/businessman/facilityInsert'/>" method="post">
-	  <div class="form-group">
-	    <label for="fa_bu_num">사업자 번호</label>
-	    <input type="text" class="form-control" id="fa_bu_num" name="fa_bu_num" value="${business.bu_num}" readonly>
-	  </div>
-	  
-	  <div class="form-group">
-		<label>지역</label> 
-		<select class="form-control rg_main" required>
-			<option value="0">지역을 선택하세요</option>
-				<c:forEach items="${MainRegion}" var="main">
-					<option value="${main.rg_main}">${main.rg_main}</option>
-				</c:forEach>
-		</select>
-	  </div>
-	  <div class="form-group">
-		<select class="form-control rg_sub" name="fa_rg_num" required>
-			<option value="0">지역을 선택하세요</option>
-				<c:forEach items="${SubRegion}" var="sub">
-					<option value="${sub.rg_num}">${sub.rg_sub}</option>
-				</c:forEach>
-		</select>
-	  </div>
+		<div class="form-group">
+			<label for="fa_bu_num">사업자 번호</label>
+		    <input type="text" class="form-control" id="fa_bu_num" name="fa_bu_num" value="${business.bu_num}" readonly>
+		</div>
+		  
+	  	<div class="form-group">
+			<label>지역</label> 
+			<select class="form-control rg_main" required>
+				<option value="0">지역을 선택하세요</option>
+					<c:forEach items="${MainRegion}" var="main">
+						<option value="${main.rg_main}">${main.rg_main}</option>
+					</c:forEach>
+			</select>
+		</div>
+	    <div class="form-group">
+			<select class="form-control rg_sub" name="fa_rg_num" required>
+				<option value="0">지역을 선택하세요</option>
+					<c:forEach items="${SubRegion}" var="sub">
+						<option value="${sub.rg_num}">${sub.rg_sub}</option>
+					</c:forEach>
+			</select>
+	    </div>
 
-	  <div class="form-group">
-	    <label for="fa_name">시설명</label>
-	    <input type="text" class="form-control" placeholder="시설명을 입력하세요" name="fa_name" id="fa_name" required>
-	  </div>
-	  <div class="form-group">
-		<label for="fa_add">주소</label>
-		  <input type="text" class="form-control" placeholder="주소를 입력하세요" name="fa_add" id="fa_add" required>
-	  </div>
-	  <div class="form-group">
-		  <label for="fa_add_detail">상세주소</label>
-		  <input type="text" class="form-control" placeholder="상세 주소를 입력하세요" name="fa_add_detail" id="fa_add_detail" required>
-	  </div>
-	 
-	  <div class="form-group">
-	    <label for="fa_phone">전화번호</label>
-	    <input type="text" class="form-control" id="fa_phone" name="fa_phone" placeholder="-를 제외하고 입력하세요" oninput="autoHyphen(this)" maxlength="14" required>
-	  </div>
-	  
-	  <h3>부대시설</h3>
-	  <div class="form-group">
-	    <label for="fa_pay" style="font-weight: bold;">주차장</label>
-	    <div class="form-check-inline">
-		  <label class="form-check-label">
-		  	<input type="radio" class="form-check-input" name="fa_pay" value="0" required>없음
-		  </label>
+  	    <div class="form-group">
+		    <label for="fa_name">시설명</label>
+		    <input type="text" class="form-control" placeholder="시설명을 입력하세요" name="fa_name" id="fa_name" required>
 		</div>
-		<div class="form-check-inline">
-		  <label class="form-check-label">
-		    <input type="radio" class="form-check-input" name="fa_pay" value="1" required>무료
-		  </label>
+		<div class="form-group">
+			<label for="fa_add">주소</label>
+		    <input type="text" class="form-control" placeholder="주소를 입력하세요" name="fa_add" id="fa_add" required>
 		</div>
-		<div class="form-check-inline">
-		  <label class="form-check-label">
-		    <input type="radio" class="form-check-input" name="fa_pay" value="2" required>유료
-		  </label>
+		<div class="form-group">
+			<label for="fa_add_detail">상세주소</label>
+			<input type="text" class="form-control" placeholder="상세 주소를 입력하세요" name="fa_add_detail" id="fa_add_detail" required>
 		</div>
-	  </div>
-	  <div class="form-group">
-	    <label for="fa_locker" style="font-weight: bold;">탈의실</label>
-	    <div class="form-check-inline">
-		  <label class="form-check-label">
-		  	<input type="radio" class="form-check-input" name="fa_locker" value="0" required>없음
-		  </label>
+		 
+		<div class="form-group">
+		    <label for="fa_phone">전화번호</label>
+		    <input type="text" class="form-control" id="fa_phone" name="fa_phone" placeholder="-를 제외하고 입력하세요" oninput="autoHyphen(this)" maxlength="14" required>
 		</div>
-		<div class="form-check-inline">
-		  <label class="form-check-label">
-		    <input type="radio" class="form-check-input" name="fa_locker" value="1" required>있음
-		  </label>
+		  
+	    <h3>부대시설</h3>
+	    <div class="form-group">
+			<label for="fa_pay" style="font-weight: bold;">주차장</label>
+		    <div class="form-check-inline">
+				<label class="form-check-label">
+			  		<input type="radio" class="form-check-input" name="fa_pay" value="0" required>없음
+			    </label>
+			</div>
+			<div class="form-check-inline">
+			    <label class="form-check-label">
+			    	<input type="radio" class="form-check-input" name="fa_pay" value="1" required>무료
+			    </label>
+			</div>
+			<div class="form-check-inline">
+				<label class="form-check-label">
+			    	<input type="radio" class="form-check-input" name="fa_pay" value="2" required>유료
+			    </label>
+			</div>
 		</div>
-	  </div>
-	  <div class="form-group">
-	    <label for="fa_toilet" style="font-weight: bold;">화장실</label>
-	    <div class="form-check-inline">
-		  <label class="form-check-label">
-		  	<input type="radio" class="form-check-input" name="fa_toilet" value="0" required>없음
-		  </label>
+		  
+		<div class="form-group">
+			<label for="fa_locker" style="font-weight: bold;">탈의실</label>
+		    <div class="form-check-inline">
+				<label class="form-check-label">
+			  		<input type="radio" class="form-check-input" name="fa_locker" value="0" required>없음
+			    </label>
+			</div>
+			<div class="form-check-inline">
+				<label class="form-check-label">
+			    	<input type="radio" class="form-check-input" name="fa_locker" value="1" required>있음
+			    </label>
+			</div>
 		</div>
-		<div class="form-check-inline">
-		  <label class="form-check-label">
-		    <input type="radio" class="form-check-input" name="fa_toilet" value="1" required>있음
-		  </label>
+		  
+		<div class="form-group">
+			<label for="fa_toilet" style="font-weight: bold;">화장실</label>
+		    <div class="form-check-inline">
+				<label class="form-check-label">
+			  		<input type="radio" class="form-check-input" name="fa_toilet" value="0" required>없음
+			    </label>
+			</div>
+			<div class="form-check-inline">
+				<label class="form-check-label">
+			    	<input type="radio" class="form-check-input" name="fa_toilet" value="1" required>있음
+			    </label>
+			</div>
 		</div>
-	  </div>
-	  <div class="form-group">
-	    <label for="fa_shower" style="font-weight: bold;">샤워실</label>
-	    <div class="form-check-inline">
-		  <label class="form-check-label">
-		  	<input type="radio" class="form-check-input" name="fa_shower" value="0" required>없음
-		  </label>
+		  
+		<div class="form-group">
+		    <label for="fa_shower" style="font-weight: bold;">샤워실</label>
+		    <div class="form-check-inline">
+				<label class="form-check-label">
+			  		<input type="radio" class="form-check-input" name="fa_shower" value="0" required>없음
+			    </label>
+			</div>
+			<div class="form-check-inline">
+				<label class="form-check-label">
+			    	<input type="radio" class="form-check-input" name="fa_shower" value="1" required>있음
+			    </label>
+			</div>
 		</div>
-		<div class="form-check-inline">
-		  <label class="form-check-label">
-		    <input type="radio" class="form-check-input" name="fa_shower" value="1" required>있음
-		  </label>
+		  
+		<div class="form-group">
+		    <label for="fa_smoking" style="font-weight: bold;">흡연장</label>
+		    <div class="form-check-inline">
+				<label class="form-check-label">
+			  		<input type="radio" class="form-check-input" name="fa_smoking" value="0" required>없음
+			    </label>
+			</div>
+			<div class="form-check-inline">
+				<label class="form-check-label">
+			    	<input type="radio" class="form-check-input" name="fa_smoking" value="1" required>있음
+			    </label>
+			</div>
 		</div>
-	  </div>
-	  <div class="form-group">
-	    <label for="fa_smoking" style="font-weight: bold;">흡연장</label>
-	    <div class="form-check-inline">
-		  <label class="form-check-label">
-		  	<input type="radio" class="form-check-input" name="fa_smoking" value="0" required>없음
-		  </label>
+	
+		<div class="form-group">
+			<label for="fa_machine" style="font-weight: bold;">자판기</label>
+		    <div class="form-check-inline">
+				<label class="form-check-label">
+			  		<input type="radio" class="form-check-input" name=fa_machine value="0" required>없음
+			    </label>
+			</div>
+			<div class="form-check-inline">
+				<label class="form-check-label">
+			    	<input type="radio" class="form-check-input" name="fa_machine" value="1" required>있음
+			    </label>
+			</div>
 		</div>
-		<div class="form-check-inline">
-		  <label class="form-check-label">
-		    <input type="radio" class="form-check-input" name="fa_smoking" value="1" required>있음
-		  </label>
+		<br>
+		  
+		<div class="form-group">
+		<label for="fa_note">특이사항</label>
+			<textarea class="form-control" rows="5" id="fa_note" name="fa_note"></textarea>
 		</div>
-	  </div>
+	   <br>
+	   <button class="btn btn-secondary btn-block">등록</button><br>
+	</form> 
 
-	  <div class="form-group">
-	    <label for="fa_machine" style="font-weight: bold;">자판기</label>
-	    <div class="form-check-inline">
-		  <label class="form-check-label">
-		  	<input type="radio" class="form-check-input" name=fa_machine value="0" required>없음
-		  </label>
-		</div>
-		<div class="form-check-inline">
-		  <label class="form-check-label">
-		    <input type="radio" class="form-check-input" name="fa_machine" value="1" required>있음
-		  </label>
-		</div>
-	  </div>
-	  
-	  <div class="form-group">
-		  <label for="fa_note">특이사항</label>
-		  <textarea class="form-control" rows="5" id="fa_note" name="fa_note"></textarea>
-	  </div>
-	  <button class="btn btn-secondary btn-block">등록</button>
 
-	</form>
 
 	<script type="text/javascript">	
 		//자동으로 하이픈(-)으로 구분된 전화번호 형식으로 변환하는 메서드
@@ -174,8 +181,8 @@
 					th.parent().next().find('[name=fa_rg_num]').append(option)
 				}
 			})
-		   });
-		
+		  });
+		 
 	</script>
 
 </body>
