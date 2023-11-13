@@ -19,4 +19,66 @@
 			cm_me_num = #{me_num} and
 			cm_cl_num = #{cl_num}
 	</select>
+	<select id="selectClubMemberListByMtNum" resultType="kr.kh.final_project.vo.ClubMemberVO">
+		select
+			club_member.*,
+		    me_nickname,
+		    me_rating,
+		    me_tr_name,
+		    ifnull(en_num, 0) as en_num,
+		    if(ifnull(T1.t1, 0) + ifnull(T2.t2, 0) + ifnull(T3.t3, 0) = 0, true, false) as entry_able
+		from
+			club_member
+				join
+			member on cm_me_num = me_num
+				join
+			club_team on cm_cl_num = ct_cl_num
+				join
+			team on ct_te_num = te_num
+				join
+			`match` on te_mt_num = mt_num
+				left join
+			entry on en_te_num = te_num and en_me_num = cm_me_num
+				left join
+		    (select
+				mt_ti_num as t1,
+		        en_me_num as e1
+			from
+				entry
+					join
+				team on en_te_num = te_num
+					join
+				`match` on te_mt_num = mt_num
+			where
+				mt_date = mt_date) as T1 on T1.t1 = mt_ti_num and T1.e1 = cm_me_num
+				left join
+		    (select
+				mt_ti_num + 1 as t2,
+		        en_me_num as e2
+			from
+				entry
+					join
+				team on en_te_num = te_num
+					join
+				`match` on te_mt_num = mt_num
+			where
+				mt_date = mt_date) as T2 on T2.t2 = mt_ti_num and T2.e2 = cm_me_num
+				left join
+		    (select
+				mt_ti_num - 1 as t3,
+		        en_me_num as e3
+			from
+				entry
+					join
+				team on en_te_num = te_num
+					join
+				`match` on te_mt_num = mt_num
+			where
+				mt_date = mt_date) as T3 on T3.t3 = mt_ti_num and T3.e3 = cm_me_num
+		where
+			cm_cl_num = ${cl_num} and
+		    (cm_authority = "LEADER" or cm_authority = "MEMBER") and
+		    mt_num = #{mt_num}
+		order by me_rating desc;
+	</select>
 </mapper>

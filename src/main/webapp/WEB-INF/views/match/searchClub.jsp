@@ -121,7 +121,6 @@
 				data : {mt_date:select_day, cl_num:cl_num},
 				dataType : 'json',
 				success : function(data) {
-					console.log(data);
 					for(match of data.matchList){
 						str +=`
 						<div class="match-box">

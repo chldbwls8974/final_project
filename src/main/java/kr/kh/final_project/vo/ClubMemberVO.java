@@ -15,4 +15,6 @@ public class ClubMemberVO {
 	private String me_tr_name;
 	
     private int en_num;
+    
+    private int entry_able;
 }

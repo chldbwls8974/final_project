@@ -603,15 +603,17 @@ WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(adddate(now(), 
 
 insert into manager(mn_mt_num, mn_me_num)
 values
-(884, 3), (902, 3), (889, 4), (463, 3) ,(524, 3), (8, 3), (48, 3),
-(1337, 3), (1344, 3), (465, 4);
+(884, 3), (902, 3), (889, 4), (463, 3) ,(522, 3), (8, 3), (48, 3),
+(1337, 3), (1344, 3), (465, 4), (524, 4);
 
 update `match`
 set
-	mt_rule = 1
+	mt_rule = 1,
+    mt_state2 = 1
 where
 	mt_num = 884 or mt_num = 902 or mt_num = 889 or mt_num = 463 or
-	mt_num = 524 or mt_num = 8 or mt_num = 48 or mt_num = 1337 or mt_num = 1344 ;
+	mt_num = 522 or mt_num = 8 or mt_num = 48 or mt_num = 1337 or
+    mt_num = 1344 or mt_num = 465 or mt_num = 524 ;
 
 insert into preferred_region(pr_me_num, pr_rg_num)
 values
@@ -649,14 +651,14 @@ values
 (155 , 5), (156 , 5), (162 , 5), (163 , 5), (164 , 5);
 
 insert into team(te_mt_num, te_type)
-values(463, 0), (902, 0), (524, 0), (465, 1), (526, 1), (526, 2);
+values(463, 0), (902, 0), (524, 0), (465, 1), (522, 1), (522, 2);
 
 update `match`
 set
 	mt_type = 1,
     mt_state2 = 1
 where
-	mt_num = 902 or mt_num = 463;
+	mt_num = 902 or mt_num = 463 or mt_num = 524;
 
 insert into entry(en_me_num, en_te_num)
 values
@@ -677,7 +679,7 @@ values
 (-10000, 1, 524, 5), (-10000, 1, 524, 6), (-10000, 1, 524, 7), (-10000, 1, 524, 8), (-10000, 1, 524, 9),
 (-10000, 1, 524, 10), (-10000, 1, 524, 11), (-10000, 1, 524, 12), (-10000, 1, 524, 13), (-10000, 1, 524, 14),
 (-10000, 1, 524, 15), (-10000, 1, 524, 16), (-10000, 1, 524, 17), (-10000, 1, 524, 18), (-10000, 1, 524, 19),
-(-60000, 1, 519, 11), (-60000, 1, 519, 21);
+(-60000, 1, 522, 11), (-60000, 1, 522, 21);
 
 insert into club(cl_name, cl_rg_num)
 values
@@ -732,6 +734,7 @@ values
 UPDATE `match`
 SET
 	mt_type = 2,
-	mt_rule = 1
+	mt_rule = 1,
+    mt_state2 = 1
 WHERE
-	mt_num = 465 or mt_num = 526;
+	mt_num = 465 or mt_num = 522;

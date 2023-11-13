@@ -20,6 +20,15 @@
 	.team-box{display: flex; background-color: black;}
 	.teamList-box{flex: 1; margin-right: 3px; background-color: white;}
 	.teamList-box:last-child {margin-right: 0;}
+	.club-list-box{display: flex;}
+	.club-member-box{flex: 1; border-right: 3px solid black; overflow: scroll;}
+	.club-entry-box{flex: 1; overflow: scroll;}
+	.entry-member::after{clear: both; content: ''; display: block;}
+	.entry-btn{float: right}
+	.member-list{border-bottom: 1px solid black}
+	.member-list:last-child{border-bottom: none;}
+	.entry-list-box{width: 100%; float: right; margin-bottom: 10px;
+	border: 3px solid black; box-sizing: border-box;}
 	</style>
 </head>
 <body>
@@ -29,36 +38,8 @@
 			<div class="info-box match-box">
 			${match}
 			</div>
-			<c:if test="${cl_num != 0}">
+			<c:if test="${cl_num != 0 && match.team_count != 0}">
 				<div class="info-box team-box">
-					<c:forEach items="${teamList}" var="tl">
-						<div class="teamList-box">
-							<table>
-								<thead>
-									<tr>
-										<th>
-											${tl.te_type}팀:${tl.cl_name} ${tl.club_entry_count}/${match.mt_personnel}
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:if test="${tl.ct_cl_num == cl_num}">
-										<c:forEach items="${entryList}" var="el">
-											<c:if test="${tl.te_num == el.en_te_num }">
-												<tr>
-													<td>
-														<span>
-															${el.me_nickname}(${el.me_tr_name})
-														</span>
-													</td>
-												</tr>
-											</c:if>
-										</c:forEach>
-									</c:if>
-								</tbody>
-							</table>
-						</div>
-					</c:forEach>
 				</div>
 			</c:if>
 		</div>
@@ -86,6 +67,13 @@
 						<h4>취소</h4>
 						<button class="btn btn-outline-danger btn-cansel">취소</button>
 					</div>
+					<c:if test="${match.entry_res == 1 && match.ready==1}">
+						<div class="entry-list-box">
+							<c:forEach items="${entryList}" var="el">
+								<span>${el.me_nickname}(${el.me_tr_name})</span> <br>
+							</c:forEach>
+						</div>
+					</c:if>
 				</c:if>
 			</c:if>
 			<c:if test="${(match.mt_type == 0 && cl_num != 0) || (match.mt_type == 2 && cl_num != 0)}">
@@ -103,7 +91,49 @@
 						<button class="btn btn-outline-danger btn-cansel">취소</button>
 					</div>
 					<div class="club-list-box right-side-box">
-						<h4>미참가 클럽멤버 리스트</h4>
+						<div class="club-member-box">
+							<c:forEach items="${CMList}" var="cm">
+								<c:if test="${cm.en_num == 0}">
+									<c:if test="${cm.entry_able == 1}">
+										<div class="entry-able-member member-list">${cm.me_nickname}
+											<c:if test="${authority == 'LEADER'}">
+												<button class="entry-btn btn btn-primary entry-add-btn">등록</button>
+											</c:if>
+											<br>
+											(${cm.me_tr_name})
+											<input hidden disabled value="${cm.cm_me_num}">
+										</div>
+									</c:if>
+									<c:if test="${cm.entry_able != 1}">
+										<div class="entry-disable-member member-list">${cm.me_nickname}
+											<c:if test="${authority == 'LEADER'}">
+												<button class="entry-btn btn btn-secondary" disabled>등록</button>
+											</c:if>
+											<br>
+											(${cm.me_tr_name})
+											<input hidden disabled value="${cm.cm_me_num}">
+										</div>
+									</c:if>
+								</c:if>
+							</c:forEach>
+						</div>
+						<div class="club-entry-box">
+							<c:forEach items="${CMList}" var="cm">
+								<c:if test="${cm.en_num != 0}">
+									<div class="entry-member member-list">${cm.me_nickname}
+										<c:if test="${authority == 'LEADER' && match.ready == 0}">
+											<button class="entry-btn btn btn-danger entry-del-btn">삭제</button>
+										</c:if>
+										<br>
+										(${cm.me_tr_name})
+										<input hidden disabled value="${cm.en_num}">
+									</div>
+								</c:if>
+							</c:forEach>
+						</div>
+						<c:if test="${authority == 'LEADER'}">
+							
+						</c:if>
 					</div>
 				</c:if>
 			</c:if>
@@ -116,7 +146,8 @@
 	let cl_num = ${cl_num};
 	let hp_num = 0;
 	let total_price = ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre};
-	let mt_num = ${match.mt_num}
+	let mt_num = ${match.mt_num};
+	printTeam()
 	$(document).on('click', '[name=coupon]', function() {
 		hp_num = $(this).val();
 		total_price = ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre} - $(this).siblings('.sale-point').val();
@@ -129,7 +160,18 @@
 	$(document).on('click', '.btn-cansel', function() {
 		cansel()
 	});
-	
+	$(document).on('click', '.entry-add-btn', function() {
+		if(${match.mt_personnel == match.club_entry_count}){
+			alert("참가자를 모두 선택하였습니다.");
+		}else{
+			me_num = $(this).siblings('input').val();
+			entryAdd(me_num);
+		}
+	});
+	$(document).on('click', '.entry-del-btn', function() {
+		en_num = $(this).siblings('input').val();
+		entryDel(en_num);
+	});
 	function application() {
 		if(cl_num == 0){
 			$.ajax({
@@ -199,6 +241,73 @@
 				}
 			});
 		}
+	}
+	function entryAdd(me_num) {
+		$.ajax({
+			async : false,
+			method : 'post',
+			url : '<c:url value="/club/entry/add"/>',
+			data : {me_num:me_num, cl_num:cl_num, mt_num:mt_num},
+			dataType : 'json',
+			success : function(data) {
+				if(data.res){
+					alert("등록 성공");
+					location.href='<c:url value="/match/application?mt_num="/>'+ mt_num + '&cl_num=' + cl_num;
+				}else{
+					alert("등록 실패")	;			
+				}
+			}
+		});
+	}
+	function entryDel(en_num) {
+		$.ajax({
+			async : false,
+			method : 'post',
+			url : '<c:url value="/club/entry/del"/>',
+			data : {en_num:en_num},
+			dataType : 'json',
+			success : function(data) {
+				if(data.res){
+					alert("삭제 성공");
+					location.href='<c:url value="/match/application?mt_num="/>'+ mt_num + '&cl_num=' + cl_num;
+				}else{
+					alert("삭제 실패")	;			
+				}
+			}
+		});
+	}
+	function printTeam() {
+		str = `
+			<c:forEach items="${teamList}" var="tl">
+				<div class="teamList-box">
+					<table>
+						<thead>
+							<tr>
+								<th>
+									${tl.te_type}팀:${tl.cl_name} ${tl.club_entry_count}/${match.mt_personnel}
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:if test="${tl.ct_cl_num == cl_num || match.ready == 1}">
+								<c:forEach items="${entryList}" var="el">
+									<c:if test="${tl.te_num == el.en_te_num}">
+										<tr>
+											<td>
+												<span>
+													${el.me_nickname}(${el.me_tr_name})
+												</span>
+											</td>
+										</tr>
+									</c:if>
+								</c:forEach>
+							</c:if>
+						</tbody>
+					</table>
+				</div>
+			</c:forEach>
+		`;
+		$('.team-box').html(str);
 	}
 	</script>
 </body>

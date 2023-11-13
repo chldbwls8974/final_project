@@ -50,4 +50,10 @@ public interface MatchService {
 
 	List<EntryVO> selectEntryByMtNum(int mt_num);
 
+	List<ClubMemberVO> selectClubMemberListByMtNum(int cl_num, int mt_num);
+
+	boolean insertEntryClub(int me_num, int cl_num, int mt_num);
+
+	boolean deleteEntryClub(int en_num);
+
 }

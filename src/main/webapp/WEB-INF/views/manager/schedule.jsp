@@ -100,13 +100,24 @@
 			success : function(data) {
 				for(match of data.matchList){
 					str +=`
-					<div class="match-box">
-						<div class="match-time-box">
-							<span class="match-time">\${match.ti_time_str}</span>
-						</div>
-						<div class="match-info-box">
-							<span>\${match.rg_main} \${match.rg_sub}</span> <br>
-							<span>\${match.fa_name} \${match.st_name} \${match.mt_personnel} vs \${match.mt_personnel}</span>
+						<div class="match-box">
+							<div class="match-time-box">
+								<span class="match-time">\${match.ti_time_str}</span>
+							</div>
+							<div class="match-info-box">
+								<span>\${match.rg_main} \${match.rg_sub}</span> \${match.fa_name} \${match.st_name}<br>
+					`;
+					if(match.mt_type == 1){
+						str += `
+							<span>개인 경쟁전 \${match.mt_personnel} vs \${match.mt_personnel}</span>
+						`;
+					}
+					if(match.mt_type == 2){
+						str += `
+							<span>클럽 경쟁전 \${match.mt_personnel} vs \${match.mt_personnel}</span>
+						`;
+					}
+					str += `
 						</div>
 					`;
 					if(${weekCount == 2}){

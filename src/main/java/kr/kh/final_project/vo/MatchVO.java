@@ -67,6 +67,7 @@ public class MatchVO {
 	private int application;
 	private int application_able;
 	private int entry_res;
+	private int ready;	
 	
 	public String getMt_date_str() {
 		if(mt_date == null) {

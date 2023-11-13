@@ -146,10 +146,13 @@ public class MatchController {
 				model.addAttribute("msg", msg);
 				return "/message";
 			}
+			model.addAttribute("authority", dbCM.getCm_authority());
+			List<ClubMemberVO> CMList = matchService.selectClubMemberListByMtNum(cl_num, mt_num);
+
+			model.addAttribute("CMList", CMList);
 		}
 		List<TeamVO> teamList = matchService.selectTeamByMtNum(mt_num);
 		List<EntryVO> entryList = matchService.selectEntryByMtNum(mt_num);
-		//List<ClubMemberVO> CMList = matchService.selectClubListByMtNum(mt_num);
 		
 		model.addAttribute("cl_num", cl_num);
 		model.addAttribute("user", user);
@@ -271,6 +274,28 @@ public class MatchController {
 		}
 		
 		map.put("msg", msg);
+		map.put("res", res);
+		return map;
+	}
+	@ResponseBody
+	@PostMapping("/club/entry/add")
+	public Map<String, Object> insertEntryClub(
+			@RequestParam("me_num")int me_num,
+			@RequestParam("cl_num")int cl_num,
+			@RequestParam("mt_num")int mt_num,
+			HttpSession session){
+		Map<String, Object> map = new HashMap<String, Object>();
+		boolean res = matchService.insertEntryClub(me_num, cl_num, mt_num);
+		
+		map.put("res", res);
+		return map;
+	}
+	@ResponseBody
+	@PostMapping("/club/entry/del")
+	public Map<String, Object> deleteEntryClub(@RequestParam("en_num")int en_num, HttpSession session){
+		Map<String, Object> map = new HashMap<String, Object>();
+		boolean res = matchService.deleteEntryClub(en_num);
+		
 		map.put("res", res);
 		return map;
 	}

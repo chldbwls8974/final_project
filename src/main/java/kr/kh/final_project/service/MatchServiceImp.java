@@ -335,6 +335,10 @@ public class MatchServiceImp implements MatchService{
 				res = true;
 			}
 		}
+		MatchVO dbMatch = matchDao.selectMatchByClNum(mt_num, cl_num);
+		if(dbMatch.getTeam_count() == 0) {
+			matchDao.updateMatchMtTypeTo0(mt_num);
+		}
 		if(res) {
 			pointHistoryDao.insertPointHistoryCanselMatch(dbPH.getPh_price(), mt_num, me_num);
 			return res;
@@ -348,6 +352,30 @@ public class MatchServiceImp implements MatchService{
 			return null;
 		}
 		return entryDao.selectEntryByMtNum(mt_num);
+	}
+
+	@Override
+	public List<ClubMemberVO> selectClubMemberListByMtNum(int cl_num, int mt_num) {
+		if(cl_num == 0 || mt_num == 0) {
+			return null;
+		}
+		return clubMemberDao.selectClubMemberListByMtNum(cl_num, mt_num);
+	}
+
+	@Override
+	public boolean insertEntryClub(int me_num, int cl_num, int mt_num) {
+		if(me_num == 0 || cl_num == 0 || mt_num == 0) {
+			return false;
+		}
+		return entryDao.insertEntryClub(me_num, cl_num, mt_num);
+	}
+
+	@Override
+	public boolean deleteEntryClub(int en_num) {
+		if(en_num == 0) {
+			return false;
+		}
+		return entryDao.deleteEntryClub(en_num);
 	}
 
 }
