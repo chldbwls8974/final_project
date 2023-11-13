@@ -328,7 +328,7 @@ public class BoardController {
 				}
 			// 차단된 회원의 정보를 blockedUserIds에 저장한 후
 			// 개인매치게시글 리스트를 가져오라고 서비스에게 시킨다.
-			List<BoardVO> list = boardService.getBoardIndividualList(cri, board);
+			List<BoardVO> list = boardService.getBoardClubList(cri, board);
 			
 			// 차단된 사용자의 게시글을 필터링 해준다.
 			// 필터링된 리스트를 만들어준다.
@@ -341,7 +341,7 @@ public class BoardController {
 			model.addAttribute("list", filteredList);
 		}else{
 		// 자유게시판 조회하기 (매개변수 board추가)
-			List<BoardVO> list = boardService.getBoardIndividualList(cri, board);
+			List<BoardVO> list = boardService.getBoardClubList(cri, board);
 			model.addAttribute("list", list);		
 		}
 		model.addAttribute("cri", cri);
