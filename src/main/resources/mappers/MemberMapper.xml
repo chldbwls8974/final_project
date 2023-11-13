@@ -234,4 +234,21 @@
 			me_session_limit = NULL
     	where me_id = #{me_id}
 	</update>
+	<update id="updateUserBoardBanState">
+		update
+			member
+		set
+			me_state1 = #{i}
+		where
+			me_num = #{me_num}
+	</update>
+	<update id="updateUserMatchBanState">
+		update
+			member
+		set
+			me_state2 = #{i}
+		where
+			me_num = #{me_num}
+	</update>
+	
 </mapper>
