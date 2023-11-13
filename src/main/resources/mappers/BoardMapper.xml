@@ -432,9 +432,11 @@
 			member
 				on bo_me_num = me_num
 		where
+			(
 			bo_bt_num = 1
 				or
 			bo_bt_num = 4
+			)
 				and
 		<if test="board.bo_rg_num != 0">
 			bo_rg_num = #{board.bo_rg_num}
