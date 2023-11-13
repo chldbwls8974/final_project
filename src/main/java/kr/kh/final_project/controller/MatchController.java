@@ -191,9 +191,6 @@ public class MatchController {
 				return "/message";
 			}
 			model.addAttribute("authority", dbCM.getCm_authority());
-			List<ClubMemberVO> CMList = matchService.selectClubMemberListByMtNum(cl_num, mt_num);
-
-			model.addAttribute("CMList", CMList);
 		}
 		List<TeamVO> teamList = matchService.selectTeamByMtNum(mt_num);
 		List<EntryVO> entryList = matchService.selectEntryByMtNum(mt_num);
@@ -205,6 +202,28 @@ public class MatchController {
 		model.addAttribute("teamList", teamList);
 		model.addAttribute("entryList", entryList);
 		return "/match/application";
+	}
+	
+	@ResponseBody
+	@PostMapping("/application/print/team")
+	public Map<String, Object> printApplicationTeam(@RequestParam("mt_num")int mt_num, HttpSession session){
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<TeamVO> teamList = matchService.selectTeamByMtNum(mt_num);
+		List<EntryVO> entryList = matchService.selectEntryByMtNum(mt_num);
+		
+		map.put("teamList", teamList);
+		map.put("entryList", entryList);
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/application/print/club")
+	public Map<String, Object> printApplicationClub(@RequestParam("mt_num")int mt_num, @RequestParam("cl_num")int cl_num, HttpSession session){
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<ClubMemberVO> CMList = matchService.selectClubMemberListByMtNum(cl_num, mt_num);
+
+		map.put("CMList", CMList);
+		return map;
 	}
 	
 	@ResponseBody
