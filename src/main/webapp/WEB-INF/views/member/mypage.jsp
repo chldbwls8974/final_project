@@ -5,32 +5,58 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<style>
-</style>
 <title>마이페이지</title>
 
 <style type="text/css">
 	
-	body{color:black; font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;}
-	.body-double{ display: flex; margin-top: 50px;}
+	body{font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+		color:black;
+	}
+	.body-double{ display: flex; margin-top: 10px; padding: 20px;
+	}
+	li img, .myprofile-btn img{ width: 30px; height: 30px; float: left;
+		padding-right: 0; margin-right: 10px;
+	}
+	li{ list-style-type: none; padding: 12px 0;
+	}
+	a{ text-decoration: none; color: black;
+	}
+	a:hover { text-decoration: none; color: navy;
+	}
 	.my{
-		position: relative; width: 60%; margin-right: 10px;
+		position: relative; margin-right: 10px; width: 100%;
 	}
 	.menu{
 		width: 100%;
 	}
-	img{ width: 24px; height: 24px; }
-	li{ list-style-type: none; padding: 12px 0;}
-	a{ text-decoration: none; color: black;}
-	a:hover { text-decoration: none; color: navy;}
-	img{float: left; padding-right: 0;}
+	.body-double{ }
+	.body-right{ background-color: #f2f2f2; border-radius: 20px; 
+		width: 100%; height: auto; padding: 20px;
+	}
 	.myprofile-image-thumb{ width: 70px; height: 70px; border-radius: 50%;
-	 margin-right: 10px;}
-	.mytier{background-color:#F8FAFB; border-radius:20px; padding:20px;
-	position: relative; width: 150px;}
-	.mytier-title{display: flex; align-items: center; justify-content: flex-end;
-	font-weight: bolder; text-align: center;}
-	.mytier-box{display: flex; align-items: center; justify-content: flex-end;}
+		 margin-right: 10px;}
+	.myedit{ width: 170px; height: 50px; border-radius: 20px;
+		padding:20px;
+	}
+	
+	
+	.mypoint-thumb{
+		width: 50%; height: 150px; border-radius: 20px; margin: 20px 20px 20px 0;
+		padding: 20px; background-color: #f2f2f2; position: relative;
+	}	
+	.mytier-thumb{ background-color: #f2f2f2; border-radius:20px; padding:20px;
+		position: relative; margin: 20px 0 20px 0; width: 50%; height: 150px;
+	}
+	.mytier-title{ display: flex; align-items: center; justify-content: flex-start;
+		font-size:large; font-weight: bolder;
+	}
+	.mytier-box{
+		display: flex; justify-content: flex-start; margin-top: 20px;
+	}
+	.myclub-thumb{ width: 100%; height: auto; border-radius:20px;
+		background-color: #f2f2f2; padding: 20px; margin: 0 20px 20px 0; 
+	}
+	.mymenu-list li{ text-align: left;}
 	
 </style>
 
@@ -39,44 +65,71 @@
 <div class="body-double">
 		<section class="my">
 			<div class="body-left">
-				<div style="background-color: #F8FAFB; padding: 15px; border-radius: 30px; margin-bottom: 20px;">
-					<div class="myprofile-image">
-	                     <img src="/final_project${user.me_profile}" class="myprofile-image-thumb" alt="프로필 사진">
-               		</div>
-					<div class="myprofile-name" style="position: relative;">
-						<div style="font-size: 24px; font-weight:800;">${user.me_name}</div>
-					</div>
-					<div class="myprofile-num">
-						<p style="color:#606060;">${user.me_id}</p>
-						<span class="myprofile-kakao"></span>
-					</div>
-				</div>
-				<div class="mytier">
-					<p class="mytier-title">내 티어</p>
-					<div class="mytier-box">
-						<div style="padding:3px; width:23px; height:27px; border-radius:5px; background-color: black;">
-							<div style="text-align:center; font-size:15px; padding:0; color: white; font-weight: bolder;">1</div>
+				<div class="left-one">
+					<div style="background-color: #f0f0f0; padding: 15px; 
+					border-radius: 20px; height:130px; padding: 30px 20px; display: flex; justify-content: space-between;">
+						<div style="display: flex;">
+								<div class="myprofile-image">
+				                    <img src="/final_project${user.me_profile}" class="myprofile-image-thumb" alt="프로필 사진">
+			              		 </div>
+							<a href="<c:url value='/member/myprofile'/>" class="myprofile-info">
+			              	 	<div style="margin-left: 10px;">
+									<div class="myprofile-name" style="position: relative;">
+										<div style="font-size: 24px; font-weight:800;">${user.me_name}</div>
+									</div>
+									<div class="myprofile-num">
+										<p style="color:#606060;">${user.me_id}</p>
+										<span class="myprofile-kakao"></span>
+									</div>
+								</div>
+							</a>
 						</div>
-							<div style="margin-left:5px; font-weight: bolder; font-size: 15px; letter-spacing: 1px;">스타터</div>	
+						<div class="myedit">
+							<a href="<c:url value='/member/myedit'/>" class="myprofile-btn">
+								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg" alt="나의 포인트">
+								<p>프로필 수정</p>
+							</a>
+						</div>
 					</div>
-				</div>
-				<div style="padding:20px; border-radius: 20px; background-color:#F8FAFB; margin:10px 0 20px 0;">
-					<a href="<c:url value='/member/myedit'/>" class="myprofile-btn">
-					<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg" alt="나의 포인트">
-					<p>내 프로필 수정</p>
-					</a>
-				</div>
-				<div style="padding:30px; border-radius: 30px; background-color: #F8FAFB; position: relative;">
-					<p style="font-size:15px; font-weight: bold;">내 포인트</p>
-					<p style="font-size:18px; font-weight: bolder;">${user.me_point}원</p>
-					<div style="padding:20px; border-radius: 10px; background-color:#E9F6FF; float: right; position: absolute; right: 10px; top: 40px;">
-						<a href="<c:url value='/payment/main'/>">충전하기</a>
+					<div style="display: flex;">
+						<div class="mypoint-thumb">
+						<p style="font-size:large; font-weight: bolder; margin-bottom: 20px;">내 포인트</p>
+							<div style="display: flex; justify-content: space-between;">		
+								<div style="width: 75%;">
+									<p style="font-size:large; font-weight: bolder;">${user.me_point}원</p>
+								</div>
+								<div style="width: 25%; position: relative;">
+									<div style=" position: relative; bottom: 30px; right: 5px; text-align: center;
+										 padding: 10px; border-radius: 10px; background-color:#c2f296;">
+										<a href="#"><p style="margin: 0 auto;">충전하기</p></a>
+									</div>
+								</div>
+							</div>	
+						</div>
+						<div class="mytier-thumb">
+							<p class="mytier-title">내 티어</p>
+							<div class="mytier-box">
+								<div style="padding:0px; width:23px; height:25px; border-radius:5px; background-color: black;">
+									<div style="text-align:center; font-size:15px; padding:0; color: white; font-weight: bolder;">1</div>
+								</div>
+									<div style="margin-left:5px; font-weight: bolder; font-size: 15px; letter-spacing: 1px;">스타터</div>	
+							</div>
+						</div>
+					</div>	
+					<div class="myclub-thumb">
+						<p style="font-size:large; font-weight: bolder; margin-bottom: 20px;">소속 클럽</p>
+						<c:forEach items="${list}" var="list">
+							<a href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>" class="myclub-link" style="display: flex;">
+								<img src="" alt="나의 클럽" style="width: 30px; height: 30px; border-radius: 10px;">
+								<p style="font-size: 15px;">${list.cl_name }</p>
+							</a>
+						</c:forEach>
 					</div>
-				</div>
+				</div>	
 			</div>
 		</section>
 		<section class="menu">
-			<div class="body-right" style="background-color: #F8FAFB; border-radius: 30px;">
+			<div class="body-right">
 				<div style="font-size: 18px; font-weight: bolder; margin-left:15px; padding: 20px;">나의 메뉴</div>
 				<div class="mymenu">
 					<ul class="mymenu-list">
@@ -113,13 +166,19 @@
 						<li>
 							<a href="<c:url value='/member/search'/>">
 							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_profile.svg" width="24px" height="24px" alt="회원 조회">
-							<p>회원 조회</p>
+							<p>회원 찾기</p>
 							</a>
 						</li>
 						<li>
-							<a href="#">
-							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_point_color.svg" width="24px" height="24px" alt="나의 포인트">
-							<p>나의 포인트</p>
+							<a href="<c:url value='/member/friendlist'/>">
+							<img src="https://d31wz4d3hgve8q.cloudfront.net/media/ic_nav_team_recruit_guest.svg" width="24px" height="24px" alt="회원 조회">
+							<p>즐겨찾기 회원 조회</p>
+							</a>
+						</li>
+						<li>
+							<a href="<c:url value='/member/blocklist'/>">
+							<img src="https://d31wz4d3hgve8q.cloudfront.net/media/ic_nav_team_recruit_guest.svg" width="24px" height="24px" alt="회원 조회">
+							<p>차단 회원 조회</p>
 							</a>
 						</li>
 						<li>
@@ -132,6 +191,12 @@
 							<a href="<c:url value='/account/insert'/>">
 							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_new_team.svg" width="24px" height="24px" alt="환급 계좌 등록">
 							<p>환급 계좌 등록</p>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_point_color.svg" width="24px" height="24px" alt="나의 포인트">
+							<p>나의 포인트</p>
 							</a>
 						</li>
 						<li>

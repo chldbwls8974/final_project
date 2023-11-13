@@ -21,6 +21,7 @@ import kr.kh.final_project.util.Message;
 import kr.kh.final_project.vo.ClubMemberVO;
 import kr.kh.final_project.vo.ClubVO;
 import kr.kh.final_project.vo.MemberVO;
+import kr.kh.final_project.vo.PreferredAgeVO;
 import kr.kh.final_project.vo.RegionVO;
 import kr.kh.final_project.vo.TeamPreferredTimeVO;
 
@@ -63,16 +64,23 @@ public class ClubController {
 	public String listClub(Model model, HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		List<ClubVO> list = clubService.getClubList();
+		List<PreferredAgeVO> ageList = clubService.getClubAgeList();
+		List<TeamPreferredTimeVO> timeList = clubService.getClubTimeList();
 		model.addAttribute("user",user);
 		model.addAttribute("list",list);
+		model.addAttribute("ageList",ageList);
+		model.addAttribute("timeList",timeList);
 		return "/club/list";
 	}
 	@GetMapping("/mylist")
 	public String myClubList(Model model, HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		List<ClubVO> memberlist = clubService.getMyClubList(user.getMe_num(),"MEMBER");
+		List<ClubVO> leaderlist = clubService.getMyClubList(user.getMe_num(),"LEADER");
+		
 		model.addAttribute("user",user);
 		model.addAttribute("memberlist",memberlist);
+		model.addAttribute("leaderlist",leaderlist);
 		return "/club/mylist";
 	}
 	@GetMapping("/rookielist")

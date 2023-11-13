@@ -5,6 +5,7 @@ import java.util.List;
 import kr.kh.final_project.vo.ClubMemberVO;
 import kr.kh.final_project.vo.ClubVO;
 import kr.kh.final_project.vo.MemberVO;
+import kr.kh.final_project.vo.PreferredAgeVO;
 import kr.kh.final_project.vo.TeamPreferredTimeVO;
 
 public interface ClubService {
@@ -31,6 +32,10 @@ public interface ClubService {
 
 	TeamPreferredTimeVO getClubTime(Integer cl_num);
 
+ 
+	List<PreferredAgeVO> getClubAgeList(); //마이페이지-내클럽 선호연령 가져오기
+
+	List<TeamPreferredTimeVO> getClubTimeList(); //마이페이지-내클럽 선호시간 가져오기
 	
 }
 	

@@ -10,50 +10,91 @@
 <title>포인트 환급</title>
 </head>
 <style>
-	.error {
-		color: #f00;
-		display: block;
-	}
+.error {
+	color: #f00;
+	display: block;
+}
+.form-group label{margin: 0 auto;}
+.form-group{display:block; text-align: center;}
+.form-group input{ margin: 0 auto;}
+.form-control{ width: 400px; border-radius: 20px;}
+.form-group-info{
+	background-color: #f0f0f0; border-radius: 30px;
+	width: 400px; height: 80px; margin: 0 auto;
+}
+
+.refund-thead{
+	display: flex; justify-content: space-between; padding: 0 0 16px 0;
+	border-bottom: 1px solid rgba(0,0,0,.1);
+}
+.list-tbody{ justify-content: space-between;}
+
+.one{ justify-content: space-between;}
+.btn{
+	border-radius: 3px; width: 400px; height: 45px; border: none;
+	background-color: #0c0c0c; color: white; font-weight: 900; margin-top: 50px;
+}
+.cancel-btn, .commit-btn{
+	border-radius: 20px; width: 100px; height: 45px; border: none;
+	background-color: #c2f296; color: black; font-weight: 900; margin-bottom: 20px;
+}
+
+
+.page-link {
+  color: #000; 
+  background-color: #fff;
+  border: 1px solid #ccc; 
+}
+.page-item.active .page-link {
+ z-index: 1;
+ color: #555;
+ background-color: #f1f1f1;
+ border-color: #ccc;
+ 
+}
+.page-link:focus, .page-link:hover {
+  color: #000;
+  background-color: #fafafa; 
+  border-color: #ccc;
+}
 </style>
 <body>
-	<h1>포인트 환급</h1>
-	<form action="<c:url value='/member/refund'/>" method="post">
-		<div class="form-group">
-			<h5>${user.me_name} 님의</h5>
+	<p style="font-size: 45px; font-weight: bolder;
+		text-align: center; padding: 50px 0 20px 0;">포인트 환급</p>
+	<form action="<c:url value='/member/refund'/>" method="post" style="text-align: center;">
+		<div class="form-group-info">
+			<p style="font-size: 20px; margin: 0; padding-top: 10px; ">${user.me_name} 님의</p>
 			<!-- 여기 작업해야 함. 유저가 로그인을 풀지않으면 변경포인트가 적용이 안됨. -->
-			<span>현재 보유 포인트는 <span class="point"></span> 입니다.</span>
+			<p class="point" style="font-size: 18px;">현재 보유 포인트는 ${user.me_point}  입니다.</p>
 			<input type="hidden" class="form-control" value="${user.me_num}" name="me_num">
 			<input type="hidden" class="form-control" value="${user.me_num}" name="ph_me_num">
 			<input type="hidden" class="form-control" value="4" name="ph_source">
 		</div>
 		<br>
-		<hr>
 		<div class="form-group">
-			<label>환급받을 금액</label>
+			<label style="margin-bottom: 10px;">환급받을 금액</label>
 			<label id="check-point-error" class="error" for="point"></label>
 			<input type="number" class="form-control" id="refundAmount" name="ph_price" min="1000"  max="" placeholder="1000원 단위로 입력" required>
 		</div>
 		<div class="form-group">
-			<label>환급 후 예정 포인트</label>
+			<label style="margin-bottom: 10px;">환급 후 예정 포인트</label>
 			<input type="number" class="form-control" id="resultAmount" name="me_point" readonly required>
 		</div>
-		<button id="addBtn" class="btn btn-outline-dark col-12">등록</button>
+		<button id="addBtn" class="btn">등록</button>
 	</form>
 	<br>
+		<p style="font-size: 20px; font-weight: bolder;
+			padding: 50px 0 10px 10px;">환급 신청 내역</p>
 	<hr>
-	<div>
-		<table class="table table-hover mt-4">
-			<thead>
-				<tr style="background: wheat; font-weight: bold;">
-					<th>환급 신청 금액</th>
-					<th>상태</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody class="list-tbody">
-			
-			</tbody>
-		</table>
+	<div style="">
+		<ul class="refund-thead">
+			<li class="refund-td" style="margin-left: 20px;">환급 신청 금액</li>
+			<li class="refund-td" style="margin-right: 50px;">환급 신청 상태</li>
+			<li class="refund-td" style="margin-right: 20px;">취소/완료</li>
+		</ul>
+		<ul class="list-tbody one" >
+		
+		</ul>
 	</div>
 	<!-- 페이지네이션 -->
 	<ul class="pagination justify-content-center mt-3 pagination">
@@ -96,6 +137,7 @@
 	        //(유저의 현재 포인트 - 환급받을 금액)을 저장
 	        var userPoint = parseFloat($('.point').text());
 	        $("#resultAmount").val(userPoint - num);
+	        
         }
     });
 	
@@ -107,6 +149,8 @@
 	/* 환급이력리스트를 가져오는 함수 */
 	$(document).ready(function() {
    	 	getPointHistoryList(cri);
+   	 	
+   		
 	});
 	
 	
@@ -156,24 +200,25 @@
 				state = '승인 대기중'
 				btnStr = `
 					<div class="btn-group">
-						<button class="btn btn-outline-danger btn-delete"  onclick="deleteRefund(\${a.ph_num})" >취소</button>
+						<button class="cancel-btn"  onclick="deleteRefund(\${a.ph_num})" >취소</button>
 					</div>
 					`;
 			}else{
 				state = '환급 완료'
 				btnStr = `
 					<div class="btn-group">
-						<label class="btn btn-outline-dark disabled" >완료</label>
+						<label class="commit-btn disabled" >완료</label>
 					</div>
 					`
 			} 
 			str += `
-				<tr>
-					<td>\${price}</td>
-					<td>\${state}</td>
-					<td>\${btnStr}</td>
-				</tr>
-				
+					<li>
+					<div style="display: flex; justify-content: space-between;">
+						<div>\${price}</div>
+						<div>\${state}</div>
+						<div>\${btnStr}</div>
+					</div>	
+					</li>
 			`;
 		}
 		$(target).html(str);

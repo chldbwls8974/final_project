@@ -34,4 +34,10 @@
 		where 
 			cl_num = #{club.cl_num}
 	</update>
+	<select id="selectClubAgeList" resultType="kr.kh.final_project.vo.ClubVO">
+		select * from preferred_age
+	</select>
+	<select id="selectClubTimeList" resultType="kr.kh.final_project.vo.ClubVO">
+	 	select * from team_preferred_time
+	</select>
 </mapper>

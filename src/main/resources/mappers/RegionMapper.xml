@@ -23,4 +23,7 @@
 	<select id="selectRegionByRgNum" resultType="kr.kh.final_project.vo.RegionVO">
 		select * from region where rg_num = #{rg_num}
 	</select>
+	<select id="selectUserRegion" resultType="kr.kh.final_project.vo.RegionVO">
+		select * from region
+	</select>
 </mapper>

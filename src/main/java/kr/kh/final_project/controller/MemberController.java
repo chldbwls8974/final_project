@@ -19,14 +19,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.pagination.PageMaker;
+import kr.kh.final_project.service.ClubService;
 import kr.kh.final_project.service.MatchService;
 import kr.kh.final_project.service.MemberService;
 import kr.kh.final_project.service.RegionService;
 import kr.kh.final_project.util.Message;
+import kr.kh.final_project.vo.ClubVO;
 import kr.kh.final_project.vo.HoldingCouponVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
+import kr.kh.final_project.vo.PreferredRegionVO;
+import kr.kh.final_project.vo.PreferredTimeVO;
 import kr.kh.final_project.vo.RegionVO;
 import kr.kh.final_project.vo.TimeVO;
 
@@ -39,6 +43,8 @@ public class MemberController {
 	MatchService matchService;
 	@Autowired
 	RegionService regionService;
+	@Autowired
+	ClubService clubService;
 	
 
 	@GetMapping("/member/signup")
@@ -253,8 +259,10 @@ public class MemberController {
 	@GetMapping("/member/mypage")
 	public String myPage(HttpSession session, Model model) {
 		MemberVO user = (MemberVO) session.getAttribute("user");
+		List<ClubVO> list = clubService.getClubList();
 		String profile = user.getMe_profile();
 		model.addAttribute("user", user);
+		model.addAttribute("list",list);
 		model.addAttribute("profile", profile);
 		return "/member/mypage";
 	}
@@ -352,9 +360,41 @@ public class MemberController {
 	//마이페이지-신청 경기 페이지 조회
 	@GetMapping("/member/mymatch")
 	public String mymatch(Model model) {
-		List<MatchVO> matchList = matchService.getMatchList(); //서비스에게 매치리스트 요청
+		//서비스에게 매치리스트 요청
+		List<MatchVO> matchList = matchService.getMatchList(); 
 		model.addAttribute("matchList", matchList);
 		return "/member/mymatch";
+	}
+	
+	//마이페이지- 내 프로필 상세조회
+	@GetMapping("/member/myprofile")
+	public String myprofile(Model model, HttpSession session) {
+		//로그인한 회원 가져오기
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		//회원의 거주지역 가져오기
+		MemberVO userRegion = memberService.getMemberRegion(user);
+		
+		//회원의 선호지역, 선호시간대 가져오기
+		MemberVO userPRegion = memberService.getMemberPRegion(user);
+		MemberVO userPTime = memberService.getMemberPTime(user);
+		
+		model.addAttribute("user",user );
+		model.addAttribute("userRegion", userRegion );
+		model.addAttribute("userPRegion", userPRegion );
+		model.addAttribute("userPTime", userPTime );
+		System.out.println(userPTime);
+		return "/member/myprofile";
+	}
+	
+	//마이페이지-즐찾 및 차단조회 페이지
+	@GetMapping("/member/friendlist")
+	public String friendlist() {
+		return "/member/friendlist";
+	}
+	@GetMapping("/member/blocklist")
+	public String blocklist() {
+		return "/member/blocklist";
 	}
 	
 	@GetMapping("/payment/main")
