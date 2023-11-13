@@ -13,7 +13,7 @@
 .profile-head{ 
 	text-align: center; padding: 60px;
 	background-color: #f2f2f2; border-radius: 20px;
-	margin: 0 30px 0 30px; height: 300px;
+	margin: 0 30px 0 30px; height: 300px; width: 250px;
 }
 .form-group{ display: flex;}
 .form-group div{ text-align: right;}
