@@ -56,4 +56,6 @@ public interface MatchService {
 
 	boolean deleteEntryClub(int en_num);
 
+	void deleteMatch();
+
 }

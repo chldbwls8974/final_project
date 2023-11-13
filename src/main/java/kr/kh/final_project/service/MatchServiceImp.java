@@ -239,6 +239,7 @@ public class MatchServiceImp implements MatchService{
 					pointHistoryDao.insertPointHistoryApplicationMatch(point, mt_num, user.getMe_num());
 					if(dbTeam.getMt_type() == 0) {
 						matchDao.updateMatchMtTypeTo1(mt_num);
+						matchDao.updateMatchMtState2To1(mt_num);
 					}
 					if(hp_num != 0) {
 						couponDao.deleteCoupon(hp_num);
@@ -310,6 +311,7 @@ public class MatchServiceImp implements MatchService{
 			pointHistoryDao.insertPointHistoryApplicationMatch(point, mt_num, user.getMe_num());
 			if(dbTeam.getMt_type() == 0) {
 				matchDao.updateMatchMtTypeTo2(mt_num);
+				matchDao.updateMatchMtState2To1(mt_num);
 			}
 			return true;
 		}
@@ -376,6 +378,11 @@ public class MatchServiceImp implements MatchService{
 			return false;
 		}
 		return entryDao.deleteEntryClub(en_num);
+	}
+
+	@Override
+	public void deleteMatch() {
+		matchDao.deleteMatch();
 	}
 
 }

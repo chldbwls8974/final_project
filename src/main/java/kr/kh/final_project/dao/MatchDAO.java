@@ -20,6 +20,8 @@ public interface MatchDAO {
 	void updateMatchMtTypeTo1(@Param("mt_num")int mt_num);
 	
 	void updateMatchMtTypeTo2(@Param("mt_num")int mt_num);
+	
+	void updateMatchMtState2To1(@Param("mt_num")int mt_num);
 
 	List<MatchVO> selectManagerMatchListByMtDate(@Param("me_num")Integer me_num, @Param("mt_date")Date mt_date);
 
@@ -30,5 +32,7 @@ public interface MatchDAO {
 	List<MatchVO> selectMatchListOfClub(@Param("cl_num")int me_num, @Param("mt_date")Date mt_date);
 
 	MatchVO selectMatchByClNum(@Param("mt_num")int mt_num, @Param("cl_num")int cl_num);
+
+	void deleteMatch();
 
 }

@@ -96,6 +96,13 @@
 		where
 			mt_num = #{mt_num}
 	</update>
+	<update id="updateMatchMtState2To1">
+		update `match`
+		set
+			mt_state2 = 1
+		where
+			mt_num = #{mt_num}
+	</update>
 	<select id="selectManagerMatchListByMtDate" resultType="kr.kh.final_project.vo.MatchVO">
 		SELECT
 			manager.*,
@@ -438,4 +445,15 @@
 		order by
 			ti_num asc;
 	</select>
+	<delete id="deleteMatch">
+		delete
+			`match`
+		from
+			`match`
+				join
+			time on mt_ti_num = ti_num
+		where
+			now() >= addtime(addtime(mt_date, ti_time), "-01:30:00") and
+			mt_state2 = 0;
+	</delete>
 </mapper>
