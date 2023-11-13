@@ -378,12 +378,13 @@ public class MemberController {
 	public String myProfile(Model model,HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		List<RegionVO> MainRegion = memberService.getMainRegion();
-		List<RegionVO> subRg = regionDao.selectUserRegion();
+		
 		//회원 가져오기
 		MemberVO dbMember = memberService.getMemberByNum(user);
 		//회원의 거주지역 가져오기
 		MemberVO memberRegion = memberService.getMemberRegion(dbMember);
-		
+		List<RegionVO> subRg = regionDao.selectSubRegion(memberRegion.getRg_main());
+				
 		model.addAttribute("user",dbMember);
 		model.addAttribute("MainRegion",MainRegion);
 		model.addAttribute("subRg",subRg);
@@ -480,20 +481,29 @@ public class MemberController {
 		MemberVO dbMember = memberService.getMemberByNum(member);
 		//회원의 거주지역 가져오기
 		MemberVO memberRegion = memberService.getMemberRegion(dbMember);
+		
+		
 		//회원의 선호지역, 선호시간대 가져오기
 		List<PreferredRegionVO> memberPRegion = memberService.getMemberPRegion(dbMember);
+		List<RegionVO> subRg = regionDao.selectUserRegion();
+//		List<Integer> subRg = new ArrayList<Integer>();
+//		for(PreferredRegionVO i :memberPRegion ) {
+//			subRg.add(regionDao.selectSubRegion(i.getRg_main()));
+//		}
+		
 		List<Integer> holiTime = memberService.getMemberPTimeHoliday(dbMember);
 		List<Integer> weekTime = memberService.getMemberPTimeWeekday(dbMember);
-		
 		// 선호 지역, 시간 수정 시 필요
 		List<RegionVO> MainRegion = memberService.getMainRegion();
 		List<TimeVO> time = memberService.getAllTime();
+		
+		
 		model.addAttribute("MainRegion",MainRegion);
 		model.addAttribute("time",time);
-		
 		model.addAttribute("member",dbMember );
 		model.addAttribute("memberRegion", memberRegion );
 		model.addAttribute("memberPRegion", memberPRegion );
+		model.addAttribute("subRg", subRg );
 		model.addAttribute("holiTime", holiTime );
 		model.addAttribute("weekTime", weekTime );
 		model.addAttribute("user", user );
