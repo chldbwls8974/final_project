@@ -10,7 +10,7 @@ import kr.kh.final_project.vo.TeamPreferredTimeVO;
 
 public interface ClubService {
 
-	boolean insertClub(int me_num, ClubVO club, int[] age, int[] favoriteTime, int[] favoriteHoliTime);
+	boolean insertClub(int me_num, String fi_name, ClubVO club, int[] age, int[] favoriteTime, int[] favoriteHoliTime);
 
 	Object checkClubName(String name);
 

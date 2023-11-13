@@ -10,7 +10,7 @@ import kr.kh.final_project.vo.TeamPreferredTimeVO;
 
 public interface ClubDAO {
 
-	void insertClub(@Param("club")ClubVO club);
+	void insertClub(@Param("fi_name")String fi_name, @Param("club")ClubVO club);
 
 	ClubVO selectClubByName(@Param("cl_name")String club);
 

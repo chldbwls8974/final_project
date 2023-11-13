@@ -20,7 +20,7 @@
 	</select>
 	<insert id="insertClub">
 		insert into club(cl_name, cl_emblem, cl_price, cl_rule, cl_introduction, cl_url, cl_rg_num)
-		 values(#{club.cl_name},#{club.cl_emblem},#{club.cl_price},#{club.cl_rule},#{club.cl_introduction},#{club.cl_url},#{club.cl_rg_num})
+		 values(#{club.cl_name},#{fi_name},#{club.cl_price},#{club.cl_rule},#{club.cl_introduction},#{club.cl_url},#{club.cl_rg_num})
 	</insert>
 	<update id="updateClub">
 		update club

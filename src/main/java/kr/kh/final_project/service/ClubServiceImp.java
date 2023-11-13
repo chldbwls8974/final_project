@@ -35,11 +35,11 @@ public class ClubServiceImp implements ClubService{
 	PreferredAgeDAO preAgeDao;
 
 	@Override
-	public boolean insertClub(int me_num,ClubVO club, int[] age, int[] favoriteTime, int[] favoriteHoliTime) {
+	public boolean insertClub(int me_num,String fi_name, ClubVO club, int[] age, int[] favoriteTime, int[] favoriteHoliTime) {
 		if(club ==null) {
 			return false;
 		}
-		clubDao.insertClub(club);
+		clubDao.insertClub(fi_name,club);
 		int cl_num = clubDao.selectClubByName(club.getCl_name()).getCl_num();
 		
 		if(favoriteTime !=null) {
