@@ -17,6 +17,7 @@ import kr.kh.final_project.dao.PenaltyDAO;
 import kr.kh.final_project.dao.PointHistoryDAO;
 import kr.kh.final_project.dao.ReportDAO;
 import kr.kh.final_project.pagination.Criteria;
+import kr.kh.final_project.util.Message;
 import kr.kh.final_project.vo.BoardVO;
 import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ManagerVO;
@@ -311,6 +312,17 @@ public class AdminServiceImp implements AdminService{
 		}
 		
 		return true;
+	}
+	
+	@Override
+	public Message boardReportInsert(ReportVO report) {
+		Message msg = new Message(("/board/detail?bo_num=" + report.getRp_bo_num()), "이미 신고한 게시글입니다.");
+		
+		//중복검사 (신고자 회원번호, 게시글 번호로 등록된 신고가 없다면 등록)
+		if(reportDao.selectReportByMeNumAndBoNum(report) == null) {
+			msg.setMsg(reportDao.insertBoardReport(report) ? "신고 완료." : "신고 실패.");
+			}
+		return msg;
 	}
 	
 }

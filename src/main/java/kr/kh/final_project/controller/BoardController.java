@@ -68,7 +68,6 @@ public class BoardController {
 		// boardService한테 board와 user, files정보를 주며 저장하라고 시킴 그걸 res에 저장하기
 		boolean res = boardService.insertBoard(board, user, files);
 		// 만약 결과가 true이면
-		System.out.println(board);
 		if(res) {
 			model.addAttribute("msg", "게시글 등록 성공!");
 			model.addAttribute("url", "/board/notice");
@@ -86,7 +85,6 @@ public class BoardController {
 		boardService.updateViews(bo_num);
 		// 서비스에게 게시글 번호를 주면서 게시글을 가져오라고 시킨다.
 		BoardVO board = boardService.getBoard(bo_num);
-		System.out.println(board);
 		// 등록된 첨부파일을 가져오라고 boardService한테 시키고 가져온 첨부파일을 fileList에 넣기
 		List<FileVO> fileList = boardService.getFileList(bo_num);
 		

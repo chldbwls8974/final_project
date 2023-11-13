@@ -191,9 +191,10 @@ h1 {
 		</div>
 		<hr>
 		
-		
 		<!-- 모달버튼 -->
-		<button type="button" class="btn btn-outline-warning button--open" data-value="${board.bo_num}">게시글 신고</button>
+		<c:if test="${board.bo_bt_num != 5 && board.bo_bt_num != 6 && board.bo_bt_num != 7 }">
+			<button type="button" class="btn btn-outline-warning button--open" data-value="${board.bo_num}">게시글 신고</button>
+		</c:if>
 		<!-- 자신이 쓴 게시글만 수정,삭제 버튼 나오게 -->
 		<c:if test="${user != null && user.me_num == board.bo_me_num}">
 			<button type="button"
@@ -212,24 +213,41 @@ h1 {
 	<div class="modal--bg">
 		<div class="modal--content">
 			<p>신고하기</p>
-			<form action="<c:url value='/admin/boardReport/insert'/>" method="post">
-				<input type="text" class="form-control" name="rp_bo_num" value="${board.bo_num}" readonly>
-				<button class="btn btn-outline-dark button--close">신고</button> 
+			<form class="modal-form" action="<c:url value='/admin/boardReport/insert'/>" method="post">
+				<input type="hidden" class="form-control" name="rp_me_num" value="${user.me_num}" readonly>
+				<input type="hidden" class="form-control" name="rp_bo_num" value="${board.bo_num}" readonly>
+				<input type="hidden" class="form-control" name="rp_me_num2" value="${board.bo_me_num}" readonly>
+				<div class="form-group">
+					<select class="form-control isSelected" name="rp_rc_num">
+						<option value="0">분류</option>
+						<option value="6">음란물</option>
+						<option value="7">스팸</option>
+						<option value="8">홍보</option>
+						<option value="9">광고</option>
+						<option value="10">분란 조장</option>
+						<option value="11">혐오</option>
+						<option value="12">욕설</option>
+						<option value="13">기타</option>
+					</select>
+					<textarea cols="46" rows="6" name="rp_content"></textarea>
+				</div>
+				<button type="button" class="btn btn-outline-dark button--close">닫기</button> 
+				<button class="btn btn-outline-dark">신고</button> 
 			</form> 
-			<button type="button" class="btn btn-outline-dark button--close">닫기</button> 
 		</div>
 	</div>
-<script type="text/javascript">
-     $('#summernote').summernote({
-       placeholder: '내용을 입력하세요.',
-       tabsize: 2,
-       height: 400
-     });
-</script>
+	<!-- 썸머노트 -->
+	<script type="text/javascript">
+	     $('#summernote').summernote({
+	       placeholder: '내용을 입력하세요.',
+	       tabsize: 2,
+	       height: 400
+	     });
+	</script>
 
-<!-- 댓글 기능 자바스크립트 -->
-<script type="text/javascript">
-//등록버튼을 클릭하면 함수가 실행됨
+	<!-- 댓글 기능 자바스크립트 -->
+	<script type="text/javascript">
+	//등록버튼을 클릭하면 함수가 실행됨
 	$('#btnCommentInsert').click(function(){
 		let co_contents = $('#inputComment').val();
 		let co_me_num = '${user.me_num}';
@@ -561,6 +579,18 @@ h1 {
 		            $('.modal--bg').fadeOut();
 		        }
 		    });
+		 //모달 옵션 선택여부에 따라 알림창 또는 제출
+		 $(document).ready(function () {
+            $(".modal-form").submit(function (e) {
+                // 선택된 값이 0이면 제출을 막고 알림창 띄우기
+                var selectedValue = $(".isSelected").val();
+                if (selectedValue == 0) {
+                    alert("옵션을 선택하세요.");
+                    e.preventDefault(); // 제출 막기
+                }
+                // 선택된 값이 유효하면 폼이 계속 제출됨
+            });
+        });
 </script>
 </body>
 </html>
