@@ -19,13 +19,7 @@
   <c:forEach items="${list}" var="list">
   	<li>
   		<a href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>">
-		  	<div>
-		  		<img alt="팀프로필넣고싶어" src="<c:url value='/resource/profile/basic'/>">
-		  	</div>
-		  	<div>
 			  	<span>${list.cl_name }</span> 
-			  	<span>${list.cl_rg_num }</span>
-		  	</div>
 	  	</a>
   	</li>
   </c:forEach>

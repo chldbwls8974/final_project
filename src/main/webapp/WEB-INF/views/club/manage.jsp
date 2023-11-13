@@ -56,7 +56,7 @@ display:inline;
 					<tr>
 						<th>번호</th>
 						<th>회원 닉네임</th>
-						<th>권한</th>
+						<th>자기소개</th>
 						<th></th>
 					</tr>
 				</thead>
@@ -66,7 +66,7 @@ display:inline;
 							<tr>
 								<td>${list.cm_num}</td>
 								<td>${list.me_nickname}</td>
-								<td>${list.cm_authority}</td>
+								<td>${list.cm_introduction}</td>
 								<td>
 									<button type="button" class="btn btn-outline-warning" data-num="${list.cm_me_num}" value="${list.cm_authority}" name="approval-btn">승인</button>
 									<button type="button" class="btn btn-outline-warning" data-num="${list.cm_me_num}" value="${list.cm_authority}" name="refuse-btn">거절</button>
@@ -97,49 +97,84 @@ display:inline;
 		
 		// 멤버 테이블 관리
 		// 강퇴 버튼 클릭시
-		
+		$(document).on('click','[name=discharge-btn]',function(){
+			if(confirm("정말 회원을 퇴장시키시겠습니까?")){
+				let me_num = $(this).data('num')
+				let type="discharge"
+				
+				data={
+						cl_num : cl_num,
+						me_num : me_num,
+						type : type
+				}
+				
+				ajaxJsonToJson2(false, 'post','/club/mbmanage',data, (a)=>{
+					alert("회원을 퇴장시켰습니다.")
+				})
+			}
+		})
+				
 		
 		// 위임 버튼 클릭시
-		
+		$(document).on('click','[name=delegate-btn]',function(){
+			if(confirm("정말 클럽장 권한을 위임하시겠습니까?")){
+				let me_num = $(this).data('num')
+				let type="delegate"
+				
+				data={
+						cl_num : cl_num,
+						me_num : me_num,
+						type : type
+				}
+				
+				ajaxJsonToJson2(false, 'post','/club/mbmanage',data, (a)=>{
+					alert("클럽장을 위임하였습니다.")
+				})
+			}
+		})
 		
 		
 		
 		// 루키 테이블 관리
 		// 승인버튼 클릭시
 		$(document).on('click','[name=approval-btn]',function(){
-			let me_num = $(this).data('num')
-			let type="approval"
-			let authority = $(this).val();
-			
-			data={
-					cl_num : cl_num,
-					me_num : me_num,
-					authority : authority,
-					type : type
+			if(confirm("정말 승인하시겠습니까?")){
+				let me_num = $('[name=approval-btn]').data('num')
+				let type="approval"
+				
+				data={
+						cl_num : cl_num,
+						me_num : me_num,
+						type : type
+				}
+				ajaxJsonToJson2(false, 'post','/club/mbmanage',data, (a)=>{
+					alert("팀원 신청을 승인하였습니다.") 
+				})
+				
 			}
 			
-			ajaxJsonToJson2(false, 'post','/club/mbmanage',data, (a)=>{
-				alert("팀원 신청을 승인하였습니다.")
-			})
 			
 		})
 
 		// 거절버튼 클릭시
 		$(document).on('click','[name=refuse-btn]',function(){
-			let me = $(this).data('num')
-			let type="refuse"
-			let authority = $(this).val();
-			
-			data={
-					cl_num : cl_num,
-					me_num : me_num,
-					authority : authority,
-					type : type
+			if(confirm("정말 거절하시겠습니까?")){
+					let me_num = $(this).data('num')
+					let type="refuse"
+					
+					data={
+							cl_num : cl_num,
+							me_num : me_num,
+							type : type
+					}
+					
+					ajaxJsonToJson2(false, 'post','/club/mbmanage',data, (a)=>{
+					 	alert("팀원 신청을 거절하였습니다.")
+					})
+			}else{
+				return;
 			}
-			
-			ajaxJsonToJson2(false, 'post','/club/mbmanage',data, (a)=>{
-			 	alert("팀원 신청을 거절하였습니다.")
-			})
+		
 		})
 		
 	</script>

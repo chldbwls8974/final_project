@@ -17,4 +17,10 @@ public interface ClubMemberDAO {
 
 	List<ClubMemberVO> selectClubMemberList(@Param("cl_num")Integer cl_num);
 
+	void deleteMember(@Param("cl_num")int cl_num, @Param("me_num")int me_num);
+
+	void changeAuthority(@Param("authority")String authority, @Param("cl_num") int cl_num, @Param("me_num")int me_num);
+
+
+ 
 }

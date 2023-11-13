@@ -22,6 +22,7 @@ import kr.kh.final_project.vo.ClubMemberVO;
 import kr.kh.final_project.vo.ClubVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.RegionVO;
+import kr.kh.final_project.vo.TeamPreferredTimeVO;
 
 @Controller
 @RequestMapping("/club")
@@ -125,6 +126,8 @@ public class ClubController {
 	public String updateClub(Model model, HttpSession session, Integer cl_num) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		ClubVO club = clubService.getClub(cl_num);
+		List<RegionVO> MainRegion = memberService.getMainRegion();
+		model.addAttribute("MainRegion",MainRegion);
 		model.addAttribute("user",user);
 		model.addAttribute("club",club);
 		return "/club/update";
@@ -132,7 +135,8 @@ public class ClubController {
 	
 	@PostMapping("/update")
 	public String updateClubPost(Model model, ClubVO club, int[] favoriteTime, int[] favoriteHoliTime, int[] age,int me_num) {
-		Message msg = new Message("/club/upate", "클럽 수정에 실패하였습니다.");
+		Message msg = new Message("/club/update", "클럽 수정에 실패하였습니다.");
+		System.out.println(club);
 		if(clubService.updateClub(me_num,club, age,favoriteTime,favoriteHoliTime)) {
 			msg = new Message("/", "클럽 수정에 성공했습니다.");
 		}
@@ -142,9 +146,12 @@ public class ClubController {
 
 	@ResponseBody
 	@PostMapping("/mbmanage")
-	public Map<String, Object> region(@RequestParam String type, @RequestParam String authority, @RequestParam int cl_num, @RequestParam int me_num,  Model model){
+	public Map<String, Object> region(HttpSession session, @RequestParam String type, @RequestParam int cl_num, @RequestParam int me_num,  Model model){
 		Map<String, Object> map = new HashMap<String, Object>();
-		// 여기해야함!!!! 
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		System.out.println(cl_num + type + me_num + user);
+		clubService.memberManage(type, cl_num, me_num, user);
 		return map;
 	}
 }

@@ -26,6 +26,11 @@ ${club }
 <!-- 	이미 신청한 사람은 중복으로 신청할 수 없으므로 승인대기중을 보여줘야한다. -->
 	 <c:if test="${authority.cm_authority == 'ROOKIE'}">
 	 	<button type="button" class="btn btn-outline-success">승인대기중</button>
+	 	<button type="button" class="btn btn-outline-success" name="withdraw-btn">가입취소</button>
+	 </c:if>
+<!-- 	멤버는 가입했던 클럽을 탈퇴할 수 있다. -->
+	 <c:if test="${authority.cm_authority == 'MEMBER'}">
+	 	<button type="button" class="btn btn-outline-success" name="withdraw-btn">탈퇴</button>
 	 </c:if>
 <!-- 	 클럽의 팀장인 사람은 클럽관리를 할 수 있다. -->
 	 <c:if test="${authority.cm_authority == 'LEADER'}">
@@ -43,5 +48,23 @@ ${club }
 	
 	 </c:if>
 	</div>
+	
+	<script type="text/javascript">
+	$(document).on('click','[name=withdraw-btn]',function(){
+		if(confirm("정말 그만두시겠습니까")){
+			me_num = ${user.me_num}
+			cl_num = ${club.cl_num}
+			data = {
+					me_num : me_num,
+					cl_num : cl_num,
+					type : "withdraw"
+			}
+			
+			ajaxJsonToJson2(false, 'post','/club/mbmanage',data, (a)=>{
+				alert("완료")
+			})
+		}
+	})
+	</script>
 </body>
 </html>
