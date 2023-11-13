@@ -5,14 +5,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class OperatingVO {
 	private int op_num;
 	private String op_day;
 	private int op_open;
 	private int op_close;
-	private int op_fa_num;
+	private Integer op_fa_num;
 	
 	private Date op_open_time;
 	private Date op_close_time;

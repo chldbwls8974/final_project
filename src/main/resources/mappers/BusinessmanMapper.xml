@@ -24,9 +24,12 @@
 					(fa_phone like concat('%', #{cri.s}, '%'))
 				</when>
 			</choose>
-			and bu_me_num = #{member.me_num}
+			and 
+				bu_me_num = #{member.me_num}
+			and 
+				fa_deleted != 1
 		</where>
-			order by fa_num desc
+			order by fa_num asc
 			limit #{cri.pageStart}, #{cri.perPageNum}
 	</select>
 	<select id="selectCountFacilityList" resultType="int">
@@ -49,6 +52,7 @@
 				</when>
 			</choose>
 			and bu_me_num = #{member.me_num}
+			and fa_deleted != 1
 		</where>
 	</select>
 	<select id="selectBusinessmanByMeNum" resultType="kr.kh.final_project.vo.BusinessmanVO">

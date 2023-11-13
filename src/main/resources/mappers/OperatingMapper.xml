@@ -6,4 +6,18 @@
 	<select id="selectOperatingListByFaNum" resultType="kr.kh.final_project.vo.OperatingVO">
 		select * from operating where op_fa_num = #{fa_num}
 	</select>
+	<insert id="insertOperating">
+		insert into 
+			operating(op_day, op_open, op_close, op_fa_num)
+		values
+			(#{operating.op_day}, #{operating.op_open}, 
+			#{operating.op_close}, #{operating.op_fa_num})
+	</insert>
+	<update id="updateOperatingList">
+		update operating set
+			op_day = #{operating.op_day}, 
+			op_open = #{operating.op_open}, 
+			op_close = #{operating.op_close}
+    	where op_fa_num = #{operating.op_fa_num} and op_day = #{operating.op_day}
+	</update>
 </mapper>
