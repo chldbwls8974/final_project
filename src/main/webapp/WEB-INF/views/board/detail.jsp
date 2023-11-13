@@ -9,8 +9,8 @@
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 <style>
-	h1{
-		text-align : center;
+	form{
+		margin-top: 50px;
 	}
 	.form-control{
 		margin-bottom : 10px;
@@ -19,6 +19,8 @@
 		margin-bottom : 10px;
 	}
 	.comment-box{
+		background-color: #f2f2f2;
+		border-radius: 20px; padding: 10px; margin: 0 0 20px 0;
 		display : flex;
 	}
 	.comment-box1{
@@ -28,7 +30,7 @@
 	.profile-image {
 	    width: 60px; 
 	    height: 60px; 
-	    border-radius: 50%; /* 둥글두그륵 만들기 */
+	    border-radius: 50%; /* 둥글게 만들기 */
 	    object-fit: cover; /* 이미지가 찌그러지지 않도록 설정하는 것 */
 	    float:left;
 	}
@@ -67,7 +69,6 @@
 </head>
 <body>
 	<br>
-	<h1>&#x2709 상세보기 &#x2709</h1>
 	<form action="<c:url value='/board/detail'/>" method="post">
 		<div class="form-group">
 			<label>제목</label>
@@ -110,10 +111,11 @@
 				</c:choose>
 			</c:forEach> --%>
 		<!-- 댓글 입력창  -->
-		<label>댓글</label><br>
+		<br>
 		<div class="input-group-append mb-3">
 			<textarea class="form-control" placeholder="댓글을 입력해주세요." id="inputComment"></textarea>
-		    <button type="button"  class="btn btn-outline-success" id="btnCommentInsert">등록</button>
+		    <button type="button"  class="btn" id="btnCommentInsert"
+		    	style="background-color: #c2f296; border-radius: 5px; width: 70px;">등록</button>
 		 </div>
 		<!-- 댓글 목록창 -->
 		<div class="box-comment">
@@ -123,7 +125,7 @@
 							<span class="comment-nickname">${comment.me_nickname}</span>
 							<span class="comment-contents">${comment.co_comments}</span>
 <%-- 						<span class="comment-writer">${comment.co_me_num}</span> --%>
-							<span class="comment-date">${comment.co_date}</span>	
+							<span class="comment-date" style="color: #5b5b5b">${comment.co_date}</span>	
 						</div>
 						<div class="comment-item">
 							<c:if test="${comment.co_me_num == user.me_num}">
@@ -142,7 +144,7 @@
 					 <div class="box-comment-reply" >
 						<div class="comment-box-reply">
 							<div class="comment-list2" style="margin-left:100px">	
-								<img src="<c:url value='/resources/images/sample.jpg'/>" class="rounded-circle profile-image" alt="기본프로필 사진">
+								<img src="/final_project${user.me_profile}" class="rounded-circle profile-image" alt="기본프로필 사진">
 								<div class="comment-1-reply">
 									<span class="comment-contents-reply">${replyComment.co_comments}</span>
 									<span class="comment-writer-reply">[${replyComment.co_me_num}]</span>
@@ -244,7 +246,6 @@
 			// 원래 댓글 번호를 저장
 			let str = '';
 			str += `
-				<hr>
 					<div class="input-group-append mb-3 reply-box" >
 						 <textarea class="form-control" placeholder="답글을 입력해주세요." name="co_content_reply" id="inputComment2"></textarea>
 						 <button type="button" 
@@ -457,9 +458,9 @@
 						
 			            str += `
 							<div class="box-comment">
-								<div class="comment-box" \${comment.co_num != comment.co_ori_num ? 'style="margin-left: 40px;"' : ''}>
+								<div class="comment-box" \${comment.co_num != comment.co_ori_num ? '' : ''}>
 										<div class="comment-list">	
-											<img src="<c:url value='/resources/images/sample.jpg'/>" class="rounded-circle profile-image" alt="기본프로필 사진">
+											<img src="/final_project${user.me_profile}" class="rounded-circle profile-image" alt="기본프로필 사진">
 											<div class="comment-1">
 												<span class="comment-nickname">\${comment.me_nickname}</span>
 												\${comments}

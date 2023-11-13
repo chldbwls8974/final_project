@@ -463,7 +463,25 @@ public class MemberServiceImp implements MemberService{
 		holdingCouponDao.insertSignupCouponNewMember(dbNewMember);
 		return true;
 	}
+
 	
+	//회원 거주지역,선호지역,선호시간 조회
+	@Override
+	public MemberVO getMemberRegion(MemberVO user) {
+		return memberDao.selectMemberRegion(user);
+	}
+
+	@Override
+	public MemberVO getMemberPRegion(MemberVO user) {
+		return memberDao.selectMemberPRegion(user);
+	}
+
+	@Override
+	public MemberVO getMemberPTime(MemberVO user) {
+		return memberDao.selectMemberPTime(user);
+	}
+
+
 	//이메일인증 회원탈퇴
 	@Override
 	public boolean emailMemberSignout(MemberVO member) {
@@ -486,6 +504,7 @@ public class MemberServiceImp implements MemberService{
 		}
 
 	
-
-
 }
+
+
+

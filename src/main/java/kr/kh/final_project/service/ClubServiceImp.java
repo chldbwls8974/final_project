@@ -14,6 +14,8 @@ import kr.kh.final_project.dao.TeamPreferredTimeDAO;
 import kr.kh.final_project.vo.ClubMemberVO;
 import kr.kh.final_project.vo.ClubVO;
 import kr.kh.final_project.vo.MemberVO;
+import kr.kh.final_project.vo.PreferredAgeVO;
+import kr.kh.final_project.vo.TeamPreferredTimeVO;
 
 
 
@@ -154,6 +156,16 @@ public class ClubServiceImp implements ClubService{
 			return null;
 		}
 		return clubDao.selectMyClubList(me_num,authority);
+	}
+
+	@Override
+	public List<PreferredAgeVO> getClubAgeList() {
+		return clubDao.selectClubAgeList();
+	}
+
+	@Override
+	public List<TeamPreferredTimeVO> getClubTimeList() {
+		return clubDao.selectClubTimeList();
 	}
 
 
