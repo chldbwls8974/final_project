@@ -24,13 +24,13 @@ import kr.kh.final_project.service.MatchService;
 import kr.kh.final_project.service.MemberService;
 import kr.kh.final_project.service.RegionService;
 import kr.kh.final_project.util.Message;
+import kr.kh.final_project.vo.BlockVO;
 import kr.kh.final_project.vo.ClubVO;
 import kr.kh.final_project.vo.HoldingCouponVO;
+import kr.kh.final_project.vo.MarkVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
-import kr.kh.final_project.vo.PreferredRegionVO;
-import kr.kh.final_project.vo.PreferredTimeVO;
 import kr.kh.final_project.vo.RegionVO;
 import kr.kh.final_project.vo.TimeVO;
 
@@ -368,25 +368,48 @@ public class MemberController {
 	
 	//마이페이지- 내 프로필 상세조회
 	@GetMapping("/member/myprofile")
-	public String myprofile(Model model, MemberVO member) {
+	public String myprofile(Model model, MemberVO member, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		//회원 가져오기
-		MemberVO user = memberService.getMemberByNum(member);
+		MemberVO dbMember = memberService.getMemberByNum(member);
 		//회원의 거주지역 가져오기
-		MemberVO userRegion = memberService.getMemberRegion(user);
+		MemberVO memberRegion = memberService.getMemberRegion(dbMember);
 		
 		//회원의 선호지역, 선호시간대 가져오기
-		MemberVO userPRegion = memberService.getMemberPRegion(user);
-		MemberVO userPTime = memberService.getMemberPTime(user);
+		MemberVO memberPRegion = memberService.getMemberPRegion(dbMember);
+		MemberVO memberPTime = memberService.getMemberPTime(dbMember);
 		
-		model.addAttribute("user",user );
-		model.addAttribute("userRegion", userRegion );
-		model.addAttribute("userPRegion", userPRegion );
-		model.addAttribute("userPTime", userPTime );
-		System.out.println(userPTime);
-		System.out.println(user);
+		model.addAttribute("member",dbMember );
+		model.addAttribute("memberRegion", memberRegion );
+		model.addAttribute("memberPRegion", memberPRegion );
+		model.addAttribute("memberPTime", memberPTime );
+		model.addAttribute("user", user );
 		return "/member/myprofile";
 	}
+	//차단목록, 즐겨찾기 목록 가져오는 메서드
+	@ResponseBody
+	@PostMapping("/member/myBlockAndMarkList")
+	public Map<String, Object> myBlockAndMarkList(@RequestBody MemberVO user){
+		Map<String, Object> map = new HashMap<String, Object>();
+		//유저의 차단목록, 즐겨찾기목록 가져옴
+		List<BlockVO> blockList = memberService.getMyBlockList(user);
+		List<MarkVO> markList = memberService.getMyMarkList(user);
+		map.put("blockList", blockList);
+		map.put("markList", markList);
+		return map;
+	}
 	
+	//
+	@ResponseBody
+	@PostMapping("/member/markList/process")
+	public Map<String, Object> markListAddAndDelete(@RequestBody MarkVO mark){
+		Map<String, Object> map = new HashMap<String, Object>();
+		//즐겨찾기 등록또는 삭제
+		memberService.markListAddAndDelete(mark);
+		
+		return map;
+	}
+		
 	//마이페이지-즐찾 및 차단조회 페이지
 	@GetMapping("/member/friendlist")
 	public String friendlist() {

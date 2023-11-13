@@ -1,6 +1,5 @@
 package kr.kh.final_project.service;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -13,16 +12,19 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.kh.final_project.dao.BlockDAO;
 import kr.kh.final_project.dao.HoldingCouponDAO;
+import kr.kh.final_project.dao.MarkDAO;
 import kr.kh.final_project.dao.MemberDAO;
 import kr.kh.final_project.dao.PointHistoryDAO;
 import kr.kh.final_project.dao.PreferredRegionDAO;
 import kr.kh.final_project.dao.PreferredTimeDAO;
 import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.dao.TimeDAO;
-import kr.kh.final_project.util.UploadFileUtils;
 import kr.kh.final_project.pagination.Criteria;
+import kr.kh.final_project.vo.BlockVO;
 import kr.kh.final_project.vo.HoldingCouponVO;
+import kr.kh.final_project.vo.MarkVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.RegionVO;
@@ -57,7 +59,13 @@ public class MemberServiceImp implements MemberService{
 	
 	@Autowired
 	HoldingCouponDAO holdingCouponDao;
-
+	
+	@Autowired
+	BlockDAO blockDao;
+	
+	@Autowired
+	MarkDAO markDao;
+	
 	String uploadPath = "D:\\uploadfiles";
 	
 	String uploadProfile = "D:\\uploadProfile";
@@ -510,6 +518,41 @@ public class MemberServiceImp implements MemberService{
 		}
 		return memberDao.selectMemberByNum(member.getMe_num());
 	}
+
+	
+	@Override
+	public List<BlockVO> getMyBlockList(MemberVO user) {
+		if(user == null) {
+			return null;
+		}
+		return blockDao.selectBlockList(user.getMe_num());
+	}
+
+	@Override
+	public List<MarkVO> getMyMarkList(MemberVO user) {
+		if(user == null) {
+			return null;
+		}
+		return markDao.selectMyMarkList(user);
+	}
+
+	@Override
+	public boolean markListAddAndDelete(MarkVO mark) {
+		//유저객체와 즐겨찾기 리스트 가져옴
+		MemberVO user = memberDao.selectMemberByNum(mark.getMa_me_num());
+		List<MarkVO> dbMarkList = markDao.selectMyMarkList(user);
+		
+		boolean isExist = false;
+		for(MarkVO tmp : dbMarkList) {
+			if(tmp.getMa_marked_num() == mark.getMa_marked_num()) {
+				isExist = true;
+			}
+		}
+		//이미 추가되어 있으면 true
+		boolean res = isExist ? markDao.deleteMark(mark) : markDao.insertMark(mark);
+		return res;
+	}
+
 
 	
 }
