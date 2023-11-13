@@ -90,8 +90,8 @@
 				<c:when test="${fileList.size() != 0 }">
 					<label>첨부파일</label><br>
 						<c:forEach items="${fileList}" var="file">
-							<a  href="<c:url value='/download${file.fi_name}'/>" 
-								download="${file.fi_ori_name}">${file.fi_ori_name}</a><br>
+							<a  href="<c:url value='/download${file.fi_ori_name}'/>" 
+								download="${file.fi_name}">${file.fi_name}</a><br>
 						</c:forEach>
 				</c:when>
 				<c:otherwise>
