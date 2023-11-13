@@ -130,6 +130,55 @@ public class BusinessmanServiceImp implements BusinessmanService{
 	}
 	
 	
+	//운영시간
+	@Override
+	public List<OperatingVO> getOperatingListByFaNum(Integer fa_num) {
+		if(fa_num == 0) {
+			return null;			
+		}
+		List<OperatingVO> operatingList = operatingDao.selectOperatingListByFaNum(fa_num);
+		return operatingList;
+	}
+	//운영시간 등록
+	@Override
+	public boolean insertOperating(List<OperatingVO> operatingList, int fa_num) {
+		if(operatingList == null ){
+				return false;
+			}
+		for(OperatingVO tmp : operatingList) {
+			tmp.setOp_fa_num(fa_num);
+			//System.out.println(tmp);
+			operatingDao.insertOperating(tmp);
+		}
+			return true;
+	}
+	//운영시간 수정
+	@Override
+	public boolean updateOperatingList(List<OperatingVO> operatingList, int fa_num) {
+		if(operatingList == null) {
+			return false;
+		}
+		//Dao를 통해 해당 시설번호(fa_num)의 운영시간 목록을 가져와서 dbOperating에 저장
+		List<OperatingVO> dbOperating= operatingDao.selectOperatingListByFaNum(fa_num);
+		if(dbOperating == null) { 
+			return false;
+		}
+		// 변경된 운영 시간만 업데이트
+	    for (OperatingVO newTmp : operatingList) {
+	    	newTmp.setOp_fa_num(fa_num);
+	        //System.out.println(newTmp);
+	        for (OperatingVO dbTmp : dbOperating) {
+	        	System.out.println(dbTmp);
+	            if (newTmp.getOp_day().equals(dbTmp.getOp_day())) {
+	                operatingDao.updateOperatingList(newTmp, fa_num);
+	            }
+	        }
+	    }
+	    return true;
+	}
+	
+	
+	
 	//시설번호로 경기장 리스트 가져오기
 	@Override
 	public List<StadiumVO> getStadiumList(Integer fa_num, Criteria cri) {
@@ -140,7 +189,6 @@ public class BusinessmanServiceImp implements BusinessmanService{
 		//가져오면 반환
 		return stadiumList;
 	}
-	
 	//현재 페이지 정보(검색어, 타입)에 맞는 전체 경기장 수를 가져옴
 	@Override
 	public int getTotalStadiumCount(Criteria cri, Integer fa_num) {
@@ -186,28 +234,6 @@ public class BusinessmanServiceImp implements BusinessmanService{
 		return res;
 	}
 	
-	//운영시간
-	@Override
-	public List<OperatingVO> getOperatingListByFaNum(Integer fa_num) {
-		if(fa_num == 0) {
-			return null;			
-		}
-		List<OperatingVO> operatingList = operatingDao.selectOperatingListByFaNum(fa_num);
-		return operatingList;
-	}
-	//운영시간 등록
-	@Override
-	public boolean insertOperating(List<OperatingVO> operatingList, int fa_num) {
-		if(operatingList == null ){
-				return false;
-			}
-		for(OperatingVO tmp : operatingList) {
-			tmp.setOp_fa_num(fa_num);
-			System.out.println(tmp);
-			operatingDao.insertOperating(tmp);
-		}
-			return true;
-	}
-
 	
+
 }

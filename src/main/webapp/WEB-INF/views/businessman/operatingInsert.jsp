@@ -66,13 +66,5 @@
    	    <button class="btn btn-secondary btn-block">등록</button><br>
 	</form> 
 
-
-
-	<script type="text/javascript">	
-		
-
-		
-	</script>
-
 </body>
 </html>

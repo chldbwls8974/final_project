@@ -189,6 +189,7 @@ public class BusinessmanController {
 	    return "/util/message";
 	}
 	
+	
 	//운영시간 페이지
 	@GetMapping("/businessman/operating/{fa_num}")
 	public String operating(Model model, @PathVariable("fa_num")Integer fa_num, 
@@ -215,9 +216,9 @@ public class BusinessmanController {
 	}
 	//운영시간 등록
 	@PostMapping("/businessman/operatingInsert")
-	public String insertStadium(Model model, FacilityVO facility, HttpSession session) {
+	public String insertOperating(Model model, FacilityVO facility, HttpSession session) {
 		//System.out.println(facility);
-		//facilityVO에서 운영시간 정보를 불러와서 operatingList 변수에 저장
+		//facilityVO에서 운영시간 리스트를 불러와서 operatingList 변수에 저장
 		List<OperatingVO> operatingList = facility.getOperatingList();
 		int fa_num = facility.getFa_num();
 
@@ -226,7 +227,6 @@ public class BusinessmanController {
 				model.addAttribute("msg", "운영시간 등록이 완료되었습니다.");
 				//운영시간 등록이 완료되면 등록한 시설의 운영시간 목록으로 돌아가야 함
 				model.addAttribute("url", "/businessman/operating/" + fa_num);
-				System.out.println("sadasd");
 			}else {
 				model.addAttribute("msg", "운영시간을 등록하지 못했습니다.");
 				model.addAttribute("url", "/businessman/operatingInsert");
@@ -234,26 +234,27 @@ public class BusinessmanController {
 		return "/util/message";
 	}	
 	//운영시간 수정
-	@GetMapping("/businessman/operatingUpdate")
-	public String updateOperating(Model model, FacilityVO facility, Integer op_fa_num, HttpSession session) {
-		List<OperatingVO> operatingList = businessmanService.getOperatingListByFaNum(op_fa_num);		
+	@GetMapping("/businessman/operatingUpdate/{fa_num}")
+	public String updateOperating(Model model, @PathVariable("fa_num")Integer fa_num, HttpSession session) {
+		List<OperatingVO> operatingList = businessmanService.getOperatingListByFaNum(fa_num);		
 		model.addAttribute("operatingList", operatingList);
 		return "/businessman/operatingUpdate";
 	}
 	//운영시간 수정
 	@PostMapping("/businessman/operatingUpdate")
-	public String operatingUpdate(Model model, StadiumVO stadium, FacilityVO facility, HttpSession session) {
-		
-		/*int fa_num = facility.getFa_num();
+	public String operatingUpdate(Model model, FacilityVO facility, HttpSession session) {
+		//facility에서 operatingList를 불러옴
+		List<OperatingVO> operatingList = facility.getOperatingList();
+		int fa_num = facility.getFa_num();
 
-		boolean res = businessmanService.updateStadium(stadium);
+		boolean res = businessmanService.updateOperatingList(operatingList, fa_num);
 		if(res) {
 			model.addAttribute("msg", "시설 운영시간 수정이 완료되었습니다.");
 			model.addAttribute("url", "/businessman/operating/" + fa_num);
 		}else {
 			model.addAttribute("msg", "시설 운영시간 수정에 실패했습니다.");
 			model.addAttribute("url", "/businessman/operatingUpdate");
-		}*/
+		}
 	    return "/util/message";
 	}
 		

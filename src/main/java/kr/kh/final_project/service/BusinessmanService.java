@@ -31,6 +31,13 @@ public interface BusinessmanService {
 	//시설 삭제 => 해당 시설의 경기장도 삭제(화면에서만 삭제)
 	boolean facilityDelete(Integer fa_num, MemberVO user, BusinessmanVO business);
 	
+	//운영시간
+	List<OperatingVO> getOperatingListByFaNum(Integer fa_num);
+	//운영시간 등록
+	boolean insertOperating(List<OperatingVO> operatingList, int fa_num);
+	//운영시간 수정
+	boolean updateOperatingList(List<OperatingVO> operatingList, int fa_num);
+
 	//시설번호로 경기장 리스트 가져오기
 	List<StadiumVO> getStadiumList(Integer fa_num, Criteria cri);
 	//경기장 등록
@@ -42,10 +49,6 @@ public interface BusinessmanService {
     //현재 페이지 정보(검색어, 타입)에 맞는 전체 경기장 수를 가져옴
 	int getTotalStadiumCount(Criteria cri, Integer fa_num);
 	
-	//운영시간
-	List<OperatingVO> getOperatingListByFaNum(Integer fa_num);
-	//운영시간 등록
-	boolean insertOperating(List<OperatingVO> operatingList, int fa_num);
 	
 	
 
