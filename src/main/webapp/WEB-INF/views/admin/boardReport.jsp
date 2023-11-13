@@ -205,7 +205,7 @@
 					<td>\${a.rp_num}</td>
 					<td>\${a.rp_date}</td>
 					<td>\${a.rc_detail}</td>
-					<td>\${a.rp_bo_num}</td>
+					<td><a href="<c:url value='/board/detail?bo_num=\${a.rp_bo_num}'/>">\${a.rp_bo_num}</a></td>
 					<td>\${toggleBtnStr}</td>
 					<td>\${a.me_id}</td>
 					<td>\${a.me_id2}</td>
