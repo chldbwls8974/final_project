@@ -243,7 +243,6 @@
 				<a class="page-link" href="#"> 다음</a>
 			</div>
 		</div>
-		<hr>
 		
 		<!-- 모달버튼 -->
 		<c:if test="${board.bo_bt_num != 5 && board.bo_bt_num != 6 && board.bo_bt_num != 7 }">
