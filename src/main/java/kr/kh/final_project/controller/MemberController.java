@@ -368,10 +368,9 @@ public class MemberController {
 	
 	//마이페이지- 내 프로필 상세조회
 	@GetMapping("/member/myprofile")
-	public String myprofile(Model model, HttpSession session) {
-		//로그인한 회원 가져오기
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		
+	public String myprofile(Model model, MemberVO member) {
+		//회원 가져오기
+		MemberVO user = memberService.getMemberByNum(member);
 		//회원의 거주지역 가져오기
 		MemberVO userRegion = memberService.getMemberRegion(user);
 		
@@ -384,6 +383,7 @@ public class MemberController {
 		model.addAttribute("userPRegion", userPRegion );
 		model.addAttribute("userPTime", userPTime );
 		System.out.println(userPTime);
+		System.out.println(user);
 		return "/member/myprofile";
 	}
 	

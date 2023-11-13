@@ -503,6 +503,14 @@ public class MemberServiceImp implements MemberService{
 			return true;
 		}
 
+	@Override
+	public MemberVO getMemberByNum(MemberVO member) {
+		if(member == null) {
+			return null;
+		}
+		return memberDao.selectMemberByNum(member.getMe_num());
+	}
+
 	
 }
 
