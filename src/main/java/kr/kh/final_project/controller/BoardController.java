@@ -386,13 +386,11 @@ public class BoardController {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		// 페이지네이션
 		cri.setPerPageNum(5);
-		int totalCount = boardService.getInquiryTotalCount(cri);
+		int totalCount = boardService.getInquiryTotalCount(cri, user);
 		final int DISPLAY_PAGE_NUM = 3;
 		PageMaker pm = new PageMaker(DISPLAY_PAGE_NUM, cri, totalCount);
 		// 문의게시판 조회하기
-		List<BoardVO> list = boardService.getBoardInquiryList(cri);
-		
-		
+		List<BoardVO> list = boardService.getBoardInquiryList(cri, user);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("cri", cri);

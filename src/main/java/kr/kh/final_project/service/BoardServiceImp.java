@@ -388,16 +388,16 @@ public class BoardServiceImp implements BoardService{
 		
 	//문의게시판 가져오기
 	@Override
-	public List<BoardVO> getBoardInquiryList(Criteria cri) {
-		return boardDao.selectBoardInquiryList(cri);
+	public List<BoardVO> getBoardInquiryList(Criteria cri, MemberVO user) {
+		return boardDao.selectBoardInquiryList(cri, user);
 	}
 	// 문의게시판 총갯수 가져오기
 	@Override
-	public int getInquiryTotalCount(Criteria cri) {
+	public int getInquiryTotalCount(Criteria cri, MemberVO user) {
 		if(cri == null) {
 			cri = new Criteria();
 		}
-		return boardDao.selectInquiryTotalCount(cri);
+		return boardDao.selectInquiryTotalCount(cri, user);
 	}
 	// 문의게시판 등록하기
 	@Override
