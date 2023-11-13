@@ -48,6 +48,12 @@ public interface MemberDAO {
 
 	MemberVO selectMemberByKaKao(@Param("me_id")String me_id);
 
+	MemberVO selectMemberRegion(@Param("user") MemberVO user);
+
+	MemberVO selectMemberPRegion(@Param("user") MemberVO user);
+
+	MemberVO selectMemberPTime(@Param("user") MemberVO user);
+
 	void updateEmailMember(@Param("me_id")String me_id);
 
 	boolean updateUserBoardBanState(@Param("me_num")int me_num, @Param("i")int i);

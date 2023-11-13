@@ -1,6 +1,8 @@
 package kr.kh.final_project.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -19,7 +21,9 @@ import kr.kh.final_project.util.Message;
 import kr.kh.final_project.vo.ClubMemberVO;
 import kr.kh.final_project.vo.ClubVO;
 import kr.kh.final_project.vo.MemberVO;
+import kr.kh.final_project.vo.PreferredAgeVO;
 import kr.kh.final_project.vo.RegionVO;
+import kr.kh.final_project.vo.TeamPreferredTimeVO;
 
 @Controller
 @RequestMapping("/club")
@@ -60,27 +64,42 @@ public class ClubController {
 	public String listClub(Model model, HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		List<ClubVO> list = clubService.getClubList();
+		List<PreferredAgeVO> ageList = clubService.getClubAgeList();
+		List<TeamPreferredTimeVO> timeList = clubService.getClubTimeList();
 		model.addAttribute("user",user);
 		model.addAttribute("list",list);
+		model.addAttribute("ageList",ageList);
+		model.addAttribute("timeList",timeList);
 		return "/club/list";
 	}
 	@GetMapping("/mylist")
 	public String myClubList(Model model, HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		List<ClubVO> rookielist = clubService.getMyClubList(user.getMe_num(),"ROOKIE");
 		List<ClubVO> memberlist = clubService.getMyClubList(user.getMe_num(),"MEMBER");
+		List<ClubVO> leaderlist = clubService.getMyClubList(user.getMe_num(),"LEADER");
+		
+		model.addAttribute("user",user);
+		model.addAttribute("memberlist",memberlist);
+		model.addAttribute("leaderlist",leaderlist);
+		return "/club/mylist";
+	}
+	@GetMapping("/rookielist")
+	public String rookieClubList(Model model, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		List<ClubVO> rookielist = clubService.getMyClubList(user.getMe_num(),"ROOKIE");
 		model.addAttribute("user",user);
 		model.addAttribute("rookielist",rookielist);
-		model.addAttribute("memberlist",memberlist);
-		return "/club/mylist";
+		return "/club/rookielist";
 	}
 	
 	@GetMapping("/detail")
 	public String detailClub(Model model, HttpSession session, Integer cl_num) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		ClubVO club = clubService.getClub(cl_num);
+		ClubMemberVO authority = clubService.getMyAuthorityByClub(cl_num, user.getMe_num());
 		model.addAttribute("user",user);
 		model.addAttribute("club",club);
+		model.addAttribute("authority",authority);
 		return "/club/detail";
 	}
 	@GetMapping("/join")
@@ -102,11 +121,11 @@ public class ClubController {
 	}
 	
 	@GetMapping("/manage")
-	public String manageClub(Model model, HttpSession session) {
+	public String manageClub(Model model, HttpSession session, Integer cl_num) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		String authority = "LEADER";
-		List<ClubVO> list = clubService.getMyClubList(user.getMe_num(),authority);
-		model.addAttribute("user",user);
+		ClubVO club = clubService.getClub(cl_num);
+		List<ClubMemberVO> list = clubService.getClubMemberList(cl_num);
+		model.addAttribute("club",club);
 		model.addAttribute("list",list);
 		return "/club/manage";
 	}
@@ -115,6 +134,8 @@ public class ClubController {
 	public String updateClub(Model model, HttpSession session, Integer cl_num) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		ClubVO club = clubService.getClub(cl_num);
+		List<RegionVO> MainRegion = memberService.getMainRegion();
+		model.addAttribute("MainRegion",MainRegion);
 		model.addAttribute("user",user);
 		model.addAttribute("club",club);
 		return "/club/update";
@@ -122,12 +143,24 @@ public class ClubController {
 	
 	@PostMapping("/update")
 	public String updateClubPost(Model model, ClubVO club, int[] favoriteTime, int[] favoriteHoliTime, int[] age,int me_num) {
-		Message msg = new Message("/club/upate", "클럽 수정에 실패하였습니다.");
+		Message msg = new Message("/club/update", "클럽 수정에 실패하였습니다.");
+		System.out.println(club);
 		if(clubService.updateClub(me_num,club, age,favoriteTime,favoriteHoliTime)) {
 			msg = new Message("/", "클럽 수정에 성공했습니다.");
 		}
 		model.addAttribute("msg", msg);
 		return "message";
+	}
+
+	@ResponseBody
+	@PostMapping("/mbmanage")
+	public Map<String, Object> region(HttpSession session, @RequestParam String type, @RequestParam int cl_num, @RequestParam int me_num,  Model model){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		System.out.println(cl_num + type + me_num + user);
+		clubService.memberManage(type, cl_num, me_num, user);
+		return map;
 	}
 }
 	

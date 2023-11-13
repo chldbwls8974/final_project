@@ -23,6 +23,11 @@ public class RegionServiceImp implements RegionService{
 		return regionDao.selectSubRegion(rg_main);
 	}
 
+	@Override
+	public List<RegionVO> getUserRegionList(Integer me_num) {
+		return regionDao.selectUserRegion(me_num);
+	}
+
 
 	
 }

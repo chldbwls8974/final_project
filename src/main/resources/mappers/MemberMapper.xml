@@ -17,9 +17,16 @@
 				or
 			me_authority like concat('%', #{cri.s}, '%')
 				or
-			me_state1 like concat('%', #{cri.s}, '%')
-				or
-			me_state2 like concat('%', #{cri.s}, '%')
+			<if test='cri.s_int != 1'>
+				me_state1 like concat('%', #{cri.s_int}, '%')
+					and
+				me_state2 like concat('%', #{cri.s_int}, '%')
+			</if>
+			<if test='cri.s_int == 1'>
+				me_state1 like concat('%', #{cri.s_int}, '%')
+					or
+				me_state2 like concat('%', #{cri.s_int}, '%')
+			</if>
 		</if>
 		<if test='cri.t == "second"'>
 		where
@@ -35,9 +42,16 @@
 		</if>
 		<if test='cri.t == "fifth"'>
 		where
-			me_state1 like concat('%', #{cri.s}, '%')
-				or
-			me_state2 like concat('%', #{cri.s}, '%')
+			<if test='cri.s_int != 1'>
+				me_state1 like concat('%', #{cri.s_int}, '%')
+					and
+				me_state2 like concat('%', #{cri.s_int}, '%')
+			</if>
+			<if test='cri.s_int == 1'>
+				me_state1 like concat('%', #{cri.s_int}, '%')
+					or
+				me_state2 like concat('%', #{cri.s_int}, '%')
+			</if>
 		</if>
 		order by 
 			me_num asc
@@ -60,9 +74,16 @@
 				or
 			me_authority like concat('%', #{cri.s}, '%')
 				or
-			me_state1 like concat('%', #{cri.s}, '%')
-				or
-			me_state2 like concat('%', #{cri.s}, '%')
+			<if test='cri.s_int != 1'>
+				me_state1 like concat('%', #{cri.s_int}, '%')
+					and
+				me_state2 like concat('%', #{cri.s_int}, '%')
+			</if>
+			<if test='cri.s_int == 1'>
+				me_state1 like concat('%', #{cri.s_int}, '%')
+					or
+				me_state2 like concat('%', #{cri.s_int}, '%')
+			</if>
 		</if> 
 		<if test='cri.t == "second"'>
 		where
@@ -78,9 +99,16 @@
 		</if>
 		<if test='cri.t == "fifth"'>
 		where
-			me_state1 like concat('%', #{cri.s}, '%')
-				or
-			me_state2 like concat('%', #{cri.s}, '%')
+			<if test='cri.s_int != 1'>
+				me_state1 like concat('%', #{cri.s_int}, '%')
+					and
+				me_state2 like concat('%', #{cri.s_int}, '%')
+			</if>
+			<if test='cri.s_int == 1'>
+				me_state1 like concat('%', #{cri.s_int}, '%')
+					or
+				me_state2 like concat('%', #{cri.s_int}, '%')
+			</if>
 		</if>
 		order by
 			me_num
@@ -152,6 +180,38 @@
 	<update id="updateFile">
 		update file(fi_bo_num, fi_name, fi_ori_name) set (#{file.fi_bo_num}, #{file.fi_name}, #{file.fi_ori_name})
 	</update>
+	<select id="selectMemberRegion" resultType="kr.kh.final_project.vo.MemberVO">
+		select 
+           *
+       from 
+           member 
+          left join
+           region on me_rg_num = rg_num
+       where
+           me_num = #{user.me_num}
+	</select>
+	<select id="selectMemberPRegion" resultType="kr.kh.final_project.vo.MemberVO">
+		select 
+           *
+       from 
+           member 
+          left join
+           preferred_region on pr_me_num = me_num
+		  left join region on pr_rg_num = rg_num
+       where
+           me_num = #{user.me_num}
+	</select>
+	<select id="selectMemberPTime" resultType="kr.kh.final_project.vo.MemberVO">
+		select 
+           *
+       from 
+           member 
+          left join
+           preferred_time on pt_me_num = me_num
+		  left join time on pt_ti_num = ti_num
+       where
+           me_num = #{user.me_num}
+	</select>
 	<update id="updateEmailMember">
 		update 
 			member

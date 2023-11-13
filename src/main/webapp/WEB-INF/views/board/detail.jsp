@@ -9,9 +9,60 @@
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 <style>
-h1 {
-	text-align: center;
-}
+	form{
+		margin-top: 50px;
+	}
+	.form-control{
+		margin-bottom : 10px;
+	}
+	.btn{
+		margin-bottom : 10px;
+	}
+	.comment-box{
+		background-color: #f2f2f2;
+		border-radius: 20px; padding: 10px; margin: 0 0 20px 0;
+		display : flex;
+	}
+	.comment-box1{
+		display : flex;
+	}
+	/* 프로필 사진 */
+	.profile-image {
+	    width: 60px; 
+	    height: 60px; 
+	    border-radius: 50%; /* 둥글게 만들기 */
+	    object-fit: cover; /* 이미지가 찌그러지지 않도록 설정하는 것 */
+	    float:left;
+	}
+	/* 댓글 내용 */
+	.comment-list{
+		list-style : none;
+		padding : 10px;
+		width : 100%;
+	}
+	/* 수정 삭제 버튼 */
+	.comment-item{
+		float : right;
+		position : relative;
+	}
+	/* 날짜 */
+	.comment-date{
+		
+		display : block;
+		margin-left : 80px;
+		padding-top : 50px;
+	}
+	
+	/* 댓글, 답글 내용만 */
+	.comment-contents{
+		margin-left : 80px;
+		margin-top : 20px;
+		display : flex;
+	}
+	.comment-nickname{
+		margin-left : 20px;
+		font-weight : bold;
+	}
 
 .form-control {
 	margin-bottom: 10px;
@@ -91,7 +142,6 @@ h1 {
 </head>
 <body>
 	<br>
-	<h1>&#x2709 상세보기 &#x2709</h1>
 	<form action="<c:url value='/board/detail'/>" method="post">
 		<div class="form-group">
 			<label>제목</label>
@@ -101,20 +151,21 @@ h1 {
 			<label>작성자</label>
 			<input type="text" class="form-control" name="bo_me_id" value="${board.me_nickname}" readonly>
 		</div>
-		<div class="input-group mb-3">
-		    <div class="input-group">
-		    	<div class="form-control"
-					 style="height : 600px; overflow-y: auto; text-align: center;" >${board.bo_contents}</div>
-		    </div>
-		</div>
-		
+		<c:if test="${board.bo_contents != null}">
+			<div class="input-group mb-3">
+			    <div class="input-group">
+			    	<div class="form-control"
+						 style="height : 600px; overflow-y: auto; text-align: center;" >${board.bo_contents}</div>
+			    </div>
+			</div>
+		</c:if>
 		<div class="form-group">
 			<c:choose>
 				<c:when test="${fileList.size() != 0 }">
 					<label>첨부파일</label><br>
 						<c:forEach items="${fileList}" var="file">
-							<a  href="<c:url value='/download${file.fi_name}'/>" 
-								download="${file.fi_ori_name}">${file.fi_ori_name}</a><br>
+							<a  href="<c:url value='/download${file.fi_ori_name}'/>" 
+								download="${file.fi_name}">${file.fi_name}</a><br>
 						</c:forEach>
 				</c:when>
 				<c:otherwise>
@@ -134,12 +185,15 @@ h1 {
 				 	</c:otherwise>
 				</c:choose>
 			</c:forEach> --%>
-		<!-- 댓글 입력창  -->
-		<label>댓글</label><br>
-		<div class="input-group-append mb-3">
-			<textarea class="form-control" placeholder="댓글을 입력해주세요." id="inputComment"></textarea>
-		    <button type="button"  class="btn btn-outline-success" id="btnCommentInsert">등록</button>
-		 </div>
+		<c:if test="${board.bo_bt_num != 6 && board.bo_bt_num != 7}">
+			<!-- 댓글 입력창  -->
+			<label>댓글</label><br>
+			<div class="input-group-append mb-3">
+				<textarea class="form-control" placeholder="댓글을 입력해주세요." id="inputComment"></textarea>
+			    <button type="button"  class="btn btn-outline-success" id="btnCommentInsert"
+					style="background-color: #c2f296; border-radius: 5px; width: 70px;">등록</button>
+			 </div>
+		</c:if>
 		<!-- 댓글 목록창 -->
 		<div class="box-comment">
 			<div class="comment-box1" >
@@ -148,7 +202,7 @@ h1 {
 							<span class="comment-nickname">${comment.me_nickname}</span>
 							<span class="comment-contents">${comment.co_comments}</span>
 <%-- 						<span class="comment-writer">${comment.co_me_num}</span> --%>
-							<span class="comment-date">${comment.co_date}</span>	
+							<span class="comment-date" style="color: #5b5b5b">${comment.co_date}</span>	
 						</div>
 						<div class="comment-item">
 							<c:if test="${comment.co_me_num == user.me_num}">
@@ -167,7 +221,7 @@ h1 {
 					 <div class="box-comment-reply" >
 						<div class="comment-box-reply">
 							<div class="comment-list2" style="margin-left:100px">	
-								<img src="<c:url value='/resources/images/sample.jpg'/>" class="rounded-circle profile-image" alt="기본프로필 사진">
+								<img src="/final_project${user.me_profile}" class="rounded-circle profile-image" alt="기본프로필 사진">
 								<div class="comment-1-reply">
 									<span class="comment-contents-reply">${replyComment.co_comments}</span>
 									<span class="comment-writer-reply">[${replyComment.co_me_num}]</span>
@@ -195,19 +249,21 @@ h1 {
 		<c:if test="${board.bo_bt_num != 5 && board.bo_bt_num != 6 && board.bo_bt_num != 7 }">
 			<button type="button" class="btn btn-outline-warning button--open" data-value="${board.bo_num}">게시글 신고</button>
 		</c:if>
+		<br>
 		<!-- 자신이 쓴 게시글만 수정,삭제 버튼 나오게 -->
-		<c:if test="${user != null && user.me_num == board.bo_me_num}">
-			<button type="button"
-					class="btn btn-outline-warning col-12 btn-board-update"
-					onclick="location.href='<c:url value='/board/update?bo_num=${board.bo_num}'/>'">수정하기
-			</button><br>
-		</c:if>
-		<c:if test="${user != null && user.me_num == board.bo_me_num}">
-			<button type="button"
-					class="btn btn-outline-danger col-12 btn-delete"
-					onclick="location.href='<c:url value='/board/delete?bo_num=${board.bo_num}'/>'">삭제하기
-			</button><br>
-		</c:if>
+			<c:if test="${user != null && user.me_num == board.bo_me_num}">
+				<button type="button"
+						class="btn btn-outline-warning col-12 btn-board-update"
+						onclick="location.href='<c:url value='/board/update?bo_num=${board.bo_num}'/>'">수정하기
+				</button><br>
+			</c:if>
+			<c:if test="${user != null && user.me_num == board.bo_me_num}">
+				<button type="button"
+						class="btn btn-outline-danger col-12 btn-delete"
+						onclick="location.href='<c:url value='/board/delete?bo_num=${board.bo_num}'/>'">삭제하기
+				</button><br>
+			</c:if>
+		
 	</form>
 	<!-- 모달창 -->
 	<div class="modal--bg">
@@ -302,12 +358,11 @@ h1 {
 			// 원래 댓글 번호를 저장
 			let str = '';
 			str += `
-				<hr>
 					<div class="input-group-append mb-3 reply-box" >
 						 <textarea class="form-control" placeholder="답글을 입력해주세요." name="co_content_reply" id="inputComment2"></textarea>
 						 <button type="button" 
 						 		 class="btn btn-outline-primary btn-sm btn-reply-insert" 
-						 		 data-num="\${co_ori_num}">답글2</button>
+						 		 data-num="\${co_ori_num}">답글</button>
 					</div>
 			`;
 			$(this).parents('.comment-box').after(str);
@@ -327,7 +382,6 @@ h1 {
 					co_bo_num : co_bo_num,
 					co_comments : co_contents
 			}
-			console.log(comment)
 			$.ajax({
 				async : false,
 				method: 'post',
@@ -515,9 +569,9 @@ h1 {
 						
 			            str += `
 							<div class="box-comment">
-								<div class="comment-box" \${comment.co_num != comment.co_ori_num ? 'style="margin-left: 40px;"' : ''}>
+								<div class="comment-box" \${comment.co_num != comment.co_ori_num ? '' : ''}>
 										<div class="comment-list">	
-											<img src="<c:url value='/resources/images/sample.jpg'/>" class="rounded-circle profile-image" alt="기본프로필 사진">
+											<img src="/final_project${user.me_profile}" class="rounded-circle profile-image" alt="기본프로필 사진">
 											<div class="comment-1">
 												<span class="comment-nickname">\${comment.me_nickname}</span>
 												\${comments}

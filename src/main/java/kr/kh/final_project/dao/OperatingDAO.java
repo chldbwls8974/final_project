@@ -10,4 +10,14 @@ public interface OperatingDAO {
 
 	List<OperatingVO> selectOperatingListByFaNum(@Param("fa_num")int fa_num);
 
+	boolean insertOperating(@Param("operating")OperatingVO operating);
+
+	void updateOperatingList(@Param("operating")OperatingVO operating, @Param("fa_num")int fa_num);
+
+
+
+
+
+
+
 }

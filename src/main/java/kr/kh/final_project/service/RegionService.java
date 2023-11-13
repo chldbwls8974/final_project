@@ -13,6 +13,6 @@ public interface RegionService {
 
 	List<RegionVO> getSubRegion(String rg_main);
 
-
+	List<RegionVO> getUserRegionList(Integer me_num);
 
 }

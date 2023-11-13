@@ -46,10 +46,9 @@ public class AdminController {
 		//int me_num = 1;
 		//List<MemberVO> list = adminService.getMemberList(me_num);
 		
-		System.out.println(cri);
 		//페이지네이션
 		// perPageNum : 한페이지에서 보여줄 컨텐츠 개수
-		cri.setPerPageNum(5);
+		cri.setPerPageNum(10);
 		//현재 페이지 정보(검색어, 타입)에 맞는 전체 게시글 수(TotalCount)를 가져온다.
 		int totalCount = adminService.getTotalCount(cri);
 		//페이지네이션 페이지수
