@@ -38,4 +38,7 @@ public class Criteria {
 	public String getUrl() {
 		return "?t=" + t + "&s=" + s + "&page=" + page;
 	}
+	public int getS_int() {
+		return s.equals("정지")?1:0;
+	}
 }

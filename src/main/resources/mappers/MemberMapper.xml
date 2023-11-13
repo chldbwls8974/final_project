@@ -17,9 +17,16 @@
 				or
 			me_authority like concat('%', #{cri.s}, '%')
 				or
-			me_state1 like concat('%', #{cri.s}, '%')
-				or
-			me_state2 like concat('%', #{cri.s}, '%')
+			<if test='cri.s_int != 1'>
+				me_state1 like concat('%', #{cri.s_int}, '%')
+					and
+				me_state2 like concat('%', #{cri.s_int}, '%')
+			</if>
+			<if test='cri.s_int == 1'>
+				me_state1 like concat('%', #{cri.s_int}, '%')
+					or
+				me_state2 like concat('%', #{cri.s_int}, '%')
+			</if>
 		</if>
 		<if test='cri.t == "second"'>
 		where
@@ -35,9 +42,16 @@
 		</if>
 		<if test='cri.t == "fifth"'>
 		where
-			me_state1 like concat('%', #{cri.s}, '%')
-				or
-			me_state2 like concat('%', #{cri.s}, '%')
+			<if test='cri.s_int != 1'>
+				me_state1 like concat('%', #{cri.s_int}, '%')
+					and
+				me_state2 like concat('%', #{cri.s_int}, '%')
+			</if>
+			<if test='cri.s_int == 1'>
+				me_state1 like concat('%', #{cri.s_int}, '%')
+					or
+				me_state2 like concat('%', #{cri.s_int}, '%')
+			</if>
 		</if>
 		order by 
 			me_num asc
@@ -60,9 +74,16 @@
 				or
 			me_authority like concat('%', #{cri.s}, '%')
 				or
-			me_state1 like concat('%', #{cri.s}, '%')
-				or
-			me_state2 like concat('%', #{cri.s}, '%')
+			<if test='cri.s_int != 1'>
+				me_state1 like concat('%', #{cri.s_int}, '%')
+					and
+				me_state2 like concat('%', #{cri.s_int}, '%')
+			</if>
+			<if test='cri.s_int == 1'>
+				me_state1 like concat('%', #{cri.s_int}, '%')
+					or
+				me_state2 like concat('%', #{cri.s_int}, '%')
+			</if>
 		</if> 
 		<if test='cri.t == "second"'>
 		where
@@ -78,9 +99,16 @@
 		</if>
 		<if test='cri.t == "fifth"'>
 		where
-			me_state1 like concat('%', #{cri.s}, '%')
-				or
-			me_state2 like concat('%', #{cri.s}, '%')
+			<if test='cri.s_int != 1'>
+				me_state1 like concat('%', #{cri.s_int}, '%')
+					and
+				me_state2 like concat('%', #{cri.s_int}, '%')
+			</if>
+			<if test='cri.s_int == 1'>
+				me_state1 like concat('%', #{cri.s_int}, '%')
+					or
+				me_state2 like concat('%', #{cri.s_int}, '%')
+			</if>
 		</if>
 		order by
 			me_num

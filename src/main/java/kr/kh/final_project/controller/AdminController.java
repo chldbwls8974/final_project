@@ -45,7 +45,6 @@ public class AdminController {
 		//int me_num = 1;
 		//List<MemberVO> list = adminService.getMemberList(me_num);
 		
-		System.out.println(cri);
 		//페이지네이션
 		// perPageNum : 한페이지에서 보여줄 컨텐츠 개수
 		cri.setPerPageNum(5);
