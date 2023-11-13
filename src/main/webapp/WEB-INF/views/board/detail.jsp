@@ -118,7 +118,7 @@
 				<textarea class="form-control" placeholder="댓글을 입력해주세요." id="inputComment"></textarea>
 			    <button type="button"  class="btn btn-outline-success" id="btnCommentInsert">등록</button>
 			 </div>
-		
+		</c:if>
 		<!-- 댓글 목록창 -->
 		<div class="box-comment">
 			<div class="comment-box1" >
@@ -182,7 +182,7 @@
 						onclick="location.href='<c:url value='/board/delete?bo_num=${board.bo_num}'/>'">삭제하기
 				</button><br>
 			</c:if>
-		</c:if>
+		
 	</form>
 <script type="text/javascript">
      $('#summernote').summernote({

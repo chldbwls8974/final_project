@@ -79,7 +79,7 @@
 	        				<c:when test="${bu.bo_bt_num == 7}">사업자신청</c:when>
 						</c:choose>
 					</td>
-					<td><a href="<c:url value='/board/detail?bo_num=${ma.bo_num}'/>">${bu.bo_title}</a></td>
+					<td><a href="<c:url value='/board/detail?bo_num=${bu.bo_num}'/>">${bu.bo_title}</a></td>
 					<td class="update">${bu.me_authority}</td>
 					<td>${bu.bo_reg_date_str}</td>
 					<td>

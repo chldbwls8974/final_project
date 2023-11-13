@@ -68,7 +68,6 @@ public class BoardController {
 		// boardService한테 board와 user, files정보를 주며 저장하라고 시킴 그걸 res에 저장하기
 		boolean res = boardService.insertBoard(board, user, files);
 		// 만약 결과가 true이면
-		System.out.println(board);
 		if(res) {
 			model.addAttribute("msg", "게시글 등록 성공!");
 			model.addAttribute("url", "/board/notice");
