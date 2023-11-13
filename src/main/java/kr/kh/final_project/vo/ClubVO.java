@@ -18,5 +18,4 @@ public class ClubVO {
 	private int cm_me_num;
 	private int cm_cl_num;
 	private String cm_authority;
-	
 }

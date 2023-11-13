@@ -1,5 +1,8 @@
 package kr.kh.final_project.service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import kr.kh.final_project.dao.PenaltyDAO;
 import kr.kh.final_project.dao.PointHistoryDAO;
 import kr.kh.final_project.dao.ReportDAO;
 import kr.kh.final_project.pagination.Criteria;
+import kr.kh.final_project.util.Message;
 import kr.kh.final_project.vo.BoardVO;
 import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ManagerVO;
@@ -232,10 +236,8 @@ public class AdminServiceImp implements AdminService{
 			return false;
 		}
 		if(report.getRp_state().equals("0")) {
+			//제재처리 메소드
 			if(penaltyToMember(report)) {
-
-				//제재처리 메소드
-				
 				report.setRp_state("제재");
 			}
 		}else if(report.getRp_state().equals("1")) {
@@ -246,20 +248,81 @@ public class AdminServiceImp implements AdminService{
 		
 		return reportDao.updateReportState(report);
 	}
-	
+	//제재처리 메서드
 	public boolean penaltyToMember(ReportVO report) {
 		//rp_num으로 report객체를 가져오는 메서드
 		ReportVO dbReport = reportDao.selectReportBynum(report);
 		int me_num = dbReport.getRp_me_num2();
 		//패널티 테이블에 있는지 확인
 		List<PenaltyVO> pnList = penaltyDao.selectPenaltyByMemberNum(me_num);
-		// 패널티 테이블에 없으면
+		// 패널티 테이블에 없으면 생성
 		if(pnList.size() == 0) {
-			//penaltyDao.insertBoardPenalty(me_num);
-			System.out.println("asd");
+			String pn_type = "경기";
+			penaltyDao.insertNewPenalty(me_num, pn_type);
+			pn_type = "커뮤니티";
+			penaltyDao.insertNewPenalty(me_num, pn_type);
+		}
+		
+		//신고의 종류(경기 / 커뮤니티)
+		String rc_name = dbReport.getRc_name();
+		// 해당하는 타입(경기/커뮤니티)의 패널티 객체를 가져오는 메서드
+		PenaltyVO penalty = penaltyDao.selectPenaltyByMemberNumAndType(me_num, rc_name);
+		int penaltyCount = penalty.getPn_warning();
+		//rc_num은 신고 카테고리번호    //(1/ 6/ 7/ 8)은 경고없이 영구정지 처리
+		int rc_num = dbReport.getRp_rc_num();
+		if(rc_num == 1 || rc_num == 6 || rc_num == 7 || rc_num == 8) {
+			penaltyCount += 8;
+		}else {
+			penaltyCount ++;
+		}
+		//경고 횟수를 증가
+		penalty.setPn_warning(penaltyCount);
+		//패널티를 업데이트 하는 메서드
+		System.out.println(penalty);
+		if(!penaltyDao.updatePenalty(penalty)) {
+			return false;
+		}
+		//업데이트 한 penalty 다시 가져옴
+		penalty = penaltyDao.selectPenaltyByMemberNumAndType(me_num, rc_name);
+		//제재 후 경고 갯수
+		penaltyCount = penalty.getPn_warning();
+		LocalDateTime pn_end = LocalDateTime.now();
+		
+		//경고 횟수에 따라서 정지횟수, 정지일, 유저의 상태를 정지로 변경
+		if(penaltyCount == 2 || penaltyCount == 4 || penaltyCount == 6 || penaltyCount >= 8) {
+			if(penaltyCount == 2) {
+				penalty.setPn_stop(1);
+				pn_end = LocalDateTime.now().plusDays(7);
+			}else if(penaltyCount == 4) {
+				penalty.setPn_stop(2);
+				pn_end = LocalDateTime.now().plusDays(14);
+			}else if(penaltyCount == 6) {
+				penalty.setPn_stop(3);
+				pn_end = LocalDateTime.now().plusDays(28);
+			}else if(penaltyCount >= 8) {
+				penalty.setPn_stop(4);
+				pn_end = LocalDateTime.now().plusYears(100);
+			}
+			//LocalDateTime을 Date로 형변환
+			Date date = Date.from(pn_end.atZone(ZoneId.systemDefault()).toInstant());
+			penalty.setPn_end(date);
+			penaltyDao.updatePenalty(penalty);
+			boolean res = rc_name.equals("커뮤니티") ? memberDao.updateUserBoardBanState(me_num, 1) : memberDao.updateUserMatchBanState(me_num, 1);
+			System.out.println(res);
 		}
 		
 		return true;
+	}
+	
+	@Override
+	public Message boardReportInsert(ReportVO report) {
+		Message msg = new Message(("/board/detail?bo_num=" + report.getRp_bo_num()), "이미 신고한 게시글입니다.");
+		
+		//중복검사 (신고자 회원번호, 게시글 번호로 등록된 신고가 없다면 등록)
+		if(reportDao.selectReportByMeNumAndBoNum(report) == null) {
+			msg.setMsg(reportDao.insertBoardReport(report) ? "신고 완료." : "신고 실패.");
+			}
+		return msg;
 	}
 	
 }

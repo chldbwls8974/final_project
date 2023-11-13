@@ -8,6 +8,10 @@
 		    *
 		from 
 		    report
+		join 
+			report_category 
+		on 
+			rp_rc_num = rc_num
 		where
 			rp_num = #{report.rp_num}
 	</select>
@@ -158,6 +162,21 @@
 			rp_date like concat('%', #{cri.s}, '%')
 		</if>
 	</select>
+	<select id="selectReportByMeNumAndBoNum" resultType="kr.kh.final_project.vo.ReportVO">
+		select 
+		    *
+		from 
+		    report
+		where
+			rp_bo_num = #{report.rp_bo_num}
+		and
+			rp_me_num = #{report.rp_me_num}
+	</select>
+	<insert id="insertBoardReport">
+		insert into
+			report(rp_rc_num, rp_content, rp_me_num, rp_me_num2, rp_state, rp_bo_num)
+		values(#{report.rp_rc_num}, #{report.rp_content}, #{report.rp_me_num}, #{report.rp_me_num2}, "미확인", #{report.rp_bo_num})
+	</insert>
 	
 	
 </mapper>

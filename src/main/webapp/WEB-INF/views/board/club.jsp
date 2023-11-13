@@ -56,6 +56,7 @@
 	   		</select>
 	    </div>
 	    <input type="text" class="form-control input-search" name="s" id="me_title" placeholder="검색어를 입력하세요." value="${pm.cri.s}">
+	    <input type="hidden" class="form-control region-input" name="bo_rg_num"   value="0">
 	    <button class="btn btn-outline-success btn-insert">찾기</button>
 	</div>
 	</form>
@@ -83,7 +84,6 @@
 		   	</select>
 		</div>
 	</div> 
-
 <br>
 <!-- 공지게시판 출력 -->
 <div class="container">
@@ -113,7 +113,7 @@
 		      </tr>
 		    </c:when>
 		    <c:when test="${bo.bo_bt_num == 4}">
-		      <tr>
+		       <tr class="boardRegion" data-num="${bo.bo_rg_num}">
 		      	<td>${bo.bo_num}</td>
 		      	<td><a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_title}</a></td>
 		        <td>${bo.me_nickname}</td>

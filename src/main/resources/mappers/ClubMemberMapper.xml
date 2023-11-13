@@ -10,4 +10,25 @@
 		insert into club_member(cm_me_num, cm_cl_num,cm_introduction) 
 		values(#{member.cm_me_num},#{member.cm_cl_num},#{member.cm_introduction})
 	</insert>
+	<select id="selecMytAuthorityByClub" resultType="kr.kh.final_project.vo.ClubMemberVO">
+		select * from club_member
+		where cm_cl_num = #{cl_num} and cm_me_num = #{me_num}
+	</select>
+	<select id="selectClubMemberList" resultType="kr.kh.final_project.vo.ClubMemberVO">
+		select * from club_member
+		join member on cm_me_num = me_num
+		join club on cm_cl_num = cl_num
+		where cm_cl_num = #{cl_num}
+	</select>
+	<delete id="deleteMember">
+		delete from club_member
+		where cm_me_num = #{me_num} and cm_cl_num = #{cl_num}
+	</delete>
+	<update id="changeAuthority">
+	 	update club_member
+	 	set
+	 		cm_authority = #{authority},
+	 		cm_introduction = null
+	 	where cm_cl_num = #{cl_num} and cm_me_num = #{me_num}
+	</update>
 </mapper>

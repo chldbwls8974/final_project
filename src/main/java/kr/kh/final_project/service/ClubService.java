@@ -4,6 +4,7 @@ import java.util.List;
 
 import kr.kh.final_project.vo.ClubMemberVO;
 import kr.kh.final_project.vo.ClubVO;
+import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PreferredAgeVO;
 import kr.kh.final_project.vo.TeamPreferredTimeVO;
 
@@ -22,6 +23,15 @@ public interface ClubService {
 	boolean updateClub(int me_num, ClubVO club, int[] age, int[] favoriteTime, int[] favoriteHoliTime);
 
 	List<ClubVO> getMyClubList(Integer me_num, String authority);
+
+	ClubMemberVO getMyAuthorityByClub(Integer cl_num, Integer me_num);
+
+	List<ClubMemberVO> getClubMemberList(Integer cl_num);
+
+	void memberManage(String type, int cl_num, int me_num, MemberVO user);
+
+	TeamPreferredTimeVO getClubTime(Integer cl_num);
+
  
 	List<PreferredAgeVO> getClubAgeList(); //마이페이지-내클럽 선호연령 가져오기
 

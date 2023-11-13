@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,10 +46,9 @@ public class AdminController {
 		//int me_num = 1;
 		//List<MemberVO> list = adminService.getMemberList(me_num);
 		
-		System.out.println(cri);
 		//페이지네이션
 		// perPageNum : 한페이지에서 보여줄 컨텐츠 개수
-		cri.setPerPageNum(5);
+		cri.setPerPageNum(10);
 		//현재 페이지 정보(검색어, 타입)에 맞는 전체 게시글 수(TotalCount)를 가져온다.
 		int totalCount = adminService.getTotalCount(cri);
 		//페이지네이션 페이지수
@@ -308,6 +308,15 @@ public class AdminController {
 		return map;
 	}
 	
+	//유저가 게시글 신고 했을 때
+	@PostMapping("/admin/boardReport/insert")
+	public String boardReportInsert(Model model, ReportVO report) {
+		//신고추가
+		//중복신고 못하게 해야함 (같은 사람이 같은 게시글에 신고 x bo_num, me_num)
+		Message msg = adminService.boardReportInsert(report);
+		model.addAttribute("msg", msg);
+		return "message";
+	}
 	
 	
 	@ResponseBody

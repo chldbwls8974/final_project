@@ -43,10 +43,10 @@ public class ClubServiceImp implements ClubService{
 		int cl_num = clubDao.selectClubByName(club.getCl_name()).getCl_num();
 		
 		if(favoriteTime !=null) {
-			insertPrefferedTime(0,cl_num,favoriteTime);
+			insertPreferredTime(0,cl_num,favoriteTime);
 		}
 		if(favoriteHoliTime !=null) {
-			insertPrefferedTime(1,cl_num,favoriteHoliTime);
+			insertPreferredTime(1,cl_num,favoriteHoliTime);
 		}
 		if(age != null) {
 			for(int i : age) {
@@ -58,7 +58,7 @@ public class ClubServiceImp implements ClubService{
 		return true;
 	}
 
-	private void insertPrefferedTime(int div, int cl_num, int[] Time) {
+	private void insertPreferredTime(int div, int cl_num, int[] Time) {
 		for(int i : Time) {
 			// 평일이면
 						if(div == 0) {
@@ -109,9 +109,6 @@ public class ClubServiceImp implements ClubService{
 
 	@Override
 	public ClubVO getClub(Integer cl_num) {
-		if(cl_num == 0) {
-			return null;
-		}
 		return clubDao.selectClubByNum(cl_num);
 	}
 
@@ -123,32 +120,41 @@ public class ClubServiceImp implements ClubService{
 		clubMemberDao.insertClubMember(clubMember);
 		return true;
 	}
+	
+	
+	@Override
+	public TeamPreferredTimeVO getClubTime(Integer cl_num) {
+		return teamTimeDao.selectTeamTime(cl_num);
+	}
 
-//	여기해야함.. 클럽수정하기
 	@Override
 	public boolean updateClub(int me_num, ClubVO club, int[] age, int[] favoriteTime, int[] favoriteHoliTime) {
-//		if(club == null) {
-//			return false;
-//		}
-//		ClubVO dbClub =  clubDao.selectClubByNum(club.getCl_num());
-//		if(dbClub == null) {
-//			return false;
-//		}
-//		clubDao.updateClub(club);
-//		int cl_num = clubDao.selectClubByName(club.getCl_name()).getCl_num();
-//		if(favoriteTime !=null) {
-//			updatePrefferedTime(0,cl_num,favoriteTime);
-//		}
-//		if(favoriteHoliTime !=null) {
-//			updatePrefferedTime(1,cl_num,favoriteHoliTime);
-//		}
-//		if(age != null) {
-//			for(int i : age) {
-//				preAgeDao.insertPrefferedAge(i,cl_num);
-//			}
-//		}
-		return false;
+		if(club == null) {
+			return false;
+		}
+		ClubVO dbClub =  clubDao.selectClubByNum(club.getCl_num());
+		if(dbClub == null) {
+			return false;
+		}
+		clubDao.updateClub(club);
+		teamTimeDao.deletePreferredTime(club.getCl_num());
+		preAgeDao.deletePreferredAge(club.getCl_num());
+		int cl_num = clubDao.selectClubByName(club.getCl_name()).getCl_num();
+		if(favoriteTime !=null) {
+			insertPreferredTime(0,cl_num,favoriteTime);
+		}
+		if(favoriteHoliTime !=null) {
+			insertPreferredTime(1,cl_num,favoriteHoliTime);
+		}
+		if(age != null) {
+			for(int i : age) {
+				preAgeDao.insertPrefferedAge(i,cl_num);
+			}
+		}
+		return true;
 	}
+
+	
 
 	@Override
 	public List<ClubVO> getMyClubList(Integer me_num,String authority) {
@@ -159,6 +165,51 @@ public class ClubServiceImp implements ClubService{
 	}
 
 	@Override
+	public ClubMemberVO getMyAuthorityByClub(Integer cl_num, Integer me_num) {
+		if(cl_num == 0 || me_num == 0) {
+			return null;
+		}
+		return clubMemberDao.selecMytAuthorityByClub(cl_num, me_num);
+	}
+
+	@Override
+	public List<ClubMemberVO> getClubMemberList(Integer cl_num) {
+		if(cl_num == 0) {
+			return null;
+		}
+		return clubMemberDao.selectClubMemberList(cl_num);
+	}
+
+	@Override
+	public void memberManage(String type, int cl_num, int me_num,  MemberVO user) {
+		if(type == null || cl_num == 0 || me_num == 0 || user == null) {
+			return;
+		}
+		// 강퇴시
+		if(type.equals("discharge")) {
+			clubMemberDao.deleteMember(cl_num,me_num);
+		}
+		// 위임시
+		if(type.equals("delegate")) {
+			clubMemberDao.changeAuthority("LEADER",cl_num,me_num);
+			clubMemberDao.changeAuthority("MEMBER",cl_num,user.getMe_num());
+		}
+		// 거절시
+		if(type.equals("refuse")) {
+			clubMemberDao.deleteMember(cl_num,me_num);
+		}
+		// 승인시
+		if(type.equals("approval")) {
+			clubMemberDao.changeAuthority("MEMBER",cl_num,me_num);
+		}
+		// 탈퇴시
+		if(type.equals("withdraw")) {
+			clubMemberDao.deleteMember(cl_num,me_num);
+		}
+	}
+
+
+
 	public List<PreferredAgeVO> getClubAgeList() {
 		return clubDao.selectClubAgeList();
 	}

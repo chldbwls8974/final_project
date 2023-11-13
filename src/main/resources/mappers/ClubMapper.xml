@@ -22,6 +22,18 @@
 		insert into club(cl_name, cl_emblem, cl_price, cl_rule, cl_introduction, cl_url, cl_rg_num)
 		 values(#{club.cl_name},#{club.cl_emblem},#{club.cl_price},#{club.cl_rule},#{club.cl_introduction},#{club.cl_url},#{club.cl_rg_num})
 	</insert>
+	<update id="updateClub">
+		update club
+		set
+			cl_name = #{club.cl_name},
+			cl_price = #{club.cl_price},
+			cl_rule = #{club.cl_rule},
+			cl_introduction = #{club.cl_introduction},
+			cl_url = #{club.cl_url},
+			cl_rg_num = #{club.cl_rg_num}
+		where 
+			cl_num = #{club.cl_num}
+	</update>
 	<select id="selectClubAgeList" resultType="kr.kh.final_project.vo.ClubVO">
 		select * from preferred_age
 	</select>
