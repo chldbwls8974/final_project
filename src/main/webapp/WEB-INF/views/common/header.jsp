@@ -64,7 +64,6 @@
 					<a class="dropdown-item" href="<c:url value='/admin/member'/>">회원 관리</a>
 					<a class="dropdown-item" href="<c:url value='/admin/manager'/>">매니저 관리</a>
 					<a class="dropdown-item" href="<c:url value='/admin/business'/>">사업자 관리</a>
-					<a class="dropdown-item" href="#">게시판 관리</a>
 					<a class="dropdown-item" href="<c:url value='/admin/refund'/>">포인트 환급 관리</a>
 					<a class="dropdown-item" href="<c:url value='/admin/boardReport'/>">신고 관리</a>
 				</div>
