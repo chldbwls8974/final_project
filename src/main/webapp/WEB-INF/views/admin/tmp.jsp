@@ -31,13 +31,16 @@
 </head>
 </head>
 <body>
+${match.mt_num }
 	<!-- 임시페이지 -->
 	<!-- 임시페이지 -->
 	<!-- 임시페이지 -->
 	<!-- 임시페이지 -->
 	<!-- 임시페이지 -->
 	<h1>매치전적 임시페이지</h1>
-
+	<c:forEach items="${entryList}" var="list">
+		<span>${list.en_me_num }</span>
+	</c:forEach>
 	<!-- 모달버튼 -->
 	<button type="button" class="btn btn-outline-warning button--open" data-value="${board.bo_num}">게시글 신고</button>
 	
@@ -45,10 +48,17 @@
 	<div class="modal--bg">
 		<div class="modal--content">
 			<p>신고하기</p>
+			<!-- 일단 여기부터 작업 -->
 			<form class="modal-form" action="<c:url value='/admin/boardReport/insert'/>" method="post">
 				<input type="hidden" class="form-control" name="rp_me_num" value="${user.me_num}" readonly>
 				<input type="hidden" class="form-control" name="rp_bo_num" value="${board.bo_num}" readonly>
-				<input type="hidden" class="form-control" name="rp_me_num2" value="${board.bo_me_num}" readonly>
+				<!-- 셀렉트로 닉네임 선택하면 value는 me_num이 전송되게 -->
+					<select class="form-control isSelected" name="rp_me_num2">
+						<option value="0">닉네임 선택</option>
+						<c:forEach items="${entryList}" var="list">
+							<option value="${list.en_me_num }">${list.en_me_num}(닉네임)</option>
+						</c:forEach>
+					</select>
 				<div class="form-group">
 					<select class="form-control isSelected" name="rp_rc_num">
 						<option value="0">분류</option>

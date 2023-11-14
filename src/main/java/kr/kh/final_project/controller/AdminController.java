@@ -1,5 +1,6 @@
 package kr.kh.final_project.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,10 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.support.SessionStatus;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,9 +23,10 @@ import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.pagination.PageMaker;
 import kr.kh.final_project.service.AdminService;
 import kr.kh.final_project.util.Message;
-import kr.kh.final_project.vo.BoardVO;
+import kr.kh.final_project.vo.EntryVO;
 import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ManagerVO;
+import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.ReportVO;
@@ -332,11 +331,23 @@ public class AdminController {
 	//매치임시페이지
 	//매치임시페이지
 	@GetMapping("/admin/tmp")
-	public String match(Model model) {
+	public String match(Model model, MatchVO match) {
+		System.out.println(match);
 		//신고추가
 		//중복신고 못하게 해야함 (같은 경기에서 같은 유저가 같은 멤버에게 신고 안되게 bo_num, me_num)
+		
+		
 		//Message msg = adminService.boardReportInsert(report);
 		//model.addAttribute("msg", msg);
+		List<EntryVO> entryList = new ArrayList<EntryVO>();
+		for(int i = 1; i < 6 ; i++) {
+			EntryVO e = new EntryVO();
+			e.setEn_me_num(i);
+			entryList.add(e);
+		}
+		System.out.println(entryList);
+		model.addAttribute("match", match);
+		model.addAttribute("entryList", entryList);
 		return "/admin/tmp";
 	}
 		
