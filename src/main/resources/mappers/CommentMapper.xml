@@ -29,6 +29,7 @@
 		select 
         	comment.*,
         	member.me_nickname,
+        	member.me_profile,
         	block.*
     	from 
         	comment 

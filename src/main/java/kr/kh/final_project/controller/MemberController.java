@@ -267,7 +267,7 @@ public class MemberController {
 	@GetMapping("/member/mypage")
 	public String myPage(HttpSession session, Model model) {
 		MemberVO user = (MemberVO) session.getAttribute("user");
-		List<ClubVO> list = clubService.getClubList();
+		List<ClubVO> list = clubService.getMyClubList(user.getMe_num(),"MEMBER");
 		String profile = user.getMe_profile();
 		model.addAttribute("user", user);
 		model.addAttribute("list",list);
@@ -318,11 +318,16 @@ public class MemberController {
 	@PostMapping("/member/myedit")
 	public String profileEdit(MemberVO member, MultipartFile img, HttpSession session, Model model, int[] pr_rg_num,
 			int[] favoriteTime, int[] favoriteHoliTime) {
-		System.out.println(member);
 		try {
 			String fi_ori_name = img.getOriginalFilename();
-			System.out.println(fi_ori_name);
-			String fi_name = UploadFileUtils.updateImg(uploadPath, fi_ori_name, img.getBytes());
+			String fi_name;
+			if(fi_ori_name != null && !fi_ori_name.isEmpty()) {
+				fi_name = UploadFileUtils.updateImg(uploadPath, fi_ori_name, img.getBytes());
+				
+			}else{
+				fi_name = "/basic.jpg";
+			}
+			
 			boolean res = memberService.updateProfile(member, fi_name,pr_rg_num, favoriteTime,favoriteHoliTime); //새로 입력한 정보 업데이트
 			if(res) { //업데이트된 사용자 정보 세션에 저장
 				session.setAttribute("user", member); 

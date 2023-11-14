@@ -67,6 +67,8 @@ public interface AdminService {
 	//게시글 신고
 	Message boardReportInsert(ReportVO report);
 	
+	void noteregistration(int[] price, String date, MemberVO user);
+	
 	
 	
 	

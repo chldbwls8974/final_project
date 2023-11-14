@@ -325,4 +325,27 @@ public class AdminServiceImp implements AdminService{
 		return msg;
 	}
 	
+	// 가격 변경 시, 공지 등록
+	@Override
+	public void noteregistration(int[] price, String date, MemberVO user) {
+		String title = "이용 가격 변경 안내";
+		String contents = 
+				"안녕하세요. footing 입니다." + 	//html 형식으로 작성 ! 
+                "<br><br>" + 
+			    "이용 고객분들께 더 나은 서비스를 제공하고자" + date + "부터 이용 가격을 올리게 되었습니다" + 
+			    "<br><br>" + 
+			    "평일 개인 : " + price[0] + "원<br>"+
+			    "주말 개인 : " + price[1] + "원<br>"+
+			    "평일 클럽 : " + price[2] + "원<br>"+
+			    "주말 클럽 : " + price[3] + "원<br>"+
+			    "<br>"+"더 나은 footing이 될 수 있도록 노력하겠습니다." +
+			    "<br>" + "감사합니다.";
+		BoardVO board = new BoardVO();
+		board.setBo_bt_num(1);
+		board.setBo_me_num(user.getMe_num());
+		board.setBo_title(title);
+		board.setBo_contents(contents);
+		boardDao.insertBoard(board);
+	}
+	
 }
