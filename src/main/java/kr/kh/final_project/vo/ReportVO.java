@@ -18,6 +18,7 @@ public class ReportVO {
 	private Integer rp_bo_num;
 	@JsonFormat(pattern="yyyy-MM-dd", timezone = "Asia/Seoul")
 	private Date rp_date;
+	private int rp_mt_num;
 	
 	//신고 카테고리
 	private int rc_num;

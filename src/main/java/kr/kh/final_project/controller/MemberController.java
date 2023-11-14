@@ -258,7 +258,6 @@ public class MemberController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		//db의 유저정보 가져옴
 		user = memberService.getMemberByNum(user);
-		System.out.println(user+"222");
 		map.put("user", user);
 		return map;
 	}

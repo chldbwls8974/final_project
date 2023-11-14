@@ -320,8 +320,26 @@ public class AdminController {
 		model.addAttribute("msg", msg);
 		return "message";
 	}
-	
-	
+	//유저가 매치 신고 했을 때
+	@PostMapping("/admin/matchReport/insert")
+	public String matchReportInsert(Model model, ReportVO report) {
+		//신고추가
+		//중복신고 못하게 해야함 (같은 경기에서 같은 유저가 같은 멤버에게 신고 안되게 bo_num, me_num)
+		//Message msg = adminService.boardReportInsert(report);
+		//model.addAttribute("msg", msg);
+		return "message";
+	}
+	//매치임시페이지
+	//매치임시페이지
+	@GetMapping("/admin/tmp")
+	public String match(Model model) {
+		//신고추가
+		//중복신고 못하게 해야함 (같은 경기에서 같은 유저가 같은 멤버에게 신고 안되게 bo_num, me_num)
+		//Message msg = adminService.boardReportInsert(report);
+		//model.addAttribute("msg", msg);
+		return "/admin/tmp";
+	}
+		
 	@ResponseBody
 	@PostMapping("/admin/refund/approval")
 	public Map<String, Object> refundApproval(@RequestBody PointHistoryVO ph){
