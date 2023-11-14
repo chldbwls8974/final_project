@@ -147,10 +147,8 @@ public class BusinessmanController {
 	@ResponseBody
 	@GetMapping("/businessman/facilityUpdate/region1")
 	public Map<String, Object> region1(@RequestParam String rg_main, Model model){
-		System.out.println("region");
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<RegionVO> SubRegion = businessmanService.getSubRegionByMainRegion(rg_main);
-		System.out.println(SubRegion);
 		map.put("SubRegion", SubRegion);
 		return map;
 	}

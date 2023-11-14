@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.kh.final_project.dao.BusinessmanDAO;
+import kr.kh.final_project.dao.FacilityDAO;
 import kr.kh.final_project.dao.OperatingDAO;
 import kr.kh.final_project.dao.PreferredRegionDAO;
 import kr.kh.final_project.dao.RegionDAO;
@@ -20,9 +20,6 @@ import kr.kh.final_project.vo.StadiumVO;
 
 @Service
 public class BusinessmanServiceImp implements BusinessmanService{
-
-	@Autowired
-	BusinessmanDAO businessmanDao;
 	
 	@Autowired
 	RegionDAO regionDao;
@@ -36,6 +33,9 @@ public class BusinessmanServiceImp implements BusinessmanService{
 	@Autowired
 	OperatingDAO operatingDao;
 
+	@Autowired
+	FacilityDAO facilityDao;
+
 	//시설 리스트 가져오기
 	@Override
 	public List<FacilityVO> getFacilityList(MemberVO member, Criteria cri) {
@@ -43,7 +43,7 @@ public class BusinessmanServiceImp implements BusinessmanService{
 			cri = new Criteria();
 		}
 		//다오에게 시설 리스트를 가져오라고 시키고
-		List<FacilityVO> list = businessmanDao.selectFacilityList(member, cri);
+		List<FacilityVO> list = facilityDao.selectFacilityList(member, cri);
 		//가져오면 반환
 		return list;
 	}
@@ -53,12 +53,12 @@ public class BusinessmanServiceImp implements BusinessmanService{
 		if(cri == null) {
 			cri = new Criteria();
 		}
-		return businessmanDao.selectCountFacilityList(cri, member);
+		return facilityDao.selectCountFacilityList(cri, member);
 	}
 	//회원번호로 사업자정보 가져오기
 	@Override
 	public BusinessmanVO getBusinessmanByMeNum(Integer me_num) {
-		return businessmanDao.selectBusinessmanByMeNum(me_num);
+		return facilityDao.selectBusinessmanByMeNum(me_num);
 	}	
 	//시설 등록
 	@Override
@@ -73,7 +73,7 @@ public class BusinessmanServiceImp implements BusinessmanService{
 			|| facility.getFa_phone() == null) {
 			return false;
 		}
-		boolean res = businessmanDao.insertFacility(facility, user.getMe_num());
+		boolean res = facilityDao.insertFacility(facility, user.getMe_num());
 		return res;
 	}
 	//Main 지역리스트
@@ -96,12 +96,12 @@ public class BusinessmanServiceImp implements BusinessmanService{
 			return false;
 		}
 		//시설 번호를 이용하여 시설 정보를 가져옴
-		FacilityVO dbFacility = businessmanDao.selectFacility(facility.getFa_num());
+		FacilityVO dbFacility = facilityDao.selectFacility(facility.getFa_num());
 		//사업자번호가 같은지 확인 
 		if(dbFacility == null || !dbFacility.getFa_bu_num().equals(business.getBu_num())) { 
 			return false;
 		}
-		boolean res = businessmanDao.updateFacility(facility);
+		boolean res = facilityDao.updateFacility(facility);
 		return res;
 	}
 	//시설번호로 시설 정보 가져오기
@@ -110,7 +110,7 @@ public class BusinessmanServiceImp implements BusinessmanService{
 		if(fa_num == null) {
 			return null;
 		}
-		return businessmanDao.selectFacility(fa_num);
+		return facilityDao.selectFacility(fa_num);
 	}
 	//시설 삭제
 	@Override
@@ -119,7 +119,7 @@ public class BusinessmanServiceImp implements BusinessmanService{
 	        return false;
 	    }
 	    // 시설을 삭제한 것처럼 표시 (DB에는 실제로 삭제하지 않음)
-	    int fa_deleted = businessmanDao.facilityDelete(fa_num);
+	    int fa_deleted = facilityDao.facilityDelete(fa_num);
 	    
 	    if (fa_deleted == 1) {
 	        //경기장 상태 '2:삭제'로 업데이트

@@ -110,7 +110,8 @@
 							<a class="dropdown-item" href="<c:url value='/manager/manage/schedule'/>">일정 관리</a>
 						</div>
 				</li>
-				<li class="nav-item dropdown">
+				<c:if test="${user != null && user.me_authority == 'BUSINESS'}">
+					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 						사업자
 						</a>
@@ -121,7 +122,8 @@
 							<a class="dropdown-item" href="<c:url value='/buisnessman/manage/schedule'/>">스케줄 관리</a>
 							<a class="dropdown-item" href="#">일정 관리</a>
 						</div>
-				</li>
+					</li>
+				</c:if>
 				
 				<li class="nav-item">
 					<a class="nav-link" href="<c:url value='/member/mypage'/>">마이페이지</a>

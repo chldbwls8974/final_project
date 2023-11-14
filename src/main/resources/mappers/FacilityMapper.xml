@@ -13,4 +13,101 @@
 		where
 			bu_me_num = #{me_num}
 	</select>
+	<select id="selectFacilityList" resultType="kr.kh.final_project.vo.FacilityVO">
+			select 
+				*
+			from facility
+				 	join 
+				 businessman on fa_bu_num = bu_num
+		<where>
+			<choose>
+				<when test='cri.t == "all"'>
+					(fa_name like concat('%', #{cri.s}, '%')
+					or fa_add like concat('%', #{cri.s}, '%')
+					or fa_phone like concat('%', #{cri.s}, '%'))
+				</when>
+				<when test='cri.t == "total"'>
+					(fa_name like concat('%', #{cri.s}, '%')
+					or fa_add like concat('%', #{cri.s}, '%'))
+				</when>
+				<when test='cri.t == "phone"'>
+					(fa_phone like concat('%', #{cri.s}, '%'))
+				</when>
+			</choose>
+			and 
+				bu_me_num = #{member.me_num}
+			and 
+				fa_deleted != 1
+		</where>
+			order by fa_num asc
+			limit #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<select id="selectCountFacilityList" resultType="int">
+		select count(*) from facility
+				join 
+			 businessman on fa_bu_num = bu_num 
+		<where>
+			<choose>
+				<when test='cri.t == "all"'>
+					(fa_name like concat('%', #{cri.s}, '%')
+					or fa_add like concat('%', #{cri.s}, '%')
+					or fa_phone like concat('%', #{cri.s}, '%'))
+				</when>
+				<when test='cri.t == "total"'>
+					(fa_name like concat('%', #{cri.s}, '%')
+					or fa_add like concat('%', #{cri.s}, '%'))
+				</when>
+				<when test='cri.t == "phone"'>
+					(fa_phone like concat('%', #{cri.s}, '%'))
+				</when>
+			</choose>
+			and bu_me_num = #{member.me_num}
+			and fa_deleted != 1
+		</where>
+	</select>
+	<select id="selectBusinessmanByMeNum" resultType="kr.kh.final_project.vo.BusinessmanVO">
+			select * from businessman join member on bu_me_num = me_num where bu_me_num = #{me_num}
+	</select>
+	<insert id="insertFacility">
+			insert into 
+				facility(fa_bu_num, fa_rg_num, fa_name, fa_add, fa_add_detail, 
+						fa_phone, fa_pay, fa_locker, fa_toilet, 
+						fa_shower, fa_smoking, fa_machine, fa_note)
+				select 
+					bu_num, #{facility.fa_rg_num}, 
+					#{facility.fa_name}, #{facility.fa_add}, #{facility.fa_add_detail}, 
+					#{facility.fa_phone}, #{facility.fa_pay}, #{facility.fa_locker}, 
+					#{facility.fa_toilet}, #{facility.fa_shower}, #{facility.fa_smoking}, 
+					#{facility.fa_machine}, #{facility.fa_note}
+				from businessman where bu_me_num = #{me_num};
+	</insert>
+	<update id="updateFacility">
+			update facility set
+				fa_rg_num = #{facility.fa_rg_num}, 
+				fa_name = #{facility.fa_name}, 
+				fa_add = #{facility.fa_add}, 
+				fa_add_detail = #{facility.fa_add_detail}, 
+				fa_phone = #{facility.fa_phone}, 
+				fa_pay = #{facility.fa_pay}, 
+				fa_locker = #{facility.fa_locker}, 
+				fa_toilet = #{facility.fa_toilet}, 
+				fa_shower = #{facility.fa_shower}, 
+				fa_smoking = #{facility.fa_smoking}, 
+				fa_machine = #{facility.fa_machine}, 
+				fa_note = #{facility.fa_note}
+			where fa_num = #{facility.fa_num}
+	</update>
+	<select id="selectFacility" resultType="kr.kh.final_project.vo.FacilityVO">
+		 	select facility.*, rg_main as fa_rg_main 
+		 	from facility
+		 			join 
+		 		region on fa_rg_num = rg_num
+		 	where 
+		 		fa_num = #{fa_num}
+	</select>
+	<update id="facilityDelete" parameterType="int">
+	    update facility
+	    set fa_deleted = 1
+	    where fa_num = #{fa_num}
+	</update>
 </mapper>
