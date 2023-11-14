@@ -134,9 +134,9 @@
 		      </ul>
 		   </div>
 		   	 <ul class="individual-tbody">
-		   	 <c:forEach items="${list}" var="bo">
+		   	 <c:forEach items="${list}" var="bo" varStatus="loop">
 			   	 	<c:choose>
-				   	 		<c:when test="${bo.bo_bt_num == 1 }">
+				   	 		<c:when test="${bo.bo_bt_num == 1 && loop.index < 3 }">
 			   	 				<li class="notion">
 							      <div class="tbody-box">
 							      	<div class="tbody-list">${bo.bo_num}</div>
