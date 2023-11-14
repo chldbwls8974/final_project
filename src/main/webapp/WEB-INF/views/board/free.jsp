@@ -8,24 +8,21 @@
 <title>자유 게시판</title>
 <style>
 	.container-body{
-		background-color: #f2f2f2; height: 100%; margin-top: 20px;
-		border-radius: 20px;
+		background-color: #f2f2f2; height: auto; margin-top: 20px;
+		border-radius: 20px; padding-bottom: 40px; 
 	}
 	.main{
 		padding: 40px; height: auto;
 		background-color: white; border-radius: 20px;
 	}
-	.a{
-		color : red;
-	}
 	.free-thead{
-		display: flex; justify-content: space-between; padding: 0 0 16px 0;
+		display: flex; padding: 20px;
 		border-bottom: 1px solid rgba(0,0,0,.1);
 	}
- 	.free-tbody{ justify-content: space-between; padding: 5px;}
+ 	.free-tbody{ padding: 5px;}
  	.tbody-box{ 
-		display: flex; justify-content: space-between;
-		margin: 0; padding: 20px 20px 30px 20px; border-bottom: 1px solid rgba(0,0,0,.1);
+		display: flex;
+		margin: 0; padding: 20px 20px 30px 20px;
 	}
 	.search-btn{
 		border-radius: 3px; width: 120px; height: 38px; border: none;
@@ -58,7 +55,12 @@
 	  border-color: #ccc;
 	}
 	.notion{
-	  background-color: #e6e6e6 ; 
+	  background-color: #dffac7;
+	  border-radius: 30px;
+	}
+	.notion:first-child,
+	.notion+.notion{
+		margin-bottom: 10px;
 	}
 </style>
 </head>
@@ -67,7 +69,7 @@
 	<div style="padding: 30px;">
 	<br>
 		<p style="font-size: 35px; font-weight: bolder; margin:0 auto; border-bottom: 8px solid #c2f296;
-			width: 20%; padding: 20px 0 10px 0;">자유게시판</p>
+			width: 20%; padding: 20px 0 10px 0; text-align: center;">자유게시판</p>
 		<div style="display:flex; justify-content: flex-end;">
 			<button type="button"
 				    class="write-btn btn-free"
@@ -100,12 +102,12 @@
 		<div class="main">
 		  <div class="table">
 		    <ul class="free-thead">
-		      	<li>게시글번호</li>
-		      	<li>제목</li>
-		        <li>작성자 닉네임</li>
-		        <li>작성일</li>
-		        <li>조회수</li>
-		        <li>댓글수</li>
+		      	<li style="width: 10%;">게시글번호</li>
+				<li style="width: 35%;">제목</li>
+				<li style="width: 15%;">작성자 닉네임</li>
+				<li style="width: 20%;">작성일</li>
+				<li style="width: 10%;">조회수</li>
+				<li style="width: 10%;">댓글수</li>
 		    </ul>
 		  </div>
 	    	<ul class="free-tbody">
@@ -114,26 +116,28 @@
 				   	 		<c:when test="${bo.bo_bt_num == 1 }">
 			   	 				<li class="notion">
 							      <div class="tbody-box">
-							      	<div class="tbody-list">${bo.bo_num}</div>
-							      	<div class="tbody-list"><a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>" 
-							      											style="margin-left:10px; color:red">${bo.bo_title}</a></div>
-							        <div class="tbody-list">${bo.me_nickname}</div>
-							        <div class="tbody-list">${bo.bo_reg_date_str}</div>
-							        <div class="tbody-list">${bo.bo_count}</div>
-							        <div class="tbody-list"><a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_comment}</a></div>
+							      	<div class="tbody-list" style="width: 10%;">${bo.bo_num}</div>
+							      	<div class="tbody-list" style="width: 35%;">
+							      		<a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>" 
+							      			style="color: #646464;">${bo.bo_title}</a></div>
+							        <div class="tbody-list" style="width: 15%;">${bo.me_nickname}</div>
+							        <div class="tbody-list" style="width: 20%;">${bo.bo_reg_date_str}</div>
+							        <div class="tbody-list" style="width: 10%;">${bo.bo_count}</div>
+							        <div class="tbody-list" style="width: 10%;">${bo.bo_comment}</div>
 							      </div>
 								</li>
 						    </c:when>
 						    <c:when test="${bo.bo_bt_num == 2}">
 								<li>
 							      <div class="tbody-box">
-							      	<div class="tbody-list">${bo.bo_num}</div>
-							      	<div class="tbody-list"><a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>"
-							      								style="margin-left:10px; color: #b0df84;">${bo.bo_title}</a></div>
-							        <div class="tbody-list">${bo.me_nickname}</div>
-							        <div class="tbody-list">${bo.bo_reg_date_str}</div>
-							        <div class="tbody-list">${bo.bo_count}</div>
-							        <div class="tbody-list"><a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_comment}</a></div>
+							      	<div class="tbody-list" style="width: 10%;">${bo.bo_num}</div>
+							      	<div class="tbody-list" style="width: 35%;">
+							      		<a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>"
+							      			style="color: #86aa64; ">${bo.bo_title}</a></div>
+							        <div class="tbody-list" style="width: 15%;">${bo.me_nickname}</div>
+							        <div class="tbody-list" style="width: 20%;">${bo.bo_reg_date_str}</div>
+							        <div class="tbody-list" style="width: 10%;">${bo.bo_count}</div>
+							        <div class="tbody-list" style="width: 10%;">${bo.bo_comment}</div>
 							      </div>
 								</li>
 						   </c:when>
@@ -143,7 +147,7 @@
 		 </div>
 	</div>
 		  <!-- 페이지네이션 적용 -->
-		  <ul class="pagination justify-content-center">
+		  <ul class="pagination justify-content-center" style="margin: 30px;">
 			<c:if test="${pm.prev}">
 				<li class="page-item">
 					<a class="page-link" 
