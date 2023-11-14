@@ -68,7 +68,7 @@
 					<c:forEach items="${memberList}" var="member">
 					<li class="membertable-list">
 						<a href="<c:url value='/member/myprofile?me_num=${member.me_num}'/>" class="member-link">
-							<img src="/final_project${user.me_profile}" class="myprofile-image-thumb" alt="프로필 사진">
+							<img src="<c:url value='/memberimg${user.me_profile}'/>" class="myprofile-image-thumb" alt="프로필 사진">
 							<span style="font-weight: bold; font-size: large;">${member.me_name}</span>
 							<span style="font-size: small; color: gray;">${member.me_id}</span>
 						</a>
