@@ -12,4 +12,6 @@ public interface PreferredRegionDAO {
 
 	void insertPreferredRegion(@Param("me_num")int pr_me_num, @Param("rg_num")int pr1);
 
+	void deletePreferredRegion(@Param("me_num")int pr_me_num);
+
 }

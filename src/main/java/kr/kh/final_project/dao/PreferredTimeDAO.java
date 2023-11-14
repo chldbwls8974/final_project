@@ -12,4 +12,6 @@ public interface PreferredTimeDAO {
 
 	void insertPreferredTime(@Param("pt_num")int pt_num, @Param("me_num")int pr_me_num);
 
+	void deletePreferredTime(@Param("me_num")int pr_me_num);
+
 }

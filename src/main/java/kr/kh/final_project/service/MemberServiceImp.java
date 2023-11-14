@@ -168,16 +168,16 @@ public class MemberServiceImp implements MemberService{
 		int pr_me_num = memberDao.selectMember(member.getMe_id()).getMe_num();
 		// 선호 시간 (평일)
 		if(favoriteTime !=null) {
-			insertPrefferedTime(0,pr_me_num,favoriteTime);
+			insertPreferredTime(0,pr_me_num,favoriteTime);
 		}
 		
 		// 선호 시간 (주말)
 		if(favoriteHoliTime != null) {
-			insertPrefferedTime(1,pr_me_num,favoriteHoliTime);
+			insertPreferredTime(1,pr_me_num,favoriteHoliTime);
 		}
 		
 		// 선호 지역
-		insertPrefferedRegion(pr_me_num, pr_rg_num);
+		insertPreferredRegion(pr_me_num, pr_rg_num);
 		
 		return true;
 	}
@@ -186,7 +186,7 @@ public class MemberServiceImp implements MemberService{
 
 	
 	// 선호 지역을 넣는 메서드
-	private void insertPrefferedRegion(int pr_me_num, int[] pr_rg_num) {
+	private void insertPreferredRegion(int pr_me_num, int[] pr_rg_num) {
 		for(int i : pr_rg_num) {
 			if(i!=0) {
 				prRegionDao.insertPreferredRegion(pr_me_num,i);
@@ -196,7 +196,7 @@ public class MemberServiceImp implements MemberService{
 
 	
 	// 선호시간을 넣는 메서드
-	private void insertPrefferedTime(int div, int pr_me_num, int[] Time) {
+	private void insertPreferredTime(int div, int pr_me_num, int[] Time) {
 		for(int i : Time) {
 			// 평일이면
 						if(div == 0) {
@@ -407,24 +407,37 @@ public class MemberServiceImp implements MemberService{
 		return dbMember;
 	}
 
+
+	// 프로필 수정
 	@Override
-	public boolean updateProfile(MemberVO user, MultipartFile profileImage) {
-		// 프로필 사진 만들어야함
-//		if(profileImage == null) {
-//			return false;
-//		}
-//		if(user == null) {
-//			return false;
-//		}
-//		String fi_ori_name = profileImage.getOriginalFilename();
-//		try {
-//			String fi_name = UploadFileUtils.uploadFile(uploadProfile, fi_ori_name, profileImage.getBytes());
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		return false;
+	public boolean updateProfile(MemberVO member, String fi_name, int[] pr_rg_num, int[] favoriteTime,
+			int[] favoriteHoliTime) {
+		if(member == null) {
+			return false;
+		}
+		// 회원 정보 입력
+		memberDao.updateMember(member,fi_name);
+		
+		// 입력한 회원정보의 num값 가져오기
+		int pr_me_num = member.getMe_num();
+		prTimeDao.deletePreferredTime(pr_me_num);
+		prRegionDao.deletePreferredRegion(pr_me_num);
+		// 선호 시간 (평일)
+		if(favoriteTime !=null) {
+			insertPreferredTime(0,pr_me_num,favoriteTime);
+		}
+		
+		// 선호 시간 (주말)
+		if(favoriteHoliTime != null) {
+			insertPreferredTime(1,pr_me_num,favoriteHoliTime);
+		}
+		
+		// 선호 지역
+		insertPreferredRegion(pr_me_num, pr_rg_num);
+		
+		return true;
 	}
+
 
 
 	public List<HoldingCouponVO> getMemberCouponList(MemberVO user, Criteria cri) {

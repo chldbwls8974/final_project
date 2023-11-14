@@ -14,4 +14,8 @@
 	<insert id="insertPreferredTime">
 		insert into preferred_time(pt_me_num, pt_ti_num) values(#{me_num},#{pt_num})
 	</insert>
+	<delete id="deletePreferredTime">
+		delete from preferred_time
+		where pt_me_num = #{me_num}
+	</delete>
 </mapper>
