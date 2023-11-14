@@ -106,13 +106,13 @@ public class BusinessmanController {
 	@PostMapping("/businessman/facilityInsert")
 	public String insertfacility(Model model, FacilityVO facility, HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		//System.out.println(user);
+
 		List<RegionVO> MainRegion = businessmanService.getMainRegion();
 
 		//Service에게 user, facility 정보를 주고 insertFacility 메서드로 저장
 		boolean res = businessmanService.insertFacility(user, facility);
 			if(res) {
-				model.addAttribute("msg", "시설 등록이 완료되었습니다. 시설목록에서 '운영시간'을 입력해주세요.");
+				model.addAttribute("msg", "시설 등록이 완료되었습니다. 시설목록에서 운영시간을 입력해주세요.");
 				model.addAttribute("url", "/businessman/facility");
 			}else {
 				model.addAttribute("msg", "시설을 등록하지 못했습니다.");
