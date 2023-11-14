@@ -105,11 +105,22 @@ input[type='checkbox']:checked+label{
 input, progress {
   accent-color: #0c0c0c;
 }
-
+.input-file{
+	display: none;
+}
+.btn-file{
+	width: 200px; height: 200px; border-radius: 50%;
+	border: 1px solid gray;
+	font-weight: fold; font-size: 30px;
+	line-height:200px; text-align: center; display: block; text-decoration: none; color: gray;	
+	position: relative; overflow: hidden;
+}
+.box-thumbnail{
+	display: none; position: absolute; top: 0; 
+}
 </style>
 </head>
 <body>
-${user }
 <div class="container">
 	<p class="title" style="font-size: 45px; font-weight: bolder; padding-bottom: 30px;
 		text-align: center; letter-spacing: -3px;">프로필 수정</p>
@@ -118,8 +129,13 @@ ${user }
 		<div class="1p">
 		<input type="hidden" name="me_num" value="${user.me_num}">
 			<div class="form-group">
-				<label>프로필사진</label> 
-				<input type="file" class="form-control" name="img" id="img">
+				<input type="file" class="input-file" name="img" id="img" onchange="readUrl(this)">
+					<a href="#" class="btn-file">+
+						<div class="box-thumbnail">
+							<img src="<c:url value='/memberimg${user.me_profile}'/>" id="preview" height="auto" width="100">
+						</div>
+					</a>
+				
 			</div>
 			<div class="form-group">
 				<label>닉네임</label> <label id="check-nickName-error" class="error" for="me_nickname"></label> 
@@ -176,247 +192,6 @@ ${user }
 			</div>
 		</div>
 
-		<!-- 다음버튼 -->
-		<div class="form-group">
-			<button type="button" class="next-btn" id="next">다음</button>
-		</div>
-
-		<!-- 2번째 페이지 -->
-		<div class="2p">
-			<div class="pre_time">
-			<div class="form-group time-box weekday-time">
-				<label style="font-size: 20px; font-weight: bolder; margin-bottom: 10px;">평일 선호 시간</label>
-				<ul class="chip">
-					
-					<li class="chip__item--3">
-						<input type="checkbox" id="time_6" name="favoriteTime" class="chip__item-radio" value="6"> 
-						<label for="time_6" class="chip__item-label" style="height: 70px;">
-							<div style="margin-bottom: 5px;">
-								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunrise.svg">
-							</div> 06:00
-						</label>
-					</li>
-					<li class="chip__item--3">
-						<input type="checkbox" id="time_8" name="favoriteTime" class="chip__item-radio" value="8"> 
-						<label  for="time_8" class="chip__item-label" style="height: 70px;">
-							<div style="margin-bottom: 5px;">
-								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
-							</div> 08:00
-						</label>
-					</li>
-					<li class="chip__item--3">
-						<input type="checkbox" id="time_10" name="favoriteTime" class="chip__item-radio" value="10"> 
-						<label for="time_10" class="chip__item-label" style="height: 70px;">
-							<div style="margin-bottom: 5px;">
-								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
-							</div> 10:00
-                		</label>
-                	</li>
-					<li class="chip__item--3">
-						<input  type="checkbox" id="time_12" name="favoriteTime" class="chip__item-radio" value="12"> 
-						<label  for="time_12" class="chip__item-label" style="height: 70px;">
-							<div  style="margin-bottom: 5px;">
-								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
-							</div> 12:00
-                		</label>
-               		</li>
-					<li class="chip__item--3">
-						<input type="checkbox" id="time_14" name="favoriteTime" class="chip__item-radio" value="14"> 
-						<label for="time_14" class="chip__item-label" style="height: 70px;">
-						<div style="margin-bottom: 5px;">
-							<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
-						</div> 14:00
-                		</label>
-               		</li>
-					<li  class="chip__item--3">
-						<input  type="checkbox" id="time_16" name="favoriteTime" class="chip__item-radio" value="16">
-						<label  for="time_16" class="chip__item-label" style="height: 70px;">
-							<div  style="margin-bottom: 5px;">
-								<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
-							</div> 16:00
-                		</label>
-                	</li>
-					<li  class="chip__item--3">
-						<input  type="checkbox" id="time_18" name="favoriteTime" class="chip__item-radio" value="18"> 
-						<label  for="time_18" class="chip__item-label" style="height: 70px;">
-							<div  style="margin-bottom: 5px;">
-								<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_night.svg">
-							</div> 18:00
-                		</label>
-               		</li>
-					<li  class="chip__item--3">
-						<input  type="checkbox" id="time_20" name="favoriteTime" class="chip__item-radio" value="20"> 
-						<label  for="time_20" class="chip__item-label" style="height: 70px;">
-							<div  style="margin-bottom: 5px;">
-								<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_night.svg">
-							</div> 20:00
-               			</label>
-        			</li>
-					<li  class="chip__item--3">
-						<input  type="checkbox" id="time_22" name="favoriteTime" class="chip__item-radio" value="22"> 
-						<label  for="time_22" class="chip__item-label" style="height: 70px;">
-							<div  style="margin-bottom: 5px;">
-								<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_night.svg">
-							</div> 22:00
-               			</label>
-           			</li>
-					<li  class="chip__item--3">
-						<input  type="checkbox" id="time_24" name="favoriteTime" class="chip__item-radio" value="0">
-						<label  for="time_24" class="chip__item-label" style="height: 70px;">
-							<div  style="margin-bottom: 5px;">
-								<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_midnight.svg">
-							</div> 24:00
-               			</label>
-               		</li>
-                	<li  class="chip__item--3">
-                		<input  type="checkbox" id="time_2" name="favoriteTime" class="chip__item-radio" value="2"> 
-                		<label  for="time_2" class="chip__item-label" style="height: 70px;">
-                			<div  style="margin-bottom: 5px;">
-                				<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_midnight.svg">
-               				</div> 02:00
-                		</label>
-                	</li>
-                	<li  class="chip__item--3">
-                		<input  type="checkbox" id="time_4" name="favoriteTime" class="chip__item-radio" value="4"> 
-                		<label  for="time_4" class="chip__item-label" style="height: 70px;">
-                		<div  style="margin-bottom: 5px;">
-                			<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_midnight.svg">
-               			</div>  04:00
-              			</label>
-           			</li>
-                </ul>
-			</div>
-			<div class="form-group time-box weekend-time">
-				<label style="font-size: 20px; font-weight: bolder; margin: 10 0 10px;">주말 선호 시간</label>
-				<ul class="chip">
-					<li class="chip__item--3">
-						<input type="checkbox" id="holitime_6" name="favoriteHoliTime" class="chip__item-radio" value="6"> 
-						<label for="holitime_6" class="chip__item-label" style="height: 70px;">
-							<div style="margin-bottom: 5px;">
-								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunrise.svg">
-							</div> 06:00
-						</label>
-					</li>
-					<li class="chip__item--3">
-						<input type="checkbox" id="holitime_8" name="favoriteHoliTime" class="chip__item-radio" value="8"> 
-						<label  for="holitime_8" class="chip__item-label" style="height: 70px;">
-							<div style="margin-bottom: 5px;">
-								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
-							</div> 08:00
-						</label>
-					</li>
-					<li class="chip__item--3">
-						<input type="checkbox" id="holitime_10" name="favoriteHoliTime" class="chip__item-radio" value="10"> 
-						<label for="holitime_10" class="chip__item-label" style="height: 70px;">
-							<div style="margin-bottom: 5px;">
-								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
-							</div> 10:00
-                		</label>
-                	</li>
-					<li class="chip__item--3">
-						<input  type="checkbox" id="holitime_12" name="favoriteHoliTime" class="chip__item-radio" value="12"> 
-						<label  for="holitime_12" class="chip__item-label" style="height: 70px;">
-							<div  style="margin-bottom: 5px;">
-								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
-							</div> 12:00
-                		</label>
-               		</li>
-					<li class="chip__item--3">
-						<input type="checkbox" id="holitime_14" name="favoriteHoliTime" class="chip__item-radio" value="14"> 
-						<label for="holitime_14" class="chip__item-label" style="height: 70px;">
-						<div style="margin-bottom: 5px;">
-							<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
-						</div> 14:00
-                		</label>
-               		</li>
-					<li  class="chip__item--3">
-						<input  type="checkbox" id="holitime_16" name="favoriteHoliTime" class="chip__item-radio" value="16">
-						<label  for="holitime_16" class="chip__item-label" style="height: 70px;">
-							<div  style="margin-bottom: 5px;">
-								<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
-							</div> 16:00
-                		</label>
-                	</li>
-					<li  class="chip__item--3">
-						<input  type="checkbox" id="holitime_18" name="favoriteHoliTime" class="chip__item-radio" value="18"> 
-						<label  for="holitime_18" class="chip__item-label" style="height: 70px;">
-							<div  style="margin-bottom: 5px;">
-								<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_night.svg">
-							</div> 18:00
-                		</label>
-               		</li>
-					<li  class="chip__item--3">
-						<input  type="checkbox" id="holitime_20" name="favoriteHoliTime" class="chip__item-radio" value="20"> 
-						<label  for="holitime_20" class="chip__item-label" style="height: 70px;">
-							<div  style="margin-bottom: 5px;">
-								<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_night.svg">
-							</div> 20:00
-               			</label>
-        			</li>
-					<li  class="chip__item--3">
-						<input  type="checkbox" id="holitime_22" name="favoriteHoliTime" class="chip__item-radio" value="22"> 
-						<label  for="holitime_22" class="chip__item-label" style="height: 70px;">
-							<div  style="margin-bottom: 5px;">
-								<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_night.svg">
-							</div> 22:00
-               			</label>
-           			</li>
-					<li  class="chip__item--3">
-						<input  type="checkbox" id="holitime_24" name="favoriteHoliTime" class="chip__item-radio" value="0">
-						<label  for="holitime_24" class="chip__item-label" style="height: 70px;">
-							<div  style="margin-bottom: 5px;">
-								<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_midnight.svg">
-							</div> 24:00
-               			</label>
-               		</li>
-                	<li  class="chip__item--3">
-                		<input  type="checkbox" id="holitime_2" name="favoriteHoliTime" class="chip__item-radio" value="2"> 
-                		<label  for="holitime_2" class="chip__item-label" style="height: 70px;">
-                			<div  style="margin-bottom: 5px;">
-                				<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_midnight.svg">
-               				</div> 02:00
-                		</label>
-                	</li>
-                	<li  class="chip__item--3">
-                		<input  type="checkbox" id="holitime_4" name="favoriteHoliTime" class="chip__item-radio" value="4"> 
-                		<label  for="holitime_4" class="chip__item-label" style="height: 70px;">
-                		<div  style="margin-bottom: 5px;">
-                			<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_midnight.svg">
-               			</div>  04:00
-              			</label>
-           			</li>
-                </ul>
-			</div>
-		</div>
-
-			<div class="prefer-area">
-				<div class="form-group">
-					<label>선호지역</label> <select class="form-control pre_rg_main">
-						<option value="0">지역을 선택하세요</option>
-						<c:forEach items="${MainRegion}" var="main">
-							<option value="${main.rg_main}">${main.rg_main}</option>
-						</c:forEach>
-					</select>
-
-				</div>
-				<div class="form-group">
-					<select class="form-control rg_sub" name="pr_rg_num">
-						<option value="0">지역을 선택하세요</option>
-						<c:forEach items="${SubRegion}" var="sub">
-							<option value="${sub.rg_num}">${sub.rg_sub}</option>
-						</c:forEach>
-					</select>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<button type="button" class="form-control" name="add-area-btn">지역
-					추가</button>
-			</div>
-		</div>
-		<div class="form-group">
-			<button type="button" class="prev-btn">이전</button>
-		</div>
 		<button class="signup-btn" id="signup">수정</button>
 	</form>
 </div>	
@@ -747,6 +522,28 @@ ${user }
 			}
 			
 		})
+		
+		// 프로필사진 미리보기
+			$('.btn-file').click(function(){
+			$('.input-file').click();
+			$('.box-thumbnail').show();
+			$(this).css('boder' ,'none');
+		})
+
+		function readUrl(input){
+			//input 태그가 첨부파일이고, 첨부파일이 선택되면
+			if(input.files && input.files[0]){
+				let reader = new FileReader();
+				reader.onload = function(e){
+					document.getElementById('preview').src = e.target.result;
+				}
+				reader.readAsDataURL(input.files[0]);
+			}
+			//첨부파일이 선택되지 않으면
+			else{
+				document.getElementById('preview').src = '<c:url value="/memberimg${user.me_profile}"/>';
+			}
+		}
 	
 	</script>
 </body>

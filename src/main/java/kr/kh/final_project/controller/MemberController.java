@@ -265,10 +265,8 @@ public class MemberController {
 	public String myPage(HttpSession session, Model model) {
 		MemberVO user = (MemberVO) session.getAttribute("user");
 		List<ClubVO> list = clubService.getMyClubList(user.getMe_num(),"MEMBER");
-		String profile = user.getMe_profile();
 		model.addAttribute("user", user);
 		model.addAttribute("list",list);
-		model.addAttribute("profile", profile);
 		return "/member/mypage";
 	}
 
@@ -305,9 +303,22 @@ public class MemberController {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		List<RegionVO> MainRegion = memberService.getMainRegion();
 		List<TimeVO> time = memberService.getAllTime();
+		//회원 가져오기
+		MemberVO dbMember = memberService.getMemberByNum(user);
+		//회원의 거주지역 가져오기
+		MemberVO memberRegion = memberService.getMemberRegion(dbMember);
+		//회원의 선호지역, 선호시간대 가져오기
+		List<PreferredRegionVO> memberPRegion = memberService.getMemberPRegion(dbMember);
+		List<PreferredTimeVO> memberPTimeWeekday = memberService.getMemberPTimeWeekday(dbMember);
+		List<PreferredTimeVO> memberPTimeHoliday = memberService.getMemberPTimeHoliday(dbMember);
+		
 		model.addAttribute("user",user);
 		model.addAttribute("MainRegion",MainRegion);
 		model.addAttribute("time",time);
+		model.addAttribute("memberRegion",memberRegion);
+		model.addAttribute("memberPRegion",memberPRegion);
+		model.addAttribute("memberPTimeWeekday",memberPTimeWeekday);
+		model.addAttribute("memberPTimeHoliday",memberPTimeHoliday);
 		return "/member/myedit";
 	}
 	
@@ -315,6 +326,7 @@ public class MemberController {
 	@PostMapping("/member/myedit")
 	public String profileEdit(MemberVO member, MultipartFile img, HttpSession session, Model model, int[] pr_rg_num,
 			int[] favoriteTime, int[] favoriteHoliTime) {
+		Message msg = new Message("/", null);
 		try {
 			String fi_ori_name = img.getOriginalFilename();
 			String fi_name;
@@ -328,11 +340,11 @@ public class MemberController {
 			boolean res = memberService.updateProfile(member, fi_name,pr_rg_num, favoriteTime,favoriteHoliTime); //새로 입력한 정보 업데이트
 			if(res) { //업데이트된 사용자 정보 세션에 저장
 				session.setAttribute("user", member); 
-				model.addAttribute("msg", "수정을 완료했습니다.");
-				model.addAttribute("url","/member/mypage");
+				msg = new Message("/member/mypage", "수정에 성공했습니다.");
+				model.addAttribute("msg",msg);
 			}else { //업데이트 실패시
-				model.addAttribute("msg", "수정에 실패했습니다.");
-				model.addAttribute("url","/member/myedit");
+				msg = new Message("/", "수정에 실패했습니다");
+				model.addAttribute("msg",msg);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -340,7 +352,7 @@ public class MemberController {
 			e.printStackTrace();
 		}		
 		
-		return "/member/mypage";
+		return "message";
 	}
 	
 	

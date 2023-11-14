@@ -4,6 +4,7 @@ import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -57,12 +58,19 @@ public class MemberVO {
 	private String me_session_id;
 	private Date me_session_limit;
 	
-	public String getMe_profile() {
-		if(me_profile ==null) {
-			me_profile = "/resources/profile/basic.jpg";
-		}
-		return me_profile;
-	}
+	
+	private String me_rg_main;
+	
+	
+    private List<PreferredTimeVO> preferTimeList;
+    private List<PreferredRegionVO> preferRegionList;
+	
+//	public String getMe_profile() {
+//		if(me_profile ==null) {
+//			me_profile = "/resources/profile/basic.jpg";
+//		}
+//		return me_profile;
+//	}
 	
 	
 }
