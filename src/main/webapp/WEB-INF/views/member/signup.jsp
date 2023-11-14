@@ -113,6 +113,7 @@ input, progress {
 	<p class="title" style="font-size: 45px; font-weight: bolder; padding-bottom: 30px;
 		text-align: center; letter-spacing: -3px;">회원가입</p>
 	<form action="<c:url value='/member/signup'/>" method="post" id="myForm" style="text-align: center;">
+		<input type="hidden" value="/basic.jpg" name="me_profile">
 		
 		<div class="1p">
 			<div class="form-group">

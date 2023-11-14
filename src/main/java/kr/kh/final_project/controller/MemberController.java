@@ -316,9 +316,10 @@ public class MemberController {
 		try {
 			String fi_ori_name = img.getOriginalFilename();
 			String fi_name;
-			if(fi_ori_name != null) {
+			if(fi_ori_name != null && !fi_ori_name.isEmpty()) {
 				fi_name = UploadFileUtils.updateImg(uploadPath, fi_ori_name, img.getBytes());
-			}else {
+				
+			}else{
 				fi_name = "/basic.jpg";
 			}
 			

@@ -19,6 +19,7 @@ public class CommentVO {
 		
 		private int me_num;
 		private String me_nickname;
+		private String me_profile;
 		
 		private int bl_me_num;
 		private int bl_blocked_num;

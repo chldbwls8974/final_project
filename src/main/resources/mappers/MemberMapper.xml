@@ -136,8 +136,8 @@
 	</select>
 	
 	<insert id="insertMember">
-		insert into member(me_id, me_pw, me_email, me_phone, me_name, me_gender, me_birthday, me_nickname, me_rg_num)
-		 values(#{m.me_id},#{m.me_pw},#{m.me_email},#{m.me_phone},#{m.me_name},#{m.me_gender},#{m.me_birthday},#{m.me_nickname},#{m.me_rg_num})
+		insert into member(me_id, me_pw, me_email, me_phone, me_name, me_gender, me_birthday, me_nickname, me_rg_num, me_profile)
+		 values(#{m.me_id},#{m.me_pw},#{m.me_email},#{m.me_phone},#{m.me_name},#{m.me_gender},#{m.me_birthday},#{m.me_nickname},#{m.me_rg_num},#{m.me_profile})
 	</insert>
 	<update id="updateMemberSession">
 		update
