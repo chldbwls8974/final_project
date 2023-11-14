@@ -59,8 +59,6 @@ public interface MemberService {
 
 	MemberVO isCheck2(String check);
 	
-	boolean updateProfile(MemberVO user, MultipartFile profileImage);
-	
 	int getMemberPoint(MemberVO user);
 	
 	int getTotalRefundCount(MemberVO user);
@@ -88,6 +86,8 @@ public interface MemberService {
 	List<MarkVO> getMyMarkList(MemberVO user);
 	
 	boolean markListAddAndDelete(MarkVO mark);
+	
+	boolean updateProfile(MemberVO member, String fi_name, int[] pr_rg_num, int[] favoriteTime, int[] favoriteHoliTime);
 	
 
 }

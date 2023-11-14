@@ -128,7 +128,7 @@ public class ClubServiceImp implements ClubService{
 	}
 
 	@Override
-	public boolean updateClub(int me_num, ClubVO club, int[] age, int[] favoriteTime, int[] favoriteHoliTime) {
+	public boolean updateClub(int me_num, ClubVO club, String fi_name, int[] age, int[] favoriteTime, int[] favoriteHoliTime) {
 		if(club == null) {
 			return false;
 		}
@@ -136,7 +136,7 @@ public class ClubServiceImp implements ClubService{
 		if(dbClub == null) {
 			return false;
 		}
-		clubDao.updateClub(club);
+		clubDao.updateClub(club, fi_name);
 		teamTimeDao.deletePreferredTime(club.getCl_num());
 		preAgeDao.deletePreferredAge(club.getCl_num());
 		int cl_num = clubDao.selectClubByName(club.getCl_name()).getCl_num();

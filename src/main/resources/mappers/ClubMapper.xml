@@ -26,6 +26,7 @@
 		update club
 		set
 			cl_name = #{club.cl_name},
+			cl_emblem = #{fi_name},
 			cl_price = #{club.cl_price},
 			cl_rule = #{club.cl_rule},
 			cl_introduction = #{club.cl_introduction},

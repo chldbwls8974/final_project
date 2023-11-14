@@ -174,9 +174,6 @@
 	<select id="selectMemberNumByNick2" resultType="kr.kh.final_project.vo.MemberVO">
 		select * from member where me_nickname = #{check}
 	</select>
-	<update id="updateMemberProfile">
-		update member(me_profile, me_nickname, me_gender) set (#{user.me_profile},#{user.me_nickname},#{user.me_gender})
-	</update>
 	<update id="updateFile">
 		update file(fi_bo_num, fi_name, fi_ori_name) set (#{file.fi_bo_num}, #{file.fi_name}, #{file.fi_ori_name})
 	</update>
@@ -249,5 +246,11 @@
 			me_state2 = #{i}
 		where
 			me_num = #{me_num}
+	</update>
+	<update id="updateMember">
+		update member
+		set
+			me_profile = #{fi_name}
+		where me_num = #{m.me_num}
 	</update>
 </mapper>

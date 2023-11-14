@@ -14,4 +14,8 @@
 	<insert id="insertPreferredRegion">
 		insert into preferred_region(pr_me_num, pr_rg_num) values(#{me_num},#{rg_num})
 	</insert>
+	<delete id="deletePreferredRegion">
+		delete from preferred_region
+		where pr_me_num = #{me_num}
+	</delete>
 </mapper>

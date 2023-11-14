@@ -60,6 +60,8 @@ public interface MemberDAO {
 
 	boolean updateUserMatchBanState(@Param("me_num")int me_num, @Param("i")int i);
 
+	void updateMember(@Param("m")MemberVO member, @Param("fi_name")String fi_name);
+
 
 
 

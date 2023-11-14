@@ -70,7 +70,7 @@
 					border-radius: 20px; height:130px; padding: 30px 20px; display: flex; justify-content: space-between;">
 						<div style="display: flex;">
 								<div class="myprofile-image">
-				                    <img src="/final_project${user.me_profile}" class="myprofile-image-thumb" alt="프로필 사진">
+				                    <img src="<c:url value='/memberimg${user.me_profile}'/>" class="myprofile-image-thumb" alt="프로필 사진">
 			              		 </div>
 							<a href="<c:url value='/member/myprofile?me_num=${user.me_num}'/>" class="myprofile-info">
 			              	 	<div style="margin-left: 10px;">
@@ -120,7 +120,12 @@
 						<p style="font-size:large; font-weight: bolder; margin-bottom: 20px;">소속 클럽</p>
 						<c:forEach items="${list}" var="list">
 							<a href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>" class="myclub-link" style="display: flex;">
-								<img src="" alt="나의 클럽" style="width: 30px; height: 30px; border-radius: 10px;">
+							<c:if test="${list.cl_emblem!=null}">
+						  		<img alt="팀엠블럼" src="<c:url value='/clubimg${list.cl_emblem}'/>" style="width: 30px; height: 30px; border-radius: 10px;">
+					  		</c:if>
+						  	<c:if test="${list.cl_emblem==null}">
+						  		<img alt="팀엠블럼" src="<c:url value='https://ifh.cc/g/v9LAF1.jpg'/>" style="width: 30px; height: 30px; border-radius: 10px;">
+					  		</c:if>
 								<p style="font-size: 15px;">${list.cl_name }</p>
 							</a>
 						</c:forEach>
