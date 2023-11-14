@@ -33,6 +33,10 @@
 </style>
 </head>
 <body>
+ <div class="btn-group">
+    <button type="button" class="btn btn-primary" name="member-tag">회원</button>
+    <button type="button" class="btn btn-primary" name="rookie-tag">승인대기</button>
+  </div>
 	<div class="body-container">
 		<div class="memberlist-box">
 			<p class="title">‘MEMBER’ 등급인 클럽</p>
@@ -73,5 +77,20 @@
 			</ul>
 		</div>
 	</div>
+	
+	<script type="text/javascript">
+	// 표 전환
+	$('.rookielist-box').hide();
+	
+	$(document).on('click','[name = member-tag]',function(){
+		$('.memberlist-box').show();
+		$('.rookielist-box').hide();
+	})
+	$(document).on('click','[name=rookie-tag]',function(){
+		$('.memberlist-box').hide();
+		$('.rookielist-box').show();
+		
+	})
+	</script>
 </body>
 </html>

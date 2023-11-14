@@ -264,7 +264,7 @@ public class MemberController {
 	@GetMapping("/member/mypage")
 	public String myPage(HttpSession session, Model model) {
 		MemberVO user = (MemberVO) session.getAttribute("user");
-		List<ClubVO> list = clubService.getClubList();
+		List<ClubVO> list = clubService.getMyClubList(user.getMe_num(),"MEMBER");
 		String profile = user.getMe_profile();
 		model.addAttribute("user", user);
 		model.addAttribute("list",list);
