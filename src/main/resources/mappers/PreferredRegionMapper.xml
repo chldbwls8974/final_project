@@ -8,6 +8,8 @@
 			*
 		from
 			preferred_region
+		join region on
+			pr_rg_num = rg_num
 		where
 			pr_me_num = #{me_num}
 	</select>

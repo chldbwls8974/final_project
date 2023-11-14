@@ -6,8 +6,6 @@ import org.apache.ibatis.annotations.Param;
 
 import kr.kh.final_project.vo.PreferredTimeVO;
 
-import kr.kh.final_project.vo.AccountVO;
-
 public interface PreferredTimeDAO {
 
 	List<PreferredTimeVO> selectPTListByMeNum(@Param("me_num")Integer me_num);
