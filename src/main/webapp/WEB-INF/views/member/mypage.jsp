@@ -96,7 +96,7 @@
 						<p style="font-size:large; font-weight: bolder; margin-bottom: 20px;">내 포인트</p>
 							<div style="display: flex; justify-content: space-between;">		
 								<div style="width: 75%;">
-									<p style="font-size:large; font-weight: bolder;">${user.me_point}원</p>
+									<p style="font-size:large; font-weight: bolder;" class="point-information"></p>
 								</div>
 								<div style="width: 25%; position: relative;">
 									<div style=" position: relative; bottom: 30px; right: 5px; text-align: center;
@@ -216,4 +216,18 @@
 		</section>
 </div>	
 </body>
+<script type="text/javascript">
+
+	$(document).ready(function() {
+		getUserInformation()
+	});
+	
+	//유저정보를 가져오는 ajax함수
+	function getUserInformation() {
+		let num = { me_num : ${user.me_num}}
+		ajaxJsonToJson(false, 'post', "/member/information", num,(data)=>{
+			$('.point-information').text(data.user.me_point);
+		});
+	}
+</script>
 </html>

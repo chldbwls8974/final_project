@@ -254,9 +254,12 @@ public class MemberController {
 	@ResponseBody
 	@PostMapping("/member/information")
 	public Map<String, Object> memberInformation(@RequestBody MemberVO user){
+		System.out.println(user);
 		Map<String, Object> map = new HashMap<String, Object>();
-		int userPoint = memberService.getMemberPoint(user);
-		map.put("userPoint", userPoint);
+		//db의 유저정보 가져옴
+		user = memberService.getMemberByNum(user);
+		System.out.println(user+"222");
+		map.put("user", user);
 		return map;
 	}
 	

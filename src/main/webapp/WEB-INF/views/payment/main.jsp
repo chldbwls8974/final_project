@@ -24,7 +24,7 @@
 		 <li data-value="100" class="list-group-item col-4 ">100,000 포인트</li>
 	</ul>
 	<button class="btn btn-outline-dark col-4" onclick="btnOnclick(selectedAmount)">결제하기</button>
-	<span class="point">보유 포인트 : </span>
+	<span class="point-information">보유 포인트 : </span>
 	
 </body>
 
@@ -57,7 +57,7 @@
 	function getUserInformation() {
 		num = { me_num : ${user.me_num}}
 		ajaxJsonToJson(false, 'post', "/member/information", num,(data)=>{
-			$('.point').text("보유 포인트 : " + data.userPoint );
+			$('.point-information').text("보유 포인트 : " + data.user.me_point );
 		});
 	}
 	
