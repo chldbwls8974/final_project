@@ -33,8 +33,8 @@ public class BoardServiceImp implements BoardService{
 	
 	String uploadPath = "D:\\uploadfiles";
 
-	@Override
 	//매니저 신청
+	@Override
 	public boolean insertManagerApplication(BoardVO board, MemberVO user, MultipartFile[] files) {
 		if(user == null || user.getMe_num() == null) {
 			return false;
@@ -52,8 +52,8 @@ public class BoardServiceImp implements BoardService{
 		return true;
 	}
 	
-	@Override
 	//사업자 신청
+	@Override
 	public boolean insertBusinessmanApplication(BoardVO board, MemberVO user, MultipartFile[] files) {
 		if(user == null || user.getMe_num() == null) {
 			return false;

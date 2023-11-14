@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.service.BoardService;
 import kr.kh.final_project.service.MemberService;
+import kr.kh.final_project.util.Message;
 import kr.kh.final_project.vo.BoardVO;
 import kr.kh.final_project.vo.MemberVO;
 
@@ -25,7 +26,14 @@ public class ApplicationController {
 	
 	//매니저 신청
 	@GetMapping("/application/manager")
-	public String Manager() {
+	public String Manager(Model model, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+
+		if (user == null || !user.getMe_authority().equals("USER")) {
+			Message msg = new Message("/", "일반 회원만 신청 가능합니다.");
+			model.addAttribute("msg", msg);
+			return "/message";
+		 }
 		return "/application/manager";
 	}
 	@PostMapping("/application/manager")
@@ -48,7 +56,14 @@ public class ApplicationController {
 
 	//사업자 신청
 	@GetMapping("/application/businessman")
-	public String Businessman() {
+	public String Businessman(Model model, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+
+		if (user == null || !user.getMe_authority().equals("USER")) {
+			Message msg = new Message("/", "일반 회원만 신청 가능합니다.");
+			model.addAttribute("msg", msg);
+			return "/message";
+		 }
 		return "/application/businessman";
 	}
 	@PostMapping("/application/businessman")
