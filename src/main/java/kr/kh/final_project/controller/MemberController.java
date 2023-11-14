@@ -1,5 +1,6 @@
 package kr.kh.final_project.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ import kr.kh.final_project.service.MatchService;
 import kr.kh.final_project.service.MemberService;
 import kr.kh.final_project.service.RegionService;
 import kr.kh.final_project.util.Message;
+import kr.kh.final_project.util.UploadFileUtils;
 import kr.kh.final_project.vo.BlockVO;
 import kr.kh.final_project.vo.ClubVO;
 import kr.kh.final_project.vo.HoldingCouponVO;
@@ -31,6 +33,8 @@ import kr.kh.final_project.vo.MarkVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
+import kr.kh.final_project.vo.PreferredRegionVO;
+import kr.kh.final_project.vo.PreferredTimeVO;
 import kr.kh.final_project.vo.RegionVO;
 import kr.kh.final_project.vo.TimeVO;
 
@@ -46,6 +50,7 @@ public class MemberController {
 	@Autowired
 	ClubService clubService;
 	
+	String uploadPath = "D:\\uploadprofile\\member";
 
 	@GetMapping("/member/signup")
 	public String signup(Model model) {
@@ -249,9 +254,12 @@ public class MemberController {
 	@ResponseBody
 	@PostMapping("/member/information")
 	public Map<String, Object> memberInformation(@RequestBody MemberVO user){
+		System.out.println(user);
 		Map<String, Object> map = new HashMap<String, Object>();
-		int userPoint = memberService.getMemberPoint(user);
-		map.put("userPoint", userPoint);
+		//db의 유저정보 가져옴
+		user = memberService.getMemberByNum(user);
+		System.out.println(user+"222");
+		map.put("user", user);
 		return map;
 	}
 	
@@ -259,7 +267,7 @@ public class MemberController {
 	@GetMapping("/member/mypage")
 	public String myPage(HttpSession session, Model model) {
 		MemberVO user = (MemberVO) session.getAttribute("user");
-		List<ClubVO> list = clubService.getClubList();
+		List<ClubVO> list = clubService.getMyClubList(user.getMe_num(),"MEMBER");
 		String profile = user.getMe_profile();
 		model.addAttribute("user", user);
 		model.addAttribute("list",list);
@@ -296,24 +304,45 @@ public class MemberController {
 	}
 	
 	@GetMapping("/member/myedit")
-	public String myProfile() {
+	public String myProfile(Model model,HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		List<RegionVO> MainRegion = memberService.getMainRegion();
+		List<TimeVO> time = memberService.getAllTime();
+		model.addAttribute("user",user);
+		model.addAttribute("MainRegion",MainRegion);
+		model.addAttribute("time",time);
 		return "/member/myedit";
 	}
 	
 	
 	@PostMapping("/member/myedit")
-	public String profileEdit(MemberVO member, MultipartFile profileImage, HttpSession session,Model model) {
-		MemberVO user = (MemberVO)session.getAttribute("user"); //세션에 저장된 현재 user 정보 가져옴
-		boolean res = memberService.updateProfile(user, profileImage); //새로 입력한 정보 업데이트
-		System.out.println(member);
-		if(res) { //업데이트된 사용자 정보 세션에 저장
-			session.setAttribute("user", member); 
-			model.addAttribute("msg", "수정을 완료했습니다.");
-			model.addAttribute("url","/member/mypage");
-		}else { //업데이트 실패시
-			model.addAttribute("msg", "수정에 실패했습니다.");
-			model.addAttribute("url","/member/myedit");
-		}
+	public String profileEdit(MemberVO member, MultipartFile img, HttpSession session, Model model, int[] pr_rg_num,
+			int[] favoriteTime, int[] favoriteHoliTime) {
+		try {
+			String fi_ori_name = img.getOriginalFilename();
+			String fi_name;
+			if(fi_ori_name != null && !fi_ori_name.isEmpty()) {
+				fi_name = UploadFileUtils.updateImg(uploadPath, fi_ori_name, img.getBytes());
+				
+			}else{
+				fi_name = "/basic.jpg";
+			}
+			
+			boolean res = memberService.updateProfile(member, fi_name,pr_rg_num, favoriteTime,favoriteHoliTime); //새로 입력한 정보 업데이트
+			if(res) { //업데이트된 사용자 정보 세션에 저장
+				session.setAttribute("user", member); 
+				model.addAttribute("msg", "수정을 완료했습니다.");
+				model.addAttribute("url","/member/mypage");
+			}else { //업데이트 실패시
+				model.addAttribute("msg", "수정에 실패했습니다.");
+				model.addAttribute("url","/member/myedit");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+		
 		return "/member/mypage";
 	}
 	
@@ -374,15 +403,16 @@ public class MemberController {
 		MemberVO dbMember = memberService.getMemberByNum(member);
 		//회원의 거주지역 가져오기
 		MemberVO memberRegion = memberService.getMemberRegion(dbMember);
-		
 		//회원의 선호지역, 선호시간대 가져오기
-		MemberVO memberPRegion = memberService.getMemberPRegion(dbMember);
-		MemberVO memberPTime = memberService.getMemberPTime(dbMember);
+		List<PreferredRegionVO> memberPRegion = memberService.getMemberPRegion(dbMember);
+		List<PreferredTimeVO> memberPTimeWeekday = memberService.getMemberPTimeWeekday(dbMember);
+		List<PreferredTimeVO> memberPTimeHoliday = memberService.getMemberPTimeHoliday(dbMember);
 		
 		model.addAttribute("member",dbMember );
 		model.addAttribute("memberRegion", memberRegion );
 		model.addAttribute("memberPRegion", memberPRegion );
-		model.addAttribute("memberPTime", memberPTime );
+		model.addAttribute("memberPTimeWeekday", memberPTimeWeekday );
+		model.addAttribute("memberPTimeHoliday", memberPTimeHoliday );
 		model.addAttribute("user", user );
 		return "/member/myprofile";
 	}
@@ -399,13 +429,21 @@ public class MemberController {
 		return map;
 	}
 	
-	//
 	@ResponseBody
 	@PostMapping("/member/markList/process")
 	public Map<String, Object> markListAddAndDelete(@RequestBody MarkVO mark){
 		Map<String, Object> map = new HashMap<String, Object>();
 		//즐겨찾기 등록또는 삭제
 		memberService.markListAddAndDelete(mark);
+		
+		return map;
+	}
+	@ResponseBody
+	@PostMapping("/member/blockList/process")
+	public Map<String, Object> blockListAddAndDelete(@RequestBody BlockVO block){
+		Map<String, Object> map = new HashMap<String, Object>();
+		//차단 등록 또는 삭제
+		memberService.blockListAddAndDelete(block);
 		
 		return map;
 	}

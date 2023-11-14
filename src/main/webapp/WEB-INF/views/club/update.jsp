@@ -72,11 +72,11 @@ li{
 <body>
 ${club }
 	<h1>클럽수정</h1>
-	<form action="<c:url value='/club/update'/>" method="post">
-<!-- 		<div class="form-group"> -->
-<!-- 			<label>클럽 앰블럼</label> -->
-<!-- 			<input type="file" class="form-control" name="cl_emblem"> -->
-<!-- 		</div> -->
+	<form action="<c:url value='/club/update'/>" method="post" enctype="multipart/form-data">
+		<div class="form-group">
+			<label>클럽 앰블럼</label>
+			<input type="file" class="form-control" name="img" id="img">
+		</div>
 		<input type="hidden" class="form-control" name="me_num" value="${user.me_num }">
 		<input type="hidden" class="form-control" name="cl_num" value="${club.cl_num}">
 		<div class="form-group">

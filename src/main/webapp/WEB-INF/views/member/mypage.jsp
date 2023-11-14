@@ -35,14 +35,15 @@
 	}
 	.myprofile-image-thumb{ width: 70px; height: 70px; border-radius: 50%;
 		 margin-right: 10px;}
-	.myedit{ width: 170px; height: 50px; border-radius: 20px;
-		padding:20px;
+	.myedit, .myprofile-detail{ width: 140px; height: 40px; border-radius: 20px;
+		padding: 0;
 	}
+	.btn-box{ display: inline-block;}
 	
 	
 	.mypoint-thumb{
 		width: 50%; height: 150px; border-radius: 20px; margin: 20px 20px 20px 0;
-		padding: 20px; background-color: #f2f2f2; position: relative;
+		padding: 20px; background-color: #d7fdb5; position: relative;
 	}	
 	.mytier-thumb{ background-color: #f2f2f2; border-radius:20px; padding:20px;
 		position: relative; margin: 20px 0 20px 0; width: 50%; height: 150px;
@@ -70,7 +71,7 @@
 					border-radius: 20px; height:130px; padding: 30px 20px; display: flex; justify-content: space-between;">
 						<div style="display: flex;">
 								<div class="myprofile-image">
-				                    <img src="/final_project${user.me_profile}" class="myprofile-image-thumb" alt="프로필 사진">
+				                    <img src="<c:url value='/memberimg${user.me_profile}'/>" class="myprofile-image-thumb" alt="프로필 사진">
 			              		 </div>
 							<a href="<c:url value='/member/myprofile?me_num=${user.me_num}'/>" class="myprofile-info">
 			              	 	<div style="margin-left: 10px;">
@@ -84,11 +85,20 @@
 								</div>
 							</a>
 						</div>
-						<div class="myedit">
-							<a href="<c:url value='/member/myedit'/>" class="myprofile-btn">
-								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg" alt="나의 포인트">
-								<p>프로필 수정</p>
-							</a>
+						<div class="btn-box">
+							<div class="myprofile-detail">
+								<a href="<c:url value='/member/myprofile?me_num=${user.me_num}'/>" class="myprofile-btn">
+									<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_my.svg"
+										style="width: 24px; height: 24px; margin-left: 5px;" alt="내 프로필">
+									<p style="margin: 0;">프로필 조회</p>
+								</a>
+							</div>	
+							<div class="myedit">
+								<a href="<c:url value='/member/myedit?me_num=${user.me_num}'/>" class="myprofile-btn">
+									<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg" alt="프로필 수정">
+									<p>프로필 수정</p>
+								</a>
+							</div>
 						</div>
 					</div>
 					<div style="display: flex;">
@@ -96,11 +106,11 @@
 						<p style="font-size:large; font-weight: bolder; margin-bottom: 20px;">내 포인트</p>
 							<div style="display: flex; justify-content: space-between;">		
 								<div style="width: 75%;">
-									<p style="font-size:large; font-weight: bolder;">${user.me_point}원</p>
+									<p style="font-size:large; font-weight: bolder; margin-left: 3px;" class="point-information"></p>
 								</div>
-								<div style="width: 25%; position: relative;">
-									<div style=" position: relative; bottom: 30px; right: 5px; text-align: center;
-										 padding: 10px; border-radius: 10px; background-color:#c2f296;">
+								<div style="width: 50%; position: relative;">
+									<div style=" position: relative; bottom: 5px; right: 5px; text-align: center;
+										 padding: 10px; border-radius: 10px; background-color: white;">
 										<a href="<c:url value='/payment/main'/>"><p style="margin: 0 auto;">충전하기</p></a>
 									</div>
 								</div>
@@ -112,7 +122,7 @@
 								<div style="padding:0px; width:23px; height:25px; border-radius:5px; background-color: black;">
 									<div style="text-align:center; font-size:15px; padding:0; color: white; font-weight: bolder;">1</div>
 								</div>
-									<div style="margin-left:5px; font-weight: bolder; font-size: 15px; letter-spacing: 1px;">스타터</div>	
+									<div style="margin-left:5px; font-weight: bolder; font-size: 15px; letter-spacing: 1px;">${user.me_tr_name}</div>	
 							</div>
 						</div>
 					</div>	
@@ -120,7 +130,12 @@
 						<p style="font-size:large; font-weight: bolder; margin-bottom: 20px;">소속 클럽</p>
 						<c:forEach items="${list}" var="list">
 							<a href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>" class="myclub-link" style="display: flex;">
-								<img src="" alt="나의 클럽" style="width: 30px; height: 30px; border-radius: 10px;">
+							<c:if test="${list.cl_emblem!=null}">
+						  		<img alt="팀엠블럼" src="<c:url value='/clubimg${list.cl_emblem}'/>" style="width: 30px; height: 30px; border-radius: 10px;">
+					  		</c:if>
+						  	<c:if test="${list.cl_emblem==null}">
+						  		<img alt="팀엠블럼" src="<c:url value='https://ifh.cc/g/v9LAF1.jpg'/>" style="width: 30px; height: 30px; border-radius: 10px;">
+					  		</c:if>
 								<p style="font-size: 15px;">${list.cl_name }</p>
 							</a>
 						</c:forEach>
@@ -211,4 +226,18 @@
 		</section>
 </div>	
 </body>
+<script type="text/javascript">
+
+	$(document).ready(function() {
+		getUserInformation()
+	});
+	
+	//유저정보를 가져오는 ajax함수
+	function getUserInformation() {
+		let num = { me_num : ${user.me_num}}
+		ajaxJsonToJson(false, 'post', "/member/information", num,(data)=>{
+			$('.point-information').text(data.user.me_point);
+		});
+	}
+</script>
 </html>

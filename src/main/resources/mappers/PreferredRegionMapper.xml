@@ -8,10 +8,16 @@
 			*
 		from
 			preferred_region
+		join region on
+			pr_rg_num = rg_num
 		where
 			pr_me_num = #{me_num}
 	</select>
 	<insert id="insertPreferredRegion">
 		insert into preferred_region(pr_me_num, pr_rg_num) values(#{me_num},#{rg_num})
 	</insert>
+	<delete id="deletePreferredRegion">
+		delete from preferred_region
+		where pr_me_num = #{me_num}
+	</delete>
 </mapper>

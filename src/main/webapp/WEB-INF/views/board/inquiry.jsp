@@ -7,96 +7,136 @@
 <meta charset="UTF-8">
 <title>문의 게시판</title>
 <style>
-	.btn-info{
-		color : outline-info;
-		background-color : white;
-		border : 1px solid outline-info;
+.container-body{
+		background-color: #f2f2f2; height: 100%; margin-top: 20px;
+		border-radius: 20px;
 	}
-	.btn-info:hover{
-		background-color : outline-info;
-		color : white;
+	.main{
+		padding: 40px; height: auto;
+		background-color: white; border-radius: 20px;
 	}
-	h1{
-		text-align : center;
+	.a{
+		color : red;
 	}
-	.noneInquiry{
-		text-align : center;
+	.inquiry-thead{
+		display: flex; padding: 20px;
+		border-bottom: 1px solid rgba(0,0,0,.1);
+	}
+ 	.inquiry-tbody{ padding: 5px;}
+ 	.tbody-box{ 
+		display: flex; border-bottom: 1px solid rgba(0,0,0,.1);
+		margin: 0; padding: 20px 20px 30px 20px;
+	}
+	.search-btn{
+		border-radius: 3px; width: 120px; height: 38px; border: none;
+		background-color: #0c0c0c; color: white;
+	}
+	.write-btn{
+		border-radius: 5px; width: 120px; height: 40px; border: none;
+		background-color: #c2f296; color: black; margin: 10px 0 10px 0;
+	}
+	.write-btn:hover{
+		background-color : #e6ffcc; color: black;
+		border : 1px solid #c2f296;
+	}
+	
+	.page-link {
+	  color: #000; 
+	  background-color: #fff;
+	  border: 1px solid #ccc; 
+	}
+	.page-item.active .page-link {
+	 z-index: 1;
+	 color: #555;
+	 background-color: #f1f1f1;
+	 border-color: #ccc;
+	 
+	}
+	.page-link:focus, .page-link:hover {
+	  color: #000;
+	  background-color: #fafafa; 
+	  border-color: #ccc;
+	}
+	.notion{
+	  background-color: #e6e6e6 ; 
 	}
 </style>
 </head>
 <body>
-<br>
-<h1>  &#128259 문의게시판  &#128259;</h1>
-	<div style="display:flex; justify-content: flex-end;">
-		<button type="button"
-			    class="btn btn-outline-info btn-info btn-inquiry"
-				>글쓰기
-		</button>
-	</div>	
-<!-- 문의게시판 검색 기능 -->
+<div class="container-body">
+	<div style="padding: 30px;">
+	<br>
+		<p style="font-size: 35px; font-weight: bolder; margin:0 auto; border-bottom: 8px solid #c2f296;
+			width: 20%; padding: 20px 0 10px 0;">문의게시판</p>
+		<div style="display:flex; justify-content: flex-end;">
+			<button type="button"
+				    class="write-btn btn-inquiry"
+					>글쓰기
+			</button>
+		</div>	
+	<!-- 문의게시판 검색 기능 -->
 	<form action="<c:url value='/board/inquiry'/>" method="get">
-	<div class="input-group mb-3 mt-3">
-		<div class="input-group-prepend">
-		    <select class="form-control" id="me_authority" name="t">
-		      <option value="all" 
-		      	<c:if test="${pm.cri.t == 'all'}">selected</c:if>>전체</option>
-	 		  <option value="first"
-		      	<c:if test="${pm.cri.t == 'first'}">selected</c:if>>게시글번호</option>
-		      <option value="second"
-		      	<c:if test="${pm.cri.t == 'second'}">selected</c:if>>닉네임</option>
-		      <option value="third"
-		      	<c:if test="${pm.cri.t == 'third'}">selected</c:if>>제목</option>
-		      <option value="fourth"
-		      	<c:if test="${pm.cri.t == 'fourth'}">selected</c:if>>작성날짜</option>
-	   		</select>
-	    </div>
-	    <input type="text" class="form-control input-search" name="s" id="me_title" placeholder="검색어를 입력하세요." value="${pm.cri.s}">
-	    <button class="btn btn-outline-success btn-insert">찾기</button>
-	</div>
+		<div class="input-group mb-3 mt-3">
+			<div class="input-group-prepend">
+			    <select class="form-control" id="me_authority" name="t">
+			      <option value="all" 
+			      	<c:if test="${pm.cri.t == 'all'}">selected</c:if>>전체</option>
+		 		  <option value="first"
+			      	<c:if test="${pm.cri.t == 'first'}">selected</c:if>>게시글번호</option>
+			      <option value="second"
+			      	<c:if test="${pm.cri.t == 'second'}">selected</c:if>>닉네임</option>
+			      <option value="third"
+			      	<c:if test="${pm.cri.t == 'third'}">selected</c:if>>제목</option>
+			      <option value="fourth"
+			      	<c:if test="${pm.cri.t == 'fourth'}">selected</c:if>>작성날짜</option>
+		   		</select>
+		    </div>
+		    <input type="text" class="form-control input-search" name="s" id="me_title" placeholder="검색어를 입력하세요." value="${pm.cri.s}">
+		    <button class="search-btn btn-insert">찾기</button>
+		</div>
 	</form>
-<!-- 문의게시판 출력 -->
-<br>
-<div class="container">
-  <table class="table table-hover">
-    <thead>
-      <tr>
-      	<th>게시글번호</th>
-      	<th>제목</th>
-        <th>작성자 닉네임</th>
-        <th>작성일</th>
-        <th>조회수</th>
-        <th>댓글수</th>
-      </tr>
-    </thead>
-		<tbody>
-			<c:choose>	
-				<c:when test="${not empty list}">
-					<c:forEach items="${list}" var="bo">
-						<c:choose>
-							<c:when
-								test="${bo.bo_me_num == user.me_num || user.me_authority == 'ADMIN' }">
-								<tr>
-									<td>${bo.bo_num}</td>
-									<td><a
-										href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_title}</a></td>
-									<td>${bo.me_nickname}</td>
-									<td>${bo.bo_reg_date_str}</td>
-									<td>${bo.bo_count}</td>
-									<td><a
-										href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_comment}</a></td>
-								</tr>
-							</c:when>
-						</c:choose>
-					</c:forEach>
-				</c:when>
-				<c:otherwise>
-					<tr>
-						<td colspan="6" class="noneInquiry">문의 내용이 없습니다.</td>
-					</tr>
-				</c:otherwise>
-			</c:choose>
-		</tbody>
-</table>
+	<!-- 문의게시판 출력 -->
+	<br>
+	<div class="main">
+  		<div class="table">
+	      <ul class="inquiry-thead">
+			<li style="width: 10%;">게시글번호</li>
+			<li style="width: 35%;">제목</li>
+			<li style="width: 15%;">작성자 닉네임</li>
+			<li style="width: 20%;">작성일</li>
+			<li style="width: 10%;">조회수</li>
+			<li style="width: 10%;">댓글수</li>
+		  </ul>
+		</div>
+			<ul class="inquiry-tbody">
+				<c:choose>	
+					<c:when test="${not empty list}">
+						<c:forEach items="${list}" var="bo">
+							<c:choose>
+								<c:when test="${bo.bo_me_num == user.me_num || user.me_authority == 'ADMIN' }">
+									<li>
+										<div style="width: 10%;">${bo.bo_num}</div>
+										<div style="width: 35%;"><a
+											href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_title}</a></div>
+										<div style="width: 15%;">${bo.me_nickname}</div>
+										<div style="width: 20%;">${bo.bo_reg_date_str}</div>
+										<div style="width: 10%;">${bo.bo_count}</div>
+										<div style="width: 10%;"><a
+											href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_comment}</a></div>
+									</li>
+								</c:when>
+							</c:choose>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<li>
+							<div colspan="6" class="noneInquiry">작성된 문의 내용이 없습니다.</div>
+						</li>
+					</c:otherwise>
+				</c:choose>
+			</ul>
+		</div>
+	</div>
   <!-- 페이지네이션 적용 -->
 		<ul class="pagination justify-content-center">
 			<c:if test="${pm.prev}">
@@ -118,7 +158,7 @@
 				</li>
 			</c:if>
 		</ul>	
- </div>
+ 	</div>
  <script type="text/javascript">
 	 $(document).on('click', '.btn-inquiry', function(){
 			let co_me_num = '${user.me_num}';

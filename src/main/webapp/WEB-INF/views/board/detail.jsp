@@ -9,60 +9,10 @@
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 <style>
-	form{
-		margin-top: 50px;
-	}
-	.form-control{
-		margin-bottom : 10px;
-	}
-	.btn{
-		margin-bottom : 10px;
-	}
-	.comment-box{
-		background-color: #f2f2f2;
-		border-radius: 20px; padding: 10px; margin: 0 0 20px 0;
-		display : flex;
-	}
-	.comment-box1{
-		display : flex;
-	}
-	/* 프로필 사진 */
-	.profile-image {
-	    width: 60px; 
-	    height: 60px; 
-	    border-radius: 50%; /* 둥글게 만들기 */
-	    object-fit: cover; /* 이미지가 찌그러지지 않도록 설정하는 것 */
-	    float:left;
-	}
-	/* 댓글 내용 */
-	.comment-list{
-		list-style : none;
-		padding : 10px;
-		width : 100%;
-	}
-	/* 수정 삭제 버튼 */
-	.comment-item{
-		float : right;
-		position : relative;
-	}
-	/* 날짜 */
-	.comment-date{
-		
-		display : block;
-		margin-left : 80px;
-		padding-top : 50px;
-	}
-	
-	/* 댓글, 답글 내용만 */
-	.comment-contents{
-		margin-left : 80px;
-		margin-top : 20px;
-		display : flex;
-	}
-	.comment-nickname{
-		margin-left : 20px;
-		font-weight : bold;
-	}
+
+form{
+	margin-top: 50px;
+}
 
 .form-control {
 	margin-bottom: 10px;
@@ -73,16 +23,19 @@
 }
 
 .comment-box {
-	display: flex;
+	background-color: #ededed;
+	border-radius: 20px; padding: 10px; margin: 0 0 20px 0;
+	display : flex;
 }
+
 
 .comment-box1 {
 	display: flex;
 }
 /* 프로필 사진 */
 .profile-image {
-	width: 60px;
-	height: 60px;
+	width: 70px;
+	height: 70px;
 	border-radius: 50%; /* 둥글두그륵 만들기 */
 	object-fit: cover; /* 이미지가 찌그러지지 않도록 설정하는 것 */
 	float: left;
@@ -107,7 +60,7 @@
 
 /* 댓글, 답글 내용만 */
 .comment-contents {
-	margin-left: 80px;
+	margin-left: 91px;
 	margin-top: 20px;
 	display: flex;
 }
@@ -121,11 +74,11 @@
 .modal--bg {
 	display: none;
 	position: fixed;
-	top: 0;
-	left: 0;
+	top: 0%;
+	left: 0%;
 	width: 100%;
 	height: 100%;
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: rgba(0, 0, 0, 0.3);
 	justify-content: center;
 	align-items: center;
 }
@@ -135,12 +88,14 @@
 	padding: 20px;
 	border-radius: 5px;
 	max-width: 400px;
-	margin: 0 auto;
+	margin: 200px auto;
+	
 }
 </style>    
 </head>
 </head>
 <body>
+
 	<br>
 	<form action="<c:url value='/board/detail'/>" method="post">
 		<div class="form-group">
@@ -190,32 +145,40 @@
 			<label>댓글</label><br>
 			<div class="input-group-append mb-3">
 				<textarea class="form-control" placeholder="댓글을 입력해주세요." id="inputComment"></textarea>
-			    <button type="button"  class="btn btn-outline-success" id="btnCommentInsert"
+			    <button type="button"  class="btn" id="btnCommentInsert"
 					style="background-color: #c2f296; border-radius: 5px; width: 70px;">등록</button>
 			 </div>
 		</c:if>
 		<!-- 댓글 목록창 -->
 		<div class="box-comment">
 			<div class="comment-box1" >
-					<div class="comment-list">
-						<div class="comment-1">
-							<span class="comment-nickname">${comment.me_nickname}</span>
-							<span class="comment-contents">${comment.co_comments}</span>
+				<div class="comment-list">
+					<div class="comment-1">
+						<span class="comment-nickname">${comment.me_nickname}</span>
+						<span class="comment-contents">${comment.co_comments}</span>
 <%-- 						<span class="comment-writer">${comment.co_me_num}</span> --%>
-							<span class="comment-date" style="color: #5b5b5b">${comment.co_date}</span>	
-						</div>
-						<div class="comment-item">
-							<c:if test="${comment.co_me_num == user.me_num}">
-								<button type="button" class="btn btn-outline-info btn-sm btn-update" data-num="${comment.co_num}">수정</button>
-								<button type="button" class="btn btn-outline-info btn-sm btn-del" data-num="${comment.co_num}">삭제</button>
-							</c:if>
-							<c:if test="${comment.co_num == comment.co_ori_num}">						
-								<button type="button" class="btn btn-outline-primary btn-sm btn-reply" value="${comment.co_num}">답글</button>						
-							</c:if>	
-							
-						</div>
+						<span class="comment-date" style="color: #5b5b5b">${comment.co_date}</span>	
 					</div>
+					<div class="comment-item">
+						<c:if test="${comment.co_me_num == user.me_num}">
+							<button type="button" class="btn btn-update" style="background-color: #f2f2f2; border-radius: 5px; width: 70px;"
+								data-num="${comment.co_num}">수정</button>
+							<button type="button" class="btn btn-sm btn-del" data-num="${comment.co_num}">삭제</button>
+						</c:if>
+						<c:if test="${comment.co_num == comment.co_ori_num}">						
+							<button type="button" class="btn btn-outline-primary btn-sm btn-reply" value="${comment.co_num}">답글</button>						
+						</c:if>
+					</div>
+				</div>
 			</div>
+			<!-- 모달버튼 -->
+			<c:if test="${board.bo_bt_num != 5 && board.bo_bt_num != 6 && board.bo_bt_num != 7 }">
+				<div style="text-align: right; ">
+					<button type="button" class="btn button--open"
+						 style="background-color: black; color: white; border-radius: 10px; height: 40px; width: 120px; margin: 0 20px 30px 10px;"
+						 data-value="${board.bo_num}">게시글 신고</button>
+				</div>	 
+			</c:if>
 			<%-- <c:forEach items="${list}" var="replyComment">	
 				<c:if test="${replyComment.co_ori_num != replyComment.co_num}">		
 					 <div class="box-comment-reply" >
@@ -244,30 +207,33 @@
 			</div>
 		</div>
 		
-		<!-- 모달버튼 -->
-		<c:if test="${board.bo_bt_num != 5 && board.bo_bt_num != 6 && board.bo_bt_num != 7 }">
-			<button type="button" class="btn btn-outline-warning button--open" data-value="${board.bo_num}">게시글 신고</button>
-		</c:if>
-		<br>
+	
 		<!-- 자신이 쓴 게시글만 수정,삭제 버튼 나오게 -->
 			<c:if test="${user != null && user.me_num == board.bo_me_num}">
-				<button type="button"
-						class="btn btn-outline-warning col-12 btn-board-update"
-						onclick="location.href='<c:url value='/board/update?bo_num=${board.bo_num}'/>'">수정하기
-				</button><br>
+				<div style="text-align: center; margin-top: 80px;">
+					<button type="button"
+							class="btn btn-board-update"
+							style="background-color: #d7fdb5; color: black; height: 45px; border-radius: 10px; width: 400px; margin-bottom: 20px;"
+							onclick="location.href='<c:url value='/board/update?bo_num=${board.bo_num}'/>'">수정하기
+					</button>
+				</div>	
 			</c:if>
 			<c:if test="${user != null && user.me_num == board.bo_me_num}">
-				<button type="button"
-						class="btn btn-outline-danger col-12 btn-delete"
-						onclick="location.href='<c:url value='/board/delete?bo_num=${board.bo_num}'/>'">삭제하기
-				</button><br>
+				<div style="text-align: center;">
+					<button type="button"
+							class="btn btn-delete"
+							style="background-color: #d7fdb5; color: black; border-radius: 10px; height: 45px; width: 400px;"
+							onclick="location.href='<c:url value='/board/delete?bo_num=${board.bo_num}'/>'">삭제하기
+					</button><br>
+				</div>
 			</c:if>
 		
 	</form>
 	<!-- 모달창 -->
 	<div class="modal--bg">
 		<div class="modal--content">
-			<p>신고하기</p>
+			<p style="font-size: 20px; font-weight: bolder; margin: 0 auto; border-bottom: 8px solid #c2f296;
+			width: 20%; padding: 20px 0 10px 0; text-align: center;">신고하기</p>
 			<form class="modal-form" action="<c:url value='/admin/boardReport/insert'/>" method="post">
 				<input type="hidden" class="form-control" name="rp_me_num" value="${user.me_num}" readonly>
 				<input type="hidden" class="form-control" name="rp_bo_num" value="${board.bo_num}" readonly>
@@ -286,8 +252,12 @@
 					</select>
 					<textarea cols="46" rows="6" name="rp_content"></textarea>
 				</div>
-				<button type="button" class="btn btn-outline-dark button--close">닫기</button> 
-				<button class="btn btn-outline-dark">신고</button> 
+				<div style="text-align: center; margin-top: 40px;">
+					<button type="button" style="background-color: black; color: white; border-radius: 10px; width: 80px;"
+						class="btn button--close">닫기</button> 
+					<button  style="background-color: black; color: white; border-radius: 10px; width: 80px;"
+						class="btn">신고</button> 
+				</div>	
 			</form> 
 		</div>
 	</div>
@@ -357,13 +327,15 @@
 			// 원래 댓글 번호를 저장
 			let str = '';
 			str += `
-					<div class="input-group-append mb-3 reply-box" >
+					<div class="input-group-append mb-3 reply-box" style="margin-left: 30px;">
 						 <textarea class="form-control" placeholder="답글을 입력해주세요." name="co_content_reply" id="inputComment2"></textarea>
 						 <button type="button" 
-						 		 class="btn btn-outline-primary btn-sm btn-reply-insert" 
+						 		 class="btn btn-reply-insert" 
+						 		 style="background-color: #d0f7ad; border-radius: 5px; width: 60px;"
 						 		 data-num="\${co_ori_num}">답글</button>
 					</div>
 			`;
+			
 			$(this).parents('.comment-box').after(str);
 			$(this).hide('.btn-reply');
 		});
@@ -466,7 +438,9 @@
 			`;
 			btn='';
 			btn=`
-				<button type="button" class="btn btn-complete btn-outline-info" data-num="\${co_num}">수정완료</button>			
+				<button type="button" class="btn btn-complete"
+					style="background-color: #dddddd; border-radius: 5px; width: 90px;"
+					data-num="\${co_num}">수정완료</button>			
 			`;
 			list.find('.comment-contents').after(str)
 			th.hide(); // 버튼 박스 숨기기(수정버튼)
@@ -505,7 +479,7 @@
 		
 		/* 댓글 삭제하기 이벤트 */
 		$(document).on('click', '.btn-del', function(){
-			if(confirm("댓글을 정말 삭제하시겠습니까...?")){
+			if(confirm("댓글을 삭제하시겠습니까?")){
 			let comment = {
 					co_num : $(this).data('num')
 			}
@@ -549,14 +523,17 @@
 					for(comment of data.list){
 						let btnStr = '';
 						if (comment.co_num == comment.co_ori_num){
-							btnStr =`<button type="button" class="btn btn-outline-primary btn-sm btn-reply" data-num="\${comment.co_num}" >답글</button>`
+							btnStr =`<button type="button" class="btn btn-reply" style="background-color: #d0f7ad; border-radius: 5px; width: 60px;"
+								data-num="\${comment.co_num}" >답글</button>`
 							}
 						
 						 let updateButton = '';
 			             let deleteButton = '';
 			             if (comment.co_me_num == '${user.me_num}') {
-			                    updateButton = `<button type="button" class="btn btn-outline-info btn-sm btn-update" data-num="\${comment.co_num}">수정</button>`;
-			                    deleteButton = `<button type="button" class="btn btn-outline-info btn-sm btn-del" data-num="\${comment.co_num}">삭제</button>`;
+			                    updateButton = `<button type="button" class="btn btn-update" style="background-color: #dddddd; border-radius: 5px; width: 60px;"
+			                    	data-num="\${comment.co_num}">수정</button>`;
+			                    deleteButton = `<button type="button" class="btn btn-del"  style="background-color: #dddddd; border-radius: 5px; width: 60px;"
+			                    	data-num="\${comment.co_num}">삭제</button>`;
 			                }
 			            
 			             let comments = ''; 
@@ -568,9 +545,9 @@
 						
 			            str += `
 							<div class="box-comment">
-								<div class="comment-box" \${comment.co_num != comment.co_ori_num ? '' : ''}>
+								<div class="comment-box" \${comment.co_num != comment.co_ori_num ? 'style="margin-left: 50px; background-color: #f2f2f2;"' : ''}>
 										<div class="comment-list">	
-											<img src="/final_project${user.me_profile}" class="rounded-circle profile-image" alt="기본프로필 사진">
+											<img src="<c:url value='/memberimg\${comment.me_profile}'/>" class="rounded-circle profile-image" alt="기본프로필 사진">
 											<div class="comment-1">
 												<span class="comment-nickname">\${comment.me_nickname}</span>
 												\${comments}
