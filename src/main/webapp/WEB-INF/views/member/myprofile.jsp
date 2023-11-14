@@ -47,7 +47,7 @@
 	<hr style="margin-top: 30px;">
 	<div>
 		<div class="profile-head">
-			<img src="/final_project${member.me_profile}" class="myprofile-image-thumb" alt="프로필 사진">
+			<img src="<c:url value='/memberimg${member.me_profile}'/>" class="myprofile-image-thumb" alt="프로필 사진">
 			<p class="title">${member.me_name }</p> 
 			<p style="color: #777777; font-size: 18px;">${member.me_id}</p>
 		</div>	
