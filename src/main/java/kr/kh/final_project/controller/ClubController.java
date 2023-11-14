@@ -55,9 +55,17 @@ public class ClubController {
 		
 		try {
 			String fi_ori_name = img.getOriginalFilename();
-			String fi_name = UploadFileUtils.updateImg(uploadPath, fi_ori_name, img.getBytes());
+			String fi_name;
+			System.out.println(img);
+			System.out.println(fi_ori_name);
+			if(fi_ori_name != null && !fi_ori_name.isEmpty()) {
+				fi_name = UploadFileUtils.updateImg(uploadPath, fi_ori_name, img.getBytes());
+				
+			}else{
+				fi_name = "/default.jpg";
+			}
 			if (clubService.insertClub(me_num, fi_name, club, age, favoriteTime, favoriteHoliTime)) {
-				msg = new Message("/", "클럽 생성에 성공했습니다.");
+				msg = new Message("/club/list", "클럽 생성에 성공했습니다.");
 			}
 			model.addAttribute("msg", msg);
 
