@@ -37,7 +37,7 @@ public class ClubController {
 	@Autowired
 	MemberService memberService;
 	
-	String uploadPath = "D:\\uploadProfile\\club";
+	String uploadPath = "D:\\uploadprofile\\club";
 
 	
 	@GetMapping("/make")
