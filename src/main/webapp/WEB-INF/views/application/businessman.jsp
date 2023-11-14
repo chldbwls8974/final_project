@@ -62,12 +62,12 @@
 		    	 padding-bottom: 10px; margin-bottom: 10px;">2. 아래에 사업자 등록증을 첨부해주세요.</label> <br>
 		    <input class="fileupload-name" value="첨부파일" placeholder="첨부파일" readonly>
 			<label for="file1" class="file-btn">업로드</label>
-		    <input type="file" class="form-control" name="file1" id="file1" style="display: none;" required> <br>
+		    <input type="file" class="form-control" name="files" id="file1" style="display: none;" required> <br>
 		</div>	
 		<div class="filebox" style="margin-bottom: 50px;">		    
 		    <input class="fileupload-name" value="첨부파일" placeholder="첨부파일" readonly>
 			<label for="file2" class="file-btn">업로드</label>
-			<input type="file" class="form-control" name="file2" id="file2" style="display: none;"> <br>
+			<input type="file" class="form-control" name="files" id="file2" style="display: none;"> <br>
 		</div>	
 	  </div>
   	  <a href="<c:url value='/'/>"><button type="submit" class="btn">신청하기</button></a>	

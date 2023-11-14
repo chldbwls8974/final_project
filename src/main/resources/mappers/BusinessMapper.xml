@@ -35,7 +35,7 @@
 				bo_reg_date like concat('%', #{cri.s}, '%')
 		</if>
 		order by
-			me_num asc
+			bo_reg_date desc
 		limit
 			#{cri.pageStart}, #{cri.perPageNum}
 	</select>
@@ -82,7 +82,7 @@
 				bo_reg_date like concat('%', #{cri.s}, '%')
 		</if>
 		order by
-			me_num asc
+			bo_reg_date desc
 	</select> 
 	<!-- 사업자조회하기 & 검색기능 -->
 	<select id="selectBusinessList2" resultType="kr.kh.final_project.vo.ManagerVO">
@@ -118,7 +118,7 @@
 				bo_reg_date like concat('%', #{cri.s}, '%')
 		</if>
 		order by
-			me_num asc
+			bo_reg_date desc
 		limit
 			#{cri.pageStart}, #{cri.perPageNum}
 	</select>
@@ -165,7 +165,7 @@
 				bo_reg_date like concat('%', #{cri.s}, '%')
 		</if>
 		order by
-			me_num asc
+			bo_reg_date desc
 	</select> 
 	<delete id="deleteBoardBusinessList">
 		delete
