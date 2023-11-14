@@ -109,7 +109,7 @@
 						<div class="tbody-box">
 							<div class="tbody-list">${bo.bo_num}</div>
 							<div class="tbody-list"><a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>" 
-									style="color: #b0df84;">${bo.bo_title}</a></div>
+									style="margin-left: 10px; color: #b0df84;">${bo.bo_title}</a></div>
 							<div class="tbody-list">${bo.me_nickname}</div>
 							<div class="tbody-list">${bo.bo_reg_date_str}</div>
 							<div class="tbody-list">${bo.bo_count}</div>
