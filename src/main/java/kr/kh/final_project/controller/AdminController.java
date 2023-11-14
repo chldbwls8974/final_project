@@ -193,9 +193,12 @@ public class AdminController {
 	}
 	
 	@PostMapping("/admin/price")
-	public String priceUpdatePost(Model model, int[] price,String date) {
+	public String priceUpdatePost(Model model, int[] price,String date, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		Message msg = new Message("/admin/price", "가격 수정에 실패하였습니다.");
 		if(adminService.updatePrice(price,date)) {
+			// 공지 등록
+			adminService.noteregistration(price,date,user);
 			msg = new Message("", "가격 수정에 성공하였습니다.");
 		}
 		model.addAttribute("msg", msg);
