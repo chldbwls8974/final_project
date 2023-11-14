@@ -35,22 +35,23 @@
 </style>
 <body>
 	<p style="font-size: 35px; font-weight: bolder; margin:50px auto; border-bottom: 8px solid #c2f296;
-			width: 20%; padding: 30px 0 10px 0; text-align: center;">포인트 충전</p>
+	width: 20%; padding: 30px 0 10px 0; text-align: center;">포인트 충전</p>
 	<div class="minibox">
-		<span class="point"> 현재 ${user.me_name}님의 보유 포인트는 </span>
+		<span class="point-information"> 현재 보유 포인트는 </span>
 	</div>
 	<div style="text-align: center;">
 		<ul class="list-group">
-			 <li data-value="5" class="list-group-item col-4 " >5,000 포인트</li>
-			 <li data-value="10" class="list-group-item col-4 ">10,000 포인트</li>
-			 <li data-value="30" class="list-group-item col-4 ">30,000 포인트</li>
-			 <li data-value="50" class="list-group-item col-4 ">50,000 포인트</li>
-			 <li data-value="100" class="list-group-item col-4 ">100,000 포인트</li>
+			<li data-value="5" class="list-group-item col-4 " >5,000 포인트</li>
+			<li data-value="10" class="list-group-item col-4 ">10,000 포인트</li>
+			<li data-value="30" class="list-group-item col-4 ">30,000 포인트</li>
+			<li data-value="50" class="list-group-item col-4 ">50,000 포인트</li>
+			<li data-value="100" class="list-group-item col-4 ">100,000 포인트</li>
 		</ul>
 	</div>
 	<div style="text-align: center; margin-top: 30px">
-		<button class="btn" onclick="btnOnclick(selectedAmount)">결제하기</button>
+		<button class="btn btn-outline-dark col-4" onclick="btnOnclick(selectedAmount)">결제하기</button>
 	</div>
+	
 </body>
 
 
@@ -82,7 +83,7 @@
 	function getUserInformation() {
 		num = { me_num : ${user.me_num}}
 		ajaxJsonToJson(false, 'post', "/member/information", num,(data)=>{
-			$('.point').text("현재  `${user.me_name}` 님의 보유 포인트는 " + data.userPoint + " P 입니다.");
+			$('.point-information').text("현재 보유 포인트는 " + data.user.me_point  + " P 입니다.");
 		});
 	}
 	

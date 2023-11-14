@@ -30,12 +30,7 @@
   	<li class="clublist-link">
   		<a href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>">
 			  	<div>
-				  	<c:if test="${list.cl_emblem!=null}">
-				  		<img alt="팀엠블럼" src="<c:url value='/clubimg${list.cl_emblem}'/>" style="width: 70px; height: 70px; border-radius: 50%">
-			  		</c:if>
-				  	<c:if test="${list.cl_emblem==null}">
-				  		<img alt="팀엠블럼" src="<c:url value='https://ifh.cc/g/v9LAF1.jpg'/>" style="width: 70px; height: 70px; border-radius: 50%">
-			  		</c:if>
+				 	<img alt="팀엠블럼" src="<c:url value='/clubimg${list.cl_emblem}'/>" style="width: 70px; height: 70px; border-radius: 50%">
 			  	</div>
   			
 			  	<span>${list.cl_name}</span> 
