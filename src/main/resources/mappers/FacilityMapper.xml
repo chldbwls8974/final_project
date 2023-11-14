@@ -39,7 +39,7 @@
 			and 
 				fa_deleted != 1
 		</where>
-			order by fa_num asc
+			order by fa_name asc
 			limit #{cri.pageStart}, #{cri.perPageNum}
 	</select>
 	<select id="selectCountFacilityList" resultType="int">

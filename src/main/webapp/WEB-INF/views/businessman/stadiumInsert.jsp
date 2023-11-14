@@ -108,12 +108,12 @@
 	  <br>
 	 
 	  <div class="form-group">
-		  <label for="st_note">특이사항</label>
+		  <label for="st_note">특이사항</label> &nbsp;<span class="badge badge-secondary">선택</span>
 		  <textarea class="form-control" rows="5" id="st_note" name="st_note"></textarea>
 	  </div>
 	  
-	  <button class="btn btn-secondary btn-block">등록</button>
-	  <button class="btn btn-secondary btn-block">취소</button>
+	  <button class="btn btn-info btn-block">등록</button>
+	  <a class="btn btn-warning btn-block" role="button" href="<c:url value='/businessman/facility'/>">취소</a>
 	</form>
 
 	<script type="text/javascript">	
