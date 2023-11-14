@@ -10,8 +10,9 @@ public interface BlockDAO {
 
 	List<BlockVO> selectBlockList(@Param("me_num")Integer me_num);
 
-	
-	
+	boolean deleteBlock(@Param("block")BlockVO block);
+
+	boolean insertBlock(@Param("block")BlockVO block);
 
 
 }

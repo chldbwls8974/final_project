@@ -11,4 +11,18 @@
 		where
 			bl_me_num = #{me_num}
 	</select>
+	<delete id="deleteBlock">
+		delete from
+			block
+		where
+			bl_me_num = #{block.bl_me_num}
+		and
+			bl_blocked_num = #{block.bl_blocked_num}
+	</delete>
+	<insert id="insertBlock">
+		insert into 
+			block(bl_me_num, bl_blocked_num)
+    	values
+    		(#{block.bl_me_num}, #{block.bl_blocked_num})
+	</insert>
 </mapper>

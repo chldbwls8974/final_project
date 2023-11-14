@@ -426,13 +426,21 @@ public class MemberController {
 		return map;
 	}
 	
-	//
 	@ResponseBody
 	@PostMapping("/member/markList/process")
 	public Map<String, Object> markListAddAndDelete(@RequestBody MarkVO mark){
 		Map<String, Object> map = new HashMap<String, Object>();
 		//즐겨찾기 등록또는 삭제
 		memberService.markListAddAndDelete(mark);
+		
+		return map;
+	}
+	@ResponseBody
+	@PostMapping("/member/blockList/process")
+	public Map<String, Object> blockListAddAndDelete(@RequestBody BlockVO block){
+		Map<String, Object> map = new HashMap<String, Object>();
+		//차단 등록 또는 삭제
+		memberService.blockListAddAndDelete(block);
 		
 		return map;
 	}

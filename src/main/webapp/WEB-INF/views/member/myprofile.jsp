@@ -126,6 +126,16 @@
 			getBlockAndMarkList();
 		});
 	})
+	//차단 추가/삭제
+	$('.btn-block').click(function(){
+		data = {
+			bl_me_num : ${user.me_num},
+			bl_blocked_num : ${member.me_num}
+		}
+		ajaxJsonToJson(false, 'post', "/member/blockList/process", data,(data)=>{
+			getBlockAndMarkList();
+		});
+	})
 	//즐겨찾기, 차단리스트를 가져오는 함수
 	function getBlockAndMarkList() {
 		let data = { me_num : ${user.me_num}};

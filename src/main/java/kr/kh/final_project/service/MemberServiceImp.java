@@ -593,6 +593,23 @@ public class MemberServiceImp implements MemberService{
 		return res;
 	}
 
+	@Override
+	public boolean blockListAddAndDelete(BlockVO block) {
+		//유저객체와 블랙 리스트 가져옴
+		MemberVO user = memberDao.selectMemberByNum(block.getBl_me_num());
+		//블랙리스트 가져옴
+		List<BlockVO> dbBlockList = blockDao.selectBlockList(user.getMe_num());
+		boolean isExist = false;
+		for(BlockVO tmp : dbBlockList) {
+			if(tmp.getBl_blocked_num() == block.getBl_blocked_num()) {
+				isExist = true;
+			}
+		}
+		//이미 추가되어 있으면 true
+		boolean res = isExist ? blockDao.deleteBlock(block) : blockDao.insertBlock(block);
+		return res;
+	}
+
 
 	
 }
