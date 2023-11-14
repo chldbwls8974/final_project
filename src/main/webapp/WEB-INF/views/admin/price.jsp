@@ -46,13 +46,13 @@
 	<form action="<c:url value=''/>" method="post" id="myForm">
 		<div class="form-group">
 			<label>평일 개인</label>
-			<input type="number" class="form-control" name="price" placeholder="${list[0].ex_price }">
+			<input type="number" class="form-control" name="price" placeholder="${list[0].ex_price }원">
 			<label>주말 개인</label>
-			<input type="number" class="form-control" name="price" placeholder="${list[1].ex_price }">
+			<input type="number" class="form-control" name="price" placeholder="${list[1].ex_price }원">
 			<label>평일 클랜</label>
-			<input type="number" class="form-control" name="price" placeholder="${list[2].ex_price }">
+			<input type="number" class="form-control" name="price" placeholder="${list[2].ex_price }원">
 			<label>주말 클랜</label>
-			<input type="number" class="form-control" name="price" placeholder="${list[3].ex_price }">
+			<input type="number" class="form-control" name="price" placeholder="${list[3].ex_price }원">
 			<label>변경 적용일</label>
 			 <input type="text" class="form-control" name="date" id="date"
 			 	 placeholder="적용일을 선택하세요." style="text-align: center;" required>
@@ -76,19 +76,19 @@
 		    <tbody>
 		      <tr>
 		        <td>평일 개인</td>
-		        <td>${list[0].ex_pre }</td>
+		        <td>${list[0].ex_pre } 원</td>
 		      </tr>
 		      <tr>
 		        <td>주말 개인</td>
-		        <td>${list[1].ex_pre }</td>
+		        <td>${list[1].ex_pre } 원</td>
 		      </tr>
 		      <tr>
 		        <td>평일 클랜</td>
-		        <td>${list[2].ex_pre }</td>
+		        <td>${list[2].ex_pre } 원</td>
 		      </tr>
 		      <tr>
 		        <td>주말 클랜</td>
-		        <td>${list[3].ex_pre }</td>
+		        <td>${list[3].ex_pre } 원</td>
 		      </tr>
 		    </tbody>
 		  </table>
