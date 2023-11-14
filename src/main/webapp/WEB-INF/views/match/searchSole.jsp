@@ -122,43 +122,45 @@
 			dataType : 'json',
 			success : function(data) {
 				for(match of data.matchList){
-					str +=`
-					<div class="match-box">
-						<div class="match-time-box">
-							<span class="match-time">\${match.ti_time_str}</span>
-						</div>
-						<div class="match-info-box">
-							<span>\${match.rg_main} \${match.rg_sub} \${match.fa_name} \${match.st_name} </span> <br>
-							<span>개인 `;
-					if(match.mt_rule == 0){
-						str +=	`친선전 \${match.mt_personnel} vs \${match.mt_personnel} \${match.entry_count}/\${match.mt_personnel * 2}</span>
+					if((match.application_able == 0 && match.application == 1) || match.ready == 0){
+						str +=`
+						<div class="match-box">
+							<div class="match-time-box">
+								<span class="match-time">\${match.ti_time_str}</span>
 							</div>
-						`;
-					}else if(match.mt_rule == 1){
-						str +=	`경쟁전 \${match.mt_personnel} vs \${match.mt_personnel} \${match.entry_count}/\${match.mt_personnel * 3}</span>
+							<div class="match-info-box">
+								<span>\${match.rg_main} \${match.rg_sub} \${match.fa_name} \${match.st_name} </span> <br>
+								<span>\${match.ready}개인 `;
+						if(match.mt_rule == 0){
+							str +=	`친선전 \${match.mt_personnel} vs \${match.mt_personnel} \${match.entry_count}/\${match.mt_personnel * 2}</span>
+								</div>
+							`;
+						}else if(match.mt_rule == 1){
+							str +=	`경쟁전 \${match.mt_personnel} vs \${match.mt_personnel} \${match.entry_count}/\${match.mt_personnel * 3}</span>
+								</div>
+							`;						
+						}
+						if(match.application_able == 0 && match.application == 1){
+							str +=	`
+								<button class="btn btn-outline-danger btn-matchPage" value="\${match.mt_num}">참가 취소</button> <br>
 							</div>
-						`;						
-					}
-					if(match.application_able == 0 && match.application == 1){
-						str +=	`
-							<button class="btn btn-outline-danger btn-matchPage" value="\${match.mt_num}">참가 취소</button> <br>
-						</div>
-						`;					
-					}else if(match.entry_count == (match.mt_rule == 0 ? match.mt_personnel * 2 : match.mt_personnel * 3)){
-						str +=	`
-							<button class="btn btn-dark" value="\${match.mt_num}" disabled>참가 마감</button> <br>
-						</div>
-						`;					
-					}else if(match.application_able == 1){
-						str +=	`
-							<button class="btn btn-outline-primary btn-matchPage" value="\${match.mt_num}">참가 신청</button> <br>
-						</div>
-						`;
-					}else if(match.application_able == 0 && match.application == 0){
-						str +=	`
-							<button class="btn btn-outline-secondary" value="\${match.mt_num}" disabled>참가 불가</button> <br>
-						</div>
-						`;					
+							`;					
+						}else if(match.entry_count == (match.mt_rule == 0 ? match.mt_personnel * 2 : match.mt_personnel * 3)){
+							str +=	`
+								<button class="btn btn-dark" value="\${match.mt_num}" disabled>참가 마감</button> <br>
+							</div>
+							`;					
+						}else if(match.application_able == 1){
+							str +=	`
+								<button class="btn btn-outline-primary btn-matchPage" value="\${match.mt_num}">참가 신청</button> <br>
+							</div>
+							`;
+						}else if(match.application_able == 0 && match.application == 0){
+							str +=	`
+								<button class="btn btn-outline-secondary" value="\${match.mt_num}" disabled>참가 불가</button> <br>
+							</div>
+							`;					
+						}
 					}
 				}
 				$('.select-match-box').html(str)

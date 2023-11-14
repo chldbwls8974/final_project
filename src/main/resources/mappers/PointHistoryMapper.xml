@@ -72,4 +72,9 @@
 		limit
 			1;
 	</select>
+	<insert id="insertPointHistoryTimeOverMatch">
+		insert into point_history(ph_price, ph_source, ph_mt_num, ph_me_num)
+		values
+		(-#{point}, 3, #{mt_num}, #{me_num})
+	</insert>
 </mapper>

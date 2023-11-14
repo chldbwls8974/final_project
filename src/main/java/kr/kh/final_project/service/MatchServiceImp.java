@@ -384,5 +384,37 @@ public class MatchServiceImp implements MatchService{
 	public void deleteMatch() {
 		matchDao.deleteMatch();
 	}
-
+	
+	@Override
+	public void deleteMatchSolo() {
+		List<MatchVO> matchList = matchDao.selectMatchSolo();
+		for(MatchVO match : matchList) {
+			if(match.getDelete() == 1) {
+				//매치 정원이 안되면 참가자 전원 환불 후 참가자 삭제
+				List<EntryVO> entryList = entryDao.selectEntryByMtNum(match.getMt_num());
+				for(EntryVO entry : entryList) {
+					PointHistoryVO dbPH = pointHistoryDao.selectPointHistoryApplicationMatch(entry.getEn_me_num(), match.getMt_num());
+					if(pointHistoryDao.insertPointHistoryTimeOverMatch(dbPH.getPh_price(), match.getMt_num(), entry.getEn_me_num())) {
+						entryDao.deleteEntry(entry.getEn_num());
+					}
+				}
+				//참가자 삭제 후 팀 삭제
+				List<TeamVO> teamList = teamDao.selectTeamByMtNum(match.getMt_num());
+				for(TeamVO team : teamList) {
+					teamDao.deleteTeam(team.getTe_num());
+				}
+				//팀 삭제 후 매치 삭제(mt_state1 을 1로 수정)
+				matchDao.updateMatchMtState1To1(match.getMt_num());
+			}
+		}
+		System.out.println("성공");
+	}
+	
+	@Override
+	public void deleteMatchClub() {
+		List<MatchVO> matchList = matchDao.selectMatchClub();
+		for(MatchVO match : matchList) {
+			System.out.println(match);
+		}
+	}
 }

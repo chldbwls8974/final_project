@@ -58,4 +58,8 @@ public interface MatchService {
 
 	void deleteMatch();
 
+	void deleteMatchSolo();
+
+	void deleteMatchClub();
+
 }

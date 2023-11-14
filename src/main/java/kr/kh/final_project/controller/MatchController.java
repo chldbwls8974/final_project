@@ -118,6 +118,18 @@ public class MatchController {
 		MatchVO match = matchService.selectMatchByMtNum(mt_num, user.getMe_num(), cl_num);
 		ExpenseVO expense = matchService.selectPrice(cl_num, match.getTi_day());
 		
+		if(match.getMt_state1() == 1) {
+			Message msg = new Message("match/search/solo", "삭제된 경기입니다.");
+			
+			model.addAttribute("msg", msg);
+			return "/message";			
+		}else if(match.getMt_state1() == 2) {
+			Message msg = new Message("match/search/solo", "종료된 경기입니다.");
+			
+			model.addAttribute("msg", msg);
+			return "/message";			
+		}
+		
 		if(cl_num == 0) {
 			if(match.getEntry_res() == 0) {
 				if(match.getEntry_count() == match.getMt_personnel() * (match.getMt_rule() == 0 ? 2 : 3)) {
