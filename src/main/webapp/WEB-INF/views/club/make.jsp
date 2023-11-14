@@ -129,14 +129,13 @@ input[type='checkbox']{
 <body>
 	<p style="font-size: 45px; font-weight: bolder; text-align: center; margin-bottom: 20px;
 		 letter-spacing: -3px;">클럽 생성</p>
-	<form action="<c:url value='/club/make'/>" method="post" style="text-align: center;">
-<!-- 		<div class="form-group"> -->
-<!-- 			<label>클럽 앰블럼</label> -->
-<!-- 			<input type="file" class="form-control" name="cl_emblem"> -->
-<!-- 		</div> -->
+	<form action="<c:url value='/club/make'/>" method="post" enctype="multipart/form-data" style="text-align: center;">
 		<div class="form-group">
-			<label>회원 이름</label>
-			<input type="hidden" class="form-control" name="me_num" value="${user.me_name }" style="text-align:center; margin: 0 auto;" readonly>
+			<label>클럽 앰블럼</label>
+			<input type="file" class="form-control" name="img" id="img">
+		</div>
+		<div class="form-group">
+			<input type="hidden" class="form-control" name="me_num" value="${user.me_num}" style="text-align:center; margin: 0 auto;" readonly>
 		</div>
 		<div class="form-group">
 			<label>클럽명</label><label id="check-name-error" class="error" for="cl_name"></label>

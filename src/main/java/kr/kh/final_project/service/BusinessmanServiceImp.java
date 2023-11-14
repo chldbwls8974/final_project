@@ -74,8 +74,8 @@ public class BusinessmanServiceImp implements BusinessmanService{
 			return false;
 		}
 		boolean res = businessmanDao.insertFacility(facility, user.getMe_num());
-	    return res;
-		}
+		return res;
+	}
 	//Main 지역리스트
 	@Override
 	public List<RegionVO> getMainRegion() {

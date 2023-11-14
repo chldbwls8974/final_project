@@ -174,43 +174,18 @@
 	<select id="selectMemberNumByNick2" resultType="kr.kh.final_project.vo.MemberVO">
 		select * from member where me_nickname = #{check}
 	</select>
-	<update id="updateMemberProfile">
-		update member(me_profile, me_nickname, me_gender) set (#{user.me_profile},#{user.me_nickname},#{user.me_gender})
-	</update>
 	<update id="updateFile">
 		update file(fi_bo_num, fi_name, fi_ori_name) set (#{file.fi_bo_num}, #{file.fi_name}, #{file.fi_ori_name})
 	</update>
 	<select id="selectMemberRegion" resultType="kr.kh.final_project.vo.MemberVO">
-		select 
-           *
-       from 
-           member 
-          left join
-           region on me_rg_num = rg_num
-       where
-           me_num = #{user.me_num}
-	</select>
-	<select id="selectMemberPRegion" resultType="kr.kh.final_project.vo.MemberVO">
-		select 
-           *
-       from 
-           member 
-          left join
-           preferred_region on pr_me_num = me_num
-		  left join region on pr_rg_num = rg_num
-       where
-           me_num = #{user.me_num}
-	</select>
-	<select id="selectMemberPTime" resultType="kr.kh.final_project.vo.MemberVO">
-		select 
-           *
-       from 
-           member 
-          left join
-           preferred_time on pt_me_num = me_num
-		  left join time on pt_ti_num = ti_num
-       where
-           me_num = #{user.me_num}
+		select
+			*
+		from
+			member
+		left join
+			region on me_rg_num = rg_num
+		where
+			me_num = #{user.me_num}
 	</select>
 	<update id="updateEmailMember">
 		update 
@@ -249,5 +224,11 @@
 			me_state2 = #{i}
 		where
 			me_num = #{me_num}
+	</update>
+	<update id="updateMember">
+		update member
+		set
+			me_profile = #{fi_name}
+		where me_num = #{m.me_num}
 	</update>
 </mapper>

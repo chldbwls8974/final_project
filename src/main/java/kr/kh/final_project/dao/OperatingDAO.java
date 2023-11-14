@@ -10,8 +10,9 @@ public interface OperatingDAO {
 
 	List<OperatingVO> selectOperatingListByFaNum(@Param("fa_num")int fa_num);
 
+	//운영시간 등록
 	boolean insertOperating(@Param("operating")OperatingVO operating);
-
+	//운영시간 수정
 	void updateOperatingList(@Param("operating")OperatingVO operating, @Param("fa_num")int fa_num);
 
 

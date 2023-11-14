@@ -83,20 +83,31 @@
 		<div class="form-group">
 			<label>거주 지역</label>
 			<div>
-			<p>${memberRegion.rg_main}  ${memberRegion.rg_sub}</p>
+			<p>&nbsp;&nbsp;${memberRegion.rg_main}  ${memberRegion.rg_sub}</p>
 			</div>
 		</div>
 		<div class="form-group">
 			<label>선호 지역</label>
 			<div>
-			<p>${memberPRegion.rg_main} ${memberPRegion.rg_sub}</p>
+				<c:forEach items="${memberPRegion}" var="list">
+					<p>&nbsp;&nbsp;${list.rg_main}  ${list.rg_sub}</p> 
+				</c:forEach>
 			</div>
 		</div>
 		<div class="form-group">
-			<label>선호 시간대</label>
+			<label>평일 선호 시간대</label>
 			<div style="display: flex; justify-content: center;">
-				<p>${memberPTime.ti_day}요일 </p>
-				<p id="timeParagraph">${memberPTime.ti_time}시</p>
+				<c:forEach items="${memberPTimeWeekday}" var="list">
+					<p>&nbsp;&nbsp;${list.pt_ti_num} : 00</p>
+				</c:forEach> 
+			</div>
+		</div>
+		<div class="form-group">
+			<label>주말 선호 시간대</label>
+			<div style="display: flex; justify-content: center;">
+				<c:forEach items="${memberPTimeHoliday}" var="list">
+					<p>&nbsp;&nbsp;${list.pt_ti_num} : 00</p>
+				</c:forEach> 
 			</div>
 		</div>
 	
@@ -106,21 +117,15 @@
 </body>
 <script type="text/javascript">
 
-	//ready 함수를 사용하여 문서가 준비되면 실행
-	$(document).ready(function() {
-    // jQuery를 사용하여 시간 형식 변경
-    var timeString = "${userPTime.ti_time}";
-    // Date 객체를 사용하여 문자열을 파싱
-    var time = new Date("1970-01-01 " + timeString);
-    // 시간 부분만 추출하여 p 태그에 추가
-    var hours = time.getHours();
-    // jQuery를 사용하여 p 태그에 시간 추가
-    $("#timeParagraph").text(hours + "시");
-	});
-	
 	//즐겨찾기, 차단리스트를 가져오는 함수
 	$(document).ready(function() {
-    	getBlockAndMarkList();
+		//본인 프로필이면 버튼 숨기기
+		var userNum = ${user.me_num};
+		var memberNum = ${member.me_num};
+		if(userNum == memberNum){
+			$('.btn-add, .btn-block').hide();
+		}
+    	getBlockAndMarkList(); 
 	});
 	//즐겨찾기 추가/삭제
 	$('.btn-add').click(function(){
@@ -137,23 +142,20 @@
 		let data = { me_num : ${user.me_num}};
 		let memberNum = ${member.me_num};
 		ajaxJsonToJson(false, 'post', "/member/myBlockAndMarkList", data,(data)=>{
+			$(".btn-add").text("즐겨찾기"); 
+			$(".btn-block").text("차단하기");
 			for(obj of data.blockList){
 				if(obj.bl_blocked_num == memberNum){
 					$(".btn-block").text("차단됨");
-				}else{
-					$(".btn-block").text("차단하기");
 				}
 			}
 			for(obj of data.markList){
 				if(obj.ma_marked_num == memberNum){
-					$(".btn-add").text("추가됨");
-				}else{
-					$(".btn-add").text("즐겨찾기");
+					$(".btn-add").text("해제하기");
 				}
 			}
 		});
 	}
-	
 		
 </script>
 </html>

@@ -1,5 +1,6 @@
 package kr.kh.final_project.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,10 +15,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.service.ClubService;
 import kr.kh.final_project.service.MemberService;
 import kr.kh.final_project.util.Message;
+import kr.kh.final_project.util.UploadFileUtils;
 import kr.kh.final_project.vo.ClubMemberVO;
 import kr.kh.final_project.vo.ClubVO;
 import kr.kh.final_project.vo.MemberVO;
@@ -33,6 +36,8 @@ public class ClubController {
 	ClubService clubService;
 	@Autowired
 	MemberService memberService;
+	
+	String uploadPath = "D:\\uploadprofile\\club";
 
 	
 	@GetMapping("/make")
@@ -45,12 +50,23 @@ public class ClubController {
 	}
 	
 	@PostMapping("/make")
-	public String makeClubPost(Model model, ClubVO club, int[] favoriteTime, int[] favoriteHoliTime, int[] age,int me_num) {
+	public String makeClubPost(Model model, MultipartFile img, ClubVO club, int[] favoriteTime, int[] favoriteHoliTime, int[] age,int me_num) {
 		Message msg = new Message("/club/make", "클럽 생성에 실패하였습니다.");
-		if(clubService.insertClub(me_num,club, age,favoriteTime,favoriteHoliTime)) {
-			msg = new Message("/", "클럽 생성에 성공했습니다.");
+		
+		try {
+			String fi_ori_name = img.getOriginalFilename();
+			String fi_name = UploadFileUtils.updateImg(uploadPath, fi_ori_name, img.getBytes());
+			if (clubService.insertClub(me_num, fi_name, club, age, favoriteTime, favoriteHoliTime)) {
+				msg = new Message("/", "클럽 생성에 성공했습니다.");
+			}
+			model.addAttribute("msg", msg);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		model.addAttribute("msg", msg);
+		
 		return "message";
 	}
 	
@@ -142,13 +158,24 @@ public class ClubController {
 	}
 	
 	@PostMapping("/update")
-	public String updateClubPost(Model model, ClubVO club, int[] favoriteTime, int[] favoriteHoliTime, int[] age,int me_num) {
+	public String updateClubPost(Model model, MultipartFile img, ClubVO club, int[] favoriteTime, int[] favoriteHoliTime, int[] age,int me_num) {
 		Message msg = new Message("/club/update", "클럽 수정에 실패하였습니다.");
-		System.out.println(club);
-		if(clubService.updateClub(me_num,club, age,favoriteTime,favoriteHoliTime)) {
-			msg = new Message("/", "클럽 수정에 성공했습니다.");
+		
+
+		try {
+			String fi_ori_name = img.getOriginalFilename();
+			String fi_name = UploadFileUtils.updateImg(uploadPath, fi_ori_name, img.getBytes());
+			if(clubService.updateClub(me_num,club, fi_name,  age,favoriteTime,favoriteHoliTime)) {
+				msg = new Message("/club/list", "클럽 수정에 성공했습니다.");
+			}
+			model.addAttribute("msg", msg);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		model.addAttribute("msg", msg);
+		
 		return "message";
 	}
 

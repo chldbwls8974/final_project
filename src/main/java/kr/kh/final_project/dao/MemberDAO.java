@@ -50,15 +50,13 @@ public interface MemberDAO {
 
 	MemberVO selectMemberRegion(@Param("user") MemberVO user);
 
-	MemberVO selectMemberPRegion(@Param("user") MemberVO user);
-
-	MemberVO selectMemberPTime(@Param("user") MemberVO user);
-
 	void updateEmailMember(@Param("me_id")String me_id);
 
 	boolean updateUserBoardBanState(@Param("me_num")int me_num, @Param("i")int i);
 
 	boolean updateUserMatchBanState(@Param("me_num")int me_num, @Param("i")int i);
+
+	void updateMember(@Param("m")MemberVO member, @Param("fi_name")String fi_name);
 
 
 
