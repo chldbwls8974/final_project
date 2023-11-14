@@ -13,18 +13,44 @@
 	.list-group-item {
 	  cursor: pointer;
 	}
+	 .list-group {
+        text-align: center; /* 부모 요소에 적용 */
+        border-radius: 30px;
+    }
+    .list-group-item {
+        display: block; /* 블록 레벨로 변경 */
+        margin: auto; /* 수직 가운데 정렬을 위해 추가 */
+        cursor: pointer;
+    }
+    .minibox{
+		width: 350px; height: 70px; background-color: #f0f0f0; border-radius: 20px;
+		padding: 20px; text-align: center; margin: 40px auto;
+    }
+	.point{ font-size: 16px;}
+	.list-group-item.active{ background-color: #d7fdb5; border-color: #d7fdb5; color: black;}
+	.btn{
+		border-radius: 5px; width: 200px; height: 50px; border: none;
+		background-color: #c2f296; color: black; margin: 10px 0 10px 0;
+	}
 </style>
 <body>
-	<h1>결제 페이지</h1>
-	<ul class="list-group">
-		 <li data-value="5" class="list-group-item col-4 " >5,000 포인트</li>
-		 <li data-value="10" class="list-group-item col-4 ">10,000 포인트</li>
-		 <li data-value="30" class="list-group-item col-4 ">30,000 포인트</li>
-		 <li data-value="50" class="list-group-item col-4 ">50,000 포인트</li>
-		 <li data-value="100" class="list-group-item col-4 ">100,000 포인트</li>
-	</ul>
-	<button class="btn btn-outline-dark col-4" onclick="btnOnclick(selectedAmount)">결제하기</button>
-	<span class="point">보유 포인트 : </span>
+	<p style="font-size: 35px; font-weight: bolder; margin:50px auto; border-bottom: 8px solid #c2f296;
+	width: 20%; padding: 30px 0 10px 0; text-align: center;">포인트 충전</p>
+	<div class="minibox">
+		<span class="point-information"> 현재 보유 포인트는 </span>
+	</div>
+	<div style="text-align: center;">
+		<ul class="list-group">
+			<li data-value="5" class="list-group-item col-4 " >5,000 포인트</li>
+			<li data-value="10" class="list-group-item col-4 ">10,000 포인트</li>
+			<li data-value="30" class="list-group-item col-4 ">30,000 포인트</li>
+			<li data-value="50" class="list-group-item col-4 ">50,000 포인트</li>
+			<li data-value="100" class="list-group-item col-4 ">100,000 포인트</li>
+		</ul>
+	</div>
+	<div style="text-align: center; margin-top: 30px">
+		<button class="btn btn-outline-dark col-4" onclick="btnOnclick(selectedAmount)">결제하기</button>
+	</div>
 	
 </body>
 
@@ -57,7 +83,7 @@
 	function getUserInformation() {
 		num = { me_num : ${user.me_num}}
 		ajaxJsonToJson(false, 'post', "/member/information", num,(data)=>{
-			$('.point').text("보유 포인트 : " + data.userPoint );
+			$('.point-information').text("현재 보유 포인트는 " + data.user.me_point  + " P 입니다.");
 		});
 	}
 	

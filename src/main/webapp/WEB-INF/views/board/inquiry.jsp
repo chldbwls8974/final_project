@@ -19,13 +19,13 @@
 		color : red;
 	}
 	.inquiry-thead{
-		display: flex; justify-content: space-between; padding: 0 0 16px 0;
+		display: flex; padding: 20px;
 		border-bottom: 1px solid rgba(0,0,0,.1);
 	}
- 	.inquiry-tbody{ justify-content: space-between; padding: 5px;}
+ 	.inquiry-tbody{ padding: 5px;}
  	.tbody-box{ 
-		display: flex; justify-content: space-between;
-		margin: 0; padding: 20px 20px 30px 20px; border-bottom: 1px solid rgba(0,0,0,.1);
+		display: flex; border-bottom: 1px solid rgba(0,0,0,.1);
+		margin: 0; padding: 20px 20px 30px 20px;
 	}
 	.search-btn{
 		border-radius: 3px; width: 120px; height: 38px; border: none;
@@ -100,12 +100,12 @@
 	<div class="main">
   		<div class="table">
 	      <ul class="inquiry-thead">
-			<li>게시글번호</li>
-			<li>제목</li>
-			<li>작성자 닉네임</li>
-			<li>작성일</li>
-			<li>조회수</li>
-			<li>댓글수</li>
+			<li style="width: 10%;">게시글번호</li>
+			<li style="width: 35%;">제목</li>
+			<li style="width: 15%;">작성자 닉네임</li>
+			<li style="width: 20%;">작성일</li>
+			<li style="width: 10%;">조회수</li>
+			<li style="width: 10%;">댓글수</li>
 		  </ul>
 		</div>
 			<ul class="inquiry-tbody">
@@ -115,13 +115,13 @@
 							<c:choose>
 								<c:when test="${bo.bo_me_num == user.me_num || user.me_authority == 'ADMIN' }">
 									<li>
-										<div>${bo.bo_num}</div>
-										<div><a
+										<div style="width: 10%;">${bo.bo_num}</div>
+										<div style="width: 35%;"><a
 											href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_title}</a></div>
-										<div>${bo.me_nickname}</div>
-										<div>${bo.bo_reg_date_str}</div>
-										<div>${bo.bo_count}</div>
-										<div><a
+										<div style="width: 15%;">${bo.me_nickname}</div>
+										<div style="width: 20%;">${bo.bo_reg_date_str}</div>
+										<div style="width: 10%;">${bo.bo_count}</div>
+										<div style="width: 10%;"><a
 											href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_comment}</a></div>
 									</li>
 								</c:when>
@@ -130,7 +130,7 @@
 					</c:when>
 					<c:otherwise>
 						<li>
-							<div colspan="6" class="noneInquiry">문의 내용이 없습니다.</div>
+							<div colspan="6" class="noneInquiry">작성된 문의 내용이 없습니다.</div>
 						</li>
 					</c:otherwise>
 				</c:choose>

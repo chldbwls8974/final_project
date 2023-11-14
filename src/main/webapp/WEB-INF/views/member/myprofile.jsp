@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <!DOCTYPE html>
 <html>
@@ -10,13 +10,14 @@
 <title>나의 프로필</title>
 <style type="text/css">
 
-.container-body{ width: 100%; display: flex; margin: 50px 0 30px 0;}
+.container-body{ width: 100%; height: auto; display: flex; margin-top: 100px;}
 .profile-head{ 
 	text-align: center; padding: 60px;
 	background-color: #f2f2f2; border-radius: 20px;
-	margin: 0 30px 0 30px; height: 300px;
+	margin: 0 30px 0 30px; height: auto; width: 250px;
 }
-.form-group{ display: flex;}
+.form-group{ display: flex; justify-content: space-between;}
+.form-group label {  text-align: left; border-left: 7px solid #c2f296; padding-left: 10px;}
 .form-group div{ text-align: right;}
 .form-group p{ font-weight: bold;}
 .title{ 
@@ -27,17 +28,20 @@
 	width: 110px; height: 110px; border-radius: 50%; margin: 0 auto;
 }
 .profile-body{ 
-	background-color: #f2f2f2; border-radius: 20px;
-	height: auto; width: 70%; text-align: center; padding: 20px;
+	background-color: #f2f2f2; border-radius: 20px; display: flex; flex-direction: column;
+	height: auto; width: 70%; text-align: center; padding: 80px 50px 50px 50px;
 }
-
 .profile-head2{
 	width: 80%; display: flex; margin: 10px auto;
 }
-.btn-add, .btn-block{
-	width: auto; height: 50px; margin: auto auto 10px; border: none;
-	border-radius: 15px; background-color: #c2f296; color: black;
 
+.myedit{ }
+.myedit a{text-decoration: none; color: black; display: flex;}
+.myedit p { margin: 3px 0 0 0;}
+.myedit a:hover{text-decoration: none; color: black;}
+.btn-add, .btn-block{
+	width: 120px; height: 40px; margin: auto auto 10px; border: none;
+	border-radius: 5px; background-color: #c2f296; color: black;
 }
 
 </style>
@@ -47,9 +51,16 @@
 	<hr style="margin-top: 30px;">
 	<div>
 		<div class="profile-head">
-			<img src="<c:url value='/memberimg${member.me_profile}'/>" class="myprofile-image-thumb" alt="프로필 사진">
+			<img src="<c:url value='/memberimg${user.me_profile}'/>" class="myprofile-image-thumb" alt="프로필 사진">
 			<p class="title">${member.me_name }</p> 
 			<p style="color: #777777; font-size: 18px;">${member.me_id}</p>
+			<div class="myedit">
+				<a href="<c:url value='/member/myedit?me_num=${user.me_num}'/>" class="myprofile-btn">
+					<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg"
+						style="width: 24px; height: 24px; margin-right: 5px;" alt="프로필 수정">
+					<p style="font-size: 14px;">프로필 수정하기</p>
+				</a>
+			</div>
 		</div>	
 		<div class="profile-head2">
 			<button class="btn-add">즐겨찾기</button>
@@ -58,9 +69,9 @@
 	</div>
 	<div class="profile-body">
 		<div class="form-group">
-			<label>닉네임</label>
+			<label>닉네임 </label>
 			<div>
-				<p>${member.me_nickname}</p>
+				<p> ${member.me_nickname}</p>
 			</div>
 		</div>
 		<div class="form-group">

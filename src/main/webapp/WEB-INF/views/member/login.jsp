@@ -17,7 +17,7 @@
 body{height: 100%; justify-content: center; align-content: center;}
 .container-body{
 	background-color: #f2f2f2; height: 100%; padding: 150px 0 100px 0;
-	border-radius: 40px;
+	border-radius: 40px; margin-top: 40px;
 }
 .kakao-login{ width: 180px; display: block; margin: 0 auto;}
 .container{ height: 50%;}
@@ -30,7 +30,8 @@ body{height: 100%; justify-content: center; align-content: center;}
 input, progress {
   accent-color: #0c0c0c;
 }
-
+.signup-link{text-decoration: none; color: black;}
+.signup-link:hover{text-decoration: none; color: black;}
 .basic-btn{
 	
 }
@@ -52,6 +53,9 @@ input, progress {
 			<div class="form-check-inline" style="margin-bottom: 20px;">
 			  <label class="form-check-label">
 			    <input type="checkbox" class="form-check-input" value="true" name="autoLogin">자동 로그인
+			  </label>
+			  <label style="margin-left: 45px;">
+			  	<a href="<c:url value='/member/signup'/>" class="signup-link"><p>회원가입</p></a>
 			  </label>
 			</div>
 			<button class="basic-btn">로그인</button>
