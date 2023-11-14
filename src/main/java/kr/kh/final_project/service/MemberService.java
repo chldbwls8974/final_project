@@ -5,7 +5,9 @@ import java.util.List;
 import kr.kh.final_project.pagination.Criteria;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.kh.final_project.vo.BlockVO;
 import kr.kh.final_project.vo.HoldingCouponVO;
+import kr.kh.final_project.vo.MarkVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
@@ -69,8 +71,23 @@ public interface MemberService {
 	
 	boolean signupCoupon(String memberNickname, MemberVO newMember);
 	
+	
+	//나의 상세정보 페이지에서  거주지역, 선호지역, 선호시간대 정보 받아오기
+	MemberVO getMemberRegion(MemberVO user);
+	
+	MemberVO getMemberPRegion(MemberVO user);
+	
+	MemberVO getMemberPTime(MemberVO user);
+	
 	boolean emailMemberSignout(MemberVO member);
-
-
+	
+	MemberVO getMemberByNum(MemberVO member);
+	
+	List<BlockVO> getMyBlockList(MemberVO user);
+	
+	List<MarkVO> getMyMarkList(MemberVO user);
+	
+	boolean markListAddAndDelete(MarkVO mark);
+	
 
 }

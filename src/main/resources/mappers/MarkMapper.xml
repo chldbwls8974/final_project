@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.final_project.dao.MarkDAO">
+	<select id="selectMyMarkList" resultType="kr.kh.final_project.vo.MarkVO">
+		select 
+			*
+		from
+			mark
+		where
+			ma_me_num = #{user.me_num}
+	</select>
+	<delete id="deleteMark">
+		delete from
+			mark
+		where
+			ma_me_num = #{mark.ma_me_num}
+		and
+			ma_marked_num = #{mark.ma_marked_num}
+	</delete>
+	<insert id="insertMark">
+		insert into 
+			mark(ma_me_num, ma_marked_num)
+    	values
+    		(#{mark.ma_me_num}, #{mark.ma_marked_num})
+	</insert>
+</mapper>

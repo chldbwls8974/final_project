@@ -10,22 +10,35 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style type="text/css">
+
+.title{ font-size: 30px; font-weight: bolder; text-align: center;
+		 letter-spacing: -3px;
+}
+.clublist-control{
+	padding: 20px; background-color: #f0f0f0; border-radius: 40px;
+	margin-bottom: 30px;
+}
+.clublist-link{ display: inline-block; }
+
 </style>
 </head>
 <body>
 <div class="container">
-<h1>클럽 조회</h1>
-  <ul>
+<p class="title">모든 클럽 조회</p>
+  <ul class="clublist-control">
   <c:forEach items="${list}" var="list">
-  	<li>
+  	<li class="clublist-link">
   		<a href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>">
-		  	<div>
-		  		<img alt="팀프로필넣고싶어" src="<c:url value='/resource/profile/basic'/>">
-		  	</div>
-		  	<div>
-			  	<span>${list.cl_name }</span> 
-			  	<span>${list.cl_rg_num }</span>
-		  	</div>
+			  	<div>
+				  	<c:if test="${list.cl_emblem!=null}">
+				  		<img alt="팀엠블럼" src="<c:url value='/clubimg${list.cl_emblem}'/>" style="width: 70px; height: 70px; border-radius: 50%">
+			  		</c:if>
+				  	<c:if test="${list.cl_emblem==null}">
+				  		<img alt="팀엠블럼" src="<c:url value='https://ifh.cc/g/v9LAF1.jpg'/>" style="width: 70px; height: 70px; border-radius: 50%">
+			  		</c:if>
+			  	</div>
+  			
+			  	<span>${list.cl_name}</span> 
 	  	</a>
   	</li>
   </c:forEach>

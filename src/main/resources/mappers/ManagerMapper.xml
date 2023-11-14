@@ -121,7 +121,7 @@
 		limit
 			#{cri.pageStart}, #{cri.perPageNum}
 	</select>
-	<!-- 매니저신청 수락버튼 (권한 USER로 바꾸기) -->
+	<!-- 매니저신청 취소버튼 (권한 USER로 바꾸기) -->
 	<update id="updateManagerByAuthority2">
 		update
 			member

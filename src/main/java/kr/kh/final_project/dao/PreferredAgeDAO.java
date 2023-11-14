@@ -10,5 +10,7 @@ public interface PreferredAgeDAO {
 
 	void insertPrefferedAge(@Param("age")int i,@Param("cl_num") int cl_num);
 
+	void deletePreferredAge(@Param("cl_num")int cl_num);
+
 
 }
