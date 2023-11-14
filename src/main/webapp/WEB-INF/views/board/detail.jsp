@@ -64,6 +64,79 @@
 		font-weight : bold;
 	}
 
+.form-control {
+	margin-bottom: 10px;
+}
+
+.btn {
+	margin-bottom: 10px;
+}
+
+.comment-box {
+	display: flex;
+}
+
+.comment-box1 {
+	display: flex;
+}
+/* 프로필 사진 */
+.profile-image {
+	width: 60px;
+	height: 60px;
+	border-radius: 50%; /* 둥글두그륵 만들기 */
+	object-fit: cover; /* 이미지가 찌그러지지 않도록 설정하는 것 */
+	float: left;
+}
+/* 댓글 내용 */
+.comment-list {
+	list-style: none;
+	padding: 10px;
+	width: 100%;
+}
+/* 수정 삭제 버튼 */
+.comment-item {
+	float: right;
+	position: relative;
+}
+/* 날짜 */
+.comment-date {
+	display: block;
+	margin-left: 80px;
+	padding-top: 50px;
+}
+
+/* 댓글, 답글 내용만 */
+.comment-contents {
+	margin-left: 80px;
+	margin-top: 20px;
+	display: flex;
+}
+
+.comment-nickname {
+	margin-left: 20px;
+	font-weight: bold;
+}
+
+/* 모달 */
+.modal--bg {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	justify-content: center;
+	align-items: center;
+}
+
+.modal--content {
+	background-color: white;
+	padding: 20px;
+	border-radius: 5px;
+	max-width: 400px;
+	margin: 0 auto;
+}
 </style>    
 </head>
 </head>
@@ -78,19 +151,21 @@
 			<label>작성자</label>
 			<input type="text" class="form-control" name="bo_me_id" value="${board.me_nickname}" readonly>
 		</div>
-		<div class="input-group mb-3">
-		    <div class="input-group">
-		    	<div class="form-control"
-					 style="height : 600px; overflow-y: auto; text-align: center;" >${board.bo_contents}</div>
-		    </div>
-		</div>
+		<c:if test="${board.bo_contents != null}">
+			<div class="input-group mb-3">
+			    <div class="input-group">
+			    	<div class="form-control"
+						 style="height : 600px; overflow-y: auto; text-align: center;" >${board.bo_contents}</div>
+			    </div>
+			</div>
+		</c:if>
 		<div class="form-group">
 			<c:choose>
 				<c:when test="${fileList.size() != 0 }">
 					<label>첨부파일</label><br>
 						<c:forEach items="${fileList}" var="file">
-							<a  href="<c:url value='/download${file.fi_name}'/>" 
-								download="${file.fi_ori_name}">${file.fi_ori_name}</a><br>
+							<a  href="<c:url value='/download${file.fi_ori_name}'/>" 
+								download="${file.fi_name}">${file.fi_name}</a><br>
 						</c:forEach>
 				</c:when>
 				<c:otherwise>
@@ -110,13 +185,15 @@
 				 	</c:otherwise>
 				</c:choose>
 			</c:forEach> --%>
-		<!-- 댓글 입력창  -->
-		<br>
-		<div class="input-group-append mb-3">
-			<textarea class="form-control" placeholder="댓글을 입력해주세요." id="inputComment"></textarea>
-		    <button type="button"  class="btn" id="btnCommentInsert"
-		    	style="background-color: #c2f296; border-radius: 5px; width: 70px;">등록</button>
-		 </div>
+		<c:if test="${board.bo_bt_num != 6 && board.bo_bt_num != 7}">
+			<!-- 댓글 입력창  -->
+			<label>댓글</label><br>
+			<div class="input-group-append mb-3">
+				<textarea class="form-control" placeholder="댓글을 입력해주세요." id="inputComment"></textarea>
+			    <button type="button"  class="btn btn-outline-success" id="btnCommentInsert"
+					style="background-color: #c2f296; border-radius: 5px; width: 70px;">등록</button>
+			 </div>
+		</c:if>
 		<!-- 댓글 목록창 -->
 		<div class="box-comment">
 			<div class="comment-box1" >
@@ -166,32 +243,66 @@
 				<a class="page-link" href="#"> 다음</a>
 			</div>
 		</div>
-		<hr>
+		
+		<!-- 모달버튼 -->
+		<c:if test="${board.bo_bt_num != 5 && board.bo_bt_num != 6 && board.bo_bt_num != 7 }">
+			<button type="button" class="btn btn-outline-warning button--open" data-value="${board.bo_num}">게시글 신고</button>
+		</c:if>
+		<br>
 		<!-- 자신이 쓴 게시글만 수정,삭제 버튼 나오게 -->
-		<c:if test="${user != null && user.me_num == board.bo_me_num}">
-			<button type="button"
-					class="btn btn-outline-warning col-12 btn-board-update"
-					onclick="location.href='<c:url value='/board/update?bo_num=${board.bo_num}'/>'">수정하기
-			</button><br>
-		</c:if>
-		<c:if test="${user != null && user.me_num == board.bo_me_num}">
-			<button type="button"
-					class="btn btn-outline-danger col-12 btn-delete"
-					onclick="location.href='<c:url value='/board/delete?bo_num=${board.bo_num}'/>'">삭제하기
-			</button><br>
-		</c:if>
+			<c:if test="${user != null && user.me_num == board.bo_me_num}">
+				<button type="button"
+						class="btn btn-outline-warning col-12 btn-board-update"
+						onclick="location.href='<c:url value='/board/update?bo_num=${board.bo_num}'/>'">수정하기
+				</button><br>
+			</c:if>
+			<c:if test="${user != null && user.me_num == board.bo_me_num}">
+				<button type="button"
+						class="btn btn-outline-danger col-12 btn-delete"
+						onclick="location.href='<c:url value='/board/delete?bo_num=${board.bo_num}'/>'">삭제하기
+				</button><br>
+			</c:if>
+		
 	</form>
-<script type="text/javascript">
-     $('#summernote').summernote({
-       placeholder: '내용을 입력하세요.',
-       tabsize: 2,
-       height: 400
-     });
-</script>
+	<!-- 모달창 -->
+	<div class="modal--bg">
+		<div class="modal--content">
+			<p>신고하기</p>
+			<form class="modal-form" action="<c:url value='/admin/boardReport/insert'/>" method="post">
+				<input type="hidden" class="form-control" name="rp_me_num" value="${user.me_num}" readonly>
+				<input type="hidden" class="form-control" name="rp_bo_num" value="${board.bo_num}" readonly>
+				<input type="hidden" class="form-control" name="rp_me_num2" value="${board.bo_me_num}" readonly>
+				<div class="form-group">
+					<select class="form-control isSelected" name="rp_rc_num">
+						<option value="0">분류</option>
+						<option value="6">음란물</option>
+						<option value="7">스팸</option>
+						<option value="8">홍보</option>
+						<option value="9">광고</option>
+						<option value="10">분란 조장</option>
+						<option value="11">혐오</option>
+						<option value="12">욕설</option>
+						<option value="13">기타</option>
+					</select>
+					<textarea cols="46" rows="6" name="rp_content"></textarea>
+				</div>
+				<button type="button" class="btn btn-outline-dark button--close">닫기</button> 
+				<button class="btn btn-outline-dark">신고</button> 
+			</form> 
+		</div>
+	</div>
+	<!-- 썸머노트 -->
+	<script type="text/javascript">
+	     $('#summernote').summernote({
+	       placeholder: '내용을 입력하세요.',
+	       tabsize: 2,
+	       height: 400
+	     });
+	</script>
 
-<!-- 댓글 기능 자바스크립트 -->
-<script type="text/javascript">
-//등록버튼을 클릭하면 함수가 실행됨
+	<!-- 댓글 기능 자바스크립트 -->
+	<script type="text/javascript">
+	//등록버튼을 클릭하면 함수가 실행됨
 	$('#btnCommentInsert').click(function(){
 		let co_contents = $('#inputComment').val();
 		let co_me_num = '${user.me_num}';
@@ -250,7 +361,7 @@
 						 <textarea class="form-control" placeholder="답글을 입력해주세요." name="co_content_reply" id="inputComment2"></textarea>
 						 <button type="button" 
 						 		 class="btn btn-outline-primary btn-sm btn-reply-insert" 
-						 		 data-num="\${co_ori_num}">답글2</button>
+						 		 data-num="\${co_ori_num}">답글</button>
 					</div>
 			`;
 			$(this).parents('.comment-box').after(str);
@@ -270,7 +381,6 @@
 					co_bo_num : co_bo_num,
 					co_comments : co_contents
 			}
-			console.log(comment)
 			$.ajax({
 				async : false,
 				method: 'post',
@@ -503,6 +613,37 @@
 			getCommentList(cri);
 		}
 	
+		
+		 //모달 
+		 $(document).ready(function() {
+		        $('.button--open').click(function() {
+		            showModal();
+		        });
+
+		        $('.button--close').click(function() {
+		            closeModal();
+		        });
+
+		        function showModal() {
+		            $('.modal--bg').fadeIn();
+		        }
+
+		        function closeModal() {
+		            $('.modal--bg').fadeOut();
+		        }
+		    });
+		 //모달 옵션 선택여부에 따라 알림창 또는 제출
+		 $(document).ready(function () {
+            $(".modal-form").submit(function (e) {
+                // 선택된 값이 0이면 제출을 막고 알림창 띄우기
+                var selectedValue = $(".isSelected").val();
+                if (selectedValue == 0) {
+                    alert("옵션을 선택하세요.");
+                    e.preventDefault(); // 제출 막기
+                }
+                // 선택된 값이 유효하면 폼이 계속 제출됨
+            });
+        });
 </script>
 </body>
 </html>

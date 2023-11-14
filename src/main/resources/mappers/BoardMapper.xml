@@ -432,9 +432,11 @@
 			member
 				on bo_me_num = me_num
 		where
+			(
 			bo_bt_num = 1
 				or
 			bo_bt_num = 4
+			)
 				and
 		<if test="board.bo_rg_num != 0">
 			bo_rg_num = #{board.bo_rg_num}
@@ -545,6 +547,13 @@
 		where
 			bo_bt_num = 5
 				and
+		<if test="user.me_authority != 'ADMIN'">
+			bo_me_num = #{user.me_num}
+		</if>
+		<if test="user.me_authority == 'ADMIN'">
+			bo_me_num != #{user.me_num}
+		</if>
+				and
 		<if test="cri.t == 'all'">
 			(
 				bo_num like concat('%', #{cri.s}, '%')
@@ -585,6 +594,13 @@
 				on bo_me_num = me_num
 		where
 			bo_bt_num = 5
+				and
+		<if test="user.me_authority != 'ADMIN'">
+			bo_me_num = #{user.me_num}
+		</if>
+		<if test="user.me_authority == 'ADMIN'">
+			bo_me_num != #{user.me_num}
+		</if>
 				and
 		<if test="cri.t == 'all'">
 			(
