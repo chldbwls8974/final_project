@@ -64,7 +64,6 @@
 		  </label>
 		</div>
 	  </div>
-	  <br>
 	  
 	  <div class="form-group">
 	    <label for="st_available" style="font-weight: bold;">이용 가능 여부</label>
