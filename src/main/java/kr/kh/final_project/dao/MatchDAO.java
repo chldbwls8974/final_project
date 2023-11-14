@@ -41,7 +41,13 @@ public interface MatchDAO {
 
 	void deleteMatch();
 
+	List<MatchVO> selectLimitMatch();
+
 	List<MatchVO> selectMatchSolo();
 	
 	List<MatchVO> selectMatchClub();
+	
+	List<MatchVO> selectEndMatch();
+	
+	MatchVO selectManageMatchByMtNum(@Param("mt_num")int mt_num);
 }

@@ -22,7 +22,8 @@
 		    me_nickname,
 		    me_rating,
 		    me_tr_name,
-		    ct_cl_num
+		    ct_cl_num,
+		    te_type
 		from
 			entry
 				join
@@ -51,9 +52,4 @@
 				te_mt_num = #{mt_num} and
 			    ct_cl_num = #{cl_num}))
 	</insert>
-	<delete id="deleteEntryClub">
-		delete from entry
-		where
-			en_num = #{en_num}
-	</delete>
 </mapper>

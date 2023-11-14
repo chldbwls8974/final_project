@@ -62,6 +62,7 @@
 	</div>
 	<script type="text/javascript">
 	let select_day = "${week[0].date_str}";
+	let mt_num = 0;
 	
 	$('.day-box').eq(0).children('.not-select-circle').toggleClass('select-circle');
 	$('.day-box').eq(0).children('.not-select-circle').toggleClass('not-select-circle');
@@ -88,6 +89,10 @@
 		
 		deleteManagerMatch(mt_num);
 		printManagerMatch();
+	})
+	$(document).on('click', '.btn-manager', function() {
+		mt_num = $(this).val();
+		location.href = "<c:url value='/manager/manage/match?mt_num='/>" + mt_num;
 	})
 	function printManagerMatch() {
 		let str = '';
@@ -124,17 +129,21 @@
 						str += `
 							<button class="btn btn-outline-danger btn-delete btn-manager-match" value="\${match.mt_num}">취소</button> <br>
 						`;
-					}else if(${weekCount >= 0} && match.ready == 1){
+					}else if(match.ready == 2){
 						str += `
-							<button class="btn btn-outline-success btn-wait btn-manager-match" value="\${match.mt_num}">매칭 완료<br>\${match.entry_count}/\${match.mt_personnel * 3}</button> <br>
+							<button class="btn btn-outline-primary btn-manager btn-manager-match" value="\${match.mt_num}">매치 관리<br>\${match.entry_count}/\${match.mt_personnel * 3}</button> <br>
+						`;
+					}else if(match.ready == 1){
+						str += `
+							<button class="btn btn-outline-success btn-manager btn-manager-match" value="\${match.mt_num}">매칭 완료<br>\${match.entry_count}/\${match.mt_personnel * 3}</button> <br>
 						`;
 					}else if(${weekCount >= 0}){
 						str += `
-							<button class="btn btn-outline-warning btn-wait btn-manager-match" value="\${match.mt_num}">매칭 대기중<br>\${match.entry_count}/\${match.mt_personnel * 3}</button> <br>
+							<button class="btn btn-outline-warning btn-manager btn-manager-match" value="\${match.mt_num}">매치 대기중<br>\${match.entry_count}/\${match.mt_personnel * 3}</button> <br>
 						`;
-					}else if(${weekCount < 0}){
+					}else if(match.ready == 3){
 						str += `
-							<button class="btn btn-outline-success btn-search btn-manager-match" value="\${match.mt_num}">경기 종료</button> <br>
+							<button class="btn btn-outline-dark btn-manager btn-manager-match" value="\${match.mt_num}">관리 완료</button> <br>
 						`;
 					}
 					str += `

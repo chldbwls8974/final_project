@@ -27,8 +27,7 @@
 	.entry-btn{float: right}
 	.member-list{border-bottom: 1px solid black}
 	.member-list:last-child{border-bottom: none;}
-	.entry-list-box{width: 100%; float: right; margin-bottom: 10px;
-	border: 3px solid black; box-sizing: border-box;}
+	.entry-list-box{height: auto;}
 	</style>
 </head>
 <body>
@@ -68,7 +67,8 @@
 						<button class="btn btn-outline-danger btn-cansel">취소</button>
 					</div>
 					<c:if test="${match.entry_res == 1 && match.ready==1}">
-						<div class="entry-list-box">
+						<div class="entry-list-box right-side-box">
+							<h4>참가자 리스트</h4>
 							<c:forEach items="${entryList}" var="el">
 								<span>${el.me_nickname}(${el.me_tr_name})</span> <br>
 							</c:forEach>

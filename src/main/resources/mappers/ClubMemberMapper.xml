@@ -76,9 +76,20 @@
 			where
 				mt_date = mt_date) as T3 on T3.t3 = mt_ti_num and T3.e3 = cm_me_num
 		where
-			cm_cl_num = ${cl_num} and
+			cm_cl_num = #{cl_num} and
 		    (cm_authority = "LEADER" or cm_authority = "MEMBER") and
 		    mt_num = #{mt_num}
 		order by me_rating desc;
+	</select>
+	<select id="selectClubLeader" resultType="kr.kh.final_project.vo.ClubMemberVO">
+		select
+			club_member.*
+		from
+			club
+				join
+			club_member on cm_cl_num = cl_num
+		where
+			cl_num = #{cl_num} and
+		    cm_authority = 'LEADER'
 	</select>
 </mapper>

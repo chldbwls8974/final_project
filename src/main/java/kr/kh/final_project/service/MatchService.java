@@ -62,4 +62,8 @@ public interface MatchService {
 
 	void deleteMatchClub();
 
+	void updateEndMatch();
+
+	void insertMatchTeamSolo();
+
 }

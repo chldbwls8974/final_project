@@ -16,4 +16,6 @@ public interface ClubMemberDAO {
 
 	List<ClubMemberVO> selectClubMemberListByMtNum(@Param("cl_num")int cl_num, @Param("mt_num")int mt_num);
 
+	ClubMemberVO selectClubLeader(@Param("cl_num")int cl_num);
+
 }

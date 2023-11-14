@@ -20,6 +20,4 @@ public interface EntryDAO {
 
 	boolean insertEntryClub(@Param("me_num")int me_num, @Param("cl_num")int cl_num, @Param("mt_num")int mt_num);
 
-	boolean deleteEntryClub(@Param("en_num")int en_num);
-
 }

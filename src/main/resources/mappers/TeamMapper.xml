@@ -81,9 +81,9 @@
 			team
 				left join
 			entry on en_te_num = te_num
-				join
+				left join
 			club_team on ct_te_num = te_num
-				join
+				left join
 			club on ct_cl_num = cl_num
 		where
 			te_type != 0 and

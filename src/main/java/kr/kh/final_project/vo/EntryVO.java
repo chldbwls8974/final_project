@@ -13,4 +13,6 @@ public class EntryVO {
 	private String me_tr_name;
 	
 	private int ct_cl_num;
+
+	private int te_type;
 }

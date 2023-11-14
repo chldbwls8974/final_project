@@ -377,12 +377,16 @@ public class MatchServiceImp implements MatchService{
 		if(en_num == 0) {
 			return false;
 		}
-		return entryDao.deleteEntryClub(en_num);
+		return entryDao.deleteEntry(en_num);
 	}
 
 	@Override
 	public void deleteMatch() {
 		matchDao.deleteMatch();
+		List<MatchVO> matchList = matchDao.selectLimitMatch();
+		for(MatchVO match : matchList) {
+			matchDao.updateMatchMtState1To1(match.getMt_num());
+		}
 	}
 	
 	@Override
@@ -407,14 +411,49 @@ public class MatchServiceImp implements MatchService{
 				matchDao.updateMatchMtState1To1(match.getMt_num());
 			}
 		}
-		System.out.println("성공");
+	}
+	
+	@Override
+	public void insertMatchTeamSolo() {
+		List<MatchVO> matchList = matchDao.selectMatchSolo();
+		for(MatchVO match : matchList) {
+			if(match.getDelete() == 0 && match.getMt_rule() == 1 && match.getMt_state1() == 0) {
+				List<TeamVO> teamList = teamDao.selectTeamByMtNum(match.getMt_num());
+				if(teamList.size() == 0) {
+					for(int i = 0; i < 3; i++) {
+						teamDao.insertTeam(match.getMt_num());
+					}
+				}
+			}
+		}
 	}
 	
 	@Override
 	public void deleteMatchClub() {
 		List<MatchVO> matchList = matchDao.selectMatchClub();
 		for(MatchVO match : matchList) {
-			System.out.println(match);
+			if(match.getDelete() == 1) {
+				//클럽 매치 환불 후 참가자/클럽팀/팀 삭제
+				List<TeamVO> teamList = teamDao.selectTeamByMtNum(match.getMt_num());
+				for(TeamVO team : teamList) {
+					ClubMemberVO dbLeader = clubMemberDao.selectClubLeader(team.getCt_cl_num());
+					PointHistoryVO dbPH = pointHistoryDao.selectPointHistoryApplicationMatch(dbLeader.getCm_me_num(), match.getMt_num());
+					pointHistoryDao.insertPointHistoryTimeOverMatch(dbPH.getPh_price(), match.getMt_num(), dbLeader.getCm_me_num());
+					entryDao.deleteEntryByTeNum(team.getTe_num());
+					teamDao.deleteClubTeamByTeNum(team.getTe_num());
+					teamDao.deleteTeam(team.getTe_num());
+				}
+				//팀 삭제 후 매치 삭제(mt_state1 을 1로 수정)
+				matchDao.updateMatchMtState1To1(match.getMt_num());
+			}
 		}
 	}
+	@Override
+	public void updateEndMatch() {
+		List<MatchVO> matchList = matchDao.selectEndMatch();
+		for(MatchVO match : matchList) {
+			matchDao.updateMatchMtState1To2(match.getMt_num());
+		}
+	}
+
 }

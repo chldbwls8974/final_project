@@ -38,6 +38,13 @@ public class ManagerServiceImp implements ManagerService{
 		}
 		return matchDao.selectManagerMatchListByMtDate(me_num, mt_date);
 	}
+	@Override
+	public MatchVO selectManageMatchByMtNum(int mt_num) {
+		if(mt_num == 0) {
+			return null;
+		}
+		return matchDao.selectManageMatchByMtNum(mt_num);
+	}
 
 	@Override
 	public boolean deleteManagerToMatch(int mt_num, Integer me_num) {

@@ -12,5 +12,7 @@ public interface ManagerService {
 	List<MatchVO> selectManagerMatchListByMtDate(Integer me_num, Date mt_date);
 
 	boolean deleteManagerToMatch(int mt_num, Integer me_num);
+
+	MatchVO selectManageMatchByMtNum(int mt_num);
 	
 }

@@ -20,10 +20,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.kh.final_project.service.ManagerService;
 import kr.kh.final_project.service.MatchService;
 import kr.kh.final_project.util.Message;
+import kr.kh.final_project.vo.EntryVO;
 import kr.kh.final_project.vo.ExtraVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.RegionVO;
+import kr.kh.final_project.vo.TeamVO;
 
 @Controller
 public class ManagerController {
@@ -36,9 +38,9 @@ public class ManagerController {
 
 	@GetMapping("/manager/select/match")
 	public String searchMatchManager(Model model, HttpSession session) {
-		MemberVO member = (MemberVO)session.getAttribute("user");
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		
-		if(member == null || !member.getMe_authority().equals("MANAGER")) {
+		if(user == null || !user.getMe_authority().equals("MANAGER")) {
 			Message msg = new Message("/", "매니저 권한이 필요합니다.");
 			model.addAttribute("msg", msg);
 			return "/message";
@@ -49,7 +51,7 @@ public class ManagerController {
 		model.addAttribute("mainRegion",mainRegion);
 		model.addAttribute("thirdWeek", thirdWeek);
 		
-		return "/manager/match";
+		return "/manager/searchMatch";
 	}
 	
 	@ResponseBody
@@ -99,9 +101,9 @@ public class ManagerController {
 	
 	@GetMapping("/manager/manage/schedule")
 	public String manageScheduleManager(Model model, HttpSession session, int weekCount) {
-		MemberVO member = (MemberVO)session.getAttribute("user");
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		
-		if(member == null || !member.getMe_authority().equals("MANAGER")) {
+		if(user == null || !user.getMe_authority().equals("MANAGER")) {
 			Message msg = new Message("/", "매니저 권한이 필요합니다.");
 			model.addAttribute("msg", msg);
 			return "/message";
@@ -138,5 +140,32 @@ public class ManagerController {
 		boolean res = managerService.deleteManagerToMatch(mt_num, user.getMe_num());
 		map.put("res", res);
 		return map;
+	}
+	
+	@GetMapping("/manager/manage/match")
+	public String matchApplicationPage(Model model, HttpSession session, int mt_num) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		MatchVO match = managerService.selectManageMatchByMtNum(mt_num);
+		
+		if(user == null || !user.getMe_authority().equals("MANAGER")) {
+			Message msg = new Message("/", "매니저 권한이 필요합니다.");
+		
+			model.addAttribute("msg", msg);
+			return "/message";
+		}
+		if(match.getMn_me_num() != user.getMe_num()) {
+			Message msg = new Message("/manager/manage/schedule?weekCount=0", "등록된 매니저가 아닙니다.");
+			
+			model.addAttribute("msg", msg);
+			return "/message";			
+		}
+		List<TeamVO> teamList = matchService.selectTeamByMtNum(mt_num);
+		List<EntryVO> entryList = matchService.selectEntryByMtNum(mt_num);
+		
+		
+		model.addAttribute("match", match);
+		model.addAttribute("teamList", teamList);
+		model.addAttribute("entryList", entryList);
+		return "/manager/manageMatch";
 	}
 }
