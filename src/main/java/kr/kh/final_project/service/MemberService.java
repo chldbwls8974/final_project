@@ -5,7 +5,9 @@ import java.util.List;
 import kr.kh.final_project.pagination.Criteria;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.kh.final_project.vo.BlockVO;
 import kr.kh.final_project.vo.HoldingCouponVO;
+import kr.kh.final_project.vo.MarkVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
@@ -78,5 +80,14 @@ public interface MemberService {
 	MemberVO getMemberPTime(MemberVO user);
 	
 	boolean emailMemberSignout(MemberVO member);
+	
+	MemberVO getMemberByNum(MemberVO member);
+	
+	List<BlockVO> getMyBlockList(MemberVO user);
+	
+	List<MarkVO> getMyMarkList(MemberVO user);
+	
+	boolean markListAddAndDelete(MarkVO mark);
+	
 
 }

@@ -72,7 +72,7 @@
 								<div class="myprofile-image">
 				                    <img src="/final_project${user.me_profile}" class="myprofile-image-thumb" alt="프로필 사진">
 			              		 </div>
-							<a href="<c:url value='/member/myprofile'/>" class="myprofile-info">
+							<a href="<c:url value='/member/myprofile?me_num=${user.me_num}'/>" class="myprofile-info">
 			              	 	<div style="margin-left: 10px;">
 									<div class="myprofile-name" style="position: relative;">
 										<div style="font-size: 24px; font-weight:800;">${user.me_name}</div>
@@ -101,7 +101,7 @@
 								<div style="width: 25%; position: relative;">
 									<div style=" position: relative; bottom: 30px; right: 5px; text-align: center;
 										 padding: 10px; border-radius: 10px; background-color:#c2f296;">
-										<a href="#"><p style="margin: 0 auto;">충전하기</p></a>
+										<a href="<c:url value='/payment/main'/>"><p style="margin: 0 auto;">충전하기</p></a>
 									</div>
 								</div>
 							</div>	

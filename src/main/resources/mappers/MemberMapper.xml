@@ -250,5 +250,4 @@
 		where
 			me_num = #{me_num}
 	</update>
-	
 </mapper>
