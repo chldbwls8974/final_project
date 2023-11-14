@@ -93,5 +93,7 @@ public interface MemberService {
 	
 	boolean updateProfile(MemberVO member, String fi_name, int[] pr_rg_num, int[] favoriteTime, int[] favoriteHoliTime);
 	
+	boolean blockListAddAndDelete(BlockVO block);
+	
 
 }
