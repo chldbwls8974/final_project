@@ -1,5 +1,6 @@
 package kr.kh.final_project.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -27,6 +28,8 @@ import kr.kh.final_project.vo.HoldingCouponVO;
 import kr.kh.final_project.vo.MarkVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
+import kr.kh.final_project.vo.PreferredRegionVO;
+import kr.kh.final_project.vo.PreferredTimeVO;
 import kr.kh.final_project.vo.RegionVO;
 import kr.kh.final_project.vo.TimeVO;
 
@@ -473,22 +476,46 @@ public class MemberServiceImp implements MemberService{
 	}
 
 	
-	//회원 거주지역,선호지역,선호시간 조회
+	//회원 거주지역 조회
 	@Override
 	public MemberVO getMemberRegion(MemberVO user) {
 		return memberDao.selectMemberRegion(user);
 	}
 
 	@Override
-	public MemberVO getMemberPRegion(MemberVO user) {
-		return memberDao.selectMemberPRegion(user);
+	public List<PreferredRegionVO> getMemberPRegion(MemberVO member) {
+		return prRegionDao.selectPRListByMeNum(member.getMe_num());
 	}
 
 	@Override
-	public MemberVO getMemberPTime(MemberVO user) {
-		return memberDao.selectMemberPTime(user);
+	public List<PreferredTimeVO> getMemberPTimeWeekday(MemberVO member) {
+		//DB에서 가져온 시간은 월~일 이므로, 평일/주말로 데이터 분리
+		//24이하 = 월 ,145이상 = 일
+		List<PreferredTimeVO> dbPrTimeList = prTimeDao.selectPTListByMeNum(member.getMe_num());
+		List<PreferredTimeVO> prTimeWeekday = new ArrayList<PreferredTimeVO>();
+		for (PreferredTimeVO tmp : dbPrTimeList) {
+			if(tmp.getPt_ti_num() >= 1 && tmp.getPt_ti_num() <= 24) {
+				tmp.setPt_ti_num(tmp.getPt_ti_num()-1);
+				prTimeWeekday.add(tmp);
+			}
+		}
+		return prTimeWeekday;
 	}
-
+	
+	@Override
+	public List<PreferredTimeVO> getMemberPTimeHoliday(MemberVO member) {
+		//DB에서 가져온 시간은 월~일 이므로, 평일/주말로 데이터 분리
+		//24이하 = 월 ,145이상 = 일
+		List<PreferredTimeVO> dbPrTimeList = prTimeDao.selectPTListByMeNum(member.getMe_num());
+		List<PreferredTimeVO> prTimeHoliday = new ArrayList<PreferredTimeVO>();
+		for (PreferredTimeVO tmp : dbPrTimeList) {
+			if(tmp.getPt_ti_num() >= 145) {
+				tmp.setPt_ti_num((tmp.getPt_ti_num()-1) % 24);
+				prTimeHoliday.add(tmp);
+			}
+		}
+		return prTimeHoliday;
+	}
 
 	//이메일인증 회원탈퇴
 	@Override

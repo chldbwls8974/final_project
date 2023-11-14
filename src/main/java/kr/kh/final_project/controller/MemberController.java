@@ -31,6 +31,8 @@ import kr.kh.final_project.vo.MarkVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
+import kr.kh.final_project.vo.PreferredRegionVO;
+import kr.kh.final_project.vo.PreferredTimeVO;
 import kr.kh.final_project.vo.RegionVO;
 import kr.kh.final_project.vo.TimeVO;
 
@@ -374,15 +376,16 @@ public class MemberController {
 		MemberVO dbMember = memberService.getMemberByNum(member);
 		//회원의 거주지역 가져오기
 		MemberVO memberRegion = memberService.getMemberRegion(dbMember);
-		
 		//회원의 선호지역, 선호시간대 가져오기
-		MemberVO memberPRegion = memberService.getMemberPRegion(dbMember);
-		MemberVO memberPTime = memberService.getMemberPTime(dbMember);
+		List<PreferredRegionVO> memberPRegion = memberService.getMemberPRegion(dbMember);
+		List<PreferredTimeVO> memberPTimeWeekday = memberService.getMemberPTimeWeekday(dbMember);
+		List<PreferredTimeVO> memberPTimeHoliday = memberService.getMemberPTimeHoliday(dbMember);
 		
 		model.addAttribute("member",dbMember );
 		model.addAttribute("memberRegion", memberRegion );
 		model.addAttribute("memberPRegion", memberPRegion );
-		model.addAttribute("memberPTime", memberPTime );
+		model.addAttribute("memberPTimeWeekday", memberPTimeWeekday );
+		model.addAttribute("memberPTimeHoliday", memberPTimeHoliday );
 		model.addAttribute("user", user );
 		return "/member/myprofile";
 	}

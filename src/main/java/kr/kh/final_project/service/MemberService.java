@@ -11,6 +11,8 @@ import kr.kh.final_project.vo.MarkVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
+import kr.kh.final_project.vo.PreferredRegionVO;
+import kr.kh.final_project.vo.PreferredTimeVO;
 import kr.kh.final_project.vo.RegionVO;
 import kr.kh.final_project.vo.TimeVO;
 
@@ -75,9 +77,11 @@ public interface MemberService {
 	//나의 상세정보 페이지에서  거주지역, 선호지역, 선호시간대 정보 받아오기
 	MemberVO getMemberRegion(MemberVO user);
 	
-	MemberVO getMemberPRegion(MemberVO user);
+	List<PreferredRegionVO> getMemberPRegion(MemberVO member);
 	
-	MemberVO getMemberPTime(MemberVO user);
+	List<PreferredTimeVO> getMemberPTimeWeekday(MemberVO member);
+	
+	List<PreferredTimeVO> getMemberPTimeHoliday(MemberVO dbMember);
 	
 	boolean emailMemberSignout(MemberVO member);
 	
@@ -88,6 +92,7 @@ public interface MemberService {
 	List<MarkVO> getMyMarkList(MemberVO user);
 	
 	boolean markListAddAndDelete(MarkVO mark);
+	
 	
 
 }

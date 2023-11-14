@@ -12,4 +12,9 @@ public class PreferredRegionVO {
 	private int pr_me_num;
 	private int pr_rg_num;
 	private List<PreferredRegionVO> prRegionList;
+	
+	//RegionVO
+	private Integer rg_num;
+	private String rg_main;
+	private String rg_sub;
 }
