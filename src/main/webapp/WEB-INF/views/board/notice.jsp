@@ -70,7 +70,7 @@
 			</button>
 		</div>	
 	<!-- 공지게시판 검색 기능 -->
-			<form action="<c:url value='/board/notice'/>" method="get">
+		<form action="<c:url value='/board/notice'/>" method="get">
 			<div class="input-group mb-3 mt-3">
 				<div class="input-group-prepend">
 				    <select class="form-control" id="me_authority" name="t">
@@ -89,7 +89,7 @@
 			    <input type="text" class="form-control input-search" name="s" id="me_title" placeholder="검색어를 입력하세요." value="${pm.cri.s}">
 			    <button class="search-btn btn-insert">찾기</button>
 			</div>
-			</form>
+		</form>
 		<!-- 공지게시판 출력 -->
 		<br>
 		<div class="main">
