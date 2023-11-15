@@ -9,6 +9,86 @@
 <meta charset="UTF-8">
 <title>나의 프로필</title>
 <style type="text/css">
+.time-box{
+    margin-bottom: 30px;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+}
+.chip{
+	display: flex; 
+	flex-wrap: wrap; 
+	overflow: hidden; 
+	border-radius: 12px;
+	list-style: none;
+	padding: 20px;
+}
+.chip__item--3{
+	width: 25%;
+    position: relative;
+    box-sizing: border-box;
+    outline: none;
+    margin: 0 auto;
+    box-shadow: none;	
+    margin: 0;
+    vertical-align: baseline;
+}
+.chip_item-radio{
+	position: absolute;
+	display: none;
+    opacity: 0;
+    background-color: #F2F5F7;
+    width: 100%;
+    height: 100%;
+}
+.chip__item-label div{ margin-top: 10px;}
+.chip__item-radio+label{
+	position: relative;
+	width: 200px;
+    height: 48px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    color: #4B5A64;
+    background-color: #FFFFFF;
+    border: 1px solid #D9E0E6;
+    border-radius: 20px;
+    margin: 5px;
+    margin-left: 0px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+input[type='checkbox']{
+	display : none;
+}
+input[type='checkbox']:checked+label{
+	display: inline-block;
+	color: #1570FF;
+    border: 1px solid #1570FF;
+}
+
+
+.container{ 
+	background-color: #f2f2f2; padding: 30px; z-index: 1;
+	margin-top: 20px; border-radius: 20px;
+}
+.form-control{border-radius: 30px; width: 500px;}
+.form-group{text-align: center;}
+.form-group label{display: inline-block; text-align: center;}
+.form-group button, .form-group select{margin: 0 auto;}
+.form-group input{margin: 0 auto;}
+
+.signup-btn{ width: 500px; margin: 0 auto;
+	border-radius: 10px; border: none;
+	background-color: #0c0c0c; height: 40px; color: white;}
+.next-btn, .prev-btn{width: 500px; margin: 0 auto;
+	border-radius: 10px; border: none; height: 40px;
+	background-color: #c2f296; color: black;}
+
+input, progress {
+  accent-color: #0c0c0c;
+}
 
 .container-body{ width: 100%; height: auto; display: flex; margin-top: 100px;}
 .profile-head{ 
