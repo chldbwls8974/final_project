@@ -266,8 +266,9 @@ public class MemberController {
 	@GetMapping("/member/mypage")
 	public String myPage(HttpSession session, Model model) {
 		MemberVO user = (MemberVO) session.getAttribute("user");
+		MemberVO dbMember = memberService.getMemberByNum(user);
 		List<ClubVO> list = clubService.getMyClubList(user.getMe_num(),"MEMBER");
-		model.addAttribute("user", user);
+		model.addAttribute("user", dbMember);
 		model.addAttribute("list",list);
 		return "/member/mypage";
 	}
@@ -309,7 +310,7 @@ public class MemberController {
 		//회원의 거주지역 가져오기
 		MemberVO memberRegion = memberService.getMemberRegion(dbMember);
 		
-		model.addAttribute("user",user);
+		model.addAttribute("user",dbMember);
 		model.addAttribute("MainRegion",MainRegion);
 		model.addAttribute("memberRegion",memberRegion);
 		return "/member/myedit";
