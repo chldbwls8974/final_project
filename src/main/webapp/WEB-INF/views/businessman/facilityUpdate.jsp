@@ -23,7 +23,7 @@
 	  
 	  <!--수정전 사항이 수정페이지에 그대로 나타나게 하기 위해 if문과 'selected'속성 사용함 -->
 	  <div class="form-group">
-	    <label>지역</label>
+	    <label style="font-weight: bold;">지역</label>
 	    <select class="form-control rg_main" required> 
 	        <option value="0">지역을 선택하세요</option>
 	        <c:forEach items="${MainRegion}" var="main">
