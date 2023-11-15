@@ -29,8 +29,8 @@
 	.point{ font-size: 16px;}
 	.list-group-item.active{ background-color: #d7fdb5; border-color: #d7fdb5; color: black;}
 	.btn{
-		border-radius: 5px; width: 200px; height: 50px; border: none;
-		background-color: #c2f296; color: black; margin: 10px 0 10px 0;
+		border-radius: 10px; width: 180px; height: 50px; border: none;
+		background-color: #c2f296; color: black; margin: 10px 0 20px 0;
 	}
 </style>
 <body>
@@ -49,8 +49,8 @@
 		</ul>
 	</div>
 	<div style="text-align: center; margin-top: 30px">
-		<button class="btn btn-outline-dark col-4" onclick="btnOnclick(selectedAmount)">결제하기</button>
-		<button class="btn btn-outline-dark col-4" onclick="btnOnclickKaKao(selectedAmount)">카카오결제하기</button>
+		<button class="btn" onclick="btnOnclick(selectedAmount)">결제하기</button>
+		<button class="btn" onclick="btnOnclickKaKao(selectedAmount)">카카오결제하기</button>
 	</div>
 	
 </body>
