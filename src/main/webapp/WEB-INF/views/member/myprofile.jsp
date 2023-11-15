@@ -243,7 +243,7 @@
 				평일 선호 시간</label>
 			<ul class="chip">
 				<li class="chip__item--3">
-					<input type="checkbox" id="time_6" name="favoriteTime" class="chip__item-radio" value="6" <c:if test="${weekTime.contains(Integer(6))}">checked</c:if>  disabled="disabled"> 
+					<input type="checkbox" id="time_6"  class="chip__item-radio" value="6" <c:if test="${weekTime.contains(Integer(6)) || weekTime.contains(Integer(7))}">checked</c:if>  disabled="disabled"> 
 					<label for="time_6" class="chip__item-label" style="height: 80px; width: 90px;">
 						<div style="margin-bottom: 5px;">
 							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunrise.svg">
@@ -251,7 +251,7 @@
 					</label>
 				</li>
 				<li class="chip__item--3">
-					<input type="checkbox" id="time_8" name="favoriteTime" class="chip__item-radio" value="8" <c:if test="${weekTime.contains(Integer(8))}">checked</c:if>  disabled="disabled"> 
+					<input type="checkbox" id="time_8"  class="chip__item-radio" value="8" <c:if test="${weekTime.contains(Integer(8)) || weekTime.contains(Integer(9))}">checked</c:if>  disabled="disabled"> 
 					<label  for="time_8" class="chip__item-label" style="height: 80px; width: 90px;">
 						<div style="margin-bottom: 5px;">
 							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
@@ -259,7 +259,7 @@
 					</label>
 				</li>
 				<li class="chip__item--3">
-					<input type="checkbox" id="time_10" name="favoriteTime" class="chip__item-radio" value="10" <c:if test="${weekTime.contains(Integer(10))}">checked</c:if>  disabled="disabled"> 
+					<input type="checkbox" id="time_10"  class="chip__item-radio" value="10" <c:if test="${weekTime.contains(Integer(10)) || weekTime.contains(Integer(11))}">checked</c:if>  disabled="disabled"> 
 					<label for="time_10" class="chip__item-label" style="height: 80px; width: 90px;">
 						<div style="margin-bottom: 5px;">
 							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
@@ -267,7 +267,7 @@
                		</label>
                	</li>
 				<li class="chip__item--3">
-					<input  type="checkbox" id="time_12" name="favoriteTime" class="chip__item-radio" value="12" <c:if test="${weekTime.contains(Integer(12))}">checked</c:if>  disabled="disabled"> 
+					<input  type="checkbox" id="time_12" class="chip__item-radio" value="12" <c:if test="${weekTime.contains(Integer(12)) || weekTime.contains(Integer(13))}">checked</c:if>  disabled="disabled"> 
 					<label  for="time_12" class="chip__item-label" style="height: 80px; width: 90px;">
 						<div  style="margin-bottom: 5px;">
 							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
@@ -275,7 +275,7 @@
                		</label>
               		</li>
 				<li class="chip__item--3">
-					<input type="checkbox" id="time_14" name="favoriteTime" class="chip__item-radio" value="14" <c:if test="${weekTime.contains(Integer(14))}">checked</c:if>  disabled="disabled"> 
+					<input type="checkbox" id="time_14" class="chip__item-radio" value="14" <c:if test="${weekTime.contains(Integer(14)) || weekTime.contains(Integer(15))}">checked</c:if>  disabled="disabled"> 
 					<label for="time_14" class="chip__item-label" style="height: 80px; width: 90px;">
 					<div style="margin-bottom: 5px;">
 						<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
@@ -283,7 +283,7 @@
                		</label>
               		</li>
 				<li  class="chip__item--3">
-					<input  type="checkbox" id="time_16" name="favoriteTime" class="chip__item-radio" value="16" <c:if test="${weekTime.contains(Integer(16))}">checked</c:if>  disabled="disabled">
+					<input  type="checkbox" id="time_16" class="chip__item-radio" value="16" <c:if test="${weekTime.contains(Integer(16)) || weekTime.contains(Integer(17))}">checked</c:if>  disabled="disabled">
 					<label  for="time_16" class="chip__item-label" style="height: 80px; width: 90px;">
 						<div  style="margin-bottom: 5px;">
 							<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
@@ -291,7 +291,7 @@
                		</label>
                	</li>
 				<li  class="chip__item--3">
-					<input  type="checkbox" id="time_18" name="favoriteTime" class="chip__item-radio" value="18" <c:if test="${weekTime.contains(Integer(18))}">checked</c:if>  disabled="disabled"> 
+					<input  type="checkbox" id="time_18"  class="chip__item-radio" value="18" <c:if test="${weekTime.contains(Integer(18)) || weekTime.contains(Integer(19))}">checked</c:if>  disabled="disabled"> 
 					<label  for="time_18" class="chip__item-label" style="height: 80px; width: 90px;">
 						<div  style="margin-bottom: 5px;">
 							<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_night.svg">
@@ -299,7 +299,7 @@
                		</label>
               		</li>
 				<li  class="chip__item--3">
-					<input  type="checkbox" id="time_20" name="favoriteTime" class="chip__item-radio" value="20" <c:if test="${weekTime.contains(Integer(20))}">checked</c:if>  disabled="disabled"> 
+					<input  type="checkbox" id="time_20" class="chip__item-radio" value="20" <c:if test="${weekTime.contains(Integer(20)) || weekTime.contains(Integer(21))}">checked</c:if>  disabled="disabled"> 
 					<label  for="time_20" class="chip__item-label" style="height: 80px; width: 90px;">
 						<div  style="margin-bottom: 5px;">
 							<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_night.svg">
@@ -307,7 +307,7 @@
               			</label>
        			</li>
 				<li  class="chip__item--3">
-					<input  type="checkbox" id="time_22" name="favoriteTime" class="chip__item-radio" value="22" <c:if test="${weekTime.contains(Integer(22))}">checked</c:if>  disabled="disabled"> 
+					<input  type="checkbox" id="time_22" class="chip__item-radio" value="22" <c:if test="${weekTime.contains(Integer(22)) || weekTime.contains(Integer(23))}">checked</c:if>  disabled="disabled"> 
 					<label  for="time_22" class="chip__item-label" style="height: 80px; width: 90px;">
 						<div  style="margin-bottom: 5px;">
 							<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_night.svg">
@@ -315,7 +315,7 @@
               			</label>
           			</li>
 				<li  class="chip__item--3">
-					<input  type="checkbox" id="time_24" name="favoriteTime" class="chip__item-radio" value="0" <c:if test="${weekTime.contains(Integer(0))}">checked</c:if>  disabled="disabled">
+					<input  type="checkbox" id="time_24" class="chip__item-radio" value="0" <c:if test="${weekTime.contains(Integer(0)) || weekTime.contains(Integer(1))}">checked</c:if>  disabled="disabled">
 					<label  for="time_24" class="chip__item-label" style="height: 80px; width: 90px;">
 						<div  style="margin-bottom: 5px;">
 							<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_midnight.svg">
@@ -323,7 +323,7 @@
               			</label>
               		</li>
                	<li  class="chip__item--3">
-               			<input  type="checkbox" id="time_2" name="favoriteTime" class="chip__item-radio" value="2" <c:if test="${weekTime.contains(Integer(2))}">checked</c:if>  disabled="disabled"> 
+               			<input  type="checkbox" id="time_2" class="chip__item-radio" value="2" <c:if test="${weekTime.contains(Integer(2)) || weekTime.contains(Integer(3))}">checked</c:if>  disabled="disabled"> 
                		<label  for="time_2" class="chip__item-label" style="height: 80px; width: 90px;">
                			<div  style="margin-bottom: 5px;">
                				<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_midnight.svg">
@@ -331,7 +331,7 @@
                		</label>
                	</li>
                	<li  class="chip__item--3">
-               		<input  type="checkbox" id="time_4" name="favoriteTime" class="chip__item-radio" value="4" <c:if test="${weekTime.contains(Integer(4))}">checked</c:if>  disabled="disabled">
+               		<input  type="checkbox" id="time_4" class="chip__item-radio" value="4" <c:if test="${weekTime.contains(Integer(4)) || weekTime.contains(Integer(5))}">checked</c:if>  disabled="disabled">
                		<label  for="time_4" class="chip__item-label" style="height: 80px; width: 90px;">
                		<div  style="margin-bottom: 5px;">
                			<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_midnight.svg">
@@ -346,7 +346,7 @@
 			<div>
 				<ul class="chip">
 					<li class="chip__item--3">
-						<input type="checkbox" id="holitime_6" name="favoriteHoliTime" class="chip__item-radio" value="6" <c:if test="${holiTime.contains(Integer(6))}">checked</c:if> disabled="disabled"> 
+						<input type="checkbox" id="holitime_6" class="chip__item-radio" value="6" <c:if test="${holiTime.contains(Integer(6)) || holiTime.contains(Integer(7))}">checked</c:if> disabled="disabled"> 
 						<label for="holitime_6" class="chip__item-label" style="height: 80px; width: 90px;">
 							<div style="margin-bottom: 5px;">
 								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunrise.svg">
@@ -354,7 +354,7 @@
 						</label>
 					</li>
 					<li class="chip__item--3">
-						<input type="checkbox" id="holitime_8" name="favoriteHoliTime" class="chip__item-radio" value="8" <c:if test="${holiTime.contains(Integer(8))}">checked</c:if> disabled="disabled"> 
+						<input type="checkbox" id="holitime_8" class="chip__item-radio" value="8" <c:if test="${holiTime.contains(Integer(8)) || holiTime.contains(Integer(9))}">checked</c:if> disabled="disabled"> 
 						<label  for="holitime_8" class="chip__item-label" style="height: 80px; width: 90px;">
 							<div style="margin-bottom: 5px;">
 								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
@@ -362,7 +362,7 @@
 						</label>
 					</li>
 					<li class="chip__item--3">
-						<input type="checkbox" id="holitime_10" name="favoriteHoliTime" class="chip__item-radio" value="10" <c:if test="${holiTime.contains(Integer(10))}">checked</c:if> disabled="disabled"> 
+						<input type="checkbox" id="holitime_10" class="chip__item-radio" value="10" <c:if test="${holiTime.contains(Integer(10)) || holiTime.contains(Integer(11))}">checked</c:if> disabled="disabled"> 
 						<label for="holitime_10" class="chip__item-label" style="height: 80px; width: 90px;">
 							<div style="margin-bottom: 5px;">
 								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
@@ -370,7 +370,7 @@
                 		</label>
                 	</li>
 					<li class="chip__item--3">
-						<input  type="checkbox" id="holitime_12" name="favoriteHoliTime" class="chip__item-radio" value="12" <c:if test="${holiTime.contains(Integer(12))}">checked</c:if> disabled="disabled"> 
+						<input  type="checkbox" id="holitime_12" class="chip__item-radio" value="12" <c:if test="${holiTime.contains(Integer(12)) || holiTime.contains(Integer(13))}">checked</c:if> disabled="disabled"> 
 						<label  for="holitime_12" class="chip__item-label" style="height: 80px; width: 90px;">
 							<div  style="margin-bottom: 5px;">
 								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
@@ -378,7 +378,7 @@
                 		</label>
                		</li>
 					<li class="chip__item--3">
-						<input type="checkbox" id="holitime_14" name="favoriteHoliTime" class="chip__item-radio" value="14" <c:if test="${holiTime.contains(Integer(14))}">checked</c:if> disabled="disabled"> 
+						<input type="checkbox" id="holitime_14" class="chip__item-radio" value="14" <c:if test="${holiTime.contains(Integer(14)) || holiTime.contains(Integer(15))}">checked</c:if> disabled="disabled"> 
 						<label for="holitime_14" class="chip__item-label" style="height: 80px; width: 90px;">
 						<div style="margin-bottom: 5px;">
 							<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
@@ -386,7 +386,7 @@
                 		</label>
                		</li>
 					<li  class="chip__item--3">
-						<input  type="checkbox" id="holitime_16" name="favoriteHoliTime" class="chip__item-radio" value="16" <c:if test="${holiTime.contains(Integer(16))}">checked</c:if> disabled="disabled">
+						<input  type="checkbox" id="holitime_16" class="chip__item-radio" value="16" <c:if test="${holiTime.contains(Integer(16)) || holiTime.contains(Integer(17))}">checked</c:if> disabled="disabled">
 						<label  for="holitime_16" class="chip__item-label" style="height: 80px; width: 90px;">
 							<div  style="margin-bottom: 5px;">
 								<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
@@ -394,7 +394,7 @@
                 		</label>
                 	</li>
 					<li  class="chip__item--3">
-						<input  type="checkbox" id="holitime_18" name="favoriteHoliTime" class="chip__item-radio" value="18" <c:if test="${holiTime.contains(Integer(18))}">checked</c:if> disabled="disabled"> 
+						<input  type="checkbox" id="holitime_18" class="chip__item-radio" value="18" <c:if test="${holiTime.contains(Integer(18)) || holiTime.contains(Integer(19))}">checked</c:if> disabled="disabled"> 
 						<label  for="holitime_18" class="chip__item-label" style="height: 80px; width: 90px;">
 							<div  style="margin-bottom: 5px;">
 								<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_night.svg">
@@ -402,7 +402,7 @@
                 		</label>
                		</li>
 					<li  class="chip__item--3">
-						<input  type="checkbox" id="holitime_20" name="favoriteHoliTime" class="chip__item-radio" value="20" <c:if test="${holiTime.contains(Integer(20))}">checked</c:if> disabled="disabled"> 
+						<input  type="checkbox" id="holitime_20" class="chip__item-radio" value="20" <c:if test="${holiTime.contains(Integer(20)) || holiTime.contains(Integer(21))}">checked</c:if> disabled="disabled"> 
 						<label  for="holitime_20" class="chip__item-label" style="height: 80px; width: 90px;">
 							<div  style="margin-bottom: 5px;">
 								<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_night.svg">
@@ -410,7 +410,7 @@
                			</label>
         			</li>
 					<li  class="chip__item--3">
-						<input  type="checkbox" id="holitime_22" name="favoriteHoliTime" class="chip__item-radio" value="22" <c:if test="${holiTime.contains(Integer(22))}">checked</c:if> disabled="disabled"> 
+						<input  type="checkbox" id="holitime_22"  class="chip__item-radio" value="22" <c:if test="${holiTime.contains(Integer(22)) || holiTime.contains(Integer(23))}">checked</c:if> disabled="disabled"> 
 						<label  for="holitime_22" class="chip__item-label" style="height: 80px; width: 90px;">
 							<div  style="margin-bottom: 5px;">
 								<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_night.svg">
@@ -418,7 +418,7 @@
                			</label>
            			</li>
 					<li  class="chip__item--3">
-						<input  type="checkbox" id="holitime_24" name="favoriteHoliTime" class="chip__item-radio" value="0" <c:if test="${holiTime.contains(Integer(0))}">checked</c:if> disabled="disabled">
+						<input  type="checkbox" id="holitime_24" class="chip__item-radio" value="0" <c:if test="${holiTime.contains(Integer(0)) || holiTime.contains(Integer(1))}">checked</c:if> disabled="disabled">
 						<label  for="holitime_24" class="chip__item-label" style="height: 80px; width: 90px;">
 							<div  style="margin-bottom: 5px;">
 								<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_midnight.svg">
@@ -426,7 +426,7 @@
                			</label>
                		</li>
                 	<li  class="chip__item--3">
-                		<input  type="checkbox" id="holitime_2" name="favoriteHoliTime" class="chip__item-radio" value="2" <c:if test="${holiTime.contains(Integer(2))}">checked</c:if> disabled="disabled"> 
+                		<input  type="checkbox" id="holitime_2" class="chip__item-radio" value="2" <c:if test="${holiTime.contains(Integer(2)) || holiTime.contains(Integer(3))}">checked</c:if> disabled="disabled"> 
                 		<label  for="holitime_2" class="chip__item-label" style="height: 80px; width: 90px;">
                 			<div  style="margin-bottom: 5px;">
                 				<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_midnight.svg">
@@ -434,7 +434,7 @@
                 		</label>
                 	</li>
                 	<li  class="chip__item--3">
-                		<input  type="checkbox" id="holitime_4" name="favoriteHoliTime" class="chip__item-radio" value="4" <c:if test="${holiTime.contains(Integer(4))}">checked</c:if> disabled="disabled"> 
+                		<input  type="checkbox" id="holitime_4" class="chip__item-radio" value="4" <c:if test="${holiTime.contains(Integer(4)) || holiTime.contains(Integer(5))}">checked</c:if> disabled="disabled"> 
                 		<label  for="holitime_4" class="chip__item-label" style="height: 80px; width: 90px;">
                 		<div  style="margin-bottom: 5px;">
                 			<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_midnight.svg">
@@ -451,6 +451,229 @@
 				<p style="font-size: 14px;">선호 시간 수정하기</p>
 			</a>
 		</div>
+		
+		
+		<!--  선호 시간수정 모달 -->
+	<!-- 모달창 -->
+		<div class="modal--bg time--modal" id ="myModal">
+		<div class="modal--content">
+			<p style="font-size: 20px; font-weight: bolder; margin: 0 auto; border-bottom: 8px solid #c2f296; width: 20%; padding: 20px 0 10px 0; text-align: center;">선호 시간 수정</p>
+			<form class="modal-form" action="<c:url value='/member/update/time'/>" method="post">
+			<input type="hidden" name="me_num" value="${member.me_num}">
+				<div class="form-group" style="display: inline;">
+			<label style="border-top: 7px solid #c2f296; padding: 5px 0 10px 0;">
+				평일 선호 시간</label>
+			<ul class="chip">
+				<li class="chip__item--3">
+					<input type="checkbox" id="time2_6" name="favoriteTime" class="chip__item-radio" value="6" <c:if test="${weekTime.contains(Integer(6)) || weekTime.contains(Integer(7))}">checked</c:if>> 
+					<label for="time2_6" class="chip__item-label" style="height: 80px; width: 90px;">
+						<div style="margin-bottom: 5px;">
+							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunrise.svg">
+						</div> 06:00
+					</label>
+				</li>
+				<li class="chip__item--3">
+					<input type="checkbox" id="time2_8" name="favoriteTime" class="chip__item-radio" value="8" <c:if test="${weekTime.contains(Integer(8)) || weekTime.contains(Integer(9))}">checked</c:if>> 
+					<label  for="time2_8" class="chip__item-label" style="height: 80px; width: 90px;">
+						<div style="margin-bottom: 5px;">
+							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
+						</div> 08:00
+					</label>
+				</li>
+				<li class="chip__item--3">
+					<input type="checkbox" id="time2_10" name="favoriteTime" class="chip__item-radio" value="10" <c:if test="${weekTime.contains(Integer(10)) || weekTime.contains(Integer(11))}">checked</c:if>> 
+					<label for="time2_10" class="chip__item-label" style="height: 80px; width: 90px;">
+						<div style="margin-bottom: 5px;">
+							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
+						</div> 10:00
+               		</label>
+               	</li>
+				<li class="chip__item--3">
+					<input  type="checkbox" id="time2_12" name="favoriteTime" class="chip__item-radio" value="12" <c:if test="${weekTime.contains(Integer(12)) || weekTime.contains(Integer(13))}">checked</c:if>> 
+					<label  for="time2_12" class="chip__item-label" style="height: 80px; width: 90px;">
+						<div  style="margin-bottom: 5px;">
+							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
+						</div> 12:00
+               		</label>
+              		</li>
+				<li class="chip__item--3">
+					<input type="checkbox" id="time2_14" name="favoriteTime" class="chip__item-radio" value="14" <c:if test="${weekTime.contains(Integer(14)) || weekTime.contains(Integer(15))}">checked</c:if>> 
+					<label for="time2_14" class="chip__item-label" style="height: 80px; width: 90px;">
+					<div style="margin-bottom: 5px;">
+						<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
+					</div> 14:00
+               		</label>
+              		</li>
+				<li  class="chip__item--3">
+					<input  type="checkbox" id="time2_16" name="favoriteTime" class="chip__item-radio" value="16" <c:if test="${weekTime.contains(Integer(16)) || weekTime.contains(Integer(17))}">checked</c:if>>
+					<label  for="time2_16" class="chip__item-label" style="height: 80px; width: 90px;">
+						<div  style="margin-bottom: 5px;">
+							<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
+						</div> 16:00
+               		</label>
+               	</li>
+				<li  class="chip__item--3">
+					<input  type="checkbox" id="time2_18" name="favoriteTime" class="chip__item-radio" value="18" <c:if test="${weekTime.contains(Integer(18)) || weekTime.contains(Integer(19))}">checked</c:if> > 
+					<label  for="time2_18" class="chip__item-label" style="height: 80px; width: 90px;">
+						<div  style="margin-bottom: 5px;">
+							<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_night.svg">
+						</div> 18:00
+               		</label>
+              		</li>
+				<li  class="chip__item--3">
+					<input  type="checkbox" id="time2_20" name="favoriteTime" class="chip__item-radio" value="20" <c:if test="${weekTime.contains(Integer(20)) || weekTime.contains(Integer(21))}">checked</c:if>> 
+					<label  for="time2_20" class="chip__item-label" style="height: 80px; width: 90px;">
+						<div  style="margin-bottom: 5px;">
+							<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_night.svg">
+						</div> 20:00
+              			</label>
+       			</li>
+				<li  class="chip__item--3">
+					<input  type="checkbox" id="time2_22" name="favoriteTime" class="chip__item-radio" value="22" <c:if test="${weekTime.contains(Integer(22)) || weekTime.contains(Integer(23))}">checked</c:if>> 
+					<label  for="time2_22" class="chip__item-label" style="height: 80px; width: 90px;">
+						<div  style="margin-bottom: 5px;">
+							<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_night.svg">
+						</div> 22:00
+              			</label>
+          			</li>
+				<li  class="chip__item--3">
+					<input  type="checkbox" id="time2_24" name="favoriteTime" class="chip__item-radio" value="0" <c:if test="${weekTime.contains(Integer(0))|| weekTime.contains(Integer(1))}">checked</c:if>  >
+					<label  for="time2_24" class="chip__item-label" style="height: 80px; width: 90px;">
+						<div  style="margin-bottom: 5px;">
+							<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_midnight.svg">
+						</div> 24:00
+              			</label>
+              		</li>
+               	<li  class="chip__item--3">
+               			<input  type="checkbox" id="time2_2" name="favoriteTime" class="chip__item-radio" value="2" <c:if test="${weekTime.contains(Integer(2)) || weekTime.contains(Integer(3))}">checked</c:if>> 
+               		<label  for="time2_2" class="chip__item-label" style="height: 80px; width: 90px;">
+               			<div  style="margin-bottom: 5px;">
+               				<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_midnight.svg">
+              				</div> 02:00
+               		</label>
+               	</li>
+               	<li  class="chip__item--3">
+               		<input  type="checkbox" id="time2_4" name="favoriteTime" class="chip__item-radio" value="4" <c:if test="${weekTime.contains(Integer(4)) || weekTime.contains(Integer(5))}">checked</c:if>>
+               		<label  for="time2_4" class="chip__item-label" style="height: 80px; width: 90px;">
+               		<div  style="margin-bottom: 5px;">
+               			<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_midnight.svg">
+              			</div>  04:00
+             			</label>
+          			</li>
+               </ul>
+		</div>
+		<div class="form-group" style="display: inline;">
+			<label style="border-top: 7px solid #c2f296; padding: 5px 0 10px 0;">
+				주말 선호 시간대</label>
+			<div>
+				<ul class="chip">
+					<li class="chip__item--3">
+						<input type="checkbox" id="holitime2_6" name="favoriteHoliTime" class="chip__item-radio" value="6" <c:if test="${holiTime.contains(Integer(6)) || holiTime.contains(Integer(7))}">checked</c:if>> 
+						<label for="holitime2_6" class="chip__item-label" style="height: 80px; width: 90px;">
+							<div style="margin-bottom: 5px;">
+								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunrise.svg">
+							</div> 06:00
+						</label>
+					</li>
+					<li class="chip__item--3">
+						<input type="checkbox" id="holitime2_8" name="favoriteHoliTime" class="chip__item-radio" value="8" <c:if test="${holiTime.contains(Integer(8)) || holiTime.contains(Integer(9))}">checked</c:if>> 
+						<label  for="holitime2_8" class="chip__item-label" style="height: 80px; width: 90px;">
+							<div style="margin-bottom: 5px;">
+								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
+							</div> 08:00
+						</label>
+					</li>
+					<li class="chip__item--3">
+						<input type="checkbox" id="holitime2_10" name="favoriteHoliTime" class="chip__item-radio" value="10" <c:if test="${holiTime.contains(Integer(10)) || holiTime.contains(Integer(11))}">checked</c:if>> 
+						<label for="holitime2_10" class="chip__item-label" style="height: 80px; width: 90px;">
+							<div style="margin-bottom: 5px;">
+								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
+							</div> 10:00
+                		</label>
+                	</li>
+					<li class="chip__item--3">
+						<input  type="checkbox" id="holitime2_12" name="favoriteHoliTime" class="chip__item-radio" value="12" <c:if test="${holiTime.contains(Integer(12)) || holiTime.contains(Integer(13))}">checked</c:if> > 
+						<label  for="holitime2_12" class="chip__item-label" style="height: 80px; width: 90px;">
+							<div  style="margin-bottom: 5px;">
+								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
+							</div> 12:00
+                		</label>
+               		</li>
+					<li class="chip__item--3">
+						<input type="checkbox" id="holitime2_14" name="favoriteHoliTime" class="chip__item-radio" value="14" <c:if test="${holiTime.contains(Integer(14)) || holiTime.contains(Integer(15))}">checked</c:if>> 
+						<label for="holitime2_14" class="chip__item-label" style="height: 80px; width: 90px;">
+						<div style="margin-bottom: 5px;">
+							<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
+						</div> 14:00
+                		</label>
+               		</li>
+					<li  class="chip__item--3">
+						<input  type="checkbox" id="holitime2_16" name="favoriteHoliTime" class="chip__item-radio" value="16" <c:if test="${holiTime.contains(Integer(16)) || holiTime.contains(Integer(17))}">checked</c:if>>
+						<label  for="holitime2_16" class="chip__item-label" style="height: 80px; width: 90px;">
+							<div  style="margin-bottom: 5px;">
+								<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
+							</div> 16:00
+                		</label>
+                	</li>
+					<li  class="chip__item--3">
+						<input  type="checkbox" id="holitime2_18" name="favoriteHoliTime" class="chip__item-radio" value="18" <c:if test="${holiTime.contains(Integer(18)) || holiTime.contains(Integer(19))}">checked</c:if>> 
+						<label  for="holitime2_18" class="chip__item-label" style="height: 80px; width: 90px;">
+							<div  style="margin-bottom: 5px;">
+								<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_night.svg">
+							</div> 18:00
+                		</label>
+               		</li>
+					<li  class="chip__item--3">
+						<input  type="checkbox" id="holitime2_20" name="favoriteHoliTime" class="chip__item-radio" value="20" <c:if test="${holiTime.contains(Integer(20)) || holiTime.contains(Integer(21))}">checked</c:if>> 
+						<label  for="holitime2_20" class="chip__item-label" style="height: 80px; width: 90px;">
+							<div  style="margin-bottom: 5px;">
+								<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_night.svg">
+							</div> 20:00
+               			</label>
+        			</li>
+					<li  class="chip__item--3">
+						<input  type="checkbox" id="holitime2_22" name="favoriteHoliTime" class="chip__item-radio" value="22" <c:if test="${holiTime.contains(Integer(22)) || holiTime.contains(Integer(23))}">checked</c:if>> 
+						<label  for="holitime2_22" class="chip__item-label" style="height: 80px; width: 90px;">
+							<div  style="margin-bottom: 5px;">
+								<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_night.svg">
+							</div> 22:00
+               			</label>
+           			</li>
+					<li  class="chip__item--3">
+						<input  type="checkbox" id="holitime2_24" name="favoriteHoliTime" class="chip__item-radio" value="0" <c:if test="${holiTime.contains(Integer(0)) || holiTime.contains(Integer(1))}">checked</c:if> >
+						<label  for="holitime2_24" class="chip__item-label" style="height: 80px; width: 90px;">
+							<div  style="margin-bottom: 5px;">
+								<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_midnight.svg">
+							</div> 24:00
+               			</label>
+               		</li>
+                	<li  class="chip__item--3">
+                		<input  type="checkbox" id="holitime2_2" name="favoriteHoliTime" class="chip__item-radio" value="2" <c:if test="${holiTime.contains(Integer(2)) || holiTime.contains(Integer(3))}">checked</c:if>> 
+                		<label  for="holitime2_2" class="chip__item-label" style="height: 80px; width: 90px;">
+                			<div  style="margin-bottom: 5px;">
+                				<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_midnight.svg">
+               				</div> 02:00
+                		</label>
+                	</li>
+                	<li  class="chip__item--3">
+                		<input  type="checkbox" id="holitime2_4" name="favoriteHoliTime" class="chip__item-radio" value="4" <c:if test="${holiTime.contains(Integer(4)) || holiTime.contains(Integer(5))}">checked</c:if> > 
+                		<label  for="holitime2_4" class="chip__item-label" style="height: 80px; width: 90px;">
+                		<div  style="margin-bottom: 5px;">
+                			<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_midnight.svg">
+               			</div>  04:00
+              			</label>
+           			</li>
+                </ul>
+			</div>
+		</div>
+				<div style="text-align: center; margin-top: 40px;">
+					<button type="button" style="background-color: black; color: white; border-radius: 10px; width: 80px;"
+						class="btn button--tmclose">닫기</button> 
+					<button  style="background-color: black; color: white; border-radius: 10px; width: 80px;" class="btn">수정</button> 
+				</div>	
+			</form> 
+		</div>
+	</div>
 	</div>
 	<hr>
 </div>
@@ -531,7 +754,7 @@
 	
 		 //시간 모달 
 		 $(document).ready(function() {
-		        $('.mytime-edit-btn').click(function() {
+		        $('.mytime-edit').click(function() {
 		            showTimeModal();
 		        });
 
@@ -610,6 +833,10 @@
 				$(this).before(btn);
 			 }
 		 })
+		 
+		 $('#myModal').on('click', function(event){
+		    event.stopPropagation();
+		});
 	
 		
 </script>
