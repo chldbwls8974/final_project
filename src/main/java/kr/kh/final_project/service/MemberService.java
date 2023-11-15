@@ -94,6 +94,10 @@ public interface MemberService {
 	boolean updateProfile(MemberVO member, String fi_name, int[] pr_rg_num, int[] favoriteTime, int[] favoriteHoliTime);
 	
 	boolean blockListAddAndDelete(BlockVO block);
+	// 내가차단한 회원 정보 가져오기
+	List<MemberVO> getBlockMemberList(List<BlockVO> blockList);
+	// 내가 즐겨찾기한 회원 정보 가져오기
+	List<MemberVO> getMemberMarkList(List<MarkVO> markList);
 	
 
 }
