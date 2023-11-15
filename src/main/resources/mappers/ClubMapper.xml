@@ -22,6 +22,12 @@
 		insert into club(cl_name, cl_emblem, cl_price, cl_rule, cl_introduction, cl_url, cl_rg_num)
 		 values(#{club.cl_name},#{fi_name},#{club.cl_price},#{club.cl_rule},#{club.cl_introduction},#{club.cl_url},#{club.cl_rg_num})
 	</insert>
+	<select id="selectClubListByMeNum" resultType="kr.kh.final_project.vo.ClubVO">
+		select * 
+		from club 
+		join club_member on cl_num = cm_cl_num
+		where cm_me_num = #{me_num} and (cm_authority = 'member' or cm_authority = 'leader')
+	</select>
 	<update id="updateClub">
 		update club
 		set

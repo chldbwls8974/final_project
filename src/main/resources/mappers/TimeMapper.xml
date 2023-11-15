@@ -6,4 +6,7 @@
 	<select id="selectTimeList" resultType="kr.kh.final_project.vo.TimeVO">
 		select * from time
 	</select>
+	<select id="selectTiNumListByMtDate" resultType="int">
+		select ti_num from futsal.time where ti_day = (select substr('일월화수목금토', dayofweek(#{mt_date}), 1))
+	</select>
 </mapper>

@@ -115,14 +115,12 @@ public class ScheduleServiceImp implements ScheduleService{
 	}
 
 	@Override
-	public int selectFaNumByMeNum(Integer me_num) {
+	public List<FacilityVO> selectFaNumByMeNum(Integer me_num) {
 		if(me_num == null) {
-			return 0;
+			return null;
 		}
-		FacilityVO facility = facilityDao.selectFacilityByMeNum(me_num);
-		if(facility == null) {
-			return 0; 
-		}
-		return facility.getFa_num();
+		List<FacilityVO> facilityList = facilityDao.selectFacilityByMeNum(me_num);
+		
+		return facilityList;
 	}
 }

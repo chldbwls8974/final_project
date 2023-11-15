@@ -57,7 +57,7 @@
 		display: flex; padding: 0 0 16px 0;
 		border-bottom: 1px solid rgba(0,0,0,.1);
 	}
- 	.notice-tbody{padding: 5px;}
+ 	.select-business{padding: 5px;}
 	.tbody-box{ 
 		display: flex; border-bottom: 1px solid rgba(0,0,0,.1);
 		margin: 0; padding: 20px 20px 30px 20px;
@@ -85,7 +85,7 @@
 <body>
 <div class="businessman-search">
 	<div class="businessman-search-navigation" style="margin-top: 50px; text-align: center;">
-		<p style="font-size: 35px; width: 23%; font-weight: bolder; margin: 30px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
+		<p style="font-size: 35px; width: 27%; font-weight: bolder; margin: 30px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
 		사업자 권한 조회</p>
 	</div>
 	<!-- 사업자권한 조회 -->
@@ -136,7 +136,7 @@
 				<li style="width: 20%">작성날짜</li>
 				<li style="width: 10%">권한 취소</li>
 			</ul>
-			 <ul class="notice-tbody">
+			 <ul class="select-business">
 			   <c:forEach items="${list}" var="bu">
 					<li>
 						<div class="tbody-box">
@@ -188,9 +188,9 @@
 		// 만약 true면 밑에 있는 코드를 실행
 		if(confirm("권한을 USER로 변경하시겠습니까?")){
 			// 버튼을 클릭한 부모 tr에서 class가 id인 값을 me_nickname로 넣어준다.
-			let me_nickname = $(this).parents('tr').find('.id').text();
+			let me_nickname = $(this).parents('ul').find('.id').text();
 			// 버튼을 클릭한 부모 tr에서 class가 update인 값을 me_authority로 넣어준다.
-			let me_authority = $(this).parents('tr').find('.update').text();
+			let me_authority = $(this).parents('ul').find('.update').text();
 			// 버튼을 누른 회원의 nickname과 authority값을 manager로 가져왔음 ( ex : 동해번쩍, USER )
 			let business = {
 					me_nickname : me_nickname,
@@ -211,17 +211,17 @@
 						/* var="bu"를 AdminController에서 만든 list데이터를 반복 */
 						for(bu of data.list){
 							str += `
-								<tr>
-									<td>\${bu.me_num}</td>
-									<td class="id">\${bu.me_nickname}</td>
-									<td>\${bu.bo_bt_num}</td>
-									<td>\${bu.bo_title}</td>
-									<td class="update">\${bu.me_authority}</td>
-									<td>\${bu.bo_reg_date_str}</td>
-									<td>
+								<ul>
+									<li>\${bu.me_num}</li>
+									<li class="id">\${bu.me_nickname}</li>
+									<li>\${bu.bo_bt_num}</li>
+									<li>\${bu.bo_title}</li>
+									<li class="update">\${bu.me_authority}</li>
+									<li>\${bu.bo_reg_date_str}</li>
+									<li>
 										<button class="btn btn-outline-danger btn-update">취소</button>
-									</td>
-								</tr>
+									</li>
+								</ul>
 							`
 						}
 						$('.select-business').html(str);

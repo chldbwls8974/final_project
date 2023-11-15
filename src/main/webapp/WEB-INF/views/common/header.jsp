@@ -40,10 +40,10 @@
 	<nav class="navbar">
 		<ul class="navbar-nav-link">
 			<li class="nav-item">
-				<a class="nav-link" href="#">개인매치</a>
+				<a class="nav-link" href="<c:url value='/match/search/solo'/>">개인매치</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#">클럽매치</a>
+				<a class="nav-link" href="<c:url value='/match/search/club?weekCount=0'/>">클럽매치</a>
 			<li class="nav-item">
 				<a class="nav-link" href="<c:url value='/admin/price'/>">가격수정</a>
 			</li>
@@ -61,14 +61,11 @@
 					커뮤니티
 					</a>
 					<div class="dropdown-menu">
-							<a class="dropdown-item" href="<c:url value='/board/notice'/>">공지게시판</a>
-							<a class="dropdown-item" href="<c:url value='/board/free'/>">자유게시판</a>
-							<a class="dropdown-item" href="<c:url value='/board/individual'/>">개인 매칭</a>
-							<a class="dropdown-item" href="<c:url value='/board/clue'/>">클럽 매칭</a>
-							<a class="dropdown-item" href="<c:url value='/board/inquiry'/>">문의게시판</a>
-						<c:if test="${user != null && user.me_authority == 'ADMIN'}">
-							<a class="dropdown-item" href="/board/block">게시판 관리</a>
-						</c:if>
+						<a class="dropdown-item" href="<c:url value='/board/notice'/>">공지게시판</a>
+						<a class="dropdown-item" href="<c:url value='/board/free'/>">자유게시판</a>
+						<a class="dropdown-item" href="<c:url value='/board/individual'/>">개인 매칭</a>
+						<a class="dropdown-item" href="<c:url value='/board/club'/>">클럽 매칭</a>
+						<a class="dropdown-item" href="<c:url value='/board/inquiry'/>">문의게시판</a>
 					</div>
 				</li>
 				<li class="nav-item dropdown">
@@ -105,7 +102,7 @@
 						</a>
 						<div class="dropdown-menu">
 							<a class="dropdown-item" href="<c:url value='/manager/select/match'/>">매치 신청</a>
-							<a class="dropdown-item" href="<c:url value='/manager/manage/schedule'/>">일정 관리</a>
+							<a class="dropdown-item" href="<c:url value='/manager/manage/schedule?weekCount=0'/>">일정 관리</a>
 						</div>
 				</li>
 				<c:if test="${user != null && user.me_authority == 'BUSINESS'}">
@@ -121,22 +118,24 @@
 						</div>
 					</li>
 				</c:if>
-				
-				<li class="nav-item">
-					<a class="nav-link" href="<c:url value='/member/mypage'/>">마이페이지</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link " href="<c:url value='/member/signup'/>">회원가입</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link " href="<c:url value='/member/login'/>">로그인</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link " href="<c:url value='/member/logout'/>">로그아웃</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" id="email-signout" href="<c:url value='/member/signout'/>">회원탈퇴</a>
-				</li>
+				<c:if test="${user != null && user.me_authority != 'ADMIN'}">
+					<li class="nav-item">
+						<a class="nav-link" href="<c:url value='/member/mypage'/>">마이페이지</a>
+					</li>
+				</c:if>
+				<c:if test="${user == null}">
+					<li class="nav-item">
+						<a class="nav-link " href="<c:url value='/member/signup'/>">회원가입</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link " href="<c:url value='/member/login'/>">로그인</a>
+					</li>
+				</c:if>
+				<c:if test="${user != null}">
+					<li class="nav-item">
+						<a class="nav-link " href="<c:url value='/member/logout'/>">로그아웃</a>
+					</li>
+				</c:if>
 			</ul>
 		</nav>
 

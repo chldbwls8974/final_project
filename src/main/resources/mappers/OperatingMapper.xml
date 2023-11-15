@@ -20,4 +20,7 @@
 			op_close = #{operating.op_close}
     	where op_fa_num = #{operating.op_fa_num} and op_day = #{operating.op_day}
 	</update>
+	<delete id="deleteOperating">
+		delete from operating where op_fa_num = #{fa_num}
+	</delete>
 </mapper>

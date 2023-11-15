@@ -23,6 +23,20 @@
 	<select id="selectRegionByRgNum" resultType="kr.kh.final_project.vo.RegionVO">
 		select * from region where rg_num = #{rg_num}
 	</select>
+	<select id="selectRgNumSubAll" resultType="int">
+		select rg_num from region where rg_sub = '전체';
+	</select>
+	<select id="selectSubRgNumByMainRgNum" resultType="int">
+		select
+			*
+		from
+			region
+		where
+			rg_main = (select rg_main from region where rg_num = #{rg_num});
+	</select>
+	<select id="selectRgNumByRgNum" resultType="int">
+		select rg_num from region where rg_num = #{rg_num}
+	</select>
 	<select id="selectUserRegion" resultType="kr.kh.final_project.vo.RegionVO">
 		select * from region
 	</select>

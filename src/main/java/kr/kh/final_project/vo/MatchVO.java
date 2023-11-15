@@ -54,8 +54,23 @@ public class MatchVO {
 	
 	private String ti_time_str;
 	
+	private int rg_num;
+	private String rg_main;
+	private String rg_sub;
+	
 	private int mn_mt_num;
 	private int mn_me_num;
+	
+	private int entry_count;		//매치의 참가자 수
+	private int club_entry_count;	//클럽 매치의 경우 해당 클럽의 참가자 수
+	private int team_count;			//매치에 참가한 클럽 수
+	private int list_team;			//리스트팀 존재 판단(개인매치 팀 확정 판단)
+	private int quarter_count;		//기록된 경기 수
+	private int application;		//리스트 조회 페이지에서 개인 매치의 경우 회원이 클럽 매치의 경우 회원이 가입한 클럽이 참가했는지 판단
+	private int application_able;	//개인 또는 클럽이 해당 매치에 신청 가능한지 유무
+	private int entry_res;			//신청 페이지에서 개인 매치의 경우 회원이 클럽 매치의 경우 회원이 가입한 클럽이 참가했는지 판단
+	private int ready;	//매치시간으로부터 특정 시간이 지났는지 판단
+	private int delete;	//매치시간으로부터 특정 시간까지 정원(참가자/클럽)이 다 찼는지 판단	
 	
 	public String getMt_date_str() {
 		if(mt_date == null) {

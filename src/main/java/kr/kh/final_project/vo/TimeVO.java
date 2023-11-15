@@ -31,4 +31,8 @@ public class TimeVO {
 			e.printStackTrace();
 		}
 	}
+	public int getPt_ti_num() {
+		pt_ti_num = ti_num;
+		return pt_ti_num;
+	}
 }

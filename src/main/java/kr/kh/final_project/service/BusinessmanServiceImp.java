@@ -123,6 +123,8 @@ public class BusinessmanServiceImp implements BusinessmanService{
 	    if (fa_deleted == 1) {
 	        //경기장 상태 '2:삭제'로 업데이트
 	        stadiumDao.updateStadiumAvailability(fa_num);
+	        //운영시간 삭제
+	        operatingDao.deleteOperating(fa_num);
 	        return true;
 	    }
 	    return false;
