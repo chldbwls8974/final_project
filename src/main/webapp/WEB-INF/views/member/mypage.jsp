@@ -291,6 +291,9 @@
 							<p>포인트 환급</p>
 							</a>
 						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="email-signout" href="<c:url value='/member/signout'/>">회원탈퇴</a>
+						</li>
 					</ul>
 				</div>
 			</div>	
