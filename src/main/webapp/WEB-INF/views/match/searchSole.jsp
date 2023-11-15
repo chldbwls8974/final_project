@@ -20,7 +20,10 @@
 		.match-box{height: 100px; border-bottom: 1px solid #c2c2c2;}
 		.match-box::after{clear: both; content: ''; display: block;}
 		.match-box:last-child{border-bottom: none}
-		.match-time-box{font-size: 40px; display: inline-block; line-height: 100px}
+		.match-time-box{
+			font-size: 40px; font-weight: 400;
+			display: inline-block; line-height: 100px; margin-right: 20px;
+		}
 		.match-info-box{display: inline-block;}
 		.btn{float: right; margin-top: 30px;}
 	</style>
@@ -53,13 +56,13 @@
 		</c:forEach>
 	</div>
 	<br>
-	<div class="preferred-time-box">
-		<span>선호시간 : </span>
-		<input class="preferred-time-check" type="checkbox" checked="checked">
+	<div class="preferred-time-box" style="margin: 10px 0 10px 0;">
+		<span>선호시간 </span>
+		<input class="preferred-time-check" type="checkbox" checked="checked" style="margin-left: 10px;">
 	</div>
 	<div class="main-region-box">
-		<span>지역 : </span>
-		<select class="select-main">
+		<span>지역 </span>
+		<select class="select-main" style="margin-left: 10px;">
 			<option value="0">선호지역</option>
 			<c:forEach items="${mainRegion}" var="mr">
 				<option value="${mr.rg_num}">${mr.rg_main}</option>
@@ -69,7 +72,7 @@
 	<div class="sub-region-box">
 		
 	</div>
-	<div class="select-match-box">
+	<div class="select-match-box" style="margin-top: 30px;">
 		
 	</div>
 	<script type="text/javascript">
@@ -153,7 +156,11 @@
 							`;					
 						}else if(match.application_able == 1){
 							str +=	`
-								<button class="btn btn-outline-primary btn-matchPage" value="\${match.mt_num}">참가 신청</button> <br>
+								<button class="btn btn-matchPage"
+									style="width: 120px; height: 40px; border: none;
+											border-radius: 5px; background-color: #c2f296; color: black;"
+									value="\${match.mt_num}">
+									참가 신청</button> <br>
 							</div>
 							`;
 						}else if(match.application_able == 0 && match.application == 0){
