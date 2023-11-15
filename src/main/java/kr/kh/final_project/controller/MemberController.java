@@ -573,5 +573,15 @@ public class MemberController {
 		return "message";
 	}
 	
+	@ResponseBody
+	@GetMapping("/member/update/region2")
+	public Map<String, Object> region1(@RequestParam String rg_main, Model model){
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<RegionVO> SubRegion = memberService.getSubRegionByMainRegion(rg_main);
+		map.put("SubRegion", SubRegion);
+		System.out.println(SubRegion);
+		return map;
+	}
+	
 	
 }

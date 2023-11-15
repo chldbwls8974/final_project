@@ -409,32 +409,6 @@ input, progress {
 		
 		
 		
-		
-		// 아이디 중복 검사
-		let flag = false;
-		$('[name=me_id]').keyup(function(){
-			flag = false;
-			let id = $(this).val();
-			if(!/^[a-zA-Z]\w{5,9}$/.test(id)){
-				$('#check-id-error').text('');
-				return;
-			}
-			$.ajax({
-				async : false, 
-				type : 'post', 
-				url : '<c:url value="/member/check/id"/>', 
-				data : { id : id}, 
-				success : function(data){
-					if(data){
-						$('#check-id-error').text('사용 가능한 아이디입니다.');
-						flag = true;
-					}else{
-						$('#check-id-error').text('이미 사용중인 아이디입니다.');
-					}
-				}
-			});
-		})
-		
 		// 닉네임 중복 검사
 		$('[name=me_nickname]').keyup(function(){
 			flag = false;
@@ -486,6 +460,45 @@ input, progress {
 				document.getElementById('preview').src = '<c:url value="/memberimg${user.me_profile}"/>';
 			}
 		}
+		
+		
+		// 지역
+		//페이지가 완전히 로드되면 실행 = jQuery의 $(document).ready()와 동일한 역할
+		$(function(){	
+	         //rg_main에서 change 이벤트가 발생되면 실행
+			 $(document).on('change','.rg_main',function(){
+				 //변수 생성 -> 현재 이벤트가 발생한 rg_main의 select 요소를 객체로 가져옴
+				 let th = $(this);
+				 //선택한 옵션 값을 가져와서 rg_main 변수에 저장
+				 rg_main = th.val();
+				 
+				 data={
+					 rg_main : rg_main
+				}
+				//각 지역별 도시 선택 
+				ajaxJsonToJson2(false, 'get', '/member/update/region2', data, (a)=>{
+					var option = "";
+					// name이 'fa_rg_num'인 요소를 찾고, 그 안의 내용을 비움
+					th.parent().next().find('[name=me_rg_num]').empty();
+					//facility.fa_rg_num의 값을 변수 region에 할당
+					let region = '${member.me_rg_num}'
+					
+					for (var i in a.SubRegion){
+						var obj = a.SubRegion[i];
+			            // 'selected' 속성을 사용하여 선택된 항목 표시
+						if (obj.rg_num == region) {
+			                option = "<option value='" + obj.rg_num + "' selected>" + obj.rg_sub + "</option>";
+			            } else {
+			                option = "<option value='" + obj.rg_num + "'>" + obj.rg_sub + "</option>";
+			            }
+			            th.parent().next().find('[name=me_rg_num]').append(option);
+			        }
+			    })
+			});
+	         //트리거를 통해 rg_main의 모든 select 요소에 대해 change 이벤트를 수동으로 발생. 
+	         //=> 이벤트가 발생하면 선택한 옵션에 따라 다른 도시를 로드하고 옵션을 설정함
+			$(".rg_main").trigger('change')
+	    })
 	
 	</script>
 </body>
