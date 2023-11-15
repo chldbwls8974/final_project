@@ -7,6 +7,27 @@
 <meta charset="UTF-8">
 <title>운영시간</title>
 </head>
+<style>
+    .day-group {
+        margin-bottom: 40px;
+    }
+    .day-label {
+        display: inline-block;
+        width: 270px;
+    }
+    .time-label {
+        display: inline-block;
+        width: 280px;
+    }
+	
+    .form-check-inline {
+        margin-right: 20px;
+    }
+    .op_day, .op_open, .op_close{
+    	 margin-right: 20px;
+    }
+ 
+</style>
 <body>
 	<h1 class="display-3"><span style="color: black; font-weight: bold;">운영시간</span></h1> <br>
 	<form action="<c:url value='/businessman/operatingInsert'/>" method="post">
@@ -17,7 +38,7 @@
 		
 	    <div class="form-group">
 			<c:forEach var="i" begin="1" end="7">
-				<div class="form-check-inline">
+				<div class="form-check-inline day-group">
 					<c:choose>
 				        <c:when test="${i == 1}">
 				            <c:set var="day" value="월" />
@@ -42,19 +63,19 @@
 				        </c:when>
 				    </c:choose>
 				    
-				    <label for="op_day_${i}" >요일 선택:</label>
+				    <label for="op_day_${i}" class="day-label">운영요일:</label>
 				    <select class="form-control op_day" name="operatingList[${i-1 }].op_day" id="op_day_${i}">
 				        <option value="${day}">${day}</option>
 				    </select>
 				    
-					<label >오픈시간:</label>
+					<label class="time-label">오픈시간 : </label>
 					<select class="form-control op_open" name="operatingList[${i-1 }].op_open" id="op_open_${i}">
 					    <c:forEach var="h" begin="0" end="23" step="1">
 					        <option><c:out value="${h}" /></option>
 					    </c:forEach>
 					</select>
 					
-					<label>종료시간:</label>
+					<label class="time-label">종료시간 : </label>
 					<select class="form-control op_close" name="operatingList[${i-1 }].op_close" id="op_close_${i}">
 					    <c:forEach var="h" begin="0" end="23" step="1">
 					        <option><c:out value="${h}" /></option>
