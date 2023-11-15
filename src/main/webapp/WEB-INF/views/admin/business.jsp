@@ -57,7 +57,7 @@
 		display: flex; padding: 0 0 16px 0;
 		border-bottom: 1px solid rgba(0,0,0,.1);
 	}
- 	.notice-tbody{padding: 5px;}
+ 	.select-business{padding: 5px;}
 	.tbody-box{ 
 		display: flex; border-bottom: 1px solid rgba(0,0,0,.1);
 		margin: 0; padding: 20px 20px 30px 20px;
@@ -136,7 +136,7 @@
 				<li style="width: 20%">작성날짜</li>
 				<li style="width: 10%">신청 수락</li>
 			</ul>
-		    <ul class="notice-tbody">
+		    <ul class="select-business">
 			   <c:forEach items="${list}" var="bu">
 					<li>
 						<div class="tbody-box">
@@ -219,7 +219,7 @@
 									<li class="update">\${bu.me_authority}</li>
 									<li>\${bu.bo_reg_date_str}</li>
 									<li>
-										<button class="btn btn-outline-warning btn-update">신청수락</button>
+										<button class="btn btn-update">신청수락</button>
 									</li>
 								</ul>
 							`
