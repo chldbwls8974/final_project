@@ -255,11 +255,9 @@ public class MemberController {
 	@ResponseBody
 	@PostMapping("/member/information")
 	public Map<String, Object> memberInformation(@RequestBody MemberVO user){
-		System.out.println(user);
 		Map<String, Object> map = new HashMap<String, Object>();
 		//db의 유저정보 가져옴
 		user = memberService.getMemberByNum(user);
-		System.out.println(user+"222");
 		map.put("user", user);
 		return map;
 	}
@@ -306,30 +304,21 @@ public class MemberController {
 	public String myProfile(Model model,HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		List<RegionVO> MainRegion = memberService.getMainRegion();
-		List<TimeVO> time = memberService.getAllTime();
 		//회원 가져오기
 		MemberVO dbMember = memberService.getMemberByNum(user);
 		//회원의 거주지역 가져오기
 		MemberVO memberRegion = memberService.getMemberRegion(dbMember);
-		//회원의 선호지역, 선호시간대 가져오기
-		List<PreferredRegionVO> memberPRegion = memberService.getMemberPRegion(dbMember);
-		List<Integer> weekTime = memberService.getMemberPTimeWeekday(dbMember);
-		List<Integer> holiTime = memberService.getMemberPTimeHoliday(dbMember);
 		
 		model.addAttribute("user",user);
 		model.addAttribute("MainRegion",MainRegion);
-		model.addAttribute("time",time);
 		model.addAttribute("memberRegion",memberRegion);
-		model.addAttribute("memberPRegion",memberPRegion);
-		model.addAttribute("weekTime",weekTime);
-		model.addAttribute("holiTime",holiTime);
 		return "/member/myedit";
 	}
 	
 	
 	@PostMapping("/member/myedit")
-	public String profileEdit(MemberVO member, MultipartFile img, HttpSession session, Model model, int[] pr_rg_num,
-			int[] favoriteTime, int[] favoriteHoliTime) {
+	public String profileEdit(MemberVO member, MultipartFile img, HttpSession session, Model model
+		) {
 		Message msg = new Message("/", null);
 		try {
 			String fi_ori_name = img.getOriginalFilename();
@@ -341,7 +330,7 @@ public class MemberController {
 				fi_name = "/basic.jpg";
 			}
 			
-			boolean res = memberService.updateProfile(member, fi_name,pr_rg_num, favoriteTime,favoriteHoliTime); //새로 입력한 정보 업데이트
+			boolean res = memberService.updateProfile(member, fi_name); //새로 입력한 정보 업데이트
 			if(res) { //업데이트된 사용자 정보 세션에 저장
 				session.setAttribute("user", member); 
 				msg = new Message("/member/mypage", "수정에 성공했습니다.");
@@ -411,9 +400,11 @@ public class MemberController {
 	//마이페이지- 내 프로필 상세조회
 	@GetMapping("/member/myprofile")
 	public String myprofile(Model model, MemberVO member, HttpSession session) {
-		MemberVO user = (MemberVO)session.getAttribute("user");
+		//MemberVO user = (MemberVO)session.getAttribute("user");
+		System.out.println("111111111"+member);
 		//회원 가져오기
 		MemberVO dbMember = memberService.getMemberByNum(member);
+		System.out.println("db"+dbMember);
 		//회원의 거주지역 가져오기
 		MemberVO memberRegion = memberService.getMemberRegion(dbMember);
 		//회원의 선호지역, 선호시간대 가져오기
@@ -426,7 +417,7 @@ public class MemberController {
 		model.addAttribute("memberPRegion", memberPRegion );
 		model.addAttribute("holiTime", holiTime );
 		model.addAttribute("weekTime", weekTime );
-		model.addAttribute("user", user );
+		//model.addAttribute("user", user );
 		return "/member/myprofile";
 	}
 	//차단목록, 즐겨찾기 목록 가져오는 메서드

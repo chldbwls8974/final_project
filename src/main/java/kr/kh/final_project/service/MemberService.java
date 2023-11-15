@@ -91,7 +91,7 @@ public interface MemberService {
 	
 	boolean markListAddAndDelete(MarkVO mark);
 	
-	boolean updateProfile(MemberVO member, String fi_name, int[] pr_rg_num, int[] favoriteTime, int[] favoriteHoliTime);
+	boolean updateProfile(MemberVO member, String fi_name);
 	
 	boolean blockListAddAndDelete(BlockVO block);
 	

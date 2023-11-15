@@ -131,11 +131,11 @@ input, progress {
 	<hr style="margin-top: 30px;">
 	<div>
 		<div class="profile-head">
-			<img src="<c:url value='/memberimg${user.me_profile}'/>" class="myprofile-image-thumb" alt="프로필 사진">
+			<img src="<c:url value='/memberimg${member.me_profile}'/>" class="myprofile-image-thumb" alt="프로필 사진">
 			<p class="title">${member.me_name }</p> 
 			<p style="color: #777777; font-size: 18px;">${member.me_id}</p>
 			<div class="myedit">
-				<a href="<c:url value='/member/myedit?me_num=${user.me_num}'/>" class="myprofile-btn">
+				<a href="<c:url value='/member/myedit?me_num=${member.me_num}'/>" class="myprofile-btn">
 					<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg"
 						style="width: 24px; height: 24px; margin-right: 5px;" alt="프로필 수정">
 					<p style="font-size: 14px;">프로필 수정하기</p>
@@ -388,6 +388,12 @@ input, progress {
 </body>
 <script type="text/javascript">
 
+	// 수정사항 실시간 적용
+	$(document).ready(function() {
+		getUserInformation()
+	});
+	
+
 	//즐겨찾기, 차단리스트를 가져오는 함수
 	$(document).ready(function() {
 		//본인 프로필이면 버튼 숨기기
@@ -437,6 +443,10 @@ input, progress {
 			}
 		});
 	}
+	
+	
+	
+	
 		
 </script>
 </html>

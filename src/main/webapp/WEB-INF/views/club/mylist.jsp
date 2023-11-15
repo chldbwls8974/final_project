@@ -19,15 +19,15 @@
 	display: flex; justify-content: center; text-align: center;
 }
 
-.memberlist-box, .rookielist-box{ margin: 20px; text-align: center;}
+.memberlist-box, .rookielist-box, .leaderlist-box{ margin: 20px; text-align: center;}
 .title{ font-size: 30px; font-weight: bolder; text-align: center;
 		 letter-spacing: -3px;
 }
-.memberlist-control, .rookielist-control{
+.memberlist-control, .rookielist-control, .leaderlist-control{
 	padding: 20px; background-color: #f0f0f0; border-radius: 40px;
 	margin-bottom: 30px;
 }
-.memberlist-link, .rookielist-link{ display:inline-block; }
+.memberlist-link, .rookielist-link, .leaderlist-link{ display:inline-block; }
 
 
 </style>
@@ -35,6 +35,7 @@
 <body>
  <div class="btn-group">
     <button type="button" class="btn btn-primary" name="member-tag">회원</button>
+    <button type="button" class="btn btn-primary" name="leader-tag">리더</button>
     <button type="button" class="btn btn-primary" name="rookie-tag">승인대기</button>
   </div>
 	<div class="body-container">
@@ -43,6 +44,25 @@
 			<ul class="memberlist-control">
 				<c:forEach items="${memberlist}" var="list">
 					<li class="memberlist-link">
+						<a href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>">
+							<div class="emblem">
+								<img alt="엠블럼"
+									src="<c:url value='https://ifh.cc/g/v9LAF1.jpg'/>"
+									style="width: 70px; height: 70px; border-radius: 50%">
+							</div>
+							<div>
+								<span>${list.cl_name }</span> <span>${list.cl_rg_num }</span>
+							</div>
+						</a>
+					</li>
+				</c:forEach>
+			</ul>
+		</div>
+		<div class="leaderlist-box">
+			<p class="title">‘LEADER’ 등급인 클럽</p>
+			<ul class="leaderlist-control">
+				<c:forEach items="${leaderlist}" var="list">
+					<li class="leaderlist-link">
 						<a href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>">
 							<div class="emblem">
 								<img alt="엠블럼"
@@ -81,14 +101,23 @@
 	<script type="text/javascript">
 	// 표 전환
 	$('.rookielist-box').hide();
+	$('.leaderlist-box').hide();
 	
 	$(document).on('click','[name = member-tag]',function(){
 		$('.memberlist-box').show();
+		$('.leaderlist-box').hide();
 		$('.rookielist-box').hide();
 	})
 	$(document).on('click','[name=rookie-tag]',function(){
 		$('.memberlist-box').hide();
 		$('.rookielist-box').show();
+		$('.leaderlist-box').hide();
+		
+	})
+	$(document).on('click','[name=leader-tag]',function(){
+		$('.memberlist-box').hide();
+		$('.rookielist-box').hide();
+		$('.leaderlist-box').show();
 		
 	})
 	</script>
