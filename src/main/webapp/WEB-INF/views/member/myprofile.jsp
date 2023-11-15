@@ -84,7 +84,7 @@
 	}
 
 	.profile-head{ 
-		text-align: center; padding: 60px;
+		text-align: center; padding: 60px 60px 20px 60px;
 		background-color: #f2f2f2; border-radius: 20px;
 		margin: 0 30px 0 30px; height: auto; width: 250px;
 	}
@@ -116,30 +116,31 @@
 		width: 120px; height: 40px; margin: auto auto 10px; border: none;
 		border-radius: 5px; background-color: #c2f296; color: black;
 	}
-/* 모달 */
-.modal--bg {
-	display: none;
-	position: fixed;
-	top: 0%;
-	left: 0%;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.3);
-	justify-content: center;
-	align-items: center;
-}
-
-.modal--content {
-	background-color: white;
-	padding: 20px;
-	border-radius: 5px;
-	max-width: 600px;
-	margin: 200px auto;
+	/* 모달 */
+	.modal--bg {
+		z-index: 1000;
+		display: none;
+		position: fixed;
+		top: 0%;
+		left: 0%;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.3);
+		justify-content: center;
+		align-items: center;
+	}
 	
-}
-    </style>
-
+	.modal--content {
+		background-color: white;
+		padding: 20px;
+		border-radius: 5px;
+		max-width: 600px;
+		margin: 200px auto;
+		
+	}
+	
 </style>
+
 </head>
 <body>
 <div class="container-body">
@@ -149,15 +150,24 @@
 			<img src="<c:url value='/memberimg${member.me_profile}'/>" class="myprofile-image-thumb" alt="프로필 사진">
 			<p class="title">${member.me_name }</p> 
 			<p style="color: #777777; font-size: 18px;">${member.me_id}</p>
-			<c:if test="${user.me_num == member.me_num }">
+		<c:if test="${user.me_num == member.me_num }">	
+			<div style="margin-top: 50px;">
 				<div class="myedit">
 					<a href="<c:url value='/member/myedit?me_num=${member.me_num}'/>" class="myprofile-btn">
-						<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg"
-							style="width: 24px; height: 24px; margin-right: 5px;" alt="프로필 수정">
+						<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_profile.svg"
+							style="width: 20px; height: 20px; margin-right: 5px;" alt="프로필 수정">
 						<p style="font-size: 14px;">프로필 수정하기</p>
 					</a>
 				</div>
-			</c:if>
+				<div class="myedit">
+					<a class="nav-link" id="email-signout" href="<c:url value='/member/signout'/>" style="padding: 0;">
+						<img src="	https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg"
+						style="width: 24px; height: 24px; margin-right: 5px;" alt="회원 탈퇴">
+						<p style="font-size: 14px;">회원탈퇴</p>
+					</a>
+				</div>
+			</div>
+		</c:if>	
 		</div>	
 		<div class="profile-head2">
 			<button class="btn-add">즐겨찾기</button>
@@ -191,24 +201,24 @@
 				</c:forEach>
 			</div>
 		</div>
-		<c:if test="${user.me_num == member.me_num }">
-			<div class="myregion-edit">
-				<a href="#" class="myregion-edit-btn">
-					<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg"
-						style="width: 24px; height: 24px; margin-right: 5px;" alt="선호 지역 수정" >
-					<p style="font-size: 14px;">선호 지역 수정하기</p>
-				</a>
-			</div>
-		</c:if>
-<!-- 		선호 지역 수정 모달 -->
+	<c:if test="${user.me_num == member.me_num }">
+		<div class="myregion-edit" style="position: relative;">
+			<a href="#" class="myregion-edit-btn" style="position: absolute; right: 0;">
+				<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg"
+					style="width: 24px; height: 24px; margin-right: 5px;" alt="선호 지역 수정" >
+				<p style="font-size: 14px;">선호 지역 수정하기</p>
+			</a>
+		</div>
+	</c:if>	
+	<!-- 선호 지역 수정 모달 -->
 	<!-- 모달창 -->
 		<div class="modal--bg region--modal">
 		<div class="modal--content">
-			<p style="font-size: 20px; font-weight: bolder; margin: 0 auto; border-bottom: 8px solid #c2f296; width: 20%; padding: 20px 0 10px 0; text-align: center;">선호 지역 수정</p>
+			<p style="font-size: 20px; font-weight: bolder; margin: 20px auto; border-bottom: 8px solid #c2f296; width: 30%; padding: 20px 0 10px 0; text-align: center;">선호 지역 수정</p>
 			<form class="modal-form" action="<c:url value='/member/update/region'/>" method="post">
 			<input type="hidden" name="me_num" value="${member.me_num}">
 				<div class="prefer-area">
-					<div class="form-group">
+					<div class="form-group" style="display: block;">
 						<select class="form-control pre_rg_main">
 							<option value="0">대분류를 선택하세요</option>
 							<c:forEach items="${MainRegion}" var="main">
@@ -217,7 +227,7 @@
 						</select>
 	
 					</div>
-					<div class="form-group">
+					<div class="form-group" style="display: block;">
 						<select class="form-control rg_sub" name="pr_rg_num">
 							<option value="0">소분류를 선택하세요</option>
 							<c:forEach items="${SubRegion}" var="sub">
@@ -227,7 +237,7 @@
 					</div>
 				</div>
 
-				<div class="form-group">
+				<div class="form-group" style="display: block;">
 					<button type="button" class="form-control" name="add-area-btn">지역추가</button>
 				</div>
 			
@@ -242,7 +252,7 @@
 	    
 	    
 		<div class="form-group" style="display: inline;">
-			<label style="border-top: 7px solid #c2f296; padding: 5px 0 10px 0;">
+			<label style="border-top: 7px solid #c2f296; padding: 5px 0 10px 0; margin-top: 60px;">
 				평일 선호 시간</label>
 			<ul class="chip">
 				<li class="chip__item--3">
@@ -447,15 +457,15 @@
                 </ul>
 			</div>
 		</div>
-		<c:if test="${user.me_num == member.me_num }">
-			<div class="mytime-edit">
-				<a href="#" class="mytime-edit-btn">
-					<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg"
-						style="width: 24px; height: 24px; margin-right: 5px;" alt="선호 시간 수정">
-					<p style="font-size: 14px;">선호 시간 수정하기</p>
-				</a>
-			</div>
-		</c:if>
+	<c:if test="${user.me_num == member.me_num }">	
+		<div class="mytime-edit" style="position: relative;">
+			<a href="#" class="mytime-edit-btn" style="position: absolute; right: 80px; bottom: 0;">
+				<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg"
+					style="width: 24px; height: 24px; margin-right: 5px;" alt="선호 시간 수정">
+				<p style="font-size: 14px;">선호 시간 수정하기</p>
+			</a>
+		</div>
+	</c:if>	
 		
 		<!--  선호 시간수정 모달 -->
 	<!-- 모달창 -->
@@ -807,7 +817,7 @@
 				 str+=`
 				 	<hr>
 					 <div class="prefer-area">
-						<div class="form-group">
+						<div class="form-group" style="display: block;">
 							<select class="form-control pre_rg_main">
 								<option value="0">대분류를 선택하세요</option>
 								<c:forEach items="${MainRegion}" var="main">
@@ -816,7 +826,7 @@
 							</select>
 
 						</div>
-						<div class="form-group">
+						<div class="form-group" style="display: block;">
 							<select class="form-control rg_sub" name="pr_rg_num">
 								<option value="0">소분류를 선택하세요</option>
 								<c:forEach items="${SubRegion}" var="sub">
@@ -828,7 +838,7 @@
 
 				 `;
 				btn+=`
-				<div class="form-group">
+				<div class="form-group" style="display: block;">
 					<button type="button" class="form-control" name="add-area-btn">지역 추가</button>
 					</div>
 				`; 
