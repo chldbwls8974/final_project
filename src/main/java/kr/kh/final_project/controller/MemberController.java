@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.pagination.PageMaker;
+import kr.kh.final_project.service.BlockService;
 import kr.kh.final_project.service.ClubService;
 import kr.kh.final_project.service.MatchService;
 import kr.kh.final_project.service.MemberService;
@@ -50,6 +51,8 @@ public class MemberController {
 	RegionService regionService;
 	@Autowired
 	ClubService clubService;
+	@Autowired
+	BlockService blockService;
 	
 	String uploadPath = "D:\\uploadprofile\\member";
 
@@ -304,6 +307,70 @@ public class MemberController {
 		map.put("res",res);//jsp로 전달
 		return map;
 	}
+	// 차단회원 검색기능
+	@ResponseBody
+	@PostMapping("/member/searchfilterByBlocked")
+	 public Map<String, Object>searchMembersByBlocked(HttpSession session, @RequestParam String searchType, @RequestParam String keyword, Model model) {
+		MemberVO user = (MemberVO) session.getAttribute("user");
+		 Map<String, Object> map = new HashMap<String, Object>();
+		 List<MemberVO> dbMemberList; //회원목록 리스트 선언
+		 boolean res = false; //검색 결과 변수 초기화
+		 
+		if("id".equals(searchType)) { //아이디로 검색하면 그 값을 memberList에 저장
+			dbMemberList = memberService.searchMemberById(keyword);
+		}else { //이름으로 검색하면 그 값을 memberList에 저장
+			dbMemberList = memberService.searchMemberByName(keyword);
+		} //검색결과가 있으면 res를 true로
+		if(dbMemberList != null) {
+			res = true;
+		}
+		//dbMemberList = 검색에 맞는 회원리스트
+		List<MemberVO> memberList = new ArrayList<MemberVO>();
+		List<BlockVO> blockList = blockService.getBlockList(user.getMe_num());
+		for(MemberVO member : dbMemberList) {
+			for(BlockVO block : blockList) {
+				if(member.getMe_num()==block.getBl_blocked_num()) {
+					memberList.add(member);
+				}
+			}
+		}
+		
+		map.put("memberList", memberList);//map에 저장 후 jsp로 전달
+		map.put("res", res);//jsp로 전달
+		return map;
+	}
+	// 즐겨찾기회원 검색기능
+		@ResponseBody
+		@PostMapping("/member/searchfilterByFriend")
+		 public Map<String, Object>searchfilterByFriend(HttpSession session, @RequestParam String searchType, @RequestParam String keyword, Model model) {
+			MemberVO user = (MemberVO) session.getAttribute("user");
+			 Map<String, Object> map = new HashMap<String, Object>();
+			 List<MemberVO> dbMemberList; //회원목록 리스트 선언
+			 boolean res = false; //검색 결과 변수 초기화
+			 
+			if("id".equals(searchType)) { //아이디로 검색하면 그 값을 memberList에 저장
+				dbMemberList = memberService.searchMemberById(keyword);
+			}else { //이름으로 검색하면 그 값을 memberList에 저장
+				dbMemberList = memberService.searchMemberByName(keyword);
+			} //검색결과가 있으면 res를 true로
+			if(dbMemberList != null) {
+				res = true;
+			}
+			//dbMemberList = 검색에 맞는 회원리스트
+			List<MemberVO> memberList = new ArrayList<MemberVO>();
+			List<MarkVO> markList = memberService.getMyMarkList(user);
+			for(MemberVO member : dbMemberList) {
+				for(MarkVO mark : markList) {
+					if(member.getMe_num()==mark.getMa_marked_num()) {
+						memberList.add(member);
+					}
+				}
+			}
+			
+			map.put("memberList", memberList);//map에 저장 후 jsp로 전달
+			map.put("res", res);//jsp로 전달
+			return map;
+		}
 	
 	@GetMapping("/member/myedit")
 	public String myProfile(Model model,HttpSession session) {
@@ -463,11 +530,29 @@ public class MemberController {
 		
 	//마이페이지-즐찾 및 차단조회 페이지
 	@GetMapping("/member/friendlist")
-	public String friendlist() {
+	public String friendlist(Model model, Criteria cri, HttpSession session) {
+		// 로그인한 사람의 즐겨찾기 목록을 가져오기 위해 지금 로그인한 사람을 user에 저장
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		//즐찾된 사람 리스트 조회하기.
+		List<MarkVO> markList = memberService.getMyMarkList(user);
+		//즐겨찾기 리스트 들고왔음
+		//즐겨찾기 리스트에 있는 사람들이랑 똑같은 멤버리스트 들고옴
+		List<MemberVO> memberListByMark = memberService.getMemberMarkList(markList);
+		model.addAttribute("memberListByMark", memberListByMark);
+		
 		return "/member/friendlist";
 	}
 	@GetMapping("/member/blocklist")
-	public String blocklist() {
+	public String blocklist(Model model, Criteria cri, HttpSession session) {
+		// 로그인한 사람의 차단 목록을 가져오기 위해 지금 로그인한 사람을 user에 저장
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		//차단된 사람 리스트 조회하기.
+		List<BlockVO> blockList = blockService.getBlockList(user.getMe_num());
+		//블랙리스트 들고왔음
+		//블랙리스트에 있는 사람들이랑 똑같은 멤버리스트 들고옴
+		List<MemberVO> memberListByBlock = memberService.getBlockMemberList(blockList);
+		model.addAttribute("memberListByBlock", memberListByBlock);
+		
 		return "/member/blocklist";
 	}
 	

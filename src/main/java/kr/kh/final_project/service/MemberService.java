@@ -96,6 +96,10 @@ public interface MemberService {
 	boolean updateProfile(MemberVO member, String fi_name);
 	
 	boolean blockListAddAndDelete(BlockVO block);
+	// 내가차단한 회원 정보 가져오기
+	List<MemberVO> getBlockMemberList(List<BlockVO> blockList);
+	// 내가 즐겨찾기한 회원 정보 가져오기
+	List<MemberVO> getMemberMarkList(List<MarkVO> markList);
 	
 	Message updatePreferRegion(int me_num, int[] pr_rg_num);
 	

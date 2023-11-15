@@ -11,6 +11,9 @@ public class BlockVO {
 	private int bl_blocked_num;
 	
 	private int me_num;
+	private String me_nickname;
+	private String me_profile;
 	
 	private int bo_me_num;
+	
 }

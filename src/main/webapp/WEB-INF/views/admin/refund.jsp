@@ -98,9 +98,9 @@
 </style>
 <body>
 	<div class="refund-navigation" style="margin-top: 50px; text-align: center;">
-		<p style="font-size: 35px; width: 27%; font-weight: bolder; margin: 30px auto; padding: 20px 0 10px 0; border-bottom: 10px solid #c2f296;">
+		<p style="font-size: 35px; width: 27%; font-weight: bolder; margin: 30px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
 		포인트 환급 관리</p>
-	</div>>
+	</div>
 
 	<form action="<c:url value='/admin/refund'/>" method="post">
 		<div class="refund-navigation" style="margin: 30px 0 30px 0; text-align: center;">

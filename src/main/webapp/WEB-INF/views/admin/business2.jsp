@@ -85,7 +85,7 @@
 <body>
 <div class="businessman-search">
 	<div class="businessman-search-navigation" style="margin-top: 50px; text-align: center;">
-		<p style="font-size: 35px; width: 23%; font-weight: bolder; margin: 30px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
+		<p style="font-size: 35px; width: 27%; font-weight: bolder; margin: 30px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
 		사업자 권한 조회</p>
 	</div>
 	<!-- 사업자권한 조회 -->
