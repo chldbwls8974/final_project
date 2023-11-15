@@ -532,7 +532,7 @@ public class MemberServiceImp implements MemberService{
 				prTimeHoliday.add(tmp);
 			}
 		}
-		List<Integer> holiTime = new ArrayList<>(); 
+		List<Integer> holiTime = new ArrayList<Integer>(); 
 		for(PreferredTimeVO i : prTimeHoliday ) {
 			holiTime.add(i.getPt_ti_num());
 		}
