@@ -63,11 +63,6 @@
 				<button class="su-btn btn-submit">수정하기</button>
 			</div>
 		</div>
-		<div class="box">
-			<input class="fileupload-name" value="첨부파일" placeholder="첨부파일" readonly>
-			<label for="file2" class="file-btn">업로드</label>
-			<input type="file" class="form-control" name="file" id="file2" style="display: none;"> <br>
-		</div>
 	</form>
 	<script type="text/javascript">
 	$('#summernote').summernote({
