@@ -3,18 +3,18 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.final_project.dao.ExtraDAO">
-	<select id="selectThirdWeekDayList" resultType="kr.kh.final_project.vo.ExtraVO">
+	<select id="selectWeekDayList" resultType="kr.kh.final_project.vo.ExtraVO">
 		select
 		    date_add(curdate(), interval n day) as date,
 		    (select substr('일월화수목금토', dayofweek(date(adddate(now(), interval n day))), 1)) as day_of_week
 		from
-		    (select 14 as n union all
-		     select 15 union all
-		     select 16 union all
-		     select 17 union all
-		     select 18 union all
-		     select 19 union all
-		     select 20) numbers
-		where n between 14 and 20;
+		    (select #{i} * 7 + 0 as n union all
+		     select #{i} * 7 + 1 union all
+		     select #{i} * 7 + 2 union all
+		     select #{i} * 7 + 3 union all
+		     select #{i} * 7 + 4 union all
+		     select #{i} * 7 + 5 union all
+		     select #{i} * 7 + 6) numbers
+		where n between #{i} * 7 + 0 and #{i} * 7 + 6;
 	</select>
 </mapper>

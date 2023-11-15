@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.final_project.dao.QuarterDAO">
+	<select id="selectQuarterListByMtNum" resultType="kr.kh.final_project.vo.QuarterVO">
+		select
+			`quarter`.*,
+		    t1.te_type as team1,
+		    t2.te_type as team2
+		from
+			`quarter`
+				join
+			team as t1 on qu_te_num1 = t1.te_num
+				join
+			team as t2 on qu_te_num2 = t2.te_num
+		where
+			qu_mt_num = #{mt_num}
+		order by
+			qu_num asc
+	</select>
+	<insert id="insertQuarter">
+		insert into `quarter`(qu_mt_num, qu_te_num1, qu_goal1, qu_te_num2, qu_goal2)
+		values
+			(#{quarter.qu_mt_num}, #{quarter.qu_te_num1}, #{quarter.qu_goal1}, #{quarter.qu_te_num2}, #{quarter.qu_goal2})
+	</insert>
+	<update id="updateQuarter">
+		update `quarter`
+		set
+			qu_te_num1 = #{quarter.qu_te_num1},
+			qu_te_num2 = #{quarter.qu_te_num2},
+			qu_goal1 = #{quarter.qu_goal1},
+			qu_goal2 = #{quarter.qu_goal2}
+		where
+			qu_num = #{quarter.qu_num}
+	</update>
+	<delete id="deleteQuarter">
+		delete from `quarter`
+		where
+			qu_num = #{qu_num}
+	</delete>
+	<select id="countQuarterByMtNum" resultType="int">
+		select
+			count(*)
+		from
+			`quarter`
+		where
+			qu_mt_num = #{mt_num}
+	</select>
+</mapper>

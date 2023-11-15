@@ -14,7 +14,8 @@
 	}
 	.body-double{ display: flex; margin-top: 10px; padding: 20px;
 	}
-	li img, .myprofile-btn img{ width: 30px; height: 30px; float: left;
+	li img, .myprofile-btn img{
+		width: 30px; height: 30px; float: left;
 		padding-right: 0; margin-right: 10px;
 	}
 	li{ list-style-type: none; padding: 12px 0;
@@ -30,12 +31,15 @@
 		width: 100%;
 	}
 	.body-double{ }
-	.body-right{ background-color: #f2f2f2; border-radius: 20px; 
+	.body-right{
+		background-color: #f2f2f2; border-radius: 20px; 
 		width: 100%; height: auto; padding: 20px;
 	}
-	.myprofile-image-thumb{ width: 70px; height: 70px; border-radius: 50%;
+	.myprofile-image-thumb{
+		width: 70px; height: 70px; border-radius: 50%;
 		 margin-right: 10px;}
-	.myedit, .myprofile-detail{ width: 140px; height: 40px; border-radius: 20px;
+	.myedit, .myprofile-detail{
+		width: 140px; height: 40px; border-radius: 20px;
 		padding: 0;
 	}
 	.btn-box{ display: inline-block;}
@@ -45,19 +49,30 @@
 		width: 50%; height: 150px; border-radius: 20px; margin: 20px 20px 20px 0;
 		padding: 20px; background-color: #d7fdb5; position: relative;
 	}	
-	.mytier-thumb{ background-color: #f2f2f2; border-radius:20px; padding:20px;
+	.mytier-thumb{
+		background-color: #f2f2f2; border-radius:20px; padding:20px;
 		position: relative; margin: 20px 0 20px 0; width: 50%; height: 150px;
 	}
-	.mytier-title{ display: flex; align-items: center; justify-content: flex-start;
+	.mytier-title{
+		display: flex; align-items: center; justify-content: flex-start;
 		font-size:large; font-weight: bolder;
 	}
 	.mytier-box{
 		display: flex; justify-content: flex-start; margin-top: 20px;
 	}
-	.myclub-thumb{ width: 100%; height: auto; border-radius:20px;
+	.myclub-thumb{
+		width: 100%; height: auto; border-radius:30px;
 		background-color: #f2f2f2; padding: 20px; margin: 0 20px 20px 0; 
 	}
 	.mymenu-list li{ text-align: left;}
+	
+	.memberlist-control, .leaderlist-control, .rookielist-control{ padding: 0;}
+	.memberlist-link, .leaderlist-link, .rookielist-link{ padding: 0 0 5px 0;}
+	.memberlist-box p, .leaderlist-box p, .rookielist-box p{ font-size: 14px; margin-left: 10px;}
+	.club-btn{
+		width: 40px; height: 30px; margin: 0 3px 0 0; border: none; font-size: 13px;
+		border-radius: 5px; background-color: #c7efa2; color: black;
+	}
 	
 </style>
 
@@ -127,12 +142,15 @@
 						</div>
 					</div>	
 					<div class="myclub-thumb">
-						<p style="font-size:large; font-weight: bolder; margin-bottom: 20px;">소속 클럽</p>
-						<div class="btn-group">
-						    <button type="button" class="btn btn-primary" name="member-tag">회원</button>
-						    <button type="button" class="btn btn-primary" name="leader-tag">리더</button>
-						    <button type="button" class="btn btn-primary" name="rookie-tag">승인대기</button>
-						  </div>
+						<div style="display: flex; justify-content: space-between;">
+							<p style="font-size:large; font-weight: bolder; margin-bottom: 20px;">소속 클럽</p>
+							<div class="btn-group">
+							    <button type="button" class="club-btn" name="member-tag">회원</button>
+							    <button type="button" class="club-btn" name="leader-tag">리더</button>
+							    <button type="button" class="club-btn" name="rookie-tag" style="width: 90px;">
+							    	승인 대기중</button>
+							</div>
+						</div>	
 							<div class="body-container">
 								<div class="memberlist-box">
 									<p class="title">‘MEMBER’ 등급인 클럽</p>
@@ -140,13 +158,15 @@
 										<c:forEach items="${memberlist}" var="list">
 											<li class="memberlist-link">
 												<a href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>">
-													<div class="emblem">
-														<img alt="엠블럼"
-															src="<c:url value='/clubimg${list.cl_emblem }'/>"
-															style="width: 70px; height: 70px; border-radius: 50%">
-													</div>
-													<div>
-														<span>${list.cl_name }</span> <span>${list.cl_rg_num }</span>
+													<div style="display: flex;">
+														<div class="emblem">
+															<img alt="엠블럼"
+																src="<c:url value='/clubimg${list.cl_emblem }'/>"
+																style="width: 60px; height: 60px; border-radius: 50%">
+														</div>
+														<div style="margin-top: 20px;">
+															<span>${list.cl_name }</span> <span>${list.cl_rg_num }</span>
+														</div>
 													</div>
 												</a>
 											</li>
@@ -159,13 +179,15 @@
 										<c:forEach items="${leaderlist}" var="list">
 											<li class="leaderlist-link">
 												<a href="<c:url value='/clubimg${list.cl_emblem }'/>">
-													<div class="emblem">
-														<img alt="엠블럼"
-															src="<c:url value='https://ifh.cc/g/v9LAF1.jpg'/>"
-															style="width: 70px; height: 70px; border-radius: 50%">
-													</div>
-													<div>
-														<span>${list.cl_name }</span> <span>${list.cl_rg_num }</span>
+													<div style="display: flex;">
+														<div class="emblem">
+															<img alt="엠블럼"
+																src="<c:url value='https://ifh.cc/g/v9LAF1.jpg'/>"
+																style="width: 60px; height: 60px; border-radius: 50%">
+														</div>
+														<div style="margin-top: 20px;">
+															<span>${list.cl_name }</span> <span>${list.cl_rg_num }</span>
+														</div>
 													</div>
 												</a>
 											</li>
@@ -178,13 +200,15 @@
 										<c:forEach items="${rookielist}" var="list">
 											<li class="rookielist-link">
 												<a href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>">
-													<div>
-														<img alt="엠블럼"
-															src="<c:url value='/clubimg${list.cl_emblem }'/>"
-															style="width: 70px; height: 70px; border-radius: 50%">
-													</div>
-													<div>
-														<span>${list.cl_name }</span> <span>${list.cl_rg_num }</span>
+													<div style="display: flex;">
+														<div>
+															<img alt="엠블럼"
+																src="<c:url value='/clubimg${list.cl_emblem }'/>"
+																style="width: 60px; height: 60px; border-radius: 50%">
+														</div>
+														<div style="margin-top: 20px;">
+															<span>${list.cl_name }</span> <span>${list.cl_rg_num }</span>
+														</div>
 													</div>
 												</a>
 											</li>
@@ -218,12 +242,6 @@
 							<img src="	https://d31wz4d3hgve8q.cloudfront.net/media/ic_crown.svg" width="24px" height="24px" alt="나의 티어">
 							<p>나의 티어</p>
 						</a>
-						</li>
-						<li>
-							<a href="<c:url value='/club/mylist'/>">
-							<img src="https://cdn.icon-icons.com/icons2/2556/PNG/512/team_friends_partners_partner_icon_153084.png" width="24px" height="24px" alt="소속 클럽">
-							<p>소속 클럽</p>
-							</a>
 						</li>
 						<li>
 							<a href="<c:url value='/member/search'/>">
@@ -266,9 +284,6 @@
 							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_manner_card.svg" width="24px" height="24px" alt="포인트 환급">
 							<p>포인트 환급</p>
 							</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" id="email-signout" href="<c:url value='/member/signout'/>">회원탈퇴</a>
 						</li>
 					</ul>
 				</div>
