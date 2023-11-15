@@ -4,19 +4,24 @@
 <head>
 	<title>매치 페이지</title>
 	<style type="text/css">
-	nav{width: 100%; display: flex;}
+	nav{width: 100%;}
 	input{text-align: right;}
-	.left-box{flex: 2;}
-	.right-box{flex: 1; height: 500px; padding-left: 10px}
-	.contents-box{padding-top: 10px}
+	.left-box{}
+	.right-box{ display: flex; height: 500px; padding-left: 10px}
+	.contents-box{padding: 10px}
 	.info-box{
-	width: 100%; background-color: white; height: 300px; margin-bottom: 10px;
-	border: 3px solid black; box-sizing: border-box;
+		width: 100%; background-color: #f2f2f2; height: 300px; margin-bottom: 10px;
+		border-radius: 20px; box-sizing: border-box;
 	}
 	.right-side-box{
-	width: 100%; height: 200px; float: right; margin-bottom: 10px;
-	border: 3px solid black; box-sizing: border-box;
+		width: 100%; height: 200px; float: right; margin: 0 10px 10px 10px;
+		border-radius: 20px; background-color: #e5f4d8;  box-sizing: border-box;
 	}
+	.right-side-box p{
+		font-size: 20px; font-weight: bolder; margin: 0 auto;
+		padding: 50px 0 30px 0; text-align: center;
+	}
+	.right-side-box div{ text-align: center;}
 	.team-box{display: flex; background-color: black;}
 	.teamList-box{flex: 1; margin-right: 3px; background-color: white;}
 	.teamList-box:last-child {margin-right: 0;}
@@ -31,8 +36,9 @@
 	</style>
 </head>
 <body>
-	<h1>매치 페이지</h1>
-	<nav class="container">
+	<p style="font-size: 35px; font-weight: bolder; margin: 50px auto; border-bottom: 8px solid #c2f296;
+	width: 20%; padding: 30px 0 10px 0; text-align: center;">매치 페이지</p>
+	<nav class="container-body">
 		<div class="contents-box left-box">
 			<div class="info-box match-box">
 			${match}
@@ -46,32 +52,43 @@
 			<c:if test="${(match.mt_type == 0 && cl_num == 0) || (match.mt_type == 1 && cl_num == 0)}">
 				<c:if test="${match.entry_res == 0}">
 					<div class="application-box right-side-box">
-						<h4>개인 매치 신청</h4>
-						<span>비용 : ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}포인트/2시간</span>
-						<input type="text" class="total-price" disabled value="${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}"> <br>
-						<button class="btn btn-outline-primary btn-application">신청</button>
+						<div>
+							<p>개인 매치 신청</p>
+							<span>비용 : ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}포인트/2시간</span>
+							<input type="text" class="total-price" disabled value="${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}"> <br>
+							<button class="btn btn-outline-primary btn-application">신청</button>
+						</div>
 					</div>
 					<div class="coupon-box right-side-box">
-						<h4>보유 쿠폰</h4>
-						<c:forEach items="${couponList}" var="co">
-							<div>
-								<input type="radio" name="coupon" value="${co.hp_num}">${co.cp_source}(${co.cp_sale}) <br>
-								<input type="text" class="sale-point" value="${co.cp_sale}" hidden>
-							</div>
-						</c:forEach>
+						<div>
+							<p>보유 쿠폰</p>
+							<c:forEach items="${couponList}" var="co">
+								<div>
+									<input type="radio" name="coupon" value="${co.hp_num}">${co.cp_source}(${co.cp_sale}) <br>
+									<input type="text" class="sale-point" value="${co.cp_sale}" hidden>
+								</div>
+							</c:forEach>
+						</div>
 					</div>
 				</c:if>
 				<c:if test="${match.entry_res != 0}">
 					<div class="cansel-box right-side-box">
-						<h4>취소</h4>
-						<button class="btn btn-outline-danger btn-cansel">취소</button>
+						<div>
+							<p>취소</p>
+							<button class="btn btn-cansel"
+									style="width: 100px; height: 40px; border: none; 
+									border-radius: 5px; background-color: black; color: white;">
+								취소</button>
+						</div>	
 					</div>
 					<c:if test="${match.entry_res == 1 && match.ready==1}">
 						<div class="entry-list-box right-side-box">
-							<h4>참가자 리스트</h4>
-							<c:forEach items="${entryList}" var="el">
-								<span>${el.me_nickname}(${el.me_tr_name})</span> <br>
-							</c:forEach>
+							<div>
+								<p>참가자 리스트</p>
+								<c:forEach items="${entryList}" var="el">
+									<span>${el.me_nickname}(${el.me_tr_name})</span> <br>
+								</c:forEach>
+							</div>
 						</div>
 					</c:if>
 				</c:if>
@@ -79,16 +96,23 @@
 			<c:if test="${(match.mt_type == 0 && cl_num != 0) || (match.mt_type == 2 && cl_num != 0)}">
 				<c:if test="${match.entry_res == 0}">
 					<div class="application-box right-side-box">
-						<h4>클럽 매치 신청</h4>
-						<span>비용 : ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}포인트/2시간</span>
-						<input type="text" class="total-price" disabled value="${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}"> <br>
-						<button class="btn btn-outline-primary btn-application">신청</button>
+						<div>
+							<p>클럽 매치 신청</p>
+							<span>비용 : ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}포인트/2시간</span>
+							<input type="text" class="total-price" disabled value="${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}"> <br>
+							<button class="btn btn-outline-primary btn-application">신청</button>
+						</div>
 					</div>
 				</c:if>
 				<c:if test="${match.entry_res != 0}">
 					<div class="cansel-box right-side-box">
-						<h4>취소</h4>
-						<button class="btn btn-outline-danger btn-cansel">취소</button>
+						<div>
+							<p>취소</p>
+							<button class="btn btn-cansel"
+									style="width: 100px; height: 40px; border: none;
+									border-radius: 5px; background-color: black; color: white;">
+								취소</button>
+						</div>	
 					</div>
 					<div class="club-list-box right-side-box">
 						<div class="club-member-box">
