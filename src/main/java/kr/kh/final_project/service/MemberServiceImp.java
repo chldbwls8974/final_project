@@ -11,7 +11,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.dao.BlockDAO;
 import kr.kh.final_project.dao.HoldingCouponDAO;
@@ -513,7 +512,7 @@ public class MemberServiceImp implements MemberService{
 			}
 		}
 		
-		List<Integer> weekTime = new ArrayList<>(); 
+		List<Integer> weekTime = new ArrayList<Integer>(); 
 		for(PreferredTimeVO i : prTimeWeekday ) {
 			weekTime.add(i.getPt_ti_num());
 		}
@@ -532,7 +531,7 @@ public class MemberServiceImp implements MemberService{
 				prTimeHoliday.add(tmp);
 			}
 		}
-		List<Integer> holiTime = new ArrayList<>(); 
+		List<Integer> holiTime = new ArrayList<Integer>(); 
 		for(PreferredTimeVO i : prTimeHoliday ) {
 			holiTime.add(i.getPt_ti_num());
 		}
