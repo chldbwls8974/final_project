@@ -7,28 +7,33 @@
 <meta charset="UTF-8">
 <title>경기장 등록</title>
 </head>
+<style>
+	h1{
+		text-align: center;
+	}
+</style>
 <body>
 	<h1 class="display-3"><span style="color: black; font-weight: bold;">경기장 등록</span></h1> <br>
 	<form action="<c:url value='/businessman/stadiumInsert'/>" method="post">
-	  <div class="form-group">
+	  <div class="form-group" hidden="hidden">
 	    <label for="st_fa_num">시설 번호</label>
  	    <input type="text" class="form-control" id="st_fa_num" name="st_fa_num" value="${fa_num}" readonly>
 	  </div>
 	  
 	  <div class="form-group">
-	    <label for="st_name">이름</label>
+	    <label for="st_name" style="font-weight: bold;">경기장 이름</label>
 	    <input type="text" class="form-control" placeholder="경기장 이름을 입력하세요" id="st_name" name="st_name" required>
 	  </div>
 	  
 	  <div class="form-group">
-		<label for="st_locate">위치</label>
+		<label for="st_locate" style="font-weight: bold;">위치</label>
 		  <input type="text" class="form-control" placeholder="경기장 위치를 입력하세요" id="st_locate" name="st_locate" required>
 	  </div>
 	  <br>
 	  
-	  <h5 class="text-info">[체크 사항]</h5>
+	  <h5 class="text-info" style="font-weight: bold;">[체크 사항]</h5>
 	  <div class="form-group">
-	    <label for="st_door" style="font-weight: bold;">실내/실외</label>
+	    <label for="st_door" style="font-weight: bold;">실내/실외</label><br>
 	    <div class="form-check-inline">
 		  <label class="form-check-label">
 		  	<input type="radio" class="form-check-input" name="st_door" value="0" required>실외
@@ -42,7 +47,7 @@
 	  </div>
 	 
 	  <div class="form-group">
-	    <label for="st_floortype" style="font-weight: bold;">바닥 종류</label>
+	    <label for="st_floortype" style="font-weight: bold;">바닥 종류</label><br>
 	    <div class="form-check-inline">
 		  <label class="form-check-label">
 		  	<input type="radio" class="form-check-input" name="st_floortype" value="0" required>인조잔디
@@ -64,10 +69,9 @@
 		  </label>
 		</div>
 	  </div>
-	  <br>
 	  
 	  <div class="form-group">
-	    <label for="st_available" style="font-weight: bold;">이용 가능 여부</label>
+	    <label for="st_available" style="font-weight: bold;">이용 가능 여부</label><br>
 	    <div class="form-check-inline">
 		  <label class="form-check-label">
 		  	<input type="radio" class="form-check-input" name="st_available" value="0" required>가능
@@ -87,7 +91,7 @@
 	  <br>
 	  
 	  <div class="form-group-inline">
-		 <label for="st_width">가로 x 세로(m)</label>
+		 <label for="st_width" style="font-weight: bold;">가로 x 세로(m)</label>
 		 <div class="input-group">
 		    <input type="number" class="form-control text-right" placeholder="가로" name="st_width" id="st_width" oninput="numOnly(this)" max="99999" required>
 		    <div class="input-group-append">
@@ -100,7 +104,7 @@
 	  <br>
 	  
 	  <div class="form-group-inline">
-	    <label for="st_max">최대인원</label>
+	    <label for="st_max" style="font-weight: bold;">최대인원</label>
    		<div class="input-group">
 		    <input type="number" class="form-control text-right" placeholder="최대인원"name="st_max"  id="st_max" oninput="numOnly2(this)" max="99" required>
 	  		<span class="input-group-text">명</span>
@@ -109,12 +113,12 @@
 	  <br>
 	 
 	  <div class="form-group">
-		  <label for="st_note">특이사항</label>
+		  <label for="st_note" style="font-weight: bold;">특이사항</label> &nbsp;<span class="badge badge-secondary">선택</span>
 		  <textarea class="form-control" rows="5" id="st_note" name="st_note"></textarea>
 	  </div>
 	  
-	  <button class="btn btn-secondary btn-block">등록</button>
-	  <button class="btn btn-secondary btn-block">취소</button>
+	  <button class="btn btn-info btn-block">등록</button>
+	  <a class="btn btn-warning btn-block" role="button" href="<c:url value='/businessman/facility'/>">취소</a>
 	</form>
 
 	<script type="text/javascript">	

@@ -31,7 +31,7 @@
 	<div style="width: 20%"></div>
 	<div style="width:60%; text-align: center; padding: 20px 0 20px 0; border-bottom: 1px solid #aaa;">
 		<a class="navbar-brand-link" href="/final_project">
-			<img alt="풋팅" src="https://ifh.cc/g/d23mzy.jpg" style="width: 120px">
+			<img alt="로고" src="https://ifh.cc/g/s2ddYw.png" style="width: 150px">
 		</a>
 	</div>
 	<div style="width: 20%"></div>
@@ -44,9 +44,6 @@
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="#">클럽매치</a>
-			<li class="nav-item">
-				<a class="nav-link" href="#">시설 조회</a>
-			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="<c:url value='/admin/price'/>">가격수정</a>
 			</li>
@@ -62,46 +59,11 @@
 				</div>
 			</li>
 			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-				커뮤니티
-				</a>
-				<div class="dropdown-menu">
-					<c:if test="${user != null && user.me_authority == 'ADMIN'}">
-						<a class="dropdown-item" 
-						   href="<c:url value='/board/notice'/>">공지게시판</a>
-					</c:if>	
-						<a class="dropdown-item" href="<c:url value='/board/free'/>">자유게시판</a>
-						<a class="dropdown-item" href="<c:url value='/board/individual'/>">개인 매칭</a>
-						<a class="dropdown-item" href="<c:url value='/board/club'/>">클럽 매칭</a>
-						<a class="dropdown-item" href="<c:url value='/board/inquiry'/>">문의게시판</a>
-					<c:if test="${user != null && user.me_authority == 'ADMIN'}">
-						<a class="dropdown-item" href="/board/block">게시판 관리</a>
-					</c:if>
-				</div>
-			</li>
-			<c:if test="${user != null && user.me_authority == 'ADMIN'}">
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-					관리자
-					</a>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" href="<c:url value='/admin/member'/>">회원 관리</a>
-						<a class="dropdown-item" href="<c:url value='/admin/manager'/>">매니저 관리</a>
-						<a class="dropdown-item" href="<c:url value='/admin/business'/>">사업자 관리</a>
-						<a class="dropdown-item" href="<c:url value='/admin/refund'/>">포인트 환급 관리</a>
-						<a class="dropdown-item" href="<c:url value='/admin/boardReport'/>">신고 관리</a>
-					</div>
-				</li>
-			</c:if>
-			<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 					커뮤니티
 					</a>
 					<div class="dropdown-menu">
-						<c:if test="${user != null && user.me_authority == 'ADMIN'}">
-							<a class="dropdown-item" 
-							   href="<c:url value='/board/notice'/>">공지게시판</a>
-						</c:if>	
+							<a class="dropdown-item" href="<c:url value='/board/notice'/>">공지게시판</a>
 							<a class="dropdown-item" href="<c:url value='/board/free'/>">자유게시판</a>
 							<a class="dropdown-item" href="<c:url value='/board/individual'/>">개인 매칭</a>
 							<a class="dropdown-item" href="<c:url value='/board/clue'/>">클럽 매칭</a>
@@ -111,21 +73,34 @@
 						</c:if>
 					</div>
 				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+					신청
+					</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="<c:url value='/application/manager'/>">매니저 신청</a>
+						<a class="dropdown-item" href="<c:url value='/application/businessman'/>">사업자 신청</a>
+					</div>
+				</li>
 			</ul>
 		</nav>	
 		<nav class="navbar">	
 			<ul class="navbar-nav-link">
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-					관리자
-					</a>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" href="<c:url value='/businessman/facilityInsert'/>">시설 등록</a>
-						<a class="dropdown-item" href="<c:url value='/businessman/facility'/>">시설 관리</a>
-						<a class="dropdown-item" href="<c:url value='/buisnessman/manage/schedule'/>">스케줄 관리</a>
-						<a class="dropdown-item" href="#">일정 관리</a>
-					</div>
-				</li>
+				<c:if test="${user != null && user.me_authority == 'ADMIN'}">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+						관리자
+						</a>
+						<div class="dropdown-menu">
+							<a class="dropdown-item" href="<c:url value='/admin/member'/>">회원 관리</a>
+							<a class="dropdown-item" href="<c:url value='/admin/boardReport'/>">신고 관리</a>
+							<a class="dropdown-item" href="#">시설 조회</a>
+							<a class="dropdown-item" href="<c:url value='/admin/manager'/>">매니저 관리</a>
+							<a class="dropdown-item" href="<c:url value='/admin/business'/>">사업자 관리</a>
+							<a class="dropdown-item" href="<c:url value='/admin/refund'/>">포인트 환급 관리</a>
+						</div>
+					</li>
+				</c:if>
 				<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 						매니저
@@ -135,27 +110,20 @@
 							<a class="dropdown-item" href="<c:url value='/manager/manage/schedule'/>">일정 관리</a>
 						</div>
 				</li>
-				<li class="nav-item dropdown">
+				<c:if test="${user != null && user.me_authority == 'BUSINESS'}">
+					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 						사업자
 						</a>
 						<div class="dropdown-menu">
 							<a class="dropdown-item" href="<c:url value='/businessman/facilityInsert'/>">시설 등록</a>
 							<a class="dropdown-item" href="<c:url value='/businessman/facility'/>">시설 관리</a>
-							<a class="dropdown-item" href="<c:url value='/businessman/stadiumInsert'/>">경기장 등록</a>
 							<a class="dropdown-item" href="<c:url value='/buisnessman/manage/schedule'/>">스케줄 관리</a>
 							<a class="dropdown-item" href="#">일정 관리</a>
 						</div>
-				</li>
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-					신청하기
-					</a>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" href="<c:url value='/application/manager'/>">매니저 신청</a>
-						<a class="dropdown-item" href="<c:url value='/application/businessman'/>">사업자 신청</a>
-					</div>
-				</li>
+					</li>
+				</c:if>
+				
 				<li class="nav-item">
 					<a class="nav-link" href="<c:url value='/member/mypage'/>">마이페이지</a>
 				</li>

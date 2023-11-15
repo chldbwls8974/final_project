@@ -77,9 +77,9 @@ public interface MemberService {
 	
 	List<PreferredRegionVO> getMemberPRegion(MemberVO member);
 	
-	List<PreferredTimeVO> getMemberPTimeWeekday(MemberVO member);
+	List<Integer> getMemberPTimeWeekday(MemberVO member);
 	
-	List<PreferredTimeVO> getMemberPTimeHoliday(MemberVO dbMember);
+	List<Integer> getMemberPTimeHoliday(MemberVO dbMember);
 	
 	boolean emailMemberSignout(MemberVO member);
 	
