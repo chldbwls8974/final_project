@@ -230,12 +230,6 @@
 			<artifactId>mail</artifactId>
 			<version>1.4.7</version> <!-- 수정 전 1.4.3 -->
 		</dependency>
-		<!-- @Scheduled를 위한 의존성 추가 -->
-		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter -->
-		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter</artifactId>
-		    <version>3.1.2</version>
 		<!-- https://mvnrepository.com/artifact/org.json/json -->
 		<!-- json 객체 -->
 		<dependency>
@@ -254,6 +248,13 @@
 		    <groupId>com.github.iamport</groupId>
 		    <artifactId>iamport-rest-client-java</artifactId>
 		    <version>0.2.23</version>
+		</dependency>
+		<!-- @Scheduled를 위한 의존성 추가 -->
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter</artifactId>
+		    <version>3.1.2</version>
 		</dependency>
 	</dependencies>
 	<!-- 저장소 -->

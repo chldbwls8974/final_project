@@ -591,6 +591,7 @@
 			mt_state1 = 0
 		group by
 			mt_num
+	</select>
 	<select id="selectMatchList" resultType="kr.kh.final_project.vo.MatchVO">
 		select * FROM `match`
 	</select>

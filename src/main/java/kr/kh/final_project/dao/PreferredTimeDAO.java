@@ -8,9 +8,11 @@ import kr.kh.final_project.vo.PreferredTimeVO;
 
 public interface PreferredTimeDAO {
 
-	void insertPreferredTime(@Param("pt_num")int pt_num, @Param("me_num")int pr_me_num);
+	List<PreferredTimeVO> selectPTListByMeNum(@Param("me_num")Integer me_num);
 
 	List<Integer> selectPtTiNumListByMeNum(@Param("me_num")Integer me_num);
+
+	void insertPreferredTime(@Param("pt_num")int pt_num, @Param("me_num")int pr_me_num);
 	
 	void deletePreferredTime(@Param("me_num")int pr_me_num);
 
