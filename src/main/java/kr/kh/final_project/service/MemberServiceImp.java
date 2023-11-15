@@ -501,7 +501,7 @@ public class MemberServiceImp implements MemberService{
 	}
 
 	@Override
-	public List<PreferredTimeVO> getMemberPTimeWeekday(MemberVO member) {
+	public List<Integer> getMemberPTimeWeekday(MemberVO member) {
 		//DB에서 가져온 시간은 월~일 이므로, 평일/주말로 데이터 분리
 		//24이하 = 월 ,145이상 = 일
 		List<PreferredTimeVO> dbPrTimeList = prTimeDao.selectPTListByMeNum(member.getMe_num());
@@ -512,11 +512,16 @@ public class MemberServiceImp implements MemberService{
 				prTimeWeekday.add(tmp);
 			}
 		}
-		return prTimeWeekday;
+		
+		List<Integer> weekTime = new ArrayList<>(); 
+		for(PreferredTimeVO i : prTimeWeekday ) {
+			weekTime.add(i.getPt_ti_num());
+		}
+		return weekTime;
 	}
 	
 	@Override
-	public List<PreferredTimeVO> getMemberPTimeHoliday(MemberVO member) {
+	public List<Integer> getMemberPTimeHoliday(MemberVO member) {
 		//DB에서 가져온 시간은 월~일 이므로, 평일/주말로 데이터 분리
 		//24이하 = 월 ,145이상 = 일
 		List<PreferredTimeVO> dbPrTimeList = prTimeDao.selectPTListByMeNum(member.getMe_num());
@@ -527,7 +532,11 @@ public class MemberServiceImp implements MemberService{
 				prTimeHoliday.add(tmp);
 			}
 		}
-		return prTimeHoliday;
+		List<Integer> holiTime = new ArrayList<>(); 
+		for(PreferredTimeVO i : prTimeHoliday ) {
+			holiTime.add(i.getPt_ti_num());
+		}
+		return holiTime;
 	}
 
 	//이메일인증 회원탈퇴

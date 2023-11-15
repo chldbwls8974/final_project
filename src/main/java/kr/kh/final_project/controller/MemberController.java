@@ -1,6 +1,7 @@
 package kr.kh.final_project.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -312,16 +313,16 @@ public class MemberController {
 		MemberVO memberRegion = memberService.getMemberRegion(dbMember);
 		//회원의 선호지역, 선호시간대 가져오기
 		List<PreferredRegionVO> memberPRegion = memberService.getMemberPRegion(dbMember);
-		List<PreferredTimeVO> memberPTimeWeekday = memberService.getMemberPTimeWeekday(dbMember);
-		List<PreferredTimeVO> memberPTimeHoliday = memberService.getMemberPTimeHoliday(dbMember);
+		List<Integer> weekTime = memberService.getMemberPTimeWeekday(dbMember);
+		List<Integer> holiTime = memberService.getMemberPTimeHoliday(dbMember);
 		
 		model.addAttribute("user",user);
 		model.addAttribute("MainRegion",MainRegion);
 		model.addAttribute("time",time);
 		model.addAttribute("memberRegion",memberRegion);
 		model.addAttribute("memberPRegion",memberPRegion);
-		model.addAttribute("memberPTimeWeekday",memberPTimeWeekday);
-		model.addAttribute("memberPTimeHoliday",memberPTimeHoliday);
+		model.addAttribute("weekTime",weekTime);
+		model.addAttribute("holiTime",holiTime);
 		return "/member/myedit";
 	}
 	
@@ -417,14 +418,16 @@ public class MemberController {
 		MemberVO memberRegion = memberService.getMemberRegion(dbMember);
 		//회원의 선호지역, 선호시간대 가져오기
 		List<PreferredRegionVO> memberPRegion = memberService.getMemberPRegion(dbMember);
-		List<PreferredTimeVO> memberPTimeWeekday = memberService.getMemberPTimeWeekday(dbMember);
-		List<PreferredTimeVO> memberPTimeHoliday = memberService.getMemberPTimeHoliday(dbMember);
+		List<Integer> holiTime = memberService.getMemberPTimeHoliday(dbMember);
+		List<Integer> weekTime = memberService.getMemberPTimeWeekday(dbMember);
+		
+		System.out.println(weekTime);
 		
 		model.addAttribute("member",dbMember );
 		model.addAttribute("memberRegion", memberRegion );
 		model.addAttribute("memberPRegion", memberPRegion );
-		model.addAttribute("memberPTimeWeekday", memberPTimeWeekday );
-		model.addAttribute("memberPTimeHoliday", memberPTimeHoliday );
+		model.addAttribute("holiTime", holiTime );
+		model.addAttribute("weekTime", weekTime );
 		model.addAttribute("user", user );
 		return "/member/myprofile";
 	}

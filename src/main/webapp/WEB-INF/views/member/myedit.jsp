@@ -125,7 +125,7 @@ input, progress {
 	<p class="title" style="font-size: 45px; font-weight: bolder; padding-bottom: 30px;
 		text-align: center; letter-spacing: -3px;">프로필 수정</p>
 	<form action="<c:url value='/member/myedit'/>" method="post" id="myForm" enctype="multipart/form-data" style="text-align: center;">
-		
+		${memberPTimeWeekday }
 		<div class="1p">
 		<input type="hidden" name="me_num" value="${user.me_num}">
 			<div class="form-group">
