@@ -244,12 +244,6 @@
 						</a>
 						</li>
 						<li>
-							<a href="<c:url value='/club/mylist'/>">
-							<img src="https://cdn.icon-icons.com/icons2/2556/PNG/512/team_friends_partners_partner_icon_153084.png" width="24px" height="24px" alt="소속 클럽">
-							<p>소속 클럽</p>
-							</a>
-						</li>
-						<li>
 							<a href="<c:url value='/member/search'/>">
 							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_profile.svg" width="24px" height="24px" alt="회원 조회">
 							<p>회원 찾기</p>
@@ -290,9 +284,6 @@
 							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_manner_card.svg" width="24px" height="24px" alt="포인트 환급">
 							<p>포인트 환급</p>
 							</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" id="email-signout" href="<c:url value='/member/signout'/>">회원탈퇴</a>
 						</li>
 					</ul>
 				</div>

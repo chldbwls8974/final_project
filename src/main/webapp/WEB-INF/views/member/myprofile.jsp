@@ -84,7 +84,7 @@
 	}
 
 	.profile-head{ 
-		text-align: center; padding: 60px;
+		text-align: center; padding: 60px 60px 20px 60px;
 		background-color: #f2f2f2; border-radius: 20px;
 		margin: 0 30px 0 30px; height: auto; width: 250px;
 	}
@@ -150,12 +150,21 @@
 			<img src="<c:url value='/memberimg${member.me_profile}'/>" class="myprofile-image-thumb" alt="프로필 사진">
 			<p class="title">${member.me_name }</p> 
 			<p style="color: #777777; font-size: 18px;">${member.me_id}</p>
-			<div class="myedit">
-				<a href="<c:url value='/member/myedit?me_num=${member.me_num}'/>" class="myprofile-btn">
-					<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg"
-						style="width: 24px; height: 24px; margin-right: 5px;" alt="프로필 수정">
-					<p style="font-size: 14px;">프로필 수정하기</p>
-				</a>
+			<div style="margin-top: 50px;">
+				<div class="myedit">
+					<a href="<c:url value='/member/myedit?me_num=${member.me_num}'/>" class="myprofile-btn">
+						<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_profile.svg"
+							style="width: 20px; height: 20px; margin-right: 5px;" alt="프로필 수정">
+						<p style="font-size: 14px;">프로필 수정하기</p>
+					</a>
+				</div>
+				<div class="myedit">
+					<a class="nav-link" id="email-signout" href="<c:url value='/member/signout'/>" style="padding: 0;">
+						<img src="	https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg"
+						style="width: 24px; height: 24px; margin-right: 5px;" alt="회원 탈퇴">
+						<p style="font-size: 14px;">회원탈퇴</p>
+					</a>
+				</div>
 			</div>
 		</div>	
 		<div class="profile-head2">
