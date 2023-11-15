@@ -79,6 +79,34 @@
 		limit
 			1;
 	</select>
+	<select id="selectPointHistoryRefund" resultType="kr.kh.final_project.vo.PointHistoryVO">
+		select
+			*
+		from
+			point_history
+		where
+			ph_mt_num = #{mt_num} and
+			ph_me_num = #{me_num} and
+		    ph_source = 2
+		order by
+			ph_num desc
+		limit
+			1;
+	</select>
+	<select id="selectPointHistoryTimeOver" resultType="kr.kh.final_project.vo.PointHistoryVO">
+		select
+			*
+		from
+			point_history
+		where
+			ph_mt_num = #{mt_num} and
+			ph_me_num = #{me_num} and
+		    ph_source = 3
+		order by
+			ph_num desc
+		limit
+			1;
+	</select>
 	<insert id="insertPointHistoryTimeOverMatch">
 		insert into point_history(ph_price, ph_source, ph_mt_num, ph_me_num)
 		values

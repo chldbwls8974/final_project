@@ -42,6 +42,14 @@ public class MatchController {
 
 	@GetMapping("/match/search/solo")
 	public String searchMatchSolo(Model model, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		if(user == null) {
+			Message msg = new Message("/", "로그인이 필요한 기능입니다.");
+			
+			model.addAttribute("msg", msg);
+			return "/message";
+		}
 		List<RegionVO> mainRegion = matchService.selectMainRegion();
 		List<ExtraVO> week = matchService.selectWeekDayList(0);
 
@@ -80,6 +88,13 @@ public class MatchController {
 	@GetMapping("/match/search/club")
 	public String searchMatchClub(Model model, HttpSession session, int weekCount) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		if(user == null) {
+			Message msg = new Message("/", "로그인이 필요한 기능입니다.");
+			
+			model.addAttribute("msg", msg);
+			return "/message";
+		}
 		//병합후 서비스 변경
 		List<ClubVO> clubList = matchService.selectClubListByMeNum(user.getMe_num());
 		List<ExtraVO> week = matchService.selectWeekDayList(weekCount);

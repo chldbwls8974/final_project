@@ -59,4 +59,6 @@ public interface MemberDAO {
 
 	void updateMember(@Param("m")MemberVO member, @Param("fi_name")String fi_name);
 
+	void updateMemberPoint2(@Param("point")int difference_point, @Param("me_num")int me_num);
+
 }

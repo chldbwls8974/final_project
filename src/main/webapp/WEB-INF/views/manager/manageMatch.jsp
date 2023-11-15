@@ -169,6 +169,7 @@
 		qu_num = $(this).val();
 		
 		deleterQuarter(qu_num);
+		printQuarter();
 		printInsertQuarter();
 	})
 	function entryToTeam(en_num, te_num) {
