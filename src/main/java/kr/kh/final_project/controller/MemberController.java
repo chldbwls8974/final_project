@@ -389,8 +389,7 @@ public class MemberController {
 	
 	
 	@PostMapping("/member/myedit")
-	public String profileEdit(MemberVO member, MultipartFile img, HttpSession session, Model model
-		) {
+	public String profileEdit(MemberVO member, MultipartFile img, HttpSession session, Model model, String test) {
 		Message msg = new Message("/", null);
 		try {
 			String fi_ori_name = img.getOriginalFilename();
@@ -399,7 +398,7 @@ public class MemberController {
 				fi_name = UploadFileUtils.updateImg(uploadPath, fi_ori_name, img.getBytes());
 				
 			}else{
-				fi_name = "/basic.jpg";
+				fi_name = test;
 			}
 			
 			boolean res = memberService.updateProfile(member, fi_name); //새로 입력한 정보 업데이트
