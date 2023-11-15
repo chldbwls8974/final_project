@@ -478,6 +478,32 @@ public class MatchServiceImp implements MatchService{
 		List<MatchVO> matchList = matchDao.selectEndMatch();
 		for(MatchVO match : matchList) {
 			matchDao.updateMatchMtState1To2(match.getMt_num());
+			updateRatingMatchResult(match.getMt_num());
+		}
+	}
+	//점수 업데이트
+	private void updateRatingMatchResult(int mt_num) {
+		//등록된 경기 조회
+		List<QuarterVO> quarterList = quarterDao.selectQuarterListByMtNum(mt_num);
+		
+		for(QuarterVO quarter : quarterList) {
+			//승리팀 점수 업데이트
+			int winTeam = quarterDao.selectWinTeamByQuNum(quarter.getQu_num());
+			if(winTeam != 0) {
+				List<EntryVO> winnerList = entryDao.selectEntryListByTeNum(winTeam);
+				for(EntryVO winner : winnerList) {
+					memberDao.updateRatingWinByMeNum(winner.getEn_me_num());
+				}
+			}
+			
+			//패배팀 점수 업데이트
+			int loserTeam = quarterDao.selectLoseTeamByQuNum(quarter.getQu_num());
+			if(loserTeam != 0) {
+				List<EntryVO> loserList = entryDao.selectEntryListByTeNum(loserTeam);
+				for(EntryVO loser : loserList) {
+					memberDao.updateRatingLoseByMeNum(loser.getEn_me_num());
+				}
+			}
 		}
 	}
 

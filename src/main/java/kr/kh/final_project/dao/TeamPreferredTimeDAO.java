@@ -12,7 +12,6 @@ public interface TeamPreferredTimeDAO {
 
 	void insertPreferredTime(@Param("pt_num")int pt_num,@Param("cl_num") int cl_num);
 
-	TeamPreferredTimeVO selectTeamTime(@Param("cl_num")Integer cl_num);
 
 	void deletePreferredTime(@Param("cl_num")int cl_num);
 

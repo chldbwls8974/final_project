@@ -14,14 +14,6 @@
 	<insert id="insertPreferredTime">
 		insert into team_preferred_time(tt_cl_num, tt_ti_num) values(#{cl_num},#{pt_num})
 	</insert>
-	<select id="selectTeamTime" resultType="kr.kh.final_project.vo.TeamPreferredTimeVO">
-		select
-			*
-		from
-			team_preferred_time
-		where
-			tt_cl_num = #{cl_num}
-	</select>
 	<delete id="deletePreferredTime">
 		delete from team_preferred_time
 		where tt_cl_num = #{cl_num}

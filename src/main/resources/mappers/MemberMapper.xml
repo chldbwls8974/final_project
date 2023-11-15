@@ -235,4 +235,60 @@
 		where
 			me_num = #{me_num}
 	</update>
+	<update id="updateRatingWinByMeNum">
+		update member
+		set
+			me_rating = ifnull(me_rating, 0) + (
+								case
+									when me_tr_name = '스타터' then 200
+									when me_tr_name = '브론즈' then 200
+									when me_tr_name = '실버' then 160
+									when me_tr_name = '골드' then 120
+									when me_tr_name = '플래티넘' then 80
+									when me_tr_name = '다이아' then 40
+		                            when me_tr_name = '마스터' then 0
+								end),
+			me_rating = if(me_rating > 5000, 5000, me_rating),
+			me_tr_name = (
+				select
+					tr_name
+				from
+					tier
+				where
+					me_rating >= tr_min_rating
+				order by
+					tr_min_rating desc
+				limit
+					1)
+		where
+			me_num = #{me_num}
+	</update>
+	<update id="updateRatingLoseByMeNum">
+		update member
+		set
+			me_rating = ifnull(me_rating, 0) - (
+								case
+									when me_tr_name = '스타터' then 0
+									when me_tr_name = '브론즈' then 40
+									when me_tr_name = '실버' then 80
+									when me_tr_name = '골드' then 120
+									when me_tr_name = '플래티넘' then 160
+									when me_tr_name = '다이아' then 200
+									when me_tr_name = '마스터' then 200
+								end),
+			me_rating = if(0 > me_rating, 0, me_rating),
+			me_tr_name = (
+				select
+					tr_name
+				from
+					tier
+				where
+					me_rating >= tr_min_rating
+				order by
+					tr_min_rating desc
+				limit
+					1)
+		where
+			me_num = #{me_num}
+	</update>
 </mapper>

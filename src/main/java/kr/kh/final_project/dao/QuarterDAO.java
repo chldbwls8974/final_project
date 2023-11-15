@@ -19,4 +19,7 @@ public interface QuarterDAO {
 
 	int countQuarterByMtNum(@Param("mt_num")int mt_num);
 
+	int selectWinTeamByQuNum(@Param("qu_num")int qu_num);
+
+	int selectLoseTeamByQuNum(@Param("qu_num")int qu_num);
 }

@@ -12,6 +12,10 @@ VALUES
 ('user28', 'user28', 6, 'U-24', 'USER', 30000, 3900, '플래티넘'), ('user29', 'user29', 7, 'U-25', 'USER', 30000, 4900, '다이아'), ('user30', 'user30', 8, 'B-30', 'BUSINESS', 30000, null, '스타터'),
 ('user31', 'user31', 2, 'test1', 'ADMIN', 300000, null, '스타터'),('user32', 'user32', 2, 'test2', 'USER', 300000, null, '스타터'),('user33', 'user33', 2, 'test3', 'USER', 300000, null, '스타터');
 
+update member
+set me_name = '테스트'
+where me_num = 1;
+
 INSERT INTO BUSINESSMAN(BU_ME_NUM)
 VALUES
 (1), (2), (30);

@@ -30,9 +30,6 @@ public interface ClubService {
 
 	void memberManage(String type, int cl_num, int me_num, MemberVO user);
 
-	TeamPreferredTimeVO getClubTime(Integer cl_num);
-
- 
 	List<PreferredAgeVO> getClubAgeList(); //마이페이지-내클럽 선호연령 가져오기
 
 	List<TeamPreferredTimeVO> getClubTimeList(); //마이페이지-내클럽 선호시간 가져오기

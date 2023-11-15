@@ -121,12 +121,6 @@ public class ClubServiceImp implements ClubService{
 		return true;
 	}
 	
-	
-	@Override
-	public TeamPreferredTimeVO getClubTime(Integer cl_num) {
-		return teamTimeDao.selectTeamTime(cl_num);
-	}
-
 	@Override
 	public boolean updateClub(int me_num, ClubVO club, String fi_name, int[] age, int[] favoriteTime, int[] favoriteHoliTime) {
 		if(club == null) {
