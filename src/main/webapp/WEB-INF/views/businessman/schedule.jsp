@@ -30,6 +30,18 @@
 </head>
 <body>
 	<div>
+		<span>시설 선택 : </span>
+		<select class="select-facility">
+				<option value="0">선택</option>
+			<c:forEach items="${facilityList}" var="fa">
+				<c:if test="${fa.fa_num == fa_num}">
+					<option selected="selected" value="${fa.fa_num}">${fa.fa_name}</option>
+				</c:if>
+				<c:if test="${fa.fa_num != fa_num}">
+					<option value="${fa.fa_num}">${fa.fa_name}</option>
+				</c:if>
+			</c:forEach>
+		</select>
 		<span>경기장 선택 : </span>
 		<select class="select-stadium">
 				<option value="0">선택</option>
@@ -39,81 +51,86 @@
 		</select>
 	</div>
 	<div class="schedule-box">
-		<div class="time-bar">
-			<c:forEach begin="0" end="24" var="t">
-						<div class="hour-bar">
-						${t}
-						</div>
-					</c:forEach>
-		</div>
-		<div class="week-box">
-			<c:forEach begin="0" end="6" var="i">
-				<div class="day-box">
-					<div class="day-bar">${timeList[i * 24].ti_day}</div>
-					<c:forEach begin="0" end="23" var="j">
-						<c:if test="${operatingList[i - 1 < 0 ? 6 : i - 1].op_open_time < operatingList[i - 1 < 0 ? 6 : i - 1].op_close_time}">
-							<c:if test="${operatingList[i].op_open_time > timeList[j].ti_time}">
-									<div class="hour-box hour-box-disabled"></div>
+		<c:if test="${fa_num == 0}">
+			<span>경기장을 선택해주세요.</span>
+		</c:if>
+		<c:if test="${fa_num != 0}">
+			<div class="time-bar">
+				<c:forEach begin="0" end="24" var="t">
+							<div class="hour-bar">
+							${t}
+							</div>
+						</c:forEach>
+			</div>
+			<div class="week-box">
+				<c:forEach begin="0" end="6" var="i">
+					<div class="day-box">
+						<div class="day-bar">${timeList[i * 24].ti_day}</div>
+						<c:forEach begin="0" end="23" var="j">
+							<c:if test="${operatingList[i - 1 < 0 ? 6 : i - 1].op_open_time < operatingList[i - 1 < 0 ? 6 : i - 1].op_close_time}">
+								<c:if test="${operatingList[i].op_open_time > timeList[j].ti_time}">
+										<div class="hour-box hour-box-disabled"></div>
+								</c:if>
+								<c:if test="${operatingList[i].op_open_time < operatingList[i].op_close_time}">
+									<c:if test="${operatingList[i].op_open_time <= timeList[j].ti_time && timeList[j].ti_time < operatingList[i].op_close_time}">
+										<div class="hour-box hour-box-abled">
+											<div class="select-box"></div>
+											<div class="btn-box"></div>
+											<span hidden="">${timeList[i * 24 + j].ti_num}</span>
+										</div>
+									</c:if>
+									<c:if test="${timeList[j].ti_time >= operatingList[i].op_close_time}">
+										<div class="hour-box hour-box-disabled"></div>
+									</c:if>
+								</c:if>
+								<c:if test="${operatingList[i].op_open_time > operatingList[i].op_close_time}">
+									<c:if test="${operatingList[i].op_open_time <= timeList[j].ti_time}">
+										<div class="hour-box hour-box-abled">
+											<div class="select-box"></div>
+											<div class="btn-box"></div>
+											<span hidden="">${timeList[i * 24 + j].ti_num}</span>
+										</div>
+									</c:if>
+								</c:if>
 							</c:if>
-							<c:if test="${operatingList[i].op_open_time < operatingList[i].op_close_time}">
-								<c:if test="${operatingList[i].op_open_time <= timeList[j].ti_time && timeList[j].ti_time < operatingList[i].op_close_time}">
+							<c:if test="${operatingList[i - 1 < 0 ? 6 : i - 1].op_open_time > operatingList[i - 1 < 0 ? 6 : i - 1].op_close_time}">
+								<c:if test="${operatingList[i - 1 < 0 ? 6 : i - 1].op_close_time > timeList[j].ti_time}">
 									<div class="hour-box hour-box-abled">
 										<div class="select-box"></div>
-										<div class="btn-box"></div>
+											<div class="btn-box"></div>
 										<span hidden="">${timeList[i * 24 + j].ti_num}</span>
 									</div>
 								</c:if>
-								<c:if test="${timeList[j].ti_time >= operatingList[i].op_close_time}">
-									<div class="hour-box hour-box-disabled"></div>
-								</c:if>
-							</c:if>
-							<c:if test="${operatingList[i].op_open_time > operatingList[i].op_close_time}">
-								<c:if test="${operatingList[i].op_open_time <= timeList[j].ti_time}">
-									<div class="hour-box hour-box-abled">
-										<div class="select-box"></div>
-										<div class="btn-box"></div>
-										<span hidden="">${timeList[i * 24 + j].ti_num}</span>
-									</div>
-								</c:if>
-							</c:if>
-						</c:if>
-						<c:if test="${operatingList[i - 1 < 0 ? 6 : i - 1].op_open_time > operatingList[i - 1 < 0 ? 6 : i - 1].op_close_time}">
-							<c:if test="${operatingList[i - 1 < 0 ? 6 : i - 1].op_close_time > timeList[j].ti_time}">
-								<div class="hour-box hour-box-abled">
-									<div class="select-box"></div>
-										<div class="btn-box"></div>
-									<span hidden="">${timeList[i * 24 + j].ti_num}</span>
-								</div>
-							</c:if>
-							<c:if test="${operatingList[i - 1 < 0 ? 6 : i - 1].op_close_time <= timeList[j].ti_time && timeList[j].ti_time < operatingList[i].op_open_time}">
-								<div class="hour-box hour-box-disabled"></div>
-							</c:if>
-							<c:if test="${operatingList[i].op_open_time < operatingList[i].op_close_time}">
-								<c:if test="${operatingList[i].op_open_time <= timeList[j].ti_time && timeList[j].ti_time < operatingList[i].op_close_time}">
-									<div class="hour-box hour-box-abled">
-										<div class="select-box"></div>
-										<div class="btn-box"></div>
-										<span hidden="">${timeList[i * 24 + j].ti_num}</span>
-									</div>
-								</c:if>
-								<c:if test="${timeList[j].ti_time >= operatingList[i].op_close_time}">
+								<c:if test="${operatingList[i - 1 < 0 ? 6 : i - 1].op_close_time <= timeList[j].ti_time && timeList[j].ti_time < operatingList[i].op_open_time}">
 									<div class="hour-box hour-box-disabled"></div>
 								</c:if>
-							</c:if>
-							<c:if test="${operatingList[i].op_open_time > operatingList[i].op_close_time}">
-								<c:if test="${operatingList[i].op_open_time <= timeList[j].ti_time}">
-									<div class="hour-box hour-box-abled">
-										<div class="select-box"></div>
-										<div class="btn-box"></div>
-										<span hidden="">${timeList[i * 24 + j].ti_num}</span>
-									</div>
+								<c:if test="${operatingList[i].op_open_time < operatingList[i].op_close_time}">
+									<c:if test="${operatingList[i].op_open_time <= timeList[j].ti_time && timeList[j].ti_time < operatingList[i].op_close_time}">
+										<div class="hour-box hour-box-abled">
+											<div class="select-box"></div>
+											<div class="btn-box"></div>
+											<span hidden="">${timeList[i * 24 + j].ti_num}</span>
+										</div>
+									</c:if>
+									<c:if test="${timeList[j].ti_time >= operatingList[i].op_close_time}">
+										<div class="hour-box hour-box-disabled"></div>
+									</c:if>
+								</c:if>
+								<c:if test="${operatingList[i].op_open_time > operatingList[i].op_close_time}">
+									<c:if test="${operatingList[i].op_open_time <= timeList[j].ti_time}">
+										<div class="hour-box hour-box-abled">
+											<div class="select-box"></div>
+											<div class="btn-box"></div>
+											<span hidden="">${timeList[i * 24 + j].ti_num}</span>
+										</div>
+									</c:if>
 								</c:if>
 							</c:if>
-						</c:if>
-					</c:forEach>
-				</div>
-			</c:forEach>
-		</div>
+						</c:forEach>
+					</div>
+				</c:forEach>
+			</div>
+		</c:if>
 	</div>
 	
 	<script type="text/javascript">
@@ -121,6 +138,10 @@
 		let max;
 		let min = 3;
 		let select = ``;
+		$('.select-facility').change(function() {
+			faNum = $(this).val();
+			location.href= '<c:url value="/buisnessman/manage/schedule?fa_num="/>' + faNum;
+		});
 		$('.select-stadium').change(function() {
 			st_num = $(this).val();
 			reset();

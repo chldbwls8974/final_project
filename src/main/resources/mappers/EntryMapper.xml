@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.final_project.dao.EntryDAO">
+	<select id="selectEntryByMeNum" resultType="kr.kh.final_project.vo.EntryVO">
+		select * from entry where en_te_num = #{te_num} and en_me_num = #{me_num}
+	</select>
+	<insert id="insertEntry">
+		insert into entry(en_te_num, en_me_num)
+		values(#{te_num}, #{me_num})
+	</insert>
+	<delete id="deleteEntry">
+		delete from entry where en_num = #{en_num}
+	</delete>
+	<delete id="deleteEntryByTeNum">
+		delete from entry where en_te_num = #{te_num}
+	</delete>
+	<select id="selectEntryByMtNum" resultType="kr.kh.final_project.vo.EntryVO">
+		select
+			entry.*,
+		    me_nickname,
+		    me_rating,
+		    me_tr_name,
+		    ct_cl_num,
+		    te_type
+		from
+			entry
+				join
+			team on en_te_num = te_num
+				join
+			member on en_me_num = me_num
+		    	left join
+			club_team on ct_te_num = te_num
+		where
+		    te_mt_num = #{mt_num}
+		order by
+			en_te_num asc,
+			me_rating desc;
+	</select>
+	<insert id="insertEntryClub">
+		insert into entry(en_me_num, en_te_num)
+		values
+		(#{me_num}, (
+			select
+				te_num
+			from
+				team
+					join
+				club_team on ct_te_num = te_num
+			where
+				te_mt_num = #{mt_num} and
+			    ct_cl_num = #{cl_num}))
+	</insert>
+	<update id="updateEntryTeam">
+		update entry
+		set
+			en_te_num = #{te_num}
+		where
+			en_num = #{en_num}
+	</update>
+</mapper>

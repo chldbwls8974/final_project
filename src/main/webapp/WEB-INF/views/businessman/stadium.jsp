@@ -56,9 +56,9 @@
 			          <td>${stadium.st_locate}</td>
 			          <td>${stadium.st_door}</td>
 			          <td>${stadium.st_floortype}</td>
-			          <td>${stadium.st_width}</td>
-			          <td>${stadium.st_height}</td>
-			          <td>${stadium.st_max}</td>
+			          <td>${stadium.st_width}m</td>
+			          <td>${stadium.st_height}m</td>
+			          <td>${stadium.st_max}명</td>
 			          <td>${stadium.st_available}</td>
 			          <td>${stadium.st_note}</td>
 			          <td hidden="hidden">${stadium.st_fa_num}</td>

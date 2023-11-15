@@ -40,10 +40,10 @@
 	<nav class="navbar">
 		<ul class="navbar-nav-link">
 			<li class="nav-item">
-				<a class="nav-link" href="#">개인매치</a>
+				<a class="nav-link" href="<c:url value='/match/search/solo'/>">개인매치</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#">클럽매치</a>
+				<a class="nav-link" href="<c:url value='/match/search/club?weekCount=0'/>">클럽매치</a>
 			<li class="nav-item">
 				<a class="nav-link" href="<c:url value='/admin/price'/>">가격수정</a>
 			</li>
@@ -102,7 +102,7 @@
 						</a>
 						<div class="dropdown-menu">
 							<a class="dropdown-item" href="<c:url value='/manager/select/match'/>">매치 신청</a>
-							<a class="dropdown-item" href="<c:url value='/manager/manage/schedule'/>">일정 관리</a>
+							<a class="dropdown-item" href="<c:url value='/manager/manage/schedule?weekCount=0'/>">일정 관리</a>
 						</div>
 				</li>
 				<c:if test="${user != null && user.me_authority == 'BUSINESS'}">

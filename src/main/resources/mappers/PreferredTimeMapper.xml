@@ -11,6 +11,14 @@
 		where
 			pt_me_num = #{me_num}
 	</select>
+	<select id="selectPtTiNumListByMeNum" resultType="int">
+		select
+			pt_ti_num
+		from
+			preferred_time
+		where
+			pt_me_num = #{me_num}
+	</select>
 	<insert id="insertPreferredTime">
 		insert into preferred_time(pt_me_num, pt_ti_num) values(#{me_num},#{pt_num})
 	</insert>

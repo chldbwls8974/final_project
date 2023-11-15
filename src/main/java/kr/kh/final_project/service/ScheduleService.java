@@ -2,6 +2,7 @@ package kr.kh.final_project.service;
 
 import java.util.List;
 
+import kr.kh.final_project.vo.FacilityVO;
 import kr.kh.final_project.vo.OperatingVO;
 import kr.kh.final_project.vo.ScheduleVO;
 import kr.kh.final_project.vo.StadiumVO;
@@ -25,5 +26,5 @@ public interface ScheduleService {
 
 	boolean updateSchedule(ScheduleVO schedule);
 
-	int selectFaNumByMeNum(Integer me_num);
+	List<FacilityVO> selectFaNumByMeNum(Integer me_num);
 }

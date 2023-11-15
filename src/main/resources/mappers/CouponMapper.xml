@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.final_project.dao.CouponDAO">
+	<select id="selectCouponListByMeNum" resultType="kr.kh.final_project.vo.CouponVO">
+		SELECT
+			*
+		FROM
+			holding_coupon
+				join
+			coupon on hp_cp_num = cp_num
+		where
+			hp_me_num = #{me_num} and
+			hp_state = 0
+	</select>
+	<delete id="deleteCoupon">
+		delete from holding_coupon
+		where hp_num = #{hp_num};
+	</delete>
+</mapper>

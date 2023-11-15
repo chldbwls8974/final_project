@@ -2,13 +2,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-	<title>매치 조회</title>
+	<title>개인 매치 조회</title>
 	<style type="text/css">
 		.days-box{width: 100%; height: 50px; display: flex;}
 		.day-box{
 		height: 70px; background-color: window; flex: 1; border-right: 3px solid black;
 		text-align: center;}
-		.day-box:nth-child(7){border-right: none}
+		.day-box:last-child{border-right: none}
 		.day-span{font-size: 30px;}
 		.day_of_week-span{font-size: 15px;}
 		.sat{color: blue;}
@@ -17,12 +17,18 @@
 		.not-select-circle:hover{height: 70px; border-radius: 20%; background-color: yellow; cursor: pointer;}
 		.main-region-box{display: inline;}
 		.sub-region-box{display: inline;}
+		.match-box{height: 100px; border-bottom: 2px solid black;}
+		.match-box::after{clear: both; content: ''; display: block;}
+		.match-box:last-child{border-bottom: none}
+		.match-time-box{font-size: 40px; display: inline-block; line-height: 100px}
+		.match-info-box{display: inline-block;}
+		.btn{float: right; margin-top: 30px;}
 	</style>
 </head>
 <body>
-	<h1>매치 조회</h1>
+	<h1>개인 매치 조회</h1>
 	<div class="days-box">
-		<c:forEach items="${thirdWeek}" var="day">
+		<c:forEach items="${week}" var="day">
 			<div class="day-box">
 				<div class="not-select-circle">
 					<input class="select-date-str" value="${day.date_str}" disabled hidden>
@@ -46,6 +52,10 @@
 		</c:forEach>
 	</div>
 	<br>
+	<div class="preferred-time-box">
+		<span>선호시간 : </span>
+		<input class="preferred-time-check" type="checkbox" checked="checked">
+	</div>
 	<div class="main-region-box">
 		<span>지역 : </span>
 		<select class="select-main">
@@ -62,8 +72,11 @@
 		
 	</div>
 	<script type="text/javascript">
-	let select_day = "${thirdWeek[0].date_str}"
+	let type = 0;
+	let select_day = "${week[0].date_str}";
+	let cl_num = 0;
 	let rg_num = 0;
+	let check = true;
 	
 	
 	$('.day-box').eq(0).children('.not-select-circle').toggleClass('select-circle');
@@ -72,7 +85,7 @@
 	
 	$(document).on('click', '.not-select-circle', function() {
 		select_day = $(this).children('.select-date-str').val();
-		rg_num = 0;
+		
 		$(this).toggleClass('not-select-circle');
 		$(this).toggleClass('select-circle');
 		$(this).parents('.day-box').siblings('.day-box').children('.select-circle').toggleClass('not-select-circle');
@@ -90,40 +103,63 @@
 		rg_num = $(this).val();
 		printSelectMatch();
 	});
+	$(document).on('change', '.preferred-time-check', function() {
+		check = !check;
+		printSelectMatch()
+	});
+	$(document).on('click', '.btn-matchPage', function() {
+		let mt_num = $(this).val();
+		
+		location.href='<c:url value="/match/application?mt_num="/>'+ mt_num + '&cl_num=' + cl_num;
+	});
 	function printSelectMatch() {
-		let data = {
-				mt_date : select_day,
-				fa_rg_num : rg_num
-		}
 		let str = '';
 		$.ajax({
 			async : false,
 			method : 'post',
-			url : '<c:url value="/manager/select/date"/>',
-			data : JSON.stringify(data),
-			contentType : "application/json; charset=UTF-8",
+			url : '<c:url value="/match/searchList/solo"/>',
+			data : {mt_date:select_day, rg_num:rg_num, check:check},
 			dataType : 'json',
 			success : function(data) {
-				console.log(data.regionList)
 				for(match of data.matchList){
-					for(time of data.timeList){
-						if(match.mt_ti_num == time.pt_ti_num){
-							for(region of data.regionList){
-								if(match.fa_rg_num == region.pr_rg_num){
-									str +=`
-									<span>\${match.ti_time_str}</span>
-									<span>\${match.mt_num}</span>
-									<span>\${match.fa_name}</span>
-									<span>\${match.fa_add}</span>
-									<span>\${match.fa_add_detail}</span>
-									<span>\${match.fa_phone}</span>
-									<span>\${match.st_name}</span>
-									<span>\${match.st_locate}</span>
-									<span>\${match.st_max}vs\${match.st_max}</span>
-									<span>\${match.fa_note}</span><br>
-									`
-								}
-							}
+					if((match.application_able == 0 && match.application == 1) || match.ready == 0){
+						str +=`
+						<div class="match-box">
+							<div class="match-time-box">
+								<span class="match-time">\${match.ti_time_str}</span>
+							</div>
+							<div class="match-info-box">
+								<span>\${match.rg_main} \${match.rg_sub} \${match.fa_name} \${match.st_name} </span> <br>
+								<span>개인 `;
+						if(match.mt_rule == 0){
+							str +=	`친선전 \${match.mt_personnel} vs \${match.mt_personnel} \${match.entry_count}/\${match.mt_personnel * 2}</span>
+								</div>
+							`;
+						}else if(match.mt_rule == 1){
+							str +=	`경쟁전 \${match.mt_personnel} vs \${match.mt_personnel} \${match.entry_count}/\${match.mt_personnel * 3}</span>
+								</div>
+							`;						
+						}
+						if(match.application_able == 0 && match.application == 1){
+							str +=	`
+								<button class="btn btn-outline-danger btn-matchPage" value="\${match.mt_num}">참가 취소</button> <br>
+							</div>
+							`;					
+						}else if(match.entry_count == (match.mt_rule == 0 ? match.mt_personnel * 2 : match.mt_personnel * 3)){
+							str +=	`
+								<button class="btn btn-dark" value="\${match.mt_num}" disabled>참가 마감</button> <br>
+							</div>
+							`;					
+						}else if(match.application_able == 1){
+							str +=	`
+								<button class="btn btn-outline-primary btn-matchPage" value="\${match.mt_num}">참가 신청</button> <br>
+							</div>
+							`;
+						}else if(match.application_able == 0 && match.application == 0){
+							str +=	`
+								<button class="btn btn-outline-secondary" value="\${match.mt_num}" disabled>참가 불가</button> <br>
+							</div>
+							`;					
 						}
 					}
 				}
@@ -158,7 +194,6 @@
 		}
 		$('.sub-region-box').html(str);
 	}
-		
 	</script>
 </body>
 </html>
