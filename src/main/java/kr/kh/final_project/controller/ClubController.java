@@ -164,11 +164,9 @@ public class ClubController {
 
 		try {
 			String fi_ori_name = img.getOriginalFilename();
-			String fi_name = UploadFileUtils.updateImg(uploadPath, fi_ori_name, img.getBytes());
-			
+			String fi_name;
 			if(fi_ori_name != null && !fi_ori_name.isEmpty()) {
 				fi_name = UploadFileUtils.updateImg(uploadPath, fi_ori_name, img.getBytes());
-				
 			}else{
 				fi_name = test;
 			}
