@@ -190,8 +190,8 @@
 				</c:forEach>
 			</div>
 		</div>
-		<div class="myregion-edit">
-			<a href="#" class="myregion-edit-btn">
+		<div class="myregion-edit" style="position: relative;">
+			<a href="#" class="myregion-edit-btn" style="position: absolute; right: 0;">
 				<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg"
 					style="width: 24px; height: 24px; margin-right: 5px;" alt="선호 지역 수정" >
 				<p style="font-size: 14px;">선호 지역 수정하기</p>
@@ -240,7 +240,7 @@
 	    
 	    
 		<div class="form-group" style="display: inline;">
-			<label style="border-top: 7px solid #c2f296; padding: 5px 0 10px 0;">
+			<label style="border-top: 7px solid #c2f296; padding: 5px 0 10px 0; margin-top: 60px;">
 				평일 선호 시간</label>
 			<ul class="chip">
 				<li class="chip__item--3">
@@ -445,8 +445,8 @@
                 </ul>
 			</div>
 		</div>
-		<div class="mytime-edit">
-			<a href="#" class="mytime-edit-btn">
+		<div class="mytime-edit" style="position: relative;">
+			<a href="#" class="mytime-edit-btn" style="position: absolute; right: 80px; bottom: 0;">
 				<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg"
 					style="width: 24px; height: 24px; margin-right: 5px;" alt="선호 시간 수정">
 				<p style="font-size: 14px;">선호 시간 수정하기</p>
