@@ -10,6 +10,23 @@
 <title>커뮤니티 신고 관리</title>
 </head>
 <style type="text/css">
+	.btn-info{
+		color : outline-info;
+		background-color : white;
+		border : 1px solid outline-info;
+	}
+	.btn-info:hover{
+		background-color : outline-info;
+		color : white;
+	}
+	tr{
+		text-align : center
+	}
+	.content-row {
+	color : #4A90E2;
+    display: none;
+	}
+	
 	.search-type-1 {
 		width: 150px;
 		padding: .8em .5em;
@@ -57,7 +74,6 @@
 		padding: 40px; height: auto;
 		background-color: #f2f2f2; border-radius: 20px;
 	}
-	
 	.page-link {
 	  color: #000; 
 	  background-color: #fff;
@@ -75,6 +91,7 @@
 	  background-color: #fafafa; 
 	  border-color: #ccc;
 	}
+	
 </style>
 <body>
 	<div class="board-report-navigation" style="margin-top: 50px; text-align: center;">
@@ -85,14 +102,14 @@
 	<div style="text-align: center; margin-right: 10px;">
 		<div class="btn-group btn-group">
 		  <button type="button"
-				    class="btn"
+				    class="btn-info"
 				    style="
 						border-radius: 10px; width: 130px; height: 40px; border: none;
 						background-color: #c2f296; color: black; margin: 10px 10px 10px 0;"
 						onclick="location.href='<c:url value='/admin/boardReport'/>'"
 				>커뮤니티 신고</button>
 		 <button type="button"
-				    class="btn"
+				    class="btn-info"
 				    style="
 						border-radius: 10px; width: 130px; height: 40px; border: none;
 						background-color: #c2f296; color: black; margin: 10px 0 10px 0;"

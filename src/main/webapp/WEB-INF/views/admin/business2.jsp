@@ -92,14 +92,14 @@
 	<div style="text-align: center; margin-right: 10px;">
 		<div class="btn-group btn-group">
 			<button type="button"
-					    class="btn"
+					    class="btn-info"
 					    style="
 							border-radius: 10px; width: 130px; height: 40px; border: none;
 							background-color: #c2f296; color: black; margin: 10px 10px 10px 0;"
 						onclick="location.href='<c:url value='/admin/business'/>'"	    
 				>신청 관리</button>
 			<button type="button"
-					    class="btn"
+					    class="btn-info"
 					    style="
 							border-radius: 10px; width: 130px; height: 40px; border: none;
 							background-color: #c2f296; color: black; margin: 10px 0 10px 0;"
