@@ -409,8 +409,7 @@ public class MemberServiceImp implements MemberService{
 
 	// 프로필 수정
 	@Override
-	public boolean updateProfile(MemberVO member, String fi_name, int[] pr_rg_num, int[] favoriteTime,
-			int[] favoriteHoliTime) {
+	public boolean updateProfile(MemberVO member, String fi_name) {
 		if(member == null) {
 			return false;
 		}
@@ -419,20 +418,20 @@ public class MemberServiceImp implements MemberService{
 		
 		// 입력한 회원정보의 num값 가져오기
 		int pr_me_num = member.getMe_num();
-		prTimeDao.deletePreferredTime(pr_me_num);
-		prRegionDao.deletePreferredRegion(pr_me_num);
-		// 선호 시간 (평일)
-		if(favoriteTime !=null) {
-			insertPreferredTime(0,pr_me_num,favoriteTime);
-		}
-		
-		// 선호 시간 (주말)
-		if(favoriteHoliTime != null) {
-			insertPreferredTime(1,pr_me_num,favoriteHoliTime);
-		}
-		
-		// 선호 지역
-		insertPreferredRegion(pr_me_num, pr_rg_num);
+//		prTimeDao.deletePreferredTime(pr_me_num);
+//		prRegionDao.deletePreferredRegion(pr_me_num);
+//		// 선호 시간 (평일)
+//		if(favoriteTime !=null) {
+//			insertPreferredTime(0,pr_me_num,favoriteTime);
+//		}
+//		
+//		// 선호 시간 (주말)
+//		if(favoriteHoliTime != null) {
+//			insertPreferredTime(1,pr_me_num,favoriteHoliTime);
+//		}
+//		
+//		// 선호 지역
+//		insertPreferredRegion(pr_me_num, pr_rg_num);
 		
 		return true;
 	}

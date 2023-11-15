@@ -231,6 +231,7 @@
 		let num = { me_num : ${user.me_num}}
 		ajaxJsonToJson(false, 'post', "/member/information", num,(data)=>{
 			$('.point-information').text(data.user.me_point);
+			
 		});
 	}
 </script>

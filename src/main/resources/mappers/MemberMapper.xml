@@ -228,7 +228,13 @@
 	<update id="updateMember">
 		update member
 		set
-			me_profile = #{fi_name}
+			me_profile = #{fi_name},
+			me_nickname = #{m.me_nickname},
+			me_phone = #{m.me_phone},
+			me_name = #{m.me_name},
+			me_gender = #{m.me_gender},
+			me_birthday = #{m.me_birthday},
+			me_rg_num = #{m.me_rg_num}
 		where me_num = #{m.me_num}
 	</update>
 </mapper>
