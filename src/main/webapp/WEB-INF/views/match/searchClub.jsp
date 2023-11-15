@@ -130,7 +130,7 @@
 								</div>
 								<div class="match-info-box">
 									<span>\${match.rg_main} \${match.rg_sub} \${match.fa_name} \${match.st_name} </span> <br>
-									<span>\${match.ready}클럽 `;
+									<span>클럽 `;
 							if(match.mt_rule == 0){
 								str +=	`친선전 \${match.mt_personnel} vs \${match.mt_personnel} \${match.entry_count}/\${match.mt_personnel * 2}</span>
 									</div>
