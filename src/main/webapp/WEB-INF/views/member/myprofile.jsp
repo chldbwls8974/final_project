@@ -95,11 +95,107 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label>평일 선호 시간대</label>
-			<div style="display: flex; justify-content: center;">
-				<c:forEach items="${memberPTimeWeekday}" var="list">
-					<p>&nbsp;&nbsp;${list.pt_ti_num} : 00</p>
-				</c:forEach> 
+			<div class="form-group time-box weekday-time">
+				<label style="font-size: 20px; font-weight: bolder; margin-bottom: 10px;">평일 선호 시간</label>
+				<ul class="chip">
+					
+					<li class="chip__item--3">
+						<input type="checkbox" id="time_6" name="favoriteTime" class="chip__item-radio" value="6" <c:if test="${weekTime.contains(Integer(6))}">checked</c:if>> 
+						<label for="time_6" class="chip__item-label" style="height: 70px;">
+							<div style="margin-bottom: 5px;">
+								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunrise.svg">
+							</div> 06:00
+						</label>
+					</li>
+					<li class="chip__item--3">
+						<input type="checkbox" id="time_8" name="favoriteTime" class="chip__item-radio" value="8" <c:if test="${weekTime.contains(Integer(8))}">checked</c:if>> 
+						<label  for="time_8" class="chip__item-label" style="height: 70px;">
+							<div style="margin-bottom: 5px;">
+								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
+							</div> 08:00
+						</label>
+					</li>
+					<li class="chip__item--3">
+						<input type="checkbox" id="time_10" name="favoriteTime" class="chip__item-radio" value="10" <c:if test="${weekTime.contains(Integer(10))}">checked</c:if>> 
+						<label for="time_10" class="chip__item-label" style="height: 70px;">
+							<div style="margin-bottom: 5px;">
+								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
+							</div> 10:00
+                		</label>
+                	</li>
+					<li class="chip__item--3">
+						<input  type="checkbox" id="time_12" name="favoriteTime" class="chip__item-radio" value="12" <c:if test="${weekTime.contains(Integer(12))}">checked</c:if>> 
+						<label  for="time_12" class="chip__item-label" style="height: 70px;">
+							<div  style="margin-bottom: 5px;">
+								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
+							</div> 12:00
+                		</label>
+               		</li>
+					<li class="chip__item--3">
+						<input type="checkbox" id="time_14" name="favoriteTime" class="chip__item-radio" value="14" <c:if test="${weekTime.contains(Integer(14))}">checked</c:if>> 
+						<label for="time_14" class="chip__item-label" style="height: 70px;">
+						<div style="margin-bottom: 5px;">
+							<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
+						</div> 14:00
+                		</label>
+               		</li>
+					<li  class="chip__item--3">
+						<input  type="checkbox" id="time_16" name="favoriteTime" class="chip__item-radio" value="16" <c:if test="${weekTime.contains(Integer(16))}">checked</c:if>>
+						<label  for="time_16" class="chip__item-label" style="height: 70px;">
+							<div  style="margin-bottom: 5px;">
+								<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_sunny.svg">
+							</div> 16:00
+                		</label>
+                	</li>
+					<li  class="chip__item--3">
+						<input  type="checkbox" id="time_18" name="favoriteTime" class="chip__item-radio" value="18" <c:if test="${weekTime.contains(Integer(18))}">checked</c:if>> 
+						<label  for="time_18" class="chip__item-label" style="height: 70px;">
+							<div  style="margin-bottom: 5px;">
+								<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_night.svg">
+							</div> 18:00
+                		</label>
+               		</li>
+					<li  class="chip__item--3">
+						<input  type="checkbox" id="time_20" name="favoriteTime" class="chip__item-radio" value="20" <c:if test="${weekTime.contains(Integer(20))}">checked</c:if>> 
+						<label  for="time_20" class="chip__item-label" style="height: 70px;">
+							<div  style="margin-bottom: 5px;">
+								<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_night.svg">
+							</div> 20:00
+               			</label>
+        			</li>
+					<li  class="chip__item--3">
+						<input  type="checkbox" id="time_22" name="favoriteTime" class="chip__item-radio" value="22" <c:if test="${weekTime.contains(Integer(22))}">checked</c:if>> 
+						<label  for="time_22" class="chip__item-label" style="height: 70px;">
+							<div  style="margin-bottom: 5px;">
+								<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_night.svg">
+							</div> 22:00
+               			</label>
+           			</li>
+					<li  class="chip__item--3">
+						<input  type="checkbox" id="time_24" name="favoriteTime" class="chip__item-radio" value="0" <c:if test="${weekTime.contains(Integer(0))}">checked</c:if>>
+						<label  for="time_24" class="chip__item-label" style="height: 70px;">
+							<div  style="margin-bottom: 5px;">
+								<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_midnight.svg">
+							</div> 24:00
+               			</label>
+               		</li>
+                	<li  class="chip__item--3">
+                			<input  type="checkbox" id="time_2" name="favoriteTime" class="chip__item-radio" value="2" <c:if test="${weekTime.contains(Integer(2))}">checked</c:if>> 
+                		<label  for="time_2" class="chip__item-label" style="height: 70px;">
+                			<div  style="margin-bottom: 5px;">
+                				<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_midnight.svg">
+               				</div> 02:00
+                		</label>
+                	</li>
+                	<li  class="chip__item--3">
+                		<input  type="checkbox" id="time_4" name="favoriteTime" class="chip__item-radio" value="4"> 
+                		<label  for="time_4" class="chip__item-label" style="height: 70px;">
+                		<div  style="margin-bottom: 5px;">
+                			<img  src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_midnight.svg">
+               			</div>  04:00
+              			</label>
+           			</li>
+                </ul>
 			</div>
 		</div>
 		<div class="form-group">

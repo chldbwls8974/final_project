@@ -173,12 +173,6 @@
 							</a>
 						</li>
 						<li>
-							<a href="<c:url value='/club/rookielist'/>">
-							<img src="https://d31wz4d3hgve8q.cloudfront.net/media/ic_nav_team_recruit_member.svg" width="24px" height="24px" alt="승인 대기 중 클럽">
-							<p>승인 대기 중 클럽</p>
-							</a>
-						</li>
-						<li>
 							<a href="<c:url value='/member/search'/>">
 							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_profile.svg" width="24px" height="24px" alt="회원 조회">
 							<p>회원 찾기</p>

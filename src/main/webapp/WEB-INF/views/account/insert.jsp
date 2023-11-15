@@ -26,8 +26,6 @@ form{ text-align: center;}
 <title>환급 계좌 등록</title>
 </head>
 <body>
-${account }
-${bankList }
 <div class="container-body">
 	<p style="font-size: 45px; font-weight: bolder;
 		text-align: center; padding: 50px 0 20px 0;">환급 계좌 등록</p>
