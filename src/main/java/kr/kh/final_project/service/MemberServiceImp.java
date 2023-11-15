@@ -22,6 +22,7 @@ import kr.kh.final_project.dao.PreferredTimeDAO;
 import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.dao.TimeDAO;
 import kr.kh.final_project.pagination.Criteria;
+import kr.kh.final_project.util.Message;
 import kr.kh.final_project.vo.BlockVO;
 import kr.kh.final_project.vo.HoldingCouponVO;
 import kr.kh.final_project.vo.MarkVO;
@@ -617,7 +618,15 @@ public class MemberServiceImp implements MemberService{
 		return res;
 	}
 
-
+	@Override
+	public Message updatePreferRegion(int me_num, int[] pr_rg_num) {
+		Message msg = new Message(("/member/myprofile?me_num="+me_num), "수정 완료");
+		
+		prRegionDao.deletePreferredRegion(me_num);
+		// 선호 지역
+		insertPreferredRegion(me_num, pr_rg_num);
+		return msg;
+	}
 	
 }
 

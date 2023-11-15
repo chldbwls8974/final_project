@@ -262,8 +262,17 @@ public class MemberController {
 	@GetMapping("/member/mypage")
 	public String myPage(HttpSession session, Model model) {
 		MemberVO user = (MemberVO) session.getAttribute("user");
+		MemberVO dbMember = memberService.getMemberByNum(user);
 		List<ClubVO> list = clubService.getMyClubList(user.getMe_num(),"MEMBER");
-		model.addAttribute("user", user);
+		List<ClubVO> memberlist = clubService.getMyClubList(user.getMe_num(),"MEMBER");
+		List<ClubVO> rookielist = clubService.getMyClubList(user.getMe_num(),"ROOKIE");
+		List<ClubVO> leaderlist = clubService.getMyClubList(user.getMe_num(),"LEADER");
+		
+		model.addAttribute("user",user);
+		model.addAttribute("memberlist",memberlist);
+		model.addAttribute("rookielist",rookielist);
+		model.addAttribute("leaderlist",leaderlist);
+		model.addAttribute("user", dbMember);
 		model.addAttribute("list",list);
 		return "/member/mypage";
 	}
@@ -305,7 +314,7 @@ public class MemberController {
 		//회원의 거주지역 가져오기
 		MemberVO memberRegion = memberService.getMemberRegion(dbMember);
 		
-		model.addAttribute("user",user);
+		model.addAttribute("user",dbMember);
 		model.addAttribute("MainRegion",MainRegion);
 		model.addAttribute("memberRegion",memberRegion);
 		return "/member/myedit";
@@ -406,6 +415,12 @@ public class MemberController {
 		List<Integer> holiTime = memberService.getMemberPTimeHoliday(dbMember);
 		List<Integer> weekTime = memberService.getMemberPTimeWeekday(dbMember);
 		
+		// 선호 지역, 시간 수정 시 필요
+		List<RegionVO> MainRegion = memberService.getMainRegion();
+		List<TimeVO> time = memberService.getAllTime();
+		model.addAttribute("MainRegion",MainRegion);
+		model.addAttribute("time",time);
+		
 		model.addAttribute("member",dbMember );
 		model.addAttribute("memberRegion", memberRegion );
 		model.addAttribute("memberPRegion", memberPRegion );
@@ -460,5 +475,13 @@ public class MemberController {
 	public String payment(Model model) {
 		return "/payment/main";
 	}
+	
+	@PostMapping("/member/update/region")
+	public String updateRegion(Model model,int me_num, int[] pr_rg_num) {
+		Message msg = memberService.updatePreferRegion(me_num, pr_rg_num);
+		model.addAttribute("msg", msg);
+		return "message";
+	}
+	
 	
 }
