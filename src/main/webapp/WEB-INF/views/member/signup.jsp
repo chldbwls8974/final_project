@@ -14,6 +14,13 @@
 	src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.12.0/validate.min.js"></script>
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- 데이트피커 디자인 -->	
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ko.js"></script>
+
 <style type="text/css">
 .error {
 	color: #f00;
@@ -24,28 +31,23 @@
     border: 0;
     vertical-align: baseline;
 }
-ul{
+.chip{
 	display: flex; 
 	flex-wrap: wrap; 
 	overflow: hidden; 
 	border-radius: 12px;
 	list-style: none;
-}
-li{
-	box-shadow: none;	
-    margin: 0;
-    vertical-align: baseline;
-}
-input[type='checkbox']{
-	display : none;
+	padding: 20px;
 }
 .chip__item--3{
-	width: 33.333%;
+	width: 25%;
     position: relative;
-    padding-right: 1px;
     box-sizing: border-box;
     outline: none;
-    text-align : center;
+    margin: 0 auto;
+    box-shadow: none;	
+    margin: 0;
+    vertical-align: baseline;
 }
 .chip_item-radio{
 	position: absolute;
@@ -55,8 +57,10 @@ input[type='checkbox']{
     width: 100%;
     height: 100%;
 }
+.chip__item-label div{ margin-top: 10px;}
 .chip__item-radio+label{
 	position: relative;
+	width: 200px;
     height: 48px;
     font-size: 16px;
     font-weight: 500;
@@ -64,49 +68,80 @@ input[type='checkbox']{
     color: #4B5A64;
     background-color: #FFFFFF;
     border: 1px solid #D9E0E6;
-    border-radius: 12px;
+    border-radius: 20px;
     margin: 5px;
     margin-left: 0px;
     display: flex;
     justify-content: center;
     flex-direction: column;
 }
+input[type='checkbox']{
+	display : none;
+}
 input[type='checkbox']:checked+label{
+	display: inline-block;
 	color: #1570FF;
     border: 1px solid #1570FF;
 }
+
+
+.container{ 
+	background-color: #f2f2f2; padding: 30px; z-index: 1;
+	margin-top: 20px; border-radius: 20px;
+}
+.form-control{border-radius: 30px; width: 500px;}
+.form-group{text-align: center;}
+.form-group label{display: inline-block; text-align: center;}
+.form-group button, .form-group select{margin: 0 auto;}
+.form-group input{margin: 0 auto;}
+
+.signup-btn{ width: 500px; margin: 0 auto;
+	border-radius: 10px; border: none;
+	background-color: #0c0c0c; height: 40px; color: white;}
+.next-btn, .prev-btn{width: 500px; margin: 0 auto;
+	border-radius: 10px; border: none; height: 40px;
+	background-color: #c2f296; color: black;}
+
+input, progress {
+  accent-color: #0c0c0c;
+}
+
 </style>
 </head>
 <body>
-	<h1>회원가입</h1>
-	<form action="<c:url value='/member/signup'/>" method="post" id="myForm">
+<div class="container">
+	<p class="title" style="font-size: 45px; font-weight: bolder; padding-bottom: 30px;
+		text-align: center; letter-spacing: -3px;">회원가입</p>
+	<form action="<c:url value='/member/signup'/>" method="post" id="myForm" style="text-align: center;">
+		<input type="hidden" value="/basic.jpg" name="me_profile">
 		
 		<div class="1p">
 			<div class="form-group">
-				<label>아이디</label> <label id="check-id-error" class="error"
-					for="me_id"></label> <input type="text" class="form-control"
-					name="me_id" id="me_id" required>
+				<label>아이디</label>  <input type="text" class="form-control"
+					name="me_id" id="me_id" required> <label id="check-id-error" class="error"
+					for="me_id"></label>
 			</div>
 
 			<div class="form-group">
-				<label>비번</label> <label id="check-pw-error" class="error"
-					for="me_pw"></label> <input type="password" class="form-control"
-					name="me_pw" id="me_pw" required>
+				<label>비밀번호</label> <input type="password" class="form-control"
+					name="me_pw" id="me_pw" required> <label id="check-pw-error" class="error"
+					for="me_pw"></label>
 			</div>
 
 			<div class="form-group">
-				<label>비번 확인</label> <label id="check-pw2-error" class="error"
-					for="me_pw2"></label> <input type="password" class="form-control"
-					name="me_pw2" id="me_pw2" required>
+				<label>비밀번호 확인</label> <input type="password" class="form-control"
+					name="me_pw2" id="me_pw2" required> <label id="check-pw2-error" class="error"
+					for="me_pw2"></label>
 			</div>
 
 			<div class="form-group">
-				<label>이메일</label> <label id="check-email-error" class="error"
-					for="me_email"></label> <input type="email" class="form-control"
-					name="me_email" id="me_email" required>
+				<label>이메일</label> <input type="email" class="form-control"
+					name="me_email" id="me_email" required> <label id="check-email-error" class="error"
+					for="me_email"></label>
 				<button type="button" class="form-control" name="me_email_btn"
-					id="me_email_btn" disabled="disabled">인증번호 전송</button>
-				<input type="number" class="form-control" name="email_code"
+					id="me_email_btn" disabled="disabled" style="margin-bottom: 20px;">인증번호 전송</button>
+					
+				<label>이메일 인증번호</label> <input type="number" class="form-control" name="email_code"
 					id="email_code" required>
 				<button type="button" class="form-control" name="email_code_btn"
 					id="email_code_btn" disabled="disabled">인증번호 확인</button>
@@ -123,14 +158,20 @@ input[type='checkbox']:checked+label{
 					name="me_name" id="me_name" required>
 			</div>
 
-			<div class="form-group">
-				<label>성별</label> <input type="radio" name="me_gender" value="M">남
-				<input type="radio" name="me_gender" value="F">여
+			<div class="form-group1" style="text-align: center; margin-bottom: 20px;">
+				<label>성별</label>
+				<div style="display: flex; justify-content: center;">
+					<div style="padding-right: 25px;">
+						<input type="radio" name="me_gender" value="M">남
+					</div>
+					<input type="radio" name="me_gender" value="F">여
+				</div>
 			</div>
 
 			<div class="form-group">
 				<label>생년월일</label> <input type="text" class="form-control"
-					name="me_birthday" id="me_birthday" required>
+					name="me_birthday" id="me_birthday"
+					placeholder="날짜를 선택하세요." style="text-align: center;" required>
 			</div>
 
 			<div class="form-group">
@@ -139,28 +180,27 @@ input[type='checkbox']:checked+label{
 					name="me_nickname" maxlength="15" required>
 			</div>
 			<div class="form-group">
-				<label>거주지</label> <select class="form-control rg_main">
-					<option value="0">지역을 선택하세요</option>
+				<label>거주지</label> <select class="form-control rg_main" required>
+					<option value="">지역을 선택하세요</option>
 					<c:forEach items="${MainRegion}" var="main">
 						<option value="${main.rg_main}">${main.rg_main}</option>
 					</c:forEach>
 				</select>
 
 			</div>
-			<div class="form-group">
-				<select class="form-control rg_sub" name="me_rg_num">
-					<option value="0">지역을 선택하세요</option>
+			<div class="form-group" style="margin-bottom: 60px;">
+				<select class="form-control rg_sub" name="me_rg_num" required>
+					<option value="">지역을 선택하세요</option>
 					<c:forEach items="${SubRegion}" var="sub">
 						<option value="${sub.rg_num}">${sub.rg_sub}</option>
 					</c:forEach>
 				</select>
 			</div>
-
 		</div>
 
 		<!-- 다음버튼 -->
 		<div class="form-group">
-			<button type="button" class="btn next-btn form-control" id="next"
+			<button type="button" class="next-btn" id="next"
 				disabled="disabled">다음</button>
 		</div>
 
@@ -168,7 +208,7 @@ input[type='checkbox']:checked+label{
 		<div class="2p">
 			<div class="pre_time">
 			<div class="form-group time-box weekday-time">
-				<label>평일 선호 시간</label>
+				<label style="font-size: 20px; font-weight: bolder; margin-bottom: 10px;">평일 선호 시간</label>
 				<ul class="chip">
 					
 					<li class="chip__item--3">
@@ -270,7 +310,7 @@ input[type='checkbox']:checked+label{
                 </ul>
 			</div>
 			<div class="form-group time-box weekend-time">
-				<label>주말 선호 시간</label>
+				<label style="font-size: 20px; font-weight: bolder; margin: 10 0 10px;">주말 선호 시간</label>
 				<ul class="chip">
 					<li class="chip__item--3">
 						<input type="checkbox" id="holitime_6" name="favoriteHoliTime" class="chip__item-radio" value="6"> 
@@ -372,14 +412,6 @@ input[type='checkbox']:checked+label{
 			</div>
 		</div>
 
-
-
-			
-		
-		
-		
-		
-		
 			<div class="prefer-area">
 				<div class="form-group">
 					<label>선호지역</label> <select class="form-control pre_rg_main">
@@ -405,20 +437,21 @@ input[type='checkbox']:checked+label{
 					추가</button>
 			</div>
 
-			<div class="form-group">
+			<div class="form-group" style="margin: 20px; 0 60px 0;">
 				<label>추천인 닉네임</label> <input type="text" class="form-control"
 					name="recommed_check" id="recommed_check">
-				<button type="button" class="form-control" name="recommed_check_btn">입력</button>
-
+				<button type="button" class="form-control" name="recommed_check_btn" style="margin-top: 10px;">입력</button>
 			</div>
 
 		</div>
 		<div class="form-group">
-			<button type="button" class="btn prev-btn form-control">이전</button>
+			<button type="button" class="prev-btn">이전</button>
 		</div>
-		<button class="btn btn-outline-warning col-12" id="signup"
+		<button class="signup-btn" id="signup"
 			disabled="disabled">회원가입</button>
 	</form>
+</div>	
+	
 	<script type="text/javascript">
 	
 
@@ -557,6 +590,7 @@ input[type='checkbox']:checked+label{
 		$(this).hide();
 		$('.prev-btn').show();
 		$('.2p').show();
+		$('.title').hide();
 	})
 	$(document).on('click','.prev-btn',function(){
 		$('.2p').hide();
@@ -573,6 +607,7 @@ input[type='checkbox']:checked+label{
 		}
 		var str = '';
 		ajaxJsonToJson2(false, 'get','/member/signup/check',data,(a)=>{
+			$(this).next('span').remove(); //중복추가 방지
 			if(a.checked == null){
 				str+=`<span>없는 회원입니다.</span>`;
 			}else{
@@ -677,10 +712,13 @@ input[type='checkbox']:checked+label{
 	
 	 // 데이트피커
 	 $(document).ready(function(){
-		$("#me_birthday").datepicker({
+		$("#me_birthday").flatpickr({
 			  showOn: "both", // 버튼과 텍스트 필드 모두 캘린더를 보여준다.
               // buttonImage: "/application/db/jquery/images/calendar.gif", // 버튼 이미지
               //buttonImageOnly: true, // 버튼에 있는 이미지만 표시한다.
+              locale: 'ko',
+              altInput: true, // 선택한 날짜를 입력란에 보여주도록 설정
+              altFormat: "yy-mm-dd", // 입력란에 표시될 날짜 형식 설정
               changeMonth: true, // 월을 바꿀수 있는 셀렉트 박스를 표시한다.
               changeYear: true, // 년을 바꿀 수 있는 셀렉트 박스를 표시한다.
               minDate: '-100y', // 현재날짜로부터 100년이전까지 년을 표시한다.
@@ -688,18 +726,24 @@ input[type='checkbox']:checked+label{
               nextText: '다음 달', // next 아이콘의 툴팁.
               prevText: '이전 달', // prev 아이콘의 툴팁.
               numberOfMonths: [1,1], // 한번에 얼마나 많은 월을 표시할것인가. [2,3] 일 경우, 2(행) x 3(열) = 6개의 월을 표시한다.
-              stepMonths: 3, // next, prev 버튼을 클릭했을때 얼마나 많은 월을 이동하여 표시하는가. 
+              stepMonths: 1, // next, prev 버튼을 클릭했을때 얼마나 많은 월을 이동하여 표시하는가. 
               yearRange: 'c-100:c+100', // 년도 선택 셀렉트박스를 현재 년도에서 이전, 이후로 얼마의 범위를 표시할것인가.
               showButtonPanel: true, // 캘린더 하단에 버튼 패널을 표시한다. ( ...으로 표시되는부분이다.) 
               closeText: '닫기',  // 닫기 버튼 패널
-              dateFormat: "yy-mm-dd", // 텍스트 필드에 입력되는 날짜 형식.
               showAnim: "slide", //애니메이션을 적용한다.  
               showMonthAfterYear: true , // 월, 년순의 셀렉트 박스를 년,월 순으로 바꿔준다. 
-              dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'], // 요일의 한글 형식.
-              monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] // 월의 한글 형식.
 	        })
-	        
 		})
+		
+	$( function() {
+    $( "#me_birthday" ).flatpickr({ 
+        onSelect: function() { 
+            var date = $.flatpickr.formatDate("yymmdd",$("#datepicker").flatpickr("getDate")); 
+            alert(date);
+        }
+	    });                    
+	});
+
 		
 		
 		
@@ -793,8 +837,6 @@ input[type='checkbox']:checked+label{
 			}
 			
 		})
-		
-		
 	
 	</script>
 </body>

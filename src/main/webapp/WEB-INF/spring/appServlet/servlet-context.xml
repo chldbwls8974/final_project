@@ -14,6 +14,9 @@
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
+	<resources mapping="/clubimg/**" location="file:///D:/uploadprofile/club/" />
+	<resources mapping="/memberimg/**" location="file:///D:/uploadprofile/member/" />
+	<resources mapping="/download/**" location="file:///D:/uploadfiles/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -40,29 +43,31 @@
 	
 	<beans:bean id="memberInterceptor" class="kr.kh.final_project.interceptor.MemberInterceptor"></beans:bean>
 	<beans:bean id="loginInterceptor" class="kr.kh.final_project.interceptor.LoginInterceptor"/>
-	<beans:bean id="autoLoginInterceptor" class="kr.kh.final_project.interceptor.AutoLoginInterceptor"/>
+	<beans:bean id="autoLoginInterceptor" class="kr.kh.final_project.interceptor.AutoLoginInterceptor"/>	
 	
 	<interceptors>
 		<interceptor>
 			<mapping path="/member/login"/>
+			<mapping path="/kakao/login"/>
 			<beans:ref bean="loginInterceptor"/>
 		</interceptor>
 		<interceptor>
 			<mapping path="/**"/>
 			<beans:ref bean="autoLoginInterceptor"/>
 		</interceptor>
-		<interceptor>
-			<mapping path="/application/manager"/>
-			<mapping path="/application/businessman"/>
-			<beans:ref bean="memberInterceptor" />
-		</interceptor>
 	</interceptors>
-	
-		
-	
+
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="maxUploadSize" value="10485760"/>
 	</beans:bean>
-	
-	
+	<beans:bean id="uploadPath" class="java.lang.String">
+	    <beans:constructor-arg value="D://uploadfiles"/>
+	    <!-- <beans:constructor-arg value="D://uploadfiles"/> -->
+	</beans:bean>
+	<beans:bean id="uploadImgPath" class="java.lang.String">
+	    <beans:constructor-arg value="D://img"/>
+	</beans:bean>
+	<beans:bean id="uploadJpgPath" class="java.lang.String">
+	    <beans:constructor-arg value="D://jpg"/>
+	</beans:bean>
 </beans:beans>

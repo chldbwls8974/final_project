@@ -50,4 +50,7 @@ public interface MatchDAO {
 	List<MatchVO> selectEndMatch();
 	
 	MatchVO selectManageMatchByMtNum(@Param("mt_num")int mt_num);
+	
+	List<MatchVO> selectMatchList();
+
 }

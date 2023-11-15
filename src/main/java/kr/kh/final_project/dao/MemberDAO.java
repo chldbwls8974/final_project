@@ -3,14 +3,15 @@ package kr.kh.final_project.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.pagination.Criteria;
-
+import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 
 public interface MemberDAO {
 
-	//List<MemberVO> selectMemberList(int me_num);
+	
 	List<MemberVO> selectMemberListBySearch(@Param("cri")Criteria cri);
 
 	int selectTotalCount(@Param("cri")Criteria cri);
@@ -41,6 +42,23 @@ public interface MemberDAO {
 	
 	MemberVO selectMemberNumByNick2(String check);
 
-	boolean updateMemberProfile(MemberVO user);
+	boolean updateMemberProfile(@Param("user")MemberVO user);
+
+	void updateFile(@Param("file")MultipartFile file);
+
+	MemberVO selectMemberByKaKao(@Param("me_id")String me_id);
+
+	MemberVO selectMemberRegion(@Param("user") MemberVO user);
+
+	void updateEmailMember(@Param("me_id")String me_id);
+
+	boolean updateUserBoardBanState(@Param("me_num")int me_num, @Param("i")int i);
+
+	boolean updateUserMatchBanState(@Param("me_num")int me_num, @Param("i")int i);
+
+	void updateMember(@Param("m")MemberVO member, @Param("fi_name")String fi_name);
+
+
+
 
 }

@@ -71,4 +71,6 @@ public interface MatchService {
 
 	int countQuarterByMtNum(int mt_num);
 
+	List<MatchVO> getMatchList();
+
 }

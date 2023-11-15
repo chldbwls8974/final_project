@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -10,4 +10,10 @@
 		FROM
 			expense;
 	</select>
+	<select id="selectExpense" resultType="kr.kh.final_project.vo.ExpenseVO">
+		select * from expense
+	</select>
+	<update id="updatePrice">
+		update expense set ex_pre=#{ex_pre}, ex_date=#{ex_date} where ex_num = #{ex_num}
+	</update>
 </mapper>

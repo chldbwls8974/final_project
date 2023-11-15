@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.final_project.dao.HoldingCouponDAO">
+	<select id="selectMemberCouponList" resultType="kr.kh.final_project.vo.HoldingCouponVO">
+		select 
+			* 
+		from 
+			holding_coupon
+		join
+			coupon on hp_cp_num = cp_num
+		where
+			hp_me_num = #{user.me_num}
+		limit
+			#{cri.pageStart}, #{cri.perPageNum};
+	</select>
+	<select id="selectMemberCouPonListCount" resultType="int">
+		select 
+			count(*) 
+		from 
+			holding_coupon
+		where
+			hp_me_num = #{user.me_num};
+	</select>
+	<insert id="insertSignupCouponOriginalMember">
+		insert into 
+			holding_coupon(hp_me_num, hp_cp_num, hp_state) 
+		values
+			(#{user.me_num}, 2, 1)
+	<!-- cp_num = 2는 초대보상(기존) -->
+	<!-- hp_state = 1는 비활성화 -->
+	</insert>
+	<insert id="insertSignupCouponNewMember">
+		insert into 
+			holding_coupon(hp_me_num, hp_cp_num, hp_state) 
+		values
+			(#{user.me_num}, 1, 0)
+	<!-- cp_num = 1는 초대보상(기존) -->
+	<!-- hp_state = 0는 비활성화 -->
+	</insert>
+</mapper>

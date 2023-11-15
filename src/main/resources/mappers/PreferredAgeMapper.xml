@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.final_project.dao.PreferredAgeDAO">
+	<insert id="insertPrefferedAge">
+		insert into preferred_age(pa_cl_num, pa_age_range) values(#{cl_num},#{age})
+	</insert>
+	<delete id="deletePreferredAge">
+		delete from preferred_age
+		where pa_cl_num = #{cl_num}
+	</delete>
+</mapper>

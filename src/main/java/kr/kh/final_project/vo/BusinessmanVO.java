@@ -1,5 +1,7 @@
 package kr.kh.final_project.vo;
 
+import java.util.List;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -7,14 +9,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BusinessmanVO {
 
-	private int bu_num;
+	private Integer bu_num;
 	private String bu_registration_number;
 	private String bu_registration;
 	private String bu_phone;
 	private String bu_name;
 	private int bu_price;
 	private String bu_email;
-	private int bu_me_num;
+	private Integer bu_me_num;
 	private int bu_state;
 
 }

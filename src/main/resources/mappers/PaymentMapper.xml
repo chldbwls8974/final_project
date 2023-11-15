@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.final_project.dao.PaymentDAO">
+	<!-- <insert id="insertAccount">
+		insert into 
+			account(ac_me_num, ac_ba_name, ac_me_name, ac_num) 
+		values(#{account.ac_me_num}, #{account.ac_ba_name}, #{account.ac_me_name}, #{account.ac_num})
+	</insert> -->
+	<select id="getPaymentByImpUid" resultType="kr.kh.final_project.vo.PaymentVO">
+		select 
+			* 
+		from 
+			payment 
+		where 
+			pm_imp_uid = #{payment.pm_imp_uid};
+	</select>
+	<insert id="insertPayment">
+		insert into 
+			payment(pm_imp_uid, pm_amount, pm_ph_num) 
+		values
+			(#{payment.pm_imp_uid}, #{payment.pm_amount},#{payment.pm_ph_num})
+	</insert>
+</mapper>

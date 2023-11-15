@@ -1,5 +1,7 @@
 package kr.kh.final_project.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,18 +13,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.kh.final_project.pagination.Criteria;
+import kr.kh.final_project.pagination.PageMaker;
+import kr.kh.final_project.service.ClubService;
+import kr.kh.final_project.service.MatchService;
 import kr.kh.final_project.service.MemberService;
 import kr.kh.final_project.service.RegionService;
 import kr.kh.final_project.util.Message;
+import kr.kh.final_project.util.UploadFileUtils;
+import kr.kh.final_project.vo.BlockVO;
+import kr.kh.final_project.vo.ClubVO;
+import kr.kh.final_project.vo.HoldingCouponVO;
+import kr.kh.final_project.vo.MarkVO;
+import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
+import kr.kh.final_project.vo.PreferredRegionVO;
+import kr.kh.final_project.vo.PreferredTimeVO;
 import kr.kh.final_project.vo.RegionVO;
 import kr.kh.final_project.vo.TimeVO;
 
@@ -32,8 +45,14 @@ public class MemberController {
 	@Autowired
 	MemberService memberService;
 	@Autowired
+	MatchService matchService;
+	@Autowired
 	RegionService regionService;
+	@Autowired
+	ClubService clubService;
 	
+	String uploadPath = "D:\\uploadprofile\\member";
+
 	@GetMapping("/member/signup")
 	public String signup(Model model) {
 		List<RegionVO> MainRegion = memberService.getMainRegion();
@@ -101,18 +120,45 @@ public class MemberController {
 	
 	@PostMapping("/member/signup")
 	public String signupPost(MemberVO member, Model model, int[] pr_rg_num,
-			 int[] favoriteTime
-			,  int[] favoriteHoliTime
-			) 
-		{
-		
+			int[] favoriteTime, int[] favoriteHoliTime, 
+			@RequestParam("recommed_check") String inviteMember){
+		//inviteMember = 추천인 닉네임	 
 		Message msg = new Message("/member/signup", "회원 가입에 실패했습니다.");
-		
 		if(memberService.signup(member, pr_rg_num,favoriteTime,favoriteHoliTime)) {
 			msg = new Message("/", "회원 가입에 성공했습니다.");
+			//초대한 기존회원, 신규 회원에게 쿠폰 지급하는 메서드 (추천인 입력받았을 때만 실행)
+			if(inviteMember != null) {
+				if(memberService.signupCoupon(inviteMember, member)) {
+				}
+			}
 		}
 		model.addAttribute("msg", msg);
 		return "message";
+	}
+	
+	
+	//이메일인증 회원탈퇴
+	@GetMapping(value="/member/signout")
+	public String emailMemberSignout(Model model, HttpSession session) {
+		MemberVO member = (MemberVO)session.getAttribute("user");
+		model.addAttribute("member", member);
+		return "/member/signout";
+	}
+	//이메일인증 회원탈퇴
+	@PostMapping(value="/member/signout")
+	public String emailMemberSignoutPost(Model model, HttpSession session) {
+		MemberVO member = (MemberVO)session.getAttribute("user");
+		
+		boolean res = memberService.emailMemberSignout(member);
+		if(res) {
+			model.addAttribute("msg", "회원 탈퇴가 완료되었습니다.");
+			model.addAttribute("url", "/");
+		}else {
+			model.addAttribute("msg", "회원 탈퇴에 실패했습니다.");
+			model.addAttribute("url", "/member/signout");
+		}
+		model.addAttribute("member", member);
+		return "/util/message";
 	}
 	
 	
@@ -152,20 +198,17 @@ public class MemberController {
 	}
 	
 	
-	
 	//포인트 환급 페이지
 	@GetMapping("/member/refund")
 	public String pointRefund(HttpSession session) {
 		return "/member/refund";
 	}
+	
 	@PostMapping("/member/refund")
 	public String pointRefundPost(Model model, HttpSession session, PointHistoryVO pointHistory, MemberVO tmpUser) {
 		String msg, url;
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		//포인트내역 테이블의 용도 속성정보를 서비스에서 추가해 줘야 함.
-		System.out.println(pointHistory);
-		System.out.println(user);
-		System.out.println(tmpUser);
+		//회원 테이블에 포인트 수정, 포인트이력 테이블에 데이터 추가
 		if(memberService.pointRefundApply(user,tmpUser, pointHistory)) {
 			msg = "환급 신청이 성공하였습니다.";
 			url = "/member/refund";
@@ -180,15 +223,18 @@ public class MemberController {
 	
 	@ResponseBody
 	@PostMapping("/member/refund/list")
-	public Map<String, Object> refundList(@RequestBody MemberVO user, HttpSession session){
+	public Map<String, Object> refundList(HttpSession session, @RequestBody Criteria cri){
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<PointHistoryVO> refundList = memberService.getUserRefundHistoryList(user);
-		//
-		MemberVO member = (MemberVO)session.getAttribute("user");
-		//dbMember 가져오는 메서드 작성해야함
-		String dbMember = "test";
 		
-		map.put("dbMember", dbMember);
+		List<PointHistoryVO> refundList = memberService.getUserRefundHistoryList(user, cri);
+		//유저 포인트 가져오는 메서드
+		int dbMemberPoint = memberService.getMemberPoint(user);
+		int totalCount = memberService.getTotalRefundCount(user);
+		PageMaker pm = new PageMaker(3, cri, totalCount);
+		
+		map.put("pm", pm);
+		map.put("dbMemberPoint", dbMemberPoint);
 		map.put("refundList", refundList);
 		return map;
 	}
@@ -201,12 +247,33 @@ public class MemberController {
 		map.put("res", res);
 		return map;
 	}
-
+	//유저포인트 ajax로 보내주기 (실시간 업데이트를 위해서)
+	@ResponseBody
+	@PostMapping("/member/information")
+	public Map<String, Object> memberInformation(@RequestBody MemberVO user){
+		Map<String, Object> map = new HashMap<String, Object>();
+		//db의 유저정보 가져옴
+		user = memberService.getMemberByNum(user);
+		map.put("user", user);
+		return map;
+	}
+	
 	//마이페이지
 	@GetMapping("/member/mypage")
 	public String myPage(HttpSession session, Model model) {
 		MemberVO user = (MemberVO) session.getAttribute("user");
-		model.addAttribute("user", user);
+		MemberVO dbMember = memberService.getMemberByNum(user);
+		List<ClubVO> list = clubService.getMyClubList(user.getMe_num(),"MEMBER");
+		List<ClubVO> memberlist = clubService.getMyClubList(user.getMe_num(),"MEMBER");
+		List<ClubVO> rookielist = clubService.getMyClubList(user.getMe_num(),"ROOKIE");
+		List<ClubVO> leaderlist = clubService.getMyClubList(user.getMe_num(),"LEADER");
+		
+		model.addAttribute("user",user);
+		model.addAttribute("memberlist",memberlist);
+		model.addAttribute("rookielist",rookielist);
+		model.addAttribute("leaderlist",leaderlist);
+		model.addAttribute("user", dbMember);
+		model.addAttribute("list",list);
 		return "/member/mypage";
 	}
 
@@ -239,26 +306,51 @@ public class MemberController {
 	}
 	
 	@GetMapping("/member/myedit")
-	public String myProfile() {
+	public String myProfile(Model model,HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		List<RegionVO> MainRegion = memberService.getMainRegion();
+		//회원 가져오기
+		MemberVO dbMember = memberService.getMemberByNum(user);
+		//회원의 거주지역 가져오기
+		MemberVO memberRegion = memberService.getMemberRegion(dbMember);
+		
+		model.addAttribute("user",dbMember);
+		model.addAttribute("MainRegion",MainRegion);
+		model.addAttribute("memberRegion",memberRegion);
 		return "/member/myedit";
 	}
 	
 	
 	@PostMapping("/member/myedit")
-	public String profileEdit(MemberVO member, MultipartFile file, HttpSession session,Model model) {
-		System.out.println(member);
-		MemberVO user = (MemberVO)session.getAttribute("user"); //세션에 저장된 현재 user 정보 가져옴
-		System.out.println(user);
-		boolean res = memberService.updateProfile(member, user, file); //새로 입력한 정보 업데이트
-		if(res) { //업데이트된 사용자 정보 세션에 저장
-			session.setAttribute("user", member); 
-			model.addAttribute("msg", "수정을 완료했습니다.");
-			model.addAttribute("url","/member/mypage");
-		}else { //업데이트 실패시
-			model.addAttribute("msg", "수정에 실패했습니다.");
-			model.addAttribute("url","/member/myedit");
-		}
-		return "/member/mypage";
+	public String profileEdit(MemberVO member, MultipartFile img, HttpSession session, Model model
+		) {
+		Message msg = new Message("/", null);
+		try {
+			String fi_ori_name = img.getOriginalFilename();
+			String fi_name;
+			if(fi_ori_name != null && !fi_ori_name.isEmpty()) {
+				fi_name = UploadFileUtils.updateImg(uploadPath, fi_ori_name, img.getBytes());
+				
+			}else{
+				fi_name = "/basic.jpg";
+			}
+			
+			boolean res = memberService.updateProfile(member, fi_name); //새로 입력한 정보 업데이트
+			if(res) { //업데이트된 사용자 정보 세션에 저장
+				session.setAttribute("user", member); 
+				msg = new Message("/member/mypage", "수정에 성공했습니다.");
+				model.addAttribute("msg",msg);
+			}else { //업데이트 실패시
+				msg = new Message("/", "수정에 실패했습니다");
+				model.addAttribute("msg",msg);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+		
+		return "message";
 	}
 	
 	
@@ -271,5 +363,125 @@ public class MemberController {
 		map.put("checked",checked);
 		return map;
 	}
+	
+	//회원 보유 쿠폰 조회
+	@GetMapping("/member/myCoupon")
+	public String myCoupon(HttpSession session, Model model) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		model.addAttribute("user",user );
+		return "/member/myCoupon";
+	}
+	//회원 보유 쿠폰 리스트
+	@ResponseBody
+	@PostMapping("/member/myCoupon")
+	public Map<String, Object> myCouponList(@RequestBody Criteria cri, HttpSession session){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		List<HoldingCouponVO> hcList = memberService.getMemberCouponList(user, cri);
+		int totalCount = memberService.getMemberCouponListCount(user);
+		PageMaker pm = new PageMaker(3, cri, totalCount);
+		
+		map.put("pm", pm);
+		map.put("hcList", hcList);
+		return map;
+	}
+	//마이페이지-소속 클럽 페이지 조회
+	@GetMapping("/member/clublist")
+	public String myClub() {
+		return "/member/clublist";
+	}
+	
+	//마이페이지-신청 경기 페이지 조회
+	@GetMapping("/member/mymatch")
+	public String mymatch(Model model) {
+		//서비스에게 매치리스트 요청
+		List<MatchVO> matchList = matchService.getMatchList(); 
+		model.addAttribute("matchList", matchList);
+		return "/member/mymatch";
+	}
+	
+	//마이페이지- 내 프로필 상세조회
+	@GetMapping("/member/myprofile")
+	public String myprofile(Model model, MemberVO member, HttpSession session) {
+		//MemberVO user = (MemberVO)session.getAttribute("user");
+		//회원 가져오기
+		MemberVO dbMember = memberService.getMemberByNum(member);
+		//회원의 거주지역 가져오기
+		MemberVO memberRegion = memberService.getMemberRegion(dbMember);
+		//회원의 선호지역, 선호시간대 가져오기
+		List<PreferredRegionVO> memberPRegion = memberService.getMemberPRegion(dbMember);
+		List<Integer> holiTime = memberService.getMemberPTimeHoliday(dbMember);
+		List<Integer> weekTime = memberService.getMemberPTimeWeekday(dbMember);
+		
+		// 선호 지역, 시간 수정 시 필요
+		List<RegionVO> MainRegion = memberService.getMainRegion();
+		List<TimeVO> time = memberService.getAllTime();
+		model.addAttribute("MainRegion",MainRegion);
+		model.addAttribute("time",time);
+		
+		model.addAttribute("member",dbMember );
+		model.addAttribute("memberRegion", memberRegion );
+		model.addAttribute("memberPRegion", memberPRegion );
+		model.addAttribute("holiTime", holiTime );
+		model.addAttribute("weekTime", weekTime );
+		//model.addAttribute("user", user );
+		return "/member/myprofile";
+	}
+	//차단목록, 즐겨찾기 목록 가져오는 메서드
+	@ResponseBody
+	@PostMapping("/member/myBlockAndMarkList")
+	public Map<String, Object> myBlockAndMarkList(@RequestBody MemberVO user){
+		Map<String, Object> map = new HashMap<String, Object>();
+		//유저의 차단목록, 즐겨찾기목록 가져옴
+		List<BlockVO> blockList = memberService.getMyBlockList(user);
+		List<MarkVO> markList = memberService.getMyMarkList(user);
+		map.put("blockList", blockList);
+		map.put("markList", markList);
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/member/markList/process")
+	public Map<String, Object> markListAddAndDelete(@RequestBody MarkVO mark){
+		Map<String, Object> map = new HashMap<String, Object>();
+		//즐겨찾기 등록또는 삭제
+		memberService.markListAddAndDelete(mark);
+		
+		return map;
+	}
+	@ResponseBody
+	@PostMapping("/member/blockList/process")
+	public Map<String, Object> blockListAddAndDelete(@RequestBody BlockVO block){
+		Map<String, Object> map = new HashMap<String, Object>();
+		//차단 등록 또는 삭제
+		memberService.blockListAddAndDelete(block);
+		
+		return map;
+	}
+		
+	//마이페이지-즐찾 및 차단조회 페이지
+	@GetMapping("/member/friendlist")
+	public String friendlist() {
+		return "/member/friendlist";
+	}
+	@GetMapping("/member/blocklist")
+	public String blocklist() {
+		return "/member/blocklist";
+	}
+	
+	@GetMapping("/payment/main")
+	public String payment(Model model) {
+		return "/payment/main";
+	}
+	
+	@PostMapping("/member/update/region")
+	public String updateRegion(Model model,int me_num, int[] pr_rg_num) {
+		Message msg = memberService.updatePreferRegion(me_num, pr_rg_num);
+		model.addAttribute("msg", msg);
+		return "message";
+	}
+	
 	
 }

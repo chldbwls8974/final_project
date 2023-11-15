@@ -29,8 +29,8 @@
 		select * from file where fi_bo_num = #{bo_num}
 	</select>
 	<insert id="insertBusinessman" useGeneratedKeys="true" keyProperty="board.bo_num">
-		insert into board(bo_bt_num, bo_rg_num, bo_title, bo_me_num, bo_reg_date)
-		values (7, 1, '사업자 신청', #{board.bo_me_num}, now())
+		insert into board(bo_bt_num, bo_rg_num, bo_title, bo_me_num, bo_reg_date, bo_contents)
+		values (7, 1, '사업자 신청', #{board.bo_me_num}, now(), #{board.bo_contents})
 	</insert>
 	<!-- 공지게시판 글 가져오기 -->
 	<select id="selectBoardList" resultType="kr.kh.final_project.vo.BoardVO">
@@ -69,6 +69,9 @@
 		<if test="cri.t == 'fourth'">
 				bo_reg_date like concat('%', #{cri.s}, '%')
 		</if>
+		order by
+			bo_reg_date
+				desc
 		limit
 			#{cri.pageStart}, #{cri.perPageNum}
 	</select>
@@ -110,14 +113,579 @@
 				bo_reg_date like concat('%', #{cri.s}, '%')
 		</if>
 	</select>	
-	<insert id="insertBoard">
+	<insert id="insertBoard" useGeneratedKeys="true" keyProperty="board.bo_num">
 		insert 
 			into 
-		board(bo_title, bo_contents)
-			select
-				#{board.bo_title},
-				#{board.bo_contents}
+				board(
+					  bo_bt_num, 
+					  bo_rg_num,
+					  bo_title, 
+					  bo_me_num,
+					  bo_reg_date,
+					  bo_contents,
+					  bo_count,
+					  bo_comment)
+    		values (
+    				1,
+    				1,
+    				#{board.bo_title}, 
+    				#{board.bo_me_num},
+    				now(),
+    				#{board.bo_contents},
+    				#{board.bo_count},
+    				#{board.bo_comment})
+	</insert>
+	<!-- 게시글 상세보기 가져오기 -->
+	<select id="selectBoard" resultType="kr.kh.final_project.vo.BoardVO">
+		select
+			board.*,
+			member.me_nickname
 		from
 			board
+				join
+			member on bo_me_num = me_num
+		where
+			bo_num = #{bo_num}
+			
+	</select>
+	<!-- 게시글 조회수 올리기 -->
+	<update id="updateBoardViews">
+		update
+			board
+				set 
+					bo_count = bo_count + 1
+			where
+				bo_num = #{bo_num}
+	</update>
+	<select id="selectFileList2" resultType="kr.kh.final_project.vo.FileVO">
+		select * from file where fi_bo_num = #{bo_num}
+	</select>
+	<!-- 게시글 삭제하기 -->
+	<delete id="deleteBoard">
+		delete
+			from
+				board
+		where
+			bo_num = #{bo_num}
+	</delete>
+	<!-- 파일 삭제하기 -->
+	<delete id="deleteFile">
+		delete from file where fi_num = #{fi_num}
+	</delete>
+
+	<update id="updateBoard">
+		update board
+		set
+			bo_title = #{board.bo_title},
+			bo_contents = #{board.bo_contents},
+			bo_up_date = now()
+		where
+			bo_num = #{board.bo_num}
+	</update>
+	<select id="selectFile" resultType="kr.kh.final_project.vo.FileVO">
+		select * from file where fi_num = #{fi_num}
+	</select>
+	<!-- 게시판 댓글 수 표기하기 -->
+	<update id="updateBoardComment">
+		update board
+		set
+			bo_comment = (select count(*) from comment where co_bo_num = #{bo_num})
+		where
+			bo_num = #{bo_num}
+	</update>
+	<!-- 게시판 답글 수 표기하기 -->
+	<update id="updateBoardComment2">
+		update board
+		set
+			bo_comment = (select count(*) from comment where co_bo_num = #{bo_num})
+		where
+			bo_num = #{bo_num}
+	</update>
+	
+	<!-- 자유게시판 글 가져오기 -->
+	<select id="selectBoardFreeList" resultType="kr.kh.final_project.vo.BoardVO">
+		select
+			*
+		from
+			board
+				join
+			member
+				on bo_me_num = me_num
+		where
+			bo_bt_num = 1
+				or
+			bo_bt_num = 2
+				and
+		<if test="cri.t == 'all'">
+			(
+				bo_num like concat('%', #{cri.s}, '%')
+					or
+				me_nickname like concat('%', #{cri.s}, '%')
+					or
+				bo_title like concat('%', #{cri.s}, '%')
+					or
+				bo_reg_date like concat('%', #{cri.s}, '%')
+			)		
+		</if> 
+		<if test="cri.t == 'first'">
+				bo_num like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'second'">
+				me_nickname like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'third'">
+				bo_title like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'fourth'">
+				bo_reg_date like concat('%', #{cri.s}, '%')
+		</if>
+		order by
+			bo_bt_num
+				asc,
+			bo_reg_date
+				desc
+		limit
+			#{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<!-- 자유게시판 총 갯수 가져오기 -->
+	<select id="selectFreeTotalCount" resultType="int">
+		select
+			count(*)
+		from
+			board
+				join
+			member
+				on bo_me_num = me_num
+		where
+			bo_bt_num = 1
+				or
+			bo_bt_num = 2
+				and
+		<if test="cri.t == 'all'">
+			(
+				bo_num like concat('%', #{cri.s}, '%')
+					or
+				me_nickname like concat('%', #{cri.s}, '%')
+					or
+				bo_title like concat('%', #{cri.s}, '%')
+					or
+				bo_reg_date like concat('%', #{cri.s}, '%')
+			)		
+		</if> 
+		<if test="cri.t == 'first'">
+				bo_num like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'second'">
+				me_nickname like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'third'">
+				bo_title like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'fourth'">
+				bo_reg_date like concat('%', #{cri.s}, '%')
+		</if>
+	</select>
+	<!-- 자유게시글 등록하기 -->
+	<insert id="insertBoard2" useGeneratedKeys="true" keyProperty="board.bo_num">
+		insert 
+			into 
+				board(
+					  bo_bt_num, 
+					  bo_rg_num,
+					  bo_title, 
+					  bo_me_num,
+					  bo_reg_date,
+					  bo_contents,
+					  bo_count,
+					  bo_comment)
+    		values (
+    				2,
+    				1,
+    				#{board.bo_title}, 
+    				#{board.bo_me_num},
+    				now(),
+    				#{board.bo_contents},
+    				#{board.bo_count},
+    				#{board.bo_comment})
 	</insert>
+	
+	<!-- 개인매치게시판 글 가져오기 -->
+	<select id="selectBoardIndividualList" resultType="kr.kh.final_project.vo.BoardVO">
+		select
+			*
+		from
+			board
+				join
+			member
+				on bo_me_num = me_num
+		where
+			(
+			bo_bt_num = 1
+				or
+			bo_bt_num = 3
+			)
+				and
+		<if test="board.bo_rg_num != 0">
+			bo_rg_num = #{board.bo_rg_num}
+				and
+		</if>
+		<if test="cri.t == 'all'">
+			(
+				bo_num like concat('%', #{cri.s}, '%')
+					or
+				me_nickname like concat('%', #{cri.s}, '%')
+					or
+				bo_title like concat('%', #{cri.s}, '%')
+					or
+				bo_reg_date like concat('%', #{cri.s}, '%')
+			)		
+		</if> 
+		<if test="cri.t == 'first'">
+				bo_num like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'second'">
+				me_nickname like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'third'">
+				bo_title like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'fourth'">
+				bo_reg_date like concat('%', #{cri.s}, '%')
+		</if>
+		order by
+			bo_bt_num
+				asc,
+			bo_reg_date
+				desc
+		limit
+			#{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<!-- 개인매치 게시판 총 갯수 가져오기 -->
+	<select id="selectIndividualTotalCount" resultType="int">
+		select
+			count(*)
+		from
+			board
+				join
+			member
+				on bo_me_num = me_num
+		where
+			bo_bt_num = 1
+				or
+			bo_bt_num = 3
+				and
+		<if test="cri.t == 'all'">
+			(
+				bo_num like concat('%', #{cri.s}, '%')
+					or
+				me_nickname like concat('%', #{cri.s}, '%')
+					or
+				bo_title like concat('%', #{cri.s}, '%')
+					or
+				bo_reg_date like concat('%', #{cri.s}, '%')
+			)		
+		</if> 
+		<if test="cri.t == 'first'">
+				bo_num like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'second'">
+				me_nickname like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'third'">
+				bo_title like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'fourth'">
+				bo_reg_date like concat('%', #{cri.s}, '%')
+		</if>
+	</select>
+	<!-- 개인게시글 등록하기 -->
+	<insert id="insertBoard3" useGeneratedKeys="true" keyProperty="board.bo_num">
+		insert 
+			into 
+				board(
+					  bo_bt_num, 
+					  bo_rg_num,
+					  bo_title, 
+					  bo_me_num,
+					  bo_reg_date,
+					  bo_contents,
+					  bo_count,
+					  bo_comment)
+    		values (
+    				3,
+    				#{board.bo_rg_num},
+    				#{board.bo_title}, 
+    				#{board.bo_me_num},
+    				now(),
+    				#{board.bo_contents},
+    				#{board.bo_count},
+    				#{board.bo_comment})
+	</insert>
+	
+	<!-- 클럽매치게시판 글 가져오기 -->
+	<select id="selectBoardClubList" resultType="kr.kh.final_project.vo.BoardVO">
+		select
+			*
+		from
+			board
+				join
+			member
+				on bo_me_num = me_num
+		where
+			(
+			bo_bt_num = 1
+				or
+			bo_bt_num = 4
+			)
+				and
+		<if test="board.bo_rg_num != 0">
+			bo_rg_num = #{board.bo_rg_num}
+				and
+		</if>
+		<if test="cri.t == 'all'">
+			(
+				bo_num like concat('%', #{cri.s}, '%')
+					or
+				me_nickname like concat('%', #{cri.s}, '%')
+					or
+				bo_title like concat('%', #{cri.s}, '%')
+					or
+				bo_reg_date like concat('%', #{cri.s}, '%')
+			)		
+		</if> 
+		<if test="cri.t == 'first'">
+				bo_num like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'second'">
+				me_nickname like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'third'">
+				bo_title like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'fourth'">
+				bo_reg_date like concat('%', #{cri.s}, '%')
+		</if>
+		order by
+			bo_bt_num
+				asc,
+			bo_reg_date
+				desc
+		limit
+			#{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<!-- 클럽매치 게시판 총 갯수 가져오기 -->
+	<select id="selectClubTotalCount" resultType="int">
+		select
+			count(*)
+		from
+			board
+				join
+			member
+				on bo_me_num = me_num
+		where
+			bo_bt_num = 1
+				or
+			bo_bt_num = 4
+				and
+		<if test="cri.t == 'all'">
+			(
+				bo_num like concat('%', #{cri.s}, '%')
+					or
+				me_nickname like concat('%', #{cri.s}, '%')
+					or
+				bo_title like concat('%', #{cri.s}, '%')
+					or
+				bo_reg_date like concat('%', #{cri.s}, '%')
+			)		
+		</if> 
+		<if test="cri.t == 'first'">
+				bo_num like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'second'">
+				me_nickname like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'third'">
+				bo_title like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'fourth'">
+				bo_reg_date like concat('%', #{cri.s}, '%')
+		</if>
+	</select>
+	<!-- 클럽게시글 등록하기 -->
+	<insert id="insertBoard4" useGeneratedKeys="true" keyProperty="board.bo_num">
+		insert 
+			into 
+				board(
+					  bo_bt_num, 
+					  bo_rg_num,
+					  bo_title, 
+					  bo_me_num,
+					  bo_reg_date,
+					  bo_contents,
+					  bo_count,
+					  bo_comment)
+    		values (
+    				4,
+    				#{board.bo_rg_num},
+    				#{board.bo_title}, 
+    				#{board.bo_me_num},
+    				now(),
+    				#{board.bo_contents},
+    				#{board.bo_count},
+    				#{board.bo_comment})
+	</insert>
+	
+	<!-- 문의게시판 글 가져오기 -->
+	<select id="selectBoardInquiryList" resultType="kr.kh.final_project.vo.BoardVO">
+		select
+			*
+		from
+			board
+				join
+			member
+				on bo_me_num = me_num
+		where
+			bo_bt_num = 5
+				and
+		<if test="user.me_authority != 'ADMIN'">
+			bo_me_num = #{user.me_num}
+		</if>
+		<if test="user.me_authority == 'ADMIN'">
+			bo_me_num != #{user.me_num}
+		</if>
+				and
+		<if test="cri.t == 'all'">
+			(
+				bo_num like concat('%', #{cri.s}, '%')
+					or
+				me_nickname like concat('%', #{cri.s}, '%')
+					or
+				bo_title like concat('%', #{cri.s}, '%')
+					or
+				bo_reg_date like concat('%', #{cri.s}, '%')
+			)		
+		</if> 
+		<if test="cri.t == 'first'">
+				bo_num like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'second'">
+				me_nickname like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'third'">
+				bo_title like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'fourth'">
+				bo_reg_date like concat('%', #{cri.s}, '%')
+		</if>
+		order by
+			bo_reg_date
+				desc
+		limit
+			#{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<!-- 문의게시판 총 갯수 가져오기 -->
+	<select id="selectInquiryTotalCount" resultType="int">
+		select
+			count(*)
+		from
+			board
+				join
+			member
+				on bo_me_num = me_num
+		where
+			bo_bt_num = 5
+				and
+		<if test="user.me_authority != 'ADMIN'">
+			bo_me_num = #{user.me_num}
+		</if>
+		<if test="user.me_authority == 'ADMIN'">
+			bo_me_num != #{user.me_num}
+		</if>
+				and
+		<if test="cri.t == 'all'">
+			(
+				bo_num like concat('%', #{cri.s}, '%')
+					or
+				me_nickname like concat('%', #{cri.s}, '%')
+					or
+				bo_title like concat('%', #{cri.s}, '%')
+					or
+				bo_reg_date like concat('%', #{cri.s}, '%')
+			)		
+		</if> 
+		<if test="cri.t == 'first'">
+				bo_num like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'second'">
+				me_nickname like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'third'">
+				bo_title like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'fourth'">
+				bo_reg_date like concat('%', #{cri.s}, '%')
+		</if>
+	</select>
+	<!-- 문의게시글 등록하기 -->
+	<insert id="insertBoard5" useGeneratedKeys="true" keyProperty="board.bo_num">
+		insert 
+			into 
+				board(
+					  bo_bt_num, 
+					  bo_rg_num,
+					  bo_title, 
+					  bo_me_num,
+					  bo_reg_date,
+					  bo_contents,
+					  bo_count,
+					  bo_comment)
+    		values (
+    				5,
+    				1,
+    				#{board.bo_title}, 
+    				#{board.bo_me_num},
+    				now(),
+    				#{board.bo_contents},
+    				#{board.bo_count},
+    				#{board.bo_comment})
+	</insert>
+	<!-- 지역필터 게시글 리스트 가져오기 -->
+	<select id="selectBoardRegionList" resultType="kr.kh.final_project.vo.BoardVO">
+		select 
+			* 
+		from 
+			board
+		where
+			bo_num = #{bo_num}
+				and
+			bo_bt_num = 3
+				and
+			bo_rg_num = #{bo_rg_num}
+
+	</select>
+	<!-- 해당 게시글 총 갯수 가져오기 -->
+	<select id="selectCommentCount" resultType="int">
+		select 
+			count(*) 
+		from 
+			board
+		where
+			bo_rg_num = #{bo_rg_num}
+	</select>
+	
+	<select id="selectBoardManager" resultType="kr.kh.final_project.vo.BoardVO">
+		select
+			*
+		from
+			board
+		where
+			bo_num = #{bo_num}
+	</select>
+	<delete id="deleteBoardManager">
+		delete
+			from
+				board
+		where
+			bo_num = #{bo_num}
+	</delete>
 </mapper>

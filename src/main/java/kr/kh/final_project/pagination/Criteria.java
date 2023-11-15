@@ -9,6 +9,7 @@ public class Criteria {
 //=====================================================
 	private String s;
 	private String t;
+	private String r;
 	
 	public Criteria() {
 		page = 1;
@@ -36,5 +37,8 @@ public class Criteria {
 	}
 	public String getUrl() {
 		return "?t=" + t + "&s=" + s + "&page=" + page;
+	}
+	public int getS_int() {
+		return s.equals("정지")?1:0;
 	}
 }

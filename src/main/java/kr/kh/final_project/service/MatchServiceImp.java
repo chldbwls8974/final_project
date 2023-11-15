@@ -294,6 +294,12 @@ public class MatchServiceImp implements MatchService{
 		}
 		return clubMemberDao.selectClubMemberByMeNum(me_num, cl_num);
 	}
+
+
+	@Override
+	public List<MatchVO> getMatchList() {
+		return  matchDao.selectMatchList();
+	}
 	
 	@Override
 	public List<TeamVO> selectTeamByMtNum(int mt_num) {

@@ -20,11 +20,12 @@
 	    -webkit-appearance: none;
 	    margin: 0;
 	}
+	body{ letter-spacing: -2px;}
 </style>
 <body>
 	<tiles:insertAttribute name="header"/>
     <div class="container" style="min-height: calc(100vh - 10px - 184px)">        
-        <tiles:insertAttribute name="body" />
+        <tiles:insertAttribute name="body"/>
     </div>                                                  
     <tiles:insertAttribute name="footer" />
 </body>
@@ -37,7 +38,12 @@ function ajaxJsonToJson(async, type, url, sendObject, successFunc){
 		data : JSON.stringify(sendObject), 
 		contentType : "application/json; charset=UTF-8", 
 		dataType : "json",
-		success : successFunc
+		success : successFunc,
+		error : function(a,b,c){
+			console.log(a);
+			console.log(b);
+			console.log(c);
+		}
 	});
 }
 

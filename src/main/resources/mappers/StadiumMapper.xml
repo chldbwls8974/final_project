@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -9,4 +9,73 @@
 	<select id="selectStadiumByStNum" resultType="kr.kh.final_project.vo.StadiumVO">
 		select * from stadium where st_num = #{st_num}
 	</select>
+	<select id="selectStadiumList" resultType="kr.kh.final_project.vo.StadiumVO">
+		select * from stadium 
+		<where>
+			<choose>
+				<when test='cri.t == "all"'>
+					(st_name like concat('%', #{cri.s}, '%')
+					or st_locate like concat('%', #{cri.s}, '%'))
+				</when>
+				<when test='cri.t == "name"'>
+					(st_name like concat('%', #{cri.s}, '%'))
+				</when>
+				<when test='cri.t == "locate"'>
+					(st_locate like concat('%', #{cri.s}, '%'))
+				</when>
+			</choose>
+			and st_fa_num = #{fa_num}
+			and stadium.st_available != 2
+		</where>
+			order by st_name asc
+			limit #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<select id="selectCountStadiumList" resultType="int">
+		select count(*) from stadium 
+		<where>
+			<choose>
+				<when test='cri.t == "all"'>
+					(st_name like concat('%', #{cri.s}, '%')
+					or st_locate like concat('%', #{cri.s}, '%'))
+				</when>
+				<when test='cri.t == "name"'>
+					(st_name like concat('%', #{cri.s}, '%'))
+				</when>
+				<when test='cri.t == "locate"'>
+					(st_locate like concat('%', #{cri.s}, '%'))
+				</when>
+			</choose>
+			and st_fa_num = #{fa_num}
+			and stadium.st_available != 2
+		</where>
+	</select>
+	<insert id="insertStadium">
+		insert into stadium(st_num, st_name, st_locate, st_door, st_floortype, st_width,
+					st_height, st_max, st_available, st_note, st_fa_num)
+			values
+				(#{stadium.st_num}, #{stadium.st_name}, #{stadium.st_locate}, #{stadium.st_door}, 
+				#{stadium.st_floortype}, #{stadium.st_width}, #{stadium.st_height}, 
+				#{stadium.st_max}, #{stadium.st_available}, #{stadium.st_note}, #{stadium.st_fa_num})
+	</insert>
+	<select id="selectStadium" resultType="kr.kh.final_project.vo.StadiumVO">
+		 select * from stadium where st_num = #{st_num}
+	</select>
+	<update id="updateStadium">
+		update stadium set
+			st_name = #{stadium.st_name}, 
+			st_locate = #{stadium.st_locate}, 
+			st_door = #{stadium.st_door}, 
+			st_floortype = #{stadium.st_floortype}, 
+			st_width = #{stadium.st_width}, 
+			st_height = #{stadium.st_height}, 
+			st_max = #{stadium.st_max}, 
+			st_available = #{stadium.st_available}, 
+			st_note = #{stadium.st_note}
+		where st_num = #{stadium.st_num}
+	</update>
+	<update id="updateStadiumAvailability" parameterType="int">
+	    update stadium
+	    set st_available = 2
+	    where st_fa_num = #{fa_num}
+	</update>
 </mapper>

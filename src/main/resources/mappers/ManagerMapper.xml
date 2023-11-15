@@ -34,11 +34,11 @@
 				bo_reg_date like concat('%', #{cri.s}, '%')
 		</if>
 		order by
-			me_num asc
+			bo_reg_date desc
 		limit
 			#{cri.pageStart}, #{cri.perPageNum}
 	</select>
-	<!-- 매니저신청 수락버튼 (권한 바꾸기) -->
+	<!-- 매니저신청 수락버튼 (권한 MANAGER로 바꾸기) -->
 	<update id="updateManagerByAuthority">
 		update
 			member
@@ -80,8 +80,7 @@
 				bo_reg_date like concat('%', #{cri.s}, '%')
 		</if>
 		order by
-			me_num
-				asc
+			bo_reg_date desc
 	</select>
 	<insert id="insertManagerToMatch">
 		insert into manager(mn_me_num, mn_mt_num)
@@ -94,4 +93,99 @@
 			mn_me_num = #{me_num} and
 			mn_mt_num = #{mt_num}
 	</insert>
+	<!-- 권한이 매니저인 회원만 조회 -->
+	<select id="selectManagerList2" resultType="kr.kh.final_project.vo.ManagerVO">
+		select
+			*
+		from
+			board
+				join
+			member on bo_me_num = me_num
+		where
+			bo_bt_num = 6
+				and
+			me_authority = "MANAGER"
+				and
+		<if test="cri.t == 'all'">
+			(
+				me_num like concat('%', #{cri.s}, '%')
+					or
+				me_nickname like concat('%', #{cri.s}, '%')
+					or
+				bo_title like concat('%', #{cri.s}, '%')
+					or
+				bo_reg_date like concat('%', #{cri.s}, '%')
+			)		
+		</if> 
+		<if test="cri.t == 'first'">
+				me_nickname like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'second'">
+				bo_title like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'third'">
+				bo_reg_date like concat('%', #{cri.s}, '%')
+		</if>
+		order by
+			bo_reg_date desc
+		limit
+			#{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<!-- 매니저신청 취소버튼 (권한 USER로 바꾸기) -->
+	<update id="updateManagerByAuthority2">
+		update
+			member
+		set
+			me_authority = 'USER'
+		where
+			me_nickname = #{manager.me_nickname}
+	</update>
+	<!--  -->
+	<select id="selectTotalCount2" resultType="int">
+		select 
+			count(*) 
+		from 
+			board
+				join
+			member on bo_me_num = me_num
+		where
+			bo_bt_num = 6
+				and
+			me_authority = "MANAGER"
+				and
+		<if test="cri.t == 'all'">
+			(
+				me_num like concat('%', #{cri.s}, '%')
+					or
+				me_nickname like concat('%', #{cri.s}, '%')
+					or
+				bo_title like concat('%', #{cri.s}, '%')
+					or
+				bo_reg_date like concat('%', #{cri.s}, '%')	
+			)		
+		</if> 
+		<if test="cri.t == 'first'">
+				me_nickname like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'second'">
+				bo_title like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'third'">
+				bo_reg_date like concat('%', #{cri.s}, '%')
+		</if>
+		order by
+			bo_reg_date desc
+	</select>
+	<delete id="deleteBoardManagerList">
+		delete
+			from
+				board
+			where
+				bo_me_num = ( select
+									me_num 
+								from 
+									member
+								where
+									 me_nickname =#{manager.me_nickname})
+	</delete>
 </mapper>
