@@ -185,7 +185,6 @@ public class ClubController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		System.out.println(cl_num + type + me_num + user);
 		clubService.memberManage(type, cl_num, me_num, user);
 		return map;
 	}
