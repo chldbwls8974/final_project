@@ -116,30 +116,31 @@
 		width: 120px; height: 40px; margin: auto auto 10px; border: none;
 		border-radius: 5px; background-color: #c2f296; color: black;
 	}
-/* 모달 */
-.modal--bg {
-	display: none;
-	position: fixed;
-	top: 0%;
-	left: 0%;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.3);
-	justify-content: center;
-	align-items: center;
-}
-
-.modal--content {
-	background-color: white;
-	padding: 20px;
-	border-radius: 5px;
-	max-width: 600px;
-	margin: 200px auto;
+	/* 모달 */
+	.modal--bg {
+		z-index: 1000;
+		display: none;
+		position: fixed;
+		top: 0%;
+		left: 0%;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.3);
+		justify-content: center;
+		align-items: center;
+	}
 	
-}
-    </style>
-
+	.modal--content {
+		background-color: white;
+		padding: 20px;
+		border-radius: 5px;
+		max-width: 600px;
+		margin: 200px auto;
+		
+	}
+	
 </style>
+
 </head>
 <body>
 <div class="container-body">
@@ -197,15 +198,15 @@
 			</a>
 		</div>
 		
-<!-- 		선호 지역 수정 모달 -->
+	<!-- 선호 지역 수정 모달 -->
 	<!-- 모달창 -->
 		<div class="modal--bg region--modal">
 		<div class="modal--content">
-			<p style="font-size: 20px; font-weight: bolder; margin: 0 auto; border-bottom: 8px solid #c2f296; width: 20%; padding: 20px 0 10px 0; text-align: center;">선호 지역 수정</p>
+			<p style="font-size: 20px; font-weight: bolder; margin: 20px auto; border-bottom: 8px solid #c2f296; width: 30%; padding: 20px 0 10px 0; text-align: center;">선호 지역 수정</p>
 			<form class="modal-form" action="<c:url value='/member/update/region'/>" method="post">
 			<input type="hidden" name="me_num" value="${member.me_num}">
 				<div class="prefer-area">
-					<div class="form-group">
+					<div class="form-group" style="display: block;">
 						<select class="form-control pre_rg_main">
 							<option value="0">대분류를 선택하세요</option>
 							<c:forEach items="${MainRegion}" var="main">
@@ -214,7 +215,7 @@
 						</select>
 	
 					</div>
-					<div class="form-group">
+					<div class="form-group" style="display: block;">
 						<select class="form-control rg_sub" name="pr_rg_num">
 							<option value="0">소분류를 선택하세요</option>
 							<c:forEach items="${SubRegion}" var="sub">
@@ -224,7 +225,7 @@
 					</div>
 				</div>
 
-				<div class="form-group">
+				<div class="form-group" style="display: block;">
 					<button type="button" class="form-control" name="add-area-btn">지역추가</button>
 				</div>
 			
@@ -580,7 +581,7 @@
 				 str+=`
 				 	<hr>
 					 <div class="prefer-area">
-						<div class="form-group">
+						<div class="form-group" style="display: block;">
 							<select class="form-control pre_rg_main">
 								<option value="0">대분류를 선택하세요</option>
 								<c:forEach items="${MainRegion}" var="main">
@@ -589,7 +590,7 @@
 							</select>
 
 						</div>
-						<div class="form-group">
+						<div class="form-group" style="display: block;">
 							<select class="form-control rg_sub" name="pr_rg_num">
 								<option value="0">소분류를 선택하세요</option>
 								<c:forEach items="${SubRegion}" var="sub">
@@ -601,7 +602,7 @@
 
 				 `;
 				btn+=`
-				<div class="form-group">
+				<div class="form-group" style="display: block;">
 					<button type="button" class="form-control" name="add-area-btn">지역 추가</button>
 					</div>
 				`; 
