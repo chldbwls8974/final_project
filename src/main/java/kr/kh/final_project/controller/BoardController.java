@@ -36,7 +36,8 @@ public class BoardController {
 	
 	// 공지게시판 조회하기 & 페이지네이션 (1)
 	@GetMapping("/board/notice")
-	public String boardNotice(Model model, Criteria cri) {
+	public String boardNotice(Model model, Criteria cri, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		
 		// 페이지네이션
 		cri.setPerPageNum(5);

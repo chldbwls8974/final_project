@@ -62,12 +62,14 @@
 	<br>
 		<p style="font-size: 35px; font-weight: bolder; margin:0 auto; border-bottom: 8px solid #c2f296;
 			width: 20%; padding: 20px 0 10px 0; text-align: center;">공지게시판</p>
-		<div style="display:flex; justify-content: flex-end;">
-			<button type="button"
-				    class="write-btn btn-info"
-					onclick="location.href='<c:url value='/board/insert'/>'">공지글 쓰기
-			</button>
-		</div>	
+		<c:if test="${user.me_authority == 'ADMIN'}">
+			<div style="display:flex; justify-content: flex-end;">
+				<button type="button"
+					    class="write-btn btn-info"
+						onclick="location.href='<c:url value='/board/insert'/>'">공지글 쓰기
+				</button>
+			</div>	
+		</c:if>
 	<!-- 공지게시판 검색 기능 -->
 		<form action="<c:url value='/board/notice'/>" method="get">
 			<div class="input-group mb-3 mt-3">

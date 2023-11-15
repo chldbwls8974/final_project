@@ -40,6 +40,9 @@
 	   <div align="right" class="mt-3">
 		   <a class="btn btn-secondary btn-block" role="button" href="<c:url value='/businessman/operatingUpdate/${facility.fa_num}'/>">수정하기</a>
 	   </div>
+	   <div align="right" class="mt-3">
+		   <a class="btn btn-secondary btn-block" role="button" href="<c:url value='/businessman/facility'/>">시설 목록으로 이동</a>
+	   </div>
 	   <br>
 </body>
 </html>

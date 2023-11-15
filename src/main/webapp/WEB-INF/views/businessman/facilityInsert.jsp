@@ -16,7 +16,7 @@
 		</div>
 		  
 	  	<div class="form-group">
-			<label>지역</label> 
+			<label>지역</label>
 			<select class="form-control rg_main" required>
 				<option value="0">지역을 선택하세요</option>
 					<c:forEach items="${MainRegion}" var="main">
@@ -50,8 +50,9 @@
 		    <label for="fa_phone">전화번호</label>
 		    <input type="text" class="form-control" id="fa_phone" name="fa_phone" placeholder="-를 제외하고 입력하세요" oninput="autoHyphen(this)" maxlength="14" required>
 		</div>
+		<br>
 		  
-	    <h3>부대시설</h3>
+	    <h4>부대시설</h4>
 	    <div class="form-group">
 			<label for="fa_pay" style="font-weight: bold;">주차장</label>
 		    <div class="form-check-inline">
@@ -143,11 +144,11 @@
 		<br>
 		  
 		<div class="form-group">
-		<label for="fa_note">특이사항</label>
+		<label for="fa_note">특이사항</label> &nbsp;<span class="badge badge-secondary">선택</span>
 			<textarea class="form-control" rows="5" id="fa_note" name="fa_note"></textarea>
 		</div>
 	   <br>
-	   <button class="btn btn-secondary btn-block">등록</button><br>
+	   <button class="btn btn-info btn-block">등록</button><br>
 	</form> 
 
 
@@ -182,7 +183,7 @@
 				}
 			})
 		  });
-		 
+		
 	</script>
 
 </body>

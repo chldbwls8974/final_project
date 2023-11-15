@@ -63,10 +63,7 @@
 					커뮤니티
 					</a>
 					<div class="dropdown-menu">
-						<c:if test="${user != null && user.me_authority == 'ADMIN'}">
-							<a class="dropdown-item" 
-							   href="<c:url value='/board/notice'/>">공지게시판</a>
-						</c:if>	
+							<a class="dropdown-item" href="<c:url value='/board/notice'/>">공지게시판</a>
 							<a class="dropdown-item" href="<c:url value='/board/free'/>">자유게시판</a>
 							<a class="dropdown-item" href="<c:url value='/board/individual'/>">개인 매칭</a>
 							<a class="dropdown-item" href="<c:url value='/board/clue'/>">클럽 매칭</a>
@@ -113,18 +110,19 @@
 							<a class="dropdown-item" href="<c:url value='/manager/manage/schedule'/>">일정 관리</a>
 						</div>
 				</li>
-				<li class="nav-item dropdown">
+				<c:if test="${user != null && user.me_authority == 'BUSINESS'}">
+					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 						사업자
 						</a>
 						<div class="dropdown-menu">
 							<a class="dropdown-item" href="<c:url value='/businessman/facilityInsert'/>">시설 등록</a>
 							<a class="dropdown-item" href="<c:url value='/businessman/facility'/>">시설 관리</a>
-							<a class="dropdown-item" href="<c:url value='/businessman/stadiumInsert'/>">경기장 등록</a>
 							<a class="dropdown-item" href="<c:url value='/buisnessman/manage/schedule'/>">스케줄 관리</a>
 							<a class="dropdown-item" href="#">일정 관리</a>
 						</div>
-				</li>
+					</li>
+				</c:if>
 				
 				<li class="nav-item">
 					<a class="nav-link" href="<c:url value='/member/mypage'/>">마이페이지</a>
