@@ -567,6 +567,12 @@ public class MemberController {
 		model.addAttribute("msg", msg);
 		return "message";
 	}
+	@PostMapping("/member/update/time")
+	public String updateTime(Model model,int me_num, int[] favoriteTime, int[] favoriteHoliTime) {
+		Message msg = memberService.updatePreferTime(me_num, favoriteTime,favoriteHoliTime);
+		model.addAttribute("msg", msg);
+		return "message";
+	}
 	
 	
 }

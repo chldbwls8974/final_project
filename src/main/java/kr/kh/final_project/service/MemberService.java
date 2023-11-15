@@ -103,5 +103,7 @@ public interface MemberService {
 	
 	Message updatePreferRegion(int me_num, int[] pr_rg_num);
 	
+	Message updatePreferTime(int me_num, int[] favoriteTime, int[] favoriteHoliTime);
+	
 
 }
