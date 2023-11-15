@@ -57,12 +57,9 @@ public class KakaoController {
 		
 		try {
 		    KakaoResponse kakaoResponse = objectMapper.readValue(res, KakaoResponse.class);
-		    System.out.println(code);
 		    // 카카오 토큰 id
-		    //System.out.println("ID: " + kakaoResponse.getId());
 		    // 토큰에 실린 정보
 		    KakaoAccount kakaoAccount = kakaoResponse.getKakao_account();
-		    System.out.println(kakaoAccount);
 		    long id =  kakaoResponse.getId();
 		    String me_id = String.valueOf(id);
 		    me_id  += 'k';
@@ -105,14 +102,12 @@ public class KakaoController {
 			) 
 		{
 		
-		System.out.println(member);
 		Message msg = new Message("/member/signup", "회원 가입에 실패했습니다.");
 		if(memberService.signup(member, pr_rg_num,favoriteTime,favoriteHoliTime)) {
 			msg = new Message("/", "회원 가입에 성공했습니다.");
 			//초대한 기존회원, 신규 회원에게 쿠폰 지급하는 메서드 (추천인 입력받았을 때만 실행)
 			if(inviteMember != null) {
 				if(memberService.signupCoupon(inviteMember, member)) {
-					System.out.println("쿠폰지급 성공");
 				}
 			}
 		}
@@ -134,7 +129,6 @@ public class KakaoController {
 		Message msg = new Message("", "로그인에 성공했습니다.");
 		MemberVO dbMember = memberDao.selectMember(me_id);
 		MemberVO user = memberService.login(dbMember); 
-		System.out.println(user);
 		model.addAttribute("user", user);
 		model.addAttribute("msg", msg);
 		return "message";
@@ -209,7 +203,6 @@ public class KakaoController {
 	}
 	private String getUserForKakao(String accessToken) {
 		try {
-			System.out.println(accessToken);
 			log.info(accessToken);
 			String apiUrl = "https://kapi.kakao.com/v2/user/me";
             // URL 객체 생성

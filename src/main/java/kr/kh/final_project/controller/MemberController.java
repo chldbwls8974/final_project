@@ -129,7 +129,6 @@ public class MemberController {
 			//초대한 기존회원, 신규 회원에게 쿠폰 지급하는 메서드 (추천인 입력받았을 때만 실행)
 			if(inviteMember != null) {
 				if(memberService.signupCoupon(inviteMember, member)) {
-					System.out.println("쿠폰지급 성공");
 				}
 			}
 		}
@@ -149,7 +148,6 @@ public class MemberController {
 	@PostMapping(value="/member/signout")
 	public String emailMemberSignoutPost(Model model, HttpSession session) {
 		MemberVO member = (MemberVO)session.getAttribute("user");
-		System.out.println(member);
 		
 		boolean res = memberService.emailMemberSignout(member);
 		if(res) {
@@ -226,11 +224,9 @@ public class MemberController {
 	@ResponseBody
 	@PostMapping("/member/refund/list")
 	public Map<String, Object> refundList(HttpSession session, @RequestBody Criteria cri){
-		System.out.println("asd");
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		System.out.println(cri);
 		List<PointHistoryVO> refundList = memberService.getUserRefundHistoryList(user, cri);
 		//유저 포인트 가져오는 메서드
 		int dbMemberPoint = memberService.getMemberPoint(user);
@@ -401,10 +397,8 @@ public class MemberController {
 	@GetMapping("/member/myprofile")
 	public String myprofile(Model model, MemberVO member, HttpSession session) {
 		//MemberVO user = (MemberVO)session.getAttribute("user");
-		System.out.println("111111111"+member);
 		//회원 가져오기
 		MemberVO dbMember = memberService.getMemberByNum(member);
-		System.out.println("db"+dbMember);
 		//회원의 거주지역 가져오기
 		MemberVO memberRegion = memberService.getMemberRegion(dbMember);
 		//회원의 선호지역, 선호시간대 가져오기

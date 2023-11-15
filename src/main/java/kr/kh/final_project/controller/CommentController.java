@@ -1,6 +1,5 @@
 package kr.kh.final_project.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +17,6 @@ import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.pagination.PageMaker;
 import kr.kh.final_project.service.BlockService;
 import kr.kh.final_project.service.CommentService;
-import kr.kh.final_project.vo.BlockVO;
 import kr.kh.final_project.vo.CommentVO;
 import kr.kh.final_project.vo.MemberVO;
 

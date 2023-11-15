@@ -63,7 +63,6 @@ public class BusinessmanServiceImp implements BusinessmanService{
 	//시설 등록
 	@Override
 	public boolean insertFacility(MemberVO user, FacilityVO facility) {
-		//System.out.println(facility);
 		//예외처리
 		if(user == null
 			|| facility == null
@@ -147,7 +146,6 @@ public class BusinessmanServiceImp implements BusinessmanService{
 			}
 		for(OperatingVO tmp : operatingList) {
 			tmp.setOp_fa_num(fa_num);
-			//System.out.println(tmp);
 			operatingDao.insertOperating(tmp);
 		}
 			return true;
@@ -166,9 +164,7 @@ public class BusinessmanServiceImp implements BusinessmanService{
 		// 변경된 운영 시간만 업데이트
 	    for (OperatingVO newTmp : operatingList) {
 	    	newTmp.setOp_fa_num(fa_num);
-	        //System.out.println(newTmp);
 	        for (OperatingVO dbTmp : dbOperating) {
-	        	System.out.println(dbTmp);
 	            if (newTmp.getOp_day().equals(dbTmp.getOp_day())) {
 	                operatingDao.updateOperatingList(newTmp, fa_num);
 	            }

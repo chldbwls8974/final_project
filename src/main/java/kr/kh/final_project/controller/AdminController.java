@@ -304,7 +304,6 @@ public class AdminController {
 	@PostMapping("/admin/report/handle")
 	public Map<String, Object> reportHandle(@RequestBody ReportVO report) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println(report);
 		boolean res = adminService.reportHandle(report);
 		map.put("res", res);
 		return map;
