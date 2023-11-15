@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.pagination.Criteria;
+import kr.kh.final_project.vo.BlockVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 
@@ -57,8 +58,5 @@ public interface MemberDAO {
 	boolean updateUserMatchBanState(@Param("me_num")int me_num, @Param("i")int i);
 
 	void updateMember(@Param("m")MemberVO member, @Param("fi_name")String fi_name);
-
-
-
 
 }
