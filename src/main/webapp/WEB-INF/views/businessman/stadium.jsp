@@ -7,6 +7,11 @@
 <meta charset="UTF-8">
 <title>경기장 목록</title>
 </head>
+<style>
+	body{
+		text-align: center;
+	}
+</style>
 <body>
 	<h1 class="display-3"><span style="color: black; font-weight: bold;">[${facility.fa_name}] 경기장 목록</span></h1> <br>
 	<br>

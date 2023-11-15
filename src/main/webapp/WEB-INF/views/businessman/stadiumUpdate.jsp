@@ -7,6 +7,11 @@
 <meta charset="UTF-8">
 <title>경기장 정보 수정</title>
 </head>
+<style>
+	h1{
+		text-align: center;
+	}
+</style>
 <body>
 	<h1 class="display-3"><span style="color: black; font-weight: bold;">경기장 정보 수정</span></h1> <br>
 	<form action="<c:url value='/businessman/stadiumUpdate'/>" method="post">
@@ -17,19 +22,19 @@
 	  </div>
 	  
 	  <div class="form-group">
-	    <label for="st_name">이름</label>
+	    <label for="st_name" style="font-weight: bold;">경기장 이름</label>
 	    <input type="text" class="form-control" placeholder="경기장 이름을 입력하세요" id="st_name" name="st_name" value="${stadium.st_name}" required>
 	  </div>
 	  
 	  <div class="form-group">
-		<label for="st_locate">위치</label>
+		<label for="st_locate" style="font-weight: bold;">위치</label>
 		  <input type="text" class="form-control" placeholder="경기장 위치를 입력하세요" id="st_locate" name="st_locate" value="${stadium.st_locate}" required>
 	  </div>
 	  <br>
 	  
-	  <h5 class="text-info">[체크 사항]</h5>
+	  <h5 class="text-info" style="font-weight: bold;">[체크 사항]</h5>
 		  <div class="form-group">
-		    <label for="st_door" style="font-weight: bold;">실내/실외</label>
+		    <label for="st_door" style="font-weight: bold;">실내/실외</label><br>
 		    <div class="form-check-inline">
 		        <label class="form-check-label">
 		            <c:choose>
@@ -57,7 +62,7 @@
 	  </div>
 	  
 	  <div class="form-group">
-		    <label for="st_floortype" style="font-weight: bold;">바닥 종류</label>
+		    <label for="st_floortype" style="font-weight: bold;">바닥 종류</label><br>
 		    <div class="form-check-inline">
 		        <label class="form-check-label">
 		            <c:choose>
@@ -109,7 +114,7 @@
 	  </div>
 	 
 	  <div class="form-group">
-		    <label for="st_available" style="font-weight: bold;">이용 가능 여부</label>
+		    <label for="st_available" style="font-weight: bold;">이용 가능 여부</label><br>
 		    <div class="form-check-inline">
 		        <label class="form-check-label">
 		            <c:choose>
@@ -147,9 +152,9 @@
 	        </label>
 	    </div>
 	  </div>
-	  
+	  <br>
 	  <div class="form-group-inline">
-		 <label for="st_width">가로 x 세로(m)</label>
+		 <label for="st_width" style="font-weight: bold;">가로 x 세로(m)</label>
 		 <div class="input-group">
 		    <input type="number" class="form-control text-right" placeholder="가로" name="st_width" 
 		    		id="st_width" oninput="numOnly(this)" max="99999" value="${stadium.st_width}" required>
@@ -164,7 +169,7 @@
 	  <br>
 	  
 	  <div class="form-group-inline">
-	    <label for="st_max">최대인원</label>
+	    <label for="st_max" style="font-weight: bold;">최대인원</label>
    		<div class="input-group">
 		    <input type="number" class="form-control text-right" placeholder="최대인원"name="st_max"  
 		    		id="st_max" oninput="numOnly2(this)" max="99" value="${stadium.st_max}" required>
@@ -174,11 +179,11 @@
 	  <br>
 	  
 	  <div class="form-group">
-		  <label for="st_note">특이사항</label>
+		  <label for="st_note" style="font-weight: bold;">특이사항</label> &nbsp;<span class="badge badge-secondary">선택</span>
 		  <textarea class="form-control" rows="5" id="st_note" name="st_note">${stadium.st_note}</textarea>
 	  </div>
 	  
-	  <button class="btn btn-secondary btn-block">수정</button>
+	  <button class="btn btn-info btn-block">수정</button>
 
 	</form>
 
