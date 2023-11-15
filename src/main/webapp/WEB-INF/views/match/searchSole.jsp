@@ -6,18 +6,18 @@
 	<style type="text/css">
 		.days-box{width: 100%; height: 50px; display: flex;}
 		.day-box{
-		height: 70px; background-color: window; flex: 1; border-right: 3px solid black;
+		height: 70px; background-color: window; flex: 1; border-right: 1px solid #c2c2c2;
 		text-align: center;}
 		.day-box:last-child{border-right: none}
 		.day-span{font-size: 30px;}
 		.day_of_week-span{font-size: 15px;}
-		.sat{color: blue;}
-		.sun{color: red}
-		.select-circle{height: 70px; border-radius: 20%; background-color: cyan;}
-		.not-select-circle:hover{height: 70px; border-radius: 20%; background-color: yellow; cursor: pointer;}
+		.sat{color: #16537e;}
+		.sun{color: #da8686}
+		.select-circle{height: 70px; background-color: #f2f2f2;}
+		.not-select-circle:hover{height: 70px; background-color: #dbfabf; cursor: pointer;}
 		.main-region-box{display: inline;}
 		.sub-region-box{display: inline;}
-		.match-box{height: 100px; border-bottom: 2px solid black;}
+		.match-box{height: 100px; border-bottom: 1px solid #c2c2c2;}
 		.match-box::after{clear: both; content: ''; display: block;}
 		.match-box:last-child{border-bottom: none}
 		.match-time-box{font-size: 40px; display: inline-block; line-height: 100px}
@@ -26,7 +26,8 @@
 	</style>
 </head>
 <body>
-	<h1>개인 매치 조회</h1>
+	<p style="font-size: 35px; font-weight: bolder; margin:50px auto; border-bottom: 8px solid #c2f296;
+	width: 20%; padding: 30px 0 10px 0; text-align: center;">개인 매치 조회</p>
 	<div class="days-box">
 		<c:forEach items="${week}" var="day">
 			<div class="day-box">
