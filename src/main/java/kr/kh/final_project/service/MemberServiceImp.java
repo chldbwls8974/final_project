@@ -416,24 +416,6 @@ public class MemberServiceImp implements MemberService{
 		}
 		// 회원 정보 입력
 		memberDao.updateMember(member,fi_name);
-		
-		// 입력한 회원정보의 num값 가져오기
-		int pr_me_num = member.getMe_num();
-//		prTimeDao.deletePreferredTime(pr_me_num);
-//		prRegionDao.deletePreferredRegion(pr_me_num);
-//		// 선호 시간 (평일)
-//		if(favoriteTime !=null) {
-//			insertPreferredTime(0,pr_me_num,favoriteTime);
-//		}
-//		
-//		// 선호 시간 (주말)
-//		if(favoriteHoliTime != null) {
-//			insertPreferredTime(1,pr_me_num,favoriteHoliTime);
-//		}
-//		
-//		// 선호 지역
-//		insertPreferredRegion(pr_me_num, pr_rg_num);
-		
 		return true;
 	}
 
@@ -617,6 +599,28 @@ public class MemberServiceImp implements MemberService{
 		boolean res = isExist ? blockDao.deleteBlock(block) : blockDao.insertBlock(block);
 		return res;
 	}
+	
+	// 내가 차단한 회원정보 가져오기
+	@Override
+	public List<MemberVO> getBlockMemberList(List<BlockVO> blockList) {
+		List<MemberVO> memberList = new ArrayList<MemberVO>();
+		for(BlockVO tmp : blockList) {
+			MemberVO member = memberDao.selectMemberByNum(tmp.getBl_blocked_num());
+			memberList.add(member);
+		}
+		return memberList;
+	}
+
+	@Override
+	public List<MemberVO> getMemberMarkList(List<MarkVO> markList) {
+		List<MemberVO> memberList = new ArrayList<MemberVO>();
+		for(MarkVO tmp : markList) {
+			MemberVO member = memberDao.selectMemberByNum(tmp.getMa_marked_num());
+			memberList.add(member);
+		}
+		return memberList;
+	}
+
 
 	@Override
 	public Message updatePreferRegion(int me_num, int[] pr_rg_num) {
@@ -625,6 +629,23 @@ public class MemberServiceImp implements MemberService{
 		prRegionDao.deletePreferredRegion(me_num);
 		// 선호 지역
 		insertPreferredRegion(me_num, pr_rg_num);
+		return msg;
+	}
+
+	@Override
+	public Message updatePreferTime(int me_num, int[] favoriteTime, int[] favoriteHoliTime) {
+		Message msg = new Message(("/member/myprofile?me_num="+me_num), "수정 완료");
+				
+		prTimeDao.deletePreferredTime(me_num);
+		// 선호 시간 (평일)
+		if(favoriteTime !=null) {
+			insertPreferredTime(0,me_num,favoriteTime);
+		}
+		
+		// 선호 시간 (주말)
+		if(favoriteHoliTime != null) {
+			insertPreferredTime(1,me_num,favoriteHoliTime);
+		}
 		return msg;
 	}
 	

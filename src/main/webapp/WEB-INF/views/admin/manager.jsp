@@ -190,9 +190,9 @@
 		// 만약 true면 밑에 있는 코드를 실행
 		if(confirm("수락하시겠습니까?")){
 			// 버튼을 클릭한 부모 tr에서 class가 id인 값을 me_nickname로 넣어준다.
-			let me_nickname = $(this).parents('tr').find('.id').text();
+			let me_nickname = $(this).parents('ul').find('.id').text();
 			// 버튼을 클릭한 부모 tr에서 class가 update인 값을 me_authority로 넣어준다.
-			let me_authority = $(this).parents('tr').find('.update').text();
+			let me_authority = $(this).parents('ul').find('.update').text();
 			// 버튼을 누른 회원의 nickname과 authority값을 manager로 가져왔음 ( ex : 동해번쩍, USER )
 			let manager = {
 					me_nickname : me_nickname,
@@ -212,17 +212,17 @@
 						/* var="ma"를 AdminController에서 만든 list데이터를 반복 */
 						for(ma of data.list){
 							str += `
-								<tr>
-									<td>\${ma.me_num}</td>
-									<td class="id">\${ma.me_nickname}</td>
-									<td>\${ma.bo_bt_num}</td>
-									<td>\${ma.bo_title}</td>
-									<td class="update">\${ma.me_authority}</td>
-									<td>\${ma.bo_reg_date_str}</td>
-									<td>
+								<ul>
+									<li>\${ma.me_num}</li>
+									<li class="id">\${ma.me_nickname}</li>
+									<li>\${ma.bo_bt_num}</li>
+									<li>\${ma.bo_title}</li>
+									<li class="update">\${ma.me_authority}</li>
+									<li>\${ma.bo_reg_date_str}</li>
+									<li>
 										<button class="btn btn-outline-warning btn-update">신청수락</button>
 									</td>
-								</tr>
+								</ul>
 							`
 						}
 						$('.select-manager').html(str);

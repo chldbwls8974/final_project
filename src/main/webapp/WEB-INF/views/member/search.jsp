@@ -100,7 +100,7 @@
 						str += `
 							<li style="margin: 0 80px 50px 80px; display: flex; border-bottom: 1px solid rgba(0,0,0,.1);">
 								<a href="#" class="member-link">
-									<img src="/final_project${user.me_profile}" class="myprofile-image-thumb" alt="프로필 사진">
+									<img src="<c:url value='/memberimg${member.me_profile}'/>" class="myprofile-image-thumb" alt="프로필 사진">
 									<span style="font-weight: bold; font-size: large;">\${me.me_name}</span>
 									<span style="font-size: small; color: gray;">\${me.me_id}</span>
 								</a>
