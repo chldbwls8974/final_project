@@ -7,9 +7,7 @@
 <meta charset="UTF-8">
 <title>매니저권한 조회</title>
 <style type="text/css">
-	.btn-group{
-		float : right;
-	}
+
 	.btn-info{
 		color : outline-info;
 		border : 2px solid yellow;
@@ -51,19 +49,19 @@
 	}
 	.main{
 		padding: 40px; height: auto;
-		background-color: cornsilk; border-radius: 20px;
+		background-color: #eafdd9; border-radius: 20px;
 	}
 	.a{
 		color : red;
 	}
 	.notice-thead{
-		display: flex; justify-content: space-between; padding: 0 0 16px 0;
+		display: flex; padding: 0 0 16px 0;
 		border-bottom: 1px solid rgba(0,0,0,.1);
 	}
- 	.notice-tbody{ justify-content: space-between; padding: 5px;}
+ 	.notice-tbody{padding: 5px;}
 	.tbody-box{ 
-		display: flex; justify-content: space-between;
-		margin: 0; padding: 20px 20px 30px 20px; border-bottom: 1px solid rgba(0,0,0,.1);
+		display: flex; border-bottom: 1px solid rgba(0,0,0,.1);
+		margin: 0; padding: 20px 20px 30px 20px;
 	}
 	
 	.page-link {
@@ -89,24 +87,31 @@
 <body>
 <div class="manager-search">
 	<div class="manager-search-navigation" style="margin-top: 50px; text-align: center;">
-		<p style="font-size: 35px; font-weight: bolder; margin:0 auto; padding: 20px 0 10px 0;">매니저 권한 조회</p>
+		<p style="font-size: 35px; width: 23%; font-weight: bolder; margin: 30px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
+		매니저 권한 조회</p>
 	</div>
-	<!-- 매니저권한 조회 -->
-	<br>
-	<div class="btn-group btn-group">
-	  <button type="button"
-				    class="btn btn-dark btn-info"
-					onclick="location.href='<c:url value='/admin/manager'/>'"	    
-			>매니저신청 관리</button>
-	  <button type="button"
-				    class="btn btn-dark btn-info"
-					onclick="location.href='<c:url value='/admin/manager2'/>'"	    
-			>매니저권한 조회</button>
+	<!-- 매니저 권한 조회 -->
+	<div style="text-align: center; margin-right: 10px;">
+		<div class="btn-group btn-group">
+		  <button type="button"
+					    class="btn"
+					    style="
+							border-radius: 10px; width: 130px; height: 40px; border: none;
+							background-color: #c2f296; color: black; margin: 10px 10px 10px 0;"
+						onclick="location.href='<c:url value='/admin/manager'/>'"	    
+				>신청 관리</button>
+		  <button type="button"
+					    class="btn"
+					    style="
+							border-radius: 10px; width: 130px; height: 40px; border: none;
+							background-color: #c2f296; color: black; margin: 10px 0 10px 0;"
+						onclick="location.href='<c:url value='/admin/manager2'/>'"	    
+				>권한 조회</button>
+		</div>
 	</div>
-	<br>
 	<!-- 매니저 검색 기능 -->
 	<form action="<c:url value='/admin/manager2'/>" method="get">
-		<div class="manager-search-navigation" style="margin-top: 30px; text-align: center;">
+		<div class="manager-search-navigation" style="margin: 30px 0 30px 0; text-align: center;">
 		    <select class="searchType" id="me_authority" name="t">
 		      <option value="all"
 		      		<c:if test="${pm.cri.t == 'all'}">selected</c:if>>전체</option>
@@ -125,29 +130,29 @@
 	<div class="main">
 		<div class="table">
 			<ul class="notice-thead">
-				<li>회원 번호</li>
-				<li>회원 닉네임</li>
-				<li>게시글 타입</li>
-				<li>제목</li>
-				<li>권한</li>
-				<li>작성날짜</li>
-				<li>매니저권한 취소</li>
+				<li style="width: 10%">회원 번호</li>
+				<li style="width: 20%">회원 닉네임</li>
+				<li style="width: 10%">게시글 타입</li>
+				<li style="width: 20%">제목</li>
+				<li style="width: 10%">권한</li>
+				<li style="width: 20%">작성날짜</li>
+				<li style="width: 10%">권한 취소</li>
 			</ul>
 		    <ul class="notice-tbody">
 			   <c:forEach items="${list}" var="ma">
 					<li>
 						<div class="tbody-box">
-							<div id="tbody-list">${ma.me_num}</div>
-							<div id="tbody-list" class="id">${ma.me_nickname}</div>
-							<div id="tbody-list">
+							<div id="tbody-list" style="width: 10%">${ma.me_num}</div>
+							<div id="tbody-list" class="id" style="width: 20%">${ma.me_nickname}</div>
+							<div id="tbody-list" style="width: 10%">
 								<c:choose>
 			        				<c:when test="${ma.bo_bt_num == 6}">매니저신청</c:when>
 								</c:choose>
 							</div>
-							<div id="tbody-list"><a href="<c:url value='/board/detail?bo_num=${ma.bo_num}'/>">${ma.bo_title}</a></div>
-							<div id="tbody-list" class="update">${ma.me_authority}</div>
-							<div id="tbody-list">${ma.bo_reg_date_str}</div>
-							<div id="tbody-list">
+							<div id="tbody-list" style="width: 20%"><a href="<c:url value='/board/detail?bo_num=${ma.bo_num}'/>">${ma.bo_title}</a></div>
+							<div id="tbody-list" class="update" style="width: 10%">${ma.me_authority}</div>
+							<div id="tbody-list" style="width: 20%">${ma.bo_reg_date_str}</div>
+							<div id="tbody-list" style="width: 10%">
 								<button class="btn btn-outline-danger btn-update">취소</button>
 							</div>
 						</div>

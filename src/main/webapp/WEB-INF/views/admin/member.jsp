@@ -45,13 +45,13 @@
 		color : red;
 	}
 	.notice-thead{
-		display: flex; justify-content: space-between; padding: 0 0 16px 0;
+		display: flex; padding: 20px; te
 		border-bottom: 1px solid rgba(0,0,0,.1);
 	}
- 	.notice-tbody{ justify-content: space-between; padding: 5px;}
+ 	.notice-tbody{ padding: 5px;}
 	.tbody-box{ 
-		display: flex; justify-content: space-between;
-		margin: 0; padding: 20px 20px 30px 20px; border-bottom: 1px solid rgba(0,0,0,.1);
+		display: flex; border-bottom: 1px solid rgba(0,0,0,.1);
+		margin: 0; padding: 20px 20px 30px 20px;
 	}
 	.page-link {
 	  color: #000; 
@@ -80,7 +80,7 @@
 	</div>
 	<!-- 회원검색 기능 -->
 	<form action="<c:url value='/admin/member'/>" method="get">
-		<div class="member-search-navigation" style="margin-top: 30px; text-align: center;">
+		<div class="member-search-navigation" style="margin: 30px 0 30px 0; text-align: center;">
 		    <select class="searchType" id="me_authority" name="t">
 		      <option value="all" 
 		      	<c:if test="${pm.cri.t == 'all'}">selected</c:if>>전체</option>
@@ -101,32 +101,32 @@
 	<div class="main">
 	    <div class="table">
 	    	<ul class="notice-thead">
-		      	<li>회원번호</li>
-		        <li>회원아이디</li>
-		        <li>닉네임</li>
-		        <li>이메일</li>
-		        <li>티어</li>
-		        <li>권한</li>
-		        <li>매치 정지상태</li>
-		        <li>커뮤니티 정지상태</li>
+		      	<li style="width: 8%">회원번호</li>
+		        <li style="width: 21%">회원아이디</li>
+		        <li style="width: 11%">닉네임</li>
+		        <li style="width: 18%">이메일</li>
+		        <li style="width: 10%">티어</li>
+		        <li style="width: 15%">권한</li>
+		        <li style="width: 12%">매치 정지상태</li>
+		        <li style="width: 13%">커뮤니티 정지상태</li>
 		  	</ul>
 	    	<ul class="notice-tbody">
 		   	 <c:forEach items="${list}" var="member" varStatus="vs">
 			     <li>
 					<div class="tbody-box">
-				      	<div class="tbody-list">${member.me_num}</div>
-				        <div class="tbody-list">${member.me_id}</div>
-				        <div class="tbody-list">${member.me_nickname}</div>
-				        <div class="tbody-list">${member.me_email}</div>
-				        <div class="tbody-list">${member.me_tr_name}</div>
-				        <div class="tbody-list">${member.me_authority}</div>
-				        <div class="tbody-list">
+				      	<div class="tbody-list" style="width: 8%">${member.me_num}</div>
+				        <div class="tbody-list" style="width: 21%">${member.me_id}</div>
+				        <div class="tbody-list" style="width: 11%">${member.me_nickname}</div>
+				        <div class="tbody-list" style="width: 18%">${member.me_email}</div>
+				        <div class="tbody-list" style="width: 10%">${member.me_tr_name}</div>
+				        <div class="tbody-list" style="width: 15%">${member.me_authority}</div>
+				        <div class="tbody-list" style="width: 13%">
 				        	<c:choose>
 				        		<c:when test="${member.me_state1 == 0}">클린</c:when>
 				        		<c:when test="${member.me_state1 == 1}">정지</c:when>
 				        	</c:choose>
 				        </div>
-				        <div class="tbody-list">
+				        <div class="tbody-list" style="width: 12%">
 				        	<c:choose>
 				        		<c:when test="${member.me_state2 == 0}">클린</c:when>
 				        		<c:when test="${member.me_state2 == 1}">정지</c:when>
