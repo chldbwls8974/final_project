@@ -50,6 +50,7 @@
 	</div>
 	<div style="text-align: center; margin-top: 30px">
 		<button class="btn btn-outline-dark col-4" onclick="btnOnclick(selectedAmount)">결제하기</button>
+		<button class="btn btn-outline-dark col-4" onclick="btnOnclickKaKao(selectedAmount)">카카오결제하기</button>
 	</div>
 	
 </body>
@@ -93,6 +94,15 @@
 			return;
 		}else{
 			requestPay()
+		}
+	}
+	
+	function btnOnclickKaKao(selectedAmount){
+		if(selectedAmount == 0){
+			alert('금액을 선택해 주세요.');
+			return;
+		}else{
+			requestKakaoPay()
 		}
 	}
 	
@@ -142,6 +152,51 @@
 	    });
 	}
 	
+	//카카오페이결제
+	function requestKakaoPay() {
+	    IMP.request_pay({
+	    	//필수 파라미터
+	        pg : 'kakaopay.TC0ONETIME',
+	        pay_method : 'card',
+	        merchant_uid: "IMP"+makeMerchantUid, 
+	        name : name,
+	        amount : selectedAmount,
+	        //선택 파라미터
+	        buyer_email : me_email,
+	        buyer_name : me_name
+	    }, function (rsp) { // callback함수
+	        if (rsp.success) {
+	        	let data = {
+	        		imp_uid: rsp.imp_uid,            // 결제 고유번호
+                    //merchant_uid: rsp.merchant_uid,   // 주문번호
+                    amount: rsp.paid_amount,
+                    me_num : me_num
+	        	}
+	        	$.ajax({
+					type:"post",
+					url:'<c:url value="/payment/validate"/>',
+					data:JSON.stringify(data),
+					contentType:"application/json; charset=utf-8",
+					dataType:"json",
+					success: function(data) {
+						alert("결제 완료");
+						console.log(rsp);
+						//유저포인트 갱신
+						getUserInformation()
+						//self.close();
+					},
+					error: function(data){
+						alert("결제 실패");
+						alert(data.responseText);
+						cancelPayments(rsp);
+					}
+				});
+	        } else {
+	        	console.log()
+	        	alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
+	        }
+	    });
+	}
 	//결제 취소 (ajax가 실패했을 때)
 	function cancelPayments(temp){
 		let data = null;

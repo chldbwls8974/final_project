@@ -129,7 +129,6 @@ public class MemberController {
 			//초대한 기존회원, 신규 회원에게 쿠폰 지급하는 메서드 (추천인 입력받았을 때만 실행)
 			if(inviteMember != null) {
 				if(memberService.signupCoupon(inviteMember, member)) {
-					System.out.println("쿠폰지급 성공");
 				}
 			}
 		}
@@ -149,7 +148,6 @@ public class MemberController {
 	@PostMapping(value="/member/signout")
 	public String emailMemberSignoutPost(Model model, HttpSession session) {
 		MemberVO member = (MemberVO)session.getAttribute("user");
-		System.out.println(member);
 		
 		boolean res = memberService.emailMemberSignout(member);
 		if(res) {
@@ -226,11 +224,9 @@ public class MemberController {
 	@ResponseBody
 	@PostMapping("/member/refund/list")
 	public Map<String, Object> refundList(HttpSession session, @RequestBody Criteria cri){
-		System.out.println("asd");
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		System.out.println(cri);
 		List<PointHistoryVO> refundList = memberService.getUserRefundHistoryList(user, cri);
 		//유저 포인트 가져오는 메서드
 		int dbMemberPoint = memberService.getMemberPoint(user);
@@ -266,8 +262,17 @@ public class MemberController {
 	@GetMapping("/member/mypage")
 	public String myPage(HttpSession session, Model model) {
 		MemberVO user = (MemberVO) session.getAttribute("user");
+		MemberVO dbMember = memberService.getMemberByNum(user);
 		List<ClubVO> list = clubService.getMyClubList(user.getMe_num(),"MEMBER");
-		model.addAttribute("user", user);
+		List<ClubVO> memberlist = clubService.getMyClubList(user.getMe_num(),"MEMBER");
+		List<ClubVO> rookielist = clubService.getMyClubList(user.getMe_num(),"ROOKIE");
+		List<ClubVO> leaderlist = clubService.getMyClubList(user.getMe_num(),"LEADER");
+		
+		model.addAttribute("user",user);
+		model.addAttribute("memberlist",memberlist);
+		model.addAttribute("rookielist",rookielist);
+		model.addAttribute("leaderlist",leaderlist);
+		model.addAttribute("user", dbMember);
 		model.addAttribute("list",list);
 		return "/member/mypage";
 	}
@@ -309,7 +314,7 @@ public class MemberController {
 		//회원의 거주지역 가져오기
 		MemberVO memberRegion = memberService.getMemberRegion(dbMember);
 		
-		model.addAttribute("user",user);
+		model.addAttribute("user",dbMember);
 		model.addAttribute("MainRegion",MainRegion);
 		model.addAttribute("memberRegion",memberRegion);
 		return "/member/myedit";
@@ -401,16 +406,20 @@ public class MemberController {
 	@GetMapping("/member/myprofile")
 	public String myprofile(Model model, MemberVO member, HttpSession session) {
 		//MemberVO user = (MemberVO)session.getAttribute("user");
-		System.out.println("111111111"+member);
 		//회원 가져오기
 		MemberVO dbMember = memberService.getMemberByNum(member);
-		System.out.println("db"+dbMember);
 		//회원의 거주지역 가져오기
 		MemberVO memberRegion = memberService.getMemberRegion(dbMember);
 		//회원의 선호지역, 선호시간대 가져오기
 		List<PreferredRegionVO> memberPRegion = memberService.getMemberPRegion(dbMember);
 		List<Integer> holiTime = memberService.getMemberPTimeHoliday(dbMember);
 		List<Integer> weekTime = memberService.getMemberPTimeWeekday(dbMember);
+		
+		// 선호 지역, 시간 수정 시 필요
+		List<RegionVO> MainRegion = memberService.getMainRegion();
+		List<TimeVO> time = memberService.getAllTime();
+		model.addAttribute("MainRegion",MainRegion);
+		model.addAttribute("time",time);
 		
 		model.addAttribute("member",dbMember );
 		model.addAttribute("memberRegion", memberRegion );
@@ -466,5 +475,6 @@ public class MemberController {
 	public String payment(Model model) {
 		return "/payment/main";
 	}
+	
 	
 }

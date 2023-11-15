@@ -47,7 +47,7 @@
 						<a href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>">
 							<div class="emblem">
 								<img alt="엠블럼"
-									src="<c:url value='https://ifh.cc/g/v9LAF1.jpg'/>"
+									src="<c:url value='/clubimg${list.cl_emblem }'/>"
 									style="width: 70px; height: 70px; border-radius: 50%">
 							</div>
 							<div>
@@ -63,7 +63,7 @@
 			<ul class="leaderlist-control">
 				<c:forEach items="${leaderlist}" var="list">
 					<li class="leaderlist-link">
-						<a href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>">
+						<a href="<c:url value='/clubimg${list.cl_emblem }'/>">
 							<div class="emblem">
 								<img alt="엠블럼"
 									src="<c:url value='https://ifh.cc/g/v9LAF1.jpg'/>"
@@ -85,7 +85,7 @@
 						<a href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>">
 							<div>
 								<img alt="엠블럼"
-									src="<c:url value='https://ifh.cc/g/RyG30R.jpg'/>"
+									src="<c:url value='/clubimg${list.cl_emblem }'/>"
 									style="width: 70px; height: 70px; border-radius: 50%">
 							</div>
 							<div>
