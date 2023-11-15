@@ -149,13 +149,15 @@
 			<img src="<c:url value='/memberimg${member.me_profile}'/>" class="myprofile-image-thumb" alt="프로필 사진">
 			<p class="title">${member.me_name }</p> 
 			<p style="color: #777777; font-size: 18px;">${member.me_id}</p>
-			<div class="myedit">
-				<a href="<c:url value='/member/myedit?me_num=${member.me_num}'/>" class="myprofile-btn">
-					<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg"
-						style="width: 24px; height: 24px; margin-right: 5px;" alt="프로필 수정">
-					<p style="font-size: 14px;">프로필 수정하기</p>
-				</a>
-			</div>
+			<c:if test="${user.me_num == member.me_num }">
+				<div class="myedit">
+					<a href="<c:url value='/member/myedit?me_num=${member.me_num}'/>" class="myprofile-btn">
+						<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg"
+							style="width: 24px; height: 24px; margin-right: 5px;" alt="프로필 수정">
+						<p style="font-size: 14px;">프로필 수정하기</p>
+					</a>
+				</div>
+			</c:if>
 		</div>	
 		<div class="profile-head2">
 			<button class="btn-add">즐겨찾기</button>
@@ -189,14 +191,15 @@
 				</c:forEach>
 			</div>
 		</div>
-		<div class="myregion-edit">
-			<a href="#" class="myregion-edit-btn">
-				<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg"
-					style="width: 24px; height: 24px; margin-right: 5px;" alt="선호 지역 수정" >
-				<p style="font-size: 14px;">선호 지역 수정하기</p>
-			</a>
-		</div>
-		
+		<c:if test="${user.me_num == member.me_num }">
+			<div class="myregion-edit">
+				<a href="#" class="myregion-edit-btn">
+					<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg"
+						style="width: 24px; height: 24px; margin-right: 5px;" alt="선호 지역 수정" >
+					<p style="font-size: 14px;">선호 지역 수정하기</p>
+				</a>
+			</div>
+		</c:if>
 <!-- 		선호 지역 수정 모달 -->
 	<!-- 모달창 -->
 		<div class="modal--bg region--modal">
@@ -444,14 +447,15 @@
                 </ul>
 			</div>
 		</div>
-		<div class="mytime-edit">
-			<a href="#" class="mytime-edit-btn">
-				<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg"
-					style="width: 24px; height: 24px; margin-right: 5px;" alt="선호 시간 수정">
-				<p style="font-size: 14px;">선호 시간 수정하기</p>
-			</a>
-		</div>
-		
+		<c:if test="${user.me_num == member.me_num }">
+			<div class="mytime-edit">
+				<a href="#" class="mytime-edit-btn">
+					<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg"
+						style="width: 24px; height: 24px; margin-right: 5px;" alt="선호 시간 수정">
+					<p style="font-size: 14px;">선호 시간 수정하기</p>
+				</a>
+			</div>
+		</c:if>
 		
 		<!--  선호 시간수정 모달 -->
 	<!-- 모달창 -->

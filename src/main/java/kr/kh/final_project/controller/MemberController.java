@@ -472,7 +472,7 @@ public class MemberController {
 	//마이페이지- 내 프로필 상세조회
 	@GetMapping("/member/myprofile")
 	public String myprofile(Model model, MemberVO member, HttpSession session) {
-		//MemberVO user = (MemberVO)session.getAttribute("user");
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		//회원 가져오기
 		MemberVO dbMember = memberService.getMemberByNum(member);
 		//회원의 거주지역 가져오기
@@ -493,7 +493,7 @@ public class MemberController {
 		model.addAttribute("memberPRegion", memberPRegion );
 		model.addAttribute("holiTime", holiTime );
 		model.addAttribute("weekTime", weekTime );
-		//model.addAttribute("user", user );
+		model.addAttribute("user", user );
 		return "/member/myprofile";
 	}
 	//차단목록, 즐겨찾기 목록 가져오는 메서드
