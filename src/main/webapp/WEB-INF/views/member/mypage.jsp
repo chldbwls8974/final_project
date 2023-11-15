@@ -128,17 +128,70 @@
 					</div>	
 					<div class="myclub-thumb">
 						<p style="font-size:large; font-weight: bolder; margin-bottom: 20px;">소속 클럽</p>
-						<c:forEach items="${list}" var="list">
-							<a href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>" class="myclub-link" style="display: flex;">
-							<c:if test="${list.cl_emblem!=null}">
-						  		<img alt="팀엠블럼" src="<c:url value='/clubimg${list.cl_emblem}'/>" style="width: 30px; height: 30px; border-radius: 10px;">
-					  		</c:if>
-						  	<c:if test="${list.cl_emblem==null}">
-						  		<img alt="팀엠블럼" src="<c:url value='https://ifh.cc/g/v9LAF1.jpg'/>" style="width: 30px; height: 30px; border-radius: 10px;">
-					  		</c:if>
-								<p style="font-size: 15px;">${list.cl_name }</p>
-							</a>
-						</c:forEach>
+						<div class="btn-group">
+						    <button type="button" class="btn btn-primary" name="member-tag">회원</button>
+						    <button type="button" class="btn btn-primary" name="leader-tag">리더</button>
+						    <button type="button" class="btn btn-primary" name="rookie-tag">승인대기</button>
+						  </div>
+							<div class="body-container">
+								<div class="memberlist-box">
+									<p class="title">‘MEMBER’ 등급인 클럽</p>
+									<ul class="memberlist-control">
+										<c:forEach items="${memberlist}" var="list">
+											<li class="memberlist-link">
+												<a href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>">
+													<div class="emblem">
+														<img alt="엠블럼"
+															src="<c:url value='/clubimg${list.cl_emblem }'/>"
+															style="width: 70px; height: 70px; border-radius: 50%">
+													</div>
+													<div>
+														<span>${list.cl_name }</span> <span>${list.cl_rg_num }</span>
+													</div>
+												</a>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+								<div class="leaderlist-box">
+									<p class="title">‘LEADER’ 등급인 클럽</p>
+									<ul class="leaderlist-control">
+										<c:forEach items="${leaderlist}" var="list">
+											<li class="leaderlist-link">
+												<a href="<c:url value='/clubimg${list.cl_emblem }'/>">
+													<div class="emblem">
+														<img alt="엠블럼"
+															src="<c:url value='https://ifh.cc/g/v9LAF1.jpg'/>"
+															style="width: 70px; height: 70px; border-radius: 50%">
+													</div>
+													<div>
+														<span>${list.cl_name }</span> <span>${list.cl_rg_num }</span>
+													</div>
+												</a>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+								<div class="rookielist-box">
+									<p class="title">‘ROOKIE’ 등급인 클럽</p>
+									<ul class="rookielist-control">
+										<c:forEach items="${rookielist}" var="list">
+											<li class="rookielist-link">
+												<a href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>">
+													<div>
+														<img alt="엠블럼"
+															src="<c:url value='/clubimg${list.cl_emblem }'/>"
+															style="width: 70px; height: 70px; border-radius: 50%">
+													</div>
+													<div>
+														<span>${list.cl_name }</span> <span>${list.cl_rg_num }</span>
+													</div>
+												</a>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
 					</div>
 				</div>	
 			</div>
@@ -234,5 +287,27 @@
 			
 		});
 	}
+	
+	// 표 전환
+	$('.rookielist-box').hide();
+	$('.leaderlist-box').hide();
+	
+	$(document).on('click','[name = member-tag]',function(){
+		$('.memberlist-box').show();
+		$('.leaderlist-box').hide();
+		$('.rookielist-box').hide();
+	})
+	$(document).on('click','[name=rookie-tag]',function(){
+		$('.memberlist-box').hide();
+		$('.rookielist-box').show();
+		$('.leaderlist-box').hide();
+		
+	})
+	$(document).on('click','[name=leader-tag]',function(){
+		$('.memberlist-box').hide();
+		$('.rookielist-box').hide();
+		$('.leaderlist-box').show();
+		
+	})
 </script>
 </html>

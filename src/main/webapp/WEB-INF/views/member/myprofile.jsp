@@ -116,6 +116,28 @@
 		width: 120px; height: 40px; margin: auto auto 10px; border: none;
 		border-radius: 5px; background-color: #c2f296; color: black;
 	}
+/* 모달 */
+.modal--bg {
+	display: none;
+	position: fixed;
+	top: 0%;
+	left: 0%;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.3);
+	justify-content: center;
+	align-items: center;
+}
+
+.modal--content {
+	background-color: white;
+	padding: 20px;
+	border-radius: 5px;
+	max-width: 600px;
+	margin: 200px auto;
+	
+}
+    </style>
 
 </style>
 </head>
@@ -170,10 +192,52 @@
 		<div class="myregion-edit">
 			<a href="#" class="myregion-edit-btn">
 				<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg"
-					style="width: 24px; height: 24px; margin-right: 5px;" alt="선호 지역 수정">
+					style="width: 24px; height: 24px; margin-right: 5px;" alt="선호 지역 수정" >
 				<p style="font-size: 14px;">선호 지역 수정하기</p>
 			</a>
 		</div>
+		
+<!-- 		선호 지역 수정 모달 -->
+	<!-- 모달창 -->
+		<div class="modal--bg">
+		<div class="modal--content">
+			<p style="font-size: 20px; font-weight: bolder; margin: 0 auto; border-bottom: 8px solid #c2f296; width: 20%; padding: 20px 0 10px 0; text-align: center;">선호 지역 수정</p>
+			<form class="modal-form" action="<c:url value='/member/update/region'/>" method="post">
+			<input type="hidden" name="me_num" value="${member.me_num}">
+				<div class="prefer-area">
+					<div class="form-group">
+						<select class="form-control pre_rg_main">
+							<option value="0">대분류를 선택하세요</option>
+							<c:forEach items="${MainRegion}" var="main">
+								<option value="${main.rg_main}">${main.rg_main}</option>
+							</c:forEach>
+						</select>
+	
+					</div>
+					<div class="form-group">
+						<select class="form-control rg_sub" name="pr_rg_num">
+							<option value="0">소분류를 선택하세요</option>
+							<c:forEach items="${SubRegion}" var="sub">
+								<option value="${sub.rg_num}">${sub.rg_sub}</option>
+							</c:forEach>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<button type="button" class="form-control" name="add-area-btn">지역추가</button>
+				</div>
+			
+				<div style="text-align: center; margin-top: 40px;">
+					<button type="button" style="background-color: black; color: white; border-radius: 10px; width: 80px;"
+						class="btn button--close">닫기</button> 
+					<button  style="background-color: black; color: white; border-radius: 10px; width: 80px;" class="btn">수정</button> 
+				</div>	
+			</form> 
+		</div>
+	</div>
+	    
+	    
 		<div class="form-group" style="display: inline;">
 			<label style="border-top: 7px solid #c2f296; padding: 5px 0 10px 0;">
 				평일 선호 시간</label>
@@ -392,12 +456,7 @@
 </div>
 </body>
 <script type="text/javascript">
-
-	// 수정사항 실시간 적용
-	$(document).ready(function() {
-		getUserInformation()
-	});
-	
+	let count = 0;
 
 	//즐겨찾기, 차단리스트를 가져오는 함수
 	$(document).ready(function() {
@@ -449,8 +508,89 @@
 		});
 	}
 	
+	// 선호 지역 수정 모달
 	
+		 //모달 
+		 $(document).ready(function() {
+		        $('.myregion-edit-btn').click(function() {
+		            showModal();
+		        });
+
+		        $('.button--close').click(function() {
+		            closeModal();
+		        });
+
+		        function showModal() {
+		            $('.modal--bg').fadeIn();
+		        }
+
+		        function closeModal() {
+		            $('.modal--bg').fadeOut();
+		        }
+		    });
 	
+		// 선호 지역 대분류에 따른 소분류
+		 $(document).on('change','.pre_rg_main',function(){
+			 let th = $(this);
+			 rg_main = th.val();
+			 console.log(rg_main)
+			 data={
+				 rg_main : rg_main
+			}
+			ajaxJsonToJson2(false, 'get', '/member/signup/region', data, (a)=>{
+				var option = "";
+				th.parent().next().find('[name=pr_rg_num]').empty();
+				
+				for (var i in a.SubRegion){
+					var obj = a.SubRegion[i];
+					option = "<option value='" + obj.rg_num + "'>" + obj.rg_sub + "</option>";
+					th.parent().next().find('[name=pr_rg_num]').append(option)
+				}
+				
+			})
+			
+		   });
+		
+		// 선호지역 추가 버튼
+		 $(document).on('click','[name=add-area-btn]',function(){
+			 count++;
+			 console.log(count)
+			 if(2 >= count){
+				 str='';
+				 btn='';
+				 str+=`
+				 	<hr>
+					 <div class="prefer-area">
+						<div class="form-group">
+							<select class="form-control pre_rg_main">
+								<option value="0">대분류를 선택하세요</option>
+								<c:forEach items="${MainRegion}" var="main">
+									<option value="${main.rg_main}">${main.rg_main}</option>
+								</c:forEach>
+							</select>
+
+						</div>
+						<div class="form-group">
+							<select class="form-control rg_sub" name="pr_rg_num">
+								<option value="0">소분류를 선택하세요</option>
+								<c:forEach items="${SubRegion}" var="sub">
+									<option value="${sub.rg_num}">${sub.rg_sub}</option>
+								</c:forEach>
+							</select>
+						</div>
+					</div>
+
+				 `;
+				btn+=`
+				<div class="form-group">
+					<button type="button" class="form-control" name="add-area-btn">지역 추가</button>
+					</div>
+				`; 
+				$(this).hide();
+				$(this).before(str);
+				$(this).before(btn);
+			 }
+		 })
 	
 		
 </script>
