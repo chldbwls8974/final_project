@@ -6,29 +6,33 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Home</title>
 	<style>
-
-	/* 초기화 */
-	*{
-	  margin: 0;
-	  padding: 0;
-	  box-sizing: border-box;
-	}
 	
 	.slideshow{
-		width: 100%;
-		height: 300px;
-		position: relative;
-		margin: 50px auto;
-		overflow: hidden;
+		display: flex;
+	    justify-content: center;
+	    position: relative;
+	    margin: auto;
 	}
-	.slider li{ list-style-type: none; float: left;}
+
+	/* 초기화 */
 	.slider{
-	  position: absolute;
-	  left: 0;
-	  top: 0;
-	  width: 100%; /* 슬라이드할 사진과 마진 총 넓이 */
-	  transition: left 0.5s ease-out; 
-	  /*ease-out: 느렸다가 빨라짐*/
+	  margin: 0;
+	  padding: 0;
+	}
+	
+	.myslider img{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+	}
+	
+	.myslider{
+		border-radius:3%;
+	    width: 100%;
+	    height: 350px;
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
 	}
 	
 	/* 첫 번째 슬라이드 가운데에 정렬*/
@@ -54,6 +58,19 @@
 	  cursor: pointer;
 	}
 	
+	.fade {
+	    animation-name: fade;
+	    animation-duration: 1.5s;
+	}
+	@keyframes fade {
+	    from {
+	        opacity: .4
+	    }
+	    to {
+	        opacity: 1
+	    }
+	}
+	
 	.btn {
     position: absolute;
     top: 50%;
@@ -70,23 +87,25 @@
     font-size: 20px;
     cursor: pointer;
   }
+  #prev{ margin-left: 30px;}
+  #next{ margin-right: 30px;}
 
 
 	</style>
 </head>
 <body>
 	<div class="slideshow">
-		<ul class="slider">
-			<li>
+		<div class="slider">
+			<div class="myslider fade">
 				<img class="item" src="<c:url value='/resources/main/main1.png'/>" alt="Image1">
-			</li>
-			<li>
+			</div>
+			<div class="myslider fade">
 				<img class="item" src="<c:url value='/resources/main/main2.png'/>" alt="Image2">
-			</li>
-			<li>
+			</div>
+			<div class="myslider fade">
 				<img class="item" src="<c:url value='/resources/main/main3.png'/>" alt="Image3">
-			</li>
-		</ul>
+			</div>
+		</div>
       <!-- 화살표 -->
 		<div class="btn">
 	       <button type="button" id="prev"><</button>
@@ -95,57 +114,25 @@
 	</div>
 <script>
 	
-$(function(){
-	  var $slider = $('.slider'),
-	      $firstSlide = $slider.find('li').first() // 첫번째 슬라이드
-	      .stop(true).animate({'opacity':1},200); // 첫번째 슬라이드만 보이게 하기
-
-	  function PrevSlide(){ // 이전버튼 함수
-	    stopSlide();startSlide(); //타이머 초기화
-	    var $lastSlide = $slider.find('li').last() //마지막 슬라이드
-	    .prependTo($slider); //마지막 슬라이드를 맨 앞으로 보내기  
-	    $secondSlide = $slider.find('li').eq(1)//두 번째 슬라이드 구하기
-	    .stop(true).animate({'opacity':0},400); //밀려난 두 번째 슬라이드는 fadeOut 시키고
-	    $firstSlide = $slider.find('li').first() //맨 처음 슬라이드 다시 구하기
-	    .stop(true).animate({'opacity':1},400);//새로 들어온 첫 번째 슬라이드는 fadeIn 시키기
-	  }
-	  
-	  function NextSlide(){ // 다음 버튼 함수
-	    stopSlide();startSlide(); //타이머 초기화
-	    $firstSlide = $slider.find('li').first() // 첫 번째 슬라이드
-	    .appendTo($slider); // 맨 마지막으로 보내기
-	    var $lastSlide = $slider.find('li').last() // 맨 마지막으로 보낸 슬라이드
-	    .stop(true).animate({'opacity':0},400); // fadeOut시키기
-	    $firstSlide = $slider.find('li').first()// 맨 처음 슬라이드
-	    .stop(true).animate({'opacity':1},400);// fadeIn 시키기
-	  }
-	  
-	  $('#next').on('click', function(){ //다음버튼 클릭
-	    NextSlide();
-	  });
-	  $('#prev').on('click', function(){ //이전 버튼 클릭
-	    PrevSlide();
-	  });
-
-	  startSlide(); // 자동 슬라이드 시작
-	  
-	  var theInterval;
-
-	  function startSlide() {
-	    theInterval = setInterval(NextSlide, 5000); //자동 슬라이드 설정
-	  }
-
-	  function stopSlide() { //자동 멈추기
-	    clearInterval(theInterval);
-	  }
-	  
-	  $('.slider').hover(function(){ //마우스 오버시 슬라이드 멈춤
-	    stopSlide();
-	  }, function (){
-	    startSlide();
-	  });
-	});
-
+	//이미지 자동 슬라이드
+	var slideIndex = 0;
+	showSlides();
+	
+	function showSlides() {
+	    var i;
+	    var slides = document.getElementsByClassName("myslider");
+	   
+	    for (i = 0; i < slides.length; i++) {
+	        slides[i].style.display = "none";
+	    }
+	    slideIndex++;
+	    if (slideIndex > slides.length) {
+	        slideIndex = 1
+	    }
+	    slides[slideIndex - 1].style.display = "block";
+	
+	    setTimeout(showSlides, 3000); // 2초마다 이미지가 체인지됩니다
+	}
 
 	
 </script>
