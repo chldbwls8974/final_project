@@ -16,16 +16,17 @@
 			me_tr_name like concat('%', #{cri.s}, '%')
 				or
 			me_authority like concat('%', #{cri.s}, '%')
-				or
 			<if test='cri.s_int != 1'>
-				me_state1 like concat('%', #{cri.s_int}, '%')
-					and
-				me_state2 like concat('%', #{cri.s_int}, '%')
+				and
+					(me_state1 like concat('%', #{cri.s_int}, '%')
+						and
+					me_state2 like concat('%', #{cri.s_int}, '%'))
 			</if>
 			<if test='cri.s_int == 1'>
-				me_state1 like concat('%', #{cri.s_int}, '%')
+				and
+				(me_state1 like concat('%', #{cri.s_int}, '%')
 					or
-				me_state2 like concat('%', #{cri.s_int}, '%')
+				me_state2 like concat('%', #{cri.s_int}, '%'))
 			</if>
 		</if>
 		<if test='cri.t == "second"'>
@@ -73,17 +74,6 @@
 			me_tr_name like concat('%', #{cri.s}, '%')
 				or
 			me_authority like concat('%', #{cri.s}, '%')
-				or
-			<if test='cri.s_int != 1'>
-				me_state1 like concat('%', #{cri.s_int}, '%')
-					and
-				me_state2 like concat('%', #{cri.s_int}, '%')
-			</if>
-			<if test='cri.s_int == 1'>
-				me_state1 like concat('%', #{cri.s_int}, '%')
-					or
-				me_state2 like concat('%', #{cri.s_int}, '%')
-			</if>
 		</if> 
 		<if test='cri.t == "second"'>
 		where

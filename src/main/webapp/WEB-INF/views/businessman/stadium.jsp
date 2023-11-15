@@ -54,12 +54,29 @@
 			          <td hidden="hidden">${stadium.st_num}</td>
 			          <td>${stadium.st_name}</td>
 			          <td>${stadium.st_locate}</td>
-			          <td>${stadium.st_door}</td>
-			          <td>${stadium.st_floortype}</td>
+			          <td>
+			            <c:choose>
+			                <c:when test="${stadium.st_door == 0}">실외</c:when>
+			                <c:when test="${stadium.st_door == 1}">실내</c:when>
+			            </c:choose>
+				      </td>
+			          <td>
+			            <c:choose>
+			                <c:when test="${stadium.st_floortype == 0}">인조잔디</c:when>
+			                <c:when test="${stadium.st_floortype == 1}">천연잔디</c:when>
+			                <c:when test="${stadium.st_floortype == 2}">모래</c:when>
+			                <c:when test="${stadium.st_floortype == 3}">인도어</c:when>
+			            </c:choose>
+				      </td>
 			          <td>${stadium.st_width}m</td>
 			          <td>${stadium.st_height}m</td>
 			          <td>${stadium.st_max}명</td>
-			          <td>${stadium.st_available}</td>
+			          <td>
+			            <c:choose>
+			                <c:when test="${stadium.st_available == 0}">가능</c:when>
+			                <c:when test="${stadium.st_available == 1}">불가능</c:when>
+			            </c:choose>
+				      </td>
 			          <td>${stadium.st_note}</td>
 			          <td hidden="hidden">${stadium.st_fa_num}</td>
 			          <td><a href="<c:url value='/businessman/stadiumUpdate?st_num=${stadium.st_num}'/>"
