@@ -278,7 +278,6 @@ public class AdminServiceImp implements AdminService{
 		//경고 횟수를 증가
 		penalty.setPn_warning(penaltyCount);
 		//패널티를 업데이트 하는 메서드
-		System.out.println(penalty);
 		if(!penaltyDao.updatePenalty(penalty)) {
 			return false;
 		}
@@ -308,7 +307,6 @@ public class AdminServiceImp implements AdminService{
 			penalty.setPn_end(date);
 			penaltyDao.updatePenalty(penalty);
 			boolean res = rc_name.equals("커뮤니티") ? memberDao.updateUserBoardBanState(me_num, 1) : memberDao.updateUserMatchBanState(me_num, 1);
-			System.out.println(res);
 		}
 		
 		return true;

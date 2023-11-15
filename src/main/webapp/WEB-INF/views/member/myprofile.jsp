@@ -199,7 +199,7 @@
 		
 <!-- 		선호 지역 수정 모달 -->
 	<!-- 모달창 -->
-		<div class="modal--bg">
+		<div class="modal--bg region--modal">
 		<div class="modal--content">
 			<p style="font-size: 20px; font-weight: bolder; margin: 0 auto; border-bottom: 8px solid #c2f296; width: 20%; padding: 20px 0 10px 0; text-align: center;">선호 지역 수정</p>
 			<form class="modal-form" action="<c:url value='/member/update/region'/>" method="post">
@@ -230,7 +230,7 @@
 			
 				<div style="text-align: center; margin-top: 40px;">
 					<button type="button" style="background-color: black; color: white; border-radius: 10px; width: 80px;"
-						class="btn button--close">닫기</button> 
+						class="btn button--rgclose">닫기</button> 
 					<button  style="background-color: black; color: white; border-radius: 10px; width: 80px;" class="btn">수정</button> 
 				</div>	
 			</form> 
@@ -510,22 +510,41 @@
 	
 	// 선호 지역 수정 모달
 	
-		 //모달 
+		 //지역 모달 
 		 $(document).ready(function() {
 		        $('.myregion-edit-btn').click(function() {
-		            showModal();
+		            showRegionModal();
 		        });
 
-		        $('.button--close').click(function() {
-		            closeModal();
+		        $('.button--rgclose').click(function() {
+		            closeRegionModal();
 		        });
 
-		        function showModal() {
-		            $('.modal--bg').fadeIn();
+		        function showRegionModal() {
+		            $('.region--modal').fadeIn();
 		        }
 
-		        function closeModal() {
-		            $('.modal--bg').fadeOut();
+		        function closeRegionModal() {
+		            $('.region--modal').fadeOut();
+		        }
+		    });
+	
+		 //시간 모달 
+		 $(document).ready(function() {
+		        $('.mytime-edit-btn').click(function() {
+		            showTimeModal();
+		        });
+
+		        $('.button--tmclose').click(function() {
+		            closeTimeModal();
+		        });
+
+		        function showTimeModal() {
+		            $('.time--modal').fadeIn();
+		        }
+
+		        function closeTimeModal() {
+		            $('.time--modal').fadeOut();
 		        }
 		    });
 	

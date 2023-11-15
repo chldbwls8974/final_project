@@ -215,7 +215,6 @@ public class BusinessmanController {
 	//운영시간 등록
 	@PostMapping("/businessman/operatingInsert")
 	public String insertOperating(Model model, FacilityVO facility, HttpSession session) {
-		//System.out.println(facility);
 		//facilityVO에서 운영시간 리스트를 불러와서 operatingList 변수에 저장
 		List<OperatingVO> operatingList = facility.getOperatingList();
 		int fa_num = facility.getFa_num();

@@ -76,7 +76,8 @@
 <body>
 <div class="member-search">
 	<div class="member-search-navigation" style="margin-top: 50px; text-align: center;">
-		<p style="font-size: 35px; font-weight: bolder; margin:0 auto; padding: 20px 0 10px 0;"> 회원 조회</p>
+		<p style="font-size: 35px; width: 17%; font-weight: bolder; margin: 30px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
+		회원 조회</p>
 	</div>
 	<!-- 회원검색 기능 -->
 	<form action="<c:url value='/admin/member'/>" method="get">

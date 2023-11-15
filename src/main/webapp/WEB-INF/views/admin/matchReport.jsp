@@ -13,9 +13,6 @@
 	tr{
 		text-align : center
 	}
-	h1{
-		text-align : center
-	}
 	.btn-info{
 		color : outline-info;
 		background-color : white;
@@ -25,72 +22,144 @@
 		background-color : outline-info;
 		color : white;
 	}
-	.error {
-		color: #f00;
-		display: block;
-	}
 	.content-row {
 	color : #4A90E2;
     display: none;
 	}
+	
+	.search-type-1 {
+		width: 150px;
+		padding: .8em .5em;
+		border: 1px solid #999;
+		font-family: inherit;
+		background: url('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F99761B495C84AA8716') no-repeat 95% 50%;
+		border-radius: 5px;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+		margin-top: 20px;
+	}
+	.search-type-2 {
+		width: 150px;
+		padding: .8em .5em;
+		border: 1px solid #999;
+		font-family: inherit;
+		background: url('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F99761B495C84AA8716') no-repeat 95% 50%;
+		border-radius: 5px;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+		margin-top: 20px;
+	}
+	.input-search{
+		width: 500px;
+		padding: .8em .5em;
+		border-radius: 5px;
+		border: 1px solid #999;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+	}
+	.btn-search{
+		width: 80px;
+		padding: .8em .5em;
+		border-radius: 5px;
+		border: 1px solid #999;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+	}
+	.main{
+		padding: 40px; height: auto;
+		background-color: #eafdd9; border-radius: 20px;
+	}
+	.page-link {
+	  color: #000; 
+	  background-color: #fff;
+	  border: 1px solid #ccc; 
+	}
+	.page-item.active .page-link {
+	 z-index: 1;
+	 color: #555;
+	 background-color: #f1f1f1;
+	 border-color: #ccc;
+	 
+	}
+	.page-link:focus, .page-link:hover {
+	  color: #000;
+	  background-color: #fafafa; 
+	  border-color: #ccc;
+	}
 </style>
 <body>
-	<h1>매치 신고 관리</h1>
-	<br>
-	<hr>
-	<div class="btn-group btn-group">
-	  <button type="button"
-				    class="btn btn-outline-info btn-info" onclick="location.href='<c:url value='/admin/boardReport'/>'">커뮤니티 신고</button>
-	  <button type="button"
-				    class="btn btn-outline-info btn-info" onclick="location.href='<c:url value='/admin/matchReport'/>'">매치 신고</button>
+	<div class="match-report-navigation" style="margin-top: 50px; text-align: center;">
+		<p style="font-size: 35px; width: 23%; font-weight: bolder; margin: 30px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
+		매치 신고 관리</p>
+	</div>
+	
+	<div style="text-align: center; margin-right: 10px;">
+		<div class="btn-group btn-group">
+		  <button type="button"
+				    class="btn-info"
+				    style="
+						border-radius: 10px; width: 130px; height: 40px; border: none;
+						background-color: #c2f296; color: black; margin: 10px 10px 10px 0;"
+						onclick="location.href='<c:url value='/admin/boardReport'/>'"
+				>커뮤니티 신고</button>
+		  <button type="button"
+				    class="btn-info"
+				    style="
+						border-radius: 10px; width: 130px; height: 40px; border: none;
+						background-color: #c2f296; color: black; margin: 10px 0 10px 0;"
+						onclick="location.href='<c:url value='/admin/matchReport'/>'"
+				>매치 신고</button>
+		</div>
 	</div>
 	
 	<form>
-		<div class="input-group mb-3 mt-3">
-			<div class="input-group-prepend">
-				<select class="form-control search-type-1">
+		<div class="match-report-navigation" style="margin: 30px 0 30px 0; text-align: center;">
+				<select class="search-type-1">
 			      <option value="all">상태</option>
 			      <option value="second">제재</option>
 			      <option value="third">확인</option>
 			      <option value="fourth">미확인</option>
 			    </select>
-			    <select class="form-control search-type-2">
+			    <select class="search-type-2">
 			      <option value="all">전체</option>
 			      <option value="second">신고자</option>
 			      <option value="third">대상자</option>
 			      <option value="fourth">카테고리</option>
 			      <option value="fifth">신고일</option>
 			    </select>
-		    </div>
-	    <input type="text" class="form-control input-search" name="s" id="input-search" placeholder="검색어를 입력하세요." value="${pm.cri.s}">
-	    <button type="button" class="btn btn-outline-success btn-search">찾기</button>
-	    
-	    
+	   		<input type="text" class="input-search" name="s" id="input-search" placeholder="검색어를 입력하세요." value="${pm.cri.s}">
+	    	<button type="button" class="btn-search">찾기</button>
 		</div>
 	</form>
-	<div>
-		<table class="table table-hover mt-4">
-			<thead>
-				<tr>
-					<th>번호</th>
-					<th>신고일</th>
-					<th>카테고리</th>
-					<th>내용</th>
-					<th>신고자 ID</th>
-					<th>대상자 ID</th>
-					<th>상태</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody class="list-tbody">
-			
-			</tbody>
-		</table>
+	<div class="main">
+		<div>
+			<table class="table table-hover mt-4">
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>신고일</th>
+						<th>카테고리</th>
+						<th>내용</th>
+						<th>신고자 ID</th>
+						<th>대상자 ID</th>
+						<th>상태</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody class="list-tbody">
+				
+				</tbody>
+			</table>
+		</div>
+		<!-- 페이지네이션 -->
+		<ul class="pagination justify-content-center mt-3 pagination">
+		
+		</ul>
 	</div>
-	<!-- 페이지네이션 -->
-	<ul class="pagination justify-content-center mt-3 pagination">
-	
-	</ul>
 </body>
 
 <script type="text/javascript">
