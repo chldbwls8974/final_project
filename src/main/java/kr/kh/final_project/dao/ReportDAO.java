@@ -27,6 +27,8 @@ public interface ReportDAO {
 
 	boolean insertBoardReport(@Param("report")ReportVO report);
 
+	ReportVO selectReportByMeNumAndMtNum(@Param("report")ReportVO report);
+
 
 
 }
