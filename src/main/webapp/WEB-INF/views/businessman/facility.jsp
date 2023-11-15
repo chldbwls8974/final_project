@@ -63,12 +63,43 @@
 			          <td>${facility.fa_add}</td>
 			          <td>${facility.fa_add_detail}</td>
 			          <td>${facility.fa_phone}</td>
-			          <td>${facility.fa_pay}</td>
-			          <td>${facility.fa_locker}</td>
-			          <td>${facility.fa_toilet}</td>
-			          <td>${facility.fa_shower}</td>
-			          <td>${facility.fa_smoking}</td>
-			          <td>${facility.fa_machine}</td>
+			          <td>
+			            <c:choose>
+			                <c:when test="${facility.fa_pay == 0}">없음</c:when>
+			                <c:when test="${facility.fa_pay == 1}">무료</c:when>
+			                <c:when test="${facility.fa_pay == 2}">유료</c:when>
+			            </c:choose>
+				      </td>
+			          <td>
+			            <c:choose>
+			                <c:when test="${facility.fa_locker == 0}">없음</c:when>
+			                <c:when test="${facility.fa_locker == 1}">있음</c:when>
+			            </c:choose>
+				      </td>
+			          <td>
+			            <c:choose>
+			                <c:when test="${facility.fa_toilet == 0}">없음</c:when>
+			                <c:when test="${facility.fa_toilet == 1}">있음</c:when>
+			            </c:choose>
+				      </td>
+			          <td>
+			            <c:choose>
+			                <c:when test="${facility.fa_shower == 0}">없음</c:when>
+			                <c:when test="${facility.fa_shower == 1}">있음</c:when>
+			            </c:choose>
+				      </td>
+			          <td>
+			            <c:choose>
+			                <c:when test="${facility.fa_smoking == 0}">없음</c:when>
+			                <c:when test="${facility.fa_smoking == 1}">있음</c:when>
+			            </c:choose>
+				      </td>
+			          <td>
+			            <c:choose>
+			                <c:when test="${facility.fa_machine == 0}">없음</c:when>
+			                <c:when test="${facility.fa_machine == 1}">있음</c:when>
+			            </c:choose>
+				      </td>
 			          <td>${facility.fa_note}</td>
 			       	  <td><a href="<c:url value='/businessman/operating/${facility.fa_num}'/>"
 								class="btn btn-success" role="button">운영시간</a></td>
