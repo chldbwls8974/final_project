@@ -68,6 +68,8 @@ public interface AdminService {
 	Message boardReportInsert(ReportVO report);
 	
 	void noteregistration(int[] price, String date, MemberVO user);
+	//매치 신고를 처리하는 메서드
+	Message matchReportInsert(ReportVO report);
 	
 	
 	

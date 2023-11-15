@@ -174,9 +174,21 @@
 	</select>
 	<insert id="insertBoardReport">
 		insert into
-			report(rp_rc_num, rp_content, rp_me_num, rp_me_num2, rp_state, rp_bo_num)
-		values(#{report.rp_rc_num}, #{report.rp_content}, #{report.rp_me_num}, #{report.rp_me_num2}, "미확인", #{report.rp_bo_num})
+			report(rp_rc_num, rp_content, rp_me_num, rp_me_num2, rp_state, rp_bo_num, rp_mt_num)
+		values(#{report.rp_rc_num}, #{report.rp_content}, #{report.rp_me_num}, #{report.rp_me_num2}, "미확인", #{report.rp_bo_num}, #{report.rp_mt_num} )
 	</insert>
+	<select id="selectReportByMeNumAndMtNum" resultType="kr.kh.final_project.vo.ReportVO">
+		select 
+		    *
+		from 
+		    report
+		where
+			rp_mt_num = #{report.rp_mt_num}
+		and
+			rp_me_num = #{report.rp_me_num}
+		and 
+			rp_me_num2 = #{report.rp_me_num2}
+	</select>
 	
 	
 </mapper>
