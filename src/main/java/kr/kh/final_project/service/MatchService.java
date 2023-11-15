@@ -11,6 +11,7 @@ import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ExtraVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
+import kr.kh.final_project.vo.QuarterVO;
 import kr.kh.final_project.vo.RegionVO;
 import kr.kh.final_project.vo.TeamVO;
 
@@ -65,5 +66,9 @@ public interface MatchService {
 	void updateEndMatch();
 
 	void insertMatchTeamSolo();
+
+	List<QuarterVO> selectQuarterListByMtNum(int mt_num);
+
+	int countQuarterByMtNum(int mt_num);
 
 }

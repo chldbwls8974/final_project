@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -24,6 +25,7 @@ import kr.kh.final_project.vo.EntryVO;
 import kr.kh.final_project.vo.ExtraVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
+import kr.kh.final_project.vo.QuarterVO;
 import kr.kh.final_project.vo.RegionVO;
 import kr.kh.final_project.vo.TeamVO;
 
@@ -162,10 +164,111 @@ public class ManagerController {
 		List<TeamVO> teamList = matchService.selectTeamByMtNum(mt_num);
 		List<EntryVO> entryList = matchService.selectEntryByMtNum(mt_num);
 		
-		
 		model.addAttribute("match", match);
 		model.addAttribute("teamList", teamList);
 		model.addAttribute("entryList", entryList);
 		return "/manager/manageMatch";
+	}
+	
+	@ResponseBody
+	@PostMapping("/update/entry/team")
+	public Map<String, Object> updateEntryTeam(@RequestParam("en_num")int en_num, @RequestParam("te_num")int te_num){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		boolean res = managerService.updateEntryTeam(en_num, te_num);
+		
+		map.put("res", res);
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/reset/entry/team")
+	public Map<String, Object> resetEntryTeam(@RequestParam("mt_num")int mt_num){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		boolean res = managerService.resetEntryTeam(mt_num);
+		
+		map.put("res", res);
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/auto/Balance")
+	public Map<String, Object> autoBalance(@RequestParam("mt_num")int mt_num){
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		boolean res = managerService.autoBalanceByMtNum(mt_num);
+		
+		map.put("res", res);
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/complete/team")
+	public Map<String, Object> completeTeam(@RequestParam("mt_num")int mt_num){
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		boolean res = managerService.completeTeamByMtNum(mt_num);
+		if(!res) {
+			String msg = "모든 참가자가 팀에 속해야합니다.";
+			map.put("msg", msg);
+		}
+		map.put("res", res);
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/insert/quarter")
+	public Map<String, Object> insertQuarter(@RequestBody QuarterVO quarter){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		boolean res = managerService.insertQuarter(quarter);
+		
+		map.put("res", res);
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/count/quarter")
+	public Map<String, Object> countQuarter(@RequestParam("mt_num")int mt_num){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		int count = matchService.countQuarterByMtNum(mt_num);
+
+		map.put("count", count);
+		return map;
+	}
+	@ResponseBody
+	@PostMapping("/select/quarter")
+	public Map<String, Object> selectQuarter(@RequestParam("mt_num")int mt_num){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		List<QuarterVO> quarterList = matchService.selectQuarterListByMtNum(mt_num);
+
+		map.put("quarterList", quarterList);
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/update/quarter")
+	public Map<String, Object> updateQuarter(@RequestBody QuarterVO quarter){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		boolean res = managerService.updateQuarter(quarter);
+		
+		map.put("res", res);
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/delete/quarter")
+	public Map<String, Object> deleteQuarter(@RequestParam("qu_num")int qu_num){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		boolean res = managerService.deleteQuarter(qu_num);
+		
+		map.put("res", res);
+		return map;
 	}
 }

@@ -17,6 +17,7 @@ import kr.kh.final_project.dao.MatchDAO;
 import kr.kh.final_project.dao.PointHistoryDAO;
 import kr.kh.final_project.dao.PreferredRegionDAO;
 import kr.kh.final_project.dao.PreferredTimeDAO;
+import kr.kh.final_project.dao.QuarterDAO;
 import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.dao.TeamDAO;
 import kr.kh.final_project.dao.TimeDAO;
@@ -29,6 +30,7 @@ import kr.kh.final_project.vo.ExtraVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
+import kr.kh.final_project.vo.QuarterVO;
 import kr.kh.final_project.vo.RegionVO;
 import kr.kh.final_project.vo.TeamVO;
 
@@ -64,6 +66,9 @@ public class MatchServiceImp implements MatchService{
 	
 	@Autowired
 	TeamDAO teamDao;
+	
+	@Autowired
+	QuarterDAO quarterDao;
 	
 	@Autowired
 	PointHistoryDAO pointHistoryDao;
@@ -454,6 +459,22 @@ public class MatchServiceImp implements MatchService{
 		for(MatchVO match : matchList) {
 			matchDao.updateMatchMtState1To2(match.getMt_num());
 		}
+	}
+
+	@Override
+	public List<QuarterVO> selectQuarterListByMtNum(int mt_num) {
+		if(mt_num == 0) {
+			return null;
+		}
+		return quarterDao.selectQuarterListByMtNum(mt_num);
+	}
+
+	@Override
+	public int countQuarterByMtNum(int mt_num) {
+		if(mt_num == 0) {
+			return 0;
+		}
+		return quarterDao.countQuarterByMtNum(mt_num);
 	}
 
 }

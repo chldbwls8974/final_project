@@ -52,4 +52,11 @@
 				te_mt_num = #{mt_num} and
 			    ct_cl_num = #{cl_num}))
 	</insert>
+	<update id="updateEntryTeam">
+		update entry
+		set
+			en_te_num = #{te_num}
+		where
+			en_num = #{en_num}
+	</update>
 </mapper>

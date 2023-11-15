@@ -274,7 +274,7 @@ CREATE TABLE `quarter` (
 	`qu_num`	int AUTO_INCREMENT PRIMARY KEY	NOT NULL,
 	`qu_mt_num`	int	NOT NULL,
 	`qu_te_num1`	int	NOT NULL,
-	`qu_goal`	int	NOT NULL	DEFAULT 0,
+	`qu_goal1`	int	NOT NULL	DEFAULT 0,
 	`qu_te_num2`	int	NOT NULL,
 	`qu_goal2`	int	NOT NULL	DEFAULT 0
 );

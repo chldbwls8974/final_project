@@ -24,7 +24,7 @@ public interface TeamDAO {
 
 	void updateTeamTeType(@Param("te_num")int te_num);
 
-	void deleteTeam(@Param("te_num")int te_num);
+	boolean deleteTeam(@Param("te_num")int te_num);
 
 	void deleteClubTeamByTeNum(@Param("te_num")int te_num);
 }
