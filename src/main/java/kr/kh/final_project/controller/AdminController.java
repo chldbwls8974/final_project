@@ -129,9 +129,10 @@ public class AdminController {
 	// 매니저권한 취소버튼 (회원정보 수정) (2)
 		@ResponseBody
 		@PostMapping("/admin/manager2")
-		public Map<String, Object>updateManager2(@RequestBody ManagerVO manager, 
-															Criteria cri
-															){
+		public Map<String, Object>updateManager2(
+				@RequestBody ManagerVO manager, 
+				Criteria cri){
+			System.out.println(manager);
 			// 결과 데이터를 넣기 위한 map을 만듬
 			Map<String, Object> map = new HashMap<String, Object>();
 			//ManagerVO user = (ManagerVO)session.getAttribute("user");
