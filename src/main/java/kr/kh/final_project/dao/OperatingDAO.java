@@ -15,6 +15,8 @@ public interface OperatingDAO {
 	//운영시간 수정
 	void updateOperatingList(@Param("operating")OperatingVO operating, @Param("fa_num")int fa_num);
 
+	void deleteOperating(@Param("fa_num")Integer fa_num);
+
 
 
 
