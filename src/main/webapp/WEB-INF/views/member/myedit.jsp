@@ -25,65 +25,6 @@
 .error {
 	color: #f00;
 }
-.time-box{
-    margin-bottom: 30px;
-    padding: 0;
-    border: 0;
-    vertical-align: baseline;
-}
-.chip{
-	display: flex; 
-	flex-wrap: wrap; 
-	overflow: hidden; 
-	border-radius: 12px;
-	list-style: none;
-	padding: 20px;
-}
-.chip__item--3{
-	width: 25%;
-    position: relative;
-    box-sizing: border-box;
-    outline: none;
-    margin: 0 auto;
-    box-shadow: none;	
-    margin: 0;
-    vertical-align: baseline;
-}
-.chip_item-radio{
-	position: absolute;
-	display: none;
-    opacity: 0;
-    background-color: #F2F5F7;
-    width: 100%;
-    height: 100%;
-}
-.chip__item-label div{ margin-top: 10px;}
-.chip__item-radio+label{
-	position: relative;
-	width: 200px;
-    height: 48px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    color: #4B5A64;
-    background-color: #FFFFFF;
-    border: 1px solid #D9E0E6;
-    border-radius: 20px;
-    margin: 5px;
-    margin-left: 0px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-input[type='checkbox']{
-	display : none;
-}
-input[type='checkbox']:checked+label{
-	display: inline-block;
-	color: #1570FF;
-    border: 1px solid #1570FF;
-}
-
 
 .container{ 
 	background-color: #f2f2f2; padding: 30px; z-index: 1;
@@ -114,6 +55,7 @@ input, progress {
 	font-weight: fold; font-size: 30px;
 	line-height:200px; text-align: center; display: block; text-decoration: none; color: gray;	
 	position: relative; overflow: hidden;
+	margin: 0 auto;
 }
 .box-thumbnail{
 	display: none; position: absolute; top: 0; 
@@ -132,10 +74,9 @@ input, progress {
 				<input type="file" class="input-file" name="img" id="img" onchange="readUrl(this)">
 					<a href="#" class="btn-file">+
 						<div class="box-thumbnail">
-							<img src="<c:url value='/memberimg${user.me_profile}'/>" id="preview" height="auto" width="100">
+							<img src="<c:url value='/memberimg${user.me_profile}'/>" id="preview" height="200" width="200">
 						</div>
 					</a>
-				
 			</div>
 			<div class="form-group">
 				<label>닉네임</label> <label id="check-nickName-error" class="error" for="me_nickname"></label> 
