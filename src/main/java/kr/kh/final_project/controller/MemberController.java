@@ -421,8 +421,6 @@ public class MemberController {
 		List<Integer> holiTime = memberService.getMemberPTimeHoliday(dbMember);
 		List<Integer> weekTime = memberService.getMemberPTimeWeekday(dbMember);
 		
-		System.out.println(weekTime);
-		
 		model.addAttribute("member",dbMember );
 		model.addAttribute("memberRegion", memberRegion );
 		model.addAttribute("memberPRegion", memberPRegion );
