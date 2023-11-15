@@ -3,6 +3,8 @@ package kr.kh.final_project.service;
 import java.util.List;
 
 import kr.kh.final_project.pagination.Criteria;
+import kr.kh.final_project.util.Message;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.vo.BlockVO;
@@ -94,6 +96,8 @@ public interface MemberService {
 	boolean updateProfile(MemberVO member, String fi_name);
 	
 	boolean blockListAddAndDelete(BlockVO block);
+	
+	Message updatePreferRegion(int me_num, int[] pr_rg_num);
 	
 
 }

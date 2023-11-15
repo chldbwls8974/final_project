@@ -476,5 +476,12 @@ public class MemberController {
 		return "/payment/main";
 	}
 	
+	@PostMapping("/member/update/region")
+	public String updateRegion(Model model,int me_num, int[] pr_rg_num) {
+		Message msg = memberService.updatePreferRegion(me_num, pr_rg_num);
+		model.addAttribute("msg", msg);
+		return "message";
+	}
+	
 	
 }

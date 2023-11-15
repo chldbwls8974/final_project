@@ -28,8 +28,6 @@ public class KakaoServiceImp implements KakaoService{
 		try {
 		    KakaoResponse kakaoResponse = objectMapper.readValue(res, KakaoResponse.class);
 		
-		    System.out.println("ID: " + kakaoResponse.getId());
-		    System.out.println("Connected At: " + kakaoResponse.getConnected_at());
 		    KakaoAccount kakaoAccount = kakaoResponse.getKakao_account();
 		    long id =  kakaoResponse.getId();
 		    String me_id = String.valueOf(id);
@@ -38,7 +36,6 @@ public class KakaoServiceImp implements KakaoService{
 		    String me_email =  kakaoAccount.getEmail();
 		    
 		    // 이후에 똑같이 처리
-		    System.out.println(me_id);
 		    MemberVO member = new MemberVO();
 		    member.setMe_id(me_id);
 		    member.setMe_name(me_name);
