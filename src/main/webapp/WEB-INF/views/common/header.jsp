@@ -61,14 +61,11 @@
 					커뮤니티
 					</a>
 					<div class="dropdown-menu">
-							<a class="dropdown-item" href="<c:url value='/board/notice'/>">공지게시판</a>
-							<a class="dropdown-item" href="<c:url value='/board/free'/>">자유게시판</a>
-							<a class="dropdown-item" href="<c:url value='/board/individual'/>">개인 매칭</a>
-							<a class="dropdown-item" href="<c:url value='/board/club'/>">클럽 매칭</a>
-							<a class="dropdown-item" href="<c:url value='/board/inquiry'/>">문의게시판</a>
-						<c:if test="${user != null && user.me_authority == 'ADMIN'}">
-							<a class="dropdown-item" href="/board/block">게시판 관리</a>
-						</c:if>
+						<a class="dropdown-item" href="<c:url value='/board/notice'/>">공지게시판</a>
+						<a class="dropdown-item" href="<c:url value='/board/free'/>">자유게시판</a>
+						<a class="dropdown-item" href="<c:url value='/board/individual'/>">개인 매칭</a>
+						<a class="dropdown-item" href="<c:url value='/board/club'/>">클럽 매칭</a>
+						<a class="dropdown-item" href="<c:url value='/board/inquiry'/>">문의게시판</a>
 					</div>
 				</li>
 				<li class="nav-item dropdown">
@@ -121,7 +118,7 @@
 						</div>
 					</li>
 				</c:if>
-				<c:if test="${user != null}">
+				<c:if test="${user != null && user.me_authority != 'ADMIN'}">
 					<li class="nav-item">
 						<a class="nav-link" href="<c:url value='/member/mypage'/>">마이페이지</a>
 					</li>
@@ -137,9 +134,6 @@
 				<c:if test="${user != null}">
 					<li class="nav-item">
 						<a class="nav-link " href="<c:url value='/member/logout'/>">로그아웃</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" id="email-signout" href="<c:url value='/member/signout'/>">회원탈퇴</a>
 					</li>
 				</c:if>
 			</ul>
