@@ -19,7 +19,7 @@
 	  <!--수정전 사항이 수정페이지에 그대로 나타나게 하기 위해 if문과 'selected'속성 사용함 -->
 	  <div class="form-group">
 	    <label>지역</label>
-	    <select class="form-control rg_main"> 
+	    <select class="form-control rg_main" required> 
 	        <option value="0">지역을 선택하세요</option>
 	        <c:forEach items="${MainRegion}" var="main">
     			<option value="${main.rg_main}"<c:if test="${facility.fa_rg_main== main.rg_main}">selected</c:if> >${main.rg_main}</option>
@@ -27,7 +27,7 @@
 	    </select>
 	  </div>
 	  <div class="form-group">
-	    <select class="form-control rg_sub" name="fa_rg_num">
+	    <select class="form-control rg_sub" name="fa_rg_num" required>
 	        <option value="0">지역을 선택하세요</option>
 	        <c:forEach items="${SubRegion}" var="sub">
 	            <option value="${sub.rg_num}">${sub.rg_num}</option>

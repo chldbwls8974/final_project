@@ -89,6 +89,9 @@
 		<div align="right" class="mt-3">
 			<a class="btn btn-secondary btn-block" role="button" href="<c:url value='/businessman/stadiumInsert/${facility.fa_num}'/>">경기장 등록하기</a>		
 		</div>
+		<div align="right" class="mt-3">
+			<a class="btn btn-secondary btn-block" role="button" href="<c:url value='/businessman/facility'/>">시설 목록으로 이동</a>		
+		</div>
 	</div>
 
 </body>
