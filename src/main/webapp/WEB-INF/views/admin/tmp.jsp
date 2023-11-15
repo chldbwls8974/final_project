@@ -49,27 +49,24 @@ ${match.mt_num }
 		<div class="modal--content">
 			<p>신고하기</p>
 			<!-- 일단 여기부터 작업 -->
-			<form class="modal-form" action="<c:url value='/admin/boardReport/insert'/>" method="post">
+			<form class="modal-form" action="<c:url value='/admin/matchReport/insert'/>" method="post">
 				<input type="hidden" class="form-control" name="rp_me_num" value="${user.me_num}" readonly>
-				<input type="hidden" class="form-control" name="rp_bo_num" value="${board.bo_num}" readonly>
+				<input type="hidden" class="form-control" name="rp_mt_num" value="${match.mt_num}" readonly>
 				<!-- 셀렉트로 닉네임 선택하면 value는 me_num이 전송되게 -->
-					<select class="form-control isSelected" name="rp_me_num2">
-						<option value="0">닉네임 선택</option>
+					<select class="form-control isSelected1" name="rp_me_num2">
+						<option value="0" selected>닉네임 선택</option>
 						<c:forEach items="${entryList}" var="list">
 							<option value="${list.en_me_num }">${list.en_me_num}(닉네임)</option>
 						</c:forEach>
 					</select>
 				<div class="form-group">
-					<select class="form-control isSelected" name="rp_rc_num">
+					<select class="form-control isSelected2" name="rp_rc_num">
 						<option value="0">분류</option>
-						<option value="6">음란물</option>
-						<option value="7">스팸</option>
-						<option value="8">홍보</option>
-						<option value="9">광고</option>
-						<option value="10">분란 조장</option>
-						<option value="11">혐오</option>
-						<option value="12">욕설</option>
-						<option value="13">기타</option>
+						<option value="1">폭행</option>
+						<option value="2">욕설</option>
+						<option value="3">지각</option>
+						<option value="4">음주</option>
+						<option value="5">비매너 플레이</option>
 					</select>
 					<textarea cols="46" rows="6" name="rp_content"></textarea>
 				</div>
@@ -99,16 +96,19 @@ ${match.mt_num }
 			$('.modal--bg').fadeOut();
 		}
 	});
-	//모달 옵션 선택여부에 따라 알림창 또는 제출
+	//모달 옵션 선택하지 않으면 제출하지 못하게
 	$(document).ready(function() {
 		$(".modal-form").submit(function(e) {
-			// 선택된 값이 0이면 제출을 막고 알림창 띄우기
-			var selectedValue = $(".isSelected").val();
-			if (selectedValue == 0) {
-				alert("옵션을 선택하세요.");
+			var selectedValue1 = $(".isSelected1").val();
+			var selectedValue2 = $(".isSelected2").val();
+			if (selectedValue1 == 0) {
+				alert("대상을 선택하세요.");
 				e.preventDefault(); // 제출 막기
 			}
-			// 선택된 값이 유효하면 폼이 계속 제출됨
+			if(selectedValue2 == 0){
+				alert("신고 종류를 선택하세요.");
+				e.preventDefault();
+			}
 		});
 	});
 </script>

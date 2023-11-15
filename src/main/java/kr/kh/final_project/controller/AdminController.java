@@ -324,15 +324,15 @@ public class AdminController {
 	public String matchReportInsert(Model model, ReportVO report) {
 		//신고추가
 		//중복신고 못하게 해야함 (같은 경기에서 같은 유저가 같은 멤버에게 신고 안되게 bo_num, me_num)
-		//Message msg = adminService.boardReportInsert(report);
-		//model.addAttribute("msg", msg);
+		
+		Message msg = adminService.matchReportInsert(report);
+		model.addAttribute("msg", msg);
 		return "message";
 	}
 	//매치임시페이지
 	//매치임시페이지
 	@GetMapping("/admin/tmp")
 	public String match(Model model, MatchVO match) {
-		System.out.println(match);
 		//신고추가
 		//중복신고 못하게 해야함 (같은 경기에서 같은 유저가 같은 멤버에게 신고 안되게 bo_num, me_num)
 		
@@ -345,7 +345,6 @@ public class AdminController {
 			e.setEn_me_num(i);
 			entryList.add(e);
 		}
-		System.out.println(entryList);
 		model.addAttribute("match", match);
 		model.addAttribute("entryList", entryList);
 		return "/admin/tmp";
