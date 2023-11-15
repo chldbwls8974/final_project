@@ -52,8 +52,6 @@
 				클럽
 				</a>
 				<div class="dropdown-menu">
-					<a class="nav-link" href="<c:url value='/club/mylist'/>">내 클럽 조회</a>
-					<a class="nav-link" href="<c:url value='/club/manage'/>">내 클럽 관리</a>
 					<a class="nav-link" href="<c:url value='/club/make'/>">클럽 생성</a>
 					<a class="nav-link" href="<c:url value='/club/list'/>">클럽 조회</a>
 				</div>
