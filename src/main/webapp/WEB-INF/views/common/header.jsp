@@ -31,7 +31,7 @@
 	<div style="width: 20%"></div>
 	<div style="width:60%; text-align: center; padding: 20px 0 20px 0; border-bottom: 1px solid #aaa;">
 		<a class="navbar-brand-link" href="/final_project">
-			<img alt="풋팅" src="https://ifh.cc/g/d23mzy.jpg" style="width: 120px">
+			<img alt="로고" src="https://ifh.cc/g/s2ddYw.png" style="width: 150px">
 		</a>
 	</div>
 	<div style="width: 20%"></div>

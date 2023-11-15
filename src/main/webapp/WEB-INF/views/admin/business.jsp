@@ -7,9 +7,6 @@
 <meta charset="UTF-8">
 <title>사업자 신청 관리</title>
 <style type="text/css">
-	.btn-group{
-		float : right;
-	}
 	.btn-info{
 		color : outline-info;
 		border : 2px solid yellow;
@@ -57,13 +54,13 @@
 		color : red;
 	}
 	.notice-thead{
-		display: flex; justify-content: space-between; padding: 0 0 16px 0;
+		display: flex; padding: 0 0 16px 0;
 		border-bottom: 1px solid rgba(0,0,0,.1);
 	}
- 	.notice-tbody{ justify-content: space-between; padding: 5px;}
+ 	.notice-tbody{padding: 5px;}
 	.tbody-box{ 
-		display: flex; justify-content: space-between;
-		margin: 0; padding: 20px 20px 30px 20px; border-bottom: 1px solid rgba(0,0,0,.1);
+		display: flex; border-bottom: 1px solid rgba(0,0,0,.1);
+		margin: 0; padding: 20px 20px 30px 20px;
 	}
 	
 	.page-link {
@@ -88,23 +85,31 @@
 <body>
 <div class="businessman-search">
 	<div class="businessman-search-navigation" style="margin-top: 50px; text-align: center;">
-		<p style="font-size: 35px; font-weight: bolder; margin:0 auto; padding: 20px 0 10px 0;">사업자 신청 관리</p>
+		<p style="font-size: 35px; width: 23%; font-weight: bolder; margin: 30px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
+		사업자 신청 관리</p>
 	</div>
 	<!-- 사업자신청 조회 -->
-	<br>
-	<div class="btn-group btn-group">
-	  <button type="button"
-				    class="btn btn-dark btn-info"
-					onclick="location.href='<c:url value='/admin/business'/>'"	    
-			>사업자신청 관리</button>
-	  <button type="button"
-				    class="btn btn-dark btn-info"
-					onclick="location.href='<c:url value='/admin/business2'/>'"	    
-			>사업자권한 조회</button>
-	</div> <br>
+	<div style="text-align: center; margin-right: 10px;">
+		<div class="btn-group btn-group">
+		  <button type="button"
+					    class="btn"
+					    style="
+							border-radius: 10px; width: 130px; height: 40px; border: none;
+							background-color: #c2f296; color: black; margin: 10px 10px 10px 0;"
+						onclick="location.href='<c:url value='/admin/business'/>'"	    
+				>신청 관리</button>
+		  <button type="button"
+					    class="btn"
+					    style="
+							border-radius: 10px; width: 130px; height: 40px; border: none;
+							background-color: #c2f296; color: black; margin: 10px 0 10px 0;"
+						onclick="location.href='<c:url value='/admin/business2'/>'"	    
+				>권한 조회</button>
+		</div>
+	</div>	
 	<!-- 사업자 신청 검색 기능 -->
 	<form action="<c:url value='/admin/business'/>" method="get">
-		<div class="businessman-search-navigation" style="margin-top: 30px; text-align: center;">
+		<div class="businessman-search-navigation" style="margin: 30px 0 30px 0; text-align: center;">
 			    <select class="searchType" id="me_authority" name="t">
 			      <option value="all"
 			      		<c:if test="${pm.cri.t == 'all'}">selected</c:if>>전체</option>
@@ -123,30 +128,30 @@
 	<div class="main">
 		<div class="table">
 			<ul class="notice-thead">
-				<li>회원 번호</li>
-				<li>회원 닉네임</li>
-				<li>게시글 타입</li>
-				<li>제목</li>
-				<li>권한</li>
-				<li>작성날짜</li>
-				<li>사업자신청 수락</li>
+				<li style="width: 10%">회원 번호</li>
+				<li style="width: 20%">회원 닉네임</li>
+				<li style="width: 10%">게시글 타입</li>
+				<li style="width: 20%">제목</li>
+				<li style="width: 10%">권한</li>
+				<li style="width: 20%">작성날짜</li>
+				<li style="width: 10%">신청 수락</li>
 			</ul>
 		    <ul class="notice-tbody">
 			   <c:forEach items="${list}" var="bu">
 					<li>
 						<div class="tbody-box">
-							<div id="tbody-list">${bu.me_num}</div>
-							<div id="tbody-list" class="id">${bu.me_nickname}</div>
-							<div id="tbody-list">
+							<div id="tbody-list" style="width: 10%">${bu.me_num}</div>
+							<div id="tbody-list" class="id" style="width: 20%">${bu.me_nickname}</div>
+							<div id="tbody-list" style="width: 10%">
 								<c:choose>
 			        				<c:when test="${bu.bo_bt_num == 7}">사업자신청</c:when>
 								</c:choose>
 							</div>
-							<div id="tbody-list"><a href="<c:url value='/board/detail?bo_num=${bu.bo_num}'/>">${bu.bo_title}</a></div>
-							<div id="tbody-list" class="update">${bu.me_authority}</div>
-							<div id="tbody-list">${bu.bo_reg_date_str}</div>
-							<div id="tbody-list">
-								<button class="btn btn-outline-warning btn-update">신청수락</button>
+							<div id="tbody-list" style="width: 20%"><a href="<c:url value='/board/detail?bo_num=${bu.bo_num}'/>">${bu.bo_title}</a></div>
+							<div id="tbody-list" class="update" style="width: 10%">${bu.me_authority}</div>
+							<div id="tbody-list" style="width: 20%">${bu.bo_reg_date_str}</div>
+							<div id="tbody-list" style="width: 10%">
+								<button class="btn btn-update">신청수락</button>
 							</div>
 						</div>
 					</li>

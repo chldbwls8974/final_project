@@ -7,6 +7,11 @@
 <meta charset="UTF-8">
 <title>시설 목록</title>
 </head>
+<style>
+	body{
+		text-align: center;
+	}
+</style>
 <body>
   	<h1 class="display-3"><span style="color: black; font-weight: bold;">시설 목록</span></h1>
 	<br>
