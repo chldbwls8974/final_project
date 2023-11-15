@@ -153,7 +153,7 @@
 							<div id="tbody-list" class="update" style="width: 10%">${ma.me_authority}</div>
 							<div id="tbody-list" style="width: 20%">${ma.bo_reg_date_str}</div>
 							<div id="tbody-list" style="width: 10%">
-								<button class="btn btn-update">신청 수락</button>
+								<button class="btn btn-update" value="${ma.me_nickname}">신청 수락</button>
 							</div>
 						</div>
 					</li>
@@ -190,7 +190,7 @@
 		// 만약 true면 밑에 있는 코드를 실행
 		if(confirm("수락하시겠습니까?")){
 			// 버튼을 클릭한 부모 tr에서 class가 id인 값을 me_nickname로 넣어준다.
-			let me_nickname = $(this).parents('ul').find('.id').text();
+			let me_nickname = $(this).val();
 			// 버튼을 클릭한 부모 tr에서 class가 update인 값을 me_authority로 넣어준다.
 			let me_authority = $(this).parents('ul').find('.update').text();
 			// 버튼을 누른 회원의 nickname과 authority값을 manager로 가져왔음 ( ex : 동해번쩍, USER )

@@ -137,26 +137,28 @@
 				<li style="width: 10%">권한 취소</li>
 			</ul>
 			 <ul class="select-business">
-			   <c:forEach items="${list}" var="bu">
-					<li>
-						<div class="tbody-box">
-							<div id="tbody-list" style="width: 10%">${bu.me_num}</div>
-							<div id="tbody-list" class="id" style="width: 20%">${bu.me_nickname}</div>
-							<div id="tbody-list" style="width: 10%">
-								<c:choose>
-			        				<c:when test="${bu.bo_bt_num == 7}">사업자신청</c:when>
-								</c:choose>
-							</div>
-							<div id="tbody-list" style="width: 20%"><a href="<c:url value='/board/detail?bo_num=${ma.bo_num}'/>">${bu.bo_title}</a></div>
-							<div id="tbody-list" class="update" style="width: 10%">${bu.me_authority}</div>
-							<div id="tbody-list" style="width: 20%">${bu.bo_reg_date_str}</div>
-							<div id="tbody-list" style="width: 10%">
-								<button class="btn btn-outline-danger btn-update">취소</button>
-							</div>
-						</div>
-					</li>
-				</c:forEach>
-			</ul>
+            <c:forEach items="${list}" var="bu">
+               <li>
+                  <div class="tbody-box">
+                     <div id="tbody-list" style="width: 10%">${bu.me_num}</div>
+                     <div id="tbody-list" class="id" style="width: 20%">${bu.me_nickname}</div>
+                     <div id="tbody-list" style="width: 10%">
+                        <c:choose>
+                             <c:when test="${bu.bo_bt_num == 7}">사업자신청</c:when>
+                        </c:choose>
+                     </div>
+                     <div id="tbody-list" style="width: 20%">
+                     <a href="<c:url value='/board/detail?bo_num=${bu.bo_num}'/>">${bu.bo_title}</a>
+                     </div>
+                     <div id="tbody-list" class="update" style="width: 10%">${bu.me_authority}</div>
+                     <div id="tbody-list" style="width: 20%">${bu.bo_reg_date_str}</div>
+                     <div id="tbody-list" style="width: 10%">
+                        <button class="btn btn-outline-danger btn-update">취소</button>
+                     </div>
+                  </div>
+               </li>
+            </c:forEach>
+         </ul>
 		</div>
 		<!-- 페이지네이션 적용 -->
 	  <ul class="pagination justify-content-center">
@@ -188,7 +190,7 @@
 		// 만약 true면 밑에 있는 코드를 실행
 		if(confirm("권한을 USER로 변경하시겠습니까?")){
 			// 버튼을 클릭한 부모 tr에서 class가 id인 값을 me_nickname로 넣어준다.
-			let me_nickname = $(this).parents('ul').find('.id').text();
+			let me_nickname = $(this).val();
 			// 버튼을 클릭한 부모 tr에서 class가 update인 값을 me_authority로 넣어준다.
 			let me_authority = $(this).parents('ul').find('.update').text();
 			// 버튼을 누른 회원의 nickname과 authority값을 manager로 가져왔음 ( ex : 동해번쩍, USER )
@@ -215,7 +217,7 @@
 									<li>\${bu.me_num}</li>
 									<li class="id">\${bu.me_nickname}</li>
 									<li>\${bu.bo_bt_num}</li>
-									<li>\${bu.bo_title}</li>
+									<li id="tbody-list" style="width: 20%"><a href="<c:url value='/board/detail?bo_num=${ma.bo_num}'/>">\${bu.bo_title}</li>
 									<li class="update">\${bu.me_authority}</li>
 									<li>\${bu.bo_reg_date_str}</li>
 									<li>

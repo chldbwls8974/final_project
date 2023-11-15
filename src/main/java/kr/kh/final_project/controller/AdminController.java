@@ -174,7 +174,6 @@ public class AdminController {
 	public Map<String, Object>updateBusiness(@RequestBody ManagerVO manager, Criteria cri){
 		// 결과 데이터를 넣기 위한 map을 만듬
 		Map<String, Object> map = new HashMap<String, Object>();
-		
 		boolean res = adminService.updateBusiness(manager);
 		if(res) {
 			List<ManagerVO> list = adminService.getBusinessList(cri);
@@ -233,6 +232,7 @@ public class AdminController {
 			Map<String, Object> map = new HashMap<String, Object>();
 			
 			boolean res = adminService.updateBusiness2(manager);
+			System.out.println(manager);
 			if(res) {
 				List<ManagerVO> list = adminService.getBusinessList2(cri);
 				map.put("list", list);
