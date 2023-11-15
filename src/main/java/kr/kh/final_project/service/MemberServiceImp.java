@@ -617,6 +617,28 @@ public class MemberServiceImp implements MemberService{
 		boolean res = isExist ? blockDao.deleteBlock(block) : blockDao.insertBlock(block);
 		return res;
 	}
+	
+	// 내가 차단한 회원정보 가져오기
+	@Override
+	public List<MemberVO> getBlockMemberList(List<BlockVO> blockList) {
+		List<MemberVO> memberList = new ArrayList<MemberVO>();
+		for(BlockVO tmp : blockList) {
+			MemberVO member = memberDao.selectMemberByNum(tmp.getBl_blocked_num());
+			memberList.add(member);
+		}
+		return memberList;
+	}
+
+	@Override
+	public List<MemberVO> getMemberMarkList(List<MarkVO> markList) {
+		List<MemberVO> memberList = new ArrayList<MemberVO>();
+		for(MarkVO tmp : markList) {
+			MemberVO member = memberDao.selectMemberByNum(tmp.getMa_marked_num());
+			memberList.add(member);
+		}
+		return memberList;
+	}
+
 
 	@Override
 	public Message updatePreferRegion(int me_num, int[] pr_rg_num) {
