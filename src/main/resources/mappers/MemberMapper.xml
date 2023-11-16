@@ -232,6 +232,7 @@
 		set
 			me_email = #{email}
 		where me_num = #{me_num}
+	</update>
 	<update id="updateMemberPoint2">
 		update
 			member

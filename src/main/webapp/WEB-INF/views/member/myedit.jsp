@@ -518,16 +518,16 @@ input, progress {
 		
 		// 이메일 변경 모달 여닫기
 		 $(document).ready(function() {
-		        $('.button--open').click(function() {
-		            showModal();
-		        });
+	        $('.button--open').click(function() {
+	            showModal();
+	        });
 
-		        $('.button--close').click(function() {
-		            closeModal();
-		        });
+	        $('.button--close').click(function() {
+	            closeModal();
+	        });
 
-		        
-		    });
+	        
+	    });
 		
 		// 이중 폼 제출
 		 function submitForm() {
