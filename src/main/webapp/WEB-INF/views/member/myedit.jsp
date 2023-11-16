@@ -70,8 +70,12 @@ input, progress {
 		<div class="1p">
 		<input type="hidden" name="me_num" value="${user.me_num}">
 		<input type="hidden" name="test" value="${user.me_profile}">
-		<img src="<c:url value='/memberimg${user.me_profile}'/>" name="profile" height="200" width="200">
-			<div class="form-group">
+		<div style="display: inline-grid;">
+			<label>현재 나의 프로필 사진</label>
+			<img src="<c:url value='/memberimg${user.me_profile}'/>" name="profile" height="150" width="150" style="border-radius: 50%; margin-bottom: 10px;">
+		</div>
+			<div class="form-group" style="margin-top: 10px;">
+				<label>프로필 사진 수정</label>
 				<input type="file" class="input-file" name="img" id="img" onchange="readUrl(this)">
 					<a href="#" class="btn-file">+
 						<div class="box-thumbnail">
