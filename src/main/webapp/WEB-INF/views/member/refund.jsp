@@ -63,9 +63,9 @@
 		text-align: center; padding: 50px 0 20px 0;">포인트 환급</p>
 	<form action="<c:url value='/member/refund'/>" method="post" style="text-align: center;">
 		<div class="form-group-info">
-			<p style="font-size: 20px; margin: 0; padding-top: 10px; ">${user.me_name} 님의</p>
+			<p style="font-size: 20px; margin: 0; padding-top: 10px; ">${user.me_name} 님의 보유 포인트</p> 
 			<!-- 여기 작업해야 함. 유저가 로그인을 풀지않으면 변경포인트가 적용이 안됨. -->
-			<p class="point" style="font-size: 18px;">현재 보유 포인트는 ${user.me_point}  입니다.</p>
+			<p class="point" style="font-size: 18px;">${user.me_point}</p>
 			<input type="hidden" class="form-control" value="${user.me_num}" name="me_num">
 			<input type="hidden" class="form-control" value="${user.me_num}" name="ph_me_num">
 			<input type="hidden" class="form-control" value="4" name="ph_source">
@@ -130,9 +130,12 @@
     $(document).on("change", "#refundAmount", function(){
         //입력한 금액을 변수에 저장
         var refundAmountValue = parseFloat($(this).val());
+        console.log(refundAmountValue);
         if(refundAmountValue > 0){
+        console.log(refundAmountValue);
         	//1000단위로 입력값 변경
 	        var num = Math.floor(parseFloat(refundAmountValue) / 1000) * 1000;
+        	console.log(num);
             $(this).val(num);
 	        //(유저의 현재 포인트 - 환급받을 금액)을 저장
 	        var userPoint = parseFloat($('.point').text());
