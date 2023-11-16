@@ -179,4 +179,85 @@
 								where
 									 me_nickname = #{manager.me_nickname})
 	</delete>
+	<select id="selectBusinessListByInsert" resultType="kr.kh.final_project.vo.BusinessmanVO">
+		select
+			*
+		from
+			businessman
+		where
+		<if test="cri.t == 'all'">
+			(
+				bu_me_num like concat('%', #{cri.s}, '%')
+					or
+				bu_name like concat('%', #{cri.s}, '%')
+					or
+				bu_registration_number like concat('%', #{cri.s}, '%')
+			)		
+		</if>
+		<if test="cri.t == 'first'">
+				bu_num like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'second'">
+				bu_name like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'third'">
+				bu_registration_number like concat('%', #{cri.s}, '%')
+		</if>
+		order by
+			bu_num desc
+		limit
+			#{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<select id="selectTotalCountByBusiness" resultType="int">
+		select
+			count(*)
+		from
+			businessman
+		where
+		<if test="cri.t == 'all'">
+			(
+				bu_me_num like concat('%', #{cri.s}, '%')
+					or
+				bu_name like concat('%', #{cri.s}, '%')
+					or
+				bu_registration_number like concat('%', #{cri.s}, '%')
+			)		
+		</if>
+		<if test="cri.t == 'first'">
+				bu_num like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'second'">
+				bu_name like concat('%', #{cri.s}, '%')
+		</if>
+		<if test="cri.t == 'third'">
+				bu_registration_number like concat('%', #{cri.s}, '%')
+		</if>
+	</select>
+	<insert id="insertBusiness">
+		insert into Businessman (bu_name, bu_phone, bu_registration_number,bu_email,bu_me_num,bu_state)
+		values(#{bu.bu_name},#{bu.bu_phone},#{bu.bu_registration_number},#{bu.bu_email},#{bu.bu_me_num}, 0)
+	</insert>
+	<select id="selectBusinessList3" resultType="kr.kh.final_project.vo.BusinessmanVO">
+		select
+			*
+		from
+			businessman
+		where
+			bu_num = #{bu_num}
+	</select>
+	<update id="updateBusiness">
+		update
+			businessman
+		set
+			bu_name = #{businessman.bu_name},
+			bu_phone = #{businessman.bu_phone},
+			bu_registration_number = #{businessman.bu_registration_number},
+			bu_email = #{businessman.bu_email},
+			bu_me_num = #{businessman.bu_me_num}
+		where
+			bu_num = #{businessman.bu_num}
+	</update>
+	<delete id="deleteBusinessList">
+		delete from businessman where bu_num = #{bu_num}
+	</delete>
 </mapper>

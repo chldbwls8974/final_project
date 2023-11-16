@@ -19,6 +19,7 @@ import kr.kh.final_project.dao.ReportDAO;
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.util.Message;
 import kr.kh.final_project.vo.BoardVO;
+import kr.kh.final_project.vo.BusinessmanVO;
 import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ManagerVO;
 import kr.kh.final_project.vo.MemberVO;
@@ -357,5 +358,73 @@ public class AdminServiceImp implements AdminService{
 		board.setBo_contents(contents);
 		boardDao.insertBoard(board);
 	}
+	// 사업자등록한내용 조회하기(3)
+	@Override
+	public List<BusinessmanVO> getBusinessListByInsert(Criteria cri) {
+		return businessDao.selectBusinessListByInsert(cri);
+	}
+	// 사업자정보 총 갯수 가져오기 (3)
+	@Override
+	public int getTotalCountByBusiness(Criteria cri) {
+		if(cri == null) {
+			cri = new Criteria();
+		}
+		return businessDao.selectTotalCountByBusiness(cri);
+	}
+	// 사업자정보 관리자가 등록하기(3)
+	@Override
+	public boolean insertBusiness(BusinessmanVO businessman, MemberVO user) {
+		if( 
+			businessman.getBu_registration_number() == null ||
+			businessman.getBu_me_num() == null || 
+			businessman.getBu_email() == null ||
+			businessman.getBu_name() == null ) {
+			return false;
+		}
+		if(user == null) {
+			return false;
+		}
+		return businessDao.insertBusiness(businessman);
+	}
+	// 수정할 사업자 가져오기(3)
+	@Override
+	public BusinessmanVO getBusinessList3(Integer bu_num) {
+		if(bu_num == null) {
+			return null;
+		}
+		// 번호 주면서 수정할 사업자 가져오라고 시킨다.
+		BusinessmanVO business = businessDao.selectBusinessList3(bu_num); 
+		
+		return business;
+	}
+	// 사업자 수정하기(3)
+	@Override
+	public boolean update(BusinessmanVO businessman) {
+		
+		if( businessman == null ) {
+			return false;
+		}
+		BusinessmanVO dbBusiness = businessDao.selectBusinessList3(businessman.getBu_num());
+		if(dbBusiness == null) {
+			return false;
+		}
+		boolean res = businessDao.updateBusiness(businessman);
+		
+		return res;
+	}
+	// 사업자 삭제하기(3)
+	@Override
+	public boolean deleteBusiness(Integer bu_num) {
+		if(bu_num == null) {
+			return false;
+		}
+		BusinessmanVO business = businessDao.selectBusinessList3(bu_num);
+		if(business == null) {
+			return false;
+		}
+		System.out.println(businessDao.deleteBusinessList(bu_num));
+		return true;
+	}
+		
 	
 }
