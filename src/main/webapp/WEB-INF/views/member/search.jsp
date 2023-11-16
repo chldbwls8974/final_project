@@ -40,7 +40,7 @@
 	li{list-style: none; text-align: start;}
 	p, span{text-decoration: none; color: black;}
 	p:hover, span:hover {text-decoration: none;}
-	#membertable{ background-color: #f2f2f2; width: 90%; height: 100%; 
+	#membertable{ background-color: #f2f2f2; width: 90%; height: auto; 
 		padding: 100px 0 100px 0; margin: 30px auto; border-radius: 30px;}
 	.membertable-list{
 		margin: 0 80px 50px 80px; display: flex; border-bottom: 1px solid rgba(0,0,0,.1);
@@ -63,25 +63,28 @@
 				<button type="submit" class="search-btn" onclick="getSearchList()">검색
 				</button>
 		</div>
-			<div>
-				<ul id="membertable">
-					<c:forEach items="${memberList}" var="member">
-					<li class="membertable-list">
-						<a href="<c:url value='/member/myprofile?me_num=${member.me_num}'/>" class="member-link">
-							<img src="<c:url value='/memberimg${member.me_profile}'/>" class="myprofile-image-thumb" alt="프로필 사진">
-							<span style="font-weight: bold; font-size: large;">${member.me_name}</span>
-							<span style="font-size: small; color: gray;">${member.me_id}</span>
-					</li>
-					</c:forEach>
-				</ul>
-			</div>
+		<div class="container-sub">
+			<ul id="membertable">
+				<c:forEach items="${memberList}" var="member">
+				<li class="membertable-list">
+					<a href="<c:url value='/member/myprofile?me_num=${member.me_num}'/>" class="member-link">
+						<img src="<c:url value='/memberimg${member.me_profile}'/>" class="myprofile-image-thumb" alt="프로필 사진">
+						<span style="font-weight: bold; font-size: large;">${member.me_name}</span>
+						<span style="font-size: small; color: gray;">${member.me_id}</span>
+					</a>
+				</li>
+				</c:forEach>
+			</ul>
+		</div>
 	</div>
 </body>
 <script type="text/javascript">
 
 	let str = '';
+	
 	//검색결과 가져오기
 	function getSearchList(){
+		
 		var searchType = $("[name='searchType']").val(); //검색유형
 		var keyword = $("[name='keyword']").val();	//내가 검색할 키워드
 		data = {
@@ -106,7 +109,8 @@
 							</li>
 						`;
 					}
-					$('#membertable').html(str); 
+					$('#membertable').html(str);
+					
 				}else{
 					alert('실패');
 				}
