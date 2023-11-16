@@ -182,7 +182,7 @@
 													<div style="display: flex;">
 														<div class="emblem">
 															<img alt="엠블럼"
-																src="<c:url value='https://ifh.cc/g/v9LAF1.jpg'/>"
+																src="<c:url value='/clubimg${list.cl_emblem }'/>"
 																style="width: 60px; height: 60px; border-radius: 50%">
 														</div>
 														<div style="margin-top: 20px;">

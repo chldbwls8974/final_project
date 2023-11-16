@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -81,7 +82,7 @@ public class BoardController {
 	
 	//게시글 상세조회하기
 	@GetMapping("/board/detail")
-	public String boardDetail(Model model,  Integer bo_num) {
+	public String boardDetail(Model model,Integer bo_num) {
 		// 게시글을 가져오기 전에 서비스에게 게시글 번호를 주면서 조회수를 1증가하라고 요청한다.
 		boardService.updateViews(bo_num);
 		// 서비스에게 게시글 번호를 주면서 게시글을 가져오라고 시킨다.

@@ -95,33 +95,6 @@ public class UploadFileUtils {
 		File target = new File(uploadPath + savedPath, savedFileName);
 		FileCopyUtils.copy(fileData, target);
 		return uploadFileName(savedPath, savedFileName);
-		/*
-		Iterator<String> iterator = ((MultipartRequest) profilePicture).getFileNames();
 		
-		MultipartFile multipartFile = null;
-		String originalFileName = null;
-		String originalFileExtension = null;
-		String storedFileName = null;
-		
-		String memberImg = "";
-		
-		
-		File file = new File(filePath);
-		if(file.exists() == false) {
-			file.mkdirs();
-		}
-		
-		while(iterator.hasNext()) {
-			multipartFile = profilePicture.getFile(iterator.next());
-			if(multipartFile.isEmpty() == false) {
-				originalFileName = multipartFile.getOriginalFilename();
-				originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
-				storedFileName = getRandomString() + originalFileExtension;
-				file = new File(filePath + storedFileName);
-				multipartFile.transferTo(file);
-				memberImg = storedFileName;
-			}
-		}
-		return memberImg;*/
 	}
 }
