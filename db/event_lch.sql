@@ -112,11 +112,13 @@ DELIMITER ;
 
 
 
--- 매일 경기 정지여부를 확인하고 정지상태를 변경해주는 이벤트
+-- 매일 커뮤니티 정지여부를 확인하고 정지상태를 변경해주는 이벤트
+DROP EVENT CheckBoardPenaltyEvent;
+
 DELIMITER //
 CREATE EVENT IF NOT EXISTS CheckBoardPenaltyEvent
-ON SCHEDULE EVERY 1 DAY
-STARTS '2023-11-10 11:27:00'
+ON SCHEDULE EVERY 1 day
+STARTS '2023-11-10 00:00:00'
 DO
   BEGIN
     UPDATE member
@@ -135,6 +137,7 @@ DELIMITER ;
 
 
 -- 매일 경기 정지여부를 확인하고 정지상태를 변경해주는 이벤트
+DROP EVENT CheckMatchPenaltyEvent;
 DELIMITER //
 CREATE EVENT IF NOT EXISTS CheckMatchPenaltyEvent
 ON SCHEDULE EVERY 1 DAY

@@ -14,6 +14,7 @@ import kr.kh.final_project.dao.EntryDAO;
 import kr.kh.final_project.dao.ExpenseDAO;
 import kr.kh.final_project.dao.ExtraDAO;
 import kr.kh.final_project.dao.MatchDAO;
+import kr.kh.final_project.dao.MemberDAO;
 import kr.kh.final_project.dao.PointHistoryDAO;
 import kr.kh.final_project.dao.PreferredRegionDAO;
 import kr.kh.final_project.dao.PreferredTimeDAO;
@@ -78,6 +79,9 @@ public class MatchServiceImp implements MatchService{
 	
 	@Autowired
 	ClubMemberDAO clubMemberDao;
+	
+	@Autowired
+	MemberDAO memberDao;
 	
 	@Override
 	public List<ExtraVO> selectWeekDayList(int i) {
@@ -242,6 +246,7 @@ public class MatchServiceImp implements MatchService{
 			if(entryDao.selectEntryByMeNum(dbTeam.getTe_num(), user.getMe_num()) == null) {
 				if(entryDao.insertEntry(dbTeam.getTe_num(), user.getMe_num())) {
 					pointHistoryDao.insertPointHistoryApplicationMatch(point, mt_num, user.getMe_num());
+					memberDao.updateMemberPoint2(point, user.getMe_num());
 					if(dbTeam.getMt_type() == 0) {
 						matchDao.updateMatchMtTypeTo1(mt_num);
 						matchDao.updateMatchMtState2To1(mt_num);
@@ -267,6 +272,8 @@ public class MatchServiceImp implements MatchService{
 		EntryVO dbEntry = entryDao.selectEntryByMeNum(dbTeam.getTe_num(), me_num);
 		if(dbPH != null) {
 			if(pointHistoryDao.insertPointHistoryCanselMatch(dbPH.getPh_price(), mt_num, me_num)){
+				dbPH = pointHistoryDao.selectPointHistoryRefund(me_num, mt_num);
+				memberDao.updateMemberPoint2(-dbPH.getPh_price(), me_num);
 				if(entryDao.deleteEntry(dbEntry.getEn_num())) {
 					dbTeam = teamDao.selectListTeamByMtNum(mt_num);
 					if(dbTeam.getEntry_count() == 0) {
@@ -320,6 +327,7 @@ public class MatchServiceImp implements MatchService{
 			dbTeam = teamDao.selectNewTeamByMtNum(mt_num);
 			teamDao.insertClubTeam(dbTeam.getTe_num(), cl_num);
 			pointHistoryDao.insertPointHistoryApplicationMatch(point, mt_num, user.getMe_num());
+			memberDao.updateMemberPoint2(point, user.getMe_num());
 			if(dbTeam.getMt_type() == 0) {
 				matchDao.updateMatchMtTypeTo2(mt_num);
 				matchDao.updateMatchMtState2To1(mt_num);
@@ -354,6 +362,8 @@ public class MatchServiceImp implements MatchService{
 		}
 		if(res) {
 			pointHistoryDao.insertPointHistoryCanselMatch(dbPH.getPh_price(), mt_num, me_num);
+			dbPH = pointHistoryDao.selectPointHistoryRefund(me_num, mt_num);
+			memberDao.updateMemberPoint2(-dbPH.getPh_price(), me_num);
 			return res;
 		}
 		return false;
@@ -410,6 +420,8 @@ public class MatchServiceImp implements MatchService{
 				for(EntryVO entry : entryList) {
 					PointHistoryVO dbPH = pointHistoryDao.selectPointHistoryApplicationMatch(entry.getEn_me_num(), match.getMt_num());
 					if(pointHistoryDao.insertPointHistoryTimeOverMatch(dbPH.getPh_price(), match.getMt_num(), entry.getEn_me_num())) {
+						dbPH = pointHistoryDao.selectPointHistoryTimeOver(entry.getEn_me_num(), match.getMt_num());
+						memberDao.updateMemberPoint2(-dbPH.getPh_price(), entry.getEn_me_num());
 						entryDao.deleteEntry(entry.getEn_num());
 					}
 				}
@@ -450,6 +462,8 @@ public class MatchServiceImp implements MatchService{
 					ClubMemberVO dbLeader = clubMemberDao.selectClubLeader(team.getCt_cl_num());
 					PointHistoryVO dbPH = pointHistoryDao.selectPointHistoryApplicationMatch(dbLeader.getCm_me_num(), match.getMt_num());
 					pointHistoryDao.insertPointHistoryTimeOverMatch(dbPH.getPh_price(), match.getMt_num(), dbLeader.getCm_me_num());
+					dbPH = pointHistoryDao.selectPointHistoryTimeOver(dbLeader.getCm_me_num(), match.getMt_num());
+					memberDao.updateMemberPoint2(-dbPH.getPh_price(), dbLeader.getCm_me_num());
 					entryDao.deleteEntryByTeNum(team.getTe_num());
 					teamDao.deleteClubTeamByTeNum(team.getTe_num());
 					teamDao.deleteTeam(team.getTe_num());

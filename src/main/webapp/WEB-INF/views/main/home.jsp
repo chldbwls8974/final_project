@@ -97,13 +97,19 @@
 	<div class="slideshow">
 		<div class="slider">
 			<div class="myslider fade">
-				<img class="item" src="<c:url value='/resources/main/main1.png'/>" alt="Image1">
+				<a href="<c:url value='/'/>">
+					<img class="item" src="<c:url value='/resources/main/main1.png'/>" alt="Image1">
+				</a>
 			</div>
 			<div class="myslider fade">
-				<img class="item" src="<c:url value='/resources/main/main2.png'/>" alt="Image2">
+				<a href="<c:url value='/match/search/solo'/>">
+					<img class="item" src="<c:url value='/resources/main/main2.png'/>" alt="Image2">
+				</a>
 			</div>
 			<div class="myslider fade">
-				<img class="item" src="<c:url value='/resources/main/main3.png'/>" alt="Image3">
+				<a href="<c:url value='/application/manager'/>">
+					<img class="item" src="<c:url value='/resources/main/main3.png'/>" alt="Image3">
+				</a>
 			</div>
 		</div>
       <!-- 화살표 -->
