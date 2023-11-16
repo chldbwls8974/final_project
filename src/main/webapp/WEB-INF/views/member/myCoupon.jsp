@@ -14,28 +14,49 @@
 		color: #f00;
 		display: block;
 	}
+	.container-body{
+		background-color: #f2f2f2; border-radius: 30px;
+		padding-bottom: 50px;
+	}
+	.mini-container{
+		width: 1000px;  height: auto;
+	    margin: 0 auto 40px auto; padding: 30px;
+		background-color: white; border-radius: 30px;
+	}
+	.table td{ border: none; padding: 30px;}
+	
+	.page-item.active .page-link{
+		z-index: 3;
+	    color: #fff;
+	    background-color: #b8d49e;
+	    border-color: #b8d49e;
+	}
+	
 </style>
 <body>
-	<h1>나의 쿠폰</h1>
-	
-	<div>
-		<table class="table table-hover mt-4">
-			<thead>
-				<tr>
-					<th>쿠폰 이름</th>
-					<th>할인 금액</th>
-					<th>추천인</th>
-					<th>상태</th>
-				</tr>
-			</thead>
-			<tbody class="list-tbody">
-			
-			</tbody>
-		</table>
+	<div class="container-body">
+		<p style="font-size: 35px; font-weight: bolder; margin:50px auto; border-bottom: 8px solid #c2f296;
+		width: 23%; padding: 80px 0 10px 0; text-align: center;">나의 보유 쿠폰</p>
+		
+		<div class="mini-container">
+			<table class="table table-hover mt-4">
+				<thead>
+					<tr style="border-bottom: 1px solid #e9e9e9;">
+						<td>쿠폰 이름</td>
+						<td>할인 금액</td>
+						<td>추천인</td>
+						<td>상태</td>
+					</tr>
+				</thead>
+				<tbody class="list-tbody">
+				
+				</tbody>
+			</table>
+		</div>
+		<!-- 페이지네이션 -->
+		<ul class="pagination justify-content-center mt-3 pagination">
+		</ul>
 	</div>
-	<!-- 페이지네이션 -->
-	<ul class="pagination justify-content-center mt-3 pagination">
-	</ul>
 </body>
 
 <script type="text/javascript">
