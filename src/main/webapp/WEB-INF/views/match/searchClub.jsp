@@ -24,7 +24,7 @@
 		.match-box{height: 100px; border-bottom: 1px solid #c2c2c2;}
 		.match-box::after{clear: both; content: ''; display: block;}
 		.match-box:last-child{border-bottom: none}
-		.match-time-box{font-size: 40px; display: inline-block; line-height: 100px}
+		.match-time-box{font-size: 40px; display: inline-block; line-height: 100px; margin-right: 10px;}
 		.match-info-box{display: inline-block;}
 		.btn{float: right; margin-top: 30px;}
 	</style>
@@ -157,7 +157,10 @@
 								`;					
 							}else if(match.application_able == 1){
 								str +=	`
-									<button class="btn btn-outline-primary btn-matchPage" value="\${match.mt_num}">참가 신청</button> <br>
+									<button class="btn btn-matchPage"
+									style="width: 120px; height: 40px; border: none;
+									border-radius: 5px; background-color: #c2f296; color: black;"
+									value="\${match.mt_num}">참가 신청</button> <br>
 								</div>
 								`;
 							}else if(match.application_able == 0 && match.application == 0){
