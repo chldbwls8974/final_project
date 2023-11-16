@@ -86,12 +86,8 @@ public class ClubController {
 	public String listClub(Model model, HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		List<ClubVO> list = clubService.getClubList();
-		List<PreferredAgeVO> ageList = clubService.getClubAgeList();
-		List<TeamPreferredTimeVO> timeList = clubService.getClubTimeList();
 		model.addAttribute("user",user);
 		model.addAttribute("list",list);
-		model.addAttribute("ageList",ageList);
-		model.addAttribute("timeList",timeList);
 		return "/club/list";
 	}
 	@GetMapping("/mylist")
@@ -151,9 +147,15 @@ public class ClubController {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		ClubVO club = clubService.getClub(cl_num);
 		List<RegionVO> MainRegion = memberService.getMainRegion();
+		List<Integer> weekTime = clubService.getClubTimeList(0,cl_num);
+		List<Integer> holiTime = clubService.getClubTimeList(1,cl_num);
+		List<Integer> ageList = clubService.getClubAgeList(cl_num);
 		model.addAttribute("MainRegion",MainRegion);
 		model.addAttribute("user",user);
 		model.addAttribute("club",club);
+		model.addAttribute("weekTime",weekTime);
+		model.addAttribute("holiTime",holiTime);
+		model.addAttribute("ageList",ageList);
 		return "/club/update";
 	}
 	

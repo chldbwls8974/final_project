@@ -26,5 +26,5 @@ public interface RegionDAO {
 
 	List<RegionVO> selectMemberRegion();
 
-	List<RegionVO> selectUserRegion(Integer me_num);
+	List<RegionVO> selectUserRegion();
 }
