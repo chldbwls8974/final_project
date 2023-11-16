@@ -209,10 +209,13 @@ public class ManagerController {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		boolean res = managerService.completeTeamByMtNum(mt_num);
+		String msg = "팀이 확정되었습니다.";
+		
 		if(!res) {
-			String msg = "모든 참가자가 팀에 속해야합니다.";
-			map.put("msg", msg);
+			msg = "모든 참가자가 팀에 속해야합니다.";
 		}
+		
+		map.put("msg", msg);
 		map.put("res", res);
 		return map;
 	}

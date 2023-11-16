@@ -214,8 +214,10 @@
 			dataType : 'json',
 			success : function(data) {
 				if(data.res){
-					printTeam()
-					printEntryList()
+					alert(data.msg);
+					location.href='<c:url value="/manager/manage/match?mt_num="/>'+ mt_num;
+				}else{
+					alert(data.msg);
 				}
 			}
 		});
