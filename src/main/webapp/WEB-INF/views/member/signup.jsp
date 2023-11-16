@@ -727,7 +727,7 @@ input, progress {
               prevText: '이전 달', // prev 아이콘의 툴팁.
               numberOfMonths: [1,1], // 한번에 얼마나 많은 월을 표시할것인가. [2,3] 일 경우, 2(행) x 3(열) = 6개의 월을 표시한다.
               stepMonths: 1, // next, prev 버튼을 클릭했을때 얼마나 많은 월을 이동하여 표시하는가. 
-              yearRange: 'c-100:c+100', // 년도 선택 셀렉트박스를 현재 년도에서 이전, 이후로 얼마의 범위를 표시할것인가.
+              yearRange: 'c-100:c+1', // 년도 선택 셀렉트박스를 현재 년도에서 이전, 이후로 얼마의 범위를 표시할것인가.
               showButtonPanel: true, // 캘린더 하단에 버튼 패널을 표시한다. ( ...으로 표시되는부분이다.) 
               closeText: '닫기',  // 닫기 버튼 패널
               showAnim: "slide", //애니메이션을 적용한다.  
@@ -739,7 +739,6 @@ input, progress {
     $( "#me_birthday" ).flatpickr({ 
         onSelect: function() { 
             var date = $.flatpickr.formatDate("yymmdd",$("#datepicker").flatpickr("getDate")); 
-            alert(date);
         }
 	    });                    
 	});
@@ -754,7 +753,7 @@ input, progress {
 			flag = false;
 			let id = $(this).val();
 			if(!/^[a-zA-Z]\w{5,9}$/.test(id)){
-				$('#check-id-error').text('');
+				$('#check-id-error').text('아이디는 6~10글자 영문+숫자 조합이며, 영문으로 시작해야합니다');
 				return;
 			}
 			$.ajax({
