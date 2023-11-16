@@ -107,5 +107,7 @@ public interface MemberService {
 	
 	boolean updateEmail(int me_num, String email);
 	
+	List<RegionVO> getMyMainRegionList(int rg_num);
+	
 
 }

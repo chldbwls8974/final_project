@@ -587,11 +587,10 @@ public class MemberController {
 	
 	@ResponseBody
 	@GetMapping("/member/update/region2")
-	public Map<String, Object> region1(@RequestParam String rg_main, Model model){
+	public Map<String, Object> region1(@RequestParam int rg_num, Model model){
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<RegionVO> SubRegion = memberService.getSubRegionByMainRegion(rg_main);
-		map.put("SubRegion", SubRegion);
-		System.out.println(SubRegion);
+		List<RegionVO> list = memberService.getMyMainRegionList(rg_num);
+		map.put("list",list);
 		return map;
 	}
 	

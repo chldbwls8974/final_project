@@ -393,65 +393,67 @@
 		
 		
 		
-		// 닉네임 중복 검사
-		$('[name=me_nickname]').keyup(function(){
-			flag = false;
-			let nickname = $(this).val();
-			let ori_nick = $('[name=ori_nick]').val();
-			var reNick = /^.{1,20}$/
-				if(!reNick.test(nickname)){
-					$('#check-nickName-error').text('');
-					return;
-				}
-			if(nickname != ''){
-				$.ajax({
-				async : false, 
-				type : 'post', 
-				url : '<c:url value="/member/check/nickname"/>', 
-				data : { nickname : nickname}, 
-				success : function(data){
-					if(data){
-						$('#check-nickName-error').text('사용 가능한 닉네임입니다.');
+	// 닉네임 중복 검사
+	$('[name=me_nickname]').keyup(function(){
+		flag = false;
+		let nickname = $(this).val();
+		let ori_nick = $('[name=ori_nick]').val();
+		var reNick = /^.{1,20}$/
+			if(!reNick.test(nickname)){
+				$('#check-nickName-error').text('');
+				return;
+			}
+		if(nickname != ''){
+			$.ajax({
+			async : false, 
+			type : 'post', 
+			url : '<c:url value="/member/check/nickname"/>', 
+			data : { nickname : nickname}, 
+			success : function(data){
+				if(data){
+					$('#check-nickName-error').text('사용 가능한 닉네임입니다.');
+					flag = true;
+				}else{
+					if(nickname == ori_nick){
+						$('#check-nickName-error').text('');
 						flag = true;
 					}else{
-						if(nickname == ori_nick){
-							$('#check-nickName-error').text('');
-							flag = true;
-						}else{
-							$('#check-nickName-error').text('이미 사용중인 닉네임입니다.');
-						}
+						$('#check-nickName-error').text('이미 사용중인 닉네임입니다.');
 					}
 				}
-			});
-			}else{
-				$('#check-nickName-error').text('');
 			}
-			
-		})
-		
-		// 프로필사진 미리보기
-			$('.btn-file').click(function(){
-			$('.input-file').click();
-			$('.box-thumbnail').show();
-			$(this).css('boder' ,'none');
-		})
-
-		function readUrl(input){
-			//input 태그가 첨부파일이고, 첨부파일이 선택되면
-			if(input.files && input.files[0]){
-				let reader = new FileReader();
-				reader.onload = function(e){
-					document.getElementById('preview').src = e.target.result;
-				}
-				reader.readAsDataURL(input.files[0]);
-			}
-			//첨부파일이 선택되지 않으면
-			else{
-				document.getElementById('preview').src = '<c:url value="/memberimg${user.me_profile}"/>';
-			}
+		});
+		}else{
+			$('#check-nickName-error').text('');
 		}
 		
-		
+	})
+	
+	
+	
+	// 프로필사진 미리보기
+		$('.btn-file').click(function(){
+		$('.input-file').click();
+		$('.box-thumbnail').show();
+		$(this).css('boder' ,'none');
+	})
+
+	function readUrl(input){
+		//input 태그가 첨부파일이고, 첨부파일이 선택되면
+		if(input.files && input.files[0]){
+			let reader = new FileReader();
+			reader.onload = function(e){
+				document.getElementById('preview').src = e.target.result;
+			}
+			reader.readAsDataURL(input.files[0]);
+		}
+		//첨부파일이 선택되지 않으면
+		else{
+			document.getElementById('preview').src = '<c:url value="/memberimg${user.me_profile}"/>';
+		}
+	}
+	
+	
 
 	
 		
@@ -497,6 +499,22 @@
         function closeModal() {
             $('.modal--bg').fadeOut();
         }
+        
+        
+      //페이지가 완전히 로드되면 실행 = jQuery의 $(document).ready()와 동일한 역할
+		$(function(){	
+			 data={
+				 rg_num : ${user.me_rg_num}
+			}
+			//각 지역별 도시 선택 
+			ajaxJsonToJson2(false, 'get', '/member/update/region2', data, (a)=>{
+				console.log(a)
+
+		    })
+	         //트리거를 통해 rg_main의 모든 select 요소에 대해 change 이벤트를 수동으로 발생. 
+	         //=> 이벤트가 발생하면 선택한 옵션에 따라 다른 도시를 로드하고 옵션을 설정함
+			//$(".rg_main").trigger('change')
+	    })
 	</script>
 </body>
 </html>
