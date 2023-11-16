@@ -71,7 +71,6 @@
 							<img src="<c:url value='/memberimg${member.me_profile}'/>" class="myprofile-image-thumb" alt="프로필 사진">
 							<span style="font-weight: bold; font-size: large;">${member.me_name}</span>
 							<span style="font-size: small; color: gray;">${member.me_id}</span>
-						</a>
 					</li>
 					</c:forEach>
 				</ul>
