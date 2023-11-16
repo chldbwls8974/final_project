@@ -99,11 +99,11 @@
 		  <div class="form-group-inline">
 			 <label for="st_width" style="font-weight: bold;">가로 x 세로(m)</label>
 			 <div class="input-group">
-			    <input type="number" class="form-control text-right" placeholder="가로" name="st_width" id="st_width" oninput="numOnly(this)" max="99999" required>
+			    <input type="number" class="form-control text-right" placeholder="가로" name="st_width" id="st_width" oninput="numOnly(this); calculateMax();" max="99999" required>
 			    <div class="input-group-append">
 			      <span class="input-group-text">x</span>
 			    </div>
-			    <input type="number" class="form-control text-right" placeholder="세로" name="st_height" id="st_height" oninput="numOnly(this)" max="99999" required>
+			    <input type="number" class="form-control text-right" placeholder="세로" name="st_height" id="st_height" oninput="numOnly(this); calculateMax();" max="99999" required>
 			    <span class="input-group-text">(m)</span>
 		     </div>
 		  </div>
@@ -138,6 +138,32 @@
 	        //입력값이 2자리 이상인 경우 마지막 2자리만 유지
    			target.value = target.value.slice(0, 2);
 		}
+		
+		//최대인원 자동계산
+		function calculateMax() {
+		        // st_width와 st_height의 현재 값 가져오기
+		        var st_width = parseFloat(document.getElementById("st_width").value) || 0;
+		        var st_height = parseFloat(document.getElementById("st_height").value) || 0;
+
+		        if (st_width > 0 && st_height > 0) {
+		            // 계산된 결과를 result 변수에 저장
+		            var result = st_width * st_height;
+
+		            // 범위에 따라 st_max 값 설정
+		            if (result >= 420 && result < 540) {
+		                document.getElementById("st_max").value = 15;
+		            } else if (result >= 540 && result <= 800) {
+		                document.getElementById("st_max").value = 18;
+		            } else {
+		                // 이외의 범위는 직접 최대 인원 수 입력 가능
+		                document.getElementById("st_max").value = "";
+		            }
+		        } else {
+		            // st_width와 st_height의 값이 0인 경우
+		            document.getElementById("st_max").value = "";
+		        }
+		    }
+		
 	</script>
 	
 </body>
