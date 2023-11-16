@@ -87,38 +87,37 @@
 		text-align: center; letter-spacing: -3px;">프로필 수정</p>
 	<form action="<c:url value='/member/myedit'/>" method="post" id="myForm" enctype="multipart/form-data" style="text-align: center;">
 		<div class="1p">
-		<input type="hidden" name="me_num" value="${user.me_num}">
-		<input type="hidden" name="test" value="${user.me_profile}">
-		<div style="display: inline-grid;">
-			<label>현재 나의 프로필 사진</label>
+			<input type="hidden" name="me_num" value="${user.me_num}">
+			<input type="hidden" name="test" value="${user.me_profile}">
 			<input type="hidden" name="ori_nick" value="${user.me_nickname}">
-			<img src="<c:url value='/memberimg${user.me_profile}'/>" name="profile" height="150" width="150" style="border-radius: 50%; margin-bottom: 10px;">
-		</div>
-			<div class="form-group" style="margin-top: 10px;">
-				<label>프로필 사진 수정</label>
+			<div style="display: inline-grid;" class="profile">
+				<img src="<c:url value='/memberimg${user.me_profile}'/>" name="profile" height="150" width="150" style="border-radius: 50%; margin-bottom: 10px;">
+			</div>
+			<div class="form-group update-profile" style="margin-top: 10px;">
 				<input type="file" class="input-file" name="img" id="img" onchange="readUrl(this)">
 					<a href="#" class="btn-file">+
 						<div class="box-thumbnail">
-							<img src="<c:url value='/memberimg${user.me_profile}'/>" id="preview" height="200" width="200">
+							<img src="" id="preview" height="200" width="200">
 						</div>
 					</a>
 			</div>
+			<div>
+				<button type="button" class="profile-update-btn">
+				프로필 사진 변경
+				</button>
+			</div>
+			
+			<hr>
+
 			<div class="form-group">
 				<label>닉네임</label> <label id="check-nickName-error" class="error" for="me_nickname"></label> 
 				<input type="text" class="form-control" name="me_nickname" maxlength="15" value="${user.me_nickname}" required>
 			</div>
-			<hr>
 			<div class="form-group">
 				<label>이메일</label> 
 				<input type="email" class="form-control" name="ori_email" value="${user.me_email}" readonly> 
 				<button type="button" class="form-control button--open" name="email-change-btn" style="margin-bottom: 20px;">이메일 변경</button>
 			</div>
-			
-			
-
-			
-			
-
 			<div class="form-group">
 				<label>전화번호</label> <input type="text" class="form-control" name="me_phone" id="me_phone" value="${user.me_phone}" required>
 			</div>
@@ -199,7 +198,7 @@
 </div>	
 	
 	<script type="text/javascript">
-	
+	$('.update-profile').hide();
 	const codeSendBtn = document.getElementById("me_email_btn");
 	const checkCode = document.getElementById("email_code");
 	const checkCodeBtn = document.getElementById("email_code_btn");
@@ -415,15 +414,17 @@
 	
 	
 	// 프로필사진 미리보기
-		$('.btn-file').click(function(){
-		$('.input-file').click();
-		$('.box-thumbnail').show();
-		$(this).css('boder' ,'none');
-	})
+		$('.profile-update-btn').click(function(){
+			$('.input-file').click();
+			$('.box-thumbnail').show();
+			$(this).css('boder' ,'none');
+		})
 
 	function readUrl(input){
 		//input 태그가 첨부파일이고, 첨부파일이 선택되면
 		if(input.files && input.files[0]){
+			$('.profile').hide();
+			$('.update-profile').show();
 			let reader = new FileReader();
 			reader.onload = function(e){
 				document.getElementById('preview').src = e.target.result;
@@ -432,7 +433,8 @@
 		}
 		//첨부파일이 선택되지 않으면
 		else{
-			document.getElementById('preview').src = '<c:url value="/memberimg${user.me_profile}"/>';
+			$('.profile').show();
+			$('.update-profile').hide();
 		}
 	}
 	
