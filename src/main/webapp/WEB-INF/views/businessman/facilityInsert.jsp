@@ -37,7 +37,6 @@
 			</div>
 		    <div class="form-group">
 				<select class="form-control rg_sub" name="fa_rg_num" required>
-					<option value="0">지역을 선택하세요</option>
 						<c:forEach items="${SubRegion}" var="sub">
 							<option value="${sub.rg_num}">${sub.rg_sub}</option>
 						</c:forEach>
