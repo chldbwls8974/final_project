@@ -6,22 +6,22 @@
 	<style type="text/css">
 		.days-box{width: 100%; height: 50px; display: flex;}
 		.day-box{
-		height: 70px; background-color: window; flex: 1; border-right: 3px solid black;
+		height: 70px; background-color: window; flex: 1; border-right: 1px solid #c2c2c2;
 		text-align: center;}
 		.day-box:last-child{border-right: none}
 		.btn-week{width: 20px;}
-		.btn-week:hover{background-color: yellow; cursor: pointer;}
-		.prev-week{height: 70px; border-right: 3px solid black; line-height: 70px;}
+		.btn-week:hover{ font-weight: bolder; cursor: pointer;}
+		.prev-week{height: 70px; border-right: 1px solid #c2c2c2; line-height: 70px;}
 		.next-week{height: 70px; line-height: 70px;}
 		.day-span{font-size: 30px;}
 		.day_of_week-span{font-size: 15px;}
-		.sat{color: blue;}
-		.sun{color: red}
-		.select-circle{height: 70px; border-radius: 20%; background-color: cyan;}
-		.not-select-circle:hover{height: 70px; border-radius: 20%; background-color: yellow; cursor: pointer;}
+		.sat{color: #16537e;}
+		.sun{color: #da8686}
+		.select-circle{height: 70px; background-color: #f2f2f2;}
+		.not-select-circle:hover{height: 70px;  background-color: #dbfabf; cursor: pointer;}
 		.main-region-box{display: inline;}
 		.sub-region-box{display: inline;}
-		.match-box{height: 100px; border-bottom: 2px solid black;}
+		.match-box{height: 100px; border-bottom: 1px solid #c2c2c2;}
 		.match-box::after{clear: both; content: ''; display: block;}
 		.match-box:last-child{border-bottom: none}
 		.match-time-box{font-size: 40px; display: inline-block; line-height: 100px}
@@ -30,7 +30,8 @@
 	</style>
 </head>
 <body>
-	<h1>클럽 매치 조회</h1>
+	<p style="font-size: 35px; font-weight: bolder; margin:50px auto; border-bottom: 8px solid #c2f296;
+	width: 25%; padding: 30px 0 10px 0; text-align: center;">클럽 매치 조회</p>
 	<div class="days-box">
 		<c:if test="${weekCount != 0}">
 			<div class="prev-week btn-week"><</div>
@@ -62,9 +63,9 @@
 		</c:if>
 	</div>
 	<br>
-	<div class="club-select-box">
-		<span>클럽 : </span>
-		<select class="select-club">
+	<div class="club-select-box" style="margin: 10px 0 10px 0;">
+		<span>클럽 </span>
+		<select class="select-club" style="margin-left: 10px;">
 			<option value="0">선택</option>
 			<c:forEach items="${clubList}" var="cl">
 				<option value="${cl.cl_num}">${cl.cl_name}</option>
@@ -112,7 +113,11 @@
 	function printSelectMatch() {
 		let str = ``;
 		if(cl_num == 0){
-			str += `<h2>클럽을 선택해주세요</h2>`;
+			str += `<p style="font-size: larger;
+			   				font-weight: 600;
+			   				text-align: center;
+							margin-top: 50px;">
+			   				현재 선택된 클럽이 없습니다. 클럽을 선택해주세요</p>`;
 		}else{
 			$.ajax({
 				async : false,
