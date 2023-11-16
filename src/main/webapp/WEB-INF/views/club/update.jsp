@@ -112,12 +112,13 @@ li{
 			<label>클럽명</label><label id="check-name-error" class="error" for="cl_name"></label>
 			<input type="text" class="form-control" name="cl_name" id="cl_name" value="${club.cl_name }">
 		</div>
+		${region }
 		<div class="form-group">
 			<label>활동지역</label> 
 			<select class="form-control rg_main" required>
 				<option value="">지역을 선택하세요</option>
 				<c:forEach items="${MainRegion}" var="main">
-					<option value="${main.rg_main}" >${main.rg_main}</option>
+					<option value="${main.rg_main}" <c:if test="${region.rg_main == main.rg_main }">selected</c:if> >${main.rg_main}</option>
 				</c:forEach>
 			</select>
 
@@ -125,8 +126,8 @@ li{
 		<div class="form-group">
 			<select class="form-control rg_sub" name="cl_rg_num" required>
 				<option value="">지역을 선택하세요</option>
-				<c:forEach items="${SubRegion}" var="sub">
-					<option value="${sub.rg_num}">${sub.rg_sub}</option>
+				<c:forEach items="${subRg}" var="sub">
+					<option value="${sub.rg_num}" <c:if test="${region.rg_num == sub.rg_num }">selected</c:if> >${sub.rg_sub}</option>
 				</c:forEach>
 			</select>
 		</div>
@@ -339,7 +340,6 @@ li{
 				</div>
 			</div>
 		</div>
-		${ageList }
 		<div class="form-group">
 		<label>선호 연령</label><br>
 		
