@@ -227,4 +227,10 @@
 			me_rg_num = #{m.me_rg_num}
 		where me_num = #{m.me_num}
 	</update>
+	<update id="updateEmail">
+		update member
+		set
+			me_email = #{email}
+		where me_num = #{me_num}
+	</update>
 </mapper>
