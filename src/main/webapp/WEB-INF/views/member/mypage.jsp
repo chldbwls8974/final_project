@@ -103,8 +103,8 @@
 						<div class="btn-box">
 							<div class="myprofile-detail">
 								<a href="<c:url value='/member/myprofile?me_num=${user.me_num}'/>" class="myprofile-btn">
-									<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_my.svg"
-										style="width: 24px; height: 24px; margin-left: 5px;" alt="내 프로필">
+									<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_profile.svg"
+										style="width: 22px; height: 22px; margin-left: 5px;" alt="내 프로필">
 									<p style="margin: 0;">프로필 조회</p>
 								</a>
 							</div>	
@@ -245,7 +245,7 @@
 						</li>
 						<li>
 							<a href="<c:url value='/member/search'/>">
-							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_profile.svg" width="24px" height="24px" alt="회원 조회">
+							<img src="	https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_friend.svg" width="24px" height="24px" alt="회원 조회">
 							<p>회원 찾기</p>
 							</a>
 						</li>
