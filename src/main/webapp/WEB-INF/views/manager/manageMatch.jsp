@@ -52,31 +52,15 @@
 					<button class="btn-auto-balance">자동 밸런스</button>
 					<button class="btn-team-complete">팀 확정</button>
 				</c:if>
-				<c:forEach items="${entryList}" var="el">
-					<div class="entry-member member-list">${el.me_nickname}(${el.me_tr_name})
-						<c:if test="${el.te_type != 0}">
-							${el.te_type}팀
-						</c:if>
-						<input hidden disabled value="${el.en_num}">
-						<c:if test="${match.ready == 1 && el.te_type == 0}">
-							<div class="entry-btn-box">
-								<c:forEach items="${teamList}" var="tl">
-									<c:if test="${tl.club_entry_count < match.mt_personnel}">
-										<button class="entry-btn" value="${tl.te_num}">${tl.te_type}팀</button>
-									</c:if>
-									<c:if test="${tl.club_entry_count == match.mt_personnel}">
-										<button class="entry-btn" value="${tl.te_num}" disabled>${tl.te_type}팀</button>
-									</c:if>
-								</c:forEach>
-							</div>
-						</c:if>
-					</div>
-				</c:forEach>
+				<div class="entry-list">
+				
+				</div>
 			</div>
 		</div>
 	</nav>
 	<c:if test="${match.ready ==  2 && match.list_team == 1}">
 		<div class="insert-quarter-box">
+		
 		</div>
 	</c:if>
 	<div class="quarter-list-box">
@@ -87,6 +71,7 @@
 	let str = ``;
 	
 	printTeam()
+	printEntryList()
 	printInsertQuarter()
 	printQuarter()
 	
@@ -182,7 +167,8 @@
 			success : function(data) {
 				if(data.res){
 					alert("등록 성공");
-					location.href='<c:url value="/manager/manage/match?mt_num="/>'+ mt_num;
+					printTeam()
+					printEntryList()
 				}else{
 					alert("등록 실패");
 				}
@@ -198,7 +184,8 @@
 			dataType : 'json',
 			success : function(data) {
 				if(data.res){
-					location.href='<c:url value="/manager/manage/match?mt_num="/>'+ mt_num;
+					printTeam()
+					printEntryList()
 				}
 			}
 		});
@@ -212,7 +199,8 @@
 			dataType : 'json',
 			success : function(data) {
 				if(data.res){
-					location.href='<c:url value="/manager/manage/match?mt_num="/>'+ mt_num;
+					printTeam()
+					printEntryList()
 				}
 			}
 		});
@@ -226,7 +214,8 @@
 			dataType : 'json',
 			success : function(data) {
 				if(data.res){
-					location.href='<c:url value="/manager/manage/match?mt_num="/>'+ mt_num;
+					printTeam()
+					printEntryList()
 				}
 			}
 		});
@@ -247,36 +236,98 @@
 		printQuarter();
 	}
 	function printTeam() {
-		str = `
-			<c:forEach items="${teamList}" var="tl">
-				<div class="teamList-box">
-					<table>
-						<thead>
-							<tr>
-								<th>
-									${tl.te_type}팀:${tl.cl_name} ${tl.club_entry_count}/${match.mt_personnel}
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach items="${entryList}" var="el">
-								<c:if test="${tl.te_num == el.en_te_num}">
+		$.ajax({
+			async : false,
+			method : 'post',
+			url : '<c:url value="/print/team/entry"/>',
+			data : {mt_num:mt_num},
+			dataType : 'json',
+			success : function(data) {
+				str = ``;
+				for(team of data.teamList){
+					str += `
+						<div class="teamList-box">
+							<table>
+								<thead>
+									<tr>
+										<th>
+											\${team.te_type}팀:\${team.cl_name == null ? '' : team.cl_name} \${team.club_entry_count}/${match.mt_personnel}
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+					`;
+						for(entry of data.entryList){
+							if(team.te_num == entry.en_te_num){
+								str += `
 									<tr>
 										<td>
 											<span>
-												${el.me_nickname}(${el.me_tr_name})
+												\${entry.me_nickname}(\${entry.me_tr_name})
 											</span>
 										</td>
 									</tr>
-								</c:if>
-							</c:forEach>
-						</tbody>
-					</table>
-				</div>
-			</c:forEach>
-		`;
+								`;
+							}
+						}
+					str += `
+								</tbody>
+							</table>
+						</div>
+					`;
+				}
+			}
+		});
 		$('.team-box').html(str);
 	}
+	function printEntryList() {
+		$.ajax({
+			async : false,
+			method : 'post',
+			url : '<c:url value="/print/team/entry"/>',
+			data : {mt_num:mt_num},
+			dataType : 'json',
+			success : function(data) {
+				str = ``;
+				for(entry of data.entryList){
+					str += `
+						<div class="entry-member member-list">
+						\${entry.me_nickname}(\${entry.me_tr_name})
+					`;
+					if(entry.te_type != 0){
+						str += `
+							\${entry.te_type}팀
+						`;
+					}
+					if(${match.ready == 1} && entry.te_type == 0){
+						str += `
+							<input hidden disabled value="\${entry.en_num}">
+							<div class="entry-btn-box">
+						`;
+						for(team of data.teamList){
+							if(team.club_entry_count < ${match.mt_personnel}){
+								str += `
+									<button class="entry-btn" value="\${team.te_num}">\${team.te_type}팀</button>
+								`;
+							}else if(team.club_entry_count == ${match.mt_personnel}){
+								str += `
+									<button class="entry-btn" value="\${team.te_num}" disabled>\${team.te_type}팀</button>
+								`;
+							}
+						}
+						str += `
+							</div>
+						`;
+					}
+					str += `
+						</div>
+					`;
+				}
+			}
+		});
+		$('.entry-list').html(str);
+	}
+	
 	function printInsertQuarter() {
 		str = ``;
 		$.ajax({
@@ -330,8 +381,14 @@
 						str += `
 							<div class="info-box quarter-box">
 								<h4>\${i + 1}경기</h4>
-								<button class="btn-update-quarter" value="\${quarterList.qu_num}">수정</button>
-								<button class="btn-delete-quarter" value="\${quarterList.qu_num}">삭제</button>
+						`;
+						if(${match.mt_state1 == 0}){
+							str += `
+									<button class="btn-update-quarter" value="\${quarterList.qu_num}">수정</button>
+									<button class="btn-delete-quarter" value="\${quarterList.qu_num}">삭제</button>
+							`;
+						}
+						str += `
 								<input type="number" class="recored-team1" value="\${quarterList.team1}" hidden disabled>
 								<input type="number" class="recored-team2" value="\${quarterList.team2}" hidden disabled>
 								<input type="number" class="recored-te_num1" value="\${quarterList.qu_te_num1}" hidden disabled>

@@ -155,7 +155,7 @@
 			entry on en_te_num = te_num
 		where
 			mt_date = #{mt_date} and
-			mt_state1 = 0 and
+			mt_state1 in (0, 2) and
 			mn_me_num = #{me_num}
 		group by
 			mt_num
@@ -588,7 +588,7 @@
 			region on fa_rg_num = rg_num
 		where
 			mt_num = #{mt_num} and
-			mt_state1 = 0
+			mt_state1 in (0, 2)
 		group by
 			mt_num
 	</select>

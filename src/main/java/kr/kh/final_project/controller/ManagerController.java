@@ -271,4 +271,17 @@ public class ManagerController {
 		map.put("res", res);
 		return map;
 	}
+	
+	@ResponseBody
+	@PostMapping("/print/team/entry")
+	public Map<String, Object> printTeam(@RequestParam("mt_num")int mt_num){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		List<TeamVO> teamList = matchService.selectTeamByMtNum(mt_num);
+		List<EntryVO> entryList = matchService.selectEntryByMtNum(mt_num);
+		
+		map.put("teamList", teamList);
+		map.put("entryList", entryList);
+		return map;
+	}
 }
