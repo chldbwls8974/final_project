@@ -217,7 +217,7 @@
 									<li>\${bu.me_num}</li>
 									<li class="id">\${bu.me_nickname}</li>
 									<li>\${bu.bo_bt_num}</li>
-									<li id="tbody-list" style="width: 20%"><a href="<c:url value='/board/detail?bo_num=${ma.bo_num}'/>">\${bu.bo_title}</li>
+									<li id="tbody-list" style="width: 20%"><a href="<c:url value='/board/detail?bo_num=${bu.bo_num}'/>">\${bu.bo_title}</li>
 									<li class="update">\${bu.me_authority}</li>
 									<li>\${bu.bo_reg_date_str}</li>
 									<li>
