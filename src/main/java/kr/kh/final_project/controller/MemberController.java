@@ -378,12 +378,15 @@ public class MemberController {
 	public String myProfile(Model model,HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		List<RegionVO> MainRegion = memberService.getMainRegion();
-		List<RegionVO> subRg = regionDao.selectUserRegion();
+		
 		//회원 가져오기
 		MemberVO dbMember = memberService.getMemberByNum(user);
 		//회원의 거주지역 가져오기
 		MemberVO memberRegion = memberService.getMemberRegion(dbMember);
-		
+		List<RegionVO> subRg = regionDao.selectSubRegion(memberRegion.getRg_main());
+		System.out.println(memberRegion);
+		System.out.println(subRg);
+				
 		model.addAttribute("user",dbMember);
 		model.addAttribute("MainRegion",MainRegion);
 		model.addAttribute("subRg",subRg);
