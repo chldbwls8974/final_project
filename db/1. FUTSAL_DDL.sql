@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS `member`;
 
 CREATE TABLE `member` (
 	`me_num`	int AUTO_INCREMENT PRIMARY KEY	NOT NULL,
-	`me_id`	varchar(10) UNIQUE	NULL	COMMENT '중복 불가',
+	`me_id`	varchar(11) UNIQUE	NULL	COMMENT '중복 불가',
 	`me_pw`	varchar(255)	NULL,
 	`me_name`	varchar(10)	NULL,
 	`me_nickname`	varchar(15) UNIQUE	NULL	COMMENT '중복 불가',
@@ -19,12 +19,12 @@ CREATE TABLE `member` (
 	`me_birthday`	date	NULL,
 	`me_authority`	varchar(10)	NOT NULL	DEFAULT 'USER'	COMMENT 'USER, ADMIN, MANAGER, BUSINESS',
 	`me_rating`	int	NULL,
-	`me_profile`	varchar(255)	NULL	COMMENT '이미지',
-	`me_tr_name`	varchar(10)	NULL,
+	`me_profile`	varchar(255)	NULL	DEFAULT '/basic.jpg'	COMMENT '이미지',
+	`me_tr_name`	varchar(10)	NULL	DEFAULT '언랭',
 	`me_point`	int	NOT NULL	DEFAULT 0,
 	`me_state1`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 없음, 1 : 정지',
 	`me_state2`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 없음, 1 : 정지',
-    `me_session_id`	varchar(255)	NULL,
+	`me_session_id`	varchar(225)	NULL,
 	`me_session_limit`	datetime	NULL
 );
 
@@ -71,7 +71,7 @@ CREATE TABLE `stadium` (
 	`st_width`	int	NOT NULL,
 	`st_height`	int	NOT NULL,
 	`st_max`	int	NOT NULL,
-	`st_available`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 가능, 1 : 불가능',
+	`st_available`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 가능, 1 : 불가능, 2 : 삭제',
 	`st_note`	varchar(255)	NULL,
 	`st_fa_num`	int	NOT NULL
 );
@@ -86,7 +86,7 @@ CREATE TABLE `match` (
 	`mt_type`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 미확정, 1 : 개인 매치, 2 : 팀 매치',
 	`mt_rule`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 친선전, 1: 경쟁전',
 	`mt_personnel`	int	NOT NULL	COMMENT 'N : N vs N',
-	`mt_state1`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 등록, 1 : 삭제 (조회에서 보여줄지)',
+	`mt_state1`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 등록, 1 : 삭제 (조회에서 보여줄지), 2:경기 종료',
 	`mt_state2`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 신청 없음, 1 : 신청 있음 (날짜가 지난 후 삭제할지)',
 	`mt_memo`	longtext	NULL
 );
@@ -96,7 +96,7 @@ DROP TABLE IF EXISTS `club`;
 CREATE TABLE `club` (
 	`cl_num`	int AUTO_INCREMENT PRIMARY KEY	NOT NULL,
 	`cl_name`	varchar(15)	NOT NULL,
-	`cl_emblem`	varchar(255)	NULL	COMMENT '이미지',
+	`cl_emblem`	varchar(255)	NULL	DEFAULT '/default.jpg'	COMMENT '이미지',
 	`cl_price`	int	NULL,
 	`cl_rule`	longtext	NULL,
 	`cl_introduction`	longtext	NULL,
@@ -109,12 +109,12 @@ DROP TABLE IF EXISTS `team`;
 CREATE TABLE `team` (
 	`te_num`	int AUTO_INCREMENT PRIMARY KEY	NOT NULL,
 	`te_mt_num`	int	NOT NULL,
-	`te_type`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 참가자 리스트, 1 : 팀 리스트'
+	`te_type`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 참가자 리스트, 1, 2, 3 : 팀 리스트'
 );
 
-DROP TABLE IF EXISTS `buisnessman`;
+DROP TABLE IF EXISTS `businessman`;
 
-CREATE TABLE `buisnessman` (
+CREATE TABLE `businessman` (
 	`bu_num`	int AUTO_INCREMENT PRIMARY KEY	NOT NULL,
 	`bu_registration_number`	varchar(20)	NULL,
 	`bu_registration`	varchar(255)	NULL	COMMENT '이미지',
@@ -140,7 +140,8 @@ CREATE TABLE `club_member` (
 	`cm_num`	int AUTO_INCREMENT PRIMARY KEY	NOT NULL,
 	`cm_me_num`	int	NOT NULL,
 	`cm_cl_num`	int	NOT NULL,
-	`cm_authority`	varchar(10)	NOT NULL	DEFAULT 'ROOKIE'	COMMENT 'ROOKIE, MEMBER, LEADER'
+	`cm_authority`	varchar(10)	NOT NULL	DEFAULT 'ROOKIE'	COMMENT 'ROOKIE, MEMBER, LEADER',
+	`cm_introduction`	longtext	NULL
 );
 
 DROP TABLE IF EXISTS `coupon`;
@@ -156,7 +157,7 @@ DROP TABLE IF EXISTS `point_history`;
 CREATE TABLE `point_history` (
 	`ph_num`	int AUTO_INCREMENT PRIMARY KEY	NOT NULL,
 	`ph_price`	int	NOT NULL	DEFAULT 0,
-	`ph_source`	int	NOT NULL	COMMENT '0 : 충전, 1: 경기 신청, 2 : 경기 취소, 3 : 환불, 4 : 환급 대기, 5 : 환급 완료',
+	`ph_source`	int	NOT NULL	COMMENT '0 : 충전, 1: 매치 신청, 2 : 매치 직접 취소, 3 : 매치 강제 취소, 4 : 환급 대기, 5 : 환급 완료',
 	`ph_mt_num`	int	NULL,
 	`ph_me_num`	int	NOT NULL
 );
@@ -216,7 +217,8 @@ CREATE TABLE `facility` (
 	`fa_shower`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 없음, 1 : 있음',
 	`fa_smoking`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 없음, 1 : 있음',
 	`fa_machine`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 없음, 1 : 있음',
-	`fa_note`	varchar(255)	NULL
+	`fa_note`	varchar(255)	NULL,
+	`fa_deleted`	int	NOT NULL	DEFAULT 0	COMMENT '0:이용중,1:삭제'
 );
 
 DROP TABLE IF EXISTS `availability`;
@@ -230,8 +232,8 @@ CREATE TABLE `availability` (
 DROP TABLE IF EXISTS `tier`;
 
 CREATE TABLE `tier` (
-	`tr_name`	varchar(10)  PRIMARY KEY	NOT NULL	COMMENT '브론즈, 실버, 골드, 플래티넘, 다이아',
-	`tr_min_rating`	int	NOT NULL	COMMENT '0, 1000, 2000, 3000, 4000'
+	`tr_name`	varchar(10)  PRIMARY KEY	NOT NULL	COMMENT '언랭, 브론즈, 실버, 골드, 플래티넘, 다이아',
+	`tr_min_rating`	int	NULL	COMMENT 'null, 0, 1000, 2000, 3000, 4000'
 );
 
 DROP TABLE IF EXISTS `mark`;
@@ -272,7 +274,7 @@ CREATE TABLE `quarter` (
 	`qu_num`	int AUTO_INCREMENT PRIMARY KEY	NOT NULL,
 	`qu_mt_num`	int	NOT NULL,
 	`qu_te_num1`	int	NOT NULL,
-	`qu_goal`	int	NOT NULL	DEFAULT 0,
+	`qu_goal1`	int	NOT NULL	DEFAULT 0,
 	`qu_te_num2`	int	NOT NULL,
 	`qu_goal2`	int	NOT NULL	DEFAULT 0
 );
@@ -314,8 +316,10 @@ CREATE TABLE `report` (
 	`rp_content`	longtext	NULL,
 	`rp_me_num`	int	NOT NULL,
 	`rp_me_num2`	int	NOT NULL,
-	`rp_state`	varchar(5)	NULL	COMMENT '처리, 확인, 신규',
-	`bo_num`	int	NULL	COMMENT '게시글 신고가 아니라면 NULL'
+	`rp_state`	varchar(5)	NULL	COMMENT '제재, 확인, 미확인',
+	`rp_bo_num`	int	NULL	COMMENT '게시글 신고가 아니라면 NULL',
+	`rp_date`	date	NOT NULL	DEFAULT (current_date),
+	`rp_mt_num`	int	NULL
 );
 
 DROP TABLE IF EXISTS `report_category`;
@@ -387,19 +391,22 @@ CREATE TABLE `operating` (
 	`op_fa_num`	int	NOT NULL
 );
 
-DROP TABLE IF EXISTS `holding coupon`;
+DROP TABLE IF EXISTS `holding_coupon`;
 
-CREATE TABLE `holding coupon` (
+CREATE TABLE `holding_coupon` (
 	`hp_num`	int AUTO_INCREMENT PRIMARY KEY	NOT NULL,
 	`hp_me_num`	int	NOT NULL,
 	`hp_cp_num`	int	NOT NULL,
 	`hp_invited_num`	int	NULL,
 	`hp_state`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 활성, 1 : 비활성'
 );
+
+DROP TABLE IF EXISTS `payment`;
+
 CREATE TABLE `payment` (
-   `pm_imp_uid`   varchar(20) PRIMARY KEY   NOT NULL,
-   `pm_amount`   int   NOT NULL,
-   `pm_ph_num`   int   NOT NULL
+	`pm_imp_uid`	varchar(20) PRIMARY KEY	NOT NULL,
+	`pm_amount`	int	NOT NULL,
+	`pm_ph_num`	int	NOT NULL
 );
 
 ALTER TABLE `member` ADD CONSTRAINT `FK_region_TO_member_1` FOREIGN KEY (
@@ -479,7 +486,7 @@ REFERENCES `match` (
 	`mt_num`
 );
 
-ALTER TABLE `buisnessman` ADD CONSTRAINT `FK_member_TO_buisnessman_1` FOREIGN KEY (
+ALTER TABLE `businessman` ADD CONSTRAINT `FK_member_TO_businessman_1` FOREIGN KEY (
 	`bu_me_num`
 )
 REFERENCES `member` (
@@ -577,10 +584,10 @@ REFERENCES `club` (
 	`cl_num`
 );
 
-ALTER TABLE `facility` ADD CONSTRAINT `FK_buisnessman_TO_facility_1` FOREIGN KEY (
+ALTER TABLE `facility` ADD CONSTRAINT `FK_businessman_TO_facility_1` FOREIGN KEY (
 	`fa_bu_num`
 )
-REFERENCES `buisnessman` (
+REFERENCES `businessman` (
 	`bu_num`
 );
 
@@ -655,7 +662,7 @@ REFERENCES `team` (
 );
 
 ALTER TABLE `manager` ADD CONSTRAINT `FK_match_TO_manager_1` FOREIGN KEY (
-	`mn_ga_num`
+	`mn_mt_num`
 )
 REFERENCES `match` (
 	`mt_num`
@@ -704,10 +711,17 @@ REFERENCES `member` (
 );
 
 ALTER TABLE `report` ADD CONSTRAINT `FK_board_TO_report_1` FOREIGN KEY (
-	`bo_num`
+	`rp_bo_num`
 )
 REFERENCES `board` (
 	`bo_num`
+);
+
+ALTER TABLE `report` ADD CONSTRAINT `FK_match_TO_report_1` FOREIGN KEY (
+	`rp_mt_num`
+)
+REFERENCES `match` (
+	`mt_num`
 );
 
 ALTER TABLE `preferred_age` ADD CONSTRAINT `FK_club_TO_preferred_age_1` FOREIGN KEY (
@@ -766,23 +780,25 @@ REFERENCES `facility` (
 	`fa_num`
 );
 
-ALTER TABLE `holding coupon` ADD CONSTRAINT `FK_member_TO_holding coupon_1` FOREIGN KEY (
+ALTER TABLE `holding_coupon` ADD CONSTRAINT `FK_member_TO_holding_coupon_1` FOREIGN KEY (
 	`hp_me_num`
 )
 REFERENCES `member` (
 	`me_num`
 );
 
-ALTER TABLE `holding coupon` ADD CONSTRAINT `FK_coupon_TO_holding coupon_1` FOREIGN KEY (
+ALTER TABLE `holding_coupon` ADD CONSTRAINT `FK_coupon_TO_holding_coupon_1` FOREIGN KEY (
 	`hp_cp_num`
 )
 REFERENCES `coupon` (
 	`cp_num`
 );
+
 ALTER TABLE `payment` ADD CONSTRAINT `FK_point_history_TO_payment_1` FOREIGN KEY (
-   `pm_ph_num`
+	`pm_ph_num`
 )
 REFERENCES `point_history` (
-   `ph_num`
+	`ph_num`
 );
+
 

@@ -96,15 +96,17 @@
 						</div>
 					</li>
 				</c:if>
-				<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-						매니저
-						</a>
-						<div class="dropdown-menu">
-							<a class="dropdown-item" href="<c:url value='/manager/select/match'/>">매치 신청</a>
-							<a class="dropdown-item" href="<c:url value='/manager/manage/schedule?weekCount=0'/>">일정 관리</a>
-						</div>
-				</li>
+				<c:if test="${user != null && user.me_authority == 'MANAGER'}">
+					<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+							매니저
+							</a>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="<c:url value='/manager/select/match'/>">매치 신청</a>
+								<a class="dropdown-item" href="<c:url value='/manager/manage/schedule?weekCount=0'/>">일정 관리</a>
+							</div>
+					</li>
+				</c:if>
 				<c:if test="${user != null && user.me_authority == 'BUSINESS'}">
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
@@ -113,7 +115,7 @@
 						<div class="dropdown-menu">
 							<a class="dropdown-item" href="<c:url value='/businessman/facilityInsert'/>">시설 등록</a>
 							<a class="dropdown-item" href="<c:url value='/businessman/facility'/>">시설 관리</a>
-							<a class="dropdown-item" href="<c:url value='/buisnessman/manage/schedule'/>">스케줄 관리</a>
+							<a class="dropdown-item" href="<c:url value='/buisnessman/manage/schedule?fa_num=0'/>">스케줄 관리</a>
 							<a class="dropdown-item" href="#">일정 관리</a>
 						</div>
 					</li>

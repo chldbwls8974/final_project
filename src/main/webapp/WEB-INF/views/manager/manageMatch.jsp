@@ -75,7 +75,7 @@
 			</div>
 		</div>
 	</nav>
-	<c:if test="${match.ready ==  2}">
+	<c:if test="${match.ready ==  2 && match.list_team == 1}">
 		<div class="insert-quarter-box">
 		</div>
 	</c:if>
@@ -169,6 +169,7 @@
 		qu_num = $(this).val();
 		
 		deleterQuarter(qu_num);
+		printQuarter();
 		printInsertQuarter();
 	})
 	function entryToTeam(en_num, te_num) {

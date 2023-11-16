@@ -9,7 +9,8 @@ VALUES
 ('user19', 'user19', 2, 'U-15', 'USER', 30000, 900, '브론즈'), ('user20', 'user20', 2, 'U-16', 'USER', 30000, 1900, '실버'),('user21', 'user21', 3, 'U-17', 'USER', 300000, 2900, '골드'),
 ('user22', 'user22', 3, 'U-18', 'USER', 30000, 3900, '플래티넘'), ('user23', 'user23', 3, 'U-19', 'USER', 30000, 4900, '다이아'), ('user24', 'user24', 4, 'U-20', 'USER', 30000, null, '스타터'),
 ('user25', 'user25', 4, 'U-21', 'USER', 30000, 900, '브론즈'), ('user26', 'user26', 4, 'U-22', 'USER', 30000, 1900, '실버'), ('user27', 'user27', 5, 'U-23', 'USER', 30000, 2900, '골드'),
-('user28', 'user28', 6, 'U-24', 'USER', 30000, 3900, '플래티넘'), ('user29', 'user29', 7, 'U-25', 'USER', 30000, 4900, '다이아'), ('user30', 'user30', 8, 'B-30', 'BUSINESS', 30000, null, '스타터');
+('user28', 'user28', 6, 'U-24', 'USER', 30000, 3900, '플래티넘'), ('user29', 'user29', 7, 'U-25', 'USER', 30000, 4900, '다이아'), ('user30', 'user30', 8, 'B-30', 'BUSINESS', 30000, null, '스타터'),
+('user31', 'user31', 2, 'test1', 'ADMIN', 300000, null, '스타터'),('user32', 'user32', 2, 'test2', 'USER', 300000, null, '스타터'),('user33', 'user33', 2, 'test3', 'USER', 300000, null, '스타터');
 
 INSERT INTO BUSINESSMAN(BU_ME_NUM)
 VALUES
