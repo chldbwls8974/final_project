@@ -292,7 +292,7 @@ public class MemberController {
 	@PostMapping("/member/searchfilter")
 	 public Map<String, Object>searchMembers(@RequestParam String searchType, @RequestParam String keyword, Model model) {
 		 Map<String, Object> map = new HashMap<String, Object>();
-		 List<MemberVO> memberList; //회원목록 리스트 선언
+		 List<MemberVO> memberList = null; //회원목록 리스트 선언
 		 boolean res = false; //검색 결과 변수 초기화
 		 
 		if("id".equals(searchType)) { //아이디로 검색하면 그 값을 memberList에 저장

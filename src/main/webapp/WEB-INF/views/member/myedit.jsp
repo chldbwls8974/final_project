@@ -22,45 +22,42 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ko.js"></script>
 
 <style type="text/css">
-.error {
-	color: #f00;
-}
-
-.container{ 
-	background-color: #f2f2f2; padding: 30px; z-index: 1;
-	margin-top: 20px; border-radius: 20px;
-}
-.form-control{border-radius: 30px; width: 500px;}
-.form-group{text-align: center;}
-.form-group label{display: inline-block; text-align: center;}
-.form-group button, .form-group select{margin: 0 auto;}
-.form-group input{margin: 0 auto;}
-
-.signup-btn{ width: 500px; margin: 0 auto;
-	border-radius: 10px; border: none;
-	background-color: #0c0c0c; height: 40px; color: white;}
-.next-btn, .prev-btn{width: 500px; margin: 0 auto;
-	border-radius: 10px; border: none; height: 40px;
-	background-color: #c2f296; color: black;}
-
-input, progress {
-  accent-color: #0c0c0c;
-}
-.input-file{
-	display: none;
-}
-.btn-file{
-	width: 200px; height: 200px; border-radius: 50%;
-	border: 1px solid gray;
-	font-weight: fold; font-size: 30px;
-	line-height:200px; text-align: center; display: block; text-decoration: none; color: gray;	
-	position: relative; overflow: hidden;
-	margin: 0 auto;
-}
-.box-thumbnail{
-	display: none; position: absolute; top: 0; 
-}
-/* 모달 */
+	.error {
+		color: #f00;
+	}
+	
+	.container{ 
+		background-color: #f2f2f2; padding: 30px; z-index: 1;
+		margin-top: 20px; border-radius: 20px;
+	}
+	.form-control{border-radius: 30px; width: 500px;}
+	.form-group{text-align: center;}
+	.form-group label{display: inline-block; text-align: center;}
+	.form-group button, .form-group select{margin: 0 auto;}
+	.form-group input{margin: 0 auto;}
+	
+	.signup-btn{ width: 500px; margin: 0 auto;
+		border-radius: 10px; border: none;
+		background-color: #0c0c0c; height: 40px; color: white;}
+	
+	input, progress {
+	  accent-color: #0c0c0c;
+	}
+	.input-file{
+		display: none;
+	}
+	.btn-file{
+		width: 200px; height: 200px; border-radius: 50%;
+		border: 1px solid gray;
+		font-weight: fold; font-size: 30px;
+		line-height:200px; text-align: center; display: block; text-decoration: none; color: gray;	
+		position: relative; overflow: hidden;
+		margin: 0 auto;
+	}
+	.box-thumbnail{
+		display: none; position: absolute; top: 0; 
+	}
+	/* 모달 */
 	.modal--bg {
 		z-index: 1000;
 		display: none;
@@ -80,7 +77,6 @@ input, progress {
 		border-radius: 5px;
 		max-width: 600px;
 		margin: 200px auto;
-		
 	}
 	
 </style>
@@ -93,6 +89,7 @@ input, progress {
 		<div class="1p">
 		<input type="hidden" name="me_num" value="${user.me_num}">
 		<input type="hidden" name="test" value="${user.me_profile}">
+		<input type="hidden" name="ori_nick" value="${user.me_nickname}">
 		<img src="<c:url value='/memberimg${user.me_profile}'/>" name="profile" height="200" width="200">
 			<div class="form-group">
 				<input type="file" class="input-file" name="img" id="img" onchange="readUrl(this)">
@@ -357,72 +354,7 @@ input, progress {
 	   });
 	
 	
-	
-	
-	// 선호 지역 대분류에 따른 소분류
-	 $(document).on('change','.pre_rg_main',function(){
-		 let th = $(this);
-		 rg_main = th.val();
-		 console.log(rg_main)
-		 data={
-			 rg_main : rg_main
-		}
-		ajaxJsonToJson2(false, 'get', '/member/signup/region', data, (a)=>{
-			var option = "";
-			th.parent().next().find('[name=pr_rg_num]').empty();
-			
-			for (var i in a.SubRegion){
-				var obj = a.SubRegion[i];
-				option = "<option value='" + obj.rg_num + "'>" + obj.rg_sub + "</option>";
-				th.parent().next().find('[name=pr_rg_num]').append(option)
-			}
-			
-		})
-		
-	   });
-	
-	// 선호지역 추가 버튼
-	 $(document).on('click','[name=add-area-btn]',function(){
-		 count++;
-		 console.log(count)
-		 if(2 >= count){
-			 str='';
-			 btn='';
-			 str+=`
-			 	<hr>
-				 <div class="prefer-area">
-					<div class="form-group">
-						<label>선호지역</label> <select class="form-control pre_rg_main">
-							<option value="0">지역을 선택하세요</option>
-							<c:forEach items="${MainRegion}" var="main">
-								<option value="${main.rg_main}">${main.rg_main}</option>
-							</c:forEach>
-						</select>
 
-					</div>
-					<div class="form-group">
-						<select class="form-control rg_sub" name="pr_rg_num">
-							<option value="0">지역을 선택하세요</option>
-							<c:forEach items="${SubRegion}" var="sub">
-								<option value="${sub.rg_num}">${sub.rg_sub}</option>
-							</c:forEach>
-						</select>
-					</div>
-				</div>
-
-			 `;
-			btn+=`
-			<div class="form-group">
-				<button type="button" class="form-control" name="add-area-btn">지역 추가</button>
-				</div>
-			`; 
-			$(this).hide();
-			$(this).after(str);
-			$(this).after(btn);
-		 }
-	 })
-	
-	
 	 // 데이트피커
 	 $(document).ready(function(){
 		$("#me_birthday").flatpickr({
@@ -464,6 +396,7 @@ input, progress {
 		$('[name=me_nickname]').keyup(function(){
 			flag = false;
 			let nickname = $(this).val();
+			let ori_nick = $('[name=ori_nick]').val();
 			var reNick = /^.{1,20}$/
 				if(!reNick.test(nickname)){
 					$('#check-nickName-error').text('');
@@ -480,7 +413,12 @@ input, progress {
 						$('#check-nickName-error').text('사용 가능한 닉네임입니다.');
 						flag = true;
 					}else{
-						$('#check-nickName-error').text('이미 사용중인 닉네임입니다.');
+						if(nickname == ori_nick){
+							$('#check-nickName-error').text('');
+							flag = true;
+						}else{
+							$('#check-nickName-error').text('이미 사용중인 닉네임입니다.');
+						}
 					}
 				}
 			});
