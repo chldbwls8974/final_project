@@ -41,19 +41,23 @@
 	
 	<context:component-scan base-package="kr.kh.final_project.*" />
 	
-	<beans:bean id="memberInterceptor" class="kr.kh.final_project.interceptor.MemberInterceptor"></beans:bean>
 	<beans:bean id="loginInterceptor" class="kr.kh.final_project.interceptor.LoginInterceptor"/>
 	<beans:bean id="autoLoginInterceptor" class="kr.kh.final_project.interceptor.AutoLoginInterceptor"/>	
+	<beans:bean id="memberInterceptor" class="kr.kh.final_project.interceptor.MemberInterceptor"/>
 	
 	<interceptors>
 		<interceptor>
-			<mapping path="/member/login"/>
-			<mapping path="/kakao/login"/>
-			<beans:ref bean="loginInterceptor"/>
+			<mapping path="/board/notice"/>
+			<beans:ref bean="memberInterceptor"/>
 		</interceptor>
 		<interceptor>
 			<mapping path="/**"/>
 			<beans:ref bean="autoLoginInterceptor"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/member/login"/>
+			<mapping path="/kakao/login"/>
+			<beans:ref bean="loginInterceptor"/>
 		</interceptor>
 	</interceptors>
 
