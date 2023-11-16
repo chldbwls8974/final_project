@@ -67,16 +67,44 @@ li{
 	color: #1570FF;
     border: 1px solid #1570FF;
 }
+
+/* 프로필사진 */
+	.input-file{
+		display: none;
+	}
+	.btn-file{
+		width: 200px; height: 200px; border-radius: 50%;
+		border: 1px solid gray;
+		font-weight: fold; font-size: 30px;
+		line-height:200px; text-align: center; display: block; text-decoration: none; color: gray;	
+		position: relative; overflow: hidden;
+		margin: 0 auto;
+	}
+	.box-thumbnail{
+		display: none; position: absolute; top: 0; 
+	}
 </style>
 </head>
 <body>
 	<h1>클럽수정</h1>
 	${club }
 	<form action="<c:url value='/club/update'/>" method="post" enctype="multipart/form-data">
-		<div class="form-group">
-			<label>클럽 앰블럼</label>
-			<input type="file" class="form-control" name="img" id="img">
-		</div>
+		<div style="display: inline-grid;" class="profile">
+				<img src="<c:url value='/clubimg${club.cl_emblem }'/>" name="profile" height="150" width="150" style="border-radius: 50%; margin-bottom: 10px;">
+			</div>
+			<div class="form-group update-profile" style="margin-top: 10px;">
+				<input type="file" class="input-file" name="img" id="img" onchange="readUrl(this)">
+					<a href="#" class="btn-file">+
+						<div class="box-thumbnail">
+							<img src="" id="preview" height="200" width="200">
+						</div>
+					</a>
+			</div>
+			<div>
+				<button type="button" class="profile-update-btn">
+				프로필 사진 변경
+				</button>
+			</div>
 		<input type="hidden" class="form-control" name="me_num" value="${user.me_num }">
 		<input type="hidden" class="form-control" name="cl_num" value="${club.cl_num}">
 		<input type="hidden" class="form-control" name="test" value="${club.cl_emblem}">
@@ -364,11 +392,12 @@ li{
 		 <label>클럽 외부 url</label>
 		   <input type="url"  class="form-control" name="cl_url" value="${club.cl_url }">
 		</div>
-		<button class="btn btn-outline-warning col-12">클럽신청</button>
+		<button class="btn btn-outline-warning col-12">클럽수정</button>
 	</form>
 	
 	
 	<script type="text/javascript">
+	$('.update-profile').hide();
 	$(document).on('check','[name=age]',function(){
 		console.log($(this).val())
 	})
@@ -415,6 +444,33 @@ li{
 			}
 		});
 	})
+	
+		// 프로필사진 미리보기
+		$('.profile-update-btn').click(function(){
+			$('.input-file').click();
+			$('.box-thumbnail').show();
+			$(this).css('boder' ,'none');
+		})
+
+	function readUrl(input){
+		//input 태그가 첨부파일이고, 첨부파일이 선택되면
+		if(input.files && input.files[0]){
+			$('.profile').hide();
+			$('.update-profile').show();
+			let reader = new FileReader();
+			reader.onload = function(e){
+				document.getElementById('preview').src = e.target.result;
+			}
+			reader.readAsDataURL(input.files[0]);
+		}
+		//첨부파일이 선택되지 않으면
+		else{
+			$('.profile').show();
+			$('.update-profile').hide();
+		}
+	}
+	
+	
 	</script>
 </body>
 </html>
