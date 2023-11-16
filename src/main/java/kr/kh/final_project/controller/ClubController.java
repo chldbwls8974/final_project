@@ -109,9 +109,16 @@ public class ClubController {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		ClubVO club = clubService.getClub(cl_num);
 		ClubMemberVO authority = clubService.getMyAuthorityByClub(cl_num, user.getMe_num());
+		List<ClubVO> rookielist = clubService.getMyClubList(user.getMe_num(),"ROOKIE");
+		List<ClubVO> memberlist = clubService.getMyClubList(user.getMe_num(),"MEMBER");
+		List<ClubVO> leaderlist = clubService.getMyClubList(user.getMe_num(),"LEADER");
+		
 		model.addAttribute("user",user);
 		model.addAttribute("club",club);
 		model.addAttribute("authority",authority);
+		model.addAttribute("rookielist",rookielist);
+		model.addAttribute("memberlist",memberlist);
+		model.addAttribute("leaderlist",leaderlist);
 		return "/club/detail";
 	}
 	@GetMapping("/join")
