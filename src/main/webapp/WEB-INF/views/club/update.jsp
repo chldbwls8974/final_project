@@ -71,6 +71,7 @@ li{
 </head>
 <body>
 	<h1>클럽수정</h1>
+	${club }
 	<form action="<c:url value='/club/update'/>" method="post" enctype="multipart/form-data">
 		<div class="form-group">
 			<label>클럽 앰블럼</label>
@@ -88,7 +89,7 @@ li{
 			<select class="form-control rg_main" required>
 				<option value="">지역을 선택하세요</option>
 				<c:forEach items="${MainRegion}" var="main">
-					<option value="${main.rg_main}">${main.rg_main}</option>
+					<option value="${main.rg_main}" >${main.rg_main}</option>
 				</c:forEach>
 			</select>
 
