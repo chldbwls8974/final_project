@@ -75,7 +75,7 @@
 			</div>
 		</div>
 	</nav>
-	<c:if test="${match.ready ==  2}">
+	<c:if test="${match.ready ==  2 && match.list_team == 1}">
 		<div class="insert-quarter-box">
 		</div>
 	</c:if>

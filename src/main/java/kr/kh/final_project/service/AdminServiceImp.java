@@ -329,7 +329,7 @@ public class AdminServiceImp implements AdminService{
 		
 		//중복검사 (신고자 회원번호, 게시글 번호로 등록된 신고가 없다면 등록)
 		if(reportDao.selectReportByMeNumAndMtNum(report) == null) {
-			msg.setMsg(reportDao.insertBoardReport(report) ? "신고 완료." : "신고 실패.");
+			msg.setMsg(reportDao.insertMatchReport(report) ? "신고 완료." : "신고 실패.");
 		}
 		return msg;
 	}

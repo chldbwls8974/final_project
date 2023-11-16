@@ -50,6 +50,12 @@ public class MatchController {
 			model.addAttribute("msg", msg);
 			return "/message";
 		}
+		if(user.getMe_state1() == 1) {
+			Message msg = new Message("/", "이용정지 상태입니다.");
+			
+			model.addAttribute("msg", msg);
+			return "/message";
+		}
 		List<RegionVO> mainRegion = matchService.selectMainRegion();
 		List<ExtraVO> week = matchService.selectWeekDayList(0);
 
@@ -91,6 +97,12 @@ public class MatchController {
 		
 		if(user == null) {
 			Message msg = new Message("/", "로그인이 필요한 기능입니다.");
+			
+			model.addAttribute("msg", msg);
+			return "/message";
+		}
+		if(user.getMe_state1() == 1) {
+			Message msg = new Message("/", "이용정지 상태입니다.");
 			
 			model.addAttribute("msg", msg);
 			return "/message";
@@ -144,7 +156,12 @@ public class MatchController {
 			model.addAttribute("msg", msg);
 			return "/message";			
 		}
-		
+		if(user.getMe_state1() == 1) {
+			Message msg = new Message("/", "이용정지 상태입니다.");
+			
+			model.addAttribute("msg", msg);
+			return "/message";
+		}
 		if(cl_num == 0) {
 			if(match.getEntry_res() == 0) {
 				if(match.getEntry_count() == match.getMt_personnel() * (match.getMt_rule() == 0 ? 2 : 3)) {
