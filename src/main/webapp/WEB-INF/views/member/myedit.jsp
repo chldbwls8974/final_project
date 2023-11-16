@@ -144,7 +144,7 @@
 				<label>거주지</label> <select class="form-control rg_main" required>
 					<option value="">지역을 선택하세요</option>
 					<c:forEach items="${MainRegion}" var="main">
-						<option value="${main.rg_main}">${main.rg_main}</option>
+						<option value="${main.rg_main}" <c:if test="${memberRegion.rg_main ==  main.rg_main}">selected</c:if>>${main.rg_main}</option>
 					</c:forEach>
 				</select>
 
@@ -152,8 +152,8 @@
 			<div class="form-group" style="margin-bottom: 60px;">
 				<select class="form-control rg_sub" name="me_rg_num" required>
 					<option value="">지역을 선택하세요</option>
-					<c:forEach items="${SubRegion}" var="sub">
-						<option value="${sub.rg_num}">${sub.rg_sub}</option>
+					<c:forEach items="${subRg}" var="sub">
+						<option value="${sub.rg_num}" <c:if test="${memberRegion.rg_sub ==  sub.rg_sub}">selected</c:if>>${sub.rg_sub}</option>
 					</c:forEach>
 				</select>
 			</div>
@@ -500,21 +500,6 @@
             $('.modal--bg').fadeOut();
         }
         
-        
-      //페이지가 완전히 로드되면 실행 = jQuery의 $(document).ready()와 동일한 역할
-		$(function(){	
-			 data={
-				 rg_num : ${user.me_rg_num}
-			}
-			//각 지역별 도시 선택 
-			ajaxJsonToJson2(false, 'get', '/member/update/region2', data, (a)=>{
-				console.log(a)
-
-		    })
-	         //트리거를 통해 rg_main의 모든 select 요소에 대해 change 이벤트를 수동으로 발생. 
-	         //=> 이벤트가 발생하면 선택한 옵션에 따라 다른 도시를 로드하고 옵션을 설정함
-			//$(".rg_main").trigger('change')
-	    })
 	</script>
 </body>
 </html>

@@ -194,14 +194,6 @@ public class MemberServiceImp implements MemberService{
 		
 		return true;
 	}
-	
-	
-	 private static int[] addElement(int[] array, int element) {
-	        int length = array.length;
-	        int[] newArray = Arrays.copyOf(array, length + 1);
-	        newArray[length] = element;
-	        return newArray;
-	    }
 
 	// 선호 지역을 넣는 메서드
 	private void insertPreferredRegion(int pr_me_num, int[] pr_rg_num) {
