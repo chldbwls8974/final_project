@@ -178,7 +178,7 @@
 									<ul class="leaderlist-control">
 										<c:forEach items="${leaderlist}" var="list">
 											<li class="leaderlist-link">
-												<a href="<c:url value='/clubimg${list.cl_emblem }'/>">
+												<a href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>">
 													<div style="display: flex;">
 														<div class="emblem">
 															<img alt="엠블럼"

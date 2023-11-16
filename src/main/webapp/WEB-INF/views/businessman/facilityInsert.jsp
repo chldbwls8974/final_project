@@ -37,7 +37,6 @@
 			</div>
 		    <div class="form-group">
 				<select class="form-control rg_sub" name="fa_rg_num" required>
-					<option value="0">지역을 선택하세요</option>
 						<c:forEach items="${SubRegion}" var="sub">
 							<option value="${sub.rg_num}">${sub.rg_sub}</option>
 						</c:forEach>
@@ -68,7 +67,7 @@
 				<label for="fa_pay" style="font-weight: bold;">주차장</label><br>
 			    <div class="form-check-inline">
 					<label class="form-check-label">
-				  		<input type="radio" class="form-check-input" name="fa_pay" value="0" required>없음
+				  		<input type="radio" class="form-check-input" name="fa_pay" value="0" checked>없음
 				    </label>
 				</div>
 				<div class="form-check-inline">
@@ -87,7 +86,7 @@
 				<label for="fa_locker" style="font-weight: bold;">탈의실</label><br>
 			    <div class="form-check-inline">
 					<label class="form-check-label">
-				  		<input type="radio" class="form-check-input" name="fa_locker" value="0" required>없음
+				  		<input type="radio" class="form-check-input" name="fa_locker" value="0" checked>없음
 				    </label>
 				</div>
 				<div class="form-check-inline">
@@ -101,7 +100,7 @@
 				<label for="fa_toilet" style="font-weight: bold;">화장실</label><br>
 			    <div class="form-check-inline">
 					<label class="form-check-label">
-				  		<input type="radio" class="form-check-input" name="fa_toilet" value="0" required>없음
+				  		<input type="radio" class="form-check-input" name="fa_toilet" value="0" checked>없음
 				    </label>
 				</div>
 				<div class="form-check-inline">
@@ -115,7 +114,7 @@
 			    <label for="fa_shower" style="font-weight: bold;">샤워실</label><br>
 			    <div class="form-check-inline">
 					<label class="form-check-label">
-				  		<input type="radio" class="form-check-input" name="fa_shower" value="0" required>없음
+				  		<input type="radio" class="form-check-input" name="fa_shower" value="0" checked>없음
 				    </label>
 				</div>
 				<div class="form-check-inline">
@@ -129,7 +128,7 @@
 			    <label for="fa_smoking" style="font-weight: bold;">흡연장</label><br>
 			    <div class="form-check-inline">
 					<label class="form-check-label">
-				  		<input type="radio" class="form-check-input" name="fa_smoking" value="0" required>없음
+				  		<input type="radio" class="form-check-input" name="fa_smoking" value="0" checked>없음
 				    </label>
 				</div>
 				<div class="form-check-inline">
@@ -143,7 +142,7 @@
 				<label for="fa_machine" style="font-weight: bold;">자판기</label><br>
 			    <div class="form-check-inline">
 					<label class="form-check-label">
-				  		<input type="radio" class="form-check-input" name=fa_machine value="0" required>없음
+				  		<input type="radio" class="form-check-input" name=fa_machine value="0" checked>없음
 				    </label>
 				</div>
 				<div class="form-check-inline">
