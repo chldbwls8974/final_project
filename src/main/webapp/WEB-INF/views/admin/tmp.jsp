@@ -15,7 +15,7 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background-color: rgba(0, 0, 0, 0.5);
+		background-color: rgba(0, 0, 0, 0.3);
 		justify-content: center;
 		align-items: center;
 	}
@@ -47,7 +47,8 @@ ${match.mt_num }
 	<!-- 모달창 -->
 	<div class="modal--bg">
 		<div class="modal--content">
-			<p>신고하기</p>
+			<p style="font-size: 20px; font-weight: bolder; margin: 0 auto; border-bottom: 8px solid #c2f296;
+			width: 20%; padding: 20px 0 10px 0; text-align: center;">신고하기</p>
 			<!-- 일단 여기부터 작업 -->
 			<form class="modal-form" action="<c:url value='/admin/matchReport/insert'/>" method="post">
 				<input type="hidden" class="form-control" name="rp_me_num" value="${user.me_num}" readonly>
@@ -70,8 +71,12 @@ ${match.mt_num }
 					</select>
 					<textarea cols="46" rows="6" name="rp_content"></textarea>
 				</div>
-				<button type="button" class="btn btn-outline-dark button--close">닫기</button> 
-				<button class="btn btn-outline-dark">신고</button> 
+				<div style="text-align: center; margin-top: 40px;">
+					<button type="button" style="background-color: black; color: white; border-radius: 10px; width: 80px;"
+						class="btn button--close">닫기</button> 
+					<button  style="background-color: black; color: white; border-radius: 10px; width: 80px;"
+						class="btn">신고</button> 
+				</div>	 
 			</form> 
 		</div>
 	</div>
