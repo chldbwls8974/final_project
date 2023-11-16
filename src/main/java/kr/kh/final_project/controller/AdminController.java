@@ -23,6 +23,7 @@ import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.pagination.PageMaker;
 import kr.kh.final_project.service.AdminService;
 import kr.kh.final_project.util.Message;
+import kr.kh.final_project.vo.BusinessmanVO;
 import kr.kh.final_project.vo.EntryVO;
 import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ManagerVO;
@@ -87,7 +88,7 @@ public class AdminController {
 			return "/admin/manager";
 		} 	
 	
-	// 매니저 신청 수락버튼 (회원정보 수정)
+		// 매니저 신청 수락버튼 (회원정보 수정)
 		@ResponseBody
 		@PostMapping("/admin/manager")
 		public Map<String, Object>updateManager(@RequestBody ManagerVO manager, Criteria cri){
@@ -144,8 +145,7 @@ public class AdminController {
 			map.put("res", res);
 			return map;
 		}
-			
-		
+
 	// 사업자 신청 조회하기, 페이지네이션 기능구현
 	@GetMapping("/admin/business")
 	public String adminBusiness(Model model, Criteria cri) {
@@ -168,7 +168,7 @@ public class AdminController {
 		model.addAttribute("pm", pm);
 		return ("/admin/business");
 	}
-	// 상업자 신청 수락버튼 (회원정보 수정)
+	// 사업자 신청 수락버튼 (회원정보 수정)
 	@ResponseBody
 	@PostMapping("/admin/business")
 	public Map<String, Object>updateBusiness(@RequestBody ManagerVO manager, Criteria cri){
@@ -240,7 +240,78 @@ public class AdminController {
 			map.put("res", res);
 			return map;
 		}
-		
+		// 사업자등록 조회 (3)
+		@GetMapping("/admin/business3")
+		public String adminBusiness3(Model model, Criteria cri) {
+			// 페이지네이션
+			cri.setPerPageNum(5);
+			int totalCount = adminService.getTotalCountByBusiness(cri);
+			final int DISPLAY_PAGE_NUM = 3;
+			PageMaker pm = new PageMaker(DISPLAY_PAGE_NUM, cri, totalCount);
+			// 사업자 조회하기
+			List<BusinessmanVO> list = adminService.getBusinessListByInsert(cri);
+			
+			// 사업자 출력
+			model.addAttribute("list", list);
+			model.addAttribute("pm", pm);
+			return ("/admin/business3");
+		}
+		// 사업자등록하기 (3)
+		@GetMapping("/admin/insert")
+		public String adminInsert() {
+			return "/admin/insert";
+		}
+		// 사업자 등록하기(3)
+		@PostMapping("/admin/insert")
+		public String adminInsert(Model model, BusinessmanVO businessman, HttpSession session) {
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			boolean res = adminService.insertBusiness(businessman, user);
+			if(res) {
+				model.addAttribute("msg", "사업자 등록 성공");
+				model.addAttribute("url", "/admin/business3");
+			}else {
+				model.addAttribute("msg", " 사업자 등록 실패");
+				model.addAttribute("url", "/admin/insert");
+			}
+			return"/util/message";
+		}
+		// 사업자수정하기 화면 조회하기 (3)
+		@GetMapping("/admin/update")
+		public String adminUpdate(Model model, Integer bu_num) {
+			// 서비스한테 사업자 리스트 가져오라고 시킴
+			BusinessmanVO business = adminService.getBusinessList3(bu_num);
+			
+			model.addAttribute("business", business);
+			return "/admin/update";
+		}
+		// 사업자 수정하기(3)
+		@PostMapping("/admin/update")
+		public String adminUpdate(Model model, BusinessmanVO businessman) {
+			boolean res = adminService.update(businessman);
+			
+			if(res) {
+				model.addAttribute("msg","사업자 정보를 수정했습니다.");
+				model.addAttribute("url","/admin/business3");
+			}else {
+				model.addAttribute("msg", "사업자 정보수정 실패");
+				model.addAttribute("url","/admin/update?bu_num="+businessman.getBu_num());
+			}
+			return "/util/message";
+		}
+		// 사업자 삭제하기 (3)
+		@GetMapping("/admin/delete")
+		public String adminDelete(Model model,Integer bu_num) {
+			boolean res = adminService.deleteBusiness(bu_num);
+			
+			if(res) {
+				model.addAttribute("msg", "사업자를 삭제하였습니다.");
+				model.addAttribute("url", "/admin/business3");
+			}else {
+				model.addAttribute("msg", "삭제 실패하였습니다.");
+				model.addAttribute("url", "/admin/business3");
+			}
+			return "/util/message";
+		}
 	
 	@GetMapping("/admin/refund")
 	public String refundManagement(Model model) {

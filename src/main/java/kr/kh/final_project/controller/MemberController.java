@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.pagination.PageMaker;
 import kr.kh.final_project.service.BlockService;
@@ -36,7 +37,6 @@ import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.PreferredRegionVO;
-import kr.kh.final_project.vo.PreferredTimeVO;
 import kr.kh.final_project.vo.RegionVO;
 import kr.kh.final_project.vo.TimeVO;
 
@@ -53,6 +53,8 @@ public class MemberController {
 	ClubService clubService;
 	@Autowired
 	BlockService blockService;
+	@Autowired
+	RegionDAO regionDao;
 	
 	String uploadPath = "D:\\uploadprofile\\member";
 
@@ -376,6 +378,7 @@ public class MemberController {
 	public String myProfile(Model model,HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		List<RegionVO> MainRegion = memberService.getMainRegion();
+		List<RegionVO> subRg = regionDao.selectUserRegion();
 		//회원 가져오기
 		MemberVO dbMember = memberService.getMemberByNum(user);
 		//회원의 거주지역 가져오기
@@ -383,6 +386,7 @@ public class MemberController {
 		
 		model.addAttribute("user",dbMember);
 		model.addAttribute("MainRegion",MainRegion);
+		model.addAttribute("subRg",subRg);
 		model.addAttribute("memberRegion",memberRegion);
 		return "/member/myedit";
 	}
@@ -584,15 +588,5 @@ public class MemberController {
 		map.put("res", res);
 		return map;
 	}
-	
-	@ResponseBody
-	@GetMapping("/member/update/region2")
-	public Map<String, Object> region1(@RequestParam int rg_num, Model model){
-		Map<String, Object> map = new HashMap<String, Object>();
-		List<RegionVO> list = memberService.getMyMainRegionList(rg_num);
-		map.put("list",list);
-		return map;
-	}
-	
 	
 }

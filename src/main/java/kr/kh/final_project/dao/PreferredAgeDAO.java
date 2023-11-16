@@ -12,5 +12,7 @@ public interface PreferredAgeDAO {
 
 	void deletePreferredAge(@Param("cl_num")int cl_num);
 
+	List<Integer> selectPreAgeListByClNum(@Param("cl_num")Integer cl_num);
+
 
 }
