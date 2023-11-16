@@ -12,6 +12,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import kr.kh.final_project.dao.AccountDAO;
 import kr.kh.final_project.dao.BlockDAO;
 import kr.kh.final_project.dao.HoldingCouponDAO;
 import kr.kh.final_project.dao.MarkDAO;
@@ -23,6 +24,7 @@ import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.dao.TimeDAO;
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.util.Message;
+import kr.kh.final_project.vo.AccountVO;
 import kr.kh.final_project.vo.BlockVO;
 import kr.kh.final_project.vo.HoldingCouponVO;
 import kr.kh.final_project.vo.MarkVO;
@@ -68,6 +70,9 @@ public class MemberServiceImp implements MemberService{
 	
 	@Autowired
 	MarkDAO markDao;
+	
+	@Autowired
+	AccountDAO accountDao;
 	
 	String uploadPath = "D:\\uploadfiles";
 	
@@ -652,6 +657,14 @@ public class MemberServiceImp implements MemberService{
 	@Override
 	public boolean updateEmail(int me_num, String email) {
 		return memberDao.updateEmail(me_num,email);
+	}
+
+	@Override
+	public AccountVO getUserAccount(MemberVO user) {
+		if(user == null) {
+			return null;
+		}
+		return accountDao.selectAccount(user.getMe_num());
 	}
 	
 }

@@ -130,12 +130,9 @@
     $(document).on("change", "#refundAmount", function(){
         //입력한 금액을 변수에 저장
         var refundAmountValue = parseFloat($(this).val());
-        console.log(refundAmountValue);
         if(refundAmountValue > 0){
-        console.log(refundAmountValue);
         	//1000단위로 입력값 변경
 	        var num = Math.floor(parseFloat(refundAmountValue) / 1000) * 1000;
-        	console.log(num);
             $(this).val(num);
 	        //(유저의 현재 포인트 - 환급받을 금액)을 저장
 	        var userPoint = parseFloat($('.point').text());

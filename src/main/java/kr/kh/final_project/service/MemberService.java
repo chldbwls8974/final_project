@@ -4,17 +4,13 @@ import java.util.List;
 
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.util.Message;
-
-import org.springframework.web.multipart.MultipartFile;
-
+import kr.kh.final_project.vo.AccountVO;
 import kr.kh.final_project.vo.BlockVO;
 import kr.kh.final_project.vo.HoldingCouponVO;
 import kr.kh.final_project.vo.MarkVO;
-import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.PreferredRegionVO;
-import kr.kh.final_project.vo.PreferredTimeVO;
 import kr.kh.final_project.vo.RegionVO;
 import kr.kh.final_project.vo.TimeVO;
 
@@ -106,6 +102,8 @@ public interface MemberService {
 	Message updatePreferTime(int me_num, int[] favoriteTime, int[] favoriteHoliTime);
 	
 	boolean updateEmail(int me_num, String email);
+	
+	AccountVO getUserAccount(MemberVO user);
 	
 
 }

@@ -28,6 +28,7 @@ import kr.kh.final_project.service.MemberService;
 import kr.kh.final_project.service.RegionService;
 import kr.kh.final_project.util.Message;
 import kr.kh.final_project.util.UploadFileUtils;
+import kr.kh.final_project.vo.AccountVO;
 import kr.kh.final_project.vo.BlockVO;
 import kr.kh.final_project.vo.ClubVO;
 import kr.kh.final_project.vo.HoldingCouponVO;
@@ -36,7 +37,6 @@ import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.PreferredRegionVO;
-import kr.kh.final_project.vo.PreferredTimeVO;
 import kr.kh.final_project.vo.RegionVO;
 import kr.kh.final_project.vo.TimeVO;
 
@@ -203,7 +203,13 @@ public class MemberController {
 	
 	//포인트 환급 페이지
 	@GetMapping("/member/refund")
-	public String pointRefund(HttpSession session) {
+	public String pointRefund(HttpSession session,  Model model) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(memberService.getUserAccount(user) == null) {
+			Message msg = new Message("/account/insert", "계좌 등록이 필요한 서비스입니다. \\n환급 계좌 등록 페이지로 이동합니다.");
+			model.addAttribute("msg", msg);
+			return "message";
+		}
 		return "/member/refund";
 	}
 	
