@@ -8,8 +8,9 @@
 <title>시설 목록</title>
 </head>
 <style type="text/css">
-	body{
-		text-align: center;
+	.btn:hover{
+		background-color : outline-info;
+		color : white;
 	}
 	.searchType {
 		width: 150px;
@@ -83,8 +84,8 @@
 
 	<div class="title-detail">
 		<p><strong style="font-size: 18px; letter-spacing: -3px;">꼭 읽어주세요!</strong></p>
-		<p>시설등록 후에는 [운영시간] 을 반드시 입력해주세요.
-		<br>[시설명] 클릭 시, 해당 시설의 [경기장 목록] 으로 이동됩니다.</p>
+		<p><b>1)</b> 시설등록 후에는 [운영시간] 을 반드시 입력해주세요.
+		<br><b>2)</b> [시설명] 클릭 시, 해당 시설의 [경기장 목록] 으로 이동됩니다.</p>
 	</div>
   	
 	<a class="btn" style="
