@@ -203,7 +203,7 @@
 		update
 			member
 		set
-			me_state1 = #{i}
+			me_state2 = #{i}
 		where
 			me_num = #{me_num}
 	</update>
@@ -211,7 +211,7 @@
 		update
 			member
 		set
-			me_state2 = #{i}
+			me_state1 = #{i}
 		where
 			me_num = #{me_num}
 	</update>
@@ -226,5 +226,19 @@
 			me_birthday = #{m.me_birthday},
 			me_rg_num = #{m.me_rg_num}
 		where me_num = #{m.me_num}
+	</update>
+	<update id="updateEmail">
+		update member
+		set
+			me_email = #{email}
+		where me_num = #{me_num}
+	</update>
+	<update id="updateMemberPoint2">
+		update
+			member
+		set
+			me_point = me_point - #{point}
+		where
+			me_num = #{me_num}
 	</update>
 </mapper>

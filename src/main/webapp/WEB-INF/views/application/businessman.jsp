@@ -11,6 +11,8 @@
 }
 .title{ width:20%; font-size: 35px; font-weight: bolder; text-align: center; letter-spacing: -3px;
 	border-bottom: 8px solid #c2f296; padding-bottom: 10px;  margin: 0 auto; margin-bottom: 30px;}
+.title-detail{ margin: 50px auto; background-color: #f2f2f2; border-radius: 30px;
+	padding: 30px; width: 42%;}
 .form-group{ text-align: center;}
 .form-group label{ text-align: center; display: block; margin: 0 auto;}
 #bo_contents{  resize: none; outline: none; border-radius: 5px;
@@ -44,7 +46,15 @@
 	    <label for="bo_me_num">회원번호:</label>
 	    <input type="text" class="form-control" id="bo_me_num" name="bo_me_num" value="${user.me_num}" readonly>
 	  </div>
+	
+	  <div class="title-detail">
+			<p><strong style="font-size: 18px; letter-spacing: -3px;">사업자 승인 절차 안내</strong></p>
+			<p><b>1</b> 아래의 양식에 따라 사업자 신청을 진행해주세요.
+			<br><b>2</b> 관리자가 사업자 등록증 확인 후 미팅 날짜 안내를 위해 유선상 별도 연락드립니다.
+			<br><b>3</b> 심사에 통과되면, 사업자 승인이 완료되었다는 안내 문자가 전달되며 사업자 페이지에서 시설 및 경기장 등록이 가능합니다.</p>
+	  </div>
 	  <br>
+	
 	  <div class="form-group">
 	  	<label for="bo_contents" style="border-bottom: 1px solid #d4d4d1; width: 40%;
 		    	 padding-bottom: 10px; margin-bottom: 10px;">1. 대표자명 / 대표 전화번호 / 대표 이메일을 작성해주세요.</label>

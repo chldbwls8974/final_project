@@ -270,13 +270,7 @@
 						<li>
 							<a href="<c:url value='/account/insert'/>">
 							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_new_team.svg" width="24px" height="24px" alt="환급 계좌 등록">
-							<p>환급 계좌 등록</p>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_point_color.svg" width="24px" height="24px" alt="나의 포인트">
-							<p>나의 포인트</p>
+							<p>환급 계좌 등록</p> 
 							</a>
 						</li>
 						<li>

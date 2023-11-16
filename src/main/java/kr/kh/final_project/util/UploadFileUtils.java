@@ -81,17 +81,11 @@ public class UploadFileUtils {
 	}
 	public static String updateImg(String uploadPath, String originalFileName, byte[] fileData) throws Exception{
 		
-		
-		//같은 파일명을가지는 파일을 업로드할 때 덮어쓰기가 되지 않게 처리
 
-		String savedFileName = originalFileName; //8-4-4-4-12_파일명
+		String savedFileName = originalFileName; 
 	
-		//한 폴더에 파일이 몰리지 않게 날짜별로 업로드 파일을 관리 
-		//2023/09/01
 		String savedPath = "";
 		
-		//파일을 복사
-		//빈 파일을 생성
 		File target = new File(uploadPath + savedPath, savedFileName);
 		FileCopyUtils.copy(fileData, target);
 		return uploadFileName(savedPath, savedFileName);

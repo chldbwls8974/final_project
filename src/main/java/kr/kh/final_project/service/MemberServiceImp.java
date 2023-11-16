@@ -648,6 +648,11 @@ public class MemberServiceImp implements MemberService{
 		}
 		return msg;
 	}
+
+	@Override
+	public boolean updateEmail(int me_num, String email) {
+		return memberDao.updateEmail(me_num,email);
+	}
 	
 }
 
