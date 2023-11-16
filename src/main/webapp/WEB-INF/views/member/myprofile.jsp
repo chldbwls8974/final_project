@@ -219,25 +219,28 @@
 			<form class="modal-form" action="<c:url value='/member/update/region'/>" method="post">
 			<input type="hidden" name="me_num" value="${member.me_num}">
 				<div class="prefer-area">
-					<div class="form-group" style="display: block;">
-						<select class="form-control pre_rg_main">
-							<option value="0">대분류를 선택하세요</option>
-							<c:forEach items="${MainRegion}" var="main">
-								<option value="${main.rg_main}">${main.rg_main}</option>
-							</c:forEach>
-						</select>
-	
-					</div>
-					<div class="form-group" style="display: block;">
-						<select class="form-control rg_sub" name="pr_rg_num">
-							<option value="0">소분류를 선택하세요</option>
-							<c:forEach items="${SubRegion}" var="sub">
-								<option value="${sub.rg_num}">${sub.rg_sub}</option>
-							</c:forEach>
-						</select>
-					</div>
+					<c:forEach items="${memberPRegion }" var="list">
+						<div class="form-group" style="display: block;">
+							<select class="form-control pre_rg_main">
+								<option value="0">대분류를 선택하세요</option>
+								<c:forEach items="${MainRegion}" var="main">
+									<option value="${main.rg_main}" <c:if test="${list.rg_main == main.rg_main }">selected</c:if>>${main.rg_main}</option>
+								</c:forEach>
+							</select>
+		
+						</div>
+						<div class="form-group" style="display: block;">
+							<select class="form-control rg_sub" name="pr_rg_num">
+								<option value="0">소분류를 선택하세요</option>
+								<c:forEach items="${subRg}" var="sub">
+									<c:if test="${sub.rg_main == list.rg_main}">
+										<option value="${sub.rg_num}"<c:if test="${list.rg_num == sub.rg_num }">selected</c:if>>${sub.rg_sub}</option>
+									</c:if>
+								</c:forEach>
+							</select>
+						</div>
+					</c:forEach>
 				</div>
-
 				<div class="form-group" style="display: block;">
 					<button type="button" class="form-control" name="add-area-btn">지역추가</button>
 				</div>
