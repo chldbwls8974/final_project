@@ -79,6 +79,7 @@ ${club }
 		</div>
 		<input type="hidden" class="form-control" name="me_num" value="${user.me_num }">
 		<input type="hidden" class="form-control" name="cl_num" value="${club.cl_num}">
+		<input type="hidden" class="form-control" name="test" value="${club.cl_emblem}">
 		<div class="form-group">
 			<label>클럽명</label><label id="check-name-error" class="error" for="cl_name"></label>
 			<input type="text" class="form-control" name="cl_name" id="cl_name" placeholder="${club.cl_name }">

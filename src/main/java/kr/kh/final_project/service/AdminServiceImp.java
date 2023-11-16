@@ -140,6 +140,7 @@ public class AdminServiceImp implements AdminService{
 			return false;
 		}
 		return businessDao.updateBusinessByAuthority(manager);
+		//return businessDao.insertBusiness();
 	}
 	// 사업자신청 페이지네이션
 	@Override

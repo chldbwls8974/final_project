@@ -158,13 +158,18 @@ public class ClubController {
 	}
 	
 	@PostMapping("/update")
-	public String updateClubPost(Model model, MultipartFile img, ClubVO club, int[] favoriteTime, int[] favoriteHoliTime, int[] age,int me_num) {
+	public String updateClubPost(Model model, MultipartFile img, ClubVO club, int[] favoriteTime, int[] favoriteHoliTime, int[] age,int me_num, String test) {
 		Message msg = new Message("/club/update", "클럽 수정에 실패하였습니다.");
 		
 
 		try {
 			String fi_ori_name = img.getOriginalFilename();
-			String fi_name = UploadFileUtils.updateImg(uploadPath, fi_ori_name, img.getBytes());
+			String fi_name;
+			if(fi_ori_name != null && !fi_ori_name.isEmpty()) {
+				fi_name = UploadFileUtils.updateImg(uploadPath, fi_ori_name, img.getBytes());
+			}else{
+				fi_name = test;
+			}
 			if(clubService.updateClub(me_num,club, fi_name,  age,favoriteTime,favoriteHoliTime)) {
 				msg = new Message("/club/list", "클럽 수정에 성공했습니다.");
 			}

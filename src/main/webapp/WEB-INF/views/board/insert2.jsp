@@ -9,18 +9,23 @@
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 <style>
-	h1{
-		text-align : center;
-	}
 	.form-control{
 		margin-bottom : 10px;
+	}
+	.title{
+		font-size: 35px; font-weight: bolder; margin: 50px auto; border-bottom: 8px solid #c2f296;
+		width: 11%; padding: 20px 0 10px 0; text-align: center;
+	}
+	.in-btn{
+		background-color: #d7fdb5; color: black; height: 45px; width: 400px; 
+		border-radius: 10px; margin: 50px 0 50px 0; border: none;
 	}
 </style>    
 </head>
 </head>
 <body>
 	<br>
-	<h1>&#x2709 자유글 쓰셈 &#x2709</h1>
+	<p class="title"> 글 작성</p>
 	<form action="<c:url value='/board/insert2'/>" method="post" enctype="multipart/form-data">
 		<div class="form-group">
 			<label>제목</label>
@@ -40,7 +45,9 @@
 			<input type="file" class="form-control" name="files">
 			<input type="file" class="form-control" name="files">
 		</div>
-		<button class="btn btn-outline-success col-12">등록하기</button>
+		<div style="text-align: center;">
+			<button class="in-btn">등록하기</button>
+		</div>
 	</form>
 
 	<script>
