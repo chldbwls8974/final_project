@@ -24,8 +24,8 @@ public class RegionServiceImp implements RegionService{
 	}
 
 	@Override
-	public List<RegionVO> getUserRegionList(Integer me_num) {
-		return regionDao.selectUserRegion(me_num);
+	public List<RegionVO> getUserRegionList() {
+		return regionDao.selectUserRegion();
 	}
 
 

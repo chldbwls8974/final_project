@@ -105,5 +105,9 @@ public interface MemberService {
 	
 	Message updatePreferTime(int me_num, int[] favoriteTime, int[] favoriteHoliTime);
 	
+	boolean updateEmail(int me_num, String email);
+	
+	List<RegionVO> getMyMainRegionList(int rg_num);
+	
 
 }

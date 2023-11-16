@@ -14,7 +14,7 @@
 		border-radius: 20px; box-sizing: border-box;
 	}
 	.right-side-box{
-		width: 100%; height: 200px; float: right; margin: 0 10px 10px 10px;
+		width: 100%; height: auto; float: right; margin: 0 10px 10px 10px;
 		border-radius: 20px; background-color: #e5f4d8;  box-sizing: border-box;
 	}
 	.right-side-box p{
@@ -33,6 +33,16 @@
 	.member-list{border-bottom: 1px solid black}
 	.member-list:last-child{border-bottom: none;}
 	.entry-list-box{height: auto;}
+	.total-price{
+	    width: 100px;
+	    height: 40px;
+	    border-radius: 10px;
+	    border: none;
+	    background-color: #ffff;
+	    text-align: center;
+	    margin: 20px auto 0 auto;
+	}
+	
 	</style>
 </head>
 <body>
@@ -52,25 +62,32 @@
 			<c:if test="${(match.mt_type == 0 && cl_num == 0) || (match.mt_type == 1 && cl_num == 0)}">
 				<c:if test="${match.entry_res == 0}">
 					<div class="application-box right-side-box">
-						<div>
+						<div style="margin-top: 60px;">
 							<p>개인 매치 신청</p>
-							<span>비용 : ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}포인트/2시간</span>
-							<input type="text" class="total-price" disabled value="${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}"> <br>
-							<button class="btn btn-application"
-									style="width: 100px; height: 40px; border: none; margin-top: 20px;
-									border-radius: 5px; background-color: black; color: white;">
-								신청</button>
+							<div style="display: inline-grid;">
+								<span> ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}포인트/2시간</span>
+								<p style="font-size: 15px; font-weight: 400; padding: 0;">차감 예정입니다.</p>
+								<input type="text" class="total-price" disabled value="${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}P"> <br>
+							</div>
+							<div>
+								<button class="btn btn-application"
+										style="width: 100px; height: 40px; border: none; margin-top: 20px;
+										border-radius: 5px; background-color: black; color: white;">
+									신청</button>
+							</div>	
 						</div>
 					</div>
 					<div class="coupon-box right-side-box">
-						<div>
+						<div style="margin-top: 60px;">
 							<p>보유 쿠폰</p>
-							<c:forEach items="${couponList}" var="co">
-								<div>
-									<input type="radio" name="coupon" value="${co.hp_num}">${co.cp_source}(${co.cp_sale}) <br>
-									<input type="text" class="sale-point" value="${co.cp_sale}" hidden>
-								</div>
-							</c:forEach>
+							<div>
+								<c:forEach items="${couponList}" var="co">
+									<div style="padding: 10px;">
+										<input type="radio" name="coupon" value="${co.hp_num}">${co.cp_source}(${co.cp_sale}) <br>
+										<input type="text" class="sale-point" value="${co.cp_sale}" hidden>
+									</div>
+								</c:forEach>
+							</div>
 						</div>
 					</div>
 				</c:if>
@@ -102,7 +119,7 @@
 						<div>
 							<p>클럽 매치 신청</p>
 							<span>비용 : ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}포인트/2시간</span>
-							<input type="text" class="total-price" disabled value="${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}"> <br>
+							<input type="text" class="total-price" disabled value="${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}P"> <br>
 							<button class="btn btn-application"
 									style="width: 100px; height: 40px; border: none; 
 									border-radius: 5px; background-color: black; color: white;">
@@ -182,7 +199,7 @@
 		hp_num = $(this).val();
 		total_price = ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre} - $(this).siblings('.sale-point').val();
 
-		$('.total-price').val(total_price);
+		$('.total-price').val(total_price+"P");
 	});
 	$(document).on('click', '.btn-application', function() {
 		application()

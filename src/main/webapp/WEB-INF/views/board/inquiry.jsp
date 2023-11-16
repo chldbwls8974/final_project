@@ -15,9 +15,6 @@
 		padding: 40px; height: auto;
 		background-color: white; border-radius: 20px;
 	}
-	.a{
-		color : red;
-	}
 	.inquiry-thead{
 		display: flex; padding: 20px;
 		border-bottom: 1px solid rgba(0,0,0,.1);
@@ -57,17 +54,14 @@
 	  background-color: #fafafa; 
 	  border-color: #ccc;
 	}
-	.notion{
-	  background-color: #e6e6e6 ; 
-	}
 </style>
 </head>
 <body>
 <div class="container-body">
-	<div style="padding: 30px;">
+	<div style="padding: 30px 30px 90px 30px;">
 	<br>
 		<p style="font-size: 35px; font-weight: bolder; margin:0 auto; border-bottom: 8px solid #c2f296;
-			width: 20%; padding: 20px 0 10px 0;">문의게시판</p>
+			width: 20%; padding: 20px 0 10px 0; text-align: center;">문의게시판</p>
 		<div style="display:flex; justify-content: flex-end;">
 			<button type="button"
 				    class="write-btn btn-inquiry"
@@ -108,37 +102,40 @@
 			<li style="width: 10%;">댓글수</li>
 		  </ul>
 		</div>
-			<ul class="inquiry-tbody">
-				<c:choose>	
-					<c:when test="${not empty list}">
-						<c:forEach items="${list}" var="bo">
-							<c:choose>
-								<c:when test="${bo.bo_me_num == user.me_num || user.me_authority == 'ADMIN' }">
-									<li>
+		<ul class="inquiry-tbody">
+			<c:choose>	
+				<c:when test="${not empty list}">
+					<c:forEach items="${list}" var="bo">
+						<c:choose>
+							<c:when test="${bo.bo_me_num == user.me_num || user.me_authority == 'ADMIN' }">
+								<li>
+									<div class="tbody-box">
 										<div style="width: 10%;">${bo.bo_num}</div>
-										<div style="width: 35%;"><a
-											href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_title}</a></div>
+										<div style="width: 35%;">
+											<a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>"
+												style="color: #86aa64;">
+												${bo.bo_title}</a></div>
 										<div style="width: 15%;">${bo.me_nickname}</div>
 										<div style="width: 20%;">${bo.bo_reg_date_str}</div>
 										<div style="width: 10%;">${bo.bo_count}</div>
-										<div style="width: 10%;"><a
-											href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_comment}</a></div>
-									</li>
-								</c:when>
-							</c:choose>
-						</c:forEach>
-					</c:when>
-					<c:otherwise>
-						<li>
-							<div colspan="6" class="noneInquiry">작성된 문의 내용이 없습니다.</div>
-						</li>
-					</c:otherwise>
-				</c:choose>
-			</ul>
-		</div>
+										<div style="width: 10%;">${bo.bo_comment}</div>
+									</div>
+								</li>
+							</c:when>
+						</c:choose>
+					</c:forEach>	
+				</c:when>
+				<c:otherwise>
+					<li>
+						<div colspan="6" class="noneInquiry">작성된 문의 내용이 없습니다.</div>
+					</li>
+				</c:otherwise>
+			</c:choose>
+		</ul>
 	</div>
+	
   <!-- 페이지네이션 적용 -->
-		<ul class="pagination justify-content-center">
+		<ul class="pagination justify-content-center" style="margin-top: 50px;">
 			<c:if test="${pm.prev}">
 				<li class="page-item">
 					<a class="page-link" 
@@ -159,6 +156,7 @@
 			</c:if>
 		</ul>	
  	</div>
+ </div>
  <script type="text/javascript">
 	 $(document).on('click', '.btn-inquiry', function(){
 			let co_me_num = '${user.me_num}';

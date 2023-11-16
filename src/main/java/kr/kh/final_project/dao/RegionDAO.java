@@ -22,9 +22,9 @@ public interface RegionDAO {
 
 	List<Integer> selectRgNumByRgNum(@Param("rg_num")int rg_num);
 	
-	List<RegionVO> selectRegionByRgNum(@Param("rg_num")int rg_num);
+	RegionVO selectRegionByRgNum(@Param("rg_num")int rg_num);
 
 	List<RegionVO> selectMemberRegion();
 
-	List<RegionVO> selectUserRegion(Integer me_num);
+	List<RegionVO> selectUserRegion();
 }

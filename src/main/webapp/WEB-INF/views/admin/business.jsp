@@ -105,6 +105,13 @@
 							background-color: #c2f296; color: black; margin: 10px 0 10px 0;"
 						onclick="location.href='<c:url value='/admin/business2'/>'"	    
 				>권한 조회</button>
+		  <button type="button"
+					    class="btn-info"
+					    style="
+							border-radius: 10px; width: 130px; height: 40px; border: none;
+							background-color: #c2f296; color: black; margin: 10px 0 10px 10px;"
+						onclick="location.href='<c:url value='/admin/business3'/>'"	    
+				>사업자 입력</button>
 		</div>
 	</div>	
 	<!-- 사업자 신청 검색 기능 -->

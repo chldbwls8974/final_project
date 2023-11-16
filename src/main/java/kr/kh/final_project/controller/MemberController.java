@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.pagination.PageMaker;
 import kr.kh.final_project.service.BlockService;
@@ -36,7 +37,6 @@ import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.PreferredRegionVO;
-import kr.kh.final_project.vo.PreferredTimeVO;
 import kr.kh.final_project.vo.RegionVO;
 import kr.kh.final_project.vo.TimeVO;
 
@@ -53,6 +53,8 @@ public class MemberController {
 	ClubService clubService;
 	@Autowired
 	BlockService blockService;
+	@Autowired
+	RegionDAO regionDao;
 	
 	String uploadPath = "D:\\uploadprofile\\member";
 
@@ -292,7 +294,7 @@ public class MemberController {
 	@PostMapping("/member/searchfilter")
 	 public Map<String, Object>searchMembers(@RequestParam String searchType, @RequestParam String keyword, Model model) {
 		 Map<String, Object> map = new HashMap<String, Object>();
-		 List<MemberVO> memberList; //회원목록 리스트 선언
+		 List<MemberVO> memberList = null; //회원목록 리스트 선언
 		 boolean res = false; //검색 결과 변수 초기화
 		 
 		if("id".equals(searchType)) { //아이디로 검색하면 그 값을 memberList에 저장
@@ -376,6 +378,7 @@ public class MemberController {
 	public String myProfile(Model model,HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		List<RegionVO> MainRegion = memberService.getMainRegion();
+		List<RegionVO> subRg = regionDao.selectUserRegion();
 		//회원 가져오기
 		MemberVO dbMember = memberService.getMemberByNum(user);
 		//회원의 거주지역 가져오기
@@ -383,6 +386,7 @@ public class MemberController {
 		
 		model.addAttribute("user",dbMember);
 		model.addAttribute("MainRegion",MainRegion);
+		model.addAttribute("subRg",subRg);
 		model.addAttribute("memberRegion",memberRegion);
 		return "/member/myedit";
 	}
@@ -574,14 +578,15 @@ public class MemberController {
 	}
 	
 	@ResponseBody
-	@GetMapping("/member/update/region2")
-	public Map<String, Object> region1(@RequestParam String rg_main, Model model){
+	@PostMapping("/member/update/email")
+	public Map<String, Object> updateEmail(@RequestParam int me_num, @RequestParam String email){
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<RegionVO> SubRegion = memberService.getSubRegionByMainRegion(rg_main);
-		map.put("SubRegion", SubRegion);
-		System.out.println(SubRegion);
+		boolean res = false;
+		if(memberService.updateEmail(me_num, email)) {
+			res = true;
+		}
+		map.put("res", res);
 		return map;
 	}
-	
 	
 }
