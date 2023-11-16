@@ -56,7 +56,10 @@
 							<p>개인 매치 신청</p>
 							<span>비용 : ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}포인트/2시간</span>
 							<input type="text" class="total-price" disabled value="${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}"> <br>
-							<button class="btn btn-outline-primary btn-application">신청</button>
+							<button class="btn btn-application"
+									style="width: 100px; height: 40px; border: none; margin-top: 20px;
+									border-radius: 5px; background-color: black; color: white;">
+								신청</button>
 						</div>
 					</div>
 					<div class="coupon-box right-side-box">
@@ -100,7 +103,10 @@
 							<p>클럽 매치 신청</p>
 							<span>비용 : ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}포인트/2시간</span>
 							<input type="text" class="total-price" disabled value="${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}"> <br>
-							<button class="btn btn-outline-primary btn-application">신청</button>
+							<button class="btn btn-application"
+									style="width: 100px; height: 40px; border: none; 
+									border-radius: 5px; background-color: black; color: white;">
+								신청</button>
 						</div>
 					</div>
 				</c:if>

@@ -53,6 +53,10 @@
 	  background-color: #fafafa; 
 	  border-color: #ccc;
 	}
+	.notion{
+	  background-color: #dffac7;
+	  border-radius: 30px;
+	}
 	.notion:first-child,
 	.notion+.notion{
 		margin-bottom: 10px;
@@ -140,7 +144,7 @@
 							      	<div class="tbody-list" style="width: 10%;">${bo.bo_num}</div>
 							      	<div class="tbody-list" style="width: 35%;">
 							      		<a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>" 
-							      			style="color: #86aa64;">${bo.bo_title}</a>
+							      			style="color: #646464;">${bo.bo_title}</a>
 							      	</div>
 							        <div class="tbody-list" style="width: 15%;">${bo.me_nickname}</div>
 							        <div class="tbody-list" style="width: 20%;">${bo.bo_reg_date_str}</div>
@@ -152,13 +156,13 @@
 						    <c:when test="${bo.bo_bt_num == 3}">
 								<li>
 							      <div class="tbody-box">
-							      	<div class="tbody-list">${bo.bo_num}</div>
-							      	<div class="tbody-list"><a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>"
-							      								style="margin-left:10px; color: #b0df84;">${bo.bo_title}</a></div>
-							        <div class="tbody-list">${bo.me_nickname}</div>
-							        <div class="tbody-list">${bo.bo_reg_date_str}</div>
-							        <div class="tbody-list">${bo.bo_count}</div>
-							        <div class="tbody-list"><a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_comment}</a></div>
+							      	<div class="tbody-list" style="width: 10%;">${bo.bo_num}</div>
+							      	<div class="tbody-list" style="width: 35%;"><a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>"
+							      								style="color: #86aa64;">${bo.bo_title}</a></div>
+							        <div class="tbody-list" style="width: 15%;">${bo.me_nickname}</div>
+							        <div class="tbody-list" style="width: 20%;">${bo.bo_reg_date_str}</div>
+							        <div class="tbody-list" style="width: 10%;">${bo.bo_count}</div>
+							        <div class="tbody-list" style="width: 10%;"><a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>">${bo.bo_comment}</a></div>
 							      </div>
 								</li>
 						   </c:when>
