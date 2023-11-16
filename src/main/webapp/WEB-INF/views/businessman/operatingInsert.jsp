@@ -93,5 +93,6 @@
 	   	    <button class="btn btn-info btn-block">등록</button><br>
 		</form> 
 	</div>
+	
 </body>
 </html>

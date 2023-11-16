@@ -39,7 +39,10 @@
 		<br>풋팅이 직접 주선한 취미형 일자리입니다.
 		<br>내가 원하는 시간에,
 		<br>원하는 구장에서,
-		<br>편하고 자유롭게 근무 시간과 장소를 선택할 수 있습니다.</p>
+		<br>편하고 자유롭게 근무 시간과 장소를 선택할 수 있습니다.<br><br>
+		<br><strong style="font-size: 18px; letter-spacing: -3px;">매니저 승인 절차 안내</strong>
+		<p><b>1</b> 아래의 양식에 따라 매니저 신청을 진행해주세요.
+		<br><b>2</b> 매니저 자격이 주어지면, 승인이 완료되었다는 별도의 안내 문자가 전달됩니다.</p>
 	</div>
 	
 	<form action="<c:url value='/application/manager'/>"  class="was-validated" method="post" enctype="multipart/form-data" style="text-align: center;">
