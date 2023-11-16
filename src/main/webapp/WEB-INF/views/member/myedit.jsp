@@ -60,6 +60,29 @@ input, progress {
 .box-thumbnail{
 	display: none; position: absolute; top: 0; 
 }
+/* 모달 */
+	.modal--bg {
+		z-index: 1000;
+		display: none;
+		position: fixed;
+		top: 0%;
+		left: 0%;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.3);
+		justify-content: center;
+		align-items: center;
+	}
+	
+	.modal--content {
+		background-color: white;
+		padding: 20px;
+		border-radius: 5px;
+		max-width: 600px;
+		margin: 200px auto;
+		
+	}
+	
 </style>
 </head>
 <body>
@@ -86,9 +109,43 @@ input, progress {
 			<hr>
 			<div class="form-group">
 				<label>이메일</label> 
-				<input type="email" class="form-control" name="me_email" id="me_email" value="${user.me_email}" readonly> 
-				<button type="button" class="form-control" name="email-change-btn" style="margin-bottom: 20px;">이메일 변경</button>
+				<input type="email" class="form-control" name="ori_email" value="${user.me_email}" readonly> 
+				<button type="button" class="form-control button--open" name="email-change-btn" style="margin-bottom: 20px;">이메일 변경</button>
 			</div>
+			
+			
+<!-- 이메일 변경 모달창 -->
+			<div class="modal--bg">
+				<div class="modal--content">
+					<p style="font-size: 20px; font-weight: bolder; margin: 20px auto; border-bottom: 8px solid #c2f296; width: 30%; padding: 20px 0 10px 0; text-align: center;">이메일 변경</p>
+					
+					<form class="modal-form" action="#" method="post" id="innerForm">
+						
+						
+						<div class="form-group">
+							<label>이메일</label>
+							 <input type="email" class="form-control" name="email" id="email" placeholder="${user.me_email}" required> 
+							 <label id="check-email-error" class="error"for="email"></label>
+							 <button type="button" class="form-control" name="me_email_btn" id="me_email_btn" style="margin-bottom: 20px;">인증번호 전송</button>
+								
+							<label>이메일 인증번호</label> 
+							<input type="number" class="form-control" name="email_code" id="email_code" required>
+							<button type="button" class="form-control" name="email_code_btn"
+								id="email_code_btn" disabled="disabled">인증번호 확인</button>
+							<div id="timer"></div>
+						</div>
+						
+						<div style="text-align: center; margin-top: 40px;">
+							<button type="button" style="background-color: black; color: white; border-radius: 10px; width: 80px;" class="btn button--close">닫기</button> 
+							<button type="button"  style="background-color: black; color: white; border-radius: 10px; width: 80px;" 
+							class="btn" id="md_update_btn" disabled="disabled" onclick="submitForm()">수정</button> 
+						</div>	
+					</form> 
+				</div>
+			</div>
+			
+			
+			
 
 			<div class="form-group">
 				<label>전화번호</label> <input type="text" class="form-control" name="me_phone" id="me_phone" value="${user.me_phone}" required>
@@ -139,9 +196,14 @@ input, progress {
 </div>	
 	
 	<script type="text/javascript">
-
-	const nextBtn = document.getElementById("next");
-	const signUpBtn = document.getElementById("signup");
+	
+	const codeSendBtn = document.getElementById("me_email_btn");
+	const checkCode = document.getElementById("email_code");
+	const checkCodeBtn = document.getElementById("email_code_btn");
+	const updateBtn = document.getElementById("md_update_btn");
+	
+	let email = $('#email').val();
+	let ori_email = $('[name=ori_email]').val();
 	let randomCode;
 	let x;
 	let count = 0;
@@ -161,22 +223,24 @@ input, progress {
     }
 	
 	
-	
 	// 이메일 입력 시 중복이 아니면 전송 버튼 활성화
-	$(document).on('keyup','#me_email',function(){
+	$(document).on('keyup','#email',function(){
 		let email = $(this).val();
-		
+		let ori_email = $('[name=ori_email]').val();
 		let flag = false;
 		
 		var regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 		
+		// 이메일 정규표현식
 		if(!regEmail.test(email)){
 			codeSendBtn.disabled = true;
 			$('#check-email-error').text('');
 			return;
 		}
 		
+		// 이메일 중복 체크
 		if(email != ''){
+			
 			$.ajax({
 				async : false, 
 				type : 'post', 
@@ -189,14 +253,16 @@ input, progress {
 						flag = true;
 						
 					}else{
-						codeSendBtn.disabled = true;
-						$('#check-email-error').text('이미 사용중인 이메일입니다.');
+							codeSendBtn.disabled = true;
+						if(email == ori_email){
+							$('#check-email-error').text('사용중인 이메일과 같습니다. 이메일을 확인해주세요.');
+						}else{
+							$('#check-email-error').text('이미 사용중인 이메일입니다.');
+						}
 					}
 				}
 			});
 		}
-		
-		
 	})
 	
 	
@@ -204,7 +270,11 @@ input, progress {
 	$(document).on('click','[name=me_email_btn]',function(){
 		time = 30; // 유효시간 여기서 설정 - 지금은 테스트를 위해서 5초
 		randomCode = generateRandomCode(6); 
+	
 		
+		if(email == ori_email){
+			alert('같은메일')
+		}
 		// 타이머 시작
 		x = setInterval(function(){
 			min = parseInt(time/60);
@@ -228,7 +298,6 @@ input, progress {
 		checkCodeBtn.disabled = false;
 		
 		// 값
-		const email = $('[name=me_email]').val();
 		const checkEmail = $('[name=email_code]').val();
 		
 		// ajax로 보내줄 data
@@ -253,31 +322,13 @@ input, progress {
 			alert('인증번호를 확인해주세요')
 		}else{
 			alert('인증되었습니다')
-			nextBtn.disabled = false;
-			signUpBtn.disabled = false;
 			clearInterval(x);
+			updateBtn.disabled = false;
 			codeSendBtn.innerHTML = "인증완료"
 			document.getElementById("timer").textContent ="인증완료";
 		}
 	})
 	
-	
-	// 페이지 이전, 다음버튼
-	$('.2p').hide();
-	$('.prev-btn').hide();
-	$(document).on('click','.next-btn',function(){
-		$('.1p').hide();
-		$(this).hide();
-		$('.prev-btn').show();
-		$('.2p').show();
-		$('.title').hide();
-	})
-	$(document).on('click','.prev-btn',function(){
-		$('.2p').hide();
-		$(this).hide();
-		$('.1p').show();
-		$('.next-btn').show();
-	})
 	
 
 
@@ -462,44 +513,51 @@ input, progress {
 		}
 		
 		
-		// 지역
-		//페이지가 완전히 로드되면 실행 = jQuery의 $(document).ready()와 동일한 역할
-		$(function(){	
-	         //rg_main에서 change 이벤트가 발생되면 실행
-			 $(document).on('change','.rg_main',function(){
-				 //변수 생성 -> 현재 이벤트가 발생한 rg_main의 select 요소를 객체로 가져옴
-				 let th = $(this);
-				 //선택한 옵션 값을 가져와서 rg_main 변수에 저장
-				 rg_main = th.val();
-				 
-				 data={
-					 rg_main : rg_main
-				}
-				//각 지역별 도시 선택 
-				ajaxJsonToJson2(false, 'get', '/member/update/region2', data, (a)=>{
-					var option = "";
-					// name이 'fa_rg_num'인 요소를 찾고, 그 안의 내용을 비움
-					th.parent().next().find('[name=me_rg_num]').empty();
-					//facility.fa_rg_num의 값을 변수 region에 할당
-					let region = '${member.me_rg_num}'
-					
-					for (var i in a.SubRegion){
-						var obj = a.SubRegion[i];
-			            // 'selected' 속성을 사용하여 선택된 항목 표시
-						if (obj.rg_num == region) {
-			                option = "<option value='" + obj.rg_num + "' selected>" + obj.rg_sub + "</option>";
-			            } else {
-			                option = "<option value='" + obj.rg_num + "'>" + obj.rg_sub + "</option>";
-			            }
-			            th.parent().next().find('[name=me_rg_num]').append(option);
-			        }
-			    })
-			});
-	         //트리거를 통해 rg_main의 모든 select 요소에 대해 change 이벤트를 수동으로 발생. 
-	         //=> 이벤트가 발생하면 선택한 옵션에 따라 다른 도시를 로드하고 옵션을 설정함
-			$(".rg_main").trigger('change')
-	    })
+
 	
+		
+		// 이메일 변경 모달 여닫기
+		 $(document).ready(function() {
+	        $('.button--open').click(function() {
+	            showModal();
+	        });
+
+	        $('.button--close').click(function() {
+	            closeModal();
+	        });
+
+	        
+	    });
+		
+		// 이중 폼 제출
+		 function submitForm() {
+			let email = $('#email').val();
+			let me_num = $('[name=me_num]').val();
+			let ori_email = $('[name=ori_email]').val();
+			data = {
+					email : email,
+					me_num : me_num
+			}
+			ajaxJsonToJson2(false, 'post', '/member/update/email', data, (a)=>{
+				if(a){
+					closeModal();
+					alert("이메일이 수정되었습니다.")
+					 $('[name=ori_email]').attr("value",email);
+				}else{
+					alert("이메일이 수정에 실패하였습니다")
+				}
+			})
+			
+		  }
+		
+		
+		function showModal() {
+            $('.modal--bg').fadeIn();
+        }
+
+        function closeModal() {
+            $('.modal--bg').fadeOut();
+        }
 	</script>
 </body>
 </html>

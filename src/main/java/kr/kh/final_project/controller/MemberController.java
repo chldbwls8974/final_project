@@ -574,6 +574,18 @@ public class MemberController {
 	}
 	
 	@ResponseBody
+	@PostMapping("/member/update/email")
+	public Map<String, Object> updateEmail(@RequestParam int me_num, @RequestParam String email){
+		Map<String, Object> map = new HashMap<String, Object>();
+		boolean res = false;
+		if(memberService.updateEmail(me_num, email)) {
+			res = true;
+		}
+		map.put("res", res);
+		return map;
+	}
+	
+	@ResponseBody
 	@GetMapping("/member/update/region2")
 	public Map<String, Object> region1(@RequestParam String rg_main, Model model){
 		Map<String, Object> map = new HashMap<String, Object>();
