@@ -58,7 +58,7 @@
 </head>
 <body>
 <div class="container-body">
-	<div style="padding: 30px;">
+	<div style="padding: 30px 30px 90px 30px;">
 	<br>
 		<p style="font-size: 35px; font-weight: bolder; margin:0 auto; border-bottom: 8px solid #c2f296;
 			width: 20%; padding: 20px 0 10px 0; text-align: center;">문의게시판</p>
@@ -135,7 +135,7 @@
 	</div>
 	
   <!-- 페이지네이션 적용 -->
-		<ul class="pagination justify-content-center">
+		<ul class="pagination justify-content-center" style="margin-top: 50px;">
 			<c:if test="${pm.prev}">
 				<li class="page-item">
 					<a class="page-link" 
