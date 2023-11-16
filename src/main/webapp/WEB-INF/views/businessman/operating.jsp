@@ -7,10 +7,7 @@
 <meta charset="UTF-8">
 <title>운영시간</title>
 </head>
-<style>
-  	body {
-        text-align: center;
-    }
+<style type="text/css">
     .table-responsive {
         display: inline-block;
     }
@@ -19,8 +16,27 @@
     }
 </style>
 <body>
-  	<h1 class="display-3"><span style="color: black; font-weight: bold;">운영시간</span></h1>
+  	<div class="operating-navigation" style="margin-top: 50px; text-align: center;">
+		<p style="font-size: 35px; width: 16%; font-weight: bolder; margin: 30px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
+		운영시간</p>
+	</div>
+
+	<div style="text-align: center; margin-right: 10px;">
+		<div class="btn-group btn-group">	   
+		   <a class="btn" role="button" 
+		   		style="
+					border-radius: 10px; width: 130px; height: 40px; border: none;
+					background-color: #c2f296; color: black; margin: 10px 10px 10px 0;"
+		   		href="<c:url value='/businessman/operatingUpdate/${facility.fa_num}'/>">수정하기</a>
+		   <a class="btn" role="button" 
+		   		style="
+					border-radius: 10px; width: 150px; height: 40px; border: none;
+					background-color: #c2f296; color: black; margin: 10px 10px 10px 0;"
+		   		href="<c:url value='/businessman/facility'/>">시설 목록으로 이동</a>
+		</div>
+	</div>		
 	<br>
+
 	<form action="<c:url value='/businessman/operating'/>" method="get">
   	  <div class="table-responsive">
 	    <table class="table table-bordered">
@@ -48,12 +64,5 @@
 	   </div>
 	</form>
 	  
-	   <div align="right" class="mt-3">
-		   <a class="btn btn-secondary btn-block" role="button" href="<c:url value='/businessman/operatingUpdate/${facility.fa_num}'/>">수정하기</a>
-	   </div>
-	   <div align="right" class="mt-3">
-		   <a class="btn btn-secondary btn-block" role="button" href="<c:url value='/businessman/facility'/>">시설 목록으로 이동</a>
-	   </div>
-	   <br>
 </body>
 </html>

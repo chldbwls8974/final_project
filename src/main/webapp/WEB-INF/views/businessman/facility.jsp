@@ -8,8 +8,9 @@
 <title>시설 목록</title>
 </head>
 <style type="text/css">
-	body{
-		text-align: center;
+	.btn:hover{
+		background-color : outline-info;
+		color : white;
 	}
 	.searchType {
 		width: 150px;
