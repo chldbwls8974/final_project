@@ -111,36 +111,7 @@
 			</div>
 			
 			
-<!-- 이메일 변경 모달창 -->
-			<div class="modal--bg">
-				<div class="modal--content">
-					<p style="font-size: 20px; font-weight: bolder; margin: 20px auto; border-bottom: 8px solid #c2f296; width: 30%; padding: 20px 0 10px 0; text-align: center;">이메일 변경</p>
-					
-					<form class="modal-form" action="#" method="post" id="innerForm">
-						
-						
-						<div class="form-group">
-							<label>이메일</label>
-							 <input type="email" class="form-control" name="email" id="email" placeholder="${user.me_email}" required> 
-							 <label id="check-email-error" class="error"for="email"></label>
-							 <button type="button" class="form-control" name="me_email_btn" id="me_email_btn" style="margin-bottom: 20px;">인증번호 전송</button>
-								
-							<label>이메일 인증번호</label> 
-							<input type="number" class="form-control" name="email_code" id="email_code" required>
-							<button type="button" class="form-control" name="email_code_btn"
-								id="email_code_btn" disabled="disabled">인증번호 확인</button>
-							<div id="timer"></div>
-						</div>
-						
-						<div style="text-align: center; margin-top: 40px;">
-							<button type="button" style="background-color: black; color: white; border-radius: 10px; width: 80px;" class="btn button--close">닫기</button> 
-							<button type="button"  style="background-color: black; color: white; border-radius: 10px; width: 80px;" 
-							class="btn" id="md_update_btn" disabled="disabled" onclick="submitForm()">수정</button> 
-						</div>	
-					</form> 
-				</div>
-			</div>
-			
+
 			
 			
 
@@ -190,6 +161,36 @@
 
 		<button class="signup-btn" id="signup">수정</button>
 	</form>
+	
+	
+	<!-- 이메일 변경 모달창 -->
+			<div class="modal--bg">
+				<div class="modal--content">
+					<p style="font-size: 20px; font-weight: bolder; margin: 20px auto; border-bottom: 8px solid #c2f296; width: 30%; padding: 20px 0 10px 0; text-align: center;">이메일 변경</p>
+					
+					<form class="modal-form" action="#" method="post" id="innerForm">
+						<div class="form-group">
+							<label>이메일</label>
+							 <input type="email" class="form-control" name="email" id="email" placeholder="${user.me_email}" required> 
+							 <label id="check-email-error" class="error"for="email"></label>
+							 <button type="button" class="form-control" name="me_email_btn" id="me_email_btn" style="margin-bottom: 20px;">인증번호 전송</button>
+								
+							<label>이메일 인증번호</label> 
+							<input type="number" class="form-control" name="email_code" id="email_code" required>
+							<button type="button" class="form-control" name="email_code_btn"
+								id="email_code_btn" disabled="disabled">인증번호 확인</button>
+							<div id="timer"></div>
+						</div>
+						
+						<div style="text-align: center; margin-top: 40px;">
+							<button type="button" style="background-color: black; color: white; border-radius: 10px; width: 80px;" class="btn button--close">닫기</button> 
+							<button type="button"  style="background-color: black; color: white; border-radius: 10px; width: 80px;" 
+							class="btn" id="md_update_btn" disabled="disabled" onclick="submitForm()">수정</button> 
+						</div>	
+					</form> 
+				</div>
+			</div>
+			
 </div>	
 	
 	<script type="text/javascript">
