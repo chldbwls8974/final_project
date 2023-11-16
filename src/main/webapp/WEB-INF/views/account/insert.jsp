@@ -39,7 +39,7 @@ form{ text-align: center;}
 		</div>
 		<div class="form-group">
 			<select class="form-control" name="ac_ba_name" required>
-				<option value="" >은행 선택</option>
+				<option value="0" >은행 선택</option>
 				<c:forEach items="${bankList}" var="bank">
 			    	<option value="${bank.ba_name}">${bank.ba_name}</option>
 				</c:forEach>
