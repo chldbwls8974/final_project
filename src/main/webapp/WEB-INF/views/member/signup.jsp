@@ -705,7 +705,7 @@ input, progress {
 						</select>
 					</div>
 					<div class="form-group" style="display: block;">
-						<button type="button" name="area-del-btn">x</button>
+						<button type="button" name="area-del-btn" class="form-control" >x</button>
 					</div>
 				</div>
 			</div>

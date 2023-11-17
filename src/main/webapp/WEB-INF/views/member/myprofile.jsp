@@ -244,7 +244,7 @@
 					</c:forEach>
 				</div>
 				<div class="form-group" style="display: block;">
-					<button type="button" class="form-control" name="add-area-btn">지역추가</button>
+					<button type="button" class="form-control" name="add-area-btn" style="background-color : #c3f296;">지역추가</button>
 				</div>
 			
 				<div style="text-align: center; margin-top: 40px;">
@@ -822,7 +822,6 @@
 				 str='';
 				 btn='';
 				 str+=`
-				 	<hr>
 					 <div class="prefer-area">
 						 <div class="form-group"  id="area-box" style="display: block;">
 							<div class="form-group" style="display: block;">
@@ -845,7 +844,7 @@
 								</select>
 							</div>
 							<div class="form-group" style="display: block;">
-								<button type="button" name="area-del-btn">x</button>
+								<button type="button" class="form-control" name="area-del-btn" >x</button>
 							</div>
 						</div>
 					</div>
@@ -853,7 +852,7 @@
 				 `;
 				btn+=`
 				<div class="form-group" style="display: block;">
-					<button type="button" class="form-control" name="add-area-btn">지역 추가</button>
+					<button type="button" class="form-control" name="add-area-btn" style="background-color: #c3f296;">지역 추가</button>
 					</div>
 				`; 
 				$(this).hide();
