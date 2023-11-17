@@ -240,9 +240,6 @@
 									</c:forEach>
 								</select>
 							</div>
-							<div class="form-group" style="display: block;">
-								<button type="button" name="area-del-btn">x</button>
-							</div>
 						</div>
 					</c:forEach>
 				</div>
@@ -687,6 +684,9 @@
                 </ul>
 			</div>
 		</div>
+				<div>
+					 <button type="button" id="reset-btn"  style="background-color: black; color: white; border-radius: 10px; width: 80px;" class="btn">초기화</button>
+				</div>
 				<div style="text-align: center; margin-top: 40px;">
 					<button type="button" style="background-color: black; color: white; border-radius: 10px; width: 80px;"
 						class="btn button--tmclose">닫기</button> 
@@ -700,7 +700,7 @@
 </div>
 </body>
 <script type="text/javascript">
-	let count = 0;
+	let count = 1;
 
 	//즐겨찾기, 차단리스트를 가져오는 함수
 	$(document).ready(function() {
@@ -751,6 +751,7 @@
 			}
 		});
 	}
+	
 	
 	// 선호 지역 수정 모달
 	
@@ -816,9 +817,8 @@
 		
 		// 선호지역 추가 버튼
 		 $(document).on('click','[name=add-area-btn]',function(){
-			 count++;
-			 console.log(count)
-			 if(2 >= count){
+			 if(3 > count){
+				 count++;
 				 str='';
 				 btn='';
 				 str+=`
@@ -868,9 +868,22 @@
 		    event.stopPropagation();
 		});
 		
+		
+		// 선호 지역 삭제 버튼
 		$(document).on('click','[name=area-del-btn]',function(){
 			$(this).parents('#area-box').hide();
 			$(this).parent().prev().find('[name=pr_rg_num]').val(0);
+			count--;
+		});
+		
+		
+		// 선호 시간 초기화 버튼
+		$('#reset-btn').click(function(){
+		     // 주중 선호 시간 체크박스 해제
+	        $("[name=favoriteTime]").prop("checked", false);
+
+	        // 주말 선호 시간 체크박스 해제
+	        $("[name=favoriteHoliTime]").prop("checked", false);
 		})
 	
 		
