@@ -27,4 +27,5 @@ public interface TeamDAO {
 	boolean deleteTeam(@Param("te_num")int te_num);
 
 	void deleteClubTeamByTeNum(@Param("te_num")int te_num);
+
 }

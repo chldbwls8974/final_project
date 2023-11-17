@@ -122,7 +122,7 @@ public class ClubServiceImp implements ClubService{
 		clubMemberDao.insertClubMember(clubMember);
 		return true;
 	}
-
+	
 	@Override
 	public boolean updateClub(int me_num, ClubVO club, String fi_name, int[] age, int[] favoriteTime, int[] favoriteHoliTime) {
 		if(club == null) {

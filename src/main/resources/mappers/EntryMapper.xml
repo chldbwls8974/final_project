@@ -59,4 +59,15 @@
 		where
 			en_num = #{en_num}
 	</update>
+	<select id="selectEntryListByTeNum" resultType="kr.kh.final_project.vo.EntryVO">
+		select
+			*
+		from
+			entry
+				join
+			team on en_te_num = te_num
+		where
+			te_num = #{te_num}
+	</select>
+
 </mapper>

@@ -1,6 +1,6 @@
 insert into entry(en_me_num, en_te_num)
 values
-(13, 1), (14, 1), (15, 1), (16, 1), (17, 1), (18, 1);
+(13, 1), (14, 1), (15, 1), (16, 1), (17, 1), (18, 1), (19, 1);
 
 insert into report(rp_rc_num, rp_content, rp_me_num, rp_me_num2, rp_state, rp_date, rp_mt_num)
 values
