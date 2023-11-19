@@ -124,16 +124,38 @@ input[type='checkbox']{
 .btn{ border-radius: 3px; width: 300px; height: 45px; border: none;
 	background-color: #0c0c0c; color: white; font-weight: 900; margin-top: 50px;}
 
+/* 프로필사진 */
+	.input-file{
+		display: none;
+	}
+	.btn-file{
+		width: 200px; height: 200px; border-radius: 50%;
+		border: 1px solid gray;
+		font-weight: fold; font-size: 30px;
+		line-height:200px; text-align: center; display: block; text-decoration: none; color: gray;	
+		position: relative; overflow: hidden;
+		margin: 0 auto;
+	}
+	.box-thumbnail{
+		display: none; position: absolute; top: 0; 
+	}
+	
 </style>
 </head>
 <body>
 	<p style="font-size: 45px; font-weight: bolder; text-align: center; margin-bottom: 20px;
 		 letter-spacing: -3px;">클럽 생성</p>
 	<form action="<c:url value='/club/make'/>" method="post" enctype="multipart/form-data" style="text-align: center;">
-		<div class="form-group">
-			<label>클럽 앰블럼</label>
-			<input type="file" class="form-control" name="img" id="img">
+		<div class="form-group update-profile" style="margin-top: 10px;">
+		<label>클럽 앰블럼</label>
+			<input type="file" class="input-file form-control" name="img" id="img" onchange="readUrl(this)" style="display:none;">
+				<a href="#" class="btn-file">+
+					<div class="box-thumbnail">
+						<img src="" id="preview" height="200" width="200">
+					</div>
+				</a>
 		</div>
+	
 		<div class="form-group">
 			<input type="hidden" class="form-control" name="me_num" value="${user.me_num}" style="text-align:center; margin: 0 auto;" readonly>
 		</div>
@@ -482,6 +504,29 @@ input[type='checkbox']{
 			}
 		});
 	})
+	
+
+	
+	// 프로필사진 미리보기
+	$('.btn-file').click(function(){
+		$('.input-file').click();
+		$('.box-thumbnail').show();
+		$(this).css('boder' ,'none');
+	})
+
+	function readUrl(input){
+		//input 태그가 첨부파일이고, 첨부파일이 선택되면
+		if(input.files && input.files[0]){
+			let reader = new FileReader();
+			reader.onload = function(e){
+				document.getElementById('preview').src = e.target.result;
+			}
+			reader.readAsDataURL(input.files[0]);
+		}
+		//첨부파일이 선택되지 않으면
+		else{
+		}
+	}
 	</script>
 </body>
 </html>

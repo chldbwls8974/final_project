@@ -1,7 +1,7 @@
 package kr.kh.final_project.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -13,10 +13,12 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import kr.kh.final_project.dao.AccountDAO;
 import kr.kh.final_project.dao.BlockDAO;
 import kr.kh.final_project.dao.HoldingCouponDAO;
 import kr.kh.final_project.dao.MarkDAO;
 import kr.kh.final_project.dao.MemberDAO;
+import kr.kh.final_project.dao.PenaltyDAO;
 import kr.kh.final_project.dao.PointHistoryDAO;
 import kr.kh.final_project.dao.PreferredRegionDAO;
 import kr.kh.final_project.dao.PreferredTimeDAO;
@@ -24,10 +26,12 @@ import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.dao.TimeDAO;
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.util.Message;
+import kr.kh.final_project.vo.AccountVO;
 import kr.kh.final_project.vo.BlockVO;
 import kr.kh.final_project.vo.HoldingCouponVO;
 import kr.kh.final_project.vo.MarkVO;
 import kr.kh.final_project.vo.MemberVO;
+import kr.kh.final_project.vo.PenaltyVO;
 import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.PreferredRegionVO;
 import kr.kh.final_project.vo.PreferredTimeVO;
@@ -69,6 +73,12 @@ public class MemberServiceImp implements MemberService{
 	
 	@Autowired
 	MarkDAO markDao;
+	
+	@Autowired
+	AccountDAO accountDao;
+	
+	@Autowired
+	PenaltyDAO penaltyDao;
 	
 	String uploadPath = "D:\\uploadfiles";
 	
@@ -665,6 +675,14 @@ public class MemberServiceImp implements MemberService{
 	}
 
 	@Override
+	public AccountVO getUserAccount(MemberVO user) {
+		if(user == null) {
+			return null;
+		}
+		return accountDao.selectAccount(user.getMe_num());
+	}
+	
+	@Override
 	public List<RegionVO> getMyMainRegionList(int rg_num) {
 		if(rg_num == 0) {
 			return null;
@@ -673,6 +691,14 @@ public class MemberServiceImp implements MemberService{
 		
 		List<RegionVO> list = regionDao.selectSubRegion(rg_main);
 		return list;
+	}
+
+	@Override
+	public PenaltyVO getMemberPenalty(MemberVO member, String str) {
+		if(member == null) {
+			return null;
+		}
+		return penaltyDao.selectPenaltyByMemberNumAndType(member.getMe_num(), str);
 	}
 	
 }

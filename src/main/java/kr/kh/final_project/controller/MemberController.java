@@ -1,6 +1,7 @@
 package kr.kh.final_project.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +36,7 @@ import kr.kh.final_project.vo.HoldingCouponVO;
 import kr.kh.final_project.vo.MarkVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
+import kr.kh.final_project.vo.PenaltyVO;
 import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.PreferredRegionVO;
 import kr.kh.final_project.vo.RegionVO;
@@ -205,7 +207,13 @@ public class MemberController {
 	
 	//포인트 환급 페이지
 	@GetMapping("/member/refund")
-	public String pointRefund(HttpSession session) {
+	public String pointRefund(HttpSession session,  Model model) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(memberService.getUserAccount(user) == null) {
+			Message msg = new Message("/account/insert", "계좌 등록이 필요한 서비스입니다. \\n환급 계좌 등록 페이지로 이동합니다.");
+			model.addAttribute("msg", msg);
+			return "message";
+		}
 		return "/member/refund";
 	}
 	
@@ -598,6 +606,35 @@ public class MemberController {
 		}
 		map.put("res", res);
 		return map;
+	}
+	
+	@ResponseBody
+	@GetMapping("/member/update/region2")
+	public Map<String, Object> region1(@RequestParam String rg_main, Model model){
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<RegionVO> SubRegion = memberService.getSubRegionByMainRegion(rg_main);
+		map.put("SubRegion", SubRegion);
+		return map;
+	}
+	
+	@GetMapping("/util/ban")
+	public String ban(Model model, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		MemberVO member = memberService.getMemberByNum(user);
+		//정지일
+		String str = "커뮤니티";
+		PenaltyVO boardPenalty = memberService.getMemberPenalty(member, str);
+		str = "경기";
+		PenaltyVO matchPenalty = memberService.getMemberPenalty(member, str);
+		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일"); 
+		String BoardBanEndDate = simpleDateFormat.format(boardPenalty.getPn_end());
+		String MatchBanEndDate = simpleDateFormat.format(matchPenalty.getPn_end());
+		
+		model.addAttribute("member", member);
+		model.addAttribute("BoardBanEndDate", BoardBanEndDate);
+		model.addAttribute("MatchBanEndDate", MatchBanEndDate);
+		return "/util/ban";
 	}
 	
 }
