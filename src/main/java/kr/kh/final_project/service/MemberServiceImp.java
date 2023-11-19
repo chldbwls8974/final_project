@@ -1,7 +1,7 @@
 package kr.kh.final_project.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -18,6 +18,7 @@ import kr.kh.final_project.dao.BlockDAO;
 import kr.kh.final_project.dao.HoldingCouponDAO;
 import kr.kh.final_project.dao.MarkDAO;
 import kr.kh.final_project.dao.MemberDAO;
+import kr.kh.final_project.dao.PenaltyDAO;
 import kr.kh.final_project.dao.PointHistoryDAO;
 import kr.kh.final_project.dao.PreferredRegionDAO;
 import kr.kh.final_project.dao.PreferredTimeDAO;
@@ -30,6 +31,7 @@ import kr.kh.final_project.vo.BlockVO;
 import kr.kh.final_project.vo.HoldingCouponVO;
 import kr.kh.final_project.vo.MarkVO;
 import kr.kh.final_project.vo.MemberVO;
+import kr.kh.final_project.vo.PenaltyVO;
 import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.PreferredRegionVO;
 import kr.kh.final_project.vo.PreferredTimeVO;
@@ -74,6 +76,9 @@ public class MemberServiceImp implements MemberService{
 	
 	@Autowired
 	AccountDAO accountDao;
+	
+	@Autowired
+	PenaltyDAO penaltyDao;
 	
 	String uploadPath = "D:\\uploadfiles";
 	
@@ -675,7 +680,8 @@ public class MemberServiceImp implements MemberService{
 			return null;
 		}
 		return accountDao.selectAccount(user.getMe_num());
-
+	}
+	
 	@Override
 	public List<RegionVO> getMyMainRegionList(int rg_num) {
 		if(rg_num == 0) {
@@ -685,6 +691,14 @@ public class MemberServiceImp implements MemberService{
 		
 		List<RegionVO> list = regionDao.selectSubRegion(rg_main);
 		return list;
+	}
+
+	@Override
+	public PenaltyVO getMemberPenalty(MemberVO member, String str) {
+		if(member == null) {
+			return null;
+		}
+		return penaltyDao.selectPenaltyByMemberNumAndType(member.getMe_num(), str);
 	}
 	
 }

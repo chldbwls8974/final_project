@@ -9,6 +9,7 @@ import kr.kh.final_project.vo.BlockVO;
 import kr.kh.final_project.vo.HoldingCouponVO;
 import kr.kh.final_project.vo.MarkVO;
 import kr.kh.final_project.vo.MemberVO;
+import kr.kh.final_project.vo.PenaltyVO;
 import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.PreferredRegionVO;
 import kr.kh.final_project.vo.RegionVO;
@@ -106,6 +107,8 @@ public interface MemberService {
 	AccountVO getUserAccount(MemberVO user);
 	
 	List<RegionVO> getMyMainRegionList(int rg_num);
+	
+	PenaltyVO getMemberPenalty(MemberVO member, String str);
 	
 
 }

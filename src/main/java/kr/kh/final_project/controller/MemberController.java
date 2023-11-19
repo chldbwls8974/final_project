@@ -1,6 +1,7 @@
 package kr.kh.final_project.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,13 +30,13 @@ import kr.kh.final_project.service.MemberService;
 import kr.kh.final_project.service.RegionService;
 import kr.kh.final_project.util.Message;
 import kr.kh.final_project.util.UploadFileUtils;
-import kr.kh.final_project.vo.AccountVO;
 import kr.kh.final_project.vo.BlockVO;
 import kr.kh.final_project.vo.ClubVO;
 import kr.kh.final_project.vo.HoldingCouponVO;
 import kr.kh.final_project.vo.MarkVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
+import kr.kh.final_project.vo.PenaltyVO;
 import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.PreferredRegionVO;
 import kr.kh.final_project.vo.RegionVO;
@@ -612,7 +613,6 @@ public class MemberController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<RegionVO> SubRegion = memberService.getSubRegionByMainRegion(rg_main);
 		map.put("SubRegion", SubRegion);
-		System.out.println(SubRegion);
 		return map;
 	}
 	
@@ -621,8 +621,18 @@ public class MemberController {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		MemberVO member = memberService.getMemberByNum(user);
 		//정지일
-		System.out.println("컨트롤러" + user);
+		String str = "커뮤니티";
+		PenaltyVO boardPenalty = memberService.getMemberPenalty(member, str);
+		str = "경기";
+		PenaltyVO matchPenalty = memberService.getMemberPenalty(member, str);
+		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일"); 
+		String BoardBanEndDate = simpleDateFormat.format(boardPenalty.getPn_end());
+		String MatchBanEndDate = simpleDateFormat.format(matchPenalty.getPn_end());
+		
 		model.addAttribute("member", member);
+		model.addAttribute("BoardBanEndDate", BoardBanEndDate);
+		model.addAttribute("MatchBanEndDate", MatchBanEndDate);
 		return "/util/ban";
 	}
 	

@@ -7,22 +7,32 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<style>
+	
+</style>
 <body>
-<h1 class="text1">111</h1>
-<h1 class="text2">222</h1>
-${member.me_state1}
-${member.me_state2}
+	<h1 class="text1">회원님은 정지상태 입니다.</h1>
+	<div class="ban boardBan">
+		<span>커뮤니티 정지 ${BoardBanEndDate } 까지</span>
+	</div>
+	<div class="ban matchBan">
+		<span>경기 정지 ${MatchBanEndDate } 까지</span>
+	</div>
 </body>
+
+
 <script type="text/javascript">
 	let matchBan = ${member.me_state1};
 	let boardBan = ${member.me_state2};
 	
 	$(document).ready(function() {
+		$('.ban').hide();
+		
 		if(matchBan == '1'){
-			$('.text1').text("매치밴")
+			$('.matchBan').show();
 		}
 		if(boardBan == '1'){
-			$('.text2').text("보드밴")
+			$('.boardBan').show();
 		}
 	});
 </script>
