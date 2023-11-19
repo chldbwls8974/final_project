@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PenaltyVO;
 
 public interface PenaltyDAO {
@@ -15,6 +16,7 @@ public interface PenaltyDAO {
 	void insertNewPenalty(@Param("me_num")int me_num, @Param("pn_type")String pn_type);
 
 	boolean updatePenalty(@Param("penalty")PenaltyVO penalty);
+
 
 
 
