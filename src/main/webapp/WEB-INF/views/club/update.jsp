@@ -136,12 +136,27 @@ input[type='checkbox']{
 	.box-thumbnail{
 		display: none; position: absolute; top: 0; 
 	}
+	
+	
+/* 	나이박스 */
+	.age-box{
+		display : flex; padding-left:200px;
+	}
+	.item-age{
+		border-radius: 10px; border : 1px solid #4B5A64; margin-right : 10px;
+	}
+	.item-age:checked{
+		color: #1570FF;
+	    border: 1px solid #1570FF;
+	   	text-align: center;
+	}
 </style>
 </head>
 <body>
-	<h1>클럽수정</h1>
+	<p style="font-size: 45px; font-weight: bolder; text-align: center; margin-bottom: 20px;
+		 letter-spacing: -3px;">클럽 수정</p>
 	<form action="<c:url value='/club/update'/>" method="post" enctype="multipart/form-data">
-		<div style="display: inline-grid;" class="profile">
+			<div style="display: inline-grid;" class="profile">
 				<img src="<c:url value='/clubimg${club.cl_emblem }'/>" name="profile" height="150" width="150" style="border-radius: 50%; margin-bottom: 10px;">
 			</div>
 			<div class="form-group update-profile" style="margin-top: 10px;">
@@ -391,40 +406,53 @@ input[type='checkbox']{
 				</div>
 			</div>
 		</div>
+		
+		
+		
 		<div class="form-group">
 		<label>선호 연령</label><br>
-		
 			<div class="form-check-inline">
-			  <label class="form-check-label">
-			    <input type="checkbox" class="form-check-input" name ="age" value="10" <c:if test="${ageList.contains(Integer(10))}">checked</c:if>>10
-			  </label>
+				<input type="checkbox" id="age_10" class="form-check-input" name ="age" value="10"  <c:if test="${ageList.contains(Integer(10))}">checked</c:if>>
+				<label for="age_10" class="form-check-label" style="height: 40px; width: 50px;">
+	          		<div>
+	       			</div>  10대
+    			</label>
 			</div>
 			<div class="form-check-inline">
-			  <label class="form-check-label">
-			    <input type="checkbox" class="form-check-input" name ="age" value="20" <c:if test="${ageList.contains(Integer(20))}">checked</c:if>>20
-			  </label>
+			  <input type="checkbox" id="age_20" class="form-check-input" name ="age" value="20"  <c:if test="${ageList.contains(Integer(20))}">checked</c:if>>
+				<label for="age_20" class="form-check-label" style="height: 40px; width: 50px;">
+	          		<div>
+	       			</div>  20대
+    			</label>
 			</div>
 			<div class="form-check-inline">
-			  <label class="form-check-label">
-			    <input type="checkbox" class="form-check-input" name ="age" value="30" <c:if test="${ageList.contains(Integer(30))}">checked</c:if>>30
-			  </label>
+			  <input type="checkbox" id="age_30" class="form-check-input" name ="age" value="30"  <c:if test="${ageList.contains(Integer(30))}">checked</c:if>>
+				<label for="age_30" class="form-check-label" style="height: 40px; width: 50px;">
+	          		<div>
+	       			</div>  30대
+    			</label>
 			</div>
 			<div class="form-check-inline">
-			  <label class="form-check-label">
-			    <input type="checkbox" class="form-check-input" name ="age" value="40" <c:if test="${ageList.contains(Integer(40))}">checked</c:if>>40
-			  </label>
+			  <input type="checkbox" id="age_40" class="form-check-input" name ="age" value="40"  <c:if test="${ageList.contains(Integer(40))}">checked</c:if>>
+				<label for="age_40" class="form-check-label" style="height: 40px; width: 50px;">
+	          		<div>
+	       			</div>  40대
+    			</label>
 			</div>
 			<div class="form-check-inline">
-			  <label class="form-check-label">
-			    <input type="checkbox" class="form-check-input" name ="age" value="50" <c:if test="${ageList.contains(Integer(50))}">checked</c:if>>50
-			  </label>
+			  <input type="checkbox" id="age_50" class="form-check-input" name ="age" value="50"  <c:if test="${ageList.contains(Integer(50))}">checked</c:if>>
+				<label for="age_50" class="form-check-label" style="height: 40px; width: 50px;">
+	          		<div>
+	       			</div>  50대
+    			</label>
 			</div>
 			<div class="form-check-inline">
-			  <label class="form-check-label">
-			    <input type="checkbox" class="form-check-input" name ="age" value="60" <c:if test="${ageList.contains(Integer(60))}">checked</c:if>>60
-			  </label>
+			  <input type="checkbox" id="age_60" class="form-check-input" name ="age" value="60"  <c:if test="${ageList.contains(Integer(60))}">checked</c:if>>
+				<label for="age_60" class="form-check-label" style="height: 40px; width: 50px;">
+	          		<div>
+	       			</div>  60대
+    			</label>
 			</div>
-			
 		</div>
 		
 		<div class="form-group">
@@ -452,6 +480,8 @@ input[type='checkbox']{
 	$(document).on('check','[name=age]',function(){
 		console.log($(this).val())
 	})
+	
+	
 	// 지역 대분류 선택 시 해당하는 소분류 가져오기
 	 $(document).on('change','.rg_main',function(){
 		 let th = $(this);
@@ -496,12 +526,12 @@ input[type='checkbox']{
 		});
 	})
 	
-		// 프로필사진 미리보기
-		$('.profile-update-btn').click(function(){
-			$('.input-file').click();
-			$('.box-thumbnail').show();
-			$(this).css('boder' ,'none');
-		})
+	// 프로필사진 미리보기
+	$('.profile-update-btn').click(function(){
+		$('.input-file').click();
+		$('.box-thumbnail').show();
+		$(this).css('boder' ,'none');
+	})
 
 	function readUrl(input){
 		//input 태그가 첨부파일이고, 첨부파일이 선택되면
