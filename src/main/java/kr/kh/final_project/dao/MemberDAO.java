@@ -62,4 +62,7 @@ public interface MemberDAO {
 	boolean updateEmail(@Param("me_num")int me_num,@Param("email") String email);
 	void updateMemberPoint2(@Param("point")int difference_point, @Param("me_num")int me_num);
 
+	boolean updateRatingWinByMeNum(@Param("me_num")int me_num);
+
+	boolean updateRatingLoseByMeNum(@Param("me_num")int me_num);
 }

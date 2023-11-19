@@ -1,6 +1,7 @@
 package kr.kh.final_project.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -174,22 +175,31 @@ public class MemberServiceImp implements MemberService{
 		// 선호 시간 (평일)
 		if(favoriteTime !=null) {
 			insertPreferredTime(0,pr_me_num,favoriteTime);
+		}else {
+			int[] list = {0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22};
+			insertPreferredTime(0,pr_me_num,list);
 		}
 		
 		// 선호 시간 (주말)
 		if(favoriteHoliTime != null) {
 			insertPreferredTime(1,pr_me_num,favoriteHoliTime);
+		}else {
+			int[] list = {0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22};
+			insertPreferredTime(1,pr_me_num,list);
 		}
 		
 		// 선호 지역
-		insertPreferredRegion(pr_me_num, pr_rg_num);
+		for(int i : pr_rg_num) {
+			if(i!=0) {
+				insertPreferredRegion(pr_me_num, pr_rg_num);
+			}else {
+				prRegionDao.insertPreferredRegion(pr_me_num,member.getMe_rg_num());
+			}
+		}
 		
 		return true;
 	}
-	
 
-
-	
 	// 선호 지역을 넣는 메서드
 	private void insertPreferredRegion(int pr_me_num, int[] pr_rg_num) {
 		for(int i : pr_rg_num) {
@@ -665,6 +675,16 @@ public class MemberServiceImp implements MemberService{
 			return null;
 		}
 		return accountDao.selectAccount(user.getMe_num());
+
+	@Override
+	public List<RegionVO> getMyMainRegionList(int rg_num) {
+		if(rg_num == 0) {
+			return null;
+		}
+		String rg_main = regionDao.selectRegionByRgNum(rg_num).getRg_main();
+		
+		List<RegionVO> list = regionDao.selectSubRegion(rg_main);
+		return list;
 	}
 	
 }

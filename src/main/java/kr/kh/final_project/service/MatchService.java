@@ -64,8 +64,10 @@ public interface MatchService {
 	void deleteMatchClub();
 
 	void updateEndMatch();
+	
+	boolean updateRatingMatchResult(int mt_num);
 
-	void insertMatchTeamSolo();
+	boolean insertMatchTeamSolo(int mt_num);
 
 	List<QuarterVO> selectQuarterListByMtNum(int mt_num);
 

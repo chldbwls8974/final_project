@@ -13,6 +13,7 @@ public class ClubMemberVO {
 	private String me_nickname;
 	private int me_rating;
 	private String me_tr_name;
+	private String me_profile;
 	
 	private String cl_name;
 

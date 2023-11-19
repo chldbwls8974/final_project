@@ -76,6 +76,7 @@
 			team.*,
 		    club_team.*,
 		    cl_name,
+		    cl_emblem,
 		    count(en_num) as club_entry_count
 		from
 			team

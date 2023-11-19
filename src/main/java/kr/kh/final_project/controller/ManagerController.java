@@ -171,6 +171,17 @@ public class ManagerController {
 	}
 	
 	@ResponseBody
+	@PostMapping("/insert/team/solo")
+	public Map<String, Object> insertTeamSolo(@RequestParam("mt_num")int mt_num){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		boolean res = matchService.insertMatchTeamSolo(mt_num);
+		
+		map.put("res", res);
+		return map;
+	}
+	
+	@ResponseBody
 	@PostMapping("/update/entry/team")
 	public Map<String, Object> updateEntryTeam(@RequestParam("en_num")int en_num, @RequestParam("te_num")int te_num){
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -209,10 +220,24 @@ public class ManagerController {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		boolean res = managerService.completeTeamByMtNum(mt_num);
+		String msg = "팀이 확정되었습니다.";
+		
 		if(!res) {
-			String msg = "모든 참가자가 팀에 속해야합니다.";
-			map.put("msg", msg);
+			msg = "모든 참가자가 팀에 속해야합니다.";
 		}
+		
+		map.put("msg", msg);
+		map.put("res", res);
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/confirm/match")
+	public Map<String, Object> confirmMatch(@RequestParam("mt_num")int mt_num){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		boolean res = matchService.updateRatingMatchResult(mt_num);
+		
 		map.put("res", res);
 		return map;
 	}
@@ -269,6 +294,25 @@ public class ManagerController {
 		boolean res = managerService.deleteQuarter(qu_num);
 		
 		map.put("res", res);
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/print/team/entry")
+	public Map<String, Object> printTeam(@RequestParam("mt_num")int mt_num){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		List<TeamVO> teamList = matchService.selectTeamByMtNum(mt_num);
+		List<EntryVO> entryList = matchService.selectEntryByMtNum(mt_num);
+		int entry_count = 0;
+		for(EntryVO entry : entryList) {
+			if(entry.getTe_type() != 0) {
+				entry_count++;
+			}
+		}
+		map.put("teamList", teamList);
+		map.put("entryList", entryList);
+		map.put("entry_count", entry_count);
 		return map;
 	}
 }

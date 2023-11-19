@@ -176,6 +176,7 @@ public class MatchController {
 			model.addAttribute("couponList", couponList);
 		}else {
 			ClubMemberVO dbCM = matchService.selectClubMemberByMeNum(user.getMe_num(), cl_num);
+			//클럽 매치로 들어왔을 때 cl_num이 참가한 클럽이 아닌데 매치에 참가한 클럽팀의 수가 다찼으면 예외
 			if(match.getEntry_res() == 0) {
 				if(match.getTeam_count() == (match.getMt_rule() == 0 ? 2 : 3)) {
 					Message msg = new Message("match/search/club?weekCount=0", "신청이 마감된 경기입니다.");
@@ -184,6 +185,7 @@ public class MatchController {
 					return "/message";
 				}
 			}
+			//클럽 매치로 들어왔을 때 cl_num이 참가한 클럽이지만 접근한 계정이 해당 클럽의 소속이 아닌 경우 예외
 			if(dbCM == null || (!dbCM.getCm_authority().equals("LEADER") && !dbCM.getCm_authority().equals("MEMBER"))) {
 				Message msg = new Message("match/search/club?weekCount=0", "해당 클럽의 클럽원이 아닙니다.");
 				
@@ -191,9 +193,6 @@ public class MatchController {
 				return "/message";
 			}
 			model.addAttribute("authority", dbCM.getCm_authority());
-			List<ClubMemberVO> CMList = matchService.selectClubMemberListByMtNum(cl_num, mt_num);
-
-			model.addAttribute("CMList", CMList);
 		}
 		List<TeamVO> teamList = matchService.selectTeamByMtNum(mt_num);
 		List<EntryVO> entryList = matchService.selectEntryByMtNum(mt_num);
@@ -205,6 +204,28 @@ public class MatchController {
 		model.addAttribute("teamList", teamList);
 		model.addAttribute("entryList", entryList);
 		return "/match/application";
+	}
+	
+	@ResponseBody
+	@PostMapping("/application/print/team")
+	public Map<String, Object> printApplicationTeam(@RequestParam("mt_num")int mt_num, HttpSession session){
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<TeamVO> teamList = matchService.selectTeamByMtNum(mt_num);
+		List<EntryVO> entryList = matchService.selectEntryByMtNum(mt_num);
+		
+		map.put("teamList", teamList);
+		map.put("entryList", entryList);
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/application/print/club")
+	public Map<String, Object> printApplicationClub(@RequestParam("mt_num")int mt_num, @RequestParam("cl_num")int cl_num, HttpSession session){
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<ClubMemberVO> CMList = matchService.selectClubMemberListByMtNum(cl_num, mt_num);
+
+		map.put("CMList", CMList);
+		return map;
 	}
 	
 	@ResponseBody

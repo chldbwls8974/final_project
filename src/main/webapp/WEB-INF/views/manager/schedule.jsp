@@ -6,29 +6,30 @@
 	<style type="text/css">
 		.days-box{width: 100%; height: 50px; display: flex;}
 		.day-box{
-		height: 70px; background-color: window; flex: 1; border-right: 3px solid black;
+		height: 70px; background-color: window; flex: 1; border-right: 1px solid #c2c2c2;
 		text-align: center;}
 		.day-box:last-child{border-right: none}
 		.btn-week{width: 20px;}
-		.btn-week:hover{background-color: yellow; cursor: pointer;}
-		.prev-week{height: 70px; border-right: 3px solid black; line-height: 70px;}
+		.btn-week:hover{ font-weight:bolder; cursor: pointer;}
+		.prev-week{height: 70px; border-right: 1px solid #c2c2c2; line-height: 70px;}
 		.next-week{height: 70px; line-height: 70px;}
 		.day-span{font-size: 30px;}
 		.day_of_week-span{font-size: 15px;}
-		.sat{color: blue;}
-		.sun{color: red}
-		.select-circle{height: 70px; border-radius: 20%; background-color: cyan;}
-		.not-select-circle:hover{height: 70px; border-radius: 20%; background-color: yellow; cursor: pointer;}
-		.match-box{height: 100px; border-bottom: 2px solid black;}
+		.sat{color: #16537e;}
+		.sun{color: #da8686}
+		.select-circle{height: 70px; background-color: #f2f2f2;}
+		.not-select-circle:hover{height: 70px; background-color: #dbfabf; cursor: pointer;}
+		.match-box{height: 100px; border-bottom: 1px solid #c2c2c2;}
 		.match-box::after{clear: both; content: ''; display: block;}
 		.match-box:last-child{border-bottom: none}
 		.match-time-box{font-size: 40px; display: inline-block; line-height: 100px}
 		.match-info-box{display: inline-block;}
-		.btn-manager-match{float: right; margin-top: 30px;}
+		.d-btn{float: right; margin-top: 40px;}
 	</style>
 </head>
 <body>
-	<h1>일정 관리</h1>
+	<p style="font-size: 35px; font-weight: bolder; margin:50px auto; border-bottom: 8px solid #c2f296;
+	width: 16%; padding: 30px 0 10px 0; text-align: center;">일정 관리</p>
 	<div class="days-box">
 		<div class="prev-week btn-week"><</div>
 		<c:forEach items="${week}" var="day">
@@ -57,7 +58,7 @@
 			<div class="next-week btn-week">></div>
 		</c:if>
 	</div>
-	<div class="print-match-box">
+	<div class="print-match-box" style="margin: 30px 0 30px 0;">
 		
 	</div>
 	<script type="text/javascript">
@@ -106,7 +107,7 @@
 				for(match of data.matchList){
 					str +=`
 						<div class="match-box">
-							<div class="match-time-box">
+							<div class="match-time-box" style="margin-right: 10px;">
 								<span class="match-time">\${match.ti_time_str}</span>
 							</div>
 							<div class="match-info-box">
@@ -125,23 +126,26 @@
 					str += `
 						</div>
 					`;
-					if(${weekCount == 2}){
+					if(match.mt_state1 == 0 && ${weekCount == 2}){
 						str += `
-							<button class="btn btn-outline-danger btn-delete btn-manager-match" value="\${match.mt_num}">취소</button> <br>
+							<button class="d-btn btn-delete btn-manager-match" 
+								style="width: 120px; height: 40px; border: none;
+								border-radius: 5px; background-color: #d4d4d4; color: black;"
+								value="\${match.mt_num}">취소</button> <br>
 						`;
-					}else if(match.ready == 2){
+					}else if(match.mt_state1 == 0 && match.ready == 2){
 						str += `
 							<button class="btn btn-outline-primary btn-manager btn-manager-match" value="\${match.mt_num}">매치 관리<br>\${match.entry_count}/\${match.mt_personnel * 3}</button> <br>
 						`;
-					}else if(match.ready == 1){
+					}else if(match.mt_state1 == 0 && match.ready == 1){
 						str += `
 							<button class="btn btn-outline-success btn-manager btn-manager-match" value="\${match.mt_num}">매칭 완료<br>\${match.entry_count}/\${match.mt_personnel * 3}</button> <br>
 						`;
-					}else if(${weekCount >= 0}){
+					}else if(match.mt_state1 == 0 && ${weekCount >= 0}){
 						str += `
 							<button class="btn btn-outline-warning btn-manager btn-manager-match" value="\${match.mt_num}">매치 대기중<br>\${match.entry_count}/\${match.mt_personnel * 3}</button> <br>
 						`;
-					}else if(match.ready == 3){
+					}else if(match.mt_state1 == 2){
 						str += `
 							<button class="btn btn-outline-dark btn-manager btn-manager-match" value="\${match.mt_num}">관리 완료</button> <br>
 						`;

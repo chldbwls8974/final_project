@@ -277,6 +277,7 @@ public class MatchServiceImp implements MatchService{
 				if(entryDao.deleteEntry(dbEntry.getEn_num())) {
 					dbTeam = teamDao.selectListTeamByMtNum(mt_num);
 					if(dbTeam.getEntry_count() == 0) {
+						teamDao.deleteTeam(dbTeam.getTe_num());
 						matchDao.updateMatchMtTypeTo0(mt_num);
 					}
 					return true;
@@ -437,18 +438,17 @@ public class MatchServiceImp implements MatchService{
 	}
 	
 	@Override
-	public void insertMatchTeamSolo() {
-		List<MatchVO> matchList = matchDao.selectMatchSolo();
-		for(MatchVO match : matchList) {
-			if(match.getDelete() == 0 && match.getMt_rule() == 1 && match.getMt_state1() == 0) {
-				List<TeamVO> teamList = teamDao.selectTeamByMtNum(match.getMt_num());
-				if(teamList.size() == 0) {
-					for(int i = 0; i < 3; i++) {
-						teamDao.insertTeam(match.getMt_num());
+	public boolean insertMatchTeamSolo(int mt_num) {
+		List<TeamVO> teamList = teamDao.selectTeamByMtNum(mt_num);
+		boolean res = true;
+		if(teamList.size() == 0) {
+				for(int i = 0; i < 3; i++) {
+					if(!teamDao.insertTeam(mt_num)) {
+						res = false;
 					}
-				}
 			}
 		}
+		return res;
 	}
 	
 	@Override
@@ -477,8 +477,34 @@ public class MatchServiceImp implements MatchService{
 	public void updateEndMatch() {
 		List<MatchVO> matchList = matchDao.selectEndMatch();
 		for(MatchVO match : matchList) {
-			matchDao.updateMatchMtState1To2(match.getMt_num());
+			updateRatingMatchResult(match.getMt_num());
 		}
+	}
+	//점수 업데이트
+	public boolean updateRatingMatchResult(int mt_num) {
+		//등록된 경기 조회
+		List<QuarterVO> quarterList = quarterDao.selectQuarterListByMtNum(mt_num);
+		
+		for(QuarterVO quarter : quarterList) {
+			//승리팀 점수 업데이트
+			int winTeam = quarterDao.selectWinTeamByQuNum(quarter.getQu_num());
+			if(winTeam != 0) {
+				List<EntryVO> winnerList = entryDao.selectEntryListByTeNum(winTeam);
+				for(EntryVO winner : winnerList) {
+					memberDao.updateRatingWinByMeNum(winner.getEn_me_num());
+				}
+			}
+			
+			//패배팀 점수 업데이트
+			int loserTeam = quarterDao.selectLoseTeamByQuNum(quarter.getQu_num());
+			if(loserTeam != 0) {
+				List<EntryVO> loserList = entryDao.selectEntryListByTeNum(loserTeam);
+				for(EntryVO loser : loserList) {
+					memberDao.updateRatingLoseByMeNum(loser.getEn_me_num());
+				}
+			}
+		}
+		return matchDao.updateMatchMtState1To2(mt_num);
 	}
 
 	@Override

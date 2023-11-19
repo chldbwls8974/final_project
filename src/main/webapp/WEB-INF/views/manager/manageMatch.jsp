@@ -29,7 +29,10 @@
 	.member-list:last-child{border-bottom: none;}
 	.entry-list-box{height: auto;}
 	.entry-btn-box{float: right;}
+	.btn-match-end{margin-left: 15px; margin-bottom: 10px;}
 	.quarter-box{width: 500px; height: 200px; margin-left: 15px;}
+	.club-emblem{width: 20px; height: 20px; border-radius: 50%;}
+	.member-profile{width: 20px; height: 20px; border-radius: 50%;}
 	</style>
 </head>
 <body>
@@ -44,39 +47,18 @@
 				</div>
 			</c:if>
 		</div>
-		<div class="contents-box right-box">
-			<div class="entry-list-box right-side-box">
-				<h4>참가자 리스트</h4>
-				<c:if test="${match.team_count != 0 && match.list_team == 0}">
-					<button class="btn-reset">초기화</button>
-					<button class="btn-auto-balance">자동 밸런스</button>
-					<button class="btn-team-complete">팀 확정</button>
-				</c:if>
-				<c:forEach items="${entryList}" var="el">
-					<div class="entry-member member-list">${el.me_nickname}(${el.me_tr_name})
-						<c:if test="${el.te_type != 0}">
-							${el.te_type}팀
-						</c:if>
-						<input hidden disabled value="${el.en_num}">
-						<c:if test="${match.ready == 1 && el.te_type == 0}">
-							<div class="entry-btn-box">
-								<c:forEach items="${teamList}" var="tl">
-									<c:if test="${tl.club_entry_count < match.mt_personnel}">
-										<button class="entry-btn" value="${tl.te_num}">${tl.te_type}팀</button>
-									</c:if>
-									<c:if test="${tl.club_entry_count == match.mt_personnel}">
-										<button class="entry-btn" value="${tl.te_num}" disabled>${tl.te_type}팀</button>
-									</c:if>
-								</c:forEach>
-							</div>
-						</c:if>
-					</div>
-				</c:forEach>
+		<c:if test="${match.list_team == 1}">
+			<div class="contents-box right-box">
+				<div class="entry-list-box right-side-box">
+					
+				</div>
 			</div>
-		</div>
+		</c:if>
 	</nav>
-	<c:if test="${match.ready ==  2 && match.list_team == 1}">
+	<c:if test="${match.mt_state1 == 0 && match.ready ==  2 && match.list_team == 0}">
+		<button class="btn-match-end">경기결과 입력완료</button>
 		<div class="insert-quarter-box">
+		
 		</div>
 	</c:if>
 	<div class="quarter-list-box">
@@ -87,9 +69,13 @@
 	let str = ``;
 	
 	printTeam()
+	printEntryList()
 	printInsertQuarter()
 	printQuarter()
 	
+	$(document).on('click', '.btn-insert-team', function() {
+		insertTeam()
+	})
 	$(document).on('click', '.entry-btn', function() {
 		te_num = $(this).val();
 		en_num = $(this).parents('.entry-btn-box').siblings('input').val();
@@ -103,8 +89,17 @@
 		autoBalance()
 	})
 	$(document).on('click', '.btn-team-complete', function() {
-		if(confirm("팀 확정시 변경할 수 없습니다.\n변경하시겠습니까?")){
+		if(confirm("팀 확정시 변경할 수 없습니다.\n진행하시겠습니까?")){
 			teamComplete()
+			alert("확정되었습니다.");
+		}else{
+			alert("취소되었습니다.");
+		}
+	})
+	$(document).on('click', '.btn-match-end', function() {
+		if(confirm("이후 경기결과 확정시 경기결과를 등록/수정/삭제할 수 없습니다.\n진행하시겠습니까?")){
+			confirmMatch()
+			alert("확정되었습니다.");
 		}else{
 			alert("취소되었습니다.");
 		}
@@ -112,7 +107,7 @@
 	$(document).on('change', '.quarter-type', function() {
 		type = $(this).val();
 		
-		selectType(type);
+		selectType(type)
 	})
 	$(document).on('click', '.btn-insert-quarter', function() {
 		qu_te_num1 = $(this).siblings('.qu_te_num1').val();
@@ -128,8 +123,8 @@
 				qu_goal2 : qu_goal2
 		}
 		
-		insertQuarter(data);
-		printInsertQuarter();
+		insertQuarter(data)
+		printInsertQuarter()
 	})
 	
 	$(document).on('click', '.btn-update-quarter', function() {
@@ -141,7 +136,7 @@
 		goal1 = $(this).siblings('.recored-goal1').val();
 		goal2 = $(this).siblings('.recored-goal2').val();
 		
-		printUpdateQuarter(qu_num, team1, team2, te_num1, te_num2, goal1, goal2);
+		printUpdateQuarter(qu_num, team1, team2, te_num1, te_num2, goal1, goal2)
 		$(this).parents('.quarter-box').html(str);
 	})
 	$(document).on('click', '.btn-update-complete', function() {
@@ -159,19 +154,31 @@
 				qu_goal1 : qu_goal1,
 				qu_goal2 : qu_goal2
 		}
-		updateQuarter(data);
-		printQuarter();
+		updateQuarter(data)
+		printQuarter()
 	})
 	$(document).on('click', '.btn-update-cansel', function() {
-		printQuarter();
+		printQuarter()
 	})
 	$(document).on('click', '.btn-delete-quarter', function() {
 		qu_num = $(this).val();
 		
-		deleterQuarter(qu_num);
-		printQuarter();
-		printInsertQuarter();
+		deleterQuarter(qu_num)
+		printQuarter()
+		printInsertQuarter()
 	})
+	function insertTeam() {
+		$.ajax({
+			async : false,
+			method : 'post',
+			url : '<c:url value="/insert/team/solo"/>',
+			data : {mt_num:mt_num},
+			dataType : 'json',
+			success : function(data) {
+				location.href='<c:url value="/manager/manage/match?mt_num="/>'+ mt_num;
+			}
+		});
+	}
 	function entryToTeam(en_num, te_num) {
 		$.ajax({
 			async : false,
@@ -182,7 +189,8 @@
 			success : function(data) {
 				if(data.res){
 					alert("등록 성공");
-					location.href='<c:url value="/manager/manage/match?mt_num="/>'+ mt_num;
+					printTeam()
+					printEntryList()
 				}else{
 					alert("등록 실패");
 				}
@@ -198,7 +206,8 @@
 			dataType : 'json',
 			success : function(data) {
 				if(data.res){
-					location.href='<c:url value="/manager/manage/match?mt_num="/>'+ mt_num;
+					printTeam()
+					printEntryList()
 				}
 			}
 		});
@@ -212,7 +221,8 @@
 			dataType : 'json',
 			success : function(data) {
 				if(data.res){
-					location.href='<c:url value="/manager/manage/match?mt_num="/>'+ mt_num;
+					printTeam()
+					printEntryList()
 				}
 			}
 		});
@@ -226,10 +236,30 @@
 			dataType : 'json',
 			success : function(data) {
 				if(data.res){
+					alert(data.msg);
 					location.href='<c:url value="/manager/manage/match?mt_num="/>'+ mt_num;
+				}else{
+					alert(data.msg);
 				}
 			}
 		});
+	}
+	function confirmMatch() {
+		$.ajax({
+			async : false,
+			method : 'post',
+			url : '<c:url value="/confirm/match"/>',
+			data : {mt_num:mt_num},
+			dataType : 'json',
+			success : function(data) {
+				if(data.res){
+					alert("경기확정 성공");
+					location.href='<c:url value="/manager/manage/match?mt_num="/>'+ mt_num;
+				}else{
+					alert("경기확정 실패");
+				}
+			}
+		});		
 	}
 	function insertQuarter(data) {
 		$.ajax({
@@ -247,36 +277,146 @@
 		printQuarter();
 	}
 	function printTeam() {
-		str = `
-			<c:forEach items="${teamList}" var="tl">
-				<div class="teamList-box">
-					<table>
-						<thead>
-							<tr>
-								<th>
-									${tl.te_type}팀:${tl.cl_name} ${tl.club_entry_count}/${match.mt_personnel}
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach items="${entryList}" var="el">
-								<c:if test="${tl.te_num == el.en_te_num}">
+		$.ajax({
+			async : false,
+			method : 'post',
+			url : '<c:url value="/print/team/entry"/>',
+			data : {mt_num:mt_num},
+			dataType : 'json',
+			success : function(data) {
+				str = ``;
+				count = 0;
+				for(team of data.teamList){
+					str += `
+						<div class="teamList-box">
+							<table>
+								<thead>
+									<tr>
+										<th>
+											\${team.te_type}팀
+					`;
+					if(team.cl_name != null){
+						str += `
+							<img class="club-emblem" alt="팀엠블럼" src="<c:url value='/clubimg\${team.cl_emblem}'/>">\${team.cl_name}
+						`;
+					}
+					str += `
+											(\${team.club_entry_count}/${match.mt_personnel})
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+					`;
+						for(entry of data.entryList){
+							if(team.te_num == entry.en_te_num){
+								str += `
 									<tr>
 										<td>
 											<span>
-												${el.me_nickname}(${el.me_tr_name})
+												<img class="member-profile" alt="멤버프로필" src="<c:url value='/memberimg\${entry.me_profile}'/>">
+												\${entry.me_nickname}(\${entry.me_tr_name})
 											</span>
 										</td>
 									</tr>
-								</c:if>
-							</c:forEach>
-						</tbody>
-					</table>
-				</div>
-			</c:forEach>
-		`;
+								`;
+							}
+						}
+					str += `
+								</tbody>
+							</table>
+						</div>
+					`;
+					count++;
+				}
+				for(;count < 3; count++){
+					str += `
+						<div class="teamList-box">
+						</div>
+					`;
+				}
+			}
+		});
 		$('.team-box').html(str);
 	}
+	function printEntryList() {
+		$.ajax({
+			async : false,
+			method : 'post',
+			url : '<c:url value="/print/team/entry"/>',
+			data : {mt_num:mt_num},
+			dataType : 'json',
+			success : function(data) {
+				str = ``;
+				if(${match.mt_type == 1 && match.list_team == 1 && match.entry_count == 0}){
+					str += `
+						<h4>참가자가 없습니다.</h4>
+					`;
+				}else{
+					str += `
+						<h4>참가자 리스트</h4>
+					`;
+				}
+				if(${match.team_count == 0 && match.ready > 0 && (match.mt_personnel * 3 == match.entry_count)}){
+					str += `
+						<button class="btn-insert-team">팀 배정</button>
+					`;
+				}
+				if(${match.team_count != 0 && match.list_team == 1}){
+					if(data.entry_count == 0){
+						str += `
+							<button class="btn-reset">초기화</button>
+							<button class="btn-auto-balance">자동 밸런스</button>
+							<button class="btn-team-complete">팀 확정</button>
+						`;
+					}else{
+						str += `
+							<button class="btn-reset">초기화</button>
+							<button class="btn-auto-balance" disabled>자동 밸런스</button>
+							<button class="btn-team-complete">팀 확정</button>
+						`;						
+					}
+				}
+				for(entry of data.entryList){
+					str += `
+						<div class="entry-member member-list">
+					`;
+					if(entry.te_type != 0){
+						str += `
+							\${entry.te_type}팀 : 
+						`;
+					}
+					str += `
+						<img class="member-profile" alt="멤버프로필" src="<c:url value='/memberimg\${entry.me_profile}'/>">\${entry.me_nickname}(\${entry.me_tr_name})
+					`;
+					if(${match.ready > 0} && entry.te_type == 0){
+						str += `
+							<input hidden disabled value="\${entry.en_num}">
+							<div class="entry-btn-box">
+						`;
+						for(team of data.teamList){
+							if(team.club_entry_count < ${match.mt_personnel}){
+								str += `
+									<button class="entry-btn" value="\${team.te_num}">\${team.te_type}팀</button>
+								`;
+							}else if(team.club_entry_count == ${match.mt_personnel}){
+								str += `
+									<button class="entry-btn" value="\${team.te_num}" disabled>\${team.te_type}팀</button>
+								`;
+							}
+						}
+						str += `
+							</div>
+						`;
+					}
+					str += `
+						</div>
+					`;
+				}
+			}
+		});
+		$('.entry-list-box').html(str);
+	}
+	
 	function printInsertQuarter() {
 		str = ``;
 		$.ajax({
@@ -323,15 +463,20 @@
 			data : {mt_num:mt_num},
 			dataType : 'json',
 			success : function(data) {
-				quarterList = data.quarterList
 				if(${match.ready ==  2 || match.ready == 3}){
 					let i = 0
 					for(quarterList of data.quarterList){
 						str += `
 							<div class="info-box quarter-box">
 								<h4>\${i + 1}경기</h4>
-								<button class="btn-update-quarter" value="\${quarterList.qu_num}">수정</button>
-								<button class="btn-delete-quarter" value="\${quarterList.qu_num}">삭제</button>
+						`;
+						if(${match.mt_state1 == 0}){
+							str += `
+									<button class="btn-update-quarter" value="\${quarterList.qu_num}">수정</button>
+									<button class="btn-delete-quarter" value="\${quarterList.qu_num}">삭제</button>
+							`;
+						}
+						str += `
 								<input type="number" class="recored-team1" value="\${quarterList.team1}" hidden disabled>
 								<input type="number" class="recored-team2" value="\${quarterList.team2}" hidden disabled>
 								<input type="number" class="recored-te_num1" value="\${quarterList.qu_te_num1}" hidden disabled>

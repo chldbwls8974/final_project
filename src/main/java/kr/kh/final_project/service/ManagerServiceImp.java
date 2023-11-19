@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import kr.kh.final_project.dao.EntryDAO;
 import kr.kh.final_project.dao.ManagerDAO;
 import kr.kh.final_project.dao.MatchDAO;
+import kr.kh.final_project.dao.MemberDAO;
 import kr.kh.final_project.dao.QuarterDAO;
 import kr.kh.final_project.dao.TeamDAO;
 import kr.kh.final_project.vo.EntryVO;
@@ -21,6 +22,9 @@ public class ManagerServiceImp implements ManagerService{
 
 	@Autowired
 	ManagerDAO managerDao;
+	
+	@Autowired
+	MemberDAO memberDao;
 	
 	@Autowired
 	MatchDAO matchDao;
@@ -146,9 +150,14 @@ public class ManagerServiceImp implements ManagerService{
 		if(quarter.getQu_mt_num() == 0 || quarter.getQu_te_num1() == 0 || quarter.getQu_te_num2() == 0) {
 			return false;
 		}
-		return quarterDao.insertQuarter(quarter);
+		boolean res = true;
+		//경기 등록
+		if(!quarterDao.insertQuarter(quarter)) {
+			res = false;
+		}
+		return res;
 	}
-	
+
 	@Override
 	public boolean updateQuarter(QuarterVO quarter) {
 		if(quarter.getQu_num() == 0

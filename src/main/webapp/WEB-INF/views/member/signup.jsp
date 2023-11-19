@@ -154,8 +154,8 @@ input, progress {
 			</div>
 
 			<div class="form-group">
-				<label>이름</label> <input type="text" class="form-control"
-					name="me_name" id="me_name" required>
+				<label>이름</label> 
+				<input type="text" class="form-control" name="me_name" id="me_name" maxlength="10" required>
 			</div>
 
 			<div class="form-group1" style="text-align: center; margin-bottom: 20px;">
@@ -177,7 +177,7 @@ input, progress {
 			<div class="form-group">
 				<label>닉네임</label> <label id="check-nickName-error" class="error"
 					for="me_nickname"></label> <input type="text" class="form-control"
-					name="me_nickname" maxlength="15" required>
+					name="me_nickname" maxlength="15" maxlength="15" required>
 			</div>
 			<div class="form-group">
 				<label>거주지</label> <select class="form-control rg_main" required>
@@ -409,28 +409,35 @@ input, progress {
               			</label>
            			</li>
                 </ul>
+                <div>
+					 <button type="button" id="reset-btn"  style="background-color: black; color: white; border-radius: 10px; width: 80px;" class="btn">초기화</button>
+				</div>
 			</div>
 		</div>
 
-			<div class="prefer-area">
-				<div class="form-group">
-					<label>선호지역</label> <select class="form-control pre_rg_main">
-						<option value="0">지역을 선택하세요</option>
-						<c:forEach items="${MainRegion}" var="main">
-							<option value="${main.rg_main}">${main.rg_main}</option>
-						</c:forEach>
-					</select>
-
-				</div>
-				<div class="form-group">
-					<select class="form-control rg_sub" name="pr_rg_num">
-						<option value="0">지역을 선택하세요</option>
-						<c:forEach items="${SubRegion}" var="sub">
-							<option value="${sub.rg_num}">${sub.rg_sub}</option>
-						</c:forEach>
-					</select>
-				</div>
-			</div>
+			 <div class="prefer-area">
+						 <div class="form-group"  id="area-box" style="display: block;">
+							<div class="form-group" style="display: block;">
+								<select class="form-control pre_rg_main">
+									<option value="0">대분류를 선택하세요</option>
+									<c:forEach items="${MainRegion}" var="main">
+										<option value="${main.rg_main}" <c:if test="${list.rg_main == main.rg_main }">selected</c:if>>${main.rg_main}</option>
+									</c:forEach>
+								</select>
+			
+							</div>
+							<div class="form-group" style="display: block;">
+								<select class="form-control rg_sub" name="pr_rg_num">
+									<option value="0">소분류를 선택하세요</option>
+									<c:forEach items="${subRg}" var="sub">
+										<c:if test="${sub.rg_main == list.rg_main}">
+											<option value="${sub.rg_num}"<c:if test="${list.rg_num == sub.rg_num }">selected</c:if>>${sub.rg_sub}</option>
+										</c:if>
+									</c:forEach>
+								</select>
+							</div>
+						</div>
+					</div>
 
 			<div class="form-group">
 				<button type="button" class="form-control" name="add-area-btn">지역
@@ -464,7 +471,7 @@ input, progress {
 	const signUpBtn = document.getElementById("signup");
 	let randomCode;
 	let x;
-	let count = 0;
+	let count = 1;
 	let time;
 	var min = ""; // 분
 	var sec=""; // 초
@@ -670,32 +677,39 @@ input, progress {
 	
 	// 선호지역 추가 버튼
 	 $(document).on('click','[name=add-area-btn]',function(){
-		 count++;
-		 console.log(count)
-		 if(2 >= count){
+		 
+		 if(3 > count){
+			 count++;
 			 str='';
 			 btn='';
 			 str+=`
-			 	<hr>
 				 <div class="prefer-area">
-					<div class="form-group">
-						<label>선호지역</label> <select class="form-control pre_rg_main">
-							<option value="0">지역을 선택하세요</option>
+				 <div class="form-group"  id="area-box" style="display: block;">
+					<div class="form-group" style="display: block;">
+						<select class="form-control pre_rg_main">
+							<option value="0">대분류를 선택하세요</option>
 							<c:forEach items="${MainRegion}" var="main">
-								<option value="${main.rg_main}">${main.rg_main}</option>
+								<option value="${main.rg_main}" <c:if test="${list.rg_main == main.rg_main }">selected</c:if>>${main.rg_main}</option>
 							</c:forEach>
 						</select>
-
+	
 					</div>
-					<div class="form-group">
+					<div class="form-group" style="display: block;">
 						<select class="form-control rg_sub" name="pr_rg_num">
-							<option value="0">지역을 선택하세요</option>
-							<c:forEach items="${SubRegion}" var="sub">
-								<option value="${sub.rg_num}">${sub.rg_sub}</option>
+							<option value="0">소분류를 선택하세요</option>
+							<c:forEach items="${subRg}" var="sub">
+								<c:if test="${sub.rg_main == list.rg_main}">
+									<option value="${sub.rg_num}"<c:if test="${list.rg_num == sub.rg_num }">selected</c:if>>${sub.rg_sub}</option>
+								</c:if>
 							</c:forEach>
 						</select>
+					</div>
+					<div class="form-group" style="display: block;">
+						<button type="button" name="area-del-btn" class="form-control" >x</button>
 					</div>
 				</div>
+			</div>
+
 
 			 `;
 			btn+=`
@@ -704,41 +718,21 @@ input, progress {
 				</div>
 			`; 
 			$(this).hide();
-			$(this).after(str);
-			$(this).after(btn);
+			$(this).before(str);
+			$(this).before(btn);
+		 }else{
+			 alert("선호지역은 최대 3개까지 등록 가능합니다.")
 		 }
 	 })
-	
+	 
 	
 	 // 데이트피커
-	 $(document).ready(function(){
-		$("#me_birthday").flatpickr({
-			  showOn: "both", // 버튼과 텍스트 필드 모두 캘린더를 보여준다.
-              // buttonImage: "/application/db/jquery/images/calendar.gif", // 버튼 이미지
-              //buttonImageOnly: true, // 버튼에 있는 이미지만 표시한다.
-              locale: 'ko',
-              altInput: true, // 선택한 날짜를 입력란에 보여주도록 설정
-              altFormat: "yy-mm-dd", // 입력란에 표시될 날짜 형식 설정
-              changeMonth: true, // 월을 바꿀수 있는 셀렉트 박스를 표시한다.
-              changeYear: true, // 년을 바꿀 수 있는 셀렉트 박스를 표시한다.
-              minDate: '-100y', // 현재날짜로부터 100년이전까지 년을 표시한다.
-              maxDate: 'today',
-              nextText: '다음 달', // next 아이콘의 툴팁.
-              prevText: '이전 달', // prev 아이콘의 툴팁.
-              numberOfMonths: [1,1], // 한번에 얼마나 많은 월을 표시할것인가. [2,3] 일 경우, 2(행) x 3(열) = 6개의 월을 표시한다.
-              stepMonths: 1, // next, prev 버튼을 클릭했을때 얼마나 많은 월을 이동하여 표시하는가. 
-              yearRange: 'c-100:c+100', // 년도 선택 셀렉트박스를 현재 년도에서 이전, 이후로 얼마의 범위를 표시할것인가.
-              showButtonPanel: true, // 캘린더 하단에 버튼 패널을 표시한다. ( ...으로 표시되는부분이다.) 
-              closeText: '닫기',  // 닫기 버튼 패널
-              showAnim: "slide", //애니메이션을 적용한다.  
-              showMonthAfterYear: true , // 월, 년순의 셀렉트 박스를 년,월 순으로 바꿔준다. 
-	        })
-		})
-		
 	$( function() {
     $( "#me_birthday" ).flatpickr({ 
+    	maxDate: "today", // 오늘 이후의 날짜만 선택 가능
+        format: "yy-mm-dd",
         onSelect: function() { 
-            var date = $.flatpickr.formatDate("yymmdd",$("#datepicker").flatpickr("getDate")); 
+            var date = $.flatpickr.formatDate("yy-mm-dd",$("#datepicker").flatpickr("getDate")); 
             alert(date);
         }
 	    });                    
@@ -754,7 +748,7 @@ input, progress {
 			flag = false;
 			let id = $(this).val();
 			if(!/^[a-zA-Z]\w{5,9}$/.test(id)){
-				$('#check-id-error').text('');
+				$('#check-id-error').text('아이디는 6~10글자 영문+숫자 조합이며, 영문으로 시작해야합니다');
 				return;
 			}
 			$.ajax({
@@ -837,6 +831,27 @@ input, progress {
 			}
 			
 		})
+		
+		
+		// 선호 지역 삭제 버튼
+		$(document).on('click','[name=area-del-btn]',function(){
+				$(this).parents('#area-box').hide();
+				$(this).parent().prev().find('[name=pr_rg_num]').val(0);
+				count--;
+		});
+
+		
+		// 선호 시간 초기화
+		$('#reset-btn').click(function(){
+		     // 주중 선호 시간 체크박스 해제
+	        $("[name=favoriteTime]").prop("checked", false);
+
+	        // 주말 선호 시간 체크박스 해제
+	        $("[name=favoriteHoliTime]").prop("checked", false);
+		})
+		
+	
+		
 	
 	</script>
 </body>

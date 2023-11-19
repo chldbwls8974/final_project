@@ -5,6 +5,7 @@ import java.util.List;
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.util.Message;
 import kr.kh.final_project.vo.BoardVO;
+import kr.kh.final_project.vo.BusinessmanVO;
 import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.ManagerVO;
 import kr.kh.final_project.vo.MemberVO;
@@ -70,6 +71,19 @@ public interface AdminService {
 	void noteregistration(int[] price, String date, MemberVO user);
 	//매치 신고를 처리하는 메서드
 	Message matchReportInsert(ReportVO report);
+	
+	// 사업자 등록 조회(3)
+	List<BusinessmanVO> getBusinessListByInsert(Criteria cri);
+	// 사업자 총 갯수 가져오기 (3)
+	int getTotalCountByBusiness(Criteria cri);
+	// 사업자 등록하기(3)
+	boolean insertBusiness(BusinessmanVO businessman, MemberVO user);
+	// 수정할 사업자 가져오기 (3)
+	BusinessmanVO getBusinessList3(Integer bu_num);
+	// 사업자 수정하기 (3)
+	boolean update(BusinessmanVO businessman);
+	// 사업자 삭제하기 (3)
+	boolean deleteBusiness(Integer bu_num);
 	
 	
 	

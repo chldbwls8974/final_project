@@ -22,4 +22,6 @@ public interface EntryDAO {
 
 	boolean updateEntryTeam(@Param("en_num")int en_num, @Param("te_num")int te_num);
 
+	List<EntryVO> selectEntryListByTeNum(@Param("te_num")int te_num);
+
 }

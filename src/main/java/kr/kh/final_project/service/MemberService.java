@@ -105,5 +105,7 @@ public interface MemberService {
 	
 	AccountVO getUserAccount(MemberVO user);
 	
+	List<RegionVO> getMyMainRegionList(int rg_num);
+	
 
 }

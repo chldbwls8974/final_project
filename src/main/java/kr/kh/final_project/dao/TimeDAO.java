@@ -13,4 +13,6 @@ public interface TimeDAO {
 
 	List<Integer> selectTiNumListByMtDate(@Param("mt_date")Date mt_date);
 
+	List<Integer> selectWeekTimeList();
+
 }

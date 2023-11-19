@@ -1,3 +1,94 @@
+DROP TRIGGER IF EXISTS INSERT_MANAGER;
+-- 매니저 등록시 경쟁전 매치로 변경
+DELIMITER //
+CREATE TRIGGER INSERT_MANAGER AFTER INSERT ON MANAGER
+FOR EACH ROW
+BEGIN
+	UPDATE FUTSAL.`MATCH`
+    SET
+		MT_RULE = 1
+	WHERE
+		MT_NUM = NEW.MN_MT_NUM;
+END //
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS DELETE_MANAGER;
+-- 매니저 삭제시 친선전 매치로 변경
+DELIMITER //
+CREATE TRIGGER DELETE_MANAGER AFTER DELETE ON MANAGER
+FOR EACH ROW
+BEGIN
+	UPDATE FUTSAL.`MATCH`
+    SET
+		MT_RULE = 0
+	WHERE
+		MT_NUM = OLD.MN_MT_NUM;
+END //
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS INSERT_TEAM;
+-- TE_TYPE = 0 인 팀 생성시 개인 매치로(MT_TYPE = 1) 변경
+DELIMITER //
+CREATE TRIGGER INSERT_TEAM AFTER INSERT ON TEAM
+FOR EACH ROW
+BEGIN
+	IF NEW.TE_TYPE = 0 THEN
+		UPDATE FUTSAL.`MATCH`
+		SET
+			MT_TYPE = 1
+		WHERE
+			MT_NUM = NEW.TE_MT_NUM;
+	END IF;
+END //
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS DELETE_TEAM;
+-- 팀 제거시 속해있던 매치에 등록된 팀이 0개이면 미확정 매치로(MT_TYPE = 0) 변경
+DELIMITER //
+CREATE TRIGGER DELETE_TEAM AFTER DELETE ON TEAM
+FOR EACH ROW
+BEGIN
+	IF (SELECT COUNT(TE_NUM) FROM `MATCH` JOIN TEAM ON TE_MT_NUM = MT_NUM WHERE MT_NUM = OLD.TE_MT_NUM) = 0 THEN
+		UPDATE FUTSAL.`MATCH`
+		SET
+			MT_TYPE = 0
+		WHERE
+			MT_NUM = OLD.TE_MT_NUM;
+    END IF;
+END //
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS INSERT_CLUB_TEAM;
+-- CLUB_TEAM 생성시 클럽 매치로(MT_TYPE = 2) 변경
+DELIMITER //
+CREATE TRIGGER INSERT_CLUB_TEAM AFTER INSERT ON CLUB_TEAM
+FOR EACH ROW
+BEGIN
+	UPDATE FUTSAL.`MATCH`
+    SET
+		MT_TYPE = 2,
+        MT_STATE2 = 1
+	WHERE
+		MT_NUM = (SELECT TE_MT_NUM FROM TEAM WHERE TE_NUM = NEW.CT_TE_NUM);
+END //
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS INSERT_ENTRY;
+-- CLUB_TEAM 생성시 클럽 매치로(MT_TYPE = 2) 변경
+DELIMITER //
+CREATE TRIGGER INSERT_ENTRY AFTER INSERT ON ENTRY
+FOR EACH ROW
+BEGIN
+	IF IFNULL((SELECT CT_CL_NUM FROM TEAM JOIN CLUB_TEAM ON CT_TE_NUM = TE_NUM WHERE TE_NUM = NEW.EN_TE_NUM), 0) = 0 THEN
+		UPDATE FUTSAL.`MATCH`
+		SET
+			MT_STATE2 = 1
+		WHERE
+			MT_NUM = (SELECT TE_MT_NUM FROM TEAM WHERE TE_NUM = NEW.EN_TE_NUM);
+    END IF;
+END //
+DELIMITER ;
+
 INSERT INTO MEMBER(ME_ID, ME_PW, ME_RG_NUM, ME_NICKNAME, ME_AUTHORITY, ME_POINT, ME_RATING, ME_TR_NAME)
 VALUES
 ('user1', 'user1', 2, 'B-1', 'BUSINESS', 300000, 900, '브론즈'), ('user2', 'user2', 2, 'B-2', 'BUSINESS', 30000, 1900, '실버'), ('user3', 'user3', 2, 'M-1', 'MANAGER', 30000, 2900, '골드'),
@@ -11,6 +102,10 @@ VALUES
 ('user25', 'user25', 4, 'U-21', 'USER', 30000, 900, '브론즈'), ('user26', 'user26', 4, 'U-22', 'USER', 30000, 1900, '실버'), ('user27', 'user27', 5, 'U-23', 'USER', 30000, 2900, '골드'),
 ('user28', 'user28', 6, 'U-24', 'USER', 30000, 3900, '플래티넘'), ('user29', 'user29', 7, 'U-25', 'USER', 30000, 4900, '다이아'), ('user30', 'user30', 8, 'B-30', 'BUSINESS', 30000, null, '스타터'),
 ('user31', 'user31', 2, 'test1', 'ADMIN', 300000, null, '스타터'),('user32', 'user32', 2, 'test2', 'USER', 300000, null, '스타터'),('user33', 'user33', 2, 'test3', 'USER', 300000, null, '스타터');
+
+update member
+set me_name = '테스트'
+where me_num = 1;
 
 INSERT INTO BUSINESSMAN(BU_ME_NUM)
 VALUES
@@ -97,7 +192,7 @@ VALUES
 (3, 62, 8), (3, 64, 8), (3, 66, 8), (3, 68, 8), (3, 82, 6),
 (3, 84, 6), (3, 86, 8), (3, 88, 8), (3, 90, 8), (3, 92, 8),
 (3, 106, 6), (3, 108, 6), (3, 111, 8), (3, 113, 8), (3, 115, 8),
-(3, 117, 8), (3, 119, 4), (3, 121, 3), (3, 130, 6), (3, 132, 6),
+(3, 117, 8), (3, 119, 4), (3, 121, 3), (3, 130, 8), (3, 132, 6),
 (3, 135, 8), (3, 137, 8), (3, 139, 8), (3, 141, 8), (3, 143, 4),
 (3, 145, 3), (3, 154, 6), (3, 156, 6), (3, 159, 8), (3, 161, 8),
 (3, 163, 8), (3, 165, 8), (3, 167, 4), (4, 9, 5), (4, 11, 5),
@@ -105,7 +200,7 @@ VALUES
 (4, 35, 5), (4, 38, 5), (4, 40, 5), (4, 42, 5), (4, 44, 3),
 (4, 57, 5), (4, 59, 5), (4, 62, 5), (4, 64, 5), (4, 66, 5),
 (4, 68, 3), (4, 81, 5), (4, 83, 5), (4, 86, 5), (4, 88, 5),
-(4, 90, 5), (4, 92, 3), (4, 105, 5), (4, 107, 5), (4, 110, 5),
+(4, 90, 5), (4, 92, 3), (4, 105, 5), (4, 107, 5), (4, 110, 3),
 (4, 112, 5), (4, 114, 5), (4, 116, 3), (4, 127, 4), (4, 129, 5),
 (4, 131, 5), (4, 134, 5), (4, 136, 5), (4, 138, 5), (4, 140, 3),
 (4, 142, 3), (4, 151, 4), (4, 153, 5), (4, 155, 5), (4, 158, 5),
@@ -600,21 +695,27 @@ futsal.stadium on sc_st_num = st_num
 	left join
 futsal.availability on av_st_num = st_num
 WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(adddate(now(), INTERVAL 6 DAY)), 1));
-
+INSERT INTO futsal.match (mt_date, mt_st_num, mt_ti_num, mt_personnel, mt_state1)
+SELECT
+	date(adddate(now(), INTERVAL 21 DAY)),
+	sc_st_num,
+	sc_ti_num,
+	sc_personnel,
+	if(st_available = 0, 0, if(date(adddate(now(), INTERVAL 21 DAY)) >= av_notdate, 1, 0))
+FROM
+	futsal.schedule
+	join
+futsal.time on sc_ti_num = ti_num
+	join
+futsal.stadium on sc_st_num = st_num
+	left join
+futsal.availability on av_st_num = st_num
+WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(now()), 1));
 
 insert into manager(mn_mt_num, mn_me_num)
 values
-(884, 3), (902, 3), (889, 4), (463, 3) ,(522, 3), (8, 3), (48, 3),
+(902, 3), (463, 3) ,(522, 3), (8, 3), (48, 3),
 (1337, 3), (1344, 3), (465, 4), (524, 4);
-
-update `match`
-set
-	mt_rule = 1,
-    mt_state2 = 1
-where
-	mt_num = 884 or mt_num = 902 or mt_num = 889 or mt_num = 463 or
-	mt_num = 522 or mt_num = 8 or mt_num = 48 or mt_num = 1337 or
-    mt_num = 1344 or mt_num = 465 or mt_num = 524 ;
 
 insert into preferred_region(pr_me_num, pr_rg_num)
 values
@@ -654,31 +755,27 @@ values
 insert into team(te_mt_num, te_type)
 values(463, 0), (902, 0), (524, 0), (465, 1), (522, 1), (522, 2);
 
-update `match`
-set
-	mt_type = 1,
-    mt_state2 = 1
-where
-	mt_num = 902 or mt_num = 463 or mt_num = 524;
-
 insert into entry(en_me_num, en_te_num)
 values
-(5, 1), (6, 1), (7, 1), (8, 1), (9, 1), (10, 1), (11, 1), (12, 1),
-(5, 2), (6, 2), (7, 2), (8, 2), (9, 2), (10, 2), (11, 2), (12, 2);
+(5, 1), (6, 1), (7, 1), (8, 1), (9, 1),
+(10, 1), (11, 1), (12, 1), (13, 1), (14, 1),
+(15, 1), (16, 1), (17, 1), (18, 1), (19, 1),
 
-insert into holding_coupon(hp_me_num, hp_cp_num)
-values(5, 3), (5, 4), (5, 5);
+(5, 2), (6, 2), (7, 2), (8, 2), (9, 2),
+(10, 2), (11, 2), (12, 2),
 
-insert into entry(en_me_num, en_te_num)
-values
 (5, 3), (6, 3), (7, 3), (8, 3), (9, 3),
 (10, 3), (11, 3), (12, 3), (13, 3), (14, 3),
 (15, 3), (16, 3), (17, 3), (18, 3), (19, 3);
 
+insert into holding_coupon(hp_me_num, hp_cp_num)
+values(5, 3), (5, 4), (5, 5);
+
 insert into point_history(ph_price, ph_source, ph_mt_num, ph_me_num)
 values
 (-10000, 1, 463, 5), (-10000, 1, 463, 6), (-10000, 1, 463, 7), (-10000, 1, 463, 8), (-10000, 1, 463, 9),
-(-10000, 1, 463, 10), (-10000, 1, 463, 11), (-10000, 1, 463, 12),
+(-10000, 1, 463, 10), (-10000, 1, 463, 11), (-10000, 1, 463, 12),(-10000, 1, 463, 13), (-10000, 1, 463, 14),
+(-10000, 1, 463, 15), (-10000, 1, 463, 16), (-10000, 1, 463, 17), (-10000, 1, 463, 18), (-10000, 1, 463, 19),
 (-10000, 1, 902, 5), (-10000, 1, 902, 6), (-10000, 1, 902, 7), (-10000, 1, 902, 8), (-10000, 1, 902, 9),
 (-10000, 1, 902, 10), (-10000, 1, 902, 11), (-10000, 1, 902, 12),
 (-10000, 1, 524, 5), (-10000, 1, 524, 6), (-10000, 1, 524, 7), (-10000, 1, 524, 8), (-10000, 1, 524, 9),
@@ -702,27 +799,70 @@ values
 
 insert into team_preferred_time(tt_cl_num, tt_ti_num)
 values
+(1, 7), (1, 8), (1, 9), (1, 10), (1, 11), (1, 12),
+(1, 13), (1, 14), (1, 15), (1, 16), (1, 17), (1, 18),
 (1, 19), (1, 20), (1, 21), (1, 22), (1, 23), (1, 24),
+(1, 31), (1, 32), (1, 33), (1, 34), (1, 35), (1, 36),
+(1, 37), (1, 38), (1, 39), (1, 40), (1, 41), (1, 42),
 (1, 43), (1, 44), (1, 45), (1, 46), (1, 47), (1, 48),
+(1, 55), (1, 56), (1, 57), (1, 58), (1, 59), (1, 60),
+(1, 61), (1, 62), (1, 63), (1, 64), (1, 65), (1, 66),
 (1, 67), (1, 68), (1, 69), (1, 70), (1, 71), (1, 72),
+(1, 79), (1, 80), (1, 81), (1, 82), (1, 83), (1, 84),
+(1, 85), (1, 86), (1, 87), (1, 88), (1, 89), (1, 90),
 (1, 91), (1, 92), (1, 93), (1, 94), (1, 95), (1, 96),
+(1, 103), (1, 104), (1, 105), (1, 106), (1, 107), (1, 108),
+(1, 109), (1, 110), (1, 111), (1, 112), (1, 113), (1, 114),
 (1, 115), (1, 116), (1, 117), (1, 118), (1, 119), (1, 120),
+(1, 127), (1, 128), (1, 129), (1, 130), (1, 131), (1, 132),
+(1, 133), (1, 134), (1, 135), (1, 136), (1, 137), (1, 138),
 (1, 139), (1, 140), (1, 141), (1, 142), (1, 143), (1, 144),
+(1, 151), (1, 152), (1, 153), (1, 154), (1, 155), (1, 156),
+(1, 157), (1, 158), (1, 159), (1, 160), (1, 161), (1, 162),
 (1, 163), (1, 164), (1, 165), (1, 166), (1, 167), (1, 168),
+(2, 7), (2, 8), (2, 9), (2, 10), (2, 11), (2, 12),
+(2, 13), (2, 14), (2, 15), (2, 16), (2, 17), (2, 18),
 (2, 19), (2, 20), (2, 21), (2, 22), (2, 23), (2, 24),
+(2, 31), (2, 32), (2, 33), (2, 34), (2, 35), (2, 36),
+(2, 37), (2, 38), (2, 39), (2, 40), (2, 41), (2, 42),
 (2, 43), (2, 44), (2, 45), (2, 46), (2, 47), (2, 48),
+(2, 55), (2, 56), (2, 57), (2, 58), (2, 59), (2, 60),
+(2, 61), (2, 62), (2, 63), (2, 64), (2, 65), (2, 66),
 (2, 67), (2, 68), (2, 69), (2, 70), (2, 71), (2, 72),
+(2, 79), (2, 80), (2, 81), (2, 82), (2, 83), (2, 84),
+(2, 85), (2, 86), (2, 87), (2, 88), (2, 89), (2, 90),
 (2, 91), (2, 92), (2, 93), (2, 94), (2, 95), (2, 96),
+(2, 103), (2, 104), (2, 105), (2, 106), (2, 107), (2, 108),
+(2, 109), (2, 110), (2, 111), (2, 112), (2, 113), (2, 114),
 (2, 115), (2, 116), (2, 117), (2, 118), (2, 119), (2, 120),
+(2, 127), (2, 128), (2, 129), (2, 130), (2, 131), (2, 132),
+(2, 133), (2, 134), (2, 135), (2, 136), (2, 137), (2, 138),
 (2, 139), (2, 140), (2, 141), (2, 142), (2, 143), (2, 144),
+(2, 151), (2, 152), (2, 153), (2, 154), (2, 155), (2, 156),
+(2, 157), (2, 158), (2, 159), (2, 160), (2, 161), (2, 162),
 (2, 163), (2, 164), (2, 165), (2, 166), (2, 167), (2, 168),
+(3, 7), (3, 8), (3, 9), (3, 10), (3, 11), (3, 12),
+(3, 13), (3, 14), (3, 15), (3, 16), (3, 17), (3, 18),
 (3, 19), (3, 20), (3, 21), (3, 22), (3, 23), (3, 24),
+(3, 31), (3, 32), (3, 33), (3, 34), (3, 35), (3, 36),
+(3, 37), (3, 38), (3, 39), (3, 40), (3, 41), (3, 42),
 (3, 43), (3, 44), (3, 45), (3, 46), (3, 47), (3, 48),
+(3, 55), (3, 56), (3, 57), (3, 58), (3, 59), (3, 60),
+(3, 61), (3, 62), (3, 63), (3, 64), (3, 65), (3, 66),
 (3, 67), (3, 68), (3, 69), (3, 70), (3, 71), (3, 72),
+(3, 79), (3, 80), (3, 81), (3, 82), (3, 83), (3, 84),
+(3, 85), (3, 86), (3, 87), (3, 88), (3, 89), (3, 90),
 (3, 91), (3, 92), (3, 93), (3, 94), (3, 95), (3, 96),
+(3, 103), (3, 104), (3, 105), (3, 106), (3, 107), (3, 108),
+(3, 109), (3, 110), (3, 111), (3, 112), (3, 113), (3, 114),
 (3, 115), (3, 116), (3, 117), (3, 118), (3, 119), (3, 120),
+(3, 127), (3, 128), (3, 129), (3, 130), (3, 131), (3, 132),
+(3, 133), (3, 134), (3, 135), (3, 136), (3, 137), (3, 138),
 (3, 139), (3, 140), (3, 141), (3, 142), (3, 143), (3, 144),
+(3, 151), (3, 152), (3, 153), (3, 154), (3, 155), (3, 156),
+(3, 157), (3, 158), (3, 159), (3, 160), (3, 161), (3, 162),
 (3, 163), (3, 164), (3, 165), (3, 166), (3, 167), (3, 168);
+
 
 insert into club_team(ct_te_num, ct_cl_num)
 values
@@ -736,10 +876,9 @@ values
 (21, 6), (22, 6), (23, 6), (24, 6),
 (25, 6), (26, 6), (27, 6), (28, 6); 
 
-UPDATE `match`
-SET
-	mt_type = 2,
-	mt_rule = 1,
-    mt_state2 = 1
-WHERE
-	mt_num = 465 or mt_num = 522;
+DROP TRIGGER IF EXISTS INSERT_MANAGER;
+DROP TRIGGER IF EXISTS DELETE_MANAGER;
+DROP TRIGGER IF EXISTS INSERT_TEAM;
+DROP TRIGGER IF EXISTS DELETE_TEAM;
+DROP TRIGGER IF EXISTS INSERT_CLUB_TEAM;
+DROP TRIGGER IF EXISTS INSERT_ENTRY;

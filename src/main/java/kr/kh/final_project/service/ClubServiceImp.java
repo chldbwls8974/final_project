@@ -2,6 +2,7 @@ package kr.kh.final_project.service;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import kr.kh.final_project.vo.ClubMemberVO;
 import kr.kh.final_project.vo.ClubVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PreferredAgeVO;
+import kr.kh.final_project.vo.PreferredTimeVO;
 import kr.kh.final_project.vo.TeamPreferredTimeVO;
 
 
@@ -121,12 +123,6 @@ public class ClubServiceImp implements ClubService{
 		return true;
 	}
 	
-	
-	@Override
-	public TeamPreferredTimeVO getClubTime(Integer cl_num) {
-		return teamTimeDao.selectTeamTime(cl_num);
-	}
-
 	@Override
 	public boolean updateClub(int me_num, ClubVO club, String fi_name, int[] age, int[] favoriteTime, int[] favoriteHoliTime) {
 		if(club == null) {
@@ -208,17 +204,50 @@ public class ClubServiceImp implements ClubService{
 		}
 	}
 
-
-
-	public List<PreferredAgeVO> getClubAgeList() {
-		return clubDao.selectClubAgeList();
+	@Override
+	public List<Integer> getClubTimeList(int i, Integer cl_num) {
+		// 0이면 평일, 1이면 주말
+		
+		if(i == 0) {
+			List<TeamPreferredTimeVO> dbPrTimeList = teamTimeDao.selectTeamTime(cl_num);
+			List<TeamPreferredTimeVO> prTimeWeekday = new ArrayList<TeamPreferredTimeVO>();
+			for (TeamPreferredTimeVO tmp : dbPrTimeList) {
+				if(tmp.getTt_ti_num() >= 1 && tmp.getTt_ti_num() <= 24) {
+					tmp.setTt_ti_num(tmp.getTt_ti_num()-1);
+					prTimeWeekday.add(tmp);
+				}
+			}
+			
+			List<Integer> weekTime = new ArrayList<Integer>(); 
+			for(TeamPreferredTimeVO k : prTimeWeekday ) {
+				weekTime.add(k.getTt_ti_num());
+			}
+			return weekTime;
+		}else {
+			
+			List<TeamPreferredTimeVO> dbPrTimeList = teamTimeDao.selectTeamTime(cl_num);
+			List<TeamPreferredTimeVO> prTimeHoliday = new ArrayList<TeamPreferredTimeVO>();
+			for (TeamPreferredTimeVO tmp : dbPrTimeList) {
+				if(tmp.getTt_ti_num() >= 145) {
+					tmp.setTt_ti_num((tmp.getTt_ti_num()-1) % 24);
+					prTimeHoliday.add(tmp);
+				}
+			}
+			List<Integer> holiTime = new ArrayList<Integer>(); 
+			for(TeamPreferredTimeVO k : prTimeHoliday ) {
+				holiTime.add(k.getTt_ti_num());
+			}
+			return holiTime;
+		}
 	}
 
 	@Override
-	public List<TeamPreferredTimeVO> getClubTimeList() {
-		return clubDao.selectClubTimeList();
+	public List<Integer> getClubAgeList(Integer cl_num) {
+		if(cl_num == 0) {
+			return null;
+		}
+		return preAgeDao.selectPreAgeListByClNum(cl_num);
 	}
-
 
 
 }

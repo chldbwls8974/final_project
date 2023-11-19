@@ -155,7 +155,7 @@
 			entry on en_te_num = te_num
 		where
 			mt_date = #{mt_date} and
-			mt_state1 = 0 and
+			mt_state1 in (0, 2) and
 			mn_me_num = #{me_num}
 		group by
 			mt_num
@@ -171,7 +171,7 @@
             `time`.*,
             count(en_num) as entry_count,
             ifnull(T0.t0 = mt_num, 0) as application,
-            if(ifnull(T1.t1, 0) + ifnull(T2.t2, 0) + ifnull(T3.t3, 0) = 0, true, false) as application_able,
+            if(ifnull(T1.t1, 0) + ifnull(T2.t2, 0) + ifnull(T3.t3, 0) + ifnull(T4.t4, 0) + ifnull(T5.t5, 0) + ifnull(T6.t6, 0) = 0, true, false) as application_able,
             if(now() >= addtime(addtime(mt_date, ti_time), "-01:30:00"), 1, 0) as ready
 		from
 			`match`
@@ -235,6 +235,36 @@
 			where
 				en_me_num = #{me_num} and
 				mt_date = #{mt_date}) as T3 on T3.t3 = mt_ti_num
+                left join
+			(select
+                mt_ti_num as t4
+			from
+				manager
+					join
+				`match` on mn_mt_num = mt_num
+			where
+				mn_me_num = #{me_num} and
+                mt_date = #{mt_date}) as T4 on T4.t4 = mt_ti_num
+            	left join
+			(select
+                mt_ti_num + 1 as t5
+			from
+				manager
+					join
+				`match` on mn_mt_num = mt_num
+			where
+				mn_me_num = #{me_num} and
+                mt_date = #{mt_date}) as T5 on T5.t5 = mt_ti_num
+                left join
+			(select
+                mt_ti_num - 1 as t6
+			from
+				manager
+					join
+				`match` on mn_mt_num = mt_num
+			where
+				mn_me_num = #{me_num} and
+                mt_date = #{mt_date}) as T6 on T6.t6 = mt_ti_num
 		where
 			mt_date = #{mt_date} and
             mt_state1 = 0 and
@@ -243,7 +273,7 @@
 		group by
 			mt_num
 		order by
-			ti_time asc;
+			ti_time asc
 	</select>
 	<select id="selectMatchByMeNum" resultType="kr.kh.final_project.vo.MatchVO">
 		select
@@ -556,14 +586,9 @@
 			stadium.*,
 			facility.*,
 			region.*,
-			count(t1.te_num) as team_count,
-            ifnull(t2.te_type, 1) as list_team,
-            (select
-				count(qu_num)
-			from
-				`quarter`
-			where
-				qu_mt_num = #{mt_num}) as quarter_count,
+			count(distinct if(te_type != 0, te_type, null)) as team_count,
+			count(distinct if(te_type = 0, 1, null)) as list_team,
+			count(distinct if(te_type = 0, en_num, null)) as entry_count,
 			if(now() >= addtime(addtime(mt_date, ti_time), "12:00:00"), 3,
 				if(now() >= addtime(mt_date, ti_time), 2,
 					if(mt_type = 1,
@@ -575,9 +600,9 @@
 				join
 			`match` on mn_mt_num = mt_num
 				left join
-			(select * from team where te_type != 0) as t1 on t1.te_mt_num = mt_num
-            	left join
-			(select * from team where te_type = 0) as t2 on t2.te_mt_num = mt_num
+			team on te_mt_num = mt_num
+				left join
+			entry on en_te_num = te_num
 				join
 			time on ti_num = mt_ti_num
 				join
@@ -588,9 +613,9 @@
 			region on fa_rg_num = rg_num
 		where
 			mt_num = #{mt_num} and
-			mt_state1 = 0
+			mt_state1 in (0, 2)
 		group by
-			mt_num
+			mt_num;
 	</select>
 	<select id="selectMatchList" resultType="kr.kh.final_project.vo.MatchVO">
 		select * FROM `match`

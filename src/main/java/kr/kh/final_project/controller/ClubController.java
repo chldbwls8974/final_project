@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.service.ClubService;
 import kr.kh.final_project.service.MemberService;
 import kr.kh.final_project.util.Message;
@@ -24,9 +25,7 @@ import kr.kh.final_project.util.UploadFileUtils;
 import kr.kh.final_project.vo.ClubMemberVO;
 import kr.kh.final_project.vo.ClubVO;
 import kr.kh.final_project.vo.MemberVO;
-import kr.kh.final_project.vo.PreferredAgeVO;
 import kr.kh.final_project.vo.RegionVO;
-import kr.kh.final_project.vo.TeamPreferredTimeVO;
 
 @Controller
 @RequestMapping("/club")
@@ -36,6 +35,8 @@ public class ClubController {
 	ClubService clubService;
 	@Autowired
 	MemberService memberService;
+	@Autowired
+	RegionDAO regionDao;
 	
 	String uploadPath = "D:\\uploadprofile\\club";
 
@@ -86,12 +87,8 @@ public class ClubController {
 	public String listClub(Model model, HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		List<ClubVO> list = clubService.getClubList();
-		List<PreferredAgeVO> ageList = clubService.getClubAgeList();
-		List<TeamPreferredTimeVO> timeList = clubService.getClubTimeList();
 		model.addAttribute("user",user);
 		model.addAttribute("list",list);
-		model.addAttribute("ageList",ageList);
-		model.addAttribute("timeList",timeList);
 		return "/club/list";
 	}
 	@GetMapping("/mylist")
@@ -150,10 +147,20 @@ public class ClubController {
 	public String updateClub(Model model, HttpSession session, Integer cl_num) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		ClubVO club = clubService.getClub(cl_num);
+		RegionVO region = regionDao.selectRegionByRgNum(club.getCl_rg_num());
 		List<RegionVO> MainRegion = memberService.getMainRegion();
+		List<RegionVO> subRg = regionDao.selectSubRegion(region.getRg_main());
+		List<Integer> weekTime = clubService.getClubTimeList(0,cl_num);
+		List<Integer> holiTime = clubService.getClubTimeList(1,cl_num);
+		List<Integer> ageList = clubService.getClubAgeList(cl_num);
 		model.addAttribute("MainRegion",MainRegion);
 		model.addAttribute("user",user);
 		model.addAttribute("club",club);
+		model.addAttribute("subRg",subRg);
+		model.addAttribute("region",region);
+		model.addAttribute("weekTime",weekTime);
+		model.addAttribute("holiTime",holiTime);
+		model.addAttribute("ageList",ageList);
 		return "/club/update";
 	}
 	
