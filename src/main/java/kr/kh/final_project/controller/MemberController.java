@@ -601,5 +601,14 @@ public class MemberController {
 		return map;
 	}
 	
+	@GetMapping("/util/ban")
+	public String ban(Model model, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		MemberVO member = memberService.getMemberByNum(user);
+		//정지일
+		System.out.println("컨트롤러" + user);
+		model.addAttribute("member", member);
+		return "/util/ban";
+	}
 	
 }
