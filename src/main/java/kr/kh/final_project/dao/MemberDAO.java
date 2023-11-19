@@ -65,4 +65,6 @@ public interface MemberDAO {
 	boolean updateRatingWinByMeNum(@Param("me_num")int me_num);
 
 	boolean updateRatingLoseByMeNum(@Param("me_num")int me_num);
+
+	String selectManagerNameByMtNum(@Param("mt_num")int mt_num);
 }

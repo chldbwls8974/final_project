@@ -133,12 +133,16 @@ public class MatchServiceImp implements MatchService{
 		if(mt_num == 0 || me_num == null) {
 			return null;
 		}
+		MatchVO match = null;
 		if(cl_num == 0) {
-			return matchDao.selectMatchByMeNum(mt_num, me_num);			
+			match = matchDao.selectMatchByMeNum(mt_num, me_num);			
 		}else if(cl_num != 0) {
-			return matchDao.selectMatchByClNum(mt_num, cl_num);
+			match = matchDao.selectMatchByClNum(mt_num, cl_num);
 		}
-		return null;
+		if(match.getMt_rule() == 1) {
+			match.setMe_name(memberDao.selectManagerNameByMtNum(match.getMt_num()));
+		}
+		return match;
 	}
 
 	@Override
@@ -169,6 +173,11 @@ public class MatchServiceImp implements MatchService{
 		List<MatchVO> matchList = new ArrayList<MatchVO>();
 		if(rg_num == 0) {
 			rgNumList = preferredRegionDao.selectPrRgNumListByMeNum(me_num);
+		}else if(rg_num == 246){
+			List<RegionVO> regionList = regionDao.selectUserRegion();
+			for(RegionVO region : regionList) {
+				rgNumList.add(region.getRg_num());				
+			}
 		}else {
 			List<Integer> rgMainList = regionDao.selectRgNumSubAll();
 			if(rgMainList.indexOf(rg_num) != -1) {
@@ -305,8 +314,19 @@ public class MatchServiceImp implements MatchService{
 
 
 	@Override
-	public List<MatchVO> getMatchList() {
-		return  matchDao.selectMatchList();
+	public List<MatchVO> getMyMatchListByMeNum(Integer me_num) {
+		if(me_num == null) {
+			return null;
+		}
+		List<MatchVO> matchList = matchDao.selectMyMatchListByMeNum(me_num);
+		for(MatchVO match : matchList) {
+			if(match.getMt_type() == 1) {
+				match.setCl_num(0);
+			}else if(match.getMt_type() == 2) {
+				match.setCl_num(teamDao.selectClubTeamByMeNum(match.getMt_num(), me_num));
+			}
+		}
+		return matchList;
 	}
 	
 	@Override

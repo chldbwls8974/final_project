@@ -73,6 +73,6 @@ public interface MatchService {
 
 	int countQuarterByMtNum(int mt_num);
 
-	List<MatchVO> getMatchList();
+	List<MatchVO> getMyMatchListByMeNum(Integer me_num);
 
 }

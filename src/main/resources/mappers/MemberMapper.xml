@@ -297,4 +297,16 @@
 		where
 			me_num = #{me_num}
 	</update>
+	<select id="selectManagerNameByMtNum" resultType="String">
+		SELECT
+			me_name
+		FROM
+			`match`
+				join
+			manager on mn_mt_num = mt_num
+				join
+			member on mn_me_num = me_num
+		where
+			mt_num = #{mt_num}
+	</select>
 </mapper>

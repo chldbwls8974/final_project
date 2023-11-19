@@ -64,6 +64,7 @@
 		<span>지역 </span>
 		<select class="select-main" style="margin-left: 10px;">
 			<option value="0">선호지역</option>
+			<option value="246">전체</option>
 			<c:forEach items="${mainRegion}" var="mr">
 				<option value="${mr.rg_num}">${mr.rg_main}</option>
 			</c:forEach>
@@ -178,7 +179,7 @@
 	
 	function printSubSelect(rg_num) {
 		let str = ``;
-		if(rg_num != 0){
+		if(!(rg_num == 0 || rg_num == 246)){
 			$.ajax({
 				async : false,
 				method : 'post',

@@ -28,4 +28,6 @@ public interface TeamDAO {
 
 	void deleteClubTeamByTeNum(@Param("te_num")int te_num);
 
+	int selectClubTeamByMeNum(@Param("mt_num")int mt_num, @Param("me_num")Integer me_num);
+
 }

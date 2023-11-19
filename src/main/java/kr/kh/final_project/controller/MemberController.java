@@ -466,9 +466,10 @@ public class MemberController {
 	
 	//마이페이지-신청 경기 페이지 조회
 	@GetMapping("/member/mymatch")
-	public String mymatch(Model model) {
+	public String mymatch(Model model, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		//서비스에게 매치리스트 요청
-		List<MatchVO> matchList = matchService.getMatchList(); 
+		List<MatchVO> matchList = matchService.getMyMatchListByMeNum(user.getMe_num()); 
 		model.addAttribute("matchList", matchList);
 		return "/member/mymatch";
 	}
