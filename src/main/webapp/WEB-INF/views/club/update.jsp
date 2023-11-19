@@ -10,6 +10,17 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style type="text/css">
+
+.container{ background-color: #f0f0f0; padding: 50px 0 50px 0;
+}
+.form-control{border-radius: 30px; width: 400px;}
+.form-group{display:block; text-align: center;}
+.form-group label{ margin-top: 20px;}
+.form-group input,
+.form-group select,
+.form-group textarea{ display: block; margin: 0 auto;}
+.form-group textarea{ text-align: center;}
+
 .error {
 	color: #f00;
 }
@@ -68,6 +79,48 @@ li{
     border: 1px solid #1570FF;
 }
 
+.form-check-inline{
+    position: relative;
+    padding-right: 1px;
+    margin-right: 5px;
+    box-sizing: border-box;
+    outline: none;
+}
+.form-check-input{
+	position: absolute;
+	display: none;
+    opacity: 0;
+    background-color: #F2F5F7;
+	width: 100%;
+    height: 100%;
+}
+.form-check-input+label{
+	position: relative;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    color: #4B5A64;
+    background-color: #FFFFFF;
+    border: 1px solid #D9E0E6;
+    border-radius: 12px;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.form-check-input:checked+label{
+	color: #1570FF;
+    border: 1px solid #1570FF;
+   	text-align: center;
+}
+
+input[type='checkbox']{
+	display : none;
+}
+
+.btn{ border-radius: 3px; width: 300px; height: 45px; border: none;
+	background-color: #0c0c0c; color: white; font-weight: 900; margin-top: 50px;}
+
 /* 프로필사진 */
 	.input-file{
 		display: none;
@@ -87,7 +140,6 @@ li{
 </head>
 <body>
 	<h1>클럽수정</h1>
-	${club }
 	<form action="<c:url value='/club/update'/>" method="post" enctype="multipart/form-data">
 		<div style="display: inline-grid;" class="profile">
 				<img src="<c:url value='/clubimg${club.cl_emblem }'/>" name="profile" height="150" width="150" style="border-radius: 50%; margin-bottom: 10px;">
@@ -112,7 +164,6 @@ li{
 			<label>클럽명</label><label id="check-name-error" class="error" for="cl_name"></label>
 			<input type="text" class="form-control" name="cl_name" id="cl_name" value="${club.cl_name }">
 		</div>
-		${region }
 		<div class="form-group">
 			<label>활동지역</label> 
 			<select class="form-control rg_main" required>
