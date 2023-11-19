@@ -133,6 +133,18 @@
 			</div>
 		</div>
 		<div class="form-group">
+			<label class="text">클럽 선호 연령</label>
+			<div>
+				<p> ${age}</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="text">클럽 회비</label>
+			<div>
+				<p> ${club.cl_price}</p>
+			</div>
+		</div>
+		<div class="form-group">
 			<label class="text">클럽 외부 url</label>
 			<div>
 				<p> ${club.cl_url }</p>
