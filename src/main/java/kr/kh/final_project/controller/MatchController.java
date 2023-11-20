@@ -84,7 +84,7 @@ public class MatchController {
 		}
 		
 		//match은 필터
-		//fa_rg_num은 지역필터, 0 : 선호 지역, rg_sub = '전체'이면 rg_main 의 모든 지역, 아니면 해당 지역
+		//fa_rg_num은 지역필터, 0 : 선호 지역, 246 : 전체지역, rg_sub = '전체'이면 rg_main 의 모든 지역, 아니면 해당 지역
 		//mt_date는 날짜 필터
 		List<MatchVO> matchList = matchService.selectMatchListOfSolo(user.getMe_num(), mt_date, rg_num, check);
 		map.put("matchList", matchList);
@@ -350,8 +350,16 @@ public class MatchController {
 			@RequestParam("mt_num")int mt_num,
 			HttpSession session){
 		Map<String, Object> map = new HashMap<String, Object>();
-		boolean res = matchService.insertEntryClub(me_num, cl_num, mt_num);
+		MatchVO match = matchService.selectMatchByMtNum(mt_num, 0, cl_num);
+		String msg = "등록 성공";
+		boolean res = false;
+		if(match.getClub_entry_count() == match.getMt_personnel()) {
+			msg = "참가자를 모두 선택하였습니다.";
+		}else {
+			res = matchService.insertEntryClub(me_num, cl_num, mt_num);			
+		}
 		
+		map.put("msg", msg);
 		map.put("res", res);
 		return map;
 	}

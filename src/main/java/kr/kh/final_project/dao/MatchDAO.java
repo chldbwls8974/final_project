@@ -51,6 +51,6 @@ public interface MatchDAO {
 	
 	MatchVO selectManageMatchByMtNum(@Param("mt_num")int mt_num);
 	
-	List<MatchVO> selectMatchList();
+	List<MatchVO> selectMyMatchListByMeNum(@Param("me_num")Integer me_num);
 
 }
