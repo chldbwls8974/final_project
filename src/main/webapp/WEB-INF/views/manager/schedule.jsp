@@ -111,7 +111,7 @@
 								<span class="match-time">\${match.ti_time_str}</span>
 							</div>
 							<div class="match-info-box">
-								<span>\${match.rg_main} \${match.rg_sub}</span> \${match.fa_name} \${match.st_name}<br>
+								<span>\${match.rg_main} \${match.rg_sub}</span> \${match.fa_name} \${match.st_name}
 					`;
 					if(match.mt_type == 1){
 						str += `
@@ -129,25 +129,37 @@
 					if(match.mt_state1 == 0 && ${weekCount == 2}){
 						str += `
 							<button class="d-btn btn-delete btn-manager-match" 
-								style="width: 120px; height: 40px; border: none;
-								border-radius: 5px; background-color: #d4d4d4; color: black;"
+								style="width: 120px; height: 40px; border: none; margin-left: 20px;
+								border-radius: 5px; background-color: #f2f2f2; color: black;"
 								value="\${match.mt_num}">취소</button> <br>
 						`;
 					}else if(match.mt_state1 == 0 && match.ready == 2){
 						str += `
-							<button class="btn btn-outline-primary btn-manager btn-manager-match" value="\${match.mt_num}">매치 관리<br>\${match.entry_count}/\${match.mt_personnel * 3}</button> <br>
+							<button class="btn btn-manager btn-manager-match" 
+							style="width: 120px; height: 40px; border: none; height: auto; margin-left: 20px;
+							border-radius: 5px; background-color: #f2f2f2; color: black;"
+							value="\${match.mt_num}">매치 관리<br>\${match.entry_count}/\${match.mt_personnel * 3}</button> <br>
 						`;
 					}else if(match.mt_state1 == 0 && match.ready == 1){
 						str += `
-							<button class="btn btn-outline-success btn-manager btn-manager-match" value="\${match.mt_num}">매칭 완료<br>\${match.entry_count}/\${match.mt_personnel * 3}</button> <br>
+							<button class="btn btn-manager btn-manager-match" 
+							style="width: 120px; height: 40px; border: none; height: auto; margin-left: 20px;
+							border-radius: 5px; background-color: #c2f296; color: black;"
+							value="\${match.mt_num}">매칭 완료<br>\${match.entry_count}/\${match.mt_personnel * 3}</button> <br>
 						`;
 					}else if(match.mt_state1 == 0 && ${weekCount >= 0}){
 						str += `
-							<button class="btn btn-outline-warning btn-manager btn-manager-match" value="\${match.mt_num}">매치 대기중<br>\${match.entry_count}/\${match.mt_personnel * 3}</button> <br>
+							<button class="btn btn-manager btn-manager-match"
+							style="width: 120px; height: 40px; border: none; height: auto; margin-left: 20px;
+							border-radius: 5px; background-color: #e5f4d8; color: black;"
+							value="\${match.mt_num}">매치 대기중<br>\${match.entry_count}/\${match.mt_personnel * 3}</button> <br>
 						`;
 					}else if(match.mt_state1 == 2){
 						str += `
-							<button class="btn btn-outline-dark btn-manager btn-manager-match" value="\${match.mt_num}">관리 완료</button> <br>
+							<button class="btn btn-manager btn-manager-match" 
+							style="width: 120px; height: 40px; border: none; height: auto; margin-left: 20px;
+							border-radius: 5px; background-color: #e5f4d8; color: black;"
+							value="\${match.mt_num}">관리 완료</button> <br>
 						`;
 					}
 					str += `
