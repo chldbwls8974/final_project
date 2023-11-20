@@ -111,9 +111,50 @@
 	    where fa_num = #{fa_num}
 	</update>
 	<select id="selectFacilityAllList" resultType="kr.kh.final_project.vo.FacilityVO" >
-		select facility.*,count(*) as st_count from facility
-		join businessman on fa_bu_num = bu_num
-		join stadium on fa_num = st_fa_num
-		group by st_fa_num
+		select 
+				*
+			from facility
+				 	join 
+			businessman on fa_bu_num = bu_num
+		<where>
+			<choose>
+				<when test='cri.t == "all"'>
+					(fa_name like concat('%', #{cri.s}, '%')
+					or fa_add like concat('%', #{cri.s}, '%')
+					or fa_phone like concat('%', #{cri.s}, '%'))
+				</when>
+				<when test='cri.t == "total"'>
+					(fa_name like concat('%', #{cri.s}, '%')
+					or fa_add like concat('%', #{cri.s}, '%'))
+				</when>
+				<when test='cri.t == "phone"'>
+					(fa_phone like concat('%', #{cri.s}, '%'))
+				</when>
+			</choose>
+		</where>
+		order by fa_bu_num asc
+		limit #{cri.pageStart}, #{cri.perPageNum}
 	</select>
+	<select id="selectFacilityListTotalCount" resultType="int">
+		select count(*) from facility
+				join 
+			 businessman on fa_bu_num = bu_num 
+		<where>
+			<choose>
+				<when test='cri.t == "all"'>
+					(fa_name like concat('%', #{cri.s}, '%')
+					or fa_add like concat('%', #{cri.s}, '%')
+					or fa_phone like concat('%', #{cri.s}, '%'))
+				</when>
+				<when test='cri.t == "total"'>
+					(fa_name like concat('%', #{cri.s}, '%')
+					or fa_add like concat('%', #{cri.s}, '%'))
+				</when>
+				<when test='cri.t == "phone"'>
+					(fa_phone like concat('%', #{cri.s}, '%'))
+				</when>
+			</choose>
+		</where>
+	</select>
+	
 </mapper>

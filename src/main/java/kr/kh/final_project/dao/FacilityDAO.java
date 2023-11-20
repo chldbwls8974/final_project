@@ -28,6 +28,9 @@ public interface FacilityDAO {
 	//시설 삭제(화면에서만)
 	int facilityDelete(@Param("fa_num")Integer fa_num);
 
-	List<FacilityVO> selectFacilityAllList();
+	//시설조회(admin)
+	List<FacilityVO> selectFacilityAllList(@Param("cri")Criteria cri);
+	//시설 페이지네이션(admin)
+	int selectFacilityListTotalCount(@Param("cri")Criteria cri);
 
 }

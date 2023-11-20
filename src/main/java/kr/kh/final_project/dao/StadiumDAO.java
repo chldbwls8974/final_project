@@ -26,5 +26,12 @@ public interface StadiumDAO {
 	//시설 삭제 시 경기장 삭제(화면에서만)
 	void updateStadiumAvailability(@Param("fa_num")Integer fa_num);
 	
+	//경기장 리스트 가져오기(관리자)
+	List<StadiumVO> selectStadiumListByAdmin(@Param("fa_num")Integer fa_num, @Param("cri")Criteria cri);
+	//경기장 페이지네이션(관리자)
+	int selectCountStadiumListByAdmin(@Param("cri")Criteria cri, @Param("fa_num")Integer fa_num);
+	//경기장 정보수정(관리자)
+	boolean updateStadiumByAdmin(StadiumVO stadium);
+	
 
 }

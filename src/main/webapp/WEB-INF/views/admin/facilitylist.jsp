@@ -90,7 +90,7 @@
 		시설 목록</p>
 	</div>
 	
-	<form action="<c:url value='/businessman/facility'/>" method="get">
+		<form action="<c:url value='/admin/facilitylist'/>" method="get">
 		<div class="facility-navigation" style="margin: 30px 0 30px 0; text-align: center;">
 			<select class="searchType" name="t">
 				<option value="all" <c:if test="${pm.cri.t == 'all'}">selected</c:if>>전체</option>
@@ -106,9 +106,9 @@
 		<table class="table">
 	      <thead class="thead-dark">
 	        <tr>
-	          <th>시설 번호</th>
+	          <th hidden="hidden">시설 번호</th>
 	          <th>사업자 번호</th>
-	          <th>지역</th>
+	          <th hidden="hidden">지역</th>
 	          <th>시설명</th>
 	          <th>주소</th>
 	          <th>상세주소</th>
@@ -124,10 +124,10 @@
 		  <tbody>
 	      	<c:forEach items="${list}" var="facility">
 			        <tr>
-			          <td>${facility.fa_num}</td>
+			          <td hidden="hidden">${facility.fa_num}</td>
 			          <td>${facility.fa_bu_num}</td>
-			          <td>${facility.fa_rg_num}</td>
-			          <td><a href="<c:url value='/businessman/stadium/${facility.fa_num}'/>"
+			          <td hidden="hidden">${facility.fa_rg_num}</td>
+			          <td><a href="<c:url value='/admin/stadiumlist/${facility.fa_num}'/>"
 			          style="text-align: left; color: #1179b1f5;">${facility.fa_name}</a></td>
 			          <td>${facility.fa_add}</td>
 			          <td>${facility.fa_add_detail}</td>
@@ -140,9 +140,9 @@
 			                <c:when test="${facility.fa_deleted == 1}">삭제</c:when>
 			            </c:choose>
 			          </td>
-			       	  <td><a href="<c:url value='/businessman/operating/${facility.fa_num}'/>"
+			       	  <td><a href="<c:url value='/admin/operatinglist/${facility.fa_num}'/>"
 								class="btn btn-outline-info" role="button">운영시간</a></td>
-			          <td><a href="<c:url value='/businessman/facilityUpdate?fa_num=${facility.fa_num}'/>"
+			          <td><a href="<c:url value='/admin/facilitylistUpdate?fa_num=${facility.fa_num}'/>"
 								class="btn btn-outline-secondary" role="button">수정</a></td>
 					  <td><a href="<c:url value='/businessman/facilityDelete?fa_num=${facility.fa_num}'/>"
 						    	class="btn btn-outline-secondary" role="button">삭제</a></td>
@@ -156,19 +156,19 @@
 		<c:if test="${pm.prev}">
 			<li class="page-item">
 				<a class="page-link" 
-					href="<c:url value='/businessman/facility${pm.cri.getUrl(pm.startPage-1) }'/>">이전</a>
+					href="<c:url value='/admin/facilitylist${pm.cri.getUrl(pm.startPage-1) }'/>">이전</a>
 			</li>
 		</c:if>
 		<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
 			<li class="page-item <c:if test='${pm.cri.page == i }'>active</c:if>">
 				<a class="page-link" 
-					href="<c:url value='/businessman/facility${pm.cri.getUrl(i)}'/>">${i}</a>
+					href="<c:url value='/admin/facilitylist${pm.cri.getUrl(i)}'/>">${i}</a>
 			</li>
 		</c:forEach>
 		<c:if test="${pm.next}">
 			<li class="page-item">
 				<a class="page-link" 
-					href="<c:url value='/businessman/facility${pm.cri.getUrl(pm.endPage+1) }'/>">다음</a>
+					href="<c:url value='/admin/facilitylist${pm.cri.getUrl(pm.endPage+1) }'/>">다음</a>
 			</li>
 		</c:if>
 	</ul>

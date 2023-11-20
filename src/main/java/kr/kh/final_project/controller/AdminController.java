@@ -1,6 +1,5 @@
 package kr.kh.final_project.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -20,28 +21,42 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import kr.kh.final_project.dao.FacilityDAO;
+import kr.kh.final_project.dao.OperatingDAO;
+import kr.kh.final_project.dao.StadiumDAO;
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.pagination.PageMaker;
 import kr.kh.final_project.service.AdminService;
+import kr.kh.final_project.service.BusinessmanService;
 import kr.kh.final_project.util.Message;
 import kr.kh.final_project.vo.BusinessmanVO;
-import kr.kh.final_project.vo.EntryVO;
 import kr.kh.final_project.vo.ExpenseVO;
 import kr.kh.final_project.vo.FacilityVO;
 import kr.kh.final_project.vo.ManagerVO;
-import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
+import kr.kh.final_project.vo.OperatingVO;
 import kr.kh.final_project.vo.PointHistoryVO;
+import kr.kh.final_project.vo.RegionVO;
 import kr.kh.final_project.vo.ReportVO;
+import kr.kh.final_project.vo.StadiumVO;
 
 @Controller
 public class AdminController {
 	
 	@Autowired
 	AdminService adminService;
+	
 	@Autowired
 	FacilityDAO facilityDao;
 
+	@Autowired
+	StadiumDAO stadiumDao;
+	
+	@Autowired
+	OperatingDAO operatingDao;
+	
+	@Autowired
+	BusinessmanService businessmanService;
+	
 	// 회원정보 출력하기 ,페이지네이션 기능구현
 	@GetMapping("/admin/member")
 	public String adminMember(Model model, Criteria cri) {
@@ -397,11 +412,156 @@ public class AdminController {
 		return map;
 	}
 	
+	
+	//시설 목록
 	@GetMapping("/admin/facilitylist")
-	public String facilityList(Model model) {
-		List<FacilityVO> list = facilityDao.selectFacilityAllList();
+	public String facilityList(Model model, HttpSession session, Criteria cri) {
+		List<FacilityVO> list = adminService.selectFacilityAllList(cri);
+		
+		int totalCount = adminService.getFacilityListTotalCount(cri);
+		final int DISPLAY_PAGE_NUM = 3;
+		PageMaker pm = new PageMaker(DISPLAY_PAGE_NUM, cri, totalCount);
+
 		model.addAttribute("list", list);
+		model.addAttribute("pm", pm);
 		return "/admin/facilitylist";
 	}
+	//시설 정보 수정
+	@GetMapping("/admin/facilitylistUpdate")
+	public String updateFacilityList(Model model, Integer fa_num, 
+			HttpSession session) {
+		//시설번호로 시설 정보 가져와서 저장
+		FacilityVO facility = adminService.updateFacilityByAdmin(fa_num);
 		
+		List<RegionVO> MainRegion = adminService.getMainRegion();
+
+		if(facility == null) {
+			Message msg = new Message("/admin/facilitylist", "잘못된 접근입니다.");
+			model.addAttribute("msg", msg);
+			return "message";
+		}
+		model.addAttribute("facility", facility);
+		model.addAttribute("MainRegion", MainRegion);
+		return "/admin/facilitylistUpdate";
+	}
+	//시설 정보 수정 시 지역 수정
+	@ResponseBody
+	@GetMapping("/admin/facilitylistUpdate/region1")
+	public Map<String, Object> region1(@RequestParam String rg_main, Model model){
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<RegionVO> SubRegion = adminService.getSubRegionByMainRegion(rg_main);
+		map.put("SubRegion", SubRegion);
+		return map;
+	}
+	//시설 정보 수정
+	@PostMapping("/admin/facilitylistUpdate")
+	public String facilityUpdate(Model model, FacilityVO facility, HttpSession session) {
+		Message msg;
+		
+		List<RegionVO> MainRegion = adminService.getMainRegion();
+		
+		if(facilityDao.updateFacility(facility)) {
+			msg = new Message("/admin/facilitylist?fa_num="+facility.getFa_num(), "시설 정보를 수정했습니다.");
+		}else {
+			msg = new Message("/admin/facilitylistUpdate?fa_num="+facility.getFa_num(), "시설 정보를 수정하지 못했습니다."); 
+		}
+		model.addAttribute("MainRegion", MainRegion);
+		model.addAttribute("msg", msg);
+		return "message";
+	}
+	
+	
+	//운영시간 페이지
+	@GetMapping("/admin/operatinglist/{fa_num}")
+	public String operating(Model model, @PathVariable("fa_num")Integer fa_num, 
+			HttpSession session) {
+		//시설 번호를 통해 시설 정보를 가져와서 facility에 저장
+		FacilityVO facility = facilityDao.selectFacility(fa_num);
+		
+		List<OperatingVO> operatingList = operatingDao.selectOperatingListByFaNum(fa_num);
+		
+		if(operatingList.size() == 0) {
+	        Message msg = new Message("/admin/facilitylist", "등록된 운영시간이 없습니다.");
+			model.addAttribute("msg", msg);
+			return "/message";
+		}
+		model.addAttribute("facility", facility);
+		model.addAttribute("operatingList", operatingList);
+		return "/admin/operatinglist";
+	}
+	//운영시간 수정
+	@GetMapping("/admin/operatinglistUpdate/{fa_num}")
+	public String updateOperating(Model model, @PathVariable("fa_num")Integer fa_num, HttpSession session) {
+		List<OperatingVO> operatingList = operatingDao.selectOperatingListByFaNum(fa_num);		
+		model.addAttribute("operatingList", operatingList);
+		return "/admin/operatinglistUpdate";
+	}
+	//운영시간 수정
+	@PostMapping("/admin/operatinglistUpdate")
+	public String operatingUpdate(Model model, FacilityVO facility, HttpSession session) {
+		//facility에서 operatingList를 불러옴
+		List<OperatingVO> operatingList = facility.getOperatingList();
+		int fa_num = facility.getFa_num();
+
+		boolean res = businessmanService.updateOperatingList(operatingList, fa_num);
+		if(res) {
+			model.addAttribute("msg", "시설 운영시간 수정이 완료되었습니다.");
+			model.addAttribute("url", "/admin/operatinglist/" + fa_num);
+		}else {
+			model.addAttribute("msg", "시설 운영시간 수정에 실패했습니다.");
+			model.addAttribute("url", "/admin/operatinglistUpdate");
+		}
+	    return "/util/message";
+	}
+	
+	
+	//경기장 목록
+	@GetMapping("/admin/stadiumlist/{fa_num}")
+	public String stadium(Model model, @PathVariable("fa_num")Integer fa_num, 
+			HttpSession session, Criteria cri) {
+		//시설 번호를 통해 시설 정보를 가져와서 facility에 저장
+		FacilityVO facility = adminService.updateFacilityByAdmin(fa_num);
+		
+		//시설 번호를 주고 해당 시설번호에 등록된 경기장 리스트를 저장
+		List<StadiumVO> stadiumList = adminService.getStadiumListByAdmin(fa_num, cri);
+		//현재 페이지 정보(검색어, 타입)에 맞는 전체 경기장 수를 가져옴
+		int totalCount = adminService.getTotalStadiumCountByAdmin(cri, fa_num);
+		//페이지네이션 페이지수
+		final int DISPLAY_PAGE_NUM = 3;
+		
+		PageMaker pm = new PageMaker(DISPLAY_PAGE_NUM, cri, totalCount);
+		
+		if(stadiumList.size() == 0) {
+	        Message msg = new Message("/businessman/stadiumInsert/" + fa_num , "등록된 경기장이 없습니다. 경기장을 등록해주세요");
+			model.addAttribute("msg", msg);
+			return "/message";
+		}
+		model.addAttribute("facility", facility);
+		model.addAttribute("stadiumList", stadiumList);
+		model.addAttribute("pm", pm);
+		return "/admin/stadiumlist";
+	}
+	//경기장 정보 수정
+	@GetMapping("/admin/stadiumlistUpdate")
+	public String updateStadium(Model model, Integer st_num, HttpSession session) {
+		StadiumVO stadium= stadiumDao.selectStadium(st_num);
+		
+		model.addAttribute("stadium", stadium);
+		return "/admin/stadiumlistUpdate";
+	}
+	//경기장 정보 수정
+	@PostMapping("/admin/stadiumlistUpdate")
+	public String stadiumUpdate(Model model, StadiumVO stadium, FacilityVO facility, HttpSession session) {
+		int j = stadium.getSt_fa_num();
+
+		boolean res = stadiumDao.updateStadium(stadium);
+		if(res) {
+			model.addAttribute("msg", "경기장 수정이 완료되었습니다.");
+			model.addAttribute("url", "/admin/stadiumlist/" + j);
+		}else {
+			model.addAttribute("msg", "경기장 수정에 실패했습니다.");
+			model.addAttribute("url", "/admin/stadiumlistUpdate");
+		}
+	    return "/util/message";
+	}
 }

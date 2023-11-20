@@ -11,21 +11,27 @@ import org.springframework.stereotype.Service;
 import kr.kh.final_project.dao.BoardDAO;
 import kr.kh.final_project.dao.BusinessDAO;
 import kr.kh.final_project.dao.ExpenseDAO;
+import kr.kh.final_project.dao.FacilityDAO;
 import kr.kh.final_project.dao.ManagerDAO;
 import kr.kh.final_project.dao.MemberDAO;
 import kr.kh.final_project.dao.PenaltyDAO;
 import kr.kh.final_project.dao.PointHistoryDAO;
+import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.dao.ReportDAO;
+import kr.kh.final_project.dao.StadiumDAO;
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.util.Message;
 import kr.kh.final_project.vo.BoardVO;
 import kr.kh.final_project.vo.BusinessmanVO;
 import kr.kh.final_project.vo.ExpenseVO;
+import kr.kh.final_project.vo.FacilityVO;
 import kr.kh.final_project.vo.ManagerVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PenaltyVO;
 import kr.kh.final_project.vo.PointHistoryVO;
+import kr.kh.final_project.vo.RegionVO;
 import kr.kh.final_project.vo.ReportVO;
+import kr.kh.final_project.vo.StadiumVO;
 
 @Service
 public class AdminServiceImp implements AdminService{
@@ -53,6 +59,15 @@ public class AdminServiceImp implements AdminService{
 	
 	@Autowired
 	PenaltyDAO penaltyDao;
+	
+	@Autowired
+	FacilityDAO facilityDao;
+	
+	@Autowired
+	RegionDAO regionDao;
+	
+	@Autowired
+	StadiumDAO stadiumDao;
 	
 	// 회원정보 조회
 	//@Override
@@ -425,6 +440,58 @@ public class AdminServiceImp implements AdminService{
 		System.out.println(businessDao.deleteBusinessList(bu_num));
 		return true;
 	}
-		
+	
+	//시설 리스트 가져오기
+	@Override
+	public List<FacilityVO> selectFacilityAllList(Criteria cri) {
+		if(cri == null) {
+			cri = new Criteria();
+		}
+		//다오에게 시설 리스트를 가져오라고 시키고
+		List<FacilityVO> list = facilityDao.selectFacilityAllList(cri);
+		//가져오면 반환
+		return list;
+	}
+	//시설 리스트 페이지네이션
+	@Override
+	public int getFacilityListTotalCount(Criteria cri) {
+		if(cri == null) {
+			cri = new Criteria();
+		}
+		return facilityDao.selectFacilityListTotalCount(cri);
+	}
+	@Override
+	public FacilityVO updateFacilityByAdmin(Integer fa_num) {
+		if(fa_num == null) {
+			return null;
+		}
+		return facilityDao.selectFacility(fa_num);
+	}
+	//Main 지역리스트
+	@Override
+	public List<RegionVO> getMainRegion() {
+		return regionDao.selectMainRegion();
+	}
+	//Region 리스트
+	@Override
+	public List<RegionVO> getSubRegionByMainRegion(String rg_main) {
+		return regionDao.selectSubRegion(rg_main);
+	}
+	@Override
+	public List<StadiumVO> getStadiumListByAdmin(Integer fa_num, Criteria cri) {
+		if(cri == null) {
+			cri = new Criteria();
+		}
+		List<StadiumVO> stadiumList = stadiumDao.selectStadiumListByAdmin(fa_num, cri);
+		//가져오면 반환
+		return stadiumList;
+	}
+	@Override
+	public int getTotalStadiumCountByAdmin(Criteria cri, Integer fa_num) {
+		if(cri == null) {
+			cri = new Criteria();
+		}
+		return stadiumDao.selectCountStadiumListByAdmin(cri, fa_num);
+	}
 	
 }

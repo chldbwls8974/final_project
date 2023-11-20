@@ -7,10 +7,13 @@ import kr.kh.final_project.util.Message;
 import kr.kh.final_project.vo.BoardVO;
 import kr.kh.final_project.vo.BusinessmanVO;
 import kr.kh.final_project.vo.ExpenseVO;
+import kr.kh.final_project.vo.FacilityVO;
 import kr.kh.final_project.vo.ManagerVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
+import kr.kh.final_project.vo.RegionVO;
 import kr.kh.final_project.vo.ReportVO;
+import kr.kh.final_project.vo.StadiumVO;
 
 public interface AdminService {
 	
@@ -85,7 +88,20 @@ public interface AdminService {
 	// 사업자 삭제하기 (3)
 	boolean deleteBusiness(Integer bu_num);
 	
-	
+	//시설 리스트 가져오기
+	List<FacilityVO> selectFacilityAllList(Criteria cri);
+	//시설 페이지네이션
+	int getFacilityListTotalCount(Criteria cri);
+	//시설 정보 수정
+	FacilityVO updateFacilityByAdmin(Integer fa_num);
+	//시설 : 지역 정보 수정
+	List<RegionVO> getMainRegion();
+	//지역 정보
+	List<RegionVO> getSubRegionByMainRegion(String rg_main);
+	//경기장 리스트 가져오기
+	List<StadiumVO> getStadiumListByAdmin(Integer fa_num, Criteria cri);
+	//경기장 페이지네이션
+	int getTotalStadiumCountByAdmin(Criteria cri, Integer fa_num);
 	
 	
 }
