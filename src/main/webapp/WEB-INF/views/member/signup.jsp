@@ -511,12 +511,12 @@ input, progress {
 				success : function(data){
 					if(data){
 						codeSendBtn.disabled = false;
-						$('#check-email-error').text('사용 가능한 이메일입니다.');
+						$('#check-email-error').text('사용 가능한 이메일입니다.').css('color', 'green');
 						flag = true;
 						
 					}else{
 						codeSendBtn.disabled = true;
-						$('#check-email-error').text('이미 사용중인 이메일입니다.');
+						$('#check-email-error').text('이미 사용중인 이메일입니다.').css('color', 'red');
 					}
 				}
 			});
