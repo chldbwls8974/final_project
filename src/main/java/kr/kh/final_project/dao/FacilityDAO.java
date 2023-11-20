@@ -28,4 +28,6 @@ public interface FacilityDAO {
 	//시설 삭제(화면에서만)
 	int facilityDelete(@Param("fa_num")Integer fa_num);
 
+	List<FacilityVO> selectFacilityAllList();
+
 }

@@ -29,5 +29,8 @@ public class FacilityVO {
 	
 	//시설 : 운영시간 리스트
     private List<OperatingVO> operatingList;
+    
+    //시설 내 경기장 수 
+    private int st_count;
 
 }

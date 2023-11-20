@@ -19,6 +19,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import kr.kh.final_project.dao.FacilityDAO;
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.pagination.PageMaker;
 import kr.kh.final_project.service.AdminService;
@@ -26,6 +27,7 @@ import kr.kh.final_project.util.Message;
 import kr.kh.final_project.vo.BusinessmanVO;
 import kr.kh.final_project.vo.EntryVO;
 import kr.kh.final_project.vo.ExpenseVO;
+import kr.kh.final_project.vo.FacilityVO;
 import kr.kh.final_project.vo.ManagerVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
@@ -37,6 +39,8 @@ public class AdminController {
 	
 	@Autowired
 	AdminService adminService;
+	@Autowired
+	FacilityDAO facilityDao;
 
 	// 회원정보 출력하기 ,페이지네이션 기능구현
 	@GetMapping("/admin/member")
@@ -430,4 +434,11 @@ public class AdminController {
 		return map;
 	}
 	
+	@GetMapping("/admin/facilitylist")
+	public String facilityList(Model model) {
+		List<FacilityVO> list = facilityDao.selectFacilityAllList();
+		model.addAttribute("list", list);
+		return "/admin/facilitylist";
+	}
+		
 }
