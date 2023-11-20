@@ -66,11 +66,23 @@ public class CommentServiceImp implements CommentService{
 		if(comment == null || comment.getCo_num() == 0) {
 			return false;
 		}
+		//comment객체는 댓글번호 정보밖에 없으므로 db에서 comment객체 찾아옴
 		CommentVO dbComment = commentDao.selectComment(comment.getCo_num());
 		if(dbComment == null ||  dbComment.getCo_me_num()!=(user.getMe_num())) {
 			return false;
 		}
-		boolean res = commentDao.deleteComment(comment.getCo_num());
+		//지우려고 하는 댓글이 co_num = co_ori_num 일 때 (==대댓글이 아닐 때)
+		if(dbComment.getCo_num() == dbComment.getCo_ori_num()) {
+			//대댓글 리스트를 가져오는 메서드 (co_ori_num이 같은 댓글)
+			List<CommentVO> commentList = commentDao.selectCommentCommentList(dbComment.getCo_ori_num());
+			for(CommentVO tmp : commentList) {
+				//원본 댓글이 삭제되면 대댓글도 같이 삭제
+				commentDao.deleteComment(tmp.getCo_num());
+			}
+		}else {
+			commentDao.deleteComment(dbComment.getCo_num());
+		}
+		//댓글객체의 게시판번호로 댓글테이블에서 갯수를 조회하여 게시글테이블에 업데이트하는 쿼리
 		boardDao.updateBoardComment(dbComment.getCo_bo_num());	
 		return true;
 	}
