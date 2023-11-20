@@ -42,18 +42,12 @@
 	<context:component-scan base-package="kr.kh.final_project.*" />
 	
 	<beans:bean id="loginInterceptor" class="kr.kh.final_project.interceptor.LoginInterceptor"/>
-	<beans:bean id="autoLoginInterceptor" class="kr.kh.final_project.interceptor.AutoLoginInterceptor"/>	
+	<beans:bean id="autoLoginInterceptor" class="kr.kh.final_project.interceptor.AutoLoginInterceptor"/>
+	<beans:bean id="memberInterceptor" class="kr.kh.final_project.interceptor.MemberInterceptor"/>
+	<beans:bean id="adminInterceptor" class="kr.kh.final_project.interceptor.AdminInterceptor"/>
 	<beans:bean id="boardBanInterceptor" class="kr.kh.final_project.interceptor.BoardBanInterceptor"/>
 	<beans:bean id="matchBanInterceptor" class="kr.kh.final_project.interceptor.MatchBanInterceptor"/>
 	<interceptors>
-		<interceptor>
-			<mapping path="/board/**"/>
-			<beans:ref bean="boardBanInterceptor"/>
-		</interceptor>
-		<interceptor>
-			<mapping path="/match/**"/>
-			<beans:ref bean="matchBanInterceptor"/>
-		</interceptor>
 		<interceptor>
 			<mapping path="/**"/>
 			<beans:ref bean="autoLoginInterceptor"/>
@@ -62,6 +56,38 @@
 			<mapping path="/member/login"/>
 			<mapping path="/kakao/login"/>
 			<beans:ref bean="loginInterceptor"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/admin/**"/>
+			<mapping path="/club/**"/>
+			<mapping path="/account/**"/>
+			<mapping path="/payment/**"/>
+			<mapping path="/application/**"/>
+			<mapping path="/manager/**"/>
+			<mapping path="/buisnessman/**"/>
+			<mapping path="/businessman/**"/>
+			<mapping path="/member/mypage"/>
+			<mapping path="/member/myprofile"/>
+			<mapping path="/member/myedit"/>
+			<mapping path="/member/mymatch"/>
+			<mapping path="/member/search"/>
+			<mapping path="/member/friendlist"/>
+			<mapping path="/member/blocklist"/>
+			<mapping path="/member/myCoupon"/>
+			<mapping path="/member/refund"/>
+			<beans:ref bean="memberInterceptor" />
+		</interceptor>
+		<interceptor>
+			<mapping path="/admin/**"/>
+			<beans:ref bean="adminInterceptor"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/board/**"/>
+			<beans:ref bean="boardBanInterceptor"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/match/**"/>
+			<beans:ref bean="matchBanInterceptor"/>
 		</interceptor>
 	</interceptors>
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

@@ -9,37 +9,27 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import kr.kh.final_project.dao.MemberDAO;
 import kr.kh.final_project.vo.MemberVO;
 
-public class MatchBanInterceptor extends HandlerInterceptorAdapter{
-	
+// 상속받아야 함
+public class AdminInterceptor extends HandlerInterceptorAdapter{
+
 	@Autowired
 	MemberDAO memberDao;
 	
 	@Override
-	public boolean preHandle(HttpServletRequest request, 
-			HttpServletResponse response, Object handler)
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		MemberVO user= (MemberVO)request.getSession().getAttribute("user");
-		//로그인 하지 않았고, 자동로그인을 설정하지 않았다면
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		//로그인 하지 않았다면
 		if(user == null) {
 			response.sendRedirect(request.getContextPath()+"/member/login");
 			return false;
 		}
-		
 		MemberVO dbUser = memberDao.selectMemberByNum(user.getMe_num());
-		
-		//유저가 커뮤니티 정지 상태이면
-		if(isBan(dbUser)) {
-			response.sendRedirect(request.getContextPath()+"/util/ban");
+		if(!dbUser.getMe_authority().equals("ADMIN")) {
+			response.sendRedirect(request.getContextPath()+"/");
 			return false;
 		}
-		//정지가 아니라면 컨트롤러로 넘어감
+		//로그인 했으면 기존에 가려던 URL을 방문해서 작업
 		return true;
-	}
-
-	private boolean isBan(MemberVO user) {
-		if(user.getMe_state1() == 1) {
-			return true;
-		}
-		return false;
 	}
 }

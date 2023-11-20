@@ -380,45 +380,8 @@ public class AdminController {
 		return map;
 	}
 	
-	//유저가 게시글 신고 했을 때
-	@PostMapping("/admin/boardReport/insert")
-	public String boardReportInsert(Model model, ReportVO report) {
-		//신고추가
-		//중복신고 못하게 해야함 (같은 사람이 같은 게시글에 신고 x bo_num, me_num)
-		Message msg = adminService.boardReportInsert(report);
-		model.addAttribute("msg", msg);
-		return "message";
-	}
-	//유저가 매치 신고 했을 때
-	@PostMapping("/admin/matchReport/insert")
-	public String matchReportInsert(Model model, ReportVO report) {
-		//신고추가
-		//중복신고 못하게 해야함 (같은 경기에서 같은 유저가 같은 멤버에게 신고 안되게 bo_num, me_num)
-		
-		Message msg = adminService.matchReportInsert(report);
-		model.addAttribute("msg", msg);
-		return "message";
-	}
-	//매치임시페이지
-	//매치임시페이지
-	@GetMapping("/admin/tmp")
-	public String match(Model model, MatchVO match) {
-		//신고추가
-		//중복신고 못하게 해야함 (같은 경기에서 같은 유저가 같은 멤버에게 신고 안되게 bo_num, me_num)
-		
-		
-		//Message msg = adminService.boardReportInsert(report);
-		//model.addAttribute("msg", msg);
-		List<EntryVO> entryList = new ArrayList<EntryVO>();
-		for(int i = 1; i < 6 ; i++) {
-			EntryVO e = new EntryVO();
-			e.setEn_me_num(i);
-			entryList.add(e);
-		}
-		model.addAttribute("match", match);
-		model.addAttribute("entryList", entryList);
-		return "/admin/tmp";
-	}
+	
+	
 		
 	@ResponseBody
 	@PostMapping("/admin/refund/approval")

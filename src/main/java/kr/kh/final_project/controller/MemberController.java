@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.pagination.PageMaker;
+import kr.kh.final_project.service.AdminService;
 import kr.kh.final_project.service.BlockService;
 import kr.kh.final_project.service.ClubService;
 import kr.kh.final_project.service.MatchService;
@@ -32,6 +33,7 @@ import kr.kh.final_project.util.Message;
 import kr.kh.final_project.util.UploadFileUtils;
 import kr.kh.final_project.vo.BlockVO;
 import kr.kh.final_project.vo.ClubVO;
+import kr.kh.final_project.vo.EntryVO;
 import kr.kh.final_project.vo.HoldingCouponVO;
 import kr.kh.final_project.vo.MarkVO;
 import kr.kh.final_project.vo.MatchVO;
@@ -40,6 +42,7 @@ import kr.kh.final_project.vo.PenaltyVO;
 import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.PreferredRegionVO;
 import kr.kh.final_project.vo.RegionVO;
+import kr.kh.final_project.vo.ReportVO;
 import kr.kh.final_project.vo.TimeVO;
 
 @Controller
@@ -55,6 +58,8 @@ public class MemberController {
 	ClubService clubService;
 	@Autowired
 	BlockService blockService;
+	@Autowired
+	AdminService adminService;
 	@Autowired
 	RegionDAO regionDao;
 	
@@ -637,4 +642,44 @@ public class MemberController {
 		return "/util/ban";
 	}
 	
+	//유저가 게시글 신고 했을 때
+		@PostMapping("/member/boardReport/insert")
+		public String boardReportInsert(Model model, ReportVO report) {
+			//신고추가
+			//중복신고 못하게 해야함 (같은 사람이 같은 게시글에 신고 x bo_num, me_num)
+			Message msg = adminService.boardReportInsert(report);
+			model.addAttribute("msg", msg);
+			return "message";
+		}
+		//유저가 매치 신고 했을 때
+		@PostMapping("/member/matchReport/insert")
+		public String matchReportInsert(Model model, ReportVO report) {
+			//신고추가
+			//중복신고 못하게 해야함 (같은 경기에서 같은 유저가 같은 멤버에게 신고 안되게 bo_num, me_num)
+			
+			Message msg = adminService.matchReportInsert(report);
+			model.addAttribute("msg", msg);
+			return "message";
+		}
+		
+		//매치임시페이지
+		//매치임시페이지
+		@GetMapping("/member/tmp")
+		public String match(Model model, MatchVO match) {
+			//신고추가
+			//중복신고 못하게 해야함 (같은 경기에서 같은 유저가 같은 멤버에게 신고 안되게 bo_num, me_num)
+			
+			
+			//Message msg = adminService.boardReportInsert(report);
+			//model.addAttribute("msg", msg);
+			List<EntryVO> entryList = new ArrayList<EntryVO>();
+			for(int i = 1; i < 6 ; i++) {
+				EntryVO e = new EntryVO();
+				e.setEn_me_num(i);
+				entryList.add(e);
+			}
+			model.addAttribute("match", match);
+			model.addAttribute("entryList", entryList);
+			return "/member/tmp";
+		}
 }
