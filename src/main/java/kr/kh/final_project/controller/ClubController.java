@@ -121,19 +121,11 @@ public class ClubController {
 		model.addAttribute("authority",authority);
 		return "/club/detail";
 	}
-	@GetMapping("/join")
-	public String joinClub(Model model, HttpSession session, Integer cl_num) {
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		ClubVO club = clubService.getClub(cl_num);
-		model.addAttribute("user",user);
-		model.addAttribute("club",club);
-		return "/club/join";
-	}
 	@PostMapping("/join")
 	public String joinClubPost(Model model, HttpSession session, ClubMemberVO clubMember) {
-		Message msg = new Message("/club/join", "클럽 신청에 실패하였습니다.");
+		Message msg = new Message("/club/detail?cl_num="+clubMember.getCm_cl_num(), "클럽 신청에 실패하였습니다.");
 		if(clubService.joinClub(clubMember)) {
-			msg = new Message("/", "클럽 신청에 성공했습니다.");
+			msg = new Message("/club/detail?cl_num="+clubMember.getCm_cl_num(), "클럽 신청에 성공했습니다.");
 		}
 		model.addAttribute("msg", msg);
 		return "message";
