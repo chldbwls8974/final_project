@@ -103,8 +103,8 @@
 					<div class="myedit">
 						<a href="<c:url value='/club/update?cl_num=${club.cl_num}'/>" class="myprofile-btn">
 							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg"
-								style="width: 20px; height: 20px; margin-right: 5px;" alt="프로필 수정">
-							<p style="font-size: 14px;">팀 수정</p>
+								style="width: 24px; height: 20px; margin-right: 5px;" alt="프로필 수정">
+							<p style="font-size: 14px;">클럽 수정</p>
 						</a>
 					</div>
 					<div class="myedit">
