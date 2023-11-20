@@ -133,12 +133,16 @@ public class MatchServiceImp implements MatchService{
 		if(mt_num == 0 || me_num == null) {
 			return null;
 		}
+		MatchVO match = null;
 		if(cl_num == 0) {
-			return matchDao.selectMatchByMeNum(mt_num, me_num);			
+			match = matchDao.selectMatchByMeNum(mt_num, me_num);			
 		}else if(cl_num != 0) {
-			return matchDao.selectMatchByClNum(mt_num, cl_num);
+			match = matchDao.selectMatchByClNum(mt_num, cl_num);
 		}
-		return null;
+		if(match.getMt_rule() == 1) {
+			match.setMe_name(memberDao.selectManagerNameByMtNum(match.getMt_num()));
+		}
+		return match;
 	}
 
 	@Override
@@ -169,6 +173,11 @@ public class MatchServiceImp implements MatchService{
 		List<MatchVO> matchList = new ArrayList<MatchVO>();
 		if(rg_num == 0) {
 			rgNumList = preferredRegionDao.selectPrRgNumListByMeNum(me_num);
+		}else if(rg_num == 246){
+			List<RegionVO> regionList = regionDao.selectUserRegion();
+			for(RegionVO region : regionList) {
+				rgNumList.add(region.getRg_num());				
+			}
 		}else {
 			List<Integer> rgMainList = regionDao.selectRgNumSubAll();
 			if(rgMainList.indexOf(rg_num) != -1) {
@@ -277,6 +286,7 @@ public class MatchServiceImp implements MatchService{
 				if(entryDao.deleteEntry(dbEntry.getEn_num())) {
 					dbTeam = teamDao.selectListTeamByMtNum(mt_num);
 					if(dbTeam.getEntry_count() == 0) {
+						teamDao.deleteTeam(dbTeam.getTe_num());
 						matchDao.updateMatchMtTypeTo0(mt_num);
 					}
 					return true;
@@ -304,8 +314,19 @@ public class MatchServiceImp implements MatchService{
 
 
 	@Override
-	public List<MatchVO> getMatchList() {
-		return  matchDao.selectMatchList();
+	public List<MatchVO> getMyMatchListByMeNum(Integer me_num) {
+		if(me_num == null) {
+			return null;
+		}
+		List<MatchVO> matchList = matchDao.selectMyMatchListByMeNum(me_num);
+		for(MatchVO match : matchList) {
+			if(match.getMt_type() == 1) {
+				match.setCl_num(0);
+			}else if(match.getMt_type() == 2) {
+				match.setCl_num(teamDao.selectClubTeamByMeNum(match.getMt_num(), me_num));
+			}
+		}
+		return matchList;
 	}
 	
 	@Override
@@ -437,18 +458,17 @@ public class MatchServiceImp implements MatchService{
 	}
 	
 	@Override
-	public void insertMatchTeamSolo() {
-		List<MatchVO> matchList = matchDao.selectMatchSolo();
-		for(MatchVO match : matchList) {
-			if(match.getDelete() == 0 && match.getMt_rule() == 1 && match.getMt_state1() == 0) {
-				List<TeamVO> teamList = teamDao.selectTeamByMtNum(match.getMt_num());
-				if(teamList.size() == 0) {
-					for(int i = 0; i < 3; i++) {
-						teamDao.insertTeam(match.getMt_num());
+	public boolean insertMatchTeamSolo(int mt_num) {
+		List<TeamVO> teamList = teamDao.selectTeamByMtNum(mt_num);
+		boolean res = true;
+		if(teamList.size() == 0) {
+				for(int i = 0; i < 3; i++) {
+					if(!teamDao.insertTeam(mt_num)) {
+						res = false;
 					}
-				}
 			}
 		}
+		return res;
 	}
 	
 	@Override
@@ -477,8 +497,34 @@ public class MatchServiceImp implements MatchService{
 	public void updateEndMatch() {
 		List<MatchVO> matchList = matchDao.selectEndMatch();
 		for(MatchVO match : matchList) {
-			matchDao.updateMatchMtState1To2(match.getMt_num());
+			updateRatingMatchResult(match.getMt_num());
 		}
+	}
+	//점수 업데이트
+	public boolean updateRatingMatchResult(int mt_num) {
+		//등록된 경기 조회
+		List<QuarterVO> quarterList = quarterDao.selectQuarterListByMtNum(mt_num);
+		
+		for(QuarterVO quarter : quarterList) {
+			//승리팀 점수 업데이트
+			int winTeam = quarterDao.selectWinTeamByQuNum(quarter.getQu_num());
+			if(winTeam != 0) {
+				List<EntryVO> winnerList = entryDao.selectEntryListByTeNum(winTeam);
+				for(EntryVO winner : winnerList) {
+					memberDao.updateRatingWinByMeNum(winner.getEn_me_num());
+				}
+			}
+			
+			//패배팀 점수 업데이트
+			int loserTeam = quarterDao.selectLoseTeamByQuNum(quarter.getQu_num());
+			if(loserTeam != 0) {
+				List<EntryVO> loserList = entryDao.selectEntryListByTeNum(loserTeam);
+				for(EntryVO loser : loserList) {
+					memberDao.updateRatingLoseByMeNum(loser.getEn_me_num());
+				}
+			}
+		}
+		return matchDao.updateMatchMtState1To2(mt_num);
 	}
 
 	@Override

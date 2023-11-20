@@ -2,6 +2,8 @@ SET GLOBAL event_scheduler = ON;
 
 USE FUTSAL;
 
+DROP EVENT IF EXISTS insert_match_event;
+-- 매일 자정에 등록된 스케줄에 따라 21일 뒤의 날짜에 매치를 자동으로 생성
 DELIMITER $$
 CREATE EVENT IF NOT EXISTS insert_match_event
 ON SCHEDULE EVERY 1 day

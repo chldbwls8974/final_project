@@ -126,26 +126,26 @@
 					str += `
 						</div>
 					`;
-					if(${weekCount == 2}){
+					if(match.mt_state1 == 0 && ${weekCount == 2}){
 						str += `
 							<button class="d-btn btn-delete btn-manager-match" 
 								style="width: 120px; height: 40px; border: none;
 								border-radius: 5px; background-color: #d4d4d4; color: black;"
 								value="\${match.mt_num}">취소</button> <br>
 						`;
-					}else if(match.ready == 2){
+					}else if(match.mt_state1 == 0 && match.ready == 2){
 						str += `
 							<button class="btn btn-outline-primary btn-manager btn-manager-match" value="\${match.mt_num}">매치 관리<br>\${match.entry_count}/\${match.mt_personnel * 3}</button> <br>
 						`;
-					}else if(match.ready == 1){
+					}else if(match.mt_state1 == 0 && match.ready == 1){
 						str += `
 							<button class="btn btn-outline-success btn-manager btn-manager-match" value="\${match.mt_num}">매칭 완료<br>\${match.entry_count}/\${match.mt_personnel * 3}</button> <br>
 						`;
-					}else if(${weekCount >= 0}){
+					}else if(match.mt_state1 == 0 && ${weekCount >= 0}){
 						str += `
 							<button class="btn btn-outline-warning btn-manager btn-manager-match" value="\${match.mt_num}">매치 대기중<br>\${match.entry_count}/\${match.mt_personnel * 3}</button> <br>
 						`;
-					}else if(match.ready == 3){
+					}else if(match.mt_state1 == 2){
 						str += `
 							<button class="btn btn-outline-dark btn-manager btn-manager-match" value="\${match.mt_num}">관리 완료</button> <br>
 						`;

@@ -1,6 +1,7 @@
 package kr.kh.final_project.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +36,7 @@ import kr.kh.final_project.vo.HoldingCouponVO;
 import kr.kh.final_project.vo.MarkVO;
 import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
+import kr.kh.final_project.vo.PenaltyVO;
 import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.PreferredRegionVO;
 import kr.kh.final_project.vo.RegionVO;
@@ -205,7 +207,13 @@ public class MemberController {
 	
 	//포인트 환급 페이지
 	@GetMapping("/member/refund")
-	public String pointRefund(HttpSession session) {
+	public String pointRefund(HttpSession session,  Model model) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(memberService.getUserAccount(user) == null) {
+			Message msg = new Message("/account/insert", "계좌 등록이 필요한 서비스입니다. \\n환급 계좌 등록 페이지로 이동합니다.");
+			model.addAttribute("msg", msg);
+			return "message";
+		}
 		return "/member/refund";
 	}
 	
@@ -378,12 +386,13 @@ public class MemberController {
 	public String myProfile(Model model,HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		List<RegionVO> MainRegion = memberService.getMainRegion();
-		List<RegionVO> subRg = regionDao.selectUserRegion();
+		
 		//회원 가져오기
 		MemberVO dbMember = memberService.getMemberByNum(user);
 		//회원의 거주지역 가져오기
 		MemberVO memberRegion = memberService.getMemberRegion(dbMember);
-		
+		List<RegionVO> subRg = regionDao.selectSubRegion(memberRegion.getRg_main());
+				
 		model.addAttribute("user",dbMember);
 		model.addAttribute("MainRegion",MainRegion);
 		model.addAttribute("subRg",subRg);
@@ -465,9 +474,10 @@ public class MemberController {
 	
 	//마이페이지-신청 경기 페이지 조회
 	@GetMapping("/member/mymatch")
-	public String mymatch(Model model) {
+	public String mymatch(Model model, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		//서비스에게 매치리스트 요청
-		List<MatchVO> matchList = matchService.getMatchList(); 
+		List<MatchVO> matchList = matchService.getMyMatchListByMeNum(user.getMe_num()); 
 		model.addAttribute("matchList", matchList);
 		return "/member/mymatch";
 	}
@@ -480,20 +490,29 @@ public class MemberController {
 		MemberVO dbMember = memberService.getMemberByNum(member);
 		//회원의 거주지역 가져오기
 		MemberVO memberRegion = memberService.getMemberRegion(dbMember);
+		
+		
 		//회원의 선호지역, 선호시간대 가져오기
 		List<PreferredRegionVO> memberPRegion = memberService.getMemberPRegion(dbMember);
+		List<RegionVO> subRg = regionDao.selectUserRegion();
+//		List<Integer> subRg = new ArrayList<Integer>();
+//		for(PreferredRegionVO i :memberPRegion ) {
+//			subRg.add(regionDao.selectSubRegion(i.getRg_main()));
+//		}
+		
 		List<Integer> holiTime = memberService.getMemberPTimeHoliday(dbMember);
 		List<Integer> weekTime = memberService.getMemberPTimeWeekday(dbMember);
-		
 		// 선호 지역, 시간 수정 시 필요
 		List<RegionVO> MainRegion = memberService.getMainRegion();
 		List<TimeVO> time = memberService.getAllTime();
+		
+		
 		model.addAttribute("MainRegion",MainRegion);
 		model.addAttribute("time",time);
-		
 		model.addAttribute("member",dbMember );
 		model.addAttribute("memberRegion", memberRegion );
 		model.addAttribute("memberPRegion", memberPRegion );
+		model.addAttribute("subRg", subRg );
 		model.addAttribute("holiTime", holiTime );
 		model.addAttribute("weekTime", weekTime );
 		model.addAttribute("user", user );
@@ -587,6 +606,35 @@ public class MemberController {
 		}
 		map.put("res", res);
 		return map;
+	}
+	
+	@ResponseBody
+	@GetMapping("/member/update/region2")
+	public Map<String, Object> region1(@RequestParam String rg_main, Model model){
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<RegionVO> SubRegion = memberService.getSubRegionByMainRegion(rg_main);
+		map.put("SubRegion", SubRegion);
+		return map;
+	}
+	
+	@GetMapping("/util/ban")
+	public String ban(Model model, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		MemberVO member = memberService.getMemberByNum(user);
+		//정지일
+		String str = "커뮤니티";
+		PenaltyVO boardPenalty = memberService.getMemberPenalty(member, str);
+		str = "경기";
+		PenaltyVO matchPenalty = memberService.getMemberPenalty(member, str);
+		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일"); 
+		String BoardBanEndDate = simpleDateFormat.format(boardPenalty.getPn_end());
+		String MatchBanEndDate = simpleDateFormat.format(matchPenalty.getPn_end());
+		
+		model.addAttribute("member", member);
+		model.addAttribute("BoardBanEndDate", BoardBanEndDate);
+		model.addAttribute("MatchBanEndDate", MatchBanEndDate);
+		return "/util/ban";
 	}
 	
 }

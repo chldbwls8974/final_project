@@ -22,11 +22,12 @@
 	<select id="selectClubMemberListByMtNum" resultType="kr.kh.final_project.vo.ClubMemberVO">
 		select
 			club_member.*,
-		    me_nickname,
-		    me_rating,
-		    me_tr_name,
-		    ifnull(en_num, 0) as en_num,
-		    if(ifnull(T1.t1, 0) + ifnull(T2.t2, 0) + ifnull(T3.t3, 0) = 0, true, false) as entry_able
+			me_nickname,
+			me_rating,
+			me_tr_name,
+			me_profile,
+			ifnull(en_num, 0) as en_num,
+			if(ifnull(T1.t1, 0) + ifnull(T2.t2, 0) + ifnull(T3.t3, 0) + ifnull(T4.t4, 0) + ifnull(T5.t5, 0) + ifnull(T6.t6, 0) = 0, true, false) as entry_able
 		from
 			club_member
 				join
@@ -40,46 +41,70 @@
 				left join
 			entry on en_te_num = te_num and en_me_num = cm_me_num
 				left join
-		    (select
+			(select
+				mt_date as d1,
 				mt_ti_num as t1,
-		        en_me_num as e1
+				en_me_num as e1
 			from
 				entry
 					join
 				team on en_te_num = te_num
 					join
-				`match` on te_mt_num = mt_num
-			where
-				mt_date = mt_date) as T1 on T1.t1 = mt_ti_num and T1.e1 = cm_me_num
+				`match` on te_mt_num = mt_num) as T1 on T1.d1 = mt_date and T1.t1 = mt_ti_num and T1.e1 = cm_me_num
 				left join
-		    (select
+			(select
+				mt_date as d2,
 				mt_ti_num + 1 as t2,
-		        en_me_num as e2
+				en_me_num as e2
 			from
 				entry
 					join
 				team on en_te_num = te_num
 					join
-				`match` on te_mt_num = mt_num
-			where
-				mt_date = mt_date) as T2 on T2.t2 = mt_ti_num and T2.e2 = cm_me_num
+				`match` on te_mt_num = mt_num) as T2 on T2.d2 = mt_date and T2.t2 = mt_ti_num and T2.e2 = cm_me_num
 				left join
-		    (select
+			(select
+				mt_date as d3,
 				mt_ti_num - 1 as t3,
-		        en_me_num as e3
+				en_me_num as e3
 			from
 				entry
 					join
 				team on en_te_num = te_num
 					join
-				`match` on te_mt_num = mt_num
-			where
-				mt_date = mt_date) as T3 on T3.t3 = mt_ti_num and T3.e3 = cm_me_num
+				`match` on te_mt_num = mt_num) as T3 on T3.d3 = mt_date and T3.t3 = mt_ti_num and T3.e3 = cm_me_num
+				left join
+			(select
+		        mt_date as d4,
+				mt_ti_num as t4,
+				mn_me_num as m4
+			from
+				manager
+					join
+				`match` on mn_mt_num = mt_num) as T4 on T4.d4 = mt_date and T4.t4 = mt_ti_num and T4.m4 = cm_me_num
+				left join
+			(select
+		        mt_date as d5,
+				mt_ti_num + 1 as t5,
+				mn_me_num as m5
+			from
+				manager
+					join
+				`match` on mn_mt_num = mt_num) as T5 on T5.d5 = mt_date and T5.t5 = mt_ti_num and T5.m5 = cm_me_num
+				left join
+			(select
+		        mt_date as d6,
+				mt_ti_num - 1 as t6,
+				mn_me_num as m6
+			from
+				manager
+					join
+				`match` on mn_mt_num = mt_num) as T6 on T6.d6 = mt_date and T6.t6 = mt_ti_num and T6.m6 = cm_me_num
 		where
 			cm_cl_num = #{cl_num} and
-		    (cm_authority = "LEADER" or cm_authority = "MEMBER") and
-		    mt_num = #{mt_num}
-		order by me_rating desc;
+			(cm_authority = "LEADER" or cm_authority = "MEMBER") and
+			mt_num = #{mt_num}
+		order by me_rating desc
 	</select>
 	<select id="selectClubLeader" resultType="kr.kh.final_project.vo.ClubMemberVO">
 		select

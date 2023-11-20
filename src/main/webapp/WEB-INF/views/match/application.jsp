@@ -22,8 +22,10 @@
 		padding: 50px 0 30px 0; text-align: center;
 	}
 	.right-side-box div{ text-align: center;}
+	.match-box{display: flex;}
+	.match-info-box{flex: 1}
 	.team-box{display: flex; background-color: black;}
-	.teamList-box{flex: 1; margin-right: 3px; background-color: white;}
+	.teamList-box{flex: 1; margin-right: 3px; background-color: white; text-align: center;}
 	.teamList-box:last-child {margin-right: 0;}
 	.club-list-box{display: flex;}
 	.club-member-box{flex: 1; border-right: 3px solid black; overflow: scroll;}
@@ -42,7 +44,8 @@
 	    text-align: center;
 	    margin: 20px auto 0 auto;
 	}
-	
+	.club-emblem{width: 20px; height: 20px; border-radius: 50%;}
+	.member-profile{width: 20px; height: 20px; border-radius: 50%;}
 	</style>
 </head>
 <body>
@@ -50,8 +53,32 @@
 	width: 20%; padding: 30px 0 10px 0; text-align: center;">매치 페이지</p>
 	<nav class="container-body">
 		<div class="contents-box left-box">
-			<div class="info-box match-box">
 			${match}
+			<div class="info-box match-box">
+				<div class="match-info-box match-info">
+					<h4>
+						<c:if test="${match.mt_type == 1}">개인 매치</c:if>
+						<c:if test="${match.mt_type == 2}">클럽 매치</c:if>
+						${match.mt_rule == 0 ? '친선전' : '경쟁전'}(${match.mt_personnel}vs${match.mt_personnel})
+					</h4>
+					<c:if test="${match.mt_rule == 1}">
+						담당 매니저 : ${match.me_name} <br>
+					</c:if>
+					일시	: ${match.mt_date_str} ${match.ti_time_str} <br>
+					장소	: ${match.fa_name} ${match.st_name} <br>
+					주소	: ${match.fa_add} ${match.fa_add_detail} <br>
+					시설 연락처	: ${match.fa_phone} <br>
+				</div>
+				<div class="match-info-box facility-info">
+					<h4>편의시설</h4>
+					주차장 : ${match.fa_pay == 0 ? '없음' : match.fa_pay == 1 ? '무료' : '유료'}<br>
+					탈의실 : ${match.fa_locker == 0 ? '없음' : '있음'}<br>
+					화장실 : ${match.fa_toilet == 0 ? '없음' : '있음'}<br>
+					샤워실 : ${match.fa_shower == 0 ? '없음' : '있음'}<br>
+					흡연장 : ${match.fa_smoking == 0 ? '없음' : '있음'}<br>
+					자판기 : ${match.fa_machine == 0 ? '없음' : '있음'}<br>
+					특이사항 : ${match.fa_note}
+				</div>
 			</div>
 			<c:if test="${cl_num != 0 && match.team_count != 0}">
 				<div class="info-box team-box">
@@ -106,7 +133,7 @@
 							<div>
 								<p>참가자 리스트</p>
 								<c:forEach items="${entryList}" var="el">
-									<span>${el.me_nickname}(${el.me_tr_name})</span> <br>
+									<span><img class="member-profile" alt="멤버프로필" src="<c:url value='/memberimg${el.me_profile}'/>">${el.me_nickname}(${el.me_tr_name})</span> <br>
 								</c:forEach>
 							</div>
 						</div>
@@ -119,7 +146,7 @@
 						<div>
 							<p>클럽 매치 신청</p>
 							<span>비용 : ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}포인트/2시간</span>
-							<input type="text" class="total-price" disabled value="${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}P"> <br>
+							<input type="text" class="total-price" disabled value="${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}Point"> <br>
 							<button class="btn btn-application"
 									style="width: 100px; height: 40px; border: none; 
 									border-radius: 5px; background-color: black; color: white;">
@@ -138,49 +165,7 @@
 						</div>	
 					</div>
 					<div class="club-list-box right-side-box">
-						<div class="club-member-box">
-							<c:forEach items="${CMList}" var="cm">
-								<c:if test="${cm.en_num == 0}">
-									<c:if test="${cm.entry_able == 1}">
-										<div class="entry-able-member member-list">${cm.me_nickname}
-											<c:if test="${authority == 'LEADER'}">
-												<button class="entry-btn btn btn-primary entry-add-btn">등록</button>
-											</c:if>
-											<br>
-											(${cm.me_tr_name})
-											<input hidden disabled value="${cm.cm_me_num}">
-										</div>
-									</c:if>
-									<c:if test="${cm.entry_able != 1}">
-										<div class="entry-disable-member member-list">${cm.me_nickname}
-											<c:if test="${authority == 'LEADER'}">
-												<button class="entry-btn btn btn-secondary" disabled>등록</button>
-											</c:if>
-											<br>
-											(${cm.me_tr_name})
-											<input hidden disabled value="${cm.cm_me_num}">
-										</div>
-									</c:if>
-								</c:if>
-							</c:forEach>
-						</div>
-						<div class="club-entry-box">
-							<c:forEach items="${CMList}" var="cm">
-								<c:if test="${cm.en_num != 0}">
-									<div class="entry-member member-list">${cm.me_nickname}
-										<c:if test="${authority == 'LEADER' && match.ready == 0}">
-											<button class="entry-btn btn btn-danger entry-del-btn">삭제</button>
-										</c:if>
-										<br>
-										(${cm.me_tr_name})
-										<input hidden disabled value="${cm.en_num}">
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
-						<c:if test="${authority == 'LEADER'}">
-							
-						</c:if>
+						
 					</div>
 				</c:if>
 			</c:if>
@@ -194,7 +179,12 @@
 	let hp_num = 0;
 	let total_price = ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre};
 	let mt_num = ${match.mt_num};
+	
 	printTeam()
+	if(cl_num != 0){
+		printClubMemberState()		
+	}
+	
 	$(document).on('click', '[name=coupon]', function() {
 		hp_num = $(this).val();
 		total_price = ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre} - $(this).siblings('.sale-point').val();
@@ -208,12 +198,11 @@
 		cansel()
 	});
 	$(document).on('click', '.entry-add-btn', function() {
-		if(${match.mt_personnel == match.club_entry_count}){
-			alert("참가자를 모두 선택하였습니다.");
-		}else{
-			me_num = $(this).siblings('input').val();
-			entryAdd(me_num);
-		}
+		me_num = $(this).siblings('input').val();
+		entryAdd(me_num);
+	});
+	$(document).on('click', '.entry-unable-btn', function() {
+		alert("이미 스케줄이 있는 회원입니다. \n다른 회원을 선택해주세요.");
 	});
 	$(document).on('click', '.entry-del-btn', function() {
 		en_num = $(this).siblings('input').val();
@@ -298,10 +287,11 @@
 			dataType : 'json',
 			success : function(data) {
 				if(data.res){
-					alert("등록 성공");
-					location.href='<c:url value="/match/application?mt_num="/>'+ mt_num + '&cl_num=' + cl_num;
+					alert(data.msg);			
+					printTeam()
+					printClubMemberState()
 				}else{
-					alert("등록 실패")	;			
+					alert(data.msg);			
 				}
 			}
 		});
@@ -316,7 +306,8 @@
 			success : function(data) {
 				if(data.res){
 					alert("삭제 성공");
-					location.href='<c:url value="/match/application?mt_num="/>'+ mt_num + '&cl_num=' + cl_num;
+					printTeam()
+					printClubMemberState()
 				}else{
 					alert("삭제 실패")	;			
 				}
@@ -324,37 +315,146 @@
 		});
 	}
 	function printTeam() {
-		str = `
-			<c:forEach items="${teamList}" var="tl">
-				<div class="teamList-box">
-					<table>
-						<thead>
-							<tr>
-								<th>
-									${tl.te_type}팀:${tl.cl_name} ${tl.club_entry_count}/${match.mt_personnel}
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:if test="${tl.ct_cl_num == cl_num || match.ready == 1}">
-								<c:forEach items="${entryList}" var="el">
-									<c:if test="${tl.te_num == el.en_te_num}">
-										<tr>
-											<td>
-												<span>
-													${el.me_nickname}(${el.me_tr_name})
-												</span>
-											</td>
-										</tr>
-									</c:if>
-								</c:forEach>
-							</c:if>
-						</tbody>
-					</table>
-				</div>
-			</c:forEach>
-		`;
+		str = ``;
+		$.ajax({
+			async : false,
+			method : 'post',
+			url : '<c:url value="/application/print/team"/>',
+			data : {mt_num:mt_num},
+			dataType : 'json',
+			success : function(data) {
+				count = 0;
+				for(team of data.teamList){
+					str += `
+						<div class="teamList-box">
+							<table>
+								<thead>
+									<tr>
+										<th>
+											\${team.te_type}팀 : <img class="club-emblem" alt="팀엠블럼" src="<c:url value='/clubimg\${team.cl_emblem}'/>">\${team.cl_name}
+											(\${team.club_entry_count}/${match.mt_personnel})
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+					`;
+					if(team.ct_cl_num == cl_num || ${match.ready == 1}){
+						for(entry of data.entryList){
+							if(team.te_num == entry.en_te_num){
+								str += `
+									<tr>
+										<td>
+											<span>
+												<img class="member-profile" alt="멤버프로필" src="<c:url value='/memberimg\${entry.me_profile}'/>">\${entry.me_nickname}(\${entry.me_tr_name})
+											</span>
+										</td>
+									</tr>
+								`;
+							}
+						}
+					}
+					str += `
+								</tbody>
+							</table>
+						</div>
+					`;
+					count++;
+				}
+				if(${match.mt_type = 2}){
+					for(;count < ${match.mt_rule == 0 ? 2 : 3}; count++){
+						str += `
+							<div class="teamList-box">
+								참가 클럽 대기중
+							</div>
+						`;
+					}
+				}
+			}
+		});
 		$('.team-box').html(str);
+	}
+	function printClubMemberState() {
+		str = ``;
+		str += `
+			
+		`;
+		$.ajax({
+			async : false,
+			method : 'post',
+			url : '<c:url value="/application/print/club"/>',
+			data : {cl_num:cl_num, mt_num:mt_num},
+			dataType : 'json',
+			success : function(data) {
+				str += `
+					<div class="club-member-box">
+				`;
+				for(cm of data.CMList){
+					if(cm.en_num == 0){
+						if(cm.entry_able == 1){
+							str += `
+								<div class="entry-able-member member-list">
+									<img class="member-profile" alt="멤버프로필" src="<c:url value='/memberimg\${cm.me_profile}'/>">\${cm.me_nickname}
+							`;
+							if(${authority == 'LEADER'}){
+								str += `
+									<button class="entry-btn btn btn-primary entry-add-btn">등록</button>
+								`;
+							}
+							str += `
+									<br>
+									(\${cm.me_tr_name})
+									<input hidden disabled value="\${cm.cm_me_num}">
+								</div>
+							`;
+						}
+						if(cm.entry_able != 1){
+							str += `
+								<div class="entry-disable-member member-list">
+									<img class="member-profile" alt="멤버프로필" src="<c:url value='/memberimg\${cm.me_profile}'/>">\${cm.me_nickname}
+							`;
+							if(cm.entry_able != 1){
+								str += `
+									<button class="entry-btn btn btn-secondary entry-unable-btn">등록</button>
+								`;
+							}
+							str += `
+									<br>
+									(\${cm.me_tr_name})
+									<input hidden disabled value="\${cm.cm_me_num}">
+								</div>
+							`;
+						}
+					}
+				}
+				str += `
+					</div>
+					<div class="club-entry-box">
+				`;
+				for(cm of data.CMList){
+					if(cm.en_num != 0){
+						str += `
+							<div class="entry-member member-list">
+								<img class="member-profile" alt="멤버프로필" src="<c:url value='/memberimg\${cm.me_profile}'/>">\${cm.me_nickname}
+						`;
+						if(${authority == 'LEADER' && match.ready == 0}){
+							str += `
+								<button class="entry-btn btn btn-danger entry-del-btn">삭제</button>
+							`;
+						}
+						str += `
+								<br>
+								(\${cm.me_tr_name})
+								<input hidden disabled value="\${cm.en_num}">
+							</div>
+						`;
+					}
+				}
+				str += `
+					</div>
+				`;
+			}
+		});
+		$('.club-list-box').html(str);
 	}
 	</script>
 </body>

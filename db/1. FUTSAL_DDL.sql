@@ -20,7 +20,7 @@ CREATE TABLE `member` (
 	`me_authority`	varchar(10)	NOT NULL	DEFAULT 'USER'	COMMENT 'USER, ADMIN, MANAGER, BUSINESS',
 	`me_rating`	int	NULL,
 	`me_profile`	varchar(255)	NULL	DEFAULT '/basic.jpg'	COMMENT '이미지',
-	`me_tr_name`	varchar(10)	NULL	DEFAULT '언랭',
+	`me_tr_name`	varchar(10)	NULL	DEFAULT '스타터',
 	`me_point`	int	NOT NULL	DEFAULT 0,
 	`me_state1`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 없음, 1 : 정지',
 	`me_state2`	int	NOT NULL	DEFAULT 0	COMMENT '0 : 없음, 1 : 정지',
@@ -666,7 +666,7 @@ ALTER TABLE `manager` ADD CONSTRAINT `FK_match_TO_manager_1` FOREIGN KEY (
 )
 REFERENCES `match` (
 	`mt_num`
-);
+) ON DELETE CASCADE;
 
 ALTER TABLE `manager` ADD CONSTRAINT `FK_member_TO_manager_1` FOREIGN KEY (
 	`mn_me_num`
@@ -800,5 +800,4 @@ ALTER TABLE `payment` ADD CONSTRAINT `FK_point_history_TO_payment_1` FOREIGN KEY
 REFERENCES `point_history` (
 	`ph_num`
 );
-
 
