@@ -648,6 +648,14 @@ public class MemberServiceImp implements MemberService{
 		
 		prRegionDao.deletePreferredRegion(me_num);
 		// 선호 지역
+		for(int i : pr_rg_num) {
+			if(i==0) {
+				MemberVO member = memberDao.selectMemberByNum(me_num);
+				prRegionDao.insertPreferredRegion(me_num, member.getMe_rg_num());
+				return msg;
+			}
+		}
+		
 		insertPreferredRegion(me_num, pr_rg_num);
 		return msg;
 	}

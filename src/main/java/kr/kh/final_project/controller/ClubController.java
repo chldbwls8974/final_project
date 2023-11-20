@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.kh.final_project.dao.PreferredAgeDAO;
 import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.service.ClubService;
 import kr.kh.final_project.service.MemberService;
@@ -25,6 +26,7 @@ import kr.kh.final_project.util.UploadFileUtils;
 import kr.kh.final_project.vo.ClubMemberVO;
 import kr.kh.final_project.vo.ClubVO;
 import kr.kh.final_project.vo.MemberVO;
+import kr.kh.final_project.vo.PreferredAgeVO;
 import kr.kh.final_project.vo.RegionVO;
 
 @Controller
@@ -37,6 +39,8 @@ public class ClubController {
 	MemberService memberService;
 	@Autowired
 	RegionDAO regionDao;
+	@Autowired
+	PreferredAgeDAO preferredAgeDao;
 	
 	String uploadPath = "D:\\uploadprofile\\club";
 
@@ -110,9 +114,14 @@ public class ClubController {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		ClubVO club = clubService.getClub(cl_num);
 		ClubMemberVO authority = clubService.getMyAuthorityByClub(cl_num, user.getMe_num());
+		List<Integer> age = preferredAgeDao.selectPreAgeListByClNum(cl_num);
 		model.addAttribute("user",user);
 		model.addAttribute("club",club);
+		model.addAttribute("age",age);
 		model.addAttribute("authority",authority);
+		model.addAttribute("rookielist",rookielist);
+		model.addAttribute("memberlist",memberlist);
+		model.addAttribute("leaderlist",leaderlist);
 		return "/club/detail";
 	}
 	@GetMapping("/join")

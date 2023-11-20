@@ -454,8 +454,7 @@ input, progress {
 		<div class="form-group">
 			<button type="button" class="prev-btn">이전</button>
 		</div>
-		<button class="signup-btn" id="signup"
-			disabled="disabled">회원가입</button>
+		<button class="signup-btn" id="signup"	disabled="disabled">회원가입</button>
 	</form>
 </div>	
 	
@@ -512,12 +511,12 @@ input, progress {
 				success : function(data){
 					if(data){
 						codeSendBtn.disabled = false;
-						$('#check-email-error').text('사용 가능한 이메일입니다.');
+						$('#check-email-error').text('사용 가능한 이메일입니다.').css('color', 'green');
 						flag = true;
 						
 					}else{
 						codeSendBtn.disabled = true;
-						$('#check-email-error').text('이미 사용중인 이메일입니다.');
+						$('#check-email-error').text('이미 사용중인 이메일입니다.').css('color', 'red');
 					}
 				}
 			});
@@ -748,7 +747,8 @@ input, progress {
 			flag = false;
 			let id = $(this).val();
 			if(!/^[a-zA-Z]\w{5,9}$/.test(id)){
-				$('#check-id-error').text('아이디는 6~10글자 영문+숫자 조합이며, 영문으로 시작해야합니다');
+				$('#check-id-error').text('아이디는 6~10글자 영문+숫자 조합이며, 영문으로 시작해야합니다').css('color', 'red');
+				flag = false;
 				return;
 			}
 			$.ajax({
@@ -758,10 +758,10 @@ input, progress {
 				data : { id : id}, 
 				success : function(data){
 					if(data){
-						$('#check-id-error').text('사용 가능한 아이디입니다.');
+						$('#check-id-error').text('사용 가능한 아이디입니다.').css('color', 'green'); 
 						flag = true;
 					}else{
-						$('#check-id-error').text('이미 사용중인 아이디입니다.');
+						$('#check-id-error').text('이미 사용중인 아이디입니다.').css('color', 'red');
 					}
 				}
 			});
@@ -793,11 +793,31 @@ input, progress {
 			}
 		})
 		
-		//비밀번호 확인 안되면 제출 못함
+		// 여러 조건 안맞으면 폼 제출을 막음
 		document.getElementById("myForm").addEventListener("submit", function(event) {
+		    // 비밀번호
+		    let password = $('[name=me_password]').val();
+		    let passwordConfirm = $('[name=me_password_confirm]').val();
+		
 		    if (password !== passwordConfirm) {
 		        alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
-		        event.preventDefault(); // 폼 제출을 막음
+		        event.preventDefault();
+		    }
+		    // 아이디
+		    else {
+		        let id = $('[name=me_id]').val();
+		        if (!/^[a-zA-Z]\w{5,9}$/.test(id)) {
+		            alert("아이디를 확인해주세요");
+		            event.preventDefault();
+		        }
+		        // 생년월일 선택 안하면
+		        else {
+		            let birth = $('[name=me_birthday]').val();
+		            if (birth == '') {
+		                alert("생년월일을 선택해주세요.");
+		                event.preventDefault();
+		            }
+		        }
 		    }
 		});
 			

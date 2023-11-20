@@ -239,6 +239,8 @@
 										</c:if>
 									</c:forEach>
 								</select>
+							</div>	<div class="form-group" style="display: block;">
+								<button type="button" class="form-control" name="area-del-btn" >x</button>
 							</div>
 						</div>
 					</c:forEach>

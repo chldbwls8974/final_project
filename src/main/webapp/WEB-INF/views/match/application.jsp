@@ -4,26 +4,34 @@
 <head>
 	<title>매치 페이지</title>
 	<style type="text/css">
+	
+	.container-body{ height: auto;}
 	nav{width: 100%;}
+	
 	input{text-align: right;}
 	.left-box{}
-	.right-box{ display: flex; height: 500px; padding-left: 10px}
-	.contents-box{padding: 10px}
-	.info-box{
-		width: 100%; background-color: #f2f2f2; height: 300px; margin-bottom: 10px;
-		border-radius: 20px; box-sizing: border-box;
+	.right-box{ width: 600px; height: auto; margin: 0 auto;}
+	.info-box{display: grid; justify-content: center;}
+	.match-info-box1, .match-info-box2{
+		text-align: center;
+	    background-color: #f2f2f2;
+	    width: 600px;
+	    height: auto;
+	    padding: 30px;
+	    border-radius: 20px; 
+	    text-align: center;
+	}
+	.match-info-box1{
+		margin-bottom: 20px;
 	}
 	.right-side-box{
-		width: 100%; height: auto; float: right; margin: 0 10px 10px 10px;
-		border-radius: 20px; background-color: #e5f4d8;  box-sizing: border-box;
+		height: auto; border-radius: 20px; background-color: #e5f4d8;
 	}
 	.right-side-box p{
 		font-size: 20px; font-weight: bolder; margin: 0 auto;
 		padding: 50px 0 30px 0; text-align: center;
 	}
 	.right-side-box div{ text-align: center;}
-	.match-box{display: flex;}
-	.match-info-box{flex: 1}
 	.team-box{display: flex; background-color: black;}
 	.teamList-box{flex: 1; margin-right: 3px; background-color: white; text-align: center;}
 	.teamList-box:last-child {margin-right: 0;}
@@ -46,38 +54,141 @@
 	}
 	.club-emblem{width: 20px; height: 20px; border-radius: 50%;}
 	.member-profile{width: 20px; height: 20px; border-radius: 50%;}
+	.match-icon{ width: 25px; height: 25px;}
+	.match-info-box{flex: 1}
+	.match-info-box1 div{ justify-content: space-between; display: flex;}
+	.facility-info-box{ justify-content: space-between; display: flex;}
+	.facility-info-icon{ display: flex;}
+	.facility-info-icon img{ margin-right: 5px;}
+	.facility-info-icon p{padding: 2px;}
+	
 	</style>
 </head>
 <body>
+<div class="container-body">
 	<p style="font-size: 35px; font-weight: bolder; margin: 50px auto; border-bottom: 8px solid #c2f296;
 	width: 20%; padding: 30px 0 10px 0; text-align: center;">매치 페이지</p>
 	<nav class="container-body">
 		<div class="contents-box left-box">
-			${match}
 			<div class="info-box match-box">
-				<div class="match-info-box match-info">
-					<h4>
+				<div class="match-info-box1 match-info">
+					<p style="font-size: 19px; font-weight: bold; margin-bottom: 30px;">
 						<c:if test="${match.mt_type == 1}">개인 매치</c:if>
 						<c:if test="${match.mt_type == 2}">클럽 매치</c:if>
 						${match.mt_rule == 0 ? '친선전' : '경쟁전'}(${match.mt_personnel}vs${match.mt_personnel})
-					</h4>
-					<c:if test="${match.mt_rule == 1}">
-						담당 매니저 : ${match.me_name} <br>
-					</c:if>
-					일시	: ${match.mt_date_str} ${match.ti_time_str} <br>
-					장소	: ${match.fa_name} ${match.st_name} <br>
-					주소	: ${match.fa_add} ${match.fa_add_detail} <br>
-					시설 연락처	: ${match.fa_phone} <br>
+					</p>
+					<div>
+						
+							<c:if test="${match.mt_rule == 1}">
+								<div>
+									<p>담당 매니저</p>
+								</div>
+								<div>	
+									<p>${match.me_name}</p>
+								</div>
+							</c:if>
+						
+					</div>
+					<div>
+						<div>
+							<p>일시</p>
+						</div>
+						<div>
+							<p>${match.mt_date_str} ${match.ti_time_str}</p>
+						</div>
+					</div>
+					<div>
+						<div>
+							<p>장소</p>
+						</div>
+						<div>	
+							<p>${match.fa_name} ${match.st_name}</p>
+						</div>
+					</div>
+					<div>
+						<div>
+							<p>주소</p>
+						</div>
+						<div>	
+							<p>${match.fa_add} ${match.fa_add_detail}</p>
+						</div>
+					</div>
+					<div>
+						<div>
+							<p>시설 연락처</p>
+						</div>
+						<div>
+							<p>${match.fa_phone}</p>
+						</div>
+					</div>
 				</div>
-				<div class="match-info-box facility-info">
-					<h4>편의시설</h4>
-					주차장 : ${match.fa_pay == 0 ? '없음' : match.fa_pay == 1 ? '무료' : '유료'}<br>
-					탈의실 : ${match.fa_locker == 0 ? '없음' : '있음'}<br>
-					화장실 : ${match.fa_toilet == 0 ? '없음' : '있음'}<br>
-					샤워실 : ${match.fa_shower == 0 ? '없음' : '있음'}<br>
-					흡연장 : ${match.fa_smoking == 0 ? '없음' : '있음'}<br>
-					자판기 : ${match.fa_machine == 0 ? '없음' : '있음'}<br>
-					특이사항 : ${match.fa_note}
+				<div class="match-info-box2 facility-info">
+					<p style="font-size: 19px; font-weight: bold; margin-bottom: 30px;">편의시설</p>
+					<div style="flex-direction: column; align-items: center;">
+						<div class="facility-info-box">
+							<div class="facility-info-icon">
+								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_park.svg" class="match-icon">
+								<p>주차장</p>
+							</div>
+							<div>
+								<p>${match.fa_pay == 0 ? '없음' : match.fa_pay == 1 ? '무료' : '유료'}</p>
+							</div>
+						</div>
+						<div class="facility-info-box">
+							<div class="facility-info-icon">
+								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_gender.svg" class="match-icon">
+								<p>탈의실</p>
+							</div>
+							<div>
+								<p>${match.fa_locker == 0 ? '없음' : '있음'}</p>
+							</div>
+						</div>
+						<div class="facility-info-box">
+							<div class="facility-info-icon">
+								<img src="	https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_toilet.svg" class="match-icon">
+								<p>화장실</p>
+							</div>
+							<div>
+								<p>${match.fa_toilet == 0 ? '없음' : '있음'}</p>
+							</div>
+						</div>
+						<div class="facility-info-box">
+							<div class="facility-info-icon">
+								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_shower.svg" class="match-icon">
+								<p>샤워실</p>
+							</div>
+							<div>
+								<p>${match.fa_shower == 0 ? '없음' : '있음'}</p>
+							</div>
+						</div>
+						<div class="facility-info-box">
+							<div class="facility-info-icon">
+								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_gender.svg" class="match-icon">
+								<p>흡연장</p>
+							</div>
+							<div>
+								<p>${match.fa_smoking == 0 ? '없음' : '있음'}</p>
+							</div>
+						</div>
+						<div class="facility-info-box">
+							<div class="facility-info-icon">
+								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_park.svg" class="match-icon">
+								<p>자판기</p>
+							</div>
+							<div>
+								<p>${match.fa_machine == 0 ? '없음' : '있음'}</p>
+							</div>
+						</div>
+						<div class="facility-info-box">
+							<div class="facility-info-icon">
+								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_shoes.svg" class="match-icon">
+								<p>특이사항</p>
+							</div>
+							<div>
+								<p>${match.fa_note}</p>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 			<c:if test="${cl_num != 0 && match.team_count != 0}">
@@ -98,18 +209,18 @@
 							</div>
 							<div>
 								<button class="btn btn-application"
-										style="width: 100px; height: 40px; border: none; margin-top: 20px;
+										style="width: 100px; height: 40px; border: none; margin: 20px auto 40px;
 										border-radius: 5px; background-color: black; color: white;">
 									신청</button>
 							</div>	
 						</div>
 					</div>
-					<div class="coupon-box right-side-box">
-						<div style="margin-top: 60px;">
+					<div class="coupon-box right-side-box" style="padding-bottom: 40px;">
+						<div style="margin-top: 20px;">
 							<p>보유 쿠폰</p>
-							<div>
+							<div style="margin-bottom: 40px;">
 								<c:forEach items="${couponList}" var="co">
-									<div style="padding: 10px;">
+									<div>
 										<input type="radio" name="coupon" value="${co.hp_num}">${co.cp_source}(${co.cp_sale}) <br>
 										<input type="text" class="sale-point" value="${co.cp_sale}" hidden>
 									</div>
@@ -119,11 +230,11 @@
 					</div>
 				</c:if>
 				<c:if test="${match.entry_res != 0}">
-					<div class="cansel-box right-side-box">
+					<div class="cansel-box right-side-box" style="margin-top: 20px;">
 						<div>
-							<p>취소</p>
+							<p>신청한 매치 취소하기</p>
 							<button class="btn btn-cansel"
-									style="width: 100px; height: 40px; border: none; 
+									style="width: 100px; height: 40px; border: none; margin: 20px auto 40px;
 									border-radius: 5px; background-color: black; color: white;">
 								취소</button>
 						</div>	
@@ -142,15 +253,20 @@
 			</c:if>
 			<c:if test="${(match.mt_type == 0 && cl_num != 0) || (match.mt_type == 2 && cl_num != 0)}">
 				<c:if test="${match.entry_res == 0}">
-					<div class="application-box right-side-box">
-						<div>
+					<div class="application-box right-side-box" style="width: 600px; margin: 0 auto;">
+						<div style="margin-top: 20px;">
 							<p>클럽 매치 신청</p>
-							<span>비용 : ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}포인트/2시간</span>
-							<input type="text" class="total-price" disabled value="${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}Point"> <br>
-							<button class="btn btn-application"
-									style="width: 100px; height: 40px; border: none; 
-									border-radius: 5px; background-color: black; color: white;">
-								신청</button>
+							<div style="display: inline-grid;">
+								<span>${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}포인트/2시간</span>
+								<p style="font-size: 15px; font-weight: 400; padding: 0;">차감 예정입니다.</p>
+								<input type="text" class="total-price" disabled value="${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre}P"> <br>
+							</div>		
+							<div>
+								<button class="btn btn-application"
+										style="width: 100px; height: 40px; border: none; margin: 20px auto 40px;
+										border-radius: 5px; background-color: black; color: white;">
+									신청</button>
+							</div>
 						</div>
 					</div>
 				</c:if>
@@ -174,6 +290,7 @@
 			</c:if>
 		</div>
 	</nav>
+</div>	
 	<script type="text/javascript">
 	let cl_num = ${cl_num};
 	let hp_num = 0;
