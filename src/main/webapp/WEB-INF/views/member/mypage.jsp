@@ -252,13 +252,7 @@
 						<li>
 							<a href="<c:url value='/member/friendlist'/>">
 							<img src="https://d31wz4d3hgve8q.cloudfront.net/media/ic_nav_team_recruit_guest.svg" width="24px" height="24px" alt="회원 조회">
-							<p>즐겨찾기 회원 조회</p>
-							</a>
-						</li>
-						<li>
-							<a href="<c:url value='/member/blocklist'/>">
-							<img src="https://d31wz4d3hgve8q.cloudfront.net/media/ic_nav_team_recruit_guest.svg" width="24px" height="24px" alt="회원 조회">
-							<p>차단 회원 조회</p>
+							<p>즐겨찾기/차단 조회</p>
 							</a>
 						</li>
 						<li>
