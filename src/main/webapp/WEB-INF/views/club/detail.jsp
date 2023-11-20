@@ -86,7 +86,6 @@
 		margin: 100px auto;
 	}
 	
-	.modal--content ul li{ width: 16%;}
 </style>
 
 </head>
