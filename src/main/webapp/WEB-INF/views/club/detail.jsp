@@ -217,6 +217,8 @@
 			
 			ajaxJsonToJson2(false, 'post','/club/mbmanage',data, (a)=>{
 				alert("완료")
+				// 페이지 새로 고침
+	            location.reload();
 			})
 		}
 	})
