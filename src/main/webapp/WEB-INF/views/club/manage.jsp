@@ -10,9 +10,14 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style type="text/css">
-.tag{
-display:inline;
-}
+	.tag{ display:inline;}
+	.container-body{ width: 100%; height: auto; display: flex; margin-top: 100px;}
+	
+	.text{ border-left: 7px solid #c2f296; padding-left: 10px;}
+	.btn{
+		width: 100px; height: 40px; margin: auto auto 10px; border: none;
+		border-radius: 15px; background-color: #c2f296; color: black;
+	}
 </style>
 </head>
 <body>
@@ -25,8 +30,8 @@ display:inline;
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th>번호</th>
-						<th>회원 닉네임</th>
+						<th style="width: 20%;">번호</th>
+						<th style="width: 35%;">회원 닉네임</th>
 						<th>권한</th>
 						<th></th>
 					</tr>
@@ -35,8 +40,8 @@ display:inline;
 					<c:forEach items="${list }" var="list">
 						<c:if test="${list.cm_authority !='ROOKIE'}">
 							<tr>
-								<td>${list.cm_num}</td>
-								<td>${list.me_nickname}</td>
+								<td style="width: 20%;">${list.cm_num}</td>
+								<td style="width: 35%;">${list.me_nickname}</td>
 								<td>${list.cm_authority}</td>
 								<td>
 								<c:if test="${list.cm_authority =='MEMBER'}">
