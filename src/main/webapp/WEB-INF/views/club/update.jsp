@@ -136,6 +136,7 @@ input[type='checkbox']{
 	.box-thumbnail{
 		display: none; position: absolute; top: 0; 
 	}
+
 	
 	
 /* 	나이박스 */
@@ -160,7 +161,7 @@ input[type='checkbox']{
 				<img src="<c:url value='/clubimg${club.cl_emblem }'/>" name="profile" height="150" width="150" style="border-radius: 50%; margin-bottom: 10px;">
 			</div>
 			<div class="form-group update-profile" style="margin-top: 10px;">
-				<input type="file" class="input-file" name="img" id="img" onchange="readUrl(this)">
+				<input type="file" class="input-file" name="img" id="img" onchange="readUrl(this)" style="display:none;">
 					<a href="#" class="btn-file">+
 						<div class="box-thumbnail">
 							<img src="" id="preview" height="200" width="200">
