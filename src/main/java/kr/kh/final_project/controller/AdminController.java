@@ -532,7 +532,7 @@ public class AdminController {
 		PageMaker pm = new PageMaker(DISPLAY_PAGE_NUM, cri, totalCount);
 		
 		if(stadiumList.size() == 0) {
-	        Message msg = new Message("/businessman/stadiumInsert/" + fa_num , "등록된 경기장이 없습니다. 경기장을 등록해주세요");
+	        Message msg = new Message("/admin/facilitylist", "등록된 경기장이 없습니다.");
 			model.addAttribute("msg", msg);
 			return "/message";
 		}
