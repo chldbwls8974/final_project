@@ -19,7 +19,7 @@ public class BoardBanInterceptor extends HandlerInterceptorAdapter{
 			HttpServletResponse response, Object handler)
 			throws Exception {
 		MemberVO user= (MemberVO)request.getSession().getAttribute("user");
-		//로그인 하지 않았으면
+		//로그인 하지 않았고, 자동로그인을 설정하지 않았다면
 		if(user == null) {
 			response.sendRedirect(request.getContextPath()+"/member/login");
 			return false;

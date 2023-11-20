@@ -103,4 +103,12 @@
 			co_ori_num desc,
 			co_num asc
 	</select>
+	<select id="selectCommentCommentList" resultType="kr.kh.final_project.vo.CommentVO">
+		select 
+			*
+		from 
+			comment
+		where
+			co_ori_num = #{co_ori_num}
+	</select>
 </mapper>

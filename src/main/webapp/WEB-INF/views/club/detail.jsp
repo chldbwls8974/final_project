@@ -16,7 +16,7 @@
 	.form-group{ display: flex; justify-content: space-between; text-align: center;}
 	.form-group button, .form-group select, .form-group input{ margin: 0 auto;}
 	.text{ border-left: 7px solid #c2f296; padding-left: 10px;}
-	.form-group p{ font-weight: bold;}
+	.form-group p{ font-weight: 600;}
 	
 	.signup-btn{ width: 500px; margin: 0 auto;
 		border-radius: 10px; border: none;
@@ -43,10 +43,10 @@
 	}
 	.profile-body{ 
 		background-color: #f2f2f2; border-radius: 20px; display: flex; flex-direction: column;
-		height: auto; width: 70%; text-align: center; padding: 80px 50px 50px 50px;
+		height: auto; width: 90%; text-align: center; padding: 80px 50px 50px 50px;
 	}
 	.profile-head2{
-		width: 80%; display: flex; margin: 10px auto;
+		width: 250px; display: flex; margin: 10px auto;
 	}
 	
 
@@ -103,8 +103,8 @@
 					<div class="myedit">
 						<a href="<c:url value='/club/update?cl_num=${club.cl_num}'/>" class="myprofile-btn">
 							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg"
-								style="width: 20px; height: 20px; margin-right: 5px;" alt="프로필 수정">
-							<p style="font-size: 14px;">팀 수정</p>
+								style="width: 24px; height: 20px; margin-right: 5px;" alt="프로필 수정">
+							<p style="font-size: 14px;">클럽 수정</p>
 						</a>
 					</div>
 					<div class="myedit">
@@ -123,17 +123,17 @@
 <!-- 	그 무엇도 아닌 사람은 가입신청을 할 수 있다. -->
 	<c:if test="${authority.cm_authority != 'LEADER' && authority.cm_authority != 'ROOKIE' && authority.cm_authority != 'MEMBER'}">
 		<a href="#">
-		 	<button type="button" class="btn btn-outline-success" name="join-btn">가입신청하기</button>
+		 	<button type="button" class="btn btn-outline-success" name="join-btn">가입 신청하기</button>
 		 </a>
 	</c:if>
 <!-- 	이미 신청한 사람은 중복으로 신청할 수 없으므로 승인대기중을 보여줘야한다. -->
 	 <c:if test="${authority.cm_authority == 'ROOKIE'}">
 	 	<button type="button" class="btn btn-outline-success">승인대기중</button>
-	 	<button type="button" class="btn btn-outline-success" name="withdraw-btn">가입취소</button>
+	 	<button type="button" class="btn btn-outline-success" name="withdraw-btn">가입 취소</button>
 	 </c:if>
 <!-- 	멤버는 가입했던 클럽을 탈퇴할 수 있다. -->
 	 <c:if test="${authority.cm_authority == 'MEMBER'}">
-	 	<button type="button" class="btn btn-outline-success" name="withdraw-btn">탈퇴</button>
+	 	<button type="button" class="btn btn-outline-success" name="withdraw-btn">클럽 탈퇴</button>
 	 </c:if>
 
 	</div>
@@ -157,13 +157,13 @@
 		<div class="form-group">
 			<label class="text">클럽 선호 연령</label>
 			<div>
-				<p> ${age}</p>
+				<p> ${age.toString().replace('[', ' ').replace(']', ' ')}</p>
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="text">클럽 회비</label>
 			<div>
-				<p> ${club.cl_price}</p>
+				<p> ${club.cl_price} 원</p>
 			</div>
 		</div>
 		<div class="form-group">
@@ -179,7 +179,7 @@
 		<div class="modal--bg">
 		<div class="modal--content">
 			<p style="font-size: 20px; font-weight: bolder; margin: 20px auto; border-bottom: 8px solid #c2f296; width: 30%; padding: 20px 0 10px 0; text-align: center;">클럽 가입 신청</p>
-				<p style="font-size: 15px; margin: 20px auto; width: 30%; padding: 20px 0 10px 0; text-align: center;">간단한 자기소개를 부탁해요.</p>
+				<p style="font-size: 15px; margin: 20px auto; width: 30%; padding: 20px 0 10px 0; text-align: center;">간단한 자기소개를 적어주세요.</p>
 				<form action="<c:url value='/club/join'/>" method="post" class="modal-form">
 					<div class="form-group">
 						<input type="hidden" name="cm_cl_num" value="${club.cl_num}">
@@ -205,7 +205,7 @@
 	
 	<script type="text/javascript">
 	$(document).on('click','[name=withdraw-btn]',function(){
-		if(confirm("정말 그만두시겠습니까?")){
+		if(confirm("가입 신청을 취소하시겠습니까?")){
 			me_num = ${user.me_num}
 			cl_num = ${club.cl_num}
 			data = {
