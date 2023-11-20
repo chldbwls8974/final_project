@@ -11,42 +11,65 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style type="text/css">
 	.tag{ display:inline;}
-	.container-body{ width: 100%; height: auto; display: flex; margin-top: 100px;}
+	.container-body{ width: 100%; height: auto; margin-top: 50px;}
 	
 	.text{ border-left: 7px solid #c2f296; padding-left: 10px;}
+	.top-btn{width: 120px; height: 40px; margin: auto auto 10px; border: none;
+		border-radius: 10px; background-color: #c2f296; color: black;}
 	.btn{
-		width: 100px; height: 40px; margin: auto auto 10px; border: none;
-		border-radius: 15px; background-color: #c2f296; color: black;
+		width: 90px; height: 40px; margin: auto auto 10px; border: none;
+		border-radius: 10px; background-color: #fcfff8; color: black;
+	}
+	.table{
+		background-color: #f2f2f2;
+	    padding: 10px;
+	    border-radius: 25px;
+	}
+	
+	th{ padding: 20px; vertical-align: baseline;}
+	.table th{ border: none;}
+	.table thead th, .table tbody td{ border-bottom: none; text-align: center;}
+	.table tbody tr:hover{ background-color: #f4f8f1;}
+	.btn-group{
+		display: flex;
+	    justify-content: center;
+	    margin-bottom: 50px;
 	}
 </style>
 </head>
 <body>
-	<div class="container">
+	<div class="container-body">
+	<p style="font-size: 35px; font-weight: bolder; margin: 20px auto; border-bottom: 8px solid #c2f296;
+	width: 23%; padding: 10px 0 10px 0; text-align: center;">클럽 멤버 관리</p>
 		  <div class="btn-group">
-		    <button type="button" class="btn btn-primary" name="member-tag">회원</button>
-		    <button type="button" class="btn btn-primary" name="rookie-tag">승인대기</button>
+			  <div style="margin-right: 10px;">
+			    <button type="button" class="top-btn" name="member-tag">멤버 조회</button>
+			  </div>
+			  <div>
+			    <button type="button" class="top-btn" name="rookie-tag">승인 대기 중</button>
+			  </div> 
 		  </div>
 		<div class="table member-table">
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th style="width: 20%;">번호</th>
-						<th style="width: 35%;">회원 닉네임</th>
+						<th>번호</th>
+						<th>회원 닉네임</th>
 						<th>권한</th>
-						<th></th>
+						<th style="width: 25%;"></th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach items="${list }" var="list">
 						<c:if test="${list.cm_authority !='ROOKIE'}">
 							<tr>
-								<td style="width: 20%;">${list.cm_num}</td>
-								<td style="width: 35%;">${list.me_nickname}</td>
+								<td>${list.cm_num}</td>
+								<td>${list.me_nickname}</td>
 								<td>${list.cm_authority}</td>
-								<td>
+								<td style="width: 25%;">
 								<c:if test="${list.cm_authority =='MEMBER'}">
-									<button type="button" class="btn btn-outline-warning" data-num="${list.cm_me_num}" value="${list.cm_authority}" name="delegate-btn">위임</button>
-									<button type="button" class="btn btn-outline-warning" data-num="${list.cm_me_num}" value="${list.cm_authority}" name="discharge-btn">강퇴</button>
+									<button type="button" class="btn" data-num="${list.cm_me_num}" value="${list.cm_authority}" name="delegate-btn" style="margin-right: 10px;">위임</button>
+									<button type="button" class="btn" data-num="${list.cm_me_num}" value="${list.cm_authority}" name="discharge-btn">강퇴</button>
 								</c:if>
 								</td>
 							</tr>
@@ -62,7 +85,7 @@
 						<th>번호</th>
 						<th>회원 닉네임</th>
 						<th>자기소개</th>
-						<th></th>
+						<th style="width: 25%;"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -72,9 +95,9 @@
 								<td>${list.cm_num}</td>
 								<td>${list.me_nickname}</td>
 								<td>${list.cm_introduction}</td>
-								<td>
-									<button type="button" class="btn btn-outline-warning" data-num="${list.cm_me_num}" value="${list.cm_authority}" name="approval-btn">승인</button>
-									<button type="button" class="btn btn-outline-warning" data-num="${list.cm_me_num}" value="${list.cm_authority}" name="refuse-btn">거절</button>
+								<td style="width: 25%;">
+									<button type="button" class="btn" data-num="${list.cm_me_num}" value="${list.cm_authority}" name="approval-btn">승인</button>
+									<button type="button" class="btn" data-num="${list.cm_me_num}" value="${list.cm_authority}" name="refuse-btn">거절</button>
 								</td>
 							</tr>
 						</c:if>
@@ -103,7 +126,7 @@
 		// 멤버 테이블 관리
 		// 강퇴 버튼 클릭시
 		$(document).on('click','[name=discharge-btn]',function(){
-			if(confirm("정말 회원을 퇴장시키시겠습니까?")){
+			if(confirm("정말 회원을 강퇴시키시겠습니까?")){
 				let me_num = $(this).data('num')
 				let type="discharge"
 				
