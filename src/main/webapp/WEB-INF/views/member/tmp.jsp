@@ -31,7 +31,7 @@
 </head>
 </head>
 <body>
-${match.mt_num }
+${match.mt_num } 
 	<!-- 임시페이지 -->
 	<!-- 임시페이지 -->
 	<!-- 임시페이지 -->
@@ -50,7 +50,7 @@ ${match.mt_num }
 			<p style="font-size: 20px; font-weight: bolder; margin: 0 auto; border-bottom: 8px solid #c2f296;
 			width: 20%; padding: 20px 0 10px 0; text-align: center;">신고하기</p>
 			<!-- 일단 여기부터 작업 -->
-			<form class="modal-form" action="<c:url value='/admin/matchReport/insert'/>" method="post">
+			<form class="modal-form" action="<c:url value='/member/matchReport/insert'/>" method="post">
 				<input type="hidden" class="form-control" name="rp_me_num" value="${user.me_num}" readonly>
 				<input type="hidden" class="form-control" name="rp_mt_num" value="${match.mt_num}" readonly>
 				<!-- 셀렉트로 닉네임 선택하면 value는 me_num이 전송되게 -->

@@ -161,11 +161,13 @@ form{
 			</div>
 			<!-- 모달버튼 -->
 			<c:if test="${board.bo_bt_num != 5 && board.bo_bt_num != 6 && board.bo_bt_num != 7 }">
-				<div style="text-align: right; ">
-					<button type="button" class="btn button--open"
-						 style="background-color: black; color: white; border-radius: 10px; height: 40px; width: 120px; margin: 0 20px 30px 10px;"
-						 data-value="${board.bo_num}">게시글 신고</button>
-				</div>	 
+				<c:if test="${user != null && user.me_num != board.bo_me_num}">
+					<div style="text-align: right; ">
+						<button type="button" class="btn button--open"
+							 style="background-color: black; color: white; border-radius: 10px; height: 40px; width: 120px; margin: 0 20px 30px 10px;"
+							 data-value="${board.bo_num}">게시글 신고</button>
+					</div>
+				</c:if>	 
 			</c:if>
 		<!-- 댓글 페이지네이션 -->
 			<div class="pagination justify-content-center">
@@ -202,7 +204,7 @@ form{
 		<div class="modal--content">
 			<p style="font-size: 20px; font-weight: bolder; margin: 0 auto; border-bottom: 8px solid #c2f296;
 			width: 20%; padding: 20px 0 10px 0; text-align: center;">신고하기</p>
-			<form class="modal-form" action="<c:url value='/admin/boardReport/insert'/>" method="post">
+			<form class="modal-form" action="<c:url value='/member/boardReport/insert'/>" method="post">
 				<input type="hidden" class="form-control" name="rp_me_num" value="${user.me_num}" readonly>
 				<input type="hidden" class="form-control" name="rp_bo_num" value="${board.bo_num}" readonly>
 				<input type="hidden" class="form-control" name="rp_me_num2" value="${board.bo_me_num}" readonly>
