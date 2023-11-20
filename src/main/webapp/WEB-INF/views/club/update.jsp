@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style type="text/css">
 
-.container{ background-color: #f0f0f0; padding: 50px 0 50px 0;
+.container{ background-color: #f0f0f0; padding: 50px 0 50px 0; border-radius: 30px; margin: 30px auto;
 }
 .form-control{border-radius: 30px; width: 400px;}
 .form-group{display:block; text-align: center;}
@@ -30,19 +30,18 @@
     border: 0;
     vertical-align: baseline;
 }
-ul{
+.chip{
 	display: flex; 
 	flex-wrap: wrap; 
 	overflow: hidden; 
 	border-radius: 12px;
 	list-style: none;
+	padding: 20px;
 }
-li{
+.chip__item--3{
 	box-shadow: none;	
     margin: 0;
     vertical-align: baseline;
-}
-.chip__item--3{
 	width: 33.333%;
     position: relative;
     padding-right: 1px;
@@ -136,7 +135,10 @@ input[type='checkbox']{
 	.box-thumbnail{
 		display: none; position: absolute; top: 0; 
 	}
-
+	.profile{ margin-top: 40px; text-align: center;}
+	.profile-update-btn{
+		border: none;
+	}
 	
 	
 /* 	나이박스 */
@@ -157,7 +159,7 @@ input[type='checkbox']{
 	<p style="font-size: 45px; font-weight: bolder; text-align: center; margin-bottom: 20px;
 		 letter-spacing: -3px;">클럽 수정</p>
 	<form action="<c:url value='/club/update'/>" method="post" enctype="multipart/form-data">
-			<div style="display: inline-grid;" class="profile">
+			<div class="profile">
 				<img src="<c:url value='/clubimg${club.cl_emblem }'/>" name="profile" height="150" width="150" style="border-radius: 50%; margin-bottom: 10px;">
 			</div>
 			<div class="form-group update-profile" style="margin-top: 10px;">
@@ -168,7 +170,8 @@ input[type='checkbox']{
 						</div>
 					</a>
 			</div>
-			<div>
+			<div style="justify-content: center; display: flex;">
+				<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg" alt="프로필 수정" style="width: 25px; height: 25px;">
 				<button type="button" class="profile-update-btn">
 				프로필 사진 변경
 				</button>
@@ -200,10 +203,10 @@ input[type='checkbox']{
 		</div>
 		
 		<div class="form-group">
-		 <label>선호시간</label>
+		 <label style="font-size: 19px; font-weight: 600;">선호시간</label>
 		    <div class="pre_time">
 				<div class="form-group time-box weekday-time">
-					<label>평일 선호 시간</label>
+					<label style="margin: 0;">평일 선호 시간</label>
 					<ul class="chip">
 						
 						<li class="chip__item--3">
@@ -305,7 +308,7 @@ input[type='checkbox']{
 	                </ul>
 				</div>
 				<div class="form-group time-box weekend-time">
-					<label>주말 선호 시간</label>
+					<label style="margin: 0;">주말 선호 시간</label>
 					<ul class="chip">
 						<li class="chip__item--3">
 							<input type="checkbox" id="holitime_6" name="favoriteHoliTime" class="chip__item-radio" value="6" <c:if test="${holiTime.contains(Integer(6)) || holiTime.contains(Integer(7))}">checked</c:if>> 
@@ -472,7 +475,9 @@ input[type='checkbox']{
 		 <label>클럽 외부 url</label>
 		   <input type="url"  class="form-control" name="cl_url" value="${club.cl_url }">
 		</div>
-		<button class="btn btn-outline-warning col-12">클럽수정</button>
+		<div style="text-align: center;">
+			<button class="btn">클럽수정</button>
+		</div>
 	</form>
 	
 	
