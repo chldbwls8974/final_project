@@ -5,7 +5,7 @@
 	<title>매치 페이지</title>
 	<style type="text/css">
 	
-	.container-body{ height: auto;}
+	.container-main{ height: auto;}
 	nav{width: 100%;}
 	
 	input{text-align: right;}
@@ -65,7 +65,7 @@
 	</style>
 </head>
 <body>
-<div class="container-body">
+<div class="container-main">
 	<p style="font-size: 35px; font-weight: bolder; margin: 50px auto; border-bottom: 8px solid #c2f296;
 	width: 20%; padding: 30px 0 10px 0; text-align: center;">매치 페이지</p>
 	<nav class="container-body">
