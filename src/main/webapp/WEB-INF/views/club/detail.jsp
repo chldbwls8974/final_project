@@ -51,8 +51,8 @@
 	
 
 	.btn{
-		width: 120px; height: 40px; margin: auto auto 10px; border: none;
-		border-radius: 5px; background-color: #c2f296; color: black;
+		width: 250px; height: 40px; margin: auto auto 10px; border: none;
+		border-radius: 15px; background-color: #c2f296; color: black;
 	}
 	
 	.myedit a, .mytime-edit a, .myregion-edit a{
