@@ -1,12 +1,10 @@
 package kr.kh.final_project.interceptor;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import org.springframework.web.util.WebUtils;
 
 import kr.kh.final_project.dao.MemberDAO;
 import kr.kh.final_project.vo.MemberVO;
@@ -21,9 +19,8 @@ public class BoardBanInterceptor extends HandlerInterceptorAdapter{
 			HttpServletResponse response, Object handler)
 			throws Exception {
 		MemberVO user= (MemberVO)request.getSession().getAttribute("user");
-		Cookie cookie = WebUtils.getCookie(request, "loginCookie");
 		//로그인 하지 않았고, 자동로그인을 설정하지 않았다면
-		if(user == null && cookie == null) {
+		if(user == null) {
 			response.sendRedirect(request.getContextPath()+"/member/login");
 			return false;
 		}
