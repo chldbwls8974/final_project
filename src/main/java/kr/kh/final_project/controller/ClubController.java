@@ -119,6 +119,9 @@ public class ClubController {
 		model.addAttribute("club",club);
 		model.addAttribute("age",age);
 		model.addAttribute("authority",authority);
+		model.addAttribute("rookielist",rookielist);
+		model.addAttribute("memberlist",memberlist);
+		model.addAttribute("leaderlist",leaderlist);
 		return "/club/detail";
 	}
 	@GetMapping("/join")

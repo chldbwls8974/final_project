@@ -51,8 +51,8 @@
 	
 
 	.btn{
-		width: 120px; height: 40px; margin: auto auto 10px; border: none;
-		border-radius: 5px; background-color: #c2f296; color: black;
+		width: 250px; height: 40px; margin: auto auto 10px; border: none;
+		border-radius: 15px; background-color: #c2f296; color: black;
 	}
 	
 	.myedit a, .mytime-edit a, .myregion-edit a{
@@ -171,7 +171,7 @@
 	
 	<script type="text/javascript">
 	$(document).on('click','[name=withdraw-btn]',function(){
-		if(confirm("정말 그만두시겠습니까")){
+		if(confirm("정말 그만두시겠습니까?")){
 			me_num = ${user.me_num}
 			cl_num = ${club.cl_num}
 			data = {
