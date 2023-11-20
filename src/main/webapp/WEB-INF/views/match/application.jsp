@@ -75,7 +75,7 @@
 					<p style="font-size: 19px; font-weight: bold; margin-bottom: 30px;">
 						<c:if test="${match.mt_type == 1}">개인 매치</c:if>
 						<c:if test="${match.mt_type == 2}">클럽 매치</c:if>
-						${match.mt_rule == 0 ? '친선전' : '경쟁전'}(${match.mt_personnel}vs${match.mt_personnel})
+						<span style="color: #749f4c;">${match.mt_rule == 0 ? '친선전' : '경쟁전'} </span>(${match.mt_personnel}vs${match.mt_personnel})
 					</p>
 					<div>
 						
@@ -163,7 +163,7 @@
 						</div>
 						<div class="facility-info-box">
 							<div class="facility-info-icon">
-								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_gender.svg" class="match-icon">
+								<img src="	https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_stadium.svg" class="match-icon">
 								<p>흡연장</p>
 							</div>
 							<div>
@@ -172,7 +172,7 @@
 						</div>
 						<div class="facility-info-box">
 							<div class="facility-info-icon">
-								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_park.svg" class="match-icon">
+								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_beverage.svg" class="match-icon">
 								<p>자판기</p>
 							</div>
 							<div>
@@ -181,7 +181,7 @@
 						</div>
 						<div class="facility-info-box">
 							<div class="facility-info-icon">
-								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_shoes.svg" class="match-icon">
+								<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_level.svg" class="match-icon">
 								<p>특이사항</p>
 							</div>
 							<div>
@@ -218,7 +218,7 @@
 					<div class="coupon-box right-side-box" style="padding-bottom: 40px;">
 						<div style="margin-top: 20px;">
 							<p>보유 쿠폰</p>
-							<div style="margin-bottom: 40px;">
+							<div style="width: 30%; text-align-last: left; margin: 0 auto;">
 								<c:forEach items="${couponList}" var="co">
 									<div>
 										<input type="radio" name="coupon" value="${co.hp_num}">${co.cp_source}(${co.cp_sale}) <br>
