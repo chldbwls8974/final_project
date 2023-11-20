@@ -749,6 +749,7 @@ input, progress {
 			let id = $(this).val();
 			if(!/^[a-zA-Z]\w{5,9}$/.test(id)){
 				$('#check-id-error').text('아이디는 6~10글자 영문+숫자 조합이며, 영문으로 시작해야합니다');
+				flag = false;
 				return;
 			}
 			$.ajax({
