@@ -8,6 +8,12 @@
 <title>경기장 목록</title>
 </head>
 <style type="text/css">
+
+	.title-detail{ 
+		margin: 50px auto; background-color: #f2f2f2; border-radius: 30px;
+		padding: 30px; width: 60%;
+	}
+	
 	.btn:hover{
 		background-color : outline-info;
 		color : white;
@@ -63,15 +69,134 @@
 	  background-color: #fafafa; 
 	  border-color: #ccc;
 	}
+	.text{ border-left: 7px solid #c2f296; padding-left: 10px;}
+	.match-icon{ width: 25px; height: 25px;}
+	.match-info-box{flex: 1}
+	.match-info-box1 div{ justify-content: space-between; display: flex;}
+	.facility-info-box{ justify-content: space-between; display: flex;}
+	.facility-info-icon{ display: flex;}
+	.facility-info-icon img{ margin-right: 5px;}
+	.facility-info-icon p{padding: 2px;}
+	
+	.btn-box{
+		display:flex;  float:right;
+	}
 </style>
 <body>
 	<div class="stadium-navigation" style="margin-top: 50px; text-align: center;">
 		<p style="font-size: 35px; width: 38%; font-weight: bolder; margin: 30px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
 		[${facility.fa_name}] 경기장 목록</p>
 	</div>
-	
+	<div class="title-detail">
+		<div class="info-box match-box">
+			<div class="match-info-box1 match-info justify-content: space-between">
+				<label class="text">주소 </label>
+				<div>
+					<p>${facility.fa_add}${facility.fa_add_detail}</p>
+				</div>
+				<label class="text">연락처</label>
+				<div>
+					<p>${facility.fa_phone}</p>
+				</div>
+			</div>
+			<div class="match-info-box2 facility-info">
+				<p style="font-size: 19px; font-weight: bold; margin-bottom: 30px;">편의시설</p>
+				<div style="flex-direction: column; align-items: center;">
+					<div class="facility-info-box">
+						<div class="facility-info-icon">
+							<img
+								src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_park.svg"
+								class="match-icon">
+							<p>주차장</p>
+						</div>
+						<div>
+							<p>${match.fa_pay == 0 ? '없음' : match.fa_pay == 1 ? '무료' : '유료'}</p>
+						</div>
+					</div>
+					<div class="facility-info-box">
+						<div class="facility-info-icon">
+							<img
+								src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_gender.svg"
+								class="match-icon">
+							<p>탈의실</p>
+						</div>
+						<div>
+							<p>${match.fa_locker == 0 ? '없음' : '있음'}</p>
+						</div>
+					</div>
+					<div class="facility-info-box">
+						<div class="facility-info-icon">
+							<img
+								src="	https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_toilet.svg"
+								class="match-icon">
+							<p>화장실</p>
+						</div>
+						<div>
+							<p>${match.fa_toilet == 0 ? '없음' : '있음'}</p>
+						</div>
+					</div>
+					<div class="facility-info-box">
+						<div class="facility-info-icon">
+							<img
+								src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_shower.svg"
+								class="match-icon">
+							<p>샤워실</p>
+						</div>
+						<div>
+							<p>${match.fa_shower == 0 ? '없음' : '있음'}</p>
+						</div>
+					</div>
+					<div class="facility-info-box">
+						<div class="facility-info-icon">
+							<img
+								src="	https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_stadium.svg"
+								class="match-icon">
+							<p>흡연장</p>
+						</div>
+						<div>
+							<p>${match.fa_smoking == 0 ? '없음' : '있음'}</p>
+						</div>
+					</div>
+					<div class="facility-info-box">
+						<div class="facility-info-icon">
+							<img
+								src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_beverage.svg"
+								class="match-icon">
+							<p>자판기</p>
+						</div>
+						<div>
+							<p>${match.fa_machine == 0 ? '없음' : '있음'}</p>
+						</div>
+					</div>
+					<div class="facility-info-box">
+						<div class="facility-info-icon">
+							<img
+								src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_level.svg"
+								class="match-icon">
+							<p>특이사항</p>
+						</div>
+						<div>
+							<p>${match.fa_note}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="btn-box">
+			<a href="<c:url value='/admin/operatinglist/${facility.fa_num}'/>"
+				class="btn btn-outline-info" role="button" style="margin-right:10px;">운영시간</a>
+			<a
+				href="<c:url value='/admin/facilitylistUpdate?fa_num=${facility.fa_num}'/>"
+				class="btn btn-outline-secondary" role="button" style="margin-right:10px;">수정</a>
+			<a
+				href="<c:url value='/businessman/facilityDelete?fa_num=${facility.fa_num}'/>"
+				class="btn btn-outline-secondary" role="button" style="margin-right:10px;">삭제</a>
+	</div>
+
+
 	<form action="<c:url value='/admin/stadiumlist/${facility.fa_num}'/>" method="get">
-		<div class="stadium-navigation" style="margin: 30px 0 30px 0; text-align: center;">
+		<div class="stadium-navigation" style="margin: 100px 0 30px 0; text-align: center;">
 			<select class="searchType" name="t">
 				<option value="all" <c:if test="${pm.cri.t == 'all'}">selected</c:if>>전체</option>
 				<option value="name" <c:if test="${pm.cri.t == 'name'}">selected</c:if>>경기장 이름</option>
@@ -82,16 +207,7 @@
 		</div>
 	</form>
 	
-	<div style="text-align: left; margin-right: 10px;">
-		<div class="btn-group btn-group">	    
-				<a class="btn" role="button" 
-				 style="
-						border-radius: 10px; width: 150px; height: 40px; border: none;
-						background-color: #c2f296; color: black; margin: 10px 10px 10px 0;"
-						href="<c:url value='/admin/facilitylist'/>"
-						>시설 목록으로 이동</a>		
-		</div>
-	</div>		
+
 	
 	
 	<div class="table-responsive" style="color: green;">
@@ -173,6 +289,16 @@
 			</c:if>
 	    </ul>
 	</div>
+		<div style="text-align: left; margin-right: 10px;  float:right;">
+		<div class="btn-group btn-group">	    
+				<a class="btn" role="button" 
+				 style="
+						border-radius: 10px; width: 150px; height: 40px; border: none;
+						background-color: #c2f296; color: black; margin: 10px 10px 10px 0;"
+						href="<c:url value='/admin/facilitylist'/>"
+						>시설 목록으로 이동</a>		
+		</div>
+	</div>		
 
 </body>
 </html>

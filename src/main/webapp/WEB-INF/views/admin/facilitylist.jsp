@@ -7,16 +7,6 @@
 <meta charset="UTF-8">
 <title>시설 조회</title>
 <style type="text/css">
-
-	.btn-info{
-		color : outline-info;
-		border : 2px solid yellow;
-	}
-	.btn-info:hover{
-		background-color : outline-info;
-		color : white;
-	}
-
 	.searchType {
 		width: 150px;
 		padding: .8em .5em;
@@ -55,15 +45,14 @@
 		color : red;
 	}
 	.notice-thead{
-		display: flex; padding: 0 0 16px 0;
+		display: flex; padding: 20px; te
 		border-bottom: 1px solid rgba(0,0,0,.1);
 	}
- 	.select-manager{padding: 5px;}
+ 	.notice-tbody{ padding: 5px;}
 	.tbody-box{ 
 		display: flex; border-bottom: 1px solid rgba(0,0,0,.1);
 		margin: 0; padding: 20px 20px 30px 20px;
 	}
-	
 	.page-link {
 	  color: #000; 
 	  background-color: #fff;
@@ -81,15 +70,30 @@
 	  background-color: #fafafa; 
 	  border-color: #ccc;
 	}
-
+	
+	.btn-group{
+		margin-bottom:10px;
+	}
+	.btn2{
+		background-color:#c2f296; border:0; 
+		color:white;
+	}
+  .btn2:hover {
+        background-color: #28a745; /* 진한 초록색으로 변경 */
+    }
+    .btn2.active {
+        background-color: #28a745; 
+    }
 </style>
 </head>
 <body>
-	<div class="facility-navigation" style="margin-top: 50px; text-align: center;">
-		<p style="font-size: 35px; width: 18%; font-weight: bolder; margin: 30px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
-		시설 목록</p>
+
+<div class="member-search">
+	<div class="member-search-navigation" style="margin-top: 50px; text-align: center;">
+		<p style="font-size: 35px; width: 17%; font-weight: bolder; margin: 30px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
+		시설 조회</p>
 	</div>
-	
+	<!-- 검색  -->
 		<form action="<c:url value='/admin/facilitylist'/>" method="get">
 		<div class="facility-navigation" style="margin: 30px 0 30px 0; text-align: center;">
 			<select class="searchType" name="t">
@@ -102,58 +106,117 @@
 			<button class="search-btn">검색</button>
 		</div>
 	</form>
-  	
-  	<div class="table-responsive">
-		<table class="table">
-	      <thead class="thead-dark">
-	        <tr>
-	          <th hidden="hidden">시설 번호</th>
-	          <th>사업자 번호</th>
-	          <th hidden="hidden">지역</th>
-	          <th>시설명</th>
-	          <th>주소</th>
-	          <th>상세주소</th>
-	          <th>전화번호</th>
-	          <th>경기장 수</th>
-	          <th>특이사항</th>
-	          <th>상태</th>
-	          <th>운영시간</th>
-	          <th>수정</th>
-	          <th>삭제</th>
-	        </tr>
-	      </thead>
-		  <tbody>
-	      	<c:forEach items="${list}" var="facility">
-			        <tr>
-			          <td hidden="hidden">${facility.fa_num}</td>
-			          <td>${facility.fa_bu_num}</td>
-			          <td hidden="hidden">${facility.fa_rg_num}</td>
-			          <td><a href="<c:url value='/admin/stadiumlist/${facility.fa_num}'/>"
-			          style="text-align: left; color: #1179b1f5;">${facility.fa_name}</a></td>
-			          <td>${facility.fa_add}</td>
-			          <td>${facility.fa_add_detail}</td>
-			          <td>${facility.fa_phone}</td>
-			          <td>${facility.st_count}</td>
-			          <td>${facility.fa_note}</td>
-			          <td>
-			            <c:choose>
-			                <c:when test="${facility.fa_deleted == 0}">이용 중</c:when>
-			                <c:when test="${facility.fa_deleted == 1}">삭제</c:when>
-			            </c:choose>
-			          </td>
-			       	  <td><a href="<c:url value='/admin/operatinglist/${facility.fa_num}'/>"
-								class="btn btn-outline-info" role="button">운영시간</a></td>
-			          <td><a href="<c:url value='/admin/facilitylistUpdate?fa_num=${facility.fa_num}'/>"
-								class="btn btn-outline-secondary" role="button">수정</a></td>
-					  <td><a href="<c:url value='/businessman/facilityDelete?fa_num=${facility.fa_num}'/>"
-						    	class="btn btn-outline-secondary" role="button">삭제</a></td>
-		           </tr>
-		    </c:forEach>
-	     </tbody>
-	   </table>
+	
+<!-- 	테이블 전환 버튼 -->
+	<div class="btn-group">
+		<button type="button" class="btn btn2 active" name="all-btn">전체</button>
+		<button type="button" class="btn btn2" name="available-btn">이용가능</button>
+		<button type="button" class="btn btn2" name="unavailable-btn">삭제</button>
 	</div>
 	
-	<ul class="pagination justify-content-center">
+		<!-- 시설 출력 -->
+	<div class="main">
+	    <div class="table available-table">
+	    	<ul class="notice-thead">
+		      	<li style="width: 8%">사업자 번호</li>
+		        <li style="width: 21%">시설명</li>
+		        <li style="width: 18%">전화번호</li>
+		        <li style="width: 8%">경기장 수</li>
+		        <li style="width: 20%">특이사항</li>
+		        <li style="width: 13%">상태</li>
+		        <li style="width: 13%">삭제</li>
+		  	</ul>
+	    	<ul class="notice-tbody all">
+					<c:forEach items="${list}" var="facility" varStatus="vs">
+							<li>
+								<div class="tbody-box">
+									<div class="tbody-list" style="width: 8%">${facility.fa_bu_num}</div>
+									<div class="tbody-list" style="width: 21%">
+										<a
+											href="<c:url value='/admin/stadiumlist/${facility.fa_num}'/>"
+											style="text-align: left; color: #1179b1f5;">${facility.fa_name}</a>
+									</div>
+									<div class="tbody-list" style="width: 18%">${facility.fa_phone}</div>
+									<div class="tbody-list" style="width: 8%">${facility.st_count}</div>
+									<div class="tbody-list" style="width: 20%">${facility.fa_note}</div>
+									<div class="tbody-list" style="width: 13%">
+										<c:choose>
+											<c:when test="${facility.fa_deleted == 0}">이용 중</c:when>
+											<c:when test="${facility.fa_deleted == 1}">삭제</c:when>
+										</c:choose>
+									</div>
+									<div class="tbody-list" style="width: 13%">
+										<a
+											href="<c:url value='/businessman/facilityDelete?fa_num=${facility.fa_num}'/>"
+											class="btn btn-outline-secondary" role="button">삭제</a>
+									</div>
+								</div>
+							</li>
+					</c:forEach>
+				</ul>
+	    	<ul class="notice-tbody available" style="display:none;">
+					<c:forEach items="${list}" var="facility" varStatus="vs">
+						<c:if test="${facility.fa_deleted == 0 }">
+							<li>
+								<div class="tbody-box">
+									<div class="tbody-list" style="width: 8%">${facility.fa_bu_num}</div>
+									<div class="tbody-list" style="width: 21%">
+										<a
+											href="<c:url value='/admin/stadiumlist/${facility.fa_num}'/>"
+											style="text-align: left; color: #1179b1f5;">${facility.fa_name}</a>
+									</div>
+									<div class="tbody-list" style="width: 18%">${facility.fa_phone}</div>
+									<div class="tbody-list" style="width: 8%">${facility.st_count}</div>
+									<div class="tbody-list" style="width: 20%">${facility.fa_note}</div>
+									<div class="tbody-list" style="width: 13%">
+										<c:choose>
+											<c:when test="${facility.fa_deleted == 0}">이용 중</c:when>
+											<c:when test="${facility.fa_deleted == 1}">삭제</c:when>
+										</c:choose>
+									</div>
+									<div class="tbody-list" style="width: 13%">
+										<a
+											href="<c:url value='/businessman/facilityDelete?fa_num=${facility.fa_num}'/>"
+											class="btn btn-outline-secondary" role="button">삭제</a>
+									</div>
+								</div>
+							</li>
+						</c:if>
+					</c:forEach>
+				</ul>
+	    	<ul class="notice-tbody unavailable" style="display:none;">
+					<c:forEach items="${list}" var="facility" varStatus="vs">
+						<c:if test="${facility.fa_deleted == 1 }">
+							<li>
+								<div class="tbody-box">
+									<div class="tbody-list" style="width: 8%">${facility.fa_bu_num}</div>
+									<div class="tbody-list" style="width: 21%">
+										<a
+											href="<c:url value='/admin/stadiumlist/${facility.fa_num}'/>"
+											style="text-align: left; color: #1179b1f5;">${facility.fa_name}</a>
+									</div>
+									<div class="tbody-list" style="width: 18%">${facility.fa_phone}</div>
+									<div class="tbody-list" style="width: 8%">${facility.st_count}</div>
+									<div class="tbody-list" style="width: 20%">${facility.fa_note}</div>
+									<div class="tbody-list" style="width: 13%">
+										<c:choose>
+											<c:when test="${facility.fa_deleted == 0}">이용 중</c:when>
+											<c:when test="${facility.fa_deleted == 1}">삭제</c:when>
+										</c:choose>
+									</div>
+									<div class="tbody-list" style="width: 13%">
+										<a
+											href="<c:url value='/businessman/facilityDelete?fa_num=${facility.fa_num}'/>"
+											class="btn btn-outline-secondary" role="button">삭제</a>
+									</div>
+								</div>
+							</li>
+						</c:if>
+					</c:forEach>
+				</ul>
+		 </div>
+	  <!-- 페이지네이션 적용 -->
+		<ul class="pagination justify-content-center">
 		<c:if test="${pm.prev}">
 			<li class="page-item">
 				<a class="page-link" 
@@ -173,7 +236,35 @@
 			</li>
 		</c:if>
 	</ul>
+	</div>
+</div>
 
 
+<script type="text/javascript">
+ $(document).on('click','[name=all-btn]',function(){
+	 $('.all').show();
+	 $('.available').hide();
+	 $('.unavailable').hide();
+	 $(".btn2").removeClass("active");
+     // 클릭된 버튼에 active 클래스 추가
+     $(this).addClass("active");
+ })
+ $(document).on('click','[name=available-btn]',function(){
+	 $('.all').hide();
+	 $('.available').show();
+	 $('.unavailable').hide();
+	 $(".btn2").removeClass("active");
+     // 클릭된 버튼에 active 클래스 추가
+     $(this).addClass("active");
+ })
+ $(document).on('click','[name=unavailable-btn]',function(){
+	 $('.all').hide();
+	 $('.available').hide();
+	 $('.unavailable').show();
+	 $(".btn2").removeClass("active");
+     // 클릭된 버튼에 active 클래스 추가
+     $(this).addClass("active");
+ })
+</script>
 </body>
 </html>
