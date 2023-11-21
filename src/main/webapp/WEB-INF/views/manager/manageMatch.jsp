@@ -9,14 +9,25 @@
 	.left-box{flex: 2;}
 	
 	.right-box{ width: 600px; height: auto; margin: 0 auto;}
-	.info-box{display: grid; justify-content: center;}
+	.info-box{display: flex; justify-content: center;}
 	
 	.right-side-box{
 	width: 100%; height: 200px; float: right; margin-bottom: 10px;
 	border: 3px solid black; box-sizing: border-box;
 	}
-	.team-box{display: flex; background-color: black;}
-	.teamList-box{flex: 1; margin-right: 3px; background-color: white;}
+	.team-box{display: flex; justify-content: left; margin-left: 45px;}
+	.teamList-box{
+		width: 340px; padding: 50px;
+	    background-color: #defac5;
+    }
+    .teamList-box table th{ font-size: larger; padding-bottom: 5px;}
+    .matchbtn-box{ }
+	.btn-match-end{
+		margin: 10px 0px 30px 45px; width: 1020px;
+		height: 40px; border: none; border-radius: 5px;
+		background-color: #3c3c3c; color: white;
+	}
+    
 	.teamList-box:last-child {margin-right: 0;}
 	.club-list-box{display: flex;}
 	.club-member-box{flex: 1; border-right: 3px solid black; overflow: scroll;}
@@ -27,16 +38,41 @@
 	.member-list:last-child{border-bottom: none;}
 	.entry-list-box{height: auto;}
 	.entry-btn-box{float: right;}
-	.btn-match-end{margin-left: 15px; margin-bottom: 10px;}
-	.quarter-box{width: 500px; height: 200px; margin-left: 15px;}
+	.quarter-type-box{ text-align: center;}
+	.quarter-type-box select{
+		margin-bottom: 20px; width: 200px; text-align: center;
+		height: 40px; border-radius: 5px;
+	}
+	.quarter-type-box input{ margin: 0 0 10px 60px; width: 60px; border-radius: 5px; }
+	.btn-insert-quarter-box{ text-align: center; margin-top: 10px;}
+	.btn-insert-quarter{
+		width: 200px; height: 40px; border: none; border-radius: 5px;
+		background-color: #c2f296;
+	}
+	.quarter-box{
+		display: table; width: 50%; height: 200px; 
+		background-color: #f2f2f2; border-radius: 20px;
+		margin: 0 40px 20px; padding-bottom: 30px;
+	}
+	.btn-quarter-box{
+		text-align: center;
+	}
+	.btn-update-quarter{ margin-right: 5px;} /*버튼 사이 띄우기*/
+	.btn-update-quarter, .btn-delete-quarter{
+		border: none; border-radius: 5px;
+		background-color: #c2f296; width: 50px; height: 40px;
+	}
+	.recored-box{ text-align: center; }
+	
 	.club-emblem{width: 20px; height: 20px; border-radius: 50%;}
 	.member-profile{width: 20px; height: 20px; border-radius: 50%;}
 	
+	.match-info-box1{margin-right: 20px;}
 	.match-info-box1, .match-info-box2{
 		text-align: center;
 	    background-color: #f2f2f2;
-	    width: 600px;
-	    height: auto;
+	    width: 500px;
+	    height: 500px;
 	    padding: 30px;
 	    border-radius: 20px; 
 	    text-align: center;
@@ -180,6 +216,10 @@
 					</div>
 				</div>
 			</div>
+			<c:if test="${match.team_count != 0}">
+				<div class="info-box team-box">
+				</div>
+			</c:if>
 		</div>	
 		<c:if test="${match.list_team == 1}">
 			<div class="contents-box right-box">
@@ -190,7 +230,9 @@
 		</c:if>
 	</nav>
 	<c:if test="${match.mt_state1 == 0 && match.ready ==  2 && match.list_team == 0}">
-		<button class="btn-match-end">경기결과 입력완료</button>
+		<div class="matchbtn-box">
+			<button class="btn-match-end">경기결과 입력완료</button>
+		</div>
 		<div class="insert-quarter-box">
 		
 		</div>
@@ -244,10 +286,10 @@
 		selectType(type)
 	})
 	$(document).on('click', '.btn-insert-quarter', function() {
-		qu_te_num1 = $(this).siblings('.qu_te_num1').val();
-		qu_te_num2 = $(this).siblings('.qu_te_num2').val();
-		qu_goal1 = $(this).siblings('.qu_goal1').val();
-		qu_goal2 = $(this).siblings('.qu_goal2').val();
+		qu_te_num1 = $('.insert-qu_te_num1').val();
+		qu_te_num2 = $('.insert-qu_te_num2').val();
+		qu_goal1 = $('.insert-qu_goal1').val();
+		qu_goal2 = $('.insert-qu_goal2').val();
 		
 		data = {
 				qu_mt_num : mt_num,
@@ -263,22 +305,22 @@
 	
 	$(document).on('click', '.btn-update-quarter', function() {
 		qu_num = $(this).val();
-		team1 = $(this).siblings('.recored-team1').val();
-		team2 = $(this).siblings('.recored-team2').val();
-		te_num1 = $(this).siblings('.recored-te_num1').val();
-		te_num2 = $(this).siblings('.recored-te_num2').val();
-		goal1 = $(this).siblings('.recored-goal1').val();
-		goal2 = $(this).siblings('.recored-goal2').val();
+		team1 = $(this).parents('.btn-quarter-box').siblings('.recored-box').children('.recored-team1').val();
+		team2 = $(this).parents('.btn-quarter-box').siblings('.recored-box').children('.recored-team2').val();
+		te_num1 = $(this).parents('.btn-quarter-box').siblings('.recored-box').children('.recored-te_num1').val();
+		te_num2 = $(this).parents('.btn-quarter-box').siblings('.recored-box').children('.recored-te_num2').val();
+		goal1 = $(this).parents('.btn-quarter-box').siblings('.recored-box').children('.recored-goal1').val();
+		goal2 = $(this).parents('.btn-quarter-box').siblings('.recored-box').children('.recored-goal2').val();
 		
 		printUpdateQuarter(qu_num, team1, team2, te_num1, te_num2, goal1, goal2)
 		$(this).parents('.quarter-box').html(str);
 	})
 	$(document).on('click', '.btn-update-complete', function() {
 		qu_num = $(this).val();
-		qu_te_num1 = $(this).siblings('.qu_te_num1').val();
-		qu_te_num2 = $(this).siblings('.qu_te_num2').val();
-		qu_goal1 = $(this).siblings('.qu_goal1').val();
-		qu_goal2 = $(this).siblings('.qu_goal2').val();
+		qu_te_num1 = $(this).parents('.btn-update-info').siblings('.box-update-info').children('.qu_te_num1').val();
+		qu_te_num2 = $(this).parents('.btn-update-info').siblings('.box-update-info').children('.qu_te_num2').val();
+		qu_goal1 = $(this).parents('.btn-update-info').siblings('.box-update-info').children('.qu_goal1').val();
+		qu_goal2 = $(this).parents('.btn-update-info').siblings('.box-update-info').children('.qu_goal2').val();
 		
 		data = {
 				qu_num : qu_num,
@@ -563,24 +605,31 @@
 				if(data.count < 9){
 					str += `
 						<div class="info-box quarter-box">
-							<h4>경기 등록</h4>
-							<select class="quarter-type">
-								<option value="1">1팀 vs 2팀</option>
-								<option value="2">1팀 vs 3팀</option>
-								<option value="3">2팀 vs 3팀</option>
-							</select>
-							<br>
-							<span class="team1">1</span>팀
-							<input type="text" class="input-team qu_te_num1" value="${teamList[0].te_num}" hidden disabled>
-							<input type="number" class="input-goal qu_goal1" value="0" min="0">
-							<span>골</span>
-							<br>
-							<span class="team2">2</span>팀
-							<input type="text" class="input-team qu_te_num2" value="${teamList[1].te_num}" hidden disabled>
-							<input type="number" class="input-goal qu_goal2" value="0" min="0">
-							<span>골</span>
-							<br>
-							<button class="btn-insert-quarter">등록</button>
+							<div>
+								<p style="font-size: 25px; font-weight: 600; text-align: center; padding-top: 30px;">
+									경기 등록</p>
+							</div>
+							<div class="quarter-type-box">
+								<select class="quarter-type">
+									<option value="1">1팀 vs 2팀</option>
+									<option value="2">1팀 vs 3팀</option>
+									<option value="3">2팀 vs 3팀</option>
+								</select>
+								<br>
+								<span class="team1">1</span>팀의 득점
+								<input type="text" class="input-team insert-qu_te_num1" value="${teamList[0].te_num}" hidden disabled>
+								<input type="number" class="input-goal insert-qu_goal1" value="0" min="0">
+								<span>골</span>
+								<br>
+								<span class="team2">2</span>팀의 득점
+								<input type="text" class="input-team insert-qu_te_num2" value="${teamList[1].te_num}" hidden disabled>
+								<input type="number" class="input-goal insert-qu_goal2" value="0" min="0">
+								<span>골</span>
+								<br>
+							</div>
+							<div class="btn-insert-quarter-box">
+								<button class="btn-insert-quarter">등록</button>
+							</div>
 						</div>
 					`;
 				}
@@ -602,15 +651,19 @@
 					for(quarterList of data.quarterList){
 						str += `
 							<div class="info-box quarter-box">
-								<h4>\${i + 1}경기</h4>
+								<p style="font-size: 20px; font-weight: 600; text-align: center; padding-top: 30px;">
+								\${i + 1} 번째 경기</p>
 						`;
 						if(${match.mt_state1 == 0}){
 							str += `
+								<div class="btn-quarter-box">
 									<button class="btn-update-quarter" value="\${quarterList.qu_num}">수정</button>
 									<button class="btn-delete-quarter" value="\${quarterList.qu_num}">삭제</button>
+								</div>
 							`;
 						}
 						str += `
+							<div class="recored-box">
 								<input type="number" class="recored-team1" value="\${quarterList.team1}" hidden disabled>
 								<input type="number" class="recored-team2" value="\${quarterList.team2}" hidden disabled>
 								<input type="number" class="recored-te_num1" value="\${quarterList.qu_te_num1}" hidden disabled>
@@ -618,13 +671,13 @@
 								<input type="number" class="recored-goal1" value="\${quarterList.qu_goal1}" hidden disabled>
 								<input type="number" class="recored-goal2" value="\${quarterList.qu_goal2}" hidden disabled>
 								<br>
-								\${quarterList.team1}팀 : \${quarterList.qu_goal1}
+								\${quarterList.team1}팀 : \${quarterList.qu_goal1}골
 						`;
 						if(quarterList.qu_goal1 > quarterList.qu_goal2){
 							str += `
 									<span>승리</span>
 									<br>
-									\${quarterList.team2}팀 : \${quarterList.qu_goal2}
+									\${quarterList.team2}팀 : \${quarterList.qu_goal2}골
 									<span>패배</span>
 								</div>
 							`;
@@ -632,17 +685,18 @@
 							str += `
 									<span>무승부</span>
 									<br>
-									\${quarterList.team2}팀 : \${quarterList.qu_goal2}
+									\${quarterList.team2}팀 : \${quarterList.qu_goal2}골
 									<span>무승부</span>
 								</div>
 							`;
 						}else if(quarterList.qu_goal1 < quarterList.qu_goal2){
 							str += `
-									<span>패배</span>
-									<br>
-									\${quarterList.team2}팀 : \${quarterList.qu_goal2}
-									<span>승리</span>
-								</div>
+										<span>패배</span>
+										<br>
+										\${quarterList.team2}팀 : \${quarterList.qu_goal2}골
+										<span>승리</span>
+									</div>
+								</div>	
 							`;
 						}
 						i++;
@@ -714,19 +768,21 @@
 		}
 		str += `
 				</select>
-			<br>
-			<span class="team1">\${team1}</span>팀
-			<input type="text" class="input-team qu_te_num1" value="\${te_num1}" hidden disabled>
-			<input type="number" class="input-goal qu_goal1" value="\${goal1}" min="0">
-			<span>골</span>
-			<br>
-			<span class="team2">\${team2}</span>팀
-			<input type="text" class="input-team qu_te_num2" value="\${te_num2}" hidden disabled>
-			<input type="number" class="input-goal qu_goal2" value="\${goal2}" min="0">
-			<span>골</span>
-			<br>
-			<button class="btn-update-complete" value="\${qu_num}">수정 완료</button>
-			<button class="btn-update-cansel">수정 취소</button>
+			<div class="box-update-info">
+				<span class="team1">\${team1}</span>팀
+				<input type="text" class="input-team qu_te_num1" value="\${te_num1}" hidden disabled>
+				<input type="number" class="input-goal qu_goal1" value="\${goal1}" min="0">
+				<span>골</span>
+				<br>
+				<span class="team2">\${team2}</span>팀
+				<input type="text" class="input-team qu_te_num2" value="\${te_num2}" hidden disabled>
+				<input type="number" class="input-goal qu_goal2" value="\${goal2}" min="0">
+				<span>골</span>
+			</div>			
+			<div class="btn-update-info">
+				<button class="btn-update-complete" value="\${qu_num}">수정 완료</button>
+				<button class="btn-update-cansel">수정 취소</button>
+			</div>			
 		`;
 	}
 	function updateQuarter(){
