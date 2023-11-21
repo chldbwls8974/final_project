@@ -128,16 +128,18 @@ input[type='checkbox']{
 		width: 200px; height: 200px; border-radius: 50%;
 		border: 1px solid gray;
 		font-weight: fold; font-size: 30px;
-		line-height:200px; text-align: center; display: block; text-decoration: none; color: gray;	
+		line-height:200px; text-align: center; display: block; text-decoration: none;
 		position: relative; overflow: hidden;
 		margin: 0 auto;
 	}
 	.box-thumbnail{
 		display: none; position: absolute; top: 0; 
 	}
-	.profile{ margin-top: 40px; text-align: center;}
+	.profile{
+	 margin-top: 40px; text-align: center;
+	 }
 	.profile-update-btn{
-		border: none;
+		border: none; margin-top:20px
 	}
 	
 	
@@ -153,6 +155,7 @@ input[type='checkbox']{
 	    border: 1px solid #1570FF;
 	   	text-align: center;
 	}
+	
 </style>
 </head>
 <body>
@@ -164,18 +167,17 @@ input[type='checkbox']{
 			</div>
 			<div class="form-group update-profile" style="margin-top: 10px;">
 				<input type="file" class="input-file" name="img" id="img" onchange="readUrl(this)" style="display:none;">
-					<a href="#" class="btn-file">+
+					<a href="#" class="btn-file">
 						<div class="box-thumbnail">
 							<img src="" id="preview" height="200" width="200">
 						</div>
 					</a>
 			</div>
-			<div style="justify-content: center; display: flex;">
-				<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_setting_color.svg" alt="프로필 수정" style="width: 25px; height: 25px;">
-				<button type="button" class="profile-update-btn">
-				프로필 사진 변경
-				</button>
-			</div>
+		<div class="form-group">
+			<button type="button" class="form-control btn profile-update-btn">
+			엠블럼 변경
+			</button>
+		</div>
 		<input type="hidden" class="form-control" name="me_num" value="${user.me_num }">
 		<input type="hidden" class="form-control" name="cl_num" value="${club.cl_num}">
 		<input type="hidden" class="form-control" name="test" value="${club.cl_emblem}">
