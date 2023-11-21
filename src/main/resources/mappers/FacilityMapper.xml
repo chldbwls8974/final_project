@@ -124,9 +124,14 @@
 				<when test='cri.t == "all"'>
 					(fa_name like concat('%', #{cri.s}, '%')
 						or 
+					fa_bu_num like concat('%', #{cri.s}, '%')
+						or
 					fa_add like concat('%', #{cri.s}, '%')
 						or 
 					fa_phone like concat('%', #{cri.s}, '%'))
+				</when>
+				<when test='cri.t == "businessman"'>
+					(fa_bu_num like concat('%', #{cri.s}, '%'))
 				</when>
 				<when test='cri.t == "total"'>
 					(fa_name like concat('%', #{cri.s}, '%')
@@ -149,9 +154,14 @@
 				<when test='cri.t == "all"'>
 					(fa_name like concat('%', #{cri.s}, '%')
 						or 
+					fa_bu_num like concat('%', #{cri.s}, '%')
+						or
 					fa_add like concat('%', #{cri.s}, '%')
 						or 
 					fa_phone like concat('%', #{cri.s}, '%'))
+				</when>
+				<when test='cri.t == "businessman"'>
+					(fa_bu_num like concat('%', #{cri.s}, '%'))
 				</when>
 				<when test='cri.t == "total"'>
 					(fa_name like concat('%', #{cri.s}, '%')

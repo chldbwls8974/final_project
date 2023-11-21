@@ -94,6 +94,7 @@
 		<div class="facility-navigation" style="margin: 30px 0 30px 0; text-align: center;">
 			<select class="searchType" name="t">
 				<option value="all" <c:if test="${pm.cri.t == 'all'}">selected</c:if>>전체</option>
+				<option value="businessman" <c:if test="${pm.cri.t == 'businessman'}">selected</c:if>>사업자번호</option>
 				<option value="total" <c:if test="${pm.cri.t == 'total'}">selected</c:if>>시설명 + 주소</option>
 				<option value="phone" <c:if test="${pm.cri.t == 'phone'}">selected</c:if>>전화번호</option>
 			</select>
