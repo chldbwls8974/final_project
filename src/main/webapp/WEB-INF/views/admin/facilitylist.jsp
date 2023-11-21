@@ -93,6 +93,20 @@
 		<p style="font-size: 35px; width: 17%; font-weight: bolder; margin: 30px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
 		시설 조회</p>
 	</div>
+	<!-- 테이블 전환 버튼 -->
+	<div style="text-align: center;">
+		<div class="btn-group">
+			<button type="button" class="btn btn2 active" name="all-btn"
+			 style="border-radius: 10px; width: 130px; height: 40px; border: none;
+			 background-color: #c2f296; color: black; margin: 10px 10px 10px 0;">전체</button>
+			<button type="button" class="btn btn2" name="available-btn"
+			 style="border-radius: 10px; width: 130px; height: 40px; border: none;
+			 background-color: #c2f296; color: black; margin: 10px 10px 10px 0;">이용가능</button>
+			<button type="button" class="btn btn2" name="unavailable-btn"
+		 	 style="border-radius: 10px; width: 130px; height: 40px; border: none;
+			 background-color: #c2f296; color: black; margin: 10px 10px 10px 0;">삭제</button>
+		</div>
+	</div>
 	<!-- 검색  -->
 		<form action="<c:url value='/admin/facilitylist'/>" method="get">
 		<div class="facility-navigation" style="margin: 30px 0 30px 0; text-align: center;">
@@ -107,12 +121,6 @@
 		</div>
 	</form>
 	
-<!-- 	테이블 전환 버튼 -->
-	<div class="btn-group">
-		<button type="button" class="btn btn2 active" name="all-btn">전체</button>
-		<button type="button" class="btn btn2" name="available-btn">이용가능</button>
-		<button type="button" class="btn btn2" name="unavailable-btn">삭제</button>
-	</div>
 	
 		<!-- 시설 출력 -->
 	<div class="main">

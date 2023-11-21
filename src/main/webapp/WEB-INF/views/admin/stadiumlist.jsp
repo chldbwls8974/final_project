@@ -69,7 +69,7 @@
 	  background-color: #fafafa; 
 	  border-color: #ccc;
 	}
-	.text{ border-left: 7px solid #c2f296; padding-left: 10px;}
+	.text{ border-left: 7px solid #c2f296; padding-left: 10px; height: 20px;}
 	.match-icon{ width: 25px; height: 25px;}
 	.match-info-box{flex: 1}
 	.match-info-box1 div{ justify-content: space-between; display: flex;}
@@ -90,13 +90,17 @@
 	<div class="title-detail">
 		<div class="info-box match-box">
 			<div class="match-info-box1 match-info justify-content: space-between">
-				<label class="text">주소 </label>
 				<div>
-					<p>${facility.fa_add}${facility.fa_add_detail}</p>
+					<label class="text">주소 </label>
+					<div>
+						<p>${facility.fa_add}${facility.fa_add_detail}</p>
+					</div>
 				</div>
-				<label class="text">연락처</label>
 				<div>
-					<p>${facility.fa_phone}</p>
+					<label class="text">연락처</label>
+					<div>
+						<p>${facility.fa_phone}</p>
+					</div>
 				</div>
 			</div>
 			<div class="match-info-box2 facility-info">
