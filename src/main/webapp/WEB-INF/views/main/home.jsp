@@ -7,7 +7,15 @@
 	<title>Home</title>
 	<style>
 	
-	.navbar, .jumbotron, .container-footer{ background-color: transparent;}
+	.navbar-container,
+	.navbar1, .navbar2,
+	.jumbotron,
+	.container-footer{ background-color: transparent !important;}
+	.navbar-brand{ display: none !important;}
+	.navbar1, .navbar2{display: inline-block; margin-bottom: 10px;}
+	.nav-link{ color: white;}
+	.dropdown-menu show{ background-color: #e5e5e5;}
+	
 	body{
 		background-image:url("https://cdn.pixabay.com/photo/2015/10/21/23/32/football-1000569_1280.jpg");
 		background-repeat: repeat-y;
@@ -33,7 +41,7 @@
     /* 이미지 보이는 부분 */
     .slider__img {
         position: relative;
-        width: 600px;
+        width: 800px;
         height: 400px;
         overflow: hidden;
     }
@@ -49,7 +57,7 @@
 	/* 개별 이미지 */
 	.slider{
 		position: relative;
-		width: 600px;
+		width: 800px;
 		height: 400px;
 	}
 	
@@ -64,13 +72,6 @@
         color: #fff;
         padding: 5px 10px;
     }
-    .slider:nth-child(1)::before {content: '이미지1';}
-    .slider:nth-child(2)::before {content: '이미지2';}
-    .slider:nth-child(3)::before {content: '이미지3';}
-    .slider:nth-child(4)::before {content: '이미지4';}
-    .slider:nth-child(5)::before {content: '이미지5';}
-    .slider:nth-child(6)::before {content: '이미지1';}
-
 	
 	.controller span{
 	  position:absolute;
@@ -86,8 +87,8 @@
 
 	.slider__btn {
     position: absolute;
-    top: 50%;
-    width: 100%;
+    top: 40%;
+    width: 68%;
     display: flex;
     justify-content: space-between;
     transform: translateY(-50%);
@@ -99,6 +100,13 @@
     border: none;
     font-size: 20px;
     cursor: pointer;
+    color: white;
+    font-size: 30px;
+    font-weight: bolder;
+  }
+  .prev:hover,
+  .next:hover{
+  	
   }
 
 	</style>
@@ -110,17 +118,17 @@
 				<div class="slider__inner">
 					<div class="slider">
 						<a href="<c:url value='/'/>">
-							<img class="item" src="<c:url value='/resources/main/main1.png'/>" alt="Image1">
+							<img class="item" src="<c:url value='/resources/main/main6.png'/>" alt="Image1">
 						</a>
 					</div>
 					<div class="slider">
 						<a href="<c:url value='/match/search/solo'/>">
-							<img class="item" src="<c:url value='/resources/main/main2.png'/>" alt="Image2">
+							<img class="item" src="<c:url value='/resources/main/main7.png'/>" alt="Image2">
 						</a>
 					</div>
 					<div class="slider">
 						<a href="<c:url value='/application/manager'/>">
-							<img class="item" src="<c:url value='/resources/main/main3.png'/>" alt="Image3">
+							<img class="item" src="<c:url value='/resources/main/main8.png'/>" alt="Image3">
 						</a>
 					</div>
 					<div class="slider">
