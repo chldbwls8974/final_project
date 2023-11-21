@@ -24,7 +24,9 @@
 		border:1px solid  #17a2b8; width:40%;  background-color:#f0f0f0; padding:30px; margin:auto;
 	}
 	.input-file{display: none;}
-	.img-thumbnail{cursor: pointer;}
+	.img-thumbnail{
+		cursor: pointer; width:200px; height:auto; 
+	}
 </style>
 <body>
 	<div class="facilityInsert-navigation" style="margin-top: 50px; text-align: center;">
@@ -178,13 +180,15 @@
 			</div>
 			
 <!-- 			시설 사진 -->
-			<div class="form-group box-thumbnail-input">
-				<input type="file" name="file" class="input-file input-select" onchange="readUrl(this)"  >
-			</div>
-			<div class="box-thumbnail">
-				<img src="" alt="미리보기" class="img-thumbnail img-select" height="100" width="auto">
-			</div>
-			
+			<div class="form-group picture-box">
+			 <label style="font-weight: bold;">시설사진</label> &nbsp;<span class="badge badge-secondary">선택 (최대 3장)</span>
+				<div class="form-group box-thumbnail-input">
+					<input type="file" name="file" class="input-file input-select" onchange="readUrl(this)"  >
+				</div>
+				<div class="box-thumbnail">
+					<img src="<c:url value='/resources/images/add-image.png'/>" alt="미리보기" class="img-thumbnail img-select" height="100" width="auto">
+				</div>
+			</div>			
 			
 			
 		   <br>
@@ -262,7 +266,7 @@
 					// 선택된 이미지가 3개보다 작은 경우
 					if($('.img-thumbnail').length < 3){
 						$('.box-thumbnail-input').append(`<input type="file" name="file" class="input-file input-select" onchange="readUrl(this)"  >`);
-						$('.box-thumbnail').append(`<img src="img.png" alt="미리보기" class="img-thumbnail img-select" height="100" width="auto">`);
+						$('.box-thumbnail').append(`<img src="<c:url value='/resources/images/add-image.png'/>" alt="미리보기" class="img-thumbnail img-select" height="100" width="auto">`);
 					}
 				}
 				//첨부파일이 선택되지 않으면
@@ -277,7 +281,7 @@
 					$selectInput.remove();
 					if($('.img-select').length == 0){
 						$('.box-thumbnail-input').append(`<input type="file" name="file" class="input-file input-select" onchange="readUrl(this)"  >`);
-						$('.box-thumbnail').append(`<img src="img.png" alt="미리보기" class="img-thumbnail img-select" height="100" width="auto">`);
+						$('.box-thumbnail').append(`<img src="<c:url value='/resources/images/add-image.png'/>" alt="미리보기" class="img-thumbnail img-select" height="100" width="auto">`);
 					}
 					
 				}
