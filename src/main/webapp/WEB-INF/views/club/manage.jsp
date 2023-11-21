@@ -35,6 +35,9 @@
 	    justify-content: center;
 	    margin-bottom: 50px;
 	}
+	a{
+		color:black;
+	}
 </style>
 </head>
 <body>
@@ -49,85 +52,95 @@
 			    <button type="button" class="top-btn" name="rookie-tag">승인 대기 중</button>
 			  </div> 
 		  </div>
-		<div class="table member-table">
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th>회원 번호</th>
-						<th>프로필사진</th>
-						<th>회원 닉네임</th>
-						<th>권한</th>
-						<th style="width: 25%;"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${list }" var="list">
-						<c:if test="${list.cm_authority =='LEADER'}">
-							<tr>
-								<td>${list.cm_num}</td>
-								<td>
-									<img alt="" src="<c:url value='/memberimg${list.me_profile}'/>">
-								</td>
-								<td>${list.me_nickname}</td>
-								<td>${list.cm_authority}</td>
-								<td style="width: 25%;">
-								</td>
-							</tr>
-						</c:if>
-					</c:forEach>
-					<c:forEach items="${list }" var="list">
-						<c:if test="${list.cm_authority =='MEMBER'}">
-							<tr>
-								<td>${list.cm_num}</td>
-								<td>
-									<img alt="" src="<c:url value='/memberimg${list.me_profile}'/>">
-								</td>
-								<td>${list.me_nickname}</td>
-								<td>${list.cm_authority}</td>
-								<td style="width: 25%;">
-								<c:if test="${list.cm_authority =='MEMBER'}">
-									<button type="button" class="btn" data-num="${list.cm_me_num}" value="${list.cm_authority}" name="delegate-btn" style="margin-right: 10px;">위임</button>
-									<button type="button" class="btn" data-num="${list.cm_me_num}" value="${list.cm_authority}" name="discharge-btn">강퇴</button>
-								</c:if>
-								</td>
-							</tr>
-						</c:if>
-					</c:forEach>
-				</tbody>
-			</table>
+		<div id="table">
+			<div class="table member-table">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>회원 번호</th>
+							<th>프로필사진</th>
+							<th>회원 닉네임</th>
+							<th>권한</th>
+							<th style="width: 25%;"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${list }" var="list">
+							<c:if test="${list.cm_authority =='LEADER'}">
+								<tr>
+									<td>${list.cm_num}</td>
+									<td><img alt=""
+										src="<c:url value='/memberimg${list.me_profile}'/>"></td>
+									<td>${list.me_nickname}</td>
+									<td>${list.cm_authority}</td>
+									<td style="width: 25%;"></td>
+								</tr>
+							</c:if>
+						</c:forEach>
+						<c:forEach items="${list }" var="list">
+							<c:if test="${list.cm_authority =='MEMBER'}">
+								<tr>
+									<td>${list.cm_num}</td>
+									<td><img alt=""
+										src="<c:url value='/memberimg${list.me_profile}'/>"></td>
+									<td><a
+										href="<c:url value='/member/myprofile?me_num=${list.cm_num}'/>"
+										class="member-link"> ${list.me_nickname}</a></td>
+									<td>${list.cm_authority}</td>
+									<td style="width: 25%;"><c:if
+											test="${list.cm_authority =='MEMBER'}">
+											<button type="button" class="btn"
+												data-num="${list.cm_me_num}" value="${list.cm_authority}"
+												name="delegate-btn" style="margin-right: 10px;">위임</button>
+											<button type="button" class="btn"
+												data-num="${list.cm_me_num}" value="${list.cm_authority}"
+												name="discharge-btn">강퇴</button>
+										</c:if></td>
+
+								</tr>
+							</c:if>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+			<div class="table rookie-table">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>번호</th>
+							<th>회원 닉네임</th>
+							<th>자기소개</th>
+							<th style="width: 25%;"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${list }" var="list">
+							<c:if test="${list.cm_authority =='ROOKIE'}">
+								<tr>
+									<td>${list.cm_num}</td>
+									<td><a
+										href="<c:url value='/member/myprofile?me_num=${list.cm_num}'/>"
+										class="member-link"> ${list.me_nickname}</a></td>
+									<td>${list.cm_introduction}</td>
+									<td style="width: 25%;">
+										<button type="button" class="btn" data-num="${list.cm_me_num}"
+											value="${list.cm_authority}" name="approval-btn">승인</button>
+										<button type="button" class="btn" data-num="${list.cm_me_num}"
+											value="${list.cm_authority}" name="refuse-btn">거절</button>
+									</td>
+								</tr>
+							</c:if>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
 		</div>
-		<div class="table rookie-table">
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th>번호</th>
-						<th>회원 닉네임</th>
-						<th>자기소개</th>
-						<th style="width: 25%;"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${list }" var="list">
-						<c:if test="${list.cm_authority =='ROOKIE'}">
-							<tr>
-								<td>${list.cm_num}</td>
-								<td>${list.me_nickname}</td>
-								<td>${list.cm_introduction}</td>
-								<td style="width: 25%;">
-									<button type="button" class="btn" data-num="${list.cm_me_num}" value="${list.cm_authority}" name="approval-btn">승인</button>
-									<button type="button" class="btn" data-num="${list.cm_me_num}" value="${list.cm_authority}" name="refuse-btn">거절</button>
-								</td>
-							</tr>
-						</c:if>
-					</c:forEach>
-				</tbody>
-			</table>
-		</div>
-		
 	</div>
 
 	<script type="text/javascript">
 		let cl_num = ${club.cl_num}
+		let url =  '/final_project/club/detail?cl_num=';
+		url += cl_num;
 		// 표 전환
 		$('.rookie-table').hide();
 		
@@ -144,7 +157,7 @@
 		// 멤버 테이블 관리
 		// 강퇴 버튼 클릭시
 		$(document).on('click','[name=discharge-btn]',function(){
-			if(confirm("정말 회원을 강퇴시키시겠습니까?")){
+			if(confirm("정말 팀원을 강퇴시키시겠습니까?")){
 				let me_num = $(this).data('num')
 				let type="discharge"
 				
@@ -155,7 +168,9 @@
 				}
 				
 				ajaxJsonToJson2(false, 'post','/club/mbmanage',data, (a)=>{
-					alert("회원을 퇴장시켰습니다.")
+					alert("팀원을 퇴장시켰습니다.")
+// 					여기 물어봐야함
+					$('#table').load(location.href+' #table');
 				})
 			}
 		})
@@ -174,8 +189,6 @@
 				}
 				
 				ajaxJsonToJson2(false, 'post','/club/mbmanage',data, (a)=>{
-					let url =  '/final_project/club/detail?cl_num=';
-					url += cl_num;
 					alert("클럽장을 위임하였습니다.")
 					location.replace(url);
 				})
@@ -198,6 +211,7 @@
 				}
 				ajaxJsonToJson2(false, 'post','/club/mbmanage',data, (a)=>{
 					alert("팀원 신청을 승인하였습니다.") 
+					location.reload();
 				})
 				
 			}
@@ -219,6 +233,7 @@
 					
 					ajaxJsonToJson2(false, 'post','/club/mbmanage',data, (a)=>{
 					 	alert("팀원 신청을 거절하였습니다.")
+					 	location.reload();
 					})
 			}else{
 				return;
