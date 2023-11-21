@@ -53,7 +53,8 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th>번호</th>
+						<th>회원 번호</th>
+						<th>프로필사진</th>
 						<th>회원 닉네임</th>
 						<th>권한</th>
 						<th style="width: 25%;"></th>
@@ -61,9 +62,26 @@
 				</thead>
 				<tbody>
 					<c:forEach items="${list }" var="list">
-						<c:if test="${list.cm_authority !='ROOKIE'}">
+						<c:if test="${list.cm_authority =='LEADER'}">
 							<tr>
 								<td>${list.cm_num}</td>
+								<td>
+									<img alt="" src="<c:url value='/memberimg${list.me_profile}'/>">
+								</td>
+								<td>${list.me_nickname}</td>
+								<td>${list.cm_authority}</td>
+								<td style="width: 25%;">
+								</td>
+							</tr>
+						</c:if>
+					</c:forEach>
+					<c:forEach items="${list }" var="list">
+						<c:if test="${list.cm_authority =='MEMBER'}">
+							<tr>
+								<td>${list.cm_num}</td>
+								<td>
+									<img alt="" src="<c:url value='/memberimg${list.me_profile}'/>">
+								</td>
 								<td>${list.me_nickname}</td>
 								<td>${list.cm_authority}</td>
 								<td style="width: 25%;">
@@ -156,7 +174,10 @@
 				}
 				
 				ajaxJsonToJson2(false, 'post','/club/mbmanage',data, (a)=>{
+					let url =  '/final_project/club/detail?cl_num=';
+					url += cl_num;
 					alert("클럽장을 위임하였습니다.")
+					location.replace(url);
 				})
 			}
 		})
