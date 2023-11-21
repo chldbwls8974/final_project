@@ -116,4 +116,7 @@
 			and st_fa_num = #{fa_num}
 		</where>
 	</select>
+	<select id="selectAllStadiumList"  resultType="kr.kh.final_project.vo.StadiumVO">
+		select * from stadium
+	</select>
 </mapper>

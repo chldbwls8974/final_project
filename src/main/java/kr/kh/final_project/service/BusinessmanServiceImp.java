@@ -259,6 +259,10 @@ public class BusinessmanServiceImp implements BusinessmanService{
 	public List<FacilityPictureVO> getFacilityPictureList(Integer fa_num) {
 		return facilityDao.selectFacilityPictureList(fa_num);
 	}
+	@Override
+	public List<StadiumVO> selectAllStadium() {
+		return stadiumDao.selectAllStadiumList();
+	}
 	
 	
 

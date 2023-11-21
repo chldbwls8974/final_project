@@ -276,16 +276,6 @@
 			</div>
 		</div>
 	</div>
-	<div class="btn-box">
-			<a href="<c:url value='/admin/operatinglist/${facility.fa_num}'/>"
-				class="btn btn-outline-info" role="button" style="margin-right:10px;">운영시간</a>
-			<a
-				href="<c:url value='/admin/facilitylistUpdate?fa_num=${facility.fa_num}'/>"
-				class="btn btn-outline-secondary" role="button" style="margin-right:10px;">수정</a>
-			<a
-				href="<c:url value='/businessman/facilityDelete?fa_num=${facility.fa_num}'/>"
-				class="btn btn-outline-secondary" role="button" style="margin-right:10px;">삭제</a>
-	</div>
 
 
 	<form action="<c:url value='/admin/stadiumlist/${facility.fa_num}'/>" method="get">
@@ -319,7 +309,6 @@
 	          <th>이용가능여부</th>
 	          <th>특이사항</th>
 	          <th hidden="hidden">시설번호</th>
-	          <th>수정</th>
 	        </tr>
 	      </thead>
 		  <tbody>
@@ -354,8 +343,6 @@
 			      </td>
 		          <td>${stadium.st_note}</td>
 		          <td hidden="hidden">${stadium.st_fa_num}</td>
-		          <td><a href="<c:url value='/admin/stadiumlistUpdate?st_num=${stadium.st_num}'/>"
-							class="btn btn-outline-secondary" role="button">수정</a></td>
 	         	 </tr>
 		     </c:forEach>
 	      </tbody>

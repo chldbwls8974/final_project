@@ -30,6 +30,7 @@ import kr.kh.final_project.service.BusinessmanService;
 import kr.kh.final_project.util.Message;
 import kr.kh.final_project.vo.BusinessmanVO;
 import kr.kh.final_project.vo.ExpenseVO;
+import kr.kh.final_project.vo.FacilityPictureVO;
 import kr.kh.final_project.vo.FacilityVO;
 import kr.kh.final_project.vo.ManagerVO;
 import kr.kh.final_project.vo.MemberVO;
@@ -521,6 +522,7 @@ public class AdminController {
 			HttpSession session, Criteria cri) {
 		//시설 번호를 통해 시설 정보를 가져와서 facility에 저장
 		FacilityVO facility = adminService.updateFacilityByAdmin(fa_num);
+		List<FacilityPictureVO> files = businessmanService.getFacilityPictureList(fa_num);
 		
 		//시설 번호를 주고 해당 시설번호에 등록된 경기장 리스트를 저장
 		List<StadiumVO> stadiumList = adminService.getStadiumListByAdmin(fa_num, cri);
@@ -537,6 +539,7 @@ public class AdminController {
 			return "/message";
 		}
 		model.addAttribute("facility", facility);
+		model.addAttribute("files", files);
 		model.addAttribute("stadiumList", stadiumList);
 		model.addAttribute("pm", pm);
 		return "/admin/stadiumlist";
