@@ -38,6 +38,7 @@ public class BusinessmanController {
 		
 	@Autowired
 	private BusinessmanService businessmanService;
+	
 	//시설 목록, 페이지네이션, 검색창
 		@GetMapping("/businessman/facility")
 		public String facility(Model model, HttpSession session, Criteria cri) {
@@ -53,11 +54,6 @@ public class BusinessmanController {
 			
 			PageMaker pm = new PageMaker(DISPLAY_PAGE_NUM, cri, totalCount);
 			
-			if(member == null || !member.getMe_authority().equals("BUSINESS")) {
-				Message msg = new Message("/", "사업자 권한이 필요합니다.");
-				model.addAttribute("msg", msg);
-				return "/message";
-			}
 			if(list.size() == 0) {
 		        Message msg = new Message("/businessman/facilityInsert", "등록된 시설이 없습니다. 시설을 등록해주세요");
 				model.addAttribute("msg", msg);
@@ -79,11 +75,6 @@ public class BusinessmanController {
 			//서비스에게 MainRegion메서드를 가져와서 MainRegion에 저장
 			List<RegionVO> MainRegion = businessmanService.getMainRegion();
 
-			if(member == null || !member.getMe_authority().equals("BUSINESS")) {
-				Message msg = new Message("/", "사업자 권한이 필요합니다.");
-				model.addAttribute("msg", msg);
-				return "/message";
-			}
 			model.addAttribute("business", business);
 			model.addAttribute("MainRegion", MainRegion);
 			return "/businessman/facilityInsert";

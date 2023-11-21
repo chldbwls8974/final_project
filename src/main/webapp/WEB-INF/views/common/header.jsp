@@ -44,8 +44,6 @@
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="<c:url value='/match/search/club?weekCount=0'/>">클럽매치</a>
-			<li class="nav-item">
-				<a class="nav-link" href="<c:url value='/admin/price'/>">가격수정</a>
 			</li>
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
@@ -89,10 +87,12 @@
 						<div class="dropdown-menu">
 							<a class="dropdown-item" href="<c:url value='/admin/member'/>">회원 관리</a>
 							<a class="dropdown-item" href="<c:url value='/admin/boardReport'/>">신고 관리</a>
-							<a class="dropdown-item" href="#">시설 조회</a>
+							<a class="dropdown-item" href="<c:url value='/admin/facilitylist'/>">시설 조회</a>
 							<a class="dropdown-item" href="<c:url value='/admin/manager'/>">매니저 관리</a>
 							<a class="dropdown-item" href="<c:url value='/admin/business'/>">사업자 관리</a>
 							<a class="dropdown-item" href="<c:url value='/admin/refund'/>">포인트 환급 관리</a>
+							<a class="dropdown-item" href="<c:url value='/admin/price'/>">이용 가격 수정</a>
+							
 						</div>
 					</li>
 				</c:if>
