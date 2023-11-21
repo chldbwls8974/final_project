@@ -15,13 +15,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import kr.kh.final_project.dao.BusinessDAO;
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.pagination.PageMaker;
 import kr.kh.final_project.service.BusinessmanService;
 import kr.kh.final_project.service.ScheduleService;
 import kr.kh.final_project.util.Message;
 import kr.kh.final_project.vo.BusinessmanVO;
+import kr.kh.final_project.vo.FacilityPictureVO;
 import kr.kh.final_project.vo.FacilityVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.OperatingVO;
@@ -90,13 +93,12 @@ public class BusinessmanController {
 		}
 		//시설 등록
 		@PostMapping("/businessman/facilityInsert")
-		public String insertfacility(Model model, FacilityVO facility, HttpSession session) {
+		public String insertfacility(Model model, FacilityVO facility, HttpSession session,MultipartFile[] file) {
 			MemberVO user = (MemberVO)session.getAttribute("user");
-
 			List<RegionVO> MainRegion = businessmanService.getMainRegion();
 
 			//Service에게 user, facility 정보를 주고 insertFacility 메서드로 저장
-			boolean res = businessmanService.insertFacility(user, facility);
+			boolean res = businessmanService.insertFacility(user, facility,file);
 				if(res) {
 					model.addAttribute("msg", "시설 등록이 완료되었습니다. 시설목록에서 운영시간을 입력해주세요.");
 					model.addAttribute("url", "/businessman/facility");
@@ -249,6 +251,8 @@ public class BusinessmanController {
 				HttpSession session, Criteria cri) {
 			//시설 번호를 통해 시설 정보를 가져와서 facility에 저장
 			FacilityVO facility = businessmanService.getFacility(fa_num);
+			//시설 번호로 사진들 가져옴
+			List<FacilityPictureVO> files = businessmanService.getFacilityPictureList(fa_num);
 			
 			//시설 번호를 주고 해당 시설번호에 등록된 경기장 리스트를 저장
 			List<StadiumVO> stadiumList = businessmanService.getStadiumList(fa_num, cri);
@@ -265,6 +269,7 @@ public class BusinessmanController {
 				return "/message";
 			}
 			model.addAttribute("facility", facility);
+			model.addAttribute("files", files);
 			model.addAttribute("stadiumList", stadiumList);
 			model.addAttribute("pm", pm);
 			return "/businessman/stadium";

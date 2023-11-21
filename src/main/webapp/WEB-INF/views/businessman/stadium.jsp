@@ -63,6 +63,82 @@
 	  background-color: #fafafa; 
 	  border-color: #ccc;
 	}
+	
+/* 슬라이드쇼 */
+	.slideshow{
+	display: flex;
+    justify-content: center;
+    position: relative;
+    margin: auto;
+	}
+
+	/* 초기화 */
+	.slider{
+	  margin: 0;
+	  padding: 0;
+	}
+	
+	.myslider img{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+	}
+	
+	.myslider{
+		border-radius:3%;
+	    width: 100%;
+	    height: 350px;
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	}
+	
+	/* 첫 번째 슬라이드 가운데에 정렬*/
+	.slider li:first-child{
+	  margin-left: 100px;
+	}
+	
+	/* 슬라이드 옆으로 정렬 */
+	.slider li:not(:last-child){
+	  float: left;
+	  margin-right: 100px;
+	}
+		.controller span{
+	  position:absolute;
+	  background-color: transparent;
+	  color: black;
+	  text-align: center;
+	  border-radius: 50%;
+	  padding: 10px 20px;
+	  top: 50%;
+	  font-size: 1.3em;
+	  cursor: pointer;
+	}
+	
+	.fade {
+	    animation-name: fade;
+	    animation-duration: 1.5s;
+	}
+	@keyframes fade {
+	    from {
+	        opacity: .4
+	    }
+	    to {
+	        opacity: 1
+	    }
+	}
+
+
+  #prev,
+  #next {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  #prev{ margin-left: 30px;}
+  #next{ margin-right: 30px;}
+	
 </style>
 <body>
 	<div class="stadium-navigation" style="margin-top: 50px; text-align: center;">
@@ -70,6 +146,7 @@
 		[${facility.fa_name}] 경기장 목록</p>
 	</div>
 	
+<!-- 	검색창 -->
 	<form action="<c:url value='/businessman/stadium/${facility.fa_num}'/>" method="get">
 		<div class="stadium-navigation" style="margin: 30px 0 30px 0; text-align: center;">
 			<select class="searchType" name="t">
@@ -81,6 +158,25 @@
 			<button class="search-btn">검색</button>
 		</div>
 	</form>
+	
+	
+	
+<!-- 	시설 사진 슬라이드쇼 -->
+	<div class="slideshow">
+		<div class="slider">
+			<c:forEach items="${files}" var="file">
+				<div class="myslider fade">
+						<img class="item" src="<c:url value='/facilityimg${file.fp_name }'/>" alt="Image1">
+				</div>
+			</c:forEach>
+		
+		</div>
+      <!-- 화살표 -->
+		<div class="btn">
+	       <button type="button" id="prev"><</button>
+    		<button type="button" id="next">></button>
+	    </div>
+	</div>
 	
 	<div style="text-align: left; margin-right: 10px;">
 		<div class="btn-group btn-group">	    
@@ -181,6 +277,29 @@
 			</c:if>
 	    </ul>
 	</div>
+<script>
+	
+	//이미지 자동 슬라이드
+	var slideIndex = 0;
+	showSlides();
+	
+	function showSlides() {
+	    var i;
+	    var slides = document.getElementsByClassName("myslider");
+	   
+	    for (i = 0; i < slides.length; i++) {
+	        slides[i].style.display = "none";
+	    }
+	    slideIndex++;
+	    if (slideIndex > slides.length) {
+	        slideIndex = 1
+	    }
+	    slides[slideIndex - 1].style.display = "block";
+	
+	    setTimeout(showSlides, 3000); // 2초마다 이미지가 체인지됩니다
+	}
 
+	
+</script>
 </body>
 </html>

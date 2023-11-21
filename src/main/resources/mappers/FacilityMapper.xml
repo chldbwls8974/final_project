@@ -68,7 +68,7 @@
 	<select id="selectBusinessmanByMeNum" resultType="kr.kh.final_project.vo.BusinessmanVO">
 			select * from businessman join member on bu_me_num = me_num where bu_me_num = #{me_num}
 	</select>
-	<insert id="insertFacility">
+	<insert id="insertFacility"  useGeneratedKeys="true" keyProperty="facility.fa_num">
 			insert into 
 				facility(fa_bu_num, fa_rg_num, fa_name, fa_add, fa_add_detail, 
 						fa_phone, fa_pay, fa_locker, fa_toilet, 
@@ -173,5 +173,11 @@
 			</choose>
 		</where>
 	</select>
-	
+	<insert id="insertPicture">
+		insert into facility_picture (fp_fa_num, fp_name, fp_ori_name)
+		values(#{file.fp_fa_num}, #{file.fp_name}, #{file.fp_ori_name})
+	</insert>
+	<select id="selectFacilityPictureList" resultType="kr.kh.final_project.vo.FacilityPictureVO">
+		select * from facility_picture where fp_fa_num = #{fa_num}
+	</select>
 </mapper>
