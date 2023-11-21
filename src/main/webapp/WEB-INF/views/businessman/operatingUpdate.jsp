@@ -78,14 +78,14 @@
 							<label class="time-label">오픈시간:</label>
 							<select class="form-control op_open" name="operatingList[${i-1 }].op_open" id="op_open_${i}">
 							    <c:forEach var="h" begin="0" end="23" step="1">
-	                                <option value="${h}" <c:if test="${selectedOperating.op_open == h}">selected</c:if>>${h}</option>
+	                                <option value="${h}" <c:if test="${selectedOperating.op_open == h}">selected</c:if>>${h}:00</option>
 							    </c:forEach>
 							</select>
 							
 							<label class="time-label">종료시간:</label>
 							<select class="form-control op_close" name="operatingList[${i-1 }].op_close" id="op_close_${i}">
-							    <c:forEach var="h" begin="0" end="23" step="1">
-	                                <option value="${h}" <c:if test="${selectedOperating.op_close == h}">selected</c:if>>${h}</option>
+							    <c:forEach var="h" begin="1" end="24" step="1">
+	                                <option value="${h}" <c:if test="${selectedOperating.op_close == h}">selected</c:if>>${h}:00</option>
 							    </c:forEach>
 							</select>
 						</div>
