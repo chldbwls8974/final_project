@@ -192,8 +192,10 @@
 			
 			
 		   <br>
-		   <button class="btn btn-info btn-block">등록</button>
-	   	   <a class="btn btn-warning btn-block" role="button" href="<c:url value='/businessman/facility'/>">취소</a>
+		   <div style="text-align: center; margin-top: 40px;">
+		   	   <a class="btn " role="button"  style="background-color: black; color: white; border-radius: 10px; width: 300px; margin-right:20px"  href="<c:url value='/businessman/facility'/>">취소</a>
+			   <button class="btn "  style="background-color: black; color: white; border-radius: 10px; width: 300px;" >등록</button>
+			</div>
 		</form> 
 	</div>
 
