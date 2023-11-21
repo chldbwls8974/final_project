@@ -42,7 +42,7 @@
     .slider__img {
         position: relative;
         width: 800px;
-        height: 400px;
+        height: 800px;
         overflow: hidden;
     }
      /* 이미지 감싸고 있는 부모 : 움직이는 부분 */
@@ -58,7 +58,7 @@
 	.slider{
 		position: relative;
 		width: 800px;
-		height: 400px;
+		height: 800px;
 	}
 	
 	.slider img{
@@ -117,7 +117,12 @@
 			<div class="slider__img">
 				<div class="slider__inner">
 					<div class="slider">
-						<a href="<c:url value='/'/>">
+						<a href="<c:url value='/match/search/club'/>">
+							<img class="item" src="<c:url value='/resources/main/main9.png'/>" alt="Image4">
+						</a>
+					</div>
+					<div class="slider">
+						<a href="<c:url value='/member/signup'/>">
 							<img class="item" src="<c:url value='/resources/main/main6.png'/>" alt="Image1">
 						</a>
 					</div>
@@ -127,13 +132,8 @@
 						</a>
 					</div>
 					<div class="slider">
-						<a href="<c:url value='/application/manager'/>">
-							<img class="item" src="<c:url value='/resources/main/main8.png'/>" alt="Image3">
-						</a>
-					</div>
-					<div class="slider">
 						<a href="<c:url value='/match/search/club'/>">
-							<img class="item" src="<c:url value='/resources/main/main4.png'/>" alt="Image4">
+							<img class="item" src="<c:url value='/resources/main/main8.png'/>" alt="Image3">
 						</a>
 					</div>
 					<div class="slider">

@@ -79,10 +79,10 @@
 		color:white;
 	}
   .btn2:hover {
-        background-color: #28a745; /* 진한 초록색으로 변경 */
+        background-color: #77c188 !important; /* 진한 초록색으로 변경 */
     }
     .btn2.active {
-        background-color: #28a745; 
+        background-color: #77c188 !important; 
     }
 </style>
 </head>
@@ -142,7 +142,7 @@
 									<div class="tbody-list" style="width: 21%">
 										<a
 											href="<c:url value='/admin/stadiumlist/${facility.fa_num}'/>"
-											style="text-align: left; color: #1179b1f5;">${facility.fa_name}</a>
+											style="text-align: left; color: #6aa84f;">${facility.fa_name}</a>
 									</div>
 									<div class="tbody-list" style="width: 18%">${facility.fa_phone}</div>
 									<div class="tbody-list" style="width: 8%">${facility.st_count}</div>
@@ -171,7 +171,7 @@
 									<div class="tbody-list" style="width: 21%">
 										<a
 											href="<c:url value='/admin/stadiumlist/${facility.fa_num}'/>"
-											style="text-align: left; color: #1179b1f5;">${facility.fa_name}</a>
+											style="text-align: left; color: #6aa84f;">${facility.fa_name}</a>
 									</div>
 									<div class="tbody-list" style="width: 18%">${facility.fa_phone}</div>
 									<div class="tbody-list" style="width: 8%">${facility.st_count}</div>
@@ -201,7 +201,7 @@
 									<div class="tbody-list" style="width: 21%">
 										<a
 											href="<c:url value='/admin/stadiumlist/${facility.fa_num}'/>"
-											style="text-align: left; color: #1179b1f5;">${facility.fa_name}</a>
+											style="text-align: left; color: #6aa84f;">${facility.fa_name}</a>
 									</div>
 									<div class="tbody-list" style="width: 18%">${facility.fa_phone}</div>
 									<div class="tbody-list" style="width: 8%">${facility.st_count}</div>
