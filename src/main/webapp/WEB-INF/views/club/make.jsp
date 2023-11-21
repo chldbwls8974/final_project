@@ -136,8 +136,14 @@ input[type='checkbox']{
 		position: relative; overflow: hidden;
 		margin: 0 auto;
 	}
+	.btn-file:hover{
+		text-decoration: none; color: gray;	
+	}
 	.box-thumbnail{
 		display: none; position: absolute; top: 0; 
+	}
+	.profile-update-btn{
+		margin-top:20px
 	}
 	
 </style>
@@ -147,13 +153,18 @@ input[type='checkbox']{
 		 letter-spacing: -3px;">클럽 생성</p>
 	<form action="<c:url value='/club/make'/>" method="post" enctype="multipart/form-data" style="text-align: center;">
 		<div class="form-group update-profile" style="margin-top: 10px;">
-		<label>클럽 앰블럼</label>
+			<label>클럽 앰블럼</label>
 			<input type="file" class="input-file form-control" name="img" id="img" onchange="readUrl(this)" style="display:none;">
 				<a href="#" class="btn-file">+
 					<div class="box-thumbnail">
 						<img src="" id="preview" height="200" width="200">
 					</div>
 				</a>
+				<div>
+					<button type="button" class="form-control btn profile-update-btn">
+					엠블럼 변경
+					</button>
+				</div>
 		</div>
 	
 		<div class="form-group">
@@ -508,11 +519,11 @@ input[type='checkbox']{
 
 	
 	// 프로필사진 미리보기
-	$('.btn-file').click(function(){
-		$('.input-file').click();
-		$('.box-thumbnail').show();
-		$(this).css('boder' ,'none');
-	})
+		$('.profile-update-btn').click(function(){
+			$('.input-file').click();
+			$('.box-thumbnail').show();
+			$(this).css('boder' ,'none');
+		})
 
 	function readUrl(input){
 		//input 태그가 첨부파일이고, 첨부파일이 선택되면
