@@ -655,4 +655,56 @@
 		group by
 			mt_num
 	</select>
+	<select id="selectMyRecored" resultType="kr.kh.final_project.vo.MatchVO">
+		select
+			`match`.*,
+		    ti_time,
+		    fa_name,
+		    st_name,
+		    te_type,
+		    te_num,
+		    cl_num,
+		    cl_name,
+		    me_name
+		from
+			`match`
+				join
+			time on mt_ti_num = ti_num
+				join
+			stadium on mt_st_num = st_num
+				join
+			facility on st_fa_num = fa_num
+				join
+			team on te_mt_num = mt_num
+				left join
+			club_team on ct_te_num = te_num
+				left join
+			club on ct_cl_num = cl_num
+				join
+			entry on en_te_num = te_num
+				left join
+			manager on mn_mt_num = mt_num
+				left join
+			member on mn_me_num = me_num
+		where
+			en_me_num = #{me_num} and
+			mt_state1 in (0, 2) and    
+		    curdate() >= mt_date and
+		    if(mt_date = curdate(), curtime() >= ti_time, true)
+		order by
+			mt_date desc, ti_time desc;
+	</select>
+	<select id="selectMatchRecord" resultType="kr.kh.final_project.vo.MatchVO">
+		select
+			count(if(qu_te_num1 = #{te_num}, if(qu_goal1 > qu_goal2, 1, null), if(qu_te_num2 = #{te_num}, if(qu_goal2 > qu_goal1, 1, null), null))) as win,
+			count(if(qu_goal1 = qu_goal2, 1, null)) as draw,
+			count(if(qu_te_num1 = #{te_num}, if(qu_goal2 > qu_goal1, 1, null), if(qu_te_num2 = #{te_num}, if(qu_goal1 > qu_goal2, 1, null), null))) as lose
+		from
+			`match`
+				left join
+			quarter on qu_te_num1 = #{te_num} or qu_te_num2 = #{te_num}
+		where
+			mt_num = #{mt_num}
+	</select>
+	
 </mapper>

@@ -41,6 +41,7 @@ import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PenaltyVO;
 import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.PreferredRegionVO;
+import kr.kh.final_project.vo.QuarterVO;
 import kr.kh.final_project.vo.RegionVO;
 import kr.kh.final_project.vo.ReportVO;
 import kr.kh.final_project.vo.TimeVO;
@@ -681,5 +682,55 @@ public class MemberController {
 			model.addAttribute("match", match);
 			model.addAttribute("entryList", entryList);
 			return "/member/tmp";
+		}
+		
+		@GetMapping("/member/record")
+		public String memberMyRecord(Model model, HttpSession session) {
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			List<MatchVO> matchList = matchService.selectMyRecored(user.getMe_num());
+			int win = 0;
+			int draw = 0;
+			int lose = 0;
+			for(MatchVO match : matchList) {
+				if(match.getWin() != 0) {
+					win += match.getWin();
+				}
+				if(match.getDraw() != 0) {
+					win += match.getDraw();
+				}
+				if(match.getLose() != 0) {
+					win += match.getLose();
+				}
+			}
+			model.addAttribute("matchList", matchList);
+			return "/member/record";
+		}
+
+		@ResponseBody
+		@PostMapping("/match/quarter/list")
+		public Map<String, Object> selectQuarterList(@RequestParam("mt_num")int mt_num, @RequestParam("te_num")int te_num){
+			Map<String, Object> map = new HashMap<String, Object>();
+			List<QuarterVO> dbQuarterList = matchService.selectQuarterListByMtNum(mt_num);
+			List<QuarterVO> quarterList = new ArrayList<QuarterVO>();
+			
+			for(QuarterVO quarter : dbQuarterList) {
+				if(quarter.getQu_te_num1() == te_num) {
+					quarterList.add(quarter);
+				}else if(quarter.getQu_te_num2() == te_num) {
+					QuarterVO tmp = new QuarterVO();
+					tmp.setQu_te_num1(quarter.getQu_te_num1());
+					tmp.setQu_goal1(quarter.getQu_goal1());
+					tmp.setTeam1(quarter.getTeam1());
+					quarter.setQu_te_num1(quarter.getQu_te_num2());
+					quarter.setQu_goal1(quarter.getQu_goal2());
+					quarter.setTeam1(quarter.getTeam2());
+					quarter.setQu_te_num2(tmp.getQu_te_num1());
+					quarter.setQu_goal2(tmp.getQu_goal1());
+					quarter.setTeam2(tmp.getTeam1());
+					quarterList.add(quarter);
+				}
+			}
+			map.put("quarterList", quarterList);
+			return map;
 		}
 }

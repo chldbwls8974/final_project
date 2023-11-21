@@ -543,4 +543,21 @@ public class MatchServiceImp implements MatchService{
 		return quarterDao.countQuarterByMtNum(mt_num);
 	}
 
+	@Override
+	public List<MatchVO> selectMyRecored(Integer me_num) {
+		if(me_num == 0) {
+			return null;
+		}
+		List<MatchVO> matchList = matchDao.selectMyRecored(me_num);
+		for(MatchVO match : matchList) {
+			if(match.getMt_rule() == 1) {
+				MatchVO record = matchDao.selectMatchRecord(match.getMt_num(), match.getTe_num());
+				match.setWin(record.getWin());
+				match.setDraw(record.getDraw());
+				match.setLose(record.getLose());
+			}
+		}
+		return matchList;
+	}
+
 }
