@@ -136,7 +136,7 @@ input[type='checkbox']{
 		display: none; position: absolute; top: 0; 
 	}
 	.profile{
-	 margin-top: 40px; text-align: center;
+		text-align: center; margin: 10px;
 	 }
 	.profile-update-btn{
 		border: none; margin-top:20px
@@ -163,9 +163,9 @@ input[type='checkbox']{
 		 letter-spacing: -3px;">클럽 수정</p>
 	<form action="<c:url value='/club/update'/>" method="post" enctype="multipart/form-data">
 			<div class="profile">
-				<img src="<c:url value='/clubimg${club.cl_emblem }'/>" name="profile" height="150" width="150" style="border-radius: 50%; margin-bottom: 10px;">
+				<img src="<c:url value='/clubimg${club.cl_emblem }'/>" name="profile" height="200" width="200" style="border-radius: 50%; border : 1px solid #4B5A64;">
 			</div>
-			<div class="form-group update-profile" style="margin-top: 10px;">
+			<div class="form-group update-profile" style="margin: 10px;">
 				<input type="file" class="input-file" name="img" id="img" onchange="readUrl(this)" style="display:none;">
 					<a href="#" class="btn-file">
 						<div class="box-thumbnail">
