@@ -372,5 +372,4 @@ public class MatchController {
 		map.put("res", res);
 		return map;
 	}
-	
 }

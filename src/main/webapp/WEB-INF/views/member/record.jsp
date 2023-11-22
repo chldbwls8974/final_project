@@ -29,7 +29,7 @@
 	padding: 20px;
 	border-radius: 5px;
 	max-width: 600px;
-	margin: 200px auto;
+	margin: 50px auto;
 		
 	}
 	.info-box{margin-bottom: 10px;
@@ -95,15 +95,27 @@
 	
 	<div class="modal">
 		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title">경기 결과</h4>
-				<button type="button" class="close btn-record-close" data-dismiss="modal">&times;</button>
+			<div class="match-record-box">
+				<div class="modal-header">
+					<h4 class="modal-title">경기 결과</h4>
+					<button type="button" class="close btn-record-close" data-dismiss="modal">&times;</button>
+				</div>
+				<h4>참가자 리스트</h4>
+				<div class="team-box">
+				</div>
+				<div class="reportBtn-box">
+				</div>
+				<hr>
+				<div class="quarter-list-box">
+				</div>
 			</div>
-			<h4>참가자 리스트</h4>
-			<div class="team-box">
-			</div>
-			<hr>
-			<div class="quarter-list-box">
+			<div class="match-report-box">
+				<div class="modal-header">
+					<h4 class="modal-title">매치 신고</h4>
+					<button type="button" class="close btn-matchReport-close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="report-box">
+				</div>
 			</div>
 		</div>
 	</div>
@@ -113,6 +125,8 @@
 	te_num = 0;
 	te_type = 0;
 	mt_personnel = 0;
+	manager = ``;
+	entry = ``;
 	
 	$(document).ready(function() {
         $('.btn-record-open').click(function() {
@@ -121,6 +135,9 @@
         	te_type = $(this).siblings('.te_type').val();
         	mt_personnel = $(this).siblings('.mt_personnel').val();
         	
+        	$('.match-record-box').show();
+			$('.match-report-box').hide();
+			
         	printTeam()
         	printQuarter()
         	
@@ -128,8 +145,6 @@
         });
 
         $('.btn-record-close').click(function() {
-        	printReset()
-        	
             closeModal();
         });
 
@@ -141,6 +156,26 @@
             $('.modal').fadeOut();
         }
     });
+	$(document).on('click', '.btn-matchReport-open', function() {
+		$('.match-record-box').hide();
+		$('.match-report-box').show();
+		
+		printReport()
+		$('.report-select-sub').html(entry);
+	});
+	$(document).on('click', '.btn-matchReport-close', function() {
+		$('.match-record-box').show();
+		$('.match-report-box').hide();
+	});
+	$(document).on('change', '.report-type-select', function() {
+		re_type = $(this).val();
+		
+		if(re_type == 0){
+			$('.report-select-sub').html(entry);
+		}else{
+			$('.report-select-sub').html(manager);
+		}
+	})
 	function printTeam() {
 		str = ``;
 		$.ajax({
@@ -225,6 +260,10 @@
 			}
 		});
 		$('.team-box').html(str);
+		str = `
+			<button class="btn-matchReport-open" value="\${mt_num}">신고하기</button>
+		`;
+		$('.reportBtn-box').html(str);
 	}
 	function printQuarter() {
 		str = ``;
@@ -236,42 +275,42 @@
 			dataType : 'json',
 			success : function(data) {
 				i = 0;
-				for(quarterList of data.quarterList){
+				for(quarter of data.quarterList){
 					str += `
 						<div class="info-box quarter-box">
 							<h4>\${i + 1}경기</h4>
 					`;
 					str += `
-							<input type="number" class="recored-team1" value="\${quarterList.team1}" hidden disabled>
-							<input type="number" class="recored-team2" value="\${quarterList.team2}" hidden disabled>
-							<input type="number" class="recored-te_num1" value="\${quarterList.qu_te_num1}" hidden disabled>
-							<input type="number" class="recored-te_num2" value="\${quarterList.qu_te_num2}" hidden disabled>
-							<input type="number" class="recored-goal1" value="\${quarterList.qu_goal1}" hidden disabled>
-							<input type="number" class="recored-goal2" value="\${quarterList.qu_goal2}" hidden disabled>
+							<input type="number" class="recored-team1" value="\${quarter.team1}" hidden disabled>
+							<input type="number" class="recored-team2" value="\${quarter.team2}" hidden disabled>
+							<input type="number" class="recored-te_num1" value="\${quarter.qu_te_num1}" hidden disabled>
+							<input type="number" class="recored-te_num2" value="\${quarter.qu_te_num2}" hidden disabled>
+							<input type="number" class="recored-goal1" value="\${quarter.qu_goal1}" hidden disabled>
+							<input type="number" class="recored-goal2" value="\${quarter.qu_goal2}" hidden disabled>
 							<br>
-							\${quarterList.team1}팀 : \${quarterList.qu_goal1}
+							\${quarter.team1}팀 : \${quarter.qu_goal1}
 					`;
-					if(quarterList.qu_goal1 > quarterList.qu_goal2){
+					if(quarter.qu_goal1 > quarter.qu_goal2){
 						str += `
 								<span>승리</span>
 								<br>
-								\${quarterList.team2}팀 : \${quarterList.qu_goal2}
+								\${quarter.team2}팀 : \${quarter.qu_goal2}
 								<span>패배</span>
 							</div>
 						`;
-					}else if(quarterList.qu_goal1 == quarterList.qu_goal2){
+					}else if(quarter.qu_goal1 == quarter.qu_goal2){
 						str += `
 								<span>무승부</span>
 								<br>
-								\${quarterList.team2}팀 : \${quarterList.qu_goal2}
+								\${quarter.team2}팀 : \${quarter.qu_goal2}
 								<span>무승부</span>
 							</div>
 						`;
-					}else if(quarterList.qu_goal1 < quarterList.qu_goal2){
+					}else if(quarter.qu_goal1 < quarter.qu_goal2){
 						str += `
 								<span>패배</span>
 								<br>
-								\${quarterList.team2}팀 : \${quarterList.qu_goal2}
+								\${quarter.team2}팀 : \${quarter.qu_goal2}
 								<span>승리</span>
 							</div>
 						`;
@@ -282,10 +321,56 @@
 		});
 		$('.quarter-list-box').html(str);
 	}
-	function printReset() {
+	function printReport() {
 		str = ``;
-		$('.team-box').html(str);
-		$('.quarter-list-box').html(str);
+		manager = ``;
+		entry = ``;
+		$.ajax({
+			async : false,
+			method : 'post',
+			url : '<c:url value="/print/report/match"/>',
+			data : {mt_num:mt_num},
+			dataType : 'json',
+			success : function(data) {
+				console.log(data);
+				if(data.manager != null){
+					manager += `
+						\${data.manager.me_name}
+						<input type="text" class="rp_me_num2" value="\${data.manager.me_num}" hidden disabled>
+					`;
+				}
+				entry += `
+					<select>
+				`;
+				for(en of data.entryList){
+					entry += `
+							<option value="\${en.en_me_num}">\${en.me_nickname}</option>
+					`;
+				}
+				entry += `
+					</select>
+				`;
+				str += `
+					<div class="report-type-select-box">
+						<select class="report-type-select">
+							<option value="0">회원</option>
+				`;
+				if(data.manager != null){
+					str += `
+						<option value="1">매니저</option>
+					`;
+				}
+				str += `
+						</select>
+					</div>
+					<div class="report-select-sub">
+					</div>
+				`;
+			}
+		});
+		console.log(entry);
+		$('.report-select-sub').html(entry);
+		$('.report-box').html(str);
 	}
 	</script>
 </body>

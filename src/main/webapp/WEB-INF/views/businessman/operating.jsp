@@ -14,14 +14,18 @@
      .table-bordered td, .table-bordered th {
         text-align: center; /* 테이블 셀 안의 텍스트 가운데 정렬 */
     }
+    .table-bordered{
+    	width: 50%;
+    	margin: 0 auto;
+    }
 </style>
 <body>
   	<div class="operating-navigation" style="margin-top: 50px; text-align: center;">
-		<p style="font-size: 35px; width: 16%; font-weight: bolder; margin: 30px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
+		<p style="font-size: 35px; width: 16%; font-weight: bolder; margin: 20px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
 		운영시간</p>
 	</div>
 
-	<div style="text-align: center; margin-right: 10px;">
+	<div style="text-align: center;">
 		<div class="btn-group btn-group">	   
 		   <a class="btn" role="button" 
 		   		style="
