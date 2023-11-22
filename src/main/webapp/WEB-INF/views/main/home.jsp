@@ -10,7 +10,7 @@
 	.navbar-container,
 	.navbar1, .navbar2{ background-color: transparent !important;}
 	.container-footer{margin: 0 !important;}
-	.navbar-brand, footer{ display: none !important;}
+	footer{ display: none !important;}
 	.navbar1, .navbar2{display: inline-block; margin-bottom: 10px;}
 	.navbar1-nav-link{margin-top: 10px;}
 	.navbar2-nav-link{position: absolute;  right: 20px !important; top: 10px; }
@@ -152,42 +152,73 @@
 		</div>
 	</div>
 <script>
-	
+
 	//이미지 슬라이드
 	const sliderWrap = document.querySelector(".slider__wrap");
-    const sliderImg = document.querySelector(".slider__img");       // 보여지는 영역
-    const sliderInner = document.querySelector(".slider__inner");   // 움직이는 영역
-    const slider = document.querySelectorAll(".slider"); 
-    const sliderBtn = document.querySelector(".slider__btn");    //버튼
-    const sliderBtnPrev = document.querySelector(".prev");       //왼쪽버튼
-    const sliderBtnNext = document.querySelector(".next");       //오른쪽버튼
+	const sliderImg = document.querySelector(".slider__img");       // 보여지는 영역
+	const sliderInner = document.querySelector(".slider__inner");   // 움직이는 영역
+	const slider = document.querySelectorAll(".slider"); 
+	const sliderBtn = document.querySelector(".slider__btn");    //버튼
+	const sliderBtnPrev = document.querySelector(".prev");       //왼쪽버튼
+	const sliderBtnNext = document.querySelector(".next");       //오른쪽버튼
 	
-    let currentIndex = 0;                       //현재 이미지
-    let sliderCount = slider.length;            //이미지 갯수
-    let sliderWidth = sliderImg.offsetWidth;    //이미지 가로값
-
- 	// 이미지 움직이는 영역
-    function gotoSlider(num){
-        sliderInner.style.transition = "all 400ms";
-        sliderInner.style.transform = "translateX("+ -sliderWidth * num +"px)";
-        currentIndex = num;
-    }
-    
-    //슬라이드 버튼
+	let currentIndex = 0;                       //현재 이미지
+	let sliderCount = slider.length;            //이미지 갯수
+	let sliderWidth = sliderImg.offsetWidth;    //이미지 가로값
+	let sliderClone = sliderInner.firstElementChild.cloneNode(true);    // 첫번째 이미지 복사
+	sliderInner.appendChild(sliderClone);                               // 첫번째 이미지를 마지막에 넣어줌
+	
+		// 이미지 움직이는 영역
+	function gotoSlider(num){
+	    sliderInner.style.transition = "all 400ms";
+	    sliderInner.style.transform = "translateX("+ -sliderWidth * num +"px)";
+	    currentIndex = num;
+	}
+	
+	//슬라이드 버튼
 	// 왼쪽 버튼을 클릭했을 때
-    sliderBtnPrev.addEventListener("click", () => {
-        let prevIndex = (currentIndex + (sliderCount -1)) % sliderCount
-        // 4, 1, 2, 3, 4, 1, 2, ...
-        gotoSlider(prevIndex);
-    });
-
-    // 오른쪽 버튼을 클릭했을 때
-    sliderBtnNext.addEventListener("click", () => {
-        let nextIndex = (currentIndex + 1) % sliderCount
-        // 1, 2, 3, 4, 0, 1, 2, ...
-        gotoSlider(nextIndex);
-    });
+	sliderBtnPrev.addEventListener("click", () => {
+	    let prevIndex = (currentIndex + (sliderCount -1)) % sliderCount
+	    // 4, 1, 2, 3, 4, 1, 2, ...
+	    gotoSlider(prevIndex);
+	});
 	
+	// 오른쪽 버튼을 클릭했을 때
+	sliderBtnNext.addEventListener("click", () => {
+	    let nextIndex = (currentIndex + 1) % sliderCount
+	    // 1, 2, 3, 4, 0, 1, 2, ...
+	    gotoSlider(nextIndex);
+	});
+	
+	
+	//자동 슬라이더
+	function sliderEffect() {
+	    currentIndex++;
+	    sliderInner.style.transition = "all 1.5s";
+	
+	    sliderInner.style.transform = "translateX(-"+ sliderWidth * currentIndex +"px)";
+	
+	    // sliderInner.style.transform = "translateX(-600px)";      600*1
+	    // sliderInner.style.transform = "translateX(-1200px)";     600*2
+	    // sliderInner.style.transform = "translateX(-1800px)";     600*3
+	    // sliderInner.style.transform = "translateX(-2400px)";     600*4
+	    // sliderInner.style.transform = "translateX(-3000px)";     600*5
+	    // sliderInner.style.transform = "translateX(-3600px)";     600*1
+	
+	    // 마지막 사진이면 0번째로 이동
+	    if(currentIndex == sliderCount){
+	        setTimeout(()=>{
+	            sliderInner.style.transition = "0s";
+	            sliderInner.style.transform = "translateX(0px)";
+	        }, 1000);
+	        
+	        currentIndex = 0;
+	    }
+	
+	
+	}
+	setInterval(sliderEffect, 4000); //2초마다 넘김
+
 </script>
 </body>
 </html>
