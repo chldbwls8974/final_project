@@ -38,6 +38,10 @@
 	a{
 		color:black;
 	}
+	img{
+		width: 70px; height: 70px; border-radius: 50%;
+		margin-right: 10px;
+	}
 </style>
 </head>
 <body>
