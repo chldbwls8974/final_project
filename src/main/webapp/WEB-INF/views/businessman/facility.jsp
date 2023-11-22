@@ -104,6 +104,7 @@
 	          <th>주소</th>
 	          <th>상세주소</th>
 	          <th>전화번호</th>
+	          <th>경기장 수</th>
 	          <th>주차장</th>
 	          <th>탈의실</th>
 	          <th>화장실</th>
@@ -128,6 +129,7 @@
 			          <td>${facility.fa_add}</td>
 			          <td>${facility.fa_add_detail}</td>
 			          <td>${facility.fa_phone}</td>
+	 				  <td>${facility.st_count}</td>
 			          <td>
 			            <c:choose>
 			                <c:when test="${facility.fa_pay == 0}">없음</c:when>
