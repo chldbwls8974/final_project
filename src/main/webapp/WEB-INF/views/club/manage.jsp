@@ -38,6 +38,8 @@
 	a{
 		color:black;
 	}
+	img{
+	width:45px; height:45px; border-radius:50%}
 </style>
 </head>
 <body>
@@ -53,7 +55,7 @@
 			  </div> 
 		  </div>
 		<div id="table">
-			<div class="table member-table">
+			<div class="table member-table" id="mtable">
 				<table class="table table-hover">
 					<thead>
 						<tr>
@@ -70,7 +72,7 @@
 								<tr>
 									<td>${list.cm_num}</td>
 									<td><img alt=""
-										src="<c:url value='/memberimg${list.me_profile}'/>"></td>
+										src="<c:url value='/memberimg${list.me_profile}'/>" name="profile"></td>
 									<td>${list.me_nickname}</td>
 									<td>${list.cm_authority}</td>
 									<td style="width: 25%;"></td>
@@ -82,7 +84,7 @@
 								<tr>
 									<td>${list.cm_num}</td>
 									<td><img alt=""
-										src="<c:url value='/memberimg${list.me_profile}'/>"></td>
+										src="<c:url value='/memberimg${list.me_profile}'/>" name="profile"></td>
 									<td><a
 										href="<c:url value='/member/myprofile?me_num=${list.cm_num}'/>"
 										class="member-link"> ${list.me_nickname}</a></td>
@@ -103,7 +105,7 @@
 					</tbody>
 				</table>
 			</div>
-			<div class="table rookie-table">
+			<div class="table rookie-table" id="rtable">
 				<table class="table table-hover">
 					<thead>
 						<tr>
@@ -157,6 +159,7 @@
 		// 멤버 테이블 관리
 		// 강퇴 버튼 클릭시
 		$(document).on('click','[name=discharge-btn]',function(){
+			let obj = $(this);
 			if(confirm("정말 팀원을 강퇴시키시겠습니까?")){
 				let me_num = $(this).data('num')
 				let type="discharge"
@@ -170,7 +173,9 @@
 				ajaxJsonToJson2(false, 'post','/club/mbmanage',data, (a)=>{
 					alert("팀원을 퇴장시켰습니다.")
 // 					여기 물어봐야함
-					$('#table').load(location.href+' #table');
+					$('#mtable').load(location.href+' #mtable');
+					//location.reload();
+					//obj.parents('tr').remove();
 				})
 			}
 		})
@@ -211,7 +216,9 @@
 				}
 				ajaxJsonToJson2(false, 'post','/club/mbmanage',data, (a)=>{
 					alert("팀원 신청을 승인하였습니다.") 
-					location.reload();
+					$('#rtable').load(location.href+' #rtable');
+// 					$('.member-table').hide();
+// 					$('.rookie-table').show();
 				})
 				
 			}
@@ -233,7 +240,7 @@
 					
 					ajaxJsonToJson2(false, 'post','/club/mbmanage',data, (a)=>{
 					 	alert("팀원 신청을 거절하였습니다.")
-					 	location.reload();
+					 	$('#rtable').load(location.href+' #rtable');
 					})
 			}else{
 				return;
