@@ -69,7 +69,7 @@
 	  background-color: #fafafa; 
 	  border-color: #ccc;
 	}
-	.text{ border-left: 7px solid #c2f296; padding-left: 10px; height: 20px;}
+	.text{ border-left: 7px solid #c2f296; padding-left: 10px;}
 	.match-icon{ width: 25px; height: 25px;}
 	.match-info-box{flex: 1}
 	.match-info-box1 div{ justify-content: space-between; display: flex;}
@@ -183,17 +183,13 @@
 	
 		<div class="info-box match-box">
 			<div class="match-info-box1 match-info justify-content: space-between">
+				<label class="text">주소 </label>
 				<div>
-					<label class="text">주소 </label>
-					<div>
-						<p>${facility.fa_add}${facility.fa_add_detail}</p>
-					</div>
+					<p>${facility.fa_add}${facility.fa_add_detail}</p>
 				</div>
+				<label class="text">연락처</label>
 				<div>
-					<label class="text">연락처</label>
-					<div>
-						<p>${facility.fa_phone}</p>
-					</div>
+					<p>${facility.fa_phone}</p>
 				</div>
 			</div>
 			<div class="match-info-box2 facility-info">
@@ -280,16 +276,6 @@
 			</div>
 		</div>
 	</div>
-	<div class="btn-box">
-			<a href="<c:url value='/admin/operatinglist/${facility.fa_num}'/>"
-				class="btn btn-outline-info" role="button" style="margin-right:10px;">운영시간</a>
-			<a
-				href="<c:url value='/admin/facilitylistUpdate?fa_num=${facility.fa_num}'/>"
-				class="btn btn-outline-secondary" role="button" style="margin-right:10px;">수정</a>
-			<a
-				href="<c:url value='/businessman/facilityDelete?fa_num=${facility.fa_num}'/>"
-				class="btn btn-outline-secondary" role="button" style="margin-right:10px;">삭제</a>
-	</div>
 
 
 	<form action="<c:url value='/admin/stadiumlist/${facility.fa_num}'/>" method="get">
@@ -322,8 +308,6 @@
 	          <th>최대인원</th>
 	          <th>이용가능여부</th>
 	          <th>특이사항</th>
-	          <th hidden="hidden">시설번호</th>
-	          <th>수정</th>
 	        </tr>
 	      </thead>
 		  <tbody>
@@ -357,9 +341,6 @@
 		            </c:choose>
 			      </td>
 		          <td>${stadium.st_note}</td>
-		          <td hidden="hidden">${stadium.st_fa_num}</td>
-		          <td><a href="<c:url value='/admin/stadiumlistUpdate?st_num=${stadium.st_num}'/>"
-							class="btn btn-outline-secondary" role="button">수정</a></td>
 	         	 </tr>
 		     </c:forEach>
 	      </tbody>
@@ -392,7 +373,7 @@
 				 style="
 						border-radius: 10px; width: 150px; height: 40px; border: none;
 						background-color: #c2f296; color: black; margin: 10px 10px 10px 0;"
-						href="<c:url value='/admin/facilitylist'/>"
+						href="<c:url value='/facility/list'/>"
 						>시설 목록으로 이동</a>		
 		</div>
 	</div>		

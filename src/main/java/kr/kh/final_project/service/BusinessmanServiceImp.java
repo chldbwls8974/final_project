@@ -1,9 +1,12 @@
 package kr.kh.final_project.service;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.apache.commons.io.FileSystemUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.dao.FacilityDAO;
 import kr.kh.final_project.dao.OperatingDAO;
@@ -11,8 +14,11 @@ import kr.kh.final_project.dao.PreferredRegionDAO;
 import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.dao.StadiumDAO;
 import kr.kh.final_project.pagination.Criteria;
+import kr.kh.final_project.util.UploadFileUtils;
 import kr.kh.final_project.vo.BusinessmanVO;
+import kr.kh.final_project.vo.FacilityPictureVO;
 import kr.kh.final_project.vo.FacilityVO;
+import kr.kh.final_project.vo.FileVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.OperatingVO;
 import kr.kh.final_project.vo.RegionVO;
@@ -35,6 +41,8 @@ public class BusinessmanServiceImp implements BusinessmanService{
 
 	@Autowired
 	FacilityDAO facilityDao;
+	
+	String uploadPicturePath = "D:\\uploadfacility";
 
 	//시설 리스트 가져오기
 	@Override
@@ -62,7 +70,7 @@ public class BusinessmanServiceImp implements BusinessmanService{
 	}	
 	//시설 등록
 	@Override
-	public boolean insertFacility(MemberVO user, FacilityVO facility) {
+	public boolean insertFacility(MemberVO user, FacilityVO facility,  MultipartFile[] file) {
 		//예외처리
 		if(user == null
 			|| facility == null
@@ -73,6 +81,21 @@ public class BusinessmanServiceImp implements BusinessmanService{
 			return false;
 		}
 		boolean res = facilityDao.insertFacility(facility, user.getMe_num());
+		for(MultipartFile i : file) {
+			if(i == null || i.getOriginalFilename().length() == 0) {
+				continue;
+			}
+			try {
+				String fp_ori_name = i.getOriginalFilename();
+				String fp_name = UploadFileUtils.uploadFile(uploadPicturePath, fp_ori_name, i.getBytes());
+				FacilityPictureVO fileVo = new FacilityPictureVO(facility.getFa_num(), fp_name, fp_ori_name);
+				System.out.println(fileVo);
+				//업로드한 경로를 이용하여 다오에게 첨부파일 정보를 주면서 DB에 추가하라고 요청
+				facilityDao.insertPicture(fileVo);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	}
 		return res;
 	}
 	//Main 지역리스트
@@ -230,6 +253,15 @@ public class BusinessmanServiceImp implements BusinessmanService{
 		}
 		boolean res = stadiumDao.updateStadium(stadium);
 		return res;
+	}
+	
+	@Override
+	public List<FacilityPictureVO> getFacilityPictureList(Integer fa_num) {
+		return facilityDao.selectFacilityPictureList(fa_num);
+	}
+	@Override
+	public List<StadiumVO> selectAllStadium() {
+		return stadiumDao.selectAllStadiumList();
 	}
 	
 	

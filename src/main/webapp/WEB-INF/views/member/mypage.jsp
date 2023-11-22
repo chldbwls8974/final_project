@@ -232,7 +232,7 @@
 							</a>
 						</li>	
 						<li>
-							<a href="#">
+							<a href="<c:url value='/member/record'/>">
 							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_friend_match.svg" width="24px" height="24px" alt="나의 전적">
 							<p>나의 전적</p>
 							</a>

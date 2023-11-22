@@ -6,40 +6,287 @@
 <head>
 <meta charset="UTF-8">
 <title>경기 전적</title>
+<style type="text/css">
+	.club-emblem{width: 20px; height: 20px; border-radius: 50%;}
+	.member-profile{width: 20px; height: 20px; border-radius: 50%;}
+	.team-box{display: flex;}
+	.teamList-box{flex: 1}
+	.quarter-box{width: 500px; height: 200px; margin-left: 15px;}
+	.quarter-list-box{height: 400px; overflow: scroll;}
+	.modal {
+	display: none;
+	position: fixed;
+	top: 0%;
+	left: 0%;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.3);
+	justify-content: center;
+	align-items: center;
+	}
+	.modal-content {
+	background-color: white;
+	padding: 20px;
+	border-radius: 5px;
+	max-width: 600px;
+	margin: 200px auto;
+		
+	}
+	.info-box{margin-bottom: 10px;
+	border: 3px solid black; box-sizing: border-box;}
+</style>
 </head>
 <body>
-	<div>
-		<section>
-			<div class="section-title">
-				<h3>나의 경기 전적</h3>
-			</div>
-			<div>
-				<div class="record-filter">
-					<ul>
-						<li>
-							<span>내 지역</span>
-							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_filter_arrow_selected.svg">
-						</li>
-						<li>
-							<span>날짜</span>
-							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_filter_arrow_selected.svg">
-						</li>
-						<li>
-							<span>시간</span>
-							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_filter_arrow_selected.svg">
-						</li>
-					</ul>
-				</div>
-			</div>
-			<div class="recordview-list">
-				<p>참여한 경기 횟수</p>
-				<p></p>
-			</div>
-			<div class="recordview-list">
-				<p>획득한 점수 합산</p>
-				<p>${member.me_rating}</p>
-			</div>
-		</section>
+	<div class="container">
+		<h2>${win + draw + lose} 전 ${win} 승${draw} 무${lose} 패</h2>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>매치 일시</th>
+					<th>매치 타입</th>
+					<th>장소</th>
+	        		<th>팀(클랜)</th>
+					<th>매치 전적</th>
+					<th>경기 결과</th>
+				 </tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${matchList}" var="mt" >
+					<tr>
+						<td>${mt.mt_date_str}<br>${mt.ti_time_str}</td>
+						<td>${mt.mt_type == 1 ? '개인' : '클럽'} ${mt.mt_rule == 0 ? '친선전' : '경쟁전'} (${mt.mt_personnel} vs ${mt.mt_personnel})</td>
+						<td>${mt.fa_name} ${mt.st_name}</td>
+						<td>
+							<c:if test="${mt.te_type != 0}">
+								${mt.te_type}팀
+							</c:if>
+							<c:if test="${mt.mt_type == 2}">
+								(${mt.cl_name})
+							</c:if>
+							<c:if test="${mt.te_type == 0}">
+								없음
+							</c:if>
+						</td>
+						<td>
+							<c:if test="${mt.mt_rule == 1}">
+								${mt.win + mt.draw + mt.lose}전 ${mt.win}승 ${mt.draw}무 ${mt.lose}패
+							</c:if>
+						</td>
+						<td>
+							<input type="text" class="mt_num" value="${mt.mt_num}" hidden disabled>
+							<input type="text" class="te_num" value="${mt.te_num}" hidden disabled>
+							<input type="text" class="te_type" value="${mt.te_type}" hidden disabled>
+							<input type="text" class="mt_personnel" value="${mt.mt_personnel}" hidden disabled>
+							<c:if test="${mt.mt_rule == 1 && mt.mt_state1 == 2}">
+								<button class="btn btn-success btn-record-open">경기 결과</button>
+							</c:if>
+							<c:if test="${mt.mt_rule == 1 && mt.mt_state1 == 0}">
+								<button class="btn btn-success btn-record-open">경기 진행중</button>
+							</c:if>
+							<c:if test="${mt.mt_rule == 0}">
+								<button class="btn btn-success btn-record-open">참가자</button>
+							</c:if>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
 	</div>
+	
+	<div class="modal">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">경기 결과</h4>
+				<button type="button" class="close btn-record-close" data-dismiss="modal">&times;</button>
+			</div>
+			<h4>참가자 리스트</h4>
+			<div class="team-box">
+			</div>
+			<hr>
+			<div class="quarter-list-box">
+			</div>
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+	mt_num = 0;
+	te_num = 0;
+	te_type = 0;
+	mt_personnel = 0;
+	
+	$(document).ready(function() {
+        $('.btn-record-open').click(function() {
+        	mt_num = $(this).siblings('.mt_num').val();
+        	te_num = $(this).siblings('.te_num').val();
+        	te_type = $(this).siblings('.te_type').val();
+        	mt_personnel = $(this).siblings('.mt_personnel').val();
+        	
+        	printTeam()
+        	printQuarter()
+        	
+            showModal();
+        });
+
+        $('.btn-record-close').click(function() {
+        	printReset()
+        	
+            closeModal();
+        });
+
+        function showModal() {
+            $('.modal').fadeIn();
+        }
+
+        function closeModal() {
+            $('.modal').fadeOut();
+        }
+    });
+	function printTeam() {
+		str = ``;
+		$.ajax({
+			async : false,
+			method : 'post',
+			url : '<c:url value="/application/print/team"/>',
+			data : {mt_num:mt_num},
+			dataType : 'json',
+			success : function(data) {
+				i = 0;
+				for(team of data.teamList){
+					str += `
+						<div class="teamList-box">
+							<table>
+								<thead>
+									<tr>
+										<th>
+											\${team.te_type}팀
+					`;
+					if(team.cl_name != null){
+						str += `
+							: <img class="club-emblem" alt="팀엠블럼" src="<c:url value='/clubimg\${team.cl_emblem}'/>">\${team.cl_name}
+						`;
+					}
+					if(team.te_type == te_type){
+						str += `
+							(나의 팀)
+						`;
+					}
+					str += `
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+					`;
+					for(entry of data.entryList){
+						if(team.te_num == entry.en_te_num){
+							str += `
+								<tr>
+									<td>
+										<span class="entry-member">
+											<input type="text" value="\${entry.en_me_num}" hidden disabled>
+											<img class="member-profile" alt="멤버프로필" src="<c:url value='/memberimg\${entry.me_profile}'/>">\${entry.me_nickname}(\${entry.me_tr_name})
+										</span>
+									</td>
+								</tr>
+							`;
+						}
+					}
+					str += `
+								</tbody>
+							</table>
+						</div>
+					`;
+					i++;
+				}
+				if(i == 0){
+					i = 0;
+					for(entry of data.entryList){
+						if(i == 0){
+							str += `
+								<div class="teamList-box">
+							`;							
+						}
+						if(i < mt_personnel){
+							str += `
+								<span class="entry-member">
+									<input type="text" value="\${entry.en_me_num}" hidden disabled>
+									<img class="member-profile" alt="멤버프로필" src="<c:url value='/memberimg\${entry.me_profile}'/>">\${entry.me_nickname}(\${entry.me_tr_name}) <br>
+								</span>
+							`;
+							i++;
+						}
+						if(i == mt_personnel){
+							str += `
+								</div>
+							`;
+							i = 0;
+						}
+					}
+				}
+			}
+		});
+		$('.team-box').html(str);
+	}
+	function printQuarter() {
+		str = ``;
+		$.ajax({
+			async : false,
+			method : 'post',
+			url : '<c:url value="/match/quarter/list"/>',
+			data : {mt_num:mt_num, te_num:te_num},
+			dataType : 'json',
+			success : function(data) {
+				i = 0;
+				for(quarterList of data.quarterList){
+					str += `
+						<div class="info-box quarter-box">
+							<h4>\${i + 1}경기</h4>
+					`;
+					str += `
+							<input type="number" class="recored-team1" value="\${quarterList.team1}" hidden disabled>
+							<input type="number" class="recored-team2" value="\${quarterList.team2}" hidden disabled>
+							<input type="number" class="recored-te_num1" value="\${quarterList.qu_te_num1}" hidden disabled>
+							<input type="number" class="recored-te_num2" value="\${quarterList.qu_te_num2}" hidden disabled>
+							<input type="number" class="recored-goal1" value="\${quarterList.qu_goal1}" hidden disabled>
+							<input type="number" class="recored-goal2" value="\${quarterList.qu_goal2}" hidden disabled>
+							<br>
+							\${quarterList.team1}팀 : \${quarterList.qu_goal1}
+					`;
+					if(quarterList.qu_goal1 > quarterList.qu_goal2){
+						str += `
+								<span>승리</span>
+								<br>
+								\${quarterList.team2}팀 : \${quarterList.qu_goal2}
+								<span>패배</span>
+							</div>
+						`;
+					}else if(quarterList.qu_goal1 == quarterList.qu_goal2){
+						str += `
+								<span>무승부</span>
+								<br>
+								\${quarterList.team2}팀 : \${quarterList.qu_goal2}
+								<span>무승부</span>
+							</div>
+						`;
+					}else if(quarterList.qu_goal1 < quarterList.qu_goal2){
+						str += `
+								<span>패배</span>
+								<br>
+								\${quarterList.team2}팀 : \${quarterList.qu_goal2}
+								<span>승리</span>
+							</div>
+						`;
+					}
+					i++;
+				}
+			}
+		});
+		$('.quarter-list-box').html(str);
+	}
+	function printReset() {
+		str = ``;
+		$('.team-box').html(str);
+		$('.quarter-list-box').html(str);
+	}
+	</script>
 </body>
 </html>

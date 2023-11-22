@@ -16,6 +16,7 @@
 	<resources mapping="/resources/**" location="/resources/" />
 	<resources mapping="/clubimg/**" location="file:///D:/uploadprofile/club/" />
 	<resources mapping="/memberimg/**" location="file:///D:/uploadprofile/member/" />
+	<resources mapping="/facilityimg/**" location="file:///D:/uploadfacility/" />
 	<resources mapping="/download/**" location="file:///D:/uploadfiles/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
@@ -95,6 +96,10 @@
 	</beans:bean>
 	<beans:bean id="uploadPath" class="java.lang.String">
 	    <beans:constructor-arg value="D://uploadfiles"/>
+	    <!-- <beans:constructor-arg value="D://uploadfiles"/> -->
+	</beans:bean>
+	<beans:bean id="uploadPicturePath" class="java.lang.String">
+	    <beans:constructor-arg value="D://uploadfacility"/>
 	    <!-- <beans:constructor-arg value="D://uploadfiles"/> -->
 	</beans:bean>
 	<beans:bean id="uploadImgPath" class="java.lang.String">

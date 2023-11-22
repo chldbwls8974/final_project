@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.vo.BusinessmanVO;
+import kr.kh.final_project.vo.FacilityPictureVO;
 import kr.kh.final_project.vo.FacilityVO;
 import kr.kh.final_project.vo.MemberVO;
 
@@ -32,5 +33,9 @@ public interface FacilityDAO {
 	List<FacilityVO> selectFacilityAllList(@Param("cri")Criteria cri);
 	//시설 페이지네이션(admin)
 	int selectFacilityListTotalCount(@Param("cri")Criteria cri);
+	// 시설 사진
+	void insertPicture(@Param("file")FacilityPictureVO fileVo);
+
+	List<FacilityPictureVO> selectFacilityPictureList(@Param("fa_num")Integer fa_num);
 
 }

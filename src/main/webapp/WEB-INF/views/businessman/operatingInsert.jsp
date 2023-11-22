@@ -83,7 +83,7 @@
 						
 						<label class="time-label">종료시간 : </label>
 						<select class="form-control op_close" name="operatingList[${i-1 }].op_close" id="op_close_${i}">
-						    <c:forEach var="h" begin="0" end="23" step="1">
+						    <c:forEach var="h" begin="1" end="24" step="1">
 						        <option><c:out value="${h}" /></option>
 						    </c:forEach>
 						</select>

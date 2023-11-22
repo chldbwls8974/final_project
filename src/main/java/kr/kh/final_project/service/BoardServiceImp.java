@@ -128,7 +128,6 @@ public class BoardServiceImp implements BoardService{
 		// 다오한테 boardVO를 주면서 게시글을 등록하라하고 그걸 res에 넣는다.
 		// 게시글을 DB에 저장하기
 		boolean res = boardDao.insertBoard(board);
-		
 		// 결과가 false이면 false로 반환
 		if(!res) {
 			return false;

@@ -32,6 +32,8 @@ public interface StadiumDAO {
 	int selectCountStadiumListByAdmin(@Param("cri")Criteria cri, @Param("fa_num")Integer fa_num);
 	//경기장 정보수정(관리자)
 	boolean updateStadiumByAdmin(StadiumVO stadium);
+
+	List<StadiumVO> selectAllStadiumList();
 	
 
 }
