@@ -10,7 +10,7 @@
 	.navbar-container,
 	.navbar1, .navbar2{ background-color: transparent !important;}
 	.container-footer{margin: 0 !important;}
-	footer{ display: none !important;}
+	.navbar-brand, footer{ display: none !important;}
 	.navbar1, .navbar2{display: inline-block; margin-bottom: 10px;}
 	.navbar1-nav-link{margin-top: 10px;}
 	.navbar2-nav-link{position: absolute;  right: 20px !important; top: 10px; }

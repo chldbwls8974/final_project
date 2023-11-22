@@ -10,7 +10,7 @@
 <style type="text/css">
 	.container-body{
 		background-color: #f2f2f2; padding: 30px; z-index: 1;
-		margin-top: 20px; border-radius: 20px;
+		margin-top: 20px; border-radius: 20px; text-align: center;
 	}
 	form{
 		padding-top:50px;
@@ -27,9 +27,14 @@
 	.input-file{display: none;}
 	.img-thumbnail{
 		cursor: pointer; width:200px; height:auto; 
+		background-color: transparent; border: none;
 	}
 	.form-group-text{ display: flex; justify-content: center; margin-right: 10px;}
 	.form-group-text p{ margin-top: 20px; font-weight: bolder; margin-left: 5px;}
+	.btn{ border-radius: 10px; width: 300px; height: 45px; border: none;
+	background-color: #c2f296; color: black; margin-top: 10px;}
+	
+	
 </style>
 <body>
 	<div class="facilityInsert-navigation" style="margin-top: 50px; text-align: center;">
@@ -219,9 +224,10 @@
 			
 			
 		   <br>
-		   <div style="text-align: center; margin-top: 40px;">
-		   	   <a class="btn " role="button"  style="background-color: black; color: white; border-radius: 10px; width: 300px; margin-right:20px"  href="<c:url value='/businessman/facility'/>">취소</a>
-			   <button class="btn "  style="background-color: black; color: white; border-radius: 10px; width: 300px;" >등록</button>
+		   <div style="display: inline-grid;">
+		   	   <a class="btn " role="button" href="<c:url value='/businessman/facility'/>" style="background-color: #b9b9b9;">
+		   	   취소</a>
+			   <button class="btn">등록</button>
 			</div>
 		</form> 
 	</div>

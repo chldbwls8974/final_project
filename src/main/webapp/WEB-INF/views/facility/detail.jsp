@@ -50,7 +50,7 @@
 	}
 	
 	.title-detail{ margin: 50px auto; background-color: #f2f2f2; border-radius: 30px;
-	padding: 30px; width: 42%;}
+	padding: 30px; width: 42%; height: auto;}
 
 	.page-link {
 	  color: #000; 
@@ -182,8 +182,6 @@
 	    </div>
 	</div>
 	<div class="title-detail">
-	
-	
 		<div class="info-box match-box">
 			<div class="match-info-box1 match-info justify-content: space-between">
 				<div>
@@ -228,7 +226,7 @@
 					<div class="facility-info-box">
 						<div class="facility-info-icon">
 							<img
-								src="	https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_toilet.svg"
+								src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_toilet.svg"
 								class="match-icon">
 							<p>화장실</p>
 						</div>
@@ -250,7 +248,7 @@
 					<div class="facility-info-box">
 						<div class="facility-info-icon">
 							<img
-								src="	https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_stadium.svg"
+								src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_stadium.svg"
 								class="match-icon">
 							<p>흡연장</p>
 						</div>
