@@ -238,12 +238,6 @@
 							</a>
 						</li>
 						<li>
-							<a href="#">
-							<img src="	https://d31wz4d3hgve8q.cloudfront.net/media/ic_crown.svg" width="24px" height="24px" alt="나의 티어">
-							<p>나의 티어</p>
-						</a>
-						</li>
-						<li>
 							<a href="<c:url value='/member/search'/>">
 							<img src="	https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_friend.svg" width="24px" height="24px" alt="회원 조회">
 							<p>회원 찾기</p>
@@ -271,6 +265,12 @@
 							<a href="<c:url value='/account/insert'/>">
 							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_new_team.svg" width="24px" height="24px" alt="환급 계좌 등록">
 							<p>환급 계좌 등록</p> 
+							</a>
+						</li>
+						<li>
+							<a href="<c:url value='/member/pointHistory'/>">
+							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_manner_card.svg" width="24px" height="24px" alt="포인트 환급">
+							<p>포인트 내역</p>
 							</a>
 						</li>
 						<li>

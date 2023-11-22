@@ -211,6 +211,27 @@ public class MemberController {
 	}
 	
 	
+	//포인트 내역 페이지
+	@GetMapping("/member/pointHistory")
+	public String pointHistory(HttpSession session, Model model, Criteria cri) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		cri.setPerPageNum(5);
+		int totalCount = memberService.getMemberPointHistoryCount(user, cri);
+		final int DISPLAY_PAGE_NUM = 3;
+		
+		PageMaker pm = new PageMaker(DISPLAY_PAGE_NUM, cri, totalCount);
+//		
+		List<PointHistoryVO> list = memberService.getMemberPointHistory(user, cri);
+		
+		System.out.println(totalCount);
+		System.out.println(list);
+		System.out.println(cri);
+		model.addAttribute("pm", pm);
+		model.addAttribute("list", list);
+		return "/member/pointHistory";
+	}
+	
 	//포인트 환급 페이지
 	@GetMapping("/member/refund")
 	public String pointRefund(HttpSession session,  Model model) {
@@ -633,13 +654,17 @@ public class MemberController {
 		str = "경기";
 		PenaltyVO matchPenalty = memberService.getMemberPenalty(member, str);
 		
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일"); 
-		String BoardBanEndDate = simpleDateFormat.format(boardPenalty.getPn_end());
-		String MatchBanEndDate = simpleDateFormat.format(matchPenalty.getPn_end());
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
 		
+		if(boardPenalty.getPn_end() != null) {
+			String BoardBanEndDate = simpleDateFormat.format(boardPenalty.getPn_end());
+			model.addAttribute("BoardBanEndDate", BoardBanEndDate);
+		}
+		if(matchPenalty.getPn_end() != null) {
+			String MatchBanEndDate = simpleDateFormat.format(matchPenalty.getPn_end());
+			model.addAttribute("MatchBanEndDate", MatchBanEndDate);
+		}
 		model.addAttribute("member", member);
-		model.addAttribute("BoardBanEndDate", BoardBanEndDate);
-		model.addAttribute("MatchBanEndDate", MatchBanEndDate);
 		return "/util/ban";
 	}
 	

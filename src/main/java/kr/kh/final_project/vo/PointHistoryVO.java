@@ -11,6 +11,7 @@ public class PointHistoryVO {
 	private int ph_source;
 	private int ph_mt_num;
 	private int ph_me_num;
+	private Date ph_date;
 	
 	//memberVO
 	Integer me_num;
