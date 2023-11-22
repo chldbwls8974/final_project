@@ -15,7 +15,9 @@
 	</select>
 	<select id="selectFacilityList" resultType="kr.kh.final_project.vo.FacilityVO">
 			select 
-				*
+				facility.*,
+				(select count(*) 
+				from stadium where st_fa_num = fa_num and st_available != 2) as st_count
 			from facility
 				 	join 
 				 businessman on fa_bu_num = bu_num
