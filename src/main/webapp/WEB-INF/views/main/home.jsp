@@ -8,28 +8,34 @@
 	<style>
 	
 	.navbar-container,
-	.navbar1, .navbar2,
-	.jumbotron,
-	.container-footer{ background-color: transparent !important;}
-	.navbar-brand{ display: none !important;}
+	.navbar1, .navbar2{ background-color: transparent !important;}
+	.container-footer{margin: 0 !important;}
+	.navbar-brand, footer{ display: none !important;}
 	.navbar1, .navbar2{display: inline-block; margin-bottom: 10px;}
+	.navbar1-nav-link{margin-top: 10px;}
+	.navbar2-nav-link{position: absolute;  right: 20px !important; top: 10px; }
 	.nav-link{ color: white;}
+	.dropdown-menu .nav-link{ color: black;}
+	.dropdown-menu .nav-link:hover{ color: #999999;}
 	.dropdown-menu show{ background-color: #e5e5e5;}
 	
 	body{
-		background-image:url("https://cdn.pixabay.com/photo/2015/10/21/23/32/football-1000569_1280.jpg");
+		background-image:url("https://cdn.pixabay.com/photo/2014/10/14/20/24/ball-488701_1280.jpg");
 		background-repeat: repeat-y;
 		background-size: cover;
+		background-repeat: no-repeat;
 		position: relative;
 	}
 	body::before{
-		content: ""; /* 가상 요소 생성 */
-	    position: absolute;
+/* 		content: ""; /* 가상 요소 생성 */ */
 	    top: 0;
 	    right: 0;
 	    bottom: 0;
 	    left: 0;
 	    background: rgba(0, 0, 0, 0.3);
+	    position: fixed;
+	    content: none; /* 가상 요소 내용 없음으로 설정 */
+    	pointer-events: none;
 	}
 	.slider__wrap {
         width: 100%;
@@ -117,6 +123,11 @@
 			<div class="slider__img">
 				<div class="slider__inner">
 					<div class="slider">
+						<a href="<c:url value='/'/>">
+							<img class="item" src="<c:url value='/resources/main/main10.png'/>" alt="Image5">
+						</a>
+					</div>
+					<div class="slider">
 						<a href="<c:url value='/match/search/club'/>">
 							<img class="item" src="<c:url value='/resources/main/main9.png'/>" alt="Image4">
 						</a>
@@ -134,11 +145,6 @@
 					<div class="slider">
 						<a href="<c:url value='/match/search/club'/>">
 							<img class="item" src="<c:url value='/resources/main/main8.png'/>" alt="Image3">
-						</a>
-					</div>
-					<div class="slider">
-						<a href="<c:url value='/'/>">
-							<img class="item" src="<c:url value='/resources/main/main5.png'/>" alt="Image5">
 						</a>
 					</div>
 				</div>

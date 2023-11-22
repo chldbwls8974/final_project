@@ -4,16 +4,17 @@
 <head>
 	<title>매치 관리</title>
 	<style type="text/css">
-	nav{width: 100%; display: flex;}
+	nav{width: 100%; display: inline-block;}
 	input{text-align: right;}
 	.left-box{flex: 2;}
 	
-	.right-box{ width: 600px; height: auto; margin: 0 auto;}
+	.right-box{ width: 92%; height: auto; margin-left: 40px;}
 	.info-box{display: flex; justify-content: center;}
 	
 	.right-side-box{
-	width: 100%; height: 200px; float: right; margin-bottom: 10px;
-	border: 3px solid black; box-sizing: border-box;
+	width: 100%; height: auto; background-color: #f2f2f2;
+    border-radius: 20px;  padding: 0 20px 40px 20px;
+	box-sizing: border-box; margin-bottom: 10px;
 	}
 	.team-box{display: flex; justify-content: left; margin-left: 45px;}
 	.teamList-box{
@@ -27,16 +28,19 @@
 		height: 40px; border: none; border-radius: 5px;
 		background-color: #3c3c3c; color: white;
 	}
+	.btn-reset, .btn-auto-balance, .btn-team-complete, .btn-insert-team{
+		border: none; border-radius: 5px;
+		background-color: #e4f7d3; margin: 3px; padding: 5px;
+	}
     
 	.teamList-box:last-child {margin-right: 0;}
 	.club-list-box{display: flex;}
 	.club-member-box{flex: 1; border-right: 3px solid black; overflow: scroll;}
 	.club-entry-box{flex: 1; overflow: scroll;}
 	.entry-member::after{clear: both; content: ''; display: block;}
-	.entry-btn{float: left;}
-	.member-list{border-bottom: 1px solid black;}
+	.entry-btn{ border: none; border-radius: 3px; background-color: #cccc;}
+	.member-list{border-bottom: 1px solid #b9b9b9; margin-top: 10px;}
 	.member-list:last-child{border-bottom: none;}
-	.entry-list-box{height: auto;}
 	.entry-btn-box{float: right;}
 	.quarter-type-box{ text-align: center;}
 	.quarter-type-box select{
@@ -50,9 +54,9 @@
 		background-color: #c2f296;
 	}
 	.quarter-box{
-		display: table; width: 50%; height: 200px; 
+		display: table; width: 92%; height: 200px; 
 		background-color: #f2f2f2; border-radius: 20px;
-		margin: 0 40px 20px; padding-bottom: 30px;
+		margin: 0 40px 20px 45px; padding-bottom: 30px;
 	}
 	.btn-quarter-box{
 		text-align: center;
@@ -91,6 +95,7 @@
 	</style>
 </head>
 <body>
+<div class="container-body">
 	<p style="font-size: 35px; font-weight: bolder; margin: 50px auto; border-bottom: 8px solid #c2f296;
 	width: 20%; padding: 30px 0 10px 0; text-align: center;">매치 관리</p>
 	<nav class="container-body">
@@ -223,7 +228,7 @@
 		</div>	
 		<c:if test="${match.list_team == 1}">
 			<div class="contents-box right-box">
-				<div class="entry-list-box right-side-box">
+				<div class="entry-list-box right-side-box" style="margin-top: 20px;">
 					
 				</div>
 			</div>
@@ -240,6 +245,7 @@
 	<div class="quarter-list-box">
 		
 	</div>
+</div>	
 	<script type="text/javascript">
 	let mt_num = ${match.mt_num};
 	let str = ``;
@@ -525,11 +531,13 @@
 				str = ``;
 				if(${match.mt_type == 1 && match.list_team == 1 && match.entry_count == 0}){
 					str += `
-						<h4>참가자가 없습니다.</h4>
+						<p style="font-size: 25px; font-weight: 600; text-align: center; padding-top: 30px;">
+						참가자가 없습니다.</p>
 					`;
 				}else{
 					str += `
-						<h4>참가자 리스트</h4>
+						<p style="font-size: 25px; font-weight: 600; text-align: center; padding-top: 30px;">
+						참가자 리스트</p>
 					`;
 				}
 				if(${match.team_count == 0 && match.ready > 0 && (match.mt_personnel * 3 == match.entry_count)}){

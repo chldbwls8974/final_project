@@ -48,6 +48,9 @@
 			<li class="nav-item">
 				<a class="nav-link" href="<c:url value='/match/search/club?weekCount=0'/>">클럽매치</a>
 			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="<c:url value='/facility/list'/>">시설 조회</a>
+			</li>
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 				클럽
@@ -56,9 +59,6 @@
 					<a class="nav-link" href="<c:url value='/club/make'/>">클럽 생성</a>
 					<a class="nav-link" href="<c:url value='/club/list'/>">클럽 조회</a>
 				</div>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="<c:url value='/facility/list'/>">시설 조회</a>
 			</li>
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
