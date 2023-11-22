@@ -35,7 +35,7 @@
 	</div>
 
 	<div class="container-body">
-		<form action="<c:url value='/businessman/facilityUpdate'/>" method="post">
+		<form action="<c:url value='/businessman/facilityUpdate'/>" method="post"  enctype="multipart/form-data">
 		  <input name="fa_num" type="hidden" value="${facility.fa_num}">
 		  <div class="form-group" hidden="hidden">
 		    <label for="fa_bu_num">사업자 번호</label>
@@ -277,15 +277,34 @@
 			
 			<!-- 시설 사진 -->
 			${files }
-<!-- 			여기해야함. 사진이 있는 경우 없는경우 -->
+<!-- <!-- 			여기해야함. 사진이 있는 경우 없는경우 -->
+<!-- 			<div class="form-group picture-box"> -->
+<!-- 			 <label style="font-weight: bold;">시설사진</label> &nbsp;<span class="badge badge-secondary">선택 (최대 3장)</span> -->
+<!-- 					<div class="form-group box-thumbnail-input"> -->
+<!-- 						<input type="file" name="file" class="input-file input-select" onchange="readUrl(this)"  > -->
+<!-- 					</div> -->
+<!-- 					<div class="box-thumbnail"> -->
+<%-- 						<img src="<c:url value='/resources/images/add-image.png'/>" alt="미리보기" class="img-thumbnail img-select" height="100" width="auto"> --%>
+<!-- 					</div> -->
+<!-- 			</div>	 -->
 			<div class="form-group picture-box">
 			 <label style="font-weight: bold;">시설사진</label> &nbsp;<span class="badge badge-secondary">선택 (최대 3장)</span>
-					<div class="form-group box-thumbnail-input">
-						<input type="file" name="file" class="input-file input-select" onchange="readUrl(this)"  >
-					</div>
-					<div class="box-thumbnail">
-						<img src="<c:url value='/resources/images/add-image.png'/>" alt="미리보기" class="img-thumbnail img-select" height="100" width="auto">
-					</div>
+				 <c:if test="${files !=null }">
+				 	<c:forEach items="${files }" var="files">
+				 		<div class="form-group box-thumbnail-input">
+							<input type="file" name="file" class="input-file input-select" onchange="readUrl(this)" value="${files.fp_ori_name}" >
+						</div>
+						<div class="box-thumbnail">
+							<img src="<c:url value='/facilityimg${files.fp_name }'/>" alt="미리보기" class="img-thumbnail img-select" height="100" width="auto">
+						</div>
+					</c:forEach>	
+				 </c:if>
+<!-- 				 		<div class="form-group box-thumbnail-input"> -->
+<!-- 							<input type="file" name="file" class="input-file input-select" onchange="readUrl(this)" > -->
+<!-- 						</div> -->
+<!-- 						<div class="box-thumbnail"> -->
+<%-- 							<img src="<c:url value=''/>" alt="미리보기" class="img-thumbnail img-select" height="100" width="auto"> --%>
+<!-- 						</div> -->
 			</div>	
 			<br>
 			 <div style="text-align: center; margin-top: 40px;">

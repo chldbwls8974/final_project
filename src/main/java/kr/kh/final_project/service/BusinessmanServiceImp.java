@@ -89,7 +89,6 @@ public class BusinessmanServiceImp implements BusinessmanService{
 				String fp_ori_name = i.getOriginalFilename();
 				String fp_name = UploadFileUtils.uploadFile(uploadPicturePath, fp_ori_name, i.getBytes());
 				FacilityPictureVO fileVo = new FacilityPictureVO(facility.getFa_num(), fp_name, fp_ori_name);
-				System.out.println(fileVo);
 				//업로드한 경로를 이용하여 다오에게 첨부파일 정보를 주면서 DB에 추가하라고 요청
 				facilityDao.insertPicture(fileVo);
 			} catch (IOException e) {
@@ -262,6 +261,29 @@ public class BusinessmanServiceImp implements BusinessmanService{
 	@Override
 	public List<StadiumVO> selectAllStadium() {
 		return stadiumDao.selectAllStadiumList();
+	}
+	@Override
+	public void updateFacilityPicture(FacilityVO facility,MultipartFile[] file) {
+		if(facility == null || file == null) {
+			return;
+		}
+		facilityDao.deletePicture(facility.getFa_num());
+		for(MultipartFile i : file) {
+			if(i == null || i.getOriginalFilename().length() == 0) {
+				continue;
+			}
+			try {
+				String fp_ori_name = i.getOriginalFilename();
+				String fp_name = UploadFileUtils.uploadFile(uploadPicturePath, fp_ori_name, i.getBytes());
+				FacilityPictureVO fileVo = new FacilityPictureVO(facility.getFa_num(), fp_name, fp_ori_name);
+				System.out.println(fileVo);
+				//업로드한 경로를 이용하여 다오에게 첨부파일 정보를 주면서 DB에 추가하라고 요청
+				facilityDao.insertPicture(fileVo);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	}
+		
 	}
 	
 	

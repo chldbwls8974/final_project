@@ -179,6 +179,10 @@
 		insert into facility_picture (fp_fa_num, fp_name, fp_ori_name)
 		values(#{file.fp_fa_num}, #{file.fp_name}, #{file.fp_ori_name})
 	</insert>
+	<delete id="deletePicture">
+		delete from facility_picture
+		where fp_fa_num = #{fa_num}
+	</delete>
 	<select id="selectFacilityPictureList" resultType="kr.kh.final_project.vo.FacilityPictureVO">
 		select * from facility_picture where fp_fa_num = #{fa_num}
 	</select>
