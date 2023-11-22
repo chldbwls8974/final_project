@@ -235,8 +235,10 @@
 							<div style="width: 30%; text-align-last: left; margin: 0 auto;">
 								<c:forEach items="${couponList}" var="co">
 									<div>
-										<input type="checkbox" name="coupon" value="${co.hp_num}">${co.cp_source}(${co.cp_sale}) <br>
-										<input type="text" class="sale-point" value="${co.cp_sale}" hidden>
+										<label for="coupon_${co.hp_num}">
+											<input type="radio" name="coupon" value="${co.hp_num}">${co.cp_source}(${co.cp_sale}) <br>
+											<input type="text" class="sale-point" value="${co.cp_sale}" hidden>
+										</label>
 									</div>
 								</c:forEach>
 							</div>
@@ -608,6 +610,26 @@
 		});
 		$('.club-list-box').html(str);
 	}
+
+	// 라디오 박스 체크 해제
+	var beforeChecked = -1;
+	$(function() {
+	    $(document).on("click", "input[type=radio]", function(e) {
+	        var index = $(this).parent().index("label");
+	
+	        if (beforeChecked === index) {
+	            beforeChecked = -1;
+	            $(this).prop("checked", false);
+	            // 쿠폰 값 초기화
+	            hp_num = 0;
+	            total_price = ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre};
+	            $('.total-price').val(total_price + "P");
+	        } else {
+	            beforeChecked = index;
+	        }
+	    });
+	});
+
 	</script>
 </body>
 </html>
