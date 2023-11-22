@@ -78,6 +78,14 @@
         color: #fff;
         padding: 5px 10px;
     }
+    
+	.slider__btn {
+    position: absolute;
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+  }
 	
 	.controller span{
 	  position:absolute;
@@ -91,29 +99,16 @@
 	  cursor: pointer;
 	}
 
-	.slider__btn {
-    position: absolute;
-    top: 40%;
-    width: 68%;
-    display: flex;
-    justify-content: space-between;
-    transform: translateY(-50%);
-  }
-
   .prev,
   .next {
     background-color: transparent;
+    color: white;
     border: none;
     font-size: 20px;
     cursor: pointer;
-    color: white;
-    font-size: 30px;
-    font-weight: bolder;
   }
-  .prev:hover,
-  .next:hover{
-  	
-  }
+  .prev{ margin-left: 30px;}
+  .next{ margin-right: 30px;}
 
 	</style>
 </head>
@@ -158,7 +153,7 @@
 	</div>
 <script>
 	
-	//이미지 자동 슬라이드
+	//이미지 슬라이드
 	const sliderWrap = document.querySelector(".slider__wrap");
     const sliderImg = document.querySelector(".slider__img");       // 보여지는 영역
     const sliderInner = document.querySelector(".slider__inner");   // 움직이는 영역
