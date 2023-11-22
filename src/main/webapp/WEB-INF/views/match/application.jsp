@@ -235,7 +235,7 @@
 							<div style="width: 30%; text-align-last: left; margin: 0 auto;">
 								<c:forEach items="${couponList}" var="co">
 									<div>
-										<input type="radio" name="coupon" value="${co.hp_num}">${co.cp_source}(${co.cp_sale}) <br>
+										<input type="checkbox" name="coupon" value="${co.hp_num}">${co.cp_source}(${co.cp_sale}) <br>
 										<input type="text" class="sale-point" value="${co.cp_sale}" hidden>
 									</div>
 								</c:forEach>
