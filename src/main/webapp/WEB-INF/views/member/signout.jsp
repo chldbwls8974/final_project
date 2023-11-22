@@ -31,7 +31,7 @@
 <body>
 	<p style="font-size: 35px; font-weight: bolder; margin:50px auto; border-bottom: 8px solid #c2f296;
 	width: 15%; padding: 30px 0 10px 0; text-align: center;">회원 탈퇴</p>
-	<form action="<c:url value='/member/signout'/>" method="post" id="myPassword">
+	<form action="<c:url value='/member/signout'/>" method="post" id="myForm">
 		<div class="form-group" hidden="hidden">
 			<label>회원번호</label> 
 			<input type="text" class="form-control" name="me_num" id="me_num" value="${user.me_num}"readonly>
@@ -60,7 +60,7 @@
 		</div>
 		<div class="form-group form-check" >
             <input type="checkbox" class="form-check-input"
-            	id="agreeCheck" style="margin-top: 5px;" required>
+            	id="agreeCheck" style="margin-top: 5px;">
             <label class="form-check-label" for="agreeCheck" style="margin-left: 20px;">
             	약관에 동의합니다.</label>
         </div>
@@ -71,64 +71,33 @@
 	</form>
 	
 	<script type="text/javascript">
-
-	})
 		
-	//필수사항 및 포인트 체크 alert
-	$('#signout').click(function () {
-	    // 필수 사항 체크
-	    var agreeCheck = $('#agreeCheck').prop('checked');
-	    var me_point = parseInt('${user.me_point}');
-	    
-	   if(confirm("정말 탈퇴하시겠습니까?")){
-		   if(!agreeCheck){
-			   return false
-			   alert("회원탈퇴 개인정보처리방침에 동의해야 합니다.");
-			   location.reload();
-		   }else{
+		
+		//필수사항 및 포인트 체크 alert
+		$('#signout').click(function () {
+			let agreeCheck = $('#agreeCheck').prop('checked');
+	    	let me_point = parseInt('${user.me_point}');
+		   if(confirm("정말 탈퇴하시겠습니까?")){
+			   if(!agreeCheck){ 
+					alert("회원탈퇴 개인정보처리방침에 동의해야 합니다.");
+					return false
+			   }
 			   if(me_point > 0){
 				   if(confirm("[${user.me_point}원] 포인트가 남아있습니다. 탈퇴를 진행하시겠습니까?")){
 					   return true
+				   }else{
+					   return false
 				   }
-			   }else{
-				   return false
-				   location.href = '<c:url value="/member/myprofile"/>'; 
+				  
 			   }
+				return true
+		   }else{
+			   return false
 		   }
-		   return true
-		   
-	   }else{
-		   return false
-		   location.href = '<c:url value="/member/myprofile"/>'; 
-	   }
-		  
-	});
+		});
+	
+
 	
 	</script>
-	
-	
-<!-- 	 if (!agreeCheck) { -->
-<!-- 	        alert("회원탈퇴 개인정보처리방침에 동의해야 합니다."); -->
-<!-- 		    }  else { -->
-		      
-<!-- 		        if (me_point > 0) { -->
-<%-- 		            if (confirm("[${user.me_point}원] 포인트가 남아있습니다. 탈퇴를 진행하시겠습니까?")) { --%>
-<!-- 		            	return true -->
-<!-- 		                // 탈퇴 완료되면 메인으로 이동 -->
-<%-- 		                //location.href = '<c:url value="/"/>';  --%>
-<!-- 		                // signout 온클릭이 form 태그 안에 있기 때문에 무조건 서버로 전송되기 때문에 경로 지정이 아닌  -->
-<!-- 		                //true/false로 지정해줘야 취소 버튼 눌러도 탈퇴 진행이 안됌 -->
-<!-- 		            } else { -->
-<!-- 		            	//취소 버튼 누르면 탈퇴진행 취소됨 -->
-<!-- 		                alert("탈퇴가 취소되었습니다."); -->
-<!-- 		            	return false -->
-<%-- 		                //location.href = '<c:url value="/"/>'; // 취소 시 메인 페이지로 이동 --%>
-<!-- 		            } -->
-<!-- 		        } -->
-<!-- 		        return true // 포인트 없고, 입력사항 다 충족하면 true -->
-<!-- 		    } -->
-<!-- 		    return false //처리방침 동의 및 비번입력 안했거나 비번 일치하지 않으면 false -->
-<!-- 		   } -->
-	    
 </body>
 </html>
