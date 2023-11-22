@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.kh.final_project.dao.BusinessDAO;
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.pagination.PageMaker;
 import kr.kh.final_project.service.BusinessmanService;
@@ -124,6 +123,7 @@ public class BusinessmanController {
 			BusinessmanVO business = businessmanService.getBusinessmanByMeNum(member.getMe_num());
 			//시설번호로 시설 정보 가져와서 저장
 			FacilityVO facility = businessmanService.getFacility(fa_num);
+			List<FacilityPictureVO> files = businessmanService.getFacilityPictureList(fa_num);
 			
 			List<RegionVO> MainRegion = businessmanService.getMainRegion();
 
@@ -134,6 +134,7 @@ public class BusinessmanController {
 			}
 			model.addAttribute("business", business);
 			model.addAttribute("facility", facility);
+			model.addAttribute("files", files);
 			model.addAttribute("MainRegion", MainRegion);
 			return "/businessman/facilityUpdate";
 		}
@@ -143,7 +144,6 @@ public class BusinessmanController {
 		public Map<String, Object> region1(@RequestParam String rg_main, Model model){
 			Map<String, Object> map = new HashMap<String, Object>();
 			List<RegionVO> SubRegion = businessmanService.getSubRegionByMainRegion(rg_main);
-			System.out.println(SubRegion);
 			map.put("SubRegion", SubRegion);
 			return map;
 		}

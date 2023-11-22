@@ -308,7 +308,6 @@
 	          <th>최대인원</th>
 	          <th>이용가능여부</th>
 	          <th>특이사항</th>
-	          <th hidden="hidden">시설번호</th>
 	        </tr>
 	      </thead>
 		  <tbody>
@@ -342,7 +341,6 @@
 		            </c:choose>
 			      </td>
 		          <td>${stadium.st_note}</td>
-		          <td hidden="hidden">${stadium.st_fa_num}</td>
 	         	 </tr>
 		     </c:forEach>
 	      </tbody>
@@ -375,7 +373,7 @@
 				 style="
 						border-radius: 10px; width: 150px; height: 40px; border: none;
 						background-color: #c2f296; color: black; margin: 10px 10px 10px 0;"
-						href="<c:url value='/admin/facilitylist'/>"
+						href="<c:url value='/facility/list'/>"
 						>시설 목록으로 이동</a>		
 		</div>
 	</div>		

@@ -100,7 +100,7 @@
 		$.ajax({
 			async : false,
 			method : 'post',
-			url : '<c:url value="/manager/manage/schedule?weekCount="/>' + ${weekCount},
+			url : '<c:url value="/manager/manage/schedule"/>',
 			data : {mt_date:select_day},
 			dataType : 'json',
 			success : function(data) {
@@ -174,7 +174,7 @@
 		$.ajax({
 			async : false,
 			method : 'post',
-			url : '<c:url value="/manager/delete/schedule?weekCount="/>' + ${weekCount},
+			url : '<c:url value="/manager/delete/schedule"/>',
 			data : {mt_num:mt_num},
 			dataType : 'json',
 			success : function(data) {
