@@ -437,8 +437,9 @@ public class AdminServiceImp implements AdminService{
 		if(business == null) {
 			return false;
 		}
-		System.out.println(businessDao.deleteBusinessList(bu_num));
-		return true;
+		boolean res = businessDao.deleteBusinessList(bu_num);
+		
+		return res;
 	}
 	
 	//시설 리스트 가져오기

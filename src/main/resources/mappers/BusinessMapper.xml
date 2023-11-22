@@ -203,6 +203,8 @@
 		<if test="cri.t == 'third'">
 				bu_registration_number like concat('%', #{cri.s}, '%')
 		</if>
+		and
+			bu_state = 0
 		order by
 			bu_num desc
 		limit
@@ -232,6 +234,8 @@
 		<if test="cri.t == 'third'">
 				bu_registration_number like concat('%', #{cri.s}, '%')
 		</if>
+		and
+			bu_state = 0
 	</select>
 	<insert id="insertBusiness">
 		insert into Businessman (bu_name, bu_phone, bu_registration_number,bu_email,bu_me_num,bu_state)
@@ -257,7 +261,15 @@
 		where
 			bu_num = #{businessman.bu_num}
 	</update>
-	<delete id="deleteBusinessList">
-		delete from businessman where bu_num = #{bu_num}
-	</delete>
+	<update id="deleteBusinessList">
+		update
+			businessman
+		set
+			bu_state = 1
+		where
+			bu_num = #{bu_num}
+	</update>
+<!-- 	<delete id="deleteBusinessList"> -->
+<!-- 		delete from businessman where bu_num = #{bu_num} -->
+<!-- 	</delete> -->
 </mapper>
