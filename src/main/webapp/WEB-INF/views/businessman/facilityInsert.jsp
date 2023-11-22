@@ -9,11 +9,24 @@
 </head>
 <style type="text/css">
 	.container-body{
-		background-color: #f2f2f2; height: auto; margin-top: 20px;
-		border-radius: 20px; padding: 100px;
+		background-color: #f2f2f2; padding: 30px; z-index: 1;
+		margin-top: 20px; border-radius: 20px;
+	}
+	form{
+		padding-top:50px;
+	}
+	.form-control{border-radius: 30px; width: 500px;}
+	.form-group{text-align: center;}
+	.form-group label{display: inline-block; text-align: center;}
+	.form-group button, .form-group select{margin: 0 auto;}
+	.form-group input{margin: 0 auto;}
+	.fa_pay{
+		border:1px solid  #17a2b8; width:40%;  background-color:#f0f0f0; padding:30px; margin:auto;
 	}
 	.input-file{display: none;}
-	.img-thumbnail{cursor: pointer;}
+	.img-thumbnail{
+		cursor: pointer; width:200px; height:auto; 
+	}
 </style>
 <body>
 	<div class="facilityInsert-navigation" style="margin-top: 50px; text-align: center;">
@@ -32,7 +45,7 @@
 		  	<div class="form-group">
 				<label style="font-weight: bold;">지역</label>
 				<select class="form-control rg_main" required>
-					<option value="0">지역을 선택하세요</option>
+					<option value="0">지역(대분류)을 선택하세요</option>
 						<c:forEach items="${MainRegion}" var="main">
 							<option value="${main.rg_main}">${main.rg_main}</option>
 						</c:forEach>
@@ -40,6 +53,7 @@
 			</div>
 		    <div class="form-group">
 				<select class="form-control rg_sub" name="fa_rg_num" required>
+					<option value="0">지역(소분류)을 선택하세요</option>
 						<c:forEach items="${SubRegion}" var="sub">
 							<option value="${sub.rg_num}">${sub.rg_sub}</option>
 						</c:forEach>
@@ -65,115 +79,123 @@
 			</div>
 			<br>
 			  
-		  	<h5 class="text-info" style="font-weight: bold;">[부대시설]</h5>
-		    <div class="form-group">
-				<label for="fa_pay" style="font-weight: bold;">주차장</label><br>
-			    <div class="form-check-inline">
-					<label class="form-check-label">
-				  		<input type="radio" class="form-check-input" name="fa_pay" value="0" checked>없음
-				    </label>
+		  	<h5 class="text-info" style="font-weight: bold; text-align: center;">[부대시설]</h5>
+		  	<div class="form-group fa_pay">
+			    <div class="form-group">
+					<label for="fa_pay" style="font-weight: bold;">주차장</label><br>
+				    <div class="form-check-inline">
+						<label class="form-check-label">
+					  		<input type="radio" class="form-check-input" name="fa_pay" value="0" checked>없음
+					    </label>
+					</div>
+					<div class="form-check-inline">
+					    <label class="form-check-label">
+					    	<input type="radio" class="form-check-input" name="fa_pay" value="1" required>무료
+					    </label>
+					</div>
+					<div class="form-check-inline">
+						<label class="form-check-label">
+					    	<input type="radio" class="form-check-input" name="fa_pay" value="2" required>유료
+					    </label>
+					</div>
 				</div>
-				<div class="form-check-inline">
-				    <label class="form-check-label">
-				    	<input type="radio" class="form-check-input" name="fa_pay" value="1" required>무료
-				    </label>
+				  
+				<div class="form-group">
+					<label for="fa_locker" style="font-weight: bold;">탈의실</label><br>
+				    <div class="form-check-inline">
+						<label class="form-check-label">
+					  		<input type="radio" class="form-check-input" name="fa_locker" value="0" checked>없음
+					    </label>
+					</div>
+					<div class="form-check-inline">
+						<label class="form-check-label">
+					    	<input type="radio" class="form-check-input" name="fa_locker" value="1" required>있음
+					    </label>
+					</div>
 				</div>
-				<div class="form-check-inline">
-					<label class="form-check-label">
-				    	<input type="radio" class="form-check-input" name="fa_pay" value="2" required>유료
-				    </label>
+				  
+				<div class="form-group">
+					<label for="fa_toilet" style="font-weight: bold;">화장실</label><br>
+				    <div class="form-check-inline">
+						<label class="form-check-label">
+					  		<input type="radio" class="form-check-input" name="fa_toilet" value="0" checked>없음
+					    </label>
+					</div>
+					<div class="form-check-inline">
+						<label class="form-check-label">
+					    	<input type="radio" class="form-check-input" name="fa_toilet" value="1" required>있음
+					    </label>
+					</div>
 				</div>
-			</div>
-			  
-			<div class="form-group">
-				<label for="fa_locker" style="font-weight: bold;">탈의실</label><br>
-			    <div class="form-check-inline">
-					<label class="form-check-label">
-				  		<input type="radio" class="form-check-input" name="fa_locker" value="0" checked>없음
-				    </label>
+				  
+				<div class="form-group">
+				    <label for="fa_shower" style="font-weight: bold;">샤워실</label><br>
+				    <div class="form-check-inline">
+						<label class="form-check-label">
+					  		<input type="radio" class="form-check-input" name="fa_shower" value="0" checked>없음
+					    </label>
+					</div>
+					<div class="form-check-inline">
+						<label class="form-check-label">
+					    	<input type="radio" class="form-check-input" name="fa_shower" value="1" required>있음
+					    </label>
+					</div>
 				</div>
-				<div class="form-check-inline">
-					<label class="form-check-label">
-				    	<input type="radio" class="form-check-input" name="fa_locker" value="1" required>있음
-				    </label>
+				  
+				<div class="form-group">
+				    <label for="fa_smoking" style="font-weight: bold;">흡연장</label><br>
+				    <div class="form-check-inline">
+						<label class="form-check-label">
+					  		<input type="radio" class="form-check-input" name="fa_smoking" value="0" checked>없음
+					    </label>
+					</div>
+					<div class="form-check-inline">
+						<label class="form-check-label">
+					    	<input type="radio" class="form-check-input" name="fa_smoking" value="1" required>있음
+					    </label>
+					</div>
 				</div>
-			</div>
-			  
-			<div class="form-group">
-				<label for="fa_toilet" style="font-weight: bold;">화장실</label><br>
-			    <div class="form-check-inline">
-					<label class="form-check-label">
-				  		<input type="radio" class="form-check-input" name="fa_toilet" value="0" checked>없음
-				    </label>
-				</div>
-				<div class="form-check-inline">
-					<label class="form-check-label">
-				    	<input type="radio" class="form-check-input" name="fa_toilet" value="1" required>있음
-				    </label>
-				</div>
-			</div>
-			  
-			<div class="form-group">
-			    <label for="fa_shower" style="font-weight: bold;">샤워실</label><br>
-			    <div class="form-check-inline">
-					<label class="form-check-label">
-				  		<input type="radio" class="form-check-input" name="fa_shower" value="0" checked>없음
-				    </label>
-				</div>
-				<div class="form-check-inline">
-					<label class="form-check-label">
-				    	<input type="radio" class="form-check-input" name="fa_shower" value="1" required>있음
-				    </label>
-				</div>
-			</div>
-			  
-			<div class="form-group">
-			    <label for="fa_smoking" style="font-weight: bold;">흡연장</label><br>
-			    <div class="form-check-inline">
-					<label class="form-check-label">
-				  		<input type="radio" class="form-check-input" name="fa_smoking" value="0" checked>없음
-				    </label>
-				</div>
-				<div class="form-check-inline">
-					<label class="form-check-label">
-				    	<input type="radio" class="form-check-input" name="fa_smoking" value="1" required>있음
-				    </label>
-				</div>
-			</div>
-		
-			<div class="form-group">
-				<label for="fa_machine" style="font-weight: bold;">자판기</label><br>
-			    <div class="form-check-inline">
-					<label class="form-check-label">
-				  		<input type="radio" class="form-check-input" name=fa_machine value="0" checked>없음
-				    </label>
-				</div>
-				<div class="form-check-inline">
-					<label class="form-check-label">
-				    	<input type="radio" class="form-check-input" name="fa_machine" value="1" required>있음
-				    </label>
+			
+				<div class="form-group">
+					<label for="fa_machine" style="font-weight: bold;">자판기</label><br>
+				    <div class="form-check-inline">
+						<label class="form-check-label">
+					  		<input type="radio" class="form-check-input" name=fa_machine value="0" checked>없음
+					    </label>
+					</div>
+					<div class="form-check-inline">
+						<label class="form-check-label">
+					    	<input type="radio" class="form-check-input" name="fa_machine" value="1" required>있음
+					    </label>
+					</div>
 				</div>
 			</div>
 			<br>
 			  
 			<div class="form-group">
-			<label for="fa_note" style="font-weight: bold;">특이사항</label> &nbsp;<span class="badge badge-secondary">선택</span>
-				<textarea class="form-control" rows="5" id="fa_note" name="fa_note"></textarea>
+			<label for="fa_note" style="font-weight: bold; text-align:center;">특이사항</label> &nbsp;<span class="badge badge-secondary">선택</span>
+				<div style="text-align:center;" >
+				<textarea class="form-control"  rows="5" id="fa_note" name="fa_note" style="display:inline-block"></textarea>
+				</div>
 			</div>
 			
 <!-- 			시설 사진 -->
-			<div class="form-group box-thumbnail-input">
-				<input type="file" name="file" class="input-file input-select" onchange="readUrl(this)"  >
-			</div>
-			<div class="box-thumbnail">
-				<img src="" alt="미리보기" class="img-thumbnail img-select" height="100" width="auto">
-			</div>
-			
+			<div class="form-group picture-box">
+			 <label style="font-weight: bold;">시설사진</label> &nbsp;<span class="badge badge-secondary">선택 (최대 3장)</span>
+				<div class="form-group box-thumbnail-input">
+					<input type="file" name="file" class="input-file input-select" onchange="readUrl(this)"  >
+				</div>
+				<div class="box-thumbnail">
+					<img src="<c:url value='/resources/images/add-image.png'/>" alt="미리보기" class="img-thumbnail img-select" height="100" width="auto">
+				</div>
+			</div>			
 			
 			
 		   <br>
-		   <button class="btn btn-info btn-block">등록</button>
-	   	   <a class="btn btn-warning btn-block" role="button" href="<c:url value='/businessman/facility'/>">취소</a>
+		   <div style="text-align: center; margin-top: 40px;">
+		   	   <a class="btn " role="button"  style="background-color: black; color: white; border-radius: 10px; width: 300px; margin-right:20px"  href="<c:url value='/businessman/facility'/>">취소</a>
+			   <button class="btn "  style="background-color: black; color: white; border-radius: 10px; width: 300px;" >등록</button>
+			</div>
 		</form> 
 	</div>
 
@@ -246,7 +268,7 @@
 					// 선택된 이미지가 3개보다 작은 경우
 					if($('.img-thumbnail').length < 3){
 						$('.box-thumbnail-input').append(`<input type="file" name="file" class="input-file input-select" onchange="readUrl(this)"  >`);
-						$('.box-thumbnail').append(`<img src="img.png" alt="미리보기" class="img-thumbnail img-select" height="100" width="auto">`);
+						$('.box-thumbnail').append(`<img src="<c:url value='/resources/images/add-image.png'/>" alt="미리보기" class="img-thumbnail img-select" height="100" width="auto">`);
 					}
 				}
 				//첨부파일이 선택되지 않으면
@@ -261,7 +283,7 @@
 					$selectInput.remove();
 					if($('.img-select').length == 0){
 						$('.box-thumbnail-input').append(`<input type="file" name="file" class="input-file input-select" onchange="readUrl(this)"  >`);
-						$('.box-thumbnail').append(`<img src="img.png" alt="미리보기" class="img-thumbnail img-select" height="100" width="auto">`);
+						$('.box-thumbnail').append(`<img src="<c:url value='/resources/images/add-image.png'/>" alt="미리보기" class="img-thumbnail img-select" height="100" width="auto">`);
 					}
 					
 				}

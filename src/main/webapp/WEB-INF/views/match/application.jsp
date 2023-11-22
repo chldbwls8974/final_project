@@ -32,17 +32,22 @@
 		padding: 50px 0 30px 0; text-align: center;
 	}
 	.right-side-box div{ text-align: center;}
-	.team-box{display: flex; background-color: black;}
-	.teamList-box{flex: 1; margin-right: 3px; background-color: white; text-align: center;}
-	.teamList-box:last-child {margin-right: 0;}
-	.club-list-box{display: flex;}
-	.club-member-box{flex: 1; border-right: 3px solid black; overflow: scroll;}
-	.club-entry-box{flex: 1; overflow: scroll;}
+	.team-box{
+		display: flex; padding: 10px; margin-top: 20px; margin-bottom: 20px;
+		height: auto; border-radius: 20px; background-color: #e5f4d8;
+	}
+	.teamList-box{flex: 1; border-right: 1px solid black; text-align: center;}
+	.teamList-box:last-child {border-right: none;}
+	.club-list-box{display: flex; overflow: hidden;}
+	.club-member-box{flex: 1; border-right: 3px solid black; overflow: scroll; -ms-overflow-style: none; scrollbar-width: none;}
+	.club-member-box::-webkit-scrollbar{display: none;}
+	.club-entry-box{flex: 1; overflow: scroll; -ms-overflow-style: none; scrollbar-width: none;}
+	.club-entry-box::-webkit-scrollbar{display: none;}
 	.entry-member::after{clear: both; content: ''; display: block;}
 	.entry-btn{float: right}
-	.member-list{border-bottom: 1px solid black}
+	.member-list{border-bottom: 1px solid white}
 	.member-list:last-child{border-bottom: none;}
-	.entry-list-box{height: auto;}
+	.entry-list-box{height: auto; margin-top: 20px; padding-bottom: 20px;}
 	.total-price{
 	    width: 100px;
 	    height: 40px;
@@ -77,18 +82,24 @@
 						<c:if test="${match.mt_type == 2}">클럽 매치</c:if>
 						<span style="color: #749f4c;">${match.mt_rule == 0 ? '친선전' : '경쟁전'} </span>(${match.mt_personnel}vs${match.mt_personnel})
 					</p>
-					<div>
-						
-							<c:if test="${match.mt_rule == 1}">
+					<c:if test="${match.mt_rule == 1}">
+						<div>
 								<div>
 									<p>담당 매니저</p>
 								</div>
 								<div>	
 									<p>${match.me_name}</p>
 								</div>
-							</c:if>
-						
-					</div>
+						</div>
+						<div>
+								<div>
+									<p>매니저 연락처</p>
+								</div>
+								<div>	
+									<p>${match.me_phone}</p>
+								</div>
+						</div>
+					</c:if>
 					<div>
 						<div>
 							<p>일시</p>
@@ -191,12 +202,12 @@
 					</div>
 				</div>
 			</div>
+		</div>
+		<div class="contents-box right-box">
 			<c:if test="${cl_num != 0 && match.team_count != 0}">
 				<div class="info-box team-box">
 				</div>
 			</c:if>
-		</div>
-		<div class="contents-box right-box">
 			<c:if test="${(match.mt_type == 0 && cl_num == 0) || (match.mt_type == 1 && cl_num == 0)}">
 				<c:if test="${match.entry_res == 0}">
 					<div class="application-box right-side-box">
@@ -230,15 +241,6 @@
 					</div>
 				</c:if>
 				<c:if test="${match.entry_res != 0}">
-					<div class="cansel-box right-side-box" style="margin-top: 20px;">
-						<div>
-							<p>신청한 매치 취소하기</p>
-							<button class="btn btn-cansel"
-									style="width: 100px; height: 40px; border: none; margin: 20px auto 40px;
-									border-radius: 5px; background-color: black; color: white;">
-								취소</button>
-						</div>	
-					</div>
 					<c:if test="${match.entry_res == 1 && match.ready==1}">
 						<div class="entry-list-box right-side-box">
 							<div>
@@ -249,6 +251,23 @@
 							</div>
 						</div>
 					</c:if>
+					<c:if test="${match.entry_res == 1 && match.ready==0}">
+						<div class="entry-list-box right-side-box" style="margin-bottom: 20px;">
+							<div>
+								<p>참가자 리스트</p>
+								<p>매치 시간 90분전부터 공개됩니다.</p>
+							</div>
+						</div>
+					</c:if>
+					<div class="cansel-box right-side-box" style="margin-top: 20px;">
+						<div>
+							<p>신청한 매치 취소하기</p>
+							<button class="btn btn-cansel"
+									style="width: 100px; height: 40px; border: none; margin: 20px auto 40px;
+									border-radius: 5px; background-color: black; color: white;">
+								취소</button>
+						</div>	
+					</div>
 				</c:if>
 			</c:if>
 			<c:if test="${(match.mt_type == 0 && cl_num != 0) || (match.mt_type == 2 && cl_num != 0)}">
@@ -271,17 +290,17 @@
 					</div>
 				</c:if>
 				<c:if test="${match.entry_res != 0}">
-					<div class="cansel-box right-side-box">
+					<div class="club-list-box right-side-box">
+						
+					</div>
+					<div class="cansel-box right-side-box" style="margin-top: 20px;">
 						<div>
-							<p>취소</p>
+							<p>신청한 매치 취소하기</p>
 							<button class="btn btn-cansel"
-									style="width: 100px; height: 40px; border: none;
+									style="width: 100px; height: 40px; border: none; margin: 20px auto 40px;
 									border-radius: 5px; background-color: black; color: white;">
 								취소</button>
 						</div>	
-					</div>
-					<div class="club-list-box right-side-box">
-						
 					</div>
 				</c:if>
 			</c:if>

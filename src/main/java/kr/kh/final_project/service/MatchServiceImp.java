@@ -107,6 +107,18 @@ public class MatchServiceImp implements MatchService{
 			return null;
 		}
 		List<MatchVO> dbMatchList = matchDao.selectMatchListOfManager(me_num, mt_date);
+		for(MatchVO match : dbMatchList) {
+			if(match.getTi_time_str().equals("00:00")) {
+				if(matchDao.selectManagerAble0ByMtDate(me_num, mt_date).size() != 0) {
+					match.setApplication_able(0);
+				}
+			}
+			if(match.getTi_time_str().equals("23:00")) {
+				if(matchDao.selectManagerAble23ByMtDate(me_num, mt_date).size() != 0) {
+					match.setApplication_able(0);
+				}
+			}
+		}
 		return filterMatch(me_num, mt_date, rg_num, check, dbMatchList);
 	}
 
@@ -116,6 +128,18 @@ public class MatchServiceImp implements MatchService{
 			return null;
 		}
 		List<MatchVO> dbMatchList = matchDao.selectMatchListOfSolo(me_num, mt_date);
+		for(MatchVO match : dbMatchList) {
+			if(match.getTi_time_str().equals("00:00")) {
+				if(matchDao.selectManagerAble0ByMtDate(me_num, mt_date).size() != 0 || matchDao.selectMatchAble0ByMtDate(me_num, mt_date).size() != 0) {
+					match.setApplication_able(0);
+				}
+			}
+			if(match.getTi_time_str().equals("23:00")) {
+				if(matchDao.selectManagerAble23ByMtDate(me_num, mt_date).size() != 0 || matchDao.selectMatchAble23ByMtDate(me_num, mt_date).size() != 0) {
+					match.setApplication_able(0);
+				}
+			}
+		}
 		return filterMatch(me_num, mt_date, rg_num, check, dbMatchList);
 	}
 
@@ -141,6 +165,7 @@ public class MatchServiceImp implements MatchService{
 		}
 		if(match.getMt_rule() == 1) {
 			match.setMe_name(memberDao.selectManagerNameByMtNum(match.getMt_num()));
+			match.setMe_phone(memberDao.selectManagerPhoneByMtNum(match.getMt_num()));
 		}
 		return match;
 	}

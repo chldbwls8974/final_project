@@ -78,10 +78,13 @@
 							<input type="text" class="te_type" value="${mt.te_type}" hidden disabled>
 							<input type="text" class="mt_personnel" value="${mt.mt_personnel}" hidden disabled>
 							<c:if test="${mt.mt_rule == 1 && mt.mt_state1 == 2}">
-								<button class="btn btn-record-open">경기 결과</button>
+								<button class="btn btn-success btn-record-open">경기 결과</button>
 							</c:if>
 							<c:if test="${mt.mt_rule == 1 && mt.mt_state1 == 0}">
-								<button class="btn btn-record-open">경기 진행중</button>
+								<button class="btn btn-success btn-record-open">경기 진행중</button>
+							</c:if>
+							<c:if test="${mt.mt_rule == 0}">
+								<button class="btn btn-success btn-record-open">참가자</button>
 							</c:if>
 						</td>
 					</tr>
@@ -178,7 +181,8 @@
 							str += `
 								<tr>
 									<td>
-										<span>
+										<span class="entry-member">
+											<input type="text" value="\${entry.en_me_num}" hidden disabled>
 											<img class="member-profile" alt="멤버프로필" src="<c:url value='/memberimg\${entry.me_profile}'/>">\${entry.me_nickname}(\${entry.me_tr_name})
 										</span>
 									</td>
@@ -203,7 +207,8 @@
 						}
 						if(i < mt_personnel){
 							str += `
-								<span>
+								<span class="entry-member">
+									<input type="text" value="\${entry.en_me_num}" hidden disabled>
 									<img class="member-profile" alt="멤버프로필" src="<c:url value='/memberimg\${entry.me_profile}'/>">\${entry.me_nickname}(\${entry.me_tr_name}) <br>
 								</span>
 							`;
