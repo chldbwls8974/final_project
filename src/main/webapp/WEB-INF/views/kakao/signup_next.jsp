@@ -24,28 +24,23 @@
     border: 0;
     vertical-align: baseline;
 }
-ul{
+.chip{
 	display: flex; 
 	flex-wrap: wrap; 
 	overflow: hidden; 
 	border-radius: 12px;
 	list-style: none;
-}
-li{
-	box-shadow: none;	
-    margin: 0;
-    vertical-align: baseline;
-}
-input[type='checkbox']{
-	display : none;
+	padding: 20px;
 }
 .chip__item--3{
-	width: 33.333%;
+	width: 25%;
     position: relative;
-    padding-right: 1px;
     box-sizing: border-box;
     outline: none;
-    text-align : center;
+    margin: 0 auto;
+    box-shadow: none;	
+    margin: 0;
+    vertical-align: baseline;
 }
 .chip_item-radio{
 	position: absolute;
@@ -55,8 +50,10 @@ input[type='checkbox']{
     width: 100%;
     height: 100%;
 }
+.chip__item-label div{ margin-top: 10px;}
 .chip__item-radio+label{
 	position: relative;
+	width: 200px;
     height: 48px;
     font-size: 16px;
     font-weight: 500;
@@ -64,22 +61,49 @@ input[type='checkbox']{
     color: #4B5A64;
     background-color: #FFFFFF;
     border: 1px solid #D9E0E6;
-    border-radius: 12px;
+    border-radius: 20px;
     margin: 5px;
     margin-left: 0px;
     display: flex;
     justify-content: center;
     flex-direction: column;
 }
+input[type='checkbox']{
+	display : none;
+}
 input[type='checkbox']:checked+label{
+	display: inline-block;
 	color: #1570FF;
     border: 1px solid #1570FF;
 }
+
+
+.container{ 
+	background-color: #f2f2f2; padding: 30px; z-index: 1;
+	margin-top: 20px; border-radius: 20px;
+}
+.form-control{border-radius: 30px; width: 500px;}
+.form-group{text-align: center;}
+.form-group label{display: inline-block; text-align: center;}
+.form-group button, .form-group select{margin: 0 auto;}
+.form-group input{margin: 0 auto;}
+
+.signup-btn{ width: 500px; margin: 0 auto;
+	border-radius: 10px; border: none;
+	background-color: #0c0c0c; height: 40px; color: white;}
+.next-btn, .prev-btn{width: 500px; margin: 0 auto;
+	border-radius: 10px; border: none; height: 40px;
+	background-color: #c2f296; color: black;}
+
+input, progress {
+  accent-color: #0c0c0c;
+}
+
 </style>
 </head>
 <body>
-	<h1>회원가입</h1>
-	${kakaoAccount}
+	<p class="title" style="font-size: 45px; font-weight: bolder; padding-bottom: 30px;
+		text-align: center; letter-spacing: -3px;">회원가입</p>
 	<form action="<c:url value='/kakao_callback'/>" method="post" id="myForm">
 		<div class="1p">
 			<input type="hidden" name="me_id" value="${me_id }">
@@ -364,8 +388,7 @@ input[type='checkbox']:checked+label{
 		<div class="form-group">
 			<button type="button" class="btn prev-btn form-control">이전</button>
 		</div>
-		<button class="btn btn-outline-warning col-12" id="signup"
-			>회원가입</button>
+		<button class="signup-btn" id="signup" style="display:flow-root;">회원가입</button>
 	</form>
 	<script type="text/javascript">
 	
