@@ -39,7 +39,9 @@
 		color:black;
 	}
 	img{
-	width:45px; height:45px; border-radius:50%}
+		width: 70px; height: 70px; border-radius: 50%;
+		margin-right: 10px;
+	}
 </style>
 </head>
 <body>

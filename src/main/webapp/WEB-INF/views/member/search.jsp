@@ -20,7 +20,7 @@
 		margin-top: 20px;
 	}
 	.keyword{
-		width: 500px;
+		width: 750px;
 		padding: .8em .5em;
 		border-radius: 5px;
 		border: 1px solid #999;
@@ -32,7 +32,8 @@
 		width: 80px;
 		padding: .8em .5em;
 		border-radius: 5px;
-		border: 1px solid #999;
+		border: none;
+		background-color: #c2f296;
 		-webkit-appearance: none;
 		-moz-appearance: none;
 		appearance: none;
@@ -53,8 +54,12 @@
 </style>
 </head>
 <body>
+	<div class="board-report-navigation" style="margin-top: 50px; text-align: center;">
+		<p style="font-size: 30px; width: 20%; font-weight: bolder; margin: 30px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
+		전체 회원 조회</p>
+	</div>
 	<div class="member-search">
-		<div class="member-search-navigation" style="margin-top: 50px; text-align: center;">
+		<div class="member-search-navigation" style="margin-top: 20px; text-align: center;">
 				<select class="searchType" name="searchType">
 					<option value="id">아이디</option>
 					<option value="name">이름</option>

@@ -164,8 +164,9 @@ public class MatchServiceImp implements MatchService{
 			match = matchDao.selectMatchByClNum(mt_num, cl_num);
 		}
 		if(match.getMt_rule() == 1) {
-			match.setMe_name(memberDao.selectManagerNameByMtNum(match.getMt_num()));
-			match.setMe_phone(memberDao.selectManagerPhoneByMtNum(match.getMt_num()));
+			MemberVO dbManager = memberDao.selectManagerByMtNum(match.getMt_num());
+			match.setMe_name(dbManager.getMe_name());
+			match.setMe_phone(dbManager.getMe_phone());
 		}
 		return match;
 	}
@@ -194,10 +195,29 @@ public class MatchServiceImp implements MatchService{
 
 	public List<MatchVO> filterMatch(Integer me_num, Date mt_date, int rg_num, boolean check, List<MatchVO> dbMatchList){
 		List<Integer> rgNumList = new ArrayList<Integer>();
+		List<Integer> rgNumSubList = new ArrayList<Integer>();
 		List<Integer> tiNumList;
 		List<MatchVO> matchList = new ArrayList<MatchVO>();
 		if(rg_num == 0) {
 			rgNumList = preferredRegionDao.selectPrRgNumListByMeNum(me_num);
+			List<Integer> rgMainList = regionDao.selectRgNumSubAll();
+			for(Integer rgNum : rgNumList) {
+				if(rgMainList.indexOf(rgNum) != -1) {
+					for(Integer rgN : rgMainList) {
+						if(rgNum == rgN) {
+							List<Integer> dbRgNumList = regionDao.selectSubRgNumByMainRgNum(rgN);
+							for(Integer dbRgN : dbRgNumList) {
+								if(rgN != dbRgN) {
+									rgNumSubList.add(dbRgN);
+								}
+							}
+						}
+					}
+				}
+			}
+			for(Integer rgNumSub : rgNumSubList) {
+				rgNumList.add(rgNumSub);
+			}
 		}else if(rg_num == 246){
 			List<RegionVO> regionList = regionDao.selectUserRegion();
 			for(RegionVO region : regionList) {
@@ -583,6 +603,14 @@ public class MatchServiceImp implements MatchService{
 			}
 		}
 		return matchList;
+	}
+
+	@Override
+	public MemberVO selectManagerByMtNum(int mt_num) {
+		if(mt_num == 0) {
+			return null;
+		}
+		return memberDao.selectManagerByMtNum(mt_num);
 	}
 
 }

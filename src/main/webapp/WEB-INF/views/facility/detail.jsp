@@ -69,7 +69,7 @@
 	  background-color: #fafafa; 
 	  border-color: #ccc;
 	}
-	.text{ border-left: 7px solid #c2f296; padding-left: 10px;}
+	.text{ border-left: 6px solid #c2f296; padding-left: 10px; height: 25px;}
 	.match-icon{ width: 25px; height: 25px;}
 	.match-info-box{flex: 1}
 	.match-info-box1 div{ justify-content: space-between; display: flex;}
@@ -81,45 +81,59 @@
 	.btn-box{
 		display:flex;  float:right;
 	}
+	
 	/* 슬라이드쇼 */
-	.slideshow{
-	display: flex;
-    justify-content: center;
-    position: relative;
-    margin: auto;
-	}
-
-	/* 초기화 */
+	.slider__wrap {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    /* 이미지 보이는 부분 */
+    .slider__img {
+        position: relative;
+        width: 800px;
+        height: 800px;
+        overflow: hidden;
+    }
+     /* 이미지 감싸고 있는 부모 : 움직이는 부분 */
+    .slider__inner {
+        display: flex;
+        flex-wrap: wrap;
+        /* 총 이미지 5개 */
+        width: 3600px;
+        height: 400px;
+    }
+    
+	/* 개별 이미지 */
 	.slider{
-	  margin: 0;
-	  padding: 0;
+		position: relative;
+		width: 800px;
+		height: 800px;
 	}
 	
-	.myslider img{
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+	.slider img{
+		width: 100%;
 	}
+	.slider::before {
+        position: absolute;
+        left: 5px;
+        top: 5px;
+        background: rgba(0, 0, 0, 0.4);
+        color: #fff;
+        padding: 5px 10px;
+    }
+    
+	.slider__btn {
+    position: absolute;
+    width: 68%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+  }
 	
-	.myslider{
-		border-radius:3%;
-	    width: 100%;
-	    height: 350px;
-	    display: flex;
-	    justify-content: center;
-	    align-items: center;
-	}
 	
-	/* 첫 번째 슬라이드 가운데에 정렬*/
-	.slider li:first-child{
-	  margin-left: 100px;
-	}
-	
-	/* 슬라이드 옆으로 정렬 */
-	.slider li:not(:last-child){
-	  float: left;
-	  margin-right: 100px;
-	}
 		.controller span{
 	  position:absolute;
 	  background-color: transparent;
@@ -131,30 +145,16 @@
 	  font-size: 1.3em;
 	  cursor: pointer;
 	}
-	
-	.fade {
-	    animation-name: fade;
-	    animation-duration: 1.5s;
-	}
-	@keyframes fade {
-	    from {
-	        opacity: .4
-	    }
-	    to {
-	        opacity: 1
-	    }
-	}
 
-
-  #prev,
-  #next {
+  .prev,
+  .next {
     background-color: transparent;
     border: none;
     font-size: 20px;
     cursor: pointer;
   }
-  #prev{ margin-left: 30px;}
-  #next{ margin-right: 30px;}
+  .prev{ margin-left: 30px;}
+  .next{ margin-right: 30px;}
 	
 </style>
 <body>
@@ -163,19 +163,22 @@
 		[${facility.fa_name}] 경기장 목록</p>
 	</div>
 	<!-- 	시설 사진 슬라이드쇼 -->
-	<div class="slideshow">
-		<div class="slider">
-			<c:forEach items="${files}" var="file">
-				<div class="myslider fade">
-						<img class="item" src="<c:url value='/facilityimg${file.fp_name }'/>" alt="Image1">
+	<div class="sliderType01">
+		<div class="slider__wrap">
+			<div class="slider__img">
+				<div class="slider__inner">
+					<c:forEach items="${files}" var="file">
+						<div class="slider">
+								<img class="item" src="<c:url value='/facilityimg${file.fp_name }'/>" alt="Image">
+						</div>
+					</c:forEach>
 				</div>
-			</c:forEach>
-		
-		</div>
-      <!-- 화살표 -->
-		<div class="btn">
-	       <button type="button" id="prev"><</button>
-    		<button type="button" id="next">></button>
+			</div>	
+	      <!-- 화살표 -->
+			<div class="slider__btn">
+		    	<button class="prev">＜</button>
+		    	<button class="next">＞</button>  
+		    </div>
 	    </div>
 	</div>
 	<div class="title-detail">
@@ -183,17 +186,22 @@
 	
 		<div class="info-box match-box">
 			<div class="match-info-box1 match-info justify-content: space-between">
-				<label class="text">주소 </label>
 				<div>
-					<p>${facility.fa_add}${facility.fa_add_detail}</p>
+					<label class="text">주소 </label>
+					<div>
+						<p>${facility.fa_add}${facility.fa_add_detail}</p>
+					</div>
 				</div>
-				<label class="text">연락처</label>
 				<div>
-					<p>${facility.fa_phone}</p>
-				</div>
+					<label class="text">연락처</label>
+					<div>
+						<p>${facility.fa_phone}</p>
+					</div>
+				</div>	
 			</div>
 			<div class="match-info-box2 facility-info">
-				<p style="font-size: 19px; font-weight: bold; margin-bottom: 30px;">편의시설</p>
+				<p style="font-size: 19px; font-weight: bold; margin: 20px 0 30px 0; text-align: center;">
+					편의시설</p>
 				<div style="flex-direction: column; align-items: center;">
 					<div class="facility-info-box">
 						<div class="facility-info-icon">
@@ -378,25 +386,40 @@
 		</div>
 	</div>		
 <script type="text/javascript">
-//이미지 자동 슬라이드
-var slideIndex = 0;
-showSlides();
-
-function showSlides() {
-    var i;
-    var slides = document.getElementsByClassName("myslider");
-   
-    for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-    }
-    slideIndex++;
-    if (slideIndex > slides.length) {
-        slideIndex = 1
-    }
-    slides[slideIndex - 1].style.display = "block";
-
-    setTimeout(showSlides, 3000); // 2초마다 이미지가 체인지됩니다
-}
+	//이미지 슬라이드
+	const sliderWrap = document.querySelector(".slider__wrap");
+	const sliderImg = document.querySelector(".slider__img");       // 보여지는 영역
+	const sliderInner = document.querySelector(".slider__inner");   // 움직이는 영역
+	const slider = document.querySelectorAll(".slider"); 
+	const sliderBtn = document.querySelector(".slider__btn");    //버튼
+	const sliderBtnPrev = document.querySelector(".prev");       //왼쪽버튼
+	const sliderBtnNext = document.querySelector(".next");       //오른쪽버튼
+	
+	let currentIndex = 0;                       //현재 이미지
+	let sliderCount = slider.length;            //이미지 갯수
+	let sliderWidth = sliderImg.offsetWidth;    //이미지 가로값
+	
+		// 이미지 움직이는 영역
+	function gotoSlider(num){
+	    sliderInner.style.transition = "all 400ms";
+	    sliderInner.style.transform = "translateX("+ -sliderWidth * num +"px)";
+	    currentIndex = num;
+	}
+	
+	//슬라이드 버튼
+	// 왼쪽 버튼을 클릭했을 때
+	sliderBtnPrev.addEventListener("click", () => {
+	    let prevIndex = (currentIndex + (sliderCount -1)) % sliderCount
+	    // 4, 1, 2, 3, 4, 1, 2, ...
+	    gotoSlider(prevIndex);
+	});
+	
+	// 오른쪽 버튼을 클릭했을 때
+	sliderBtnNext.addEventListener("click", () => {
+	    let nextIndex = (currentIndex + 1) % sliderCount
+	    // 1, 2, 3, 4, 0, 1, 2, ...
+	    gotoSlider(nextIndex);
+	});
 </script>
 </body>
 </html>
