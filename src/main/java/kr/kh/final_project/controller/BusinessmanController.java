@@ -143,7 +143,7 @@ public class BusinessmanController {
 		}
 		//시설 정보 수정
 		@PostMapping("/businessman/facilityUpdate")
-		public String facilityUpdate(Model model, FacilityVO facility, HttpSession session, MultipartFile[] file) {
+		public String facilityUpdate(Model model, FacilityVO facility, HttpSession session, MultipartFile[] file, int [] delNums) {
 			Message msg;
 			MemberVO user = (MemberVO)session.getAttribute("user");
 			//회원번호로 사업자 정보 가져와서 business에 저장
@@ -153,7 +153,7 @@ public class BusinessmanController {
 			
 			
 			if(businessmanService.updateFacility(facility, business)) {
-				businessmanService.updateFacilityPicture(facility,file);	
+				businessmanService.updateFacilityPicture(facility,file,delNums);	
 				msg = new Message("/businessman/facility?fa_num="+facility.getFa_num(), "시설 정보를 수정했습니다.");
 			}else {
 				msg = new Message("/businessman/facilityUpdate?fa_num="+facility.getFa_num(), "시설 정보를 수정하지 못했습니다."); 

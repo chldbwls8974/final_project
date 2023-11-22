@@ -56,7 +56,7 @@ public interface BusinessmanService {
 	
 	List<StadiumVO> selectAllStadium();
 	
-	void updateFacilityPicture(FacilityVO facility, MultipartFile[] file);
+	void updateFacilityPicture(FacilityVO facility, MultipartFile[] file, int[] delNums);
 	
 
 }

@@ -38,6 +38,6 @@ public interface FacilityDAO {
 
 	List<FacilityPictureVO> selectFacilityPictureList(@Param("fa_num")Integer fa_num);
 
-	void deletePicture(@Param("fa_num")Integer fa_num);
+	void deletePicture(@Param("fp_num")Integer fp_num);
 
 }

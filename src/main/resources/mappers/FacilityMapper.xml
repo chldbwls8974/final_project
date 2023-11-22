@@ -181,7 +181,7 @@
 	</insert>
 	<delete id="deletePicture">
 		delete from facility_picture
-		where fp_fa_num = #{fa_num}
+		where fp_num = #{fp_num}
 	</delete>
 	<select id="selectFacilityPictureList" resultType="kr.kh.final_project.vo.FacilityPictureVO">
 		select * from facility_picture where fp_fa_num = #{fa_num}
