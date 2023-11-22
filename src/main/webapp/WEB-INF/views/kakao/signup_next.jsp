@@ -14,6 +14,12 @@
 	src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.12.0/validate.min.js"></script>
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<!-- 데이트피커 디자인 -->	
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ko.js"></script>
 <style type="text/css">
 .error {
 	color: #f00;
@@ -117,7 +123,8 @@ input, progress {
 			</div>
 			<div class="form-group">
 				<label>생년월일</label> <input type="text" class="form-control"
-					name="me_birthday" id="me_birthday" required>
+					name="me_birthday" id="me_birthday"
+					placeholder="날짜를 선택하세요." style="text-align: center;" required>
 			</div>
 			<div class="form-group">
 				<label>거주지</label> <select class="form-control rg_main" required>
@@ -349,6 +356,9 @@ input, progress {
               			</label>
            			</li>
                 </ul>
+                 <div>
+					 <button type="button" id="reset-btn"  style="background-color: black; color: white; border-radius: 10px; width: 80px;" class="btn">초기화</button>
+				</div>
 			</div>
 		</div>
 
@@ -395,7 +405,7 @@ input, progress {
 
 	const nextBtn = document.getElementById("next");
 	const signUpBtn = document.getElementById("signup");
-	let count = 0;
+	let count = 1;
 	
 	// 페이지 이전, 다음버튼
 	$('.2p').hide();
@@ -421,6 +431,7 @@ input, progress {
 		}
 		var str = '';
 		ajaxJsonToJson2(false, 'get','/member/signup/check',data,(a)=>{
+			$(this).next('span').remove(); //중복추가 방지
 			if(a.checked == null){
 				str+=`<span>없는 회원입니다.</span>`;
 			}else{
@@ -481,34 +492,41 @@ input, progress {
 		
 	   });
 	
-	// 선호지역 추가 버튼
+		// 선호지역 추가 버튼
 	 $(document).on('click','[name=add-area-btn]',function(){
-		 count++;
-		 console.log(count)
-		 if(2 >= count){
+		 
+		 if(3 > count){
+			 count++;
 			 str='';
 			 btn='';
 			 str+=`
-			 	<hr>
 				 <div class="prefer-area">
-					<div class="form-group">
-						<label>선호지역</label> <select class="form-control pre_rg_main">
-							<option value="0">지역을 선택하세요</option>
+				 <div class="form-group"  id="area-box" style="display: block;">
+					<div class="form-group" style="display: block;">
+						<select class="form-control pre_rg_main">
+							<option value="0">대분류를 선택하세요</option>
 							<c:forEach items="${MainRegion}" var="main">
-								<option value="${main.rg_main}">${main.rg_main}</option>
+								<option value="${main.rg_main}" <c:if test="${list.rg_main == main.rg_main }">selected</c:if>>${main.rg_main}</option>
 							</c:forEach>
 						</select>
-
+	
 					</div>
-					<div class="form-group">
+					<div class="form-group" style="display: block;">
 						<select class="form-control rg_sub" name="pr_rg_num">
-							<option value="0">지역을 선택하세요</option>
-							<c:forEach items="${SubRegion}" var="sub">
-								<option value="${sub.rg_num}">${sub.rg_sub}</option>
+							<option value="0">소분류를 선택하세요</option>
+							<c:forEach items="${subRg}" var="sub">
+								<c:if test="${sub.rg_main == list.rg_main}">
+									<option value="${sub.rg_num}"<c:if test="${list.rg_num == sub.rg_num }">selected</c:if>>${sub.rg_sub}</option>
+								</c:if>
 							</c:forEach>
 						</select>
+					</div>
+					<div class="form-group" style="display: block;">
+						<button type="button" name="area-del-btn" class="form-control" >x</button>
 					</div>
 				</div>
+			</div>
+
 
 			 `;
 			btn+=`
@@ -517,11 +535,31 @@ input, progress {
 				</div>
 			`; 
 			$(this).hide();
-			$(this).after(str);
-			$(this).after(btn);
+			$(this).before(str);
+			$(this).before(btn);
+		 }else{
+			 alert("선호지역은 최대 3개까지 등록 가능합니다.")
 		 }
 	 })
 	
+	 // 선호 지역 삭제 버튼
+		$(document).on('click','[name=area-del-btn]',function(){
+				$(this).parents('#area-box').hide();
+				$(this).parent().prev().find('[name=pr_rg_num]').val(0);
+				count--;
+		});
+		
+		
+		// 선호 시간 초기화
+		$('#reset-btn').click(function(){
+		     // 주중 선호 시간 체크박스 해제
+	        $("[name=favoriteTime]").prop("checked", false);
+
+	        // 주말 선호 시간 체크박스 해제
+	        $("[name=favoriteHoliTime]").prop("checked", false);
+		})
+		
+
 		
 		// 닉네임 중복 검사
 		$('[name=me_nickname]').keyup(function(){
@@ -553,32 +591,27 @@ input, progress {
 			
 		})
 		
-		
-	 // 데이트피커
-	 $(document).ready(function(){
-		$("#me_birthday").datepicker({
-			  showOn: "both", // 버튼과 텍스트 필드 모두 캘린더를 보여준다.
-              // buttonImage: "/application/db/jquery/images/calendar.gif", // 버튼 이미지
-              //buttonImageOnly: true, // 버튼에 있는 이미지만 표시한다.
-              changeMonth: true, // 월을 바꿀수 있는 셀렉트 박스를 표시한다.
-              changeYear: true, // 년을 바꿀 수 있는 셀렉트 박스를 표시한다.
-              minDate: '-100y', // 현재날짜로부터 100년이전까지 년을 표시한다.
-              maxDate: 'today',
-              nextText: '다음 달', // next 아이콘의 툴팁.
-              prevText: '이전 달', // prev 아이콘의 툴팁.
-              numberOfMonths: [1,1], // 한번에 얼마나 많은 월을 표시할것인가. [2,3] 일 경우, 2(행) x 3(열) = 6개의 월을 표시한다.
-              stepMonths: 1, // next, prev 버튼을 클릭했을때 얼마나 많은 월을 이동하여 표시하는가. 
-              yearRange: 'c-100:c+100', // 년도 선택 셀렉트박스를 현재 년도에서 이전, 이후로 얼마의 범위를 표시할것인가.
-              showButtonPanel: true, // 캘린더 하단에 버튼 패널을 표시한다. ( ...으로 표시되는부분이다.) 
-              closeText: '닫기',  // 닫기 버튼 패널
-              dateFormat: "yy-mm-dd", // 텍스트 필드에 입력되는 날짜 형식.
-              showAnim: "slide", //애니메이션을 적용한다.  
-              showMonthAfterYear: true , // 월, 년순의 셀렉트 박스를 년,월 순으로 바꿔준다. 
-              dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'], // 요일의 한글 형식.
-              monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] // 월의 한글 형식.
-	        })
-	        
-		})
+		 // 데이트피커
+	$( function() {
+    $( "#me_birthday" ).flatpickr({ 
+    	maxDate: "today", // 오늘 이후의 날짜만 선택 가능
+        format: "yy-mm-dd",
+        onSelect: function() { 
+            var date = $.flatpickr.formatDate("yy-mm-dd",$("#datepicker").flatpickr("getDate")); 
+            alert(date);
+        }
+	    });                    
+	});
+	
+		// 여러 조건 안맞으면 폼 제출을 막음
+		document.getElementById("myForm").addEventListener("submit", function(event) {
+            let birth = $('[name=me_birthday]').val();
+            if (birth == '') {
+                alert("생년월일을 선택해주세요.");
+                event.preventDefault();
+            }
+		});
+			
 		
 	
 	</script>
