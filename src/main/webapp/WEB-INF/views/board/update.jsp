@@ -56,8 +56,7 @@
 				</div>	
 			</c:forEach>
 			<c:forEach begin="1" end="${3 - fileList.size() }">
-				<input type="file" name="files"> <br>
-				<label for="file2" class="file-btn">업로드</label>
+				<input type="file" class="form-control" name="files">
 			</c:forEach>
 			<div style="text-align: center;">
 				<button class="su-btn btn-submit">수정하기</button>
@@ -74,10 +73,9 @@
 	$('#summernote').summernote('code', `${board.bo_contents}`); 
 
 	$(document).on('click', '.btn-del', function(e) {
-		console.log($(this).val())
 		e.preventDefault();
 		let fi_num = $(this).data('num');
-		$('.btn-submit').before('<input type="file" name="files"> <br>');
+		$('.btn-submit').before('<input type="file" class="form-control" name="files"> <br>');
 		$('.btn-submit').before('<input type="hidden" name="delNums" value="'+fi_num+'"> <br>');
 		$(this).parent().remove();
 	});
