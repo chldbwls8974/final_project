@@ -528,7 +528,7 @@ input, progress {
 	
 	// 인증번호 전송 버튼을 누르면 서버로 이메일주소와 코드 보내주고 타이머 시작
 	$(document).on('click','[name=me_email_btn]',function(){
-		time = 30; // 유효시간 여기서 설정 - 지금은 테스트를 위해서 5초
+		time = 180; // 유효시간 여기서 설정 - 지금은 테스트를 위해서 5초
 		randomCode = generateRandomCode(6); 
 		
 		// 타이머 시작
