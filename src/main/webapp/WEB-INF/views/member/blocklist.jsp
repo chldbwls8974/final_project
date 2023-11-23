@@ -41,7 +41,7 @@
 	li{list-style: none; text-align: start;}
 	p, span{text-decoration: none; color: black;}
 	p:hover, span:hover {text-decoration: none;}
-	#membertable{ background-color: #f2f2f2; width: 90%; height: 100%; 
+	#membertable{ background-color: #f2f2f2; width: 90%; height: auto; 
 		padding: 100px 0 100px 0; margin: 30px auto; border-radius: 30px;}
 	.membertable-list{
 		margin: 0 80px 50px 80px; display: flex; border-bottom: 1px solid rgba(0,0,0,.1);
@@ -89,7 +89,7 @@
 				<button type="submit" class="search-btn" onclick="getSearchList()">검색
 				</button>
 		</div>
-		<div>
+		<div class="container-sub">
 			<ul id="membertable">
 				<c:forEach items="${memberListByBlock}" var="member">
 				<li class="membertable-list">
