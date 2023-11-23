@@ -15,6 +15,7 @@ import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.dao.StadiumDAO;
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.util.UploadFileUtils;
+import kr.kh.final_project.vo.AvailabilityVO;
 import kr.kh.final_project.vo.BusinessmanVO;
 import kr.kh.final_project.vo.FacilityPictureVO;
 import kr.kh.final_project.vo.FacilityVO;
@@ -199,7 +200,6 @@ public class BusinessmanServiceImp implements BusinessmanService{
 	}
 	
 	
-	
 	//시설번호로 경기장 리스트 가져오기
 	@Override
 	public List<StadiumVO> getStadiumList(Integer fa_num, Criteria cri) {
@@ -220,7 +220,7 @@ public class BusinessmanServiceImp implements BusinessmanService{
 	}
 	//경기장 등록
 	@Override
-	public boolean insertStadium(StadiumVO stadium) {
+	public boolean insertStadium(StadiumVO stadium, AvailabilityVO availability) {
 		if(stadium== null 
 			|| stadium.getSt_name() == null 
 			|| stadium.getSt_locate() == null
@@ -230,7 +230,10 @@ public class BusinessmanServiceImp implements BusinessmanService{
 			|| stadium.getSt_fa_num() == 0) {
 			return false;
 		}
-		return stadiumDao.insertStadium(stadium);
+		boolean insertStadiumInfo = stadiumDao.insertStadium(stadium);
+		availability.setAv_st_num(stadium.getSt_num());
+		boolean insertAvailabilityInfo = stadiumDao.insertAvailability(availability);
+		return insertStadiumInfo;
 	}
 	//경기장번호로 경기장 정보가져오기
 	@Override
@@ -262,6 +265,10 @@ public class BusinessmanServiceImp implements BusinessmanService{
 	@Override
 	public List<StadiumVO> selectAllStadium() {
 		return stadiumDao.selectAllStadiumList();
+	}
+	@Override
+	public AvailabilityVO getAvailability(Integer st_num) {
+		return stadiumDao.selectAvailability(st_num);
 	}
 	
 	

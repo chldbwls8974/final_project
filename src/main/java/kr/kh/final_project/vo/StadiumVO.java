@@ -18,4 +18,6 @@ public class StadiumVO {
 	private String st_note;
 	private Integer st_fa_num;
 	private int st_deleted;
+	
+	private AvailabilityVO availability;
 }

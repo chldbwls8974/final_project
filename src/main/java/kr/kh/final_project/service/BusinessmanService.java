@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.pagination.Criteria;
+import kr.kh.final_project.vo.AvailabilityVO;
 import kr.kh.final_project.vo.BusinessmanVO;
 import kr.kh.final_project.vo.FacilityPictureVO;
 import kr.kh.final_project.vo.FacilityVO;
@@ -44,7 +45,7 @@ public interface BusinessmanService {
 	//시설번호로 경기장 리스트 가져오기
 	List<StadiumVO> getStadiumList(Integer fa_num, Criteria cri);
 	//경기장 등록
-	boolean insertStadium(StadiumVO stadium);
+	boolean insertStadium(StadiumVO stadium, AvailabilityVO availability);
 	//경기장번호로 경기장 정보가져오기
 	StadiumVO getStadium(Integer st_num);
 	//경기장 정보 수정
@@ -55,6 +56,8 @@ public interface BusinessmanService {
 	List<FacilityPictureVO> getFacilityPictureList(Integer fa_num);
 	
 	List<StadiumVO> selectAllStadium();
+	
+	AvailabilityVO getAvailability(Integer st_num);
 	
 
 }

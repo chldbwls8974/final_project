@@ -157,6 +157,19 @@
 		            </c:choose>
 		        </label>
 		    </div>
+		    
+		    <div id="availabilityFields" style="display: none;">
+			  <div class="form-group">
+			        <label for="av_notdate" style="font-weight: bold;">불가적용 날짜</label>
+			        <input type="text" class="form-control" id="av_notdate" name="av_notdate" value="${availability.av_notdate}" placeholder="날짜를 선택하세요">
+			  </div>
+			
+			  <div class="form-group">
+			        <label for="av_reason" style="font-weight: bold;">사유</label>
+			        <input type="text" class="form-control" id="av_reason" name="av_reason" value="${availability.av_reason}" placeholder="사유를 입력하세요">
+			  </div>
+		   </div> 
+		    
 		  </div>
 		  <br>
 		  <div class="form-group-inline">
@@ -203,6 +216,15 @@
 	        //입력값이 2자리 이상인 경우 마지막 2자리만 유지
    			target.value = target.value.slice(0, 2);
 		}
+		
+		//이용가능여부 변경
+	    $('input[name="st_available"]').change(function () {
+	        if ($(this).val() === '1') {
+	            $('#availabilityFields').show();
+	        } else {
+	            $('#availabilityFields').hide();
+	        }
+	    });
 	</script>
 	
 </body>
