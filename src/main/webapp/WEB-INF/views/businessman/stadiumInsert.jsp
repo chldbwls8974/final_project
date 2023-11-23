@@ -8,10 +8,12 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-    $(function () {
-        // datepicker 초기화
-        $("#av_notdate").datepicker();
+$(function () {
+    // datepicker 초기화
+    $("#av_notdate").datepicker({
+    	dateFormat: 'yy/mm/dd'
     });
+});
 </script>
 <meta charset="UTF-8">
 <title>경기장 등록</title>
