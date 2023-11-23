@@ -21,7 +21,8 @@
 	}
 	.keyword{
 		width: 750px;
-		padding: .8em .5em;
+	    height: 50px;
+	    margin-top: 20px;
 		border-radius: 5px;
 		border: 1px solid #999;
 		-webkit-appearance: none;
@@ -30,7 +31,8 @@
 	}
 	.search-btn{
 		width: 80px;
-		padding: .8em .5em;
+		height: 50px;
+	    margin-top: 20px;
 		border-radius: 5px;
 		border: none;
 		background-color: #c2f296;
@@ -41,7 +43,7 @@
 	li{list-style: none; text-align: start;}
 	p, span{text-decoration: none; color: black;}
 	p:hover, span:hover {text-decoration: none;}
-	#membertable{ background-color: #f2f2f2; width: 90%; height: 100%; 
+	#membertable{ background-color: #f2f2f2; width: 90%; height: auto; 
 		padding: 100px 0 100px 0; margin: 30px auto; border-radius: 30px;}
 	.membertable-list{
 		margin: 0 80px 50px 80px; display: flex; border-bottom: 1px solid rgba(0,0,0,.1);
@@ -80,7 +82,7 @@
 
 
 	<div class="member-search">
-		<div class="member-search-navigation" style="margin-top: 50px; text-align: center;">
+		<div class="member-search-navigation" style="margin-top: 50px; text-align: center; display: flex; justify-content: center;">
 				<select class="searchType" name="searchType">
 					<option value="id">아이디</option>
 					<option value="name">이름</option>
