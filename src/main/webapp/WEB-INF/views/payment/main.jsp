@@ -41,11 +41,11 @@
 	</div>
 	<div style="text-align: center;">
 		<ul class="list-group">
-			<li data-value="5" class="list-group-item col-4 " >5,000 포인트</li>
-			<li data-value="10" class="list-group-item col-4 ">10,000 포인트</li>
-			<li data-value="30" class="list-group-item col-4 ">30,000 포인트</li>
-			<li data-value="50" class="list-group-item col-4 ">50,000 포인트</li>
-			<li data-value="100" class="list-group-item col-4 ">100,000 포인트</li>
+			<li data-value="5000" class="list-group-item col-4 " >5,000 포인트</li>
+			<li data-value="10000" class="list-group-item col-4 ">10,000 포인트</li>
+			<li data-value="30000" class="list-group-item col-4 ">30,000 포인트</li>
+			<li data-value="50000" class="list-group-item col-4 ">50,000 포인트</li>
+			<li data-value="100000" class="list-group-item col-4 ">100,000 포인트</li>
 		</ul>
 	</div>
 	<div style="text-align: center; margin-top: 30px">

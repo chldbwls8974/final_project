@@ -21,4 +21,17 @@ public class ClubVO {
 	
 	private String cl_rg_main;
 	
+	//RegionVO
+	private Integer rg_num;
+	private String rg_main;
+	private String rg_sub;
+
+	public String getCl_emblem() {
+		if(cl_emblem ==null) {
+			cl_emblem = "/default.jpg";
+		}
+		return cl_emblem;
+	}
+	
+	
 }

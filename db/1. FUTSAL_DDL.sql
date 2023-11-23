@@ -158,6 +158,7 @@ CREATE TABLE `point_history` (
 	`ph_num`	int AUTO_INCREMENT PRIMARY KEY	NOT NULL,
 	`ph_price`	int	NOT NULL	DEFAULT 0,
 	`ph_source`	int	NOT NULL	COMMENT '0 : 충전, 1: 매치 신청, 2 : 매치 직접 취소, 3 : 매치 강제 취소, 4 : 환급 대기, 5 : 환급 완료',
+	`ph_date`	date	NULL	DEFAULT (current_date),
 	`ph_mt_num`	int	NULL,
 	`ph_me_num`	int	NOT NULL
 );
@@ -318,8 +319,8 @@ CREATE TABLE `report` (
 	`rp_me_num2`	int	NOT NULL,
 	`rp_state`	varchar(5)	NULL	COMMENT '제재, 확인, 미확인',
 	`rp_bo_num`	int	NULL	COMMENT '게시글 신고가 아니라면 NULL',
-	`rp_date`	date	NOT NULL	DEFAULT (current_date),
-	`rp_mt_num`	int	NULL
+	`rp_mt_num`	int	NULL,
+	`rp_date`	date	NOT NULL	DEFAULT (current_date)
 );
 
 DROP TABLE IF EXISTS `report_category`;
@@ -407,6 +408,15 @@ CREATE TABLE `payment` (
 	`pm_imp_uid`	varchar(20) PRIMARY KEY	NOT NULL,
 	`pm_amount`	int	NOT NULL,
 	`pm_ph_num`	int	NOT NULL
+);
+
+DROP TABLE IF EXISTS `facility_picture`;
+
+CREATE TABLE `facility_picture` (
+	`fp_num`	int AUTO_INCREMENT PRIMARY KEY	NOT NULL,
+	`fp_fa_num`	int	NOT NULL,
+	`fp_ori_name`	varchar(255)	NOT NULL,
+	`fp_name`	varchar(255)	NOT NULL
 );
 
 ALTER TABLE `member` ADD CONSTRAINT `FK_region_TO_member_1` FOREIGN KEY (
@@ -666,7 +676,7 @@ ALTER TABLE `manager` ADD CONSTRAINT `FK_match_TO_manager_1` FOREIGN KEY (
 )
 REFERENCES `match` (
 	`mt_num`
-) ON DELETE CASCADE;
+);
 
 ALTER TABLE `manager` ADD CONSTRAINT `FK_member_TO_manager_1` FOREIGN KEY (
 	`mn_me_num`
@@ -799,5 +809,12 @@ ALTER TABLE `payment` ADD CONSTRAINT `FK_point_history_TO_payment_1` FOREIGN KEY
 )
 REFERENCES `point_history` (
 	`ph_num`
+);
+
+ALTER TABLE `facility_picture` ADD CONSTRAINT `FK_facility_TO_facility_picture_1` FOREIGN KEY (
+	`fp_fa_num`
+)
+REFERENCES `facility` (
+	`fa_num`
 );
 

@@ -119,7 +119,7 @@ public class ScheduleServiceImp implements ScheduleService{
 		if(me_num == null) {
 			return null;
 		}
-		List<FacilityVO> facilityList = facilityDao.selectFacilityByMeNum(me_num);
+		List<FacilityVO> facilityList = facilityDao.selectFacilityListByMeNum(me_num);
 		
 		return facilityList;
 	}

@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.final_project.dao.FacilityDAO">
-	<select id="selectFacilityByMeNum" resultType="kr.kh.final_project.vo.FacilityVO">
+	<select id="selectFacilityListByMeNum" resultType="kr.kh.final_project.vo.FacilityVO">
 		select
 			*
 		from
@@ -117,11 +117,14 @@
 			select 
 				facility.*,
 				businessman.*,
+				region.rg_main as fa_rg_main,
 				(select count(*) 
 			from stadium where st_fa_num = fa_num and st_available != 2) as st_count
 			from facility
 				 	join 
 			businessman on fa_bu_num = bu_num
+					join
+			region on fa_rg_num = rg_num
 		<where>
 			<choose>
 				<when test='cri.t == "all"'>
@@ -180,7 +183,29 @@
 		insert into facility_picture (fp_fa_num, fp_name, fp_ori_name)
 		values(#{file.fp_fa_num}, #{file.fp_name}, #{file.fp_ori_name})
 	</insert>
+	<delete id="deletePicture">
+		delete from facility_picture
+		where fp_num = #{fp_num}
+	</delete>
 	<select id="selectFacilityPictureList" resultType="kr.kh.final_project.vo.FacilityPictureVO">
 		select * from facility_picture where fp_fa_num = #{fa_num}
+	</select>
+	<select id="selectFacilityListByRegion" resultType="kr.kh.final_project.vo.FacilityVO">
+		select * from(
+			select facility.*, region.rg_main as fa_rg_main from facility
+			join region on fa_rg_num = rg_num) as t
+		where fa_rg_main = #{rg_main}
+	</select>
+	<select id="selectFacilityByMeNum" resultType="kr.kh.final_project.vo.FacilityVO">
+		select
+			facility.*
+		from
+			businessman
+				join
+			facility on fa_bu_num = bu_num
+		where
+			bu_me_num = #{me_num} and
+		    fa_num = #{fa_num} and
+            fa_deleted = 0
 	</select>
 </mapper>

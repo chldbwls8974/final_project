@@ -67,7 +67,7 @@
 <div class="container-body">
 	<div style="padding : 30px">
 	<br>
-		<p style="font-size: 35px; font-weight: bolder; margin: 10px auto 50px auto; border-bottom: 8px solid #c2f296;
+		<p style="font-size: 35px; font-weight: bolder; margin: 0px auto; border-bottom: 8px solid #c2f296;
 			width: 20%; padding: 20px 0 10px 0; text-align: center;">개인게시판</p>
 		<div style="display:flex;">
 			

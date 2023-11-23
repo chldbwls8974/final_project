@@ -103,5 +103,7 @@ public interface AdminService {
 	//경기장 페이지네이션
 	int getTotalStadiumCountByAdmin(Criteria cri, Integer fa_num);
 	
+	List<FacilityVO> selectFacilityListByRegion(String rg_main);
+	
 	
 }

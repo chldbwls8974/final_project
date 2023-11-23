@@ -25,8 +25,9 @@
 		margin-top: 20px;
 	}
 	.keyword{
-		width: 500px;
-		padding: .8em .5em;
+		width: 870px;
+	    height: 60px;
+	    margin-top: 20px;
 		border-radius: 5px;
 		border: 1px solid #999;
 		-webkit-appearance: none;
@@ -35,16 +36,15 @@
 	}
 	.search-btn{
 		width: 80px;
-		padding: .8em .5em;
+		height: 60px;
+	    margin-top: 20px;
 		border-radius: 5px;
-		border: 1px solid #999;
+		border: none;
+		background-color: #c2f296;
 		-webkit-appearance: none;
 		-moz-appearance: none;
 		appearance: none;
 	}
-	
-	.title-detail{ margin: 50px auto; background-color: #f2f2f2; border-radius: 30px;
-	padding: 30px; width: 42%;}
 
 	.page-link {
 	  color: #000; 
@@ -64,46 +64,57 @@
 	  border-color: #ccc;
 	}
 	
-/* 슬라이드쇼 */
-	.slideshow{
-	display: flex;
-    justify-content: center;
-    position: relative;
-    margin: auto;
-	}
-
-	/* 초기화 */
+	/* 슬라이드쇼 */
+	.slider__wrap {
+        width: 100%;
+        height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    /* 이미지 보이는 부분 */
+    .slider__img {
+        position: relative;
+        width: 600px;
+        height: 600px;
+        overflow: hidden;
+    }
+     /* 이미지 감싸고 있는 부모 : 움직이는 부분 */
+    .slider__inner {
+        display: flex;
+        flex-wrap: wrap;
+        /* 총 이미지 5개 */
+        width: 3600px;
+        height: 400px;
+    }
+    
+	/* 개별 이미지 */
 	.slider{
-	  margin: 0;
-	  padding: 0;
+		position: relative;
+		width: 600px;
+		height: 600px;
 	}
 	
-	.myslider img{
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+	.slider img{
+		width: 100%;
 	}
-	
-	.myslider{
-		border-radius:3%;
-	    width: 100%;
-	    height: 350px;
+	.slider::before {
+        position: absolute;
+        left: 5px;
+        top: 5px;
+        background: rgba(0, 0, 0, 0.4);
+        color: #fff;
+        padding: 5px 10px;
+    }
+    
+	.slider__btn {
+	    position: absolute;
+	    width: 43%;
 	    display: flex;
-	    justify-content: center;
-	    align-items: center;
-	}
-	
-	/* 첫 번째 슬라이드 가운데에 정렬*/
-	.slider li:first-child{
-	  margin-left: 100px;
-	}
-	
-	/* 슬라이드 옆으로 정렬 */
-	.slider li:not(:last-child){
-	  float: left;
-	  margin-right: 100px;
-	}
-		.controller span{
+	    justify-content: space-between;
+	    transform: translateY(-50%);
+  	}
+	.controller span{
 	  position:absolute;
 	  background-color: transparent;
 	  color: black;
@@ -114,30 +125,37 @@
 	  font-size: 1.3em;
 	  cursor: pointer;
 	}
-	
-	.fade {
-	    animation-name: fade;
-	    animation-duration: 1.5s;
-	}
-	@keyframes fade {
-	    from {
-	        opacity: .4
-	    }
-	    to {
-	        opacity: 1
-	    }
-	}
-
-
-  #prev,
-  #next {
+  .prev,
+  .next {
     background-color: transparent;
     border: none;
     font-size: 20px;
     cursor: pointer;
   }
-  #prev{ margin-left: 30px;}
-  #next{ margin-right: 30px;}
+  .prev{ margin-left: 30px;}
+  .next{ margin-right: 30px;}
+	.add-btn, .link-btn{
+		border-radius: 10px !important; width: 150px; height: 40px; border: none;
+		background-color: #c2f296; color: black; margin: 10px; line-height: 35px;
+	}
+	.up-btn{
+		border-radius: 10px !important; padding: 10px; border: none;
+		background-color: #c2f296; color: black; line-height: 35px;
+	}
+	tr, td{ text-align: center;}
+	.btn-group>.btn:not(:last-child):not(.dropdown-toggle),
+	.btn-group>.btn:not(:first-child){ border-radius: 0;}
+
+  
+	.title-detail{margin: 0px auto; background-color: white; border-radius: 30px;
+		padding: 30px; width: 500px; height: 550px; text-align: center; background-color: #f2f2f2;
+	}
+	.facility-info-box{ justify-content: space-between; display: flex;}
+	.facility-info-icon{ display: flex;}
+	.facility-info-icon img{ margin-right: 5px;}
+	.facility-info-icon p{padding: 2px; margin-top: 10px;}
+	.a-btn{ border-radius: 10px; width: 200px; height: 45px; border: none; display: block; padding-top: 10px;
+		background-color: #c2f296; color: black; margin: 0 auto;}
 	
 </style>
 <body>
@@ -146,9 +164,133 @@
 		[${facility.fa_name}] 경기장 목록</p>
 	</div>
 	
+	<div style="text-align: center;">
+		<div class="btn-group btn-group">	    
+				<a class="add-btn" role="button" 
+				 href="<c:url value='/businessman/stadiumInsert/${facility.fa_num}'/>"
+						>경기장 등록하기</a>		
+				<a class="link-btn" role="button" 
+				 href="<c:url value='/businessman/facility'/>"
+						>시설 목록으로 이동</a>		
+		</div>
+	</div>		
+	<!-- 	시설 사진 슬라이드쇼 -->
+	<div class="sliderType01">
+		<div class="slider__wrap">
+			<div class="slider__img">
+				<div class="slider__inner">
+				<c:if test="${files != null && files != '' }">
+					<c:forEach items="${files}" var="file">
+						<div class="slider">
+								<img class="item" src="<c:url value='/facilityimg${file.fp_name }'/>" alt="Image">
+						</div>
+					</c:forEach>
+				</c:if>
+				<c:if test="${empty files}">
+				    <div class="slider">
+				        <img class="item" src="<c:url value='/resources/images/add.png'/>" alt="Image">
+				    </div>
+				</c:if>
+				</div>
+			</div>	
+	      <!-- 화살표 -->
+			<div class="slider__btn">
+		    	<button class="prev">＜</button>
+		    	<button class="next">＞</button>  
+		    </div>
+	    </div>
+	</div>
+	<div class="title-detail">
+			<div class="info-box match-box">
+				<div class="match-info-box2 facility-info">
+					<p style="font-size: 19px; font-weight: bold; margin: 20px 0 30px 0; text-align: center;">
+						편의시설</p>
+					<div style="flex-direction: column; align-items: center;">
+						<div class="facility-info-box">
+							<div class="facility-info-icon">
+								<img
+									src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_park.svg"
+									class="match-icon">
+								<p>주차장</p>
+							</div>
+							<div>
+								<p>${facility.fa_pay == 0 ? '없음' : facility.fa_pay == 1 ? '무료' : '유료'}</p>
+							</div>
+						</div>
+						<div class="facility-info-box">
+							<div class="facility-info-icon">
+								<img
+									src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_gender.svg"
+									class="match-icon">
+								<p>탈의실</p>
+							</div>
+							<div>
+								<p>${facility.fa_locker == 0 ? '없음' : '있음'}</p>
+							</div>
+						</div>
+						<div class="facility-info-box">
+							<div class="facility-info-icon">
+								<img
+									src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_toilet.svg"
+									class="match-icon">
+								<p>화장실</p>
+							</div>
+							<div>
+								<p>${facility.fa_toilet == 0 ? '없음' : '있음'}</p>
+							</div>
+						</div>
+						<div class="facility-info-box">
+							<div class="facility-info-icon">
+								<img
+									src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_shower.svg"
+									class="match-icon">
+								<p>샤워실</p>
+							</div>
+							<div>
+								<p>${facility.fa_shower == 0 ? '없음' : '있음'}</p>
+							</div>
+						</div>
+						<div class="facility-info-box">
+							<div class="facility-info-icon">
+								<img
+									src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_stadium.svg"
+									class="match-icon">
+								<p>흡연장</p>
+							</div>
+							<div>
+								<p>${facility.fa_smoking == 0 ? '없음' : '있음'}</p>
+							</div>
+						</div>
+						<div class="facility-info-box">
+							<div class="facility-info-icon">
+								<img
+									src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_beverage.svg"
+									class="match-icon" style="margin-left: 8px;">
+								<p>자판기</p>
+							</div>
+							<div>
+								<p>${facility.fa_machine == 0 ? '없음' : '있음'}</p>
+							</div>
+						</div>
+						<div class="facility-info-box">
+							<div class="facility-info-icon">
+								<img
+									src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_level.svg"
+									class="match-icon">
+								<p style="margin-top: 20px;">특이사항</p>
+							</div>
+							<div>
+								<p>${facility.fa_note}</p>
+							</div>
+						</div>
+					</div>
+				</div>	
+			</div>
+		</div>
+	
 <!-- 	검색창 -->
 	<form action="<c:url value='/businessman/stadium/${facility.fa_num}'/>" method="get">
-		<div class="stadium-navigation" style="margin: 30px 0 30px 0; text-align: center;">
+		<div class="stadium-navigation" style="margin: 30px 0 30px 0; text-align: center; display: flex;">
 			<select class="searchType" name="t">
 				<option value="all" <c:if test="${pm.cri.t == 'all'}">selected</c:if>>전체</option>
 				<option value="name" <c:if test="${pm.cri.t == 'name'}">selected</c:if>>경기장 이름</option>
@@ -159,41 +301,8 @@
 		</div>
 	</form>
 	
+
 	
-	
-<!-- 	시설 사진 슬라이드쇼 -->
-	<div class="slideshow">
-		<div class="slider">
-			<c:forEach items="${files}" var="file">
-				<div class="myslider fade">
-						<img class="item" src="<c:url value='/facilityimg${file.fp_name }'/>" alt="Image1">
-				</div>
-			</c:forEach>
-		
-		</div>
-      <!-- 화살표 -->
-		<div class="btn">
-	       <button type="button" id="prev"><</button>
-    		<button type="button" id="next">></button>
-	    </div>
-	</div>
-	
-	<div style="text-align: left; margin-right: 10px;">
-		<div class="btn-group btn-group">	    
-				<a class="btn" role="button" 
-				 style="
-						border-radius: 10px; width: 130px; height: 40px; border: none;
-						background-color: #c2f296; color: black; margin: 10px 10px 10px 0;"
-						href="<c:url value='/businessman/stadiumInsert/${facility.fa_num}'/>"
-						>경기장 등록하기</a>		
-				<a class="btn" role="button" 
-				 style="
-						border-radius: 10px; width: 150px; height: 40px; border: none;
-						background-color: #c2f296; color: black; margin: 10px 10px 10px 0;"
-						href="<c:url value='/businessman/facility'/>"
-						>시설 목록으로 이동</a>		
-		</div>
-	</div>		
 	
 	
 	<div class="table-responsive" style="color: green;">
@@ -240,16 +349,22 @@
 			          <td>${stadium.st_width}m</td>
 			          <td>${stadium.st_height}m</td>
 			          <td>${stadium.st_max}명</td>
-			          <td>
-			            <c:choose>
-			                <c:when test="${stadium.st_available == 0}">가능</c:when>
-			                <c:when test="${stadium.st_available == 1}">불가능</c:when>
-			            </c:choose>
-				      </td>
-			          <td>${stadium.st_note}</td>
+			          <c:if test="${stadium.st_available == 0}">
+						    <td>
+						        <strong>가능</strong><br>
+						    </td>
+					  </c:if>
+			          <c:if test="${stadium.st_available == 1}">
+						    <td>
+						        <strong>불가능</strong><br>
+						        <span>날짜: ${stadium.availability.av_notdate_str}</span><br>
+						        <span>사유: ${stadium.availability.av_reason}</span>
+						    </td>
+					  </c:if>
+					  <td>${stadium.st_note}</td>
 			          <td hidden="hidden">${stadium.st_fa_num}</td>
-			          <td><a href="<c:url value='/businessman/stadiumUpdate?st_num=${stadium.st_num}'/>"
-								class="btn btn-outline-secondary" role="button">수정</a></td>
+			          <td style=""><a href="<c:url value='/businessman/stadiumUpdate?st_num=${stadium.st_num}'/>"
+								class="up-btn" role="button">수정</a></td>
 		         	 </tr>
     	         </c:if>
 		     </c:forEach>

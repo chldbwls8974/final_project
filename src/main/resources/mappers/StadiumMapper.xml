@@ -3,13 +3,31 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.final_project.dao.StadiumDAO">
+	<!-- 게시글을 가져올 떄 첨부파일을 자동으로 가져오기 위해 resultMap을 사용함-->
+	<resultMap type="kr.kh.final_project.vo.StadiumVO" id="StadiumVO">
+		<id property="st_num" column="st_num"/>
+		<result property="st_name" column="st_name"/>
+		<result property="st_locate" column="st_locate"/>
+		<result property="st_door" column="st_door"/>
+		<result property="st_floortype" column="st_floortype"/>
+		<result property="st_width" column="st_width"/>
+		<result property="st_height" column="st_height"/>
+		<result property="st_max" column="st_max"/>
+		<result property="st_available" column="st_available"/>
+		<result property="st_fa_num" column="st_fa_num"/>
+		<result property="st_deleted" column="st_deleted"/>
+		<collection property="availability" ofType="kr.kh.final_project.vo.AvailabilityVO" column="st_num" select="selectAvailability"/>
+	</resultMap>
+	<select id="selectAvailability" resultType="kr.kh.final_project.vo.AvailabilityVO">
+		select * from availability where av_st_num = #{st_num}
+	</select>
 	<select id="selectStadiumListByFaNum" resultType="kr.kh.final_project.vo.StadiumVO">
 		select * from stadium where st_fa_num = #{fa_num}
 	</select>
 	<select id="selectStadiumByStNum" resultType="kr.kh.final_project.vo.StadiumVO">
 		select * from stadium where st_num = #{st_num}
 	</select>
-	<select id="selectStadiumList" resultType="kr.kh.final_project.vo.StadiumVO">
+	<select id="selectStadiumList" resultMap="StadiumVO">
 		select * from stadium 
 		<where>
 			<choose>
@@ -49,7 +67,7 @@
 			and stadium.st_available != 2
 		</where>
 	</select>
-	<insert id="insertStadium">
+	<insert id="insertStadium" useGeneratedKeys="true" keyProperty="stadium.st_num">
 		insert into stadium(st_num, st_name, st_locate, st_door, st_floortype, st_width,
 					st_height, st_max, st_available, st_note, st_fa_num)
 			values
@@ -57,6 +75,18 @@
 				#{stadium.st_floortype}, #{stadium.st_width}, #{stadium.st_height}, 
 				#{stadium.st_max}, #{stadium.st_available}, #{stadium.st_note}, #{stadium.st_fa_num})
 	</insert>
+	<insert id="insertAvailability">
+ 	    insert into availability(av_st_num, av_notdate, av_reason)
+ 	    values
+ 	    (#{availability.av_st_num}, #{availability.av_notdate}, #{availability.av_reason})
+	</insert>
+	<update id="updateAvailability">
+		 update availability set
+		 	av_notdate = #{availability.av_notdate}, 
+		 	av_reason = #{availability.av_reason}
+ 	    where av_st_num = #{availability.av_st_num}
+	</update>
+	
 	<select id="selectStadium" resultType="kr.kh.final_project.vo.StadiumVO">
 		 select * from stadium where st_num = #{st_num}
 	</select>
@@ -78,6 +108,10 @@
 	    set st_available = 2
 	    where st_fa_num = #{fa_num}
 	</update>
+	<delete id="deleteAvailability">
+		delete from availability
+		where av_st_num = #{st_num};
+	</delete>
 	<select id="selectStadiumListByAdmin" resultType="kr.kh.final_project.vo.StadiumVO">
 		select * from stadium 
 		<where>
@@ -118,5 +152,19 @@
 	</select>
 	<select id="selectAllStadiumList"  resultType="kr.kh.final_project.vo.StadiumVO">
 		select * from stadium
+	</select>
+	<select id="selectStadiumByMeNum"  resultType="kr.kh.final_project.vo.StadiumVO">
+		select
+			stadium.*
+		from
+			businessman
+				join
+			facility on fa_bu_num = bu_num
+				join
+			stadium on st_fa_num = fa_num
+		where
+			bu_me_num = #{me_num} and
+		    st_num = #{st_num} and
+            st_available != 2
 	</select>
 </mapper>

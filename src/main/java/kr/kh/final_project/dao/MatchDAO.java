@@ -58,13 +58,22 @@ public interface MatchDAO {
 	
 	MatchVO selectMatchRecord(@Param("mt_num")int mt_num, @Param("te_num")int te_num);
 	
+	int selectAbleSolo(@Param("me_num")Integer me_num, @Param("mt_date")Date mt_date, @Param("mt_num")int mt_num);
+
 	List<MatchVO> selectManagerAble0ByMtDate(@Param("me_num")Integer me_num, @Param("mt_date")Date mt_date);
 	
 	List<MatchVO> selectManagerAble23ByMtDate(@Param("me_num")Integer me_num, @Param("mt_date")Date mt_date);
 	
-	List<MatchVO> selectMatchAble0ByMtDate(@Param("me_num")Integer me_num, @Param("mt_date")Date mt_date);
+	List<MatchVO> selectSoloMatchAble0ByMtDate(@Param("me_num")Integer me_num, @Param("mt_date")Date mt_date);
 	
-	List<MatchVO> selectMatchAble23ByMtDate(@Param("me_num")Integer me_num, @Param("mt_date")Date mt_date);
+	List<MatchVO> selectSoloMatchAble23ByMtDate(@Param("me_num")Integer me_num, @Param("mt_date")Date mt_date);
 	
-
+	int selectAbleClub(@Param("cl_num")Integer cl_num, @Param("mt_date")Date mt_date, @Param("mt_num")int mt_num);
+	
+	List<MatchVO> selectClubMatchAble0ByMtDate(@Param("cl_num")Integer cl_num, @Param("mt_date")Date mt_date);
+	
+	List<MatchVO> selectClubMatchAble23ByMtDate(@Param("cl_num")Integer cl_num, @Param("mt_date")Date mt_date);
+	
+	MatchVO selectDBMatchByMtNum(@Param("mt_num")int mt_num);
+	
 }

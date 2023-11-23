@@ -130,12 +130,12 @@ public class MatchServiceImp implements MatchService{
 		List<MatchVO> dbMatchList = matchDao.selectMatchListOfSolo(me_num, mt_date);
 		for(MatchVO match : dbMatchList) {
 			if(match.getTi_time_str().equals("00:00")) {
-				if(matchDao.selectManagerAble0ByMtDate(me_num, mt_date).size() != 0 || matchDao.selectMatchAble0ByMtDate(me_num, mt_date).size() != 0) {
+				if(matchDao.selectManagerAble0ByMtDate(me_num, mt_date).size() != 0 || matchDao.selectSoloMatchAble0ByMtDate(me_num, mt_date).size() != 0) {
 					match.setApplication_able(0);
 				}
 			}
 			if(match.getTi_time_str().equals("23:00")) {
-				if(matchDao.selectManagerAble23ByMtDate(me_num, mt_date).size() != 0 || matchDao.selectMatchAble23ByMtDate(me_num, mt_date).size() != 0) {
+				if(matchDao.selectManagerAble23ByMtDate(me_num, mt_date).size() != 0 || matchDao.selectSoloMatchAble23ByMtDate(me_num, mt_date).size() != 0) {
 					match.setApplication_able(0);
 				}
 			}
@@ -149,6 +149,18 @@ public class MatchServiceImp implements MatchService{
 			return null;
 		}
 		List<MatchVO> dbMatchList = matchDao.selectMatchListOfClub(cl_num, mt_date);
+		for(MatchVO match : dbMatchList) {
+			if(match.getTi_time_str().equals("00:00")) {
+				if(matchDao.selectClubMatchAble0ByMtDate(cl_num, match.getMt_date()).size() != 0) {
+					match.setApplication_able(0);
+				}
+			}
+			if(match.getTi_time_str().equals("23:00")) {
+				if(matchDao.selectClubMatchAble23ByMtDate(cl_num, match.getMt_date()).size() != 0) {
+					match.setApplication_able(0);
+				}
+			}
+		}
 		return filterMatch(cl_num, dbMatchList);
 	}
 
@@ -159,9 +171,32 @@ public class MatchServiceImp implements MatchService{
 		}
 		MatchVO match = null;
 		if(cl_num == 0) {
-			match = matchDao.selectMatchByMeNum(mt_num, me_num);			
+			match = matchDao.selectMatchByMeNum(mt_num, me_num);
+
+			match.setApplication_able(matchDao.selectAbleSolo(me_num, match.getMt_date(), mt_num));
+			if(match.getTi_time_str().equals("00:00")) {
+				if(matchDao.selectManagerAble0ByMtDate(me_num, match.getMt_date()).size() != 0 || matchDao.selectSoloMatchAble0ByMtDate(me_num, match.getMt_date()).size() != 0) {
+					match.setApplication_able(0);
+				}
+			}else if(match.getTi_time_str().equals("23:00")) {
+				if(matchDao.selectManagerAble23ByMtDate(me_num, match.getMt_date()).size() != 0 || matchDao.selectSoloMatchAble23ByMtDate(me_num, match.getMt_date()).size() != 0) {
+					match.setApplication_able(0);
+				}
+			}
 		}else if(cl_num != 0) {
 			match = matchDao.selectMatchByClNum(mt_num, cl_num);
+
+			match.setApplication_able(matchDao.selectAbleClub(cl_num, match.getMt_date(), mt_num));
+			if(match.getTi_time_str().equals("00:00")) {
+				if(matchDao.selectClubMatchAble0ByMtDate(cl_num, match.getMt_date()).size() != 0) {
+					match.setApplication_able(0);
+				}
+			}
+			if(match.getTi_time_str().equals("23:00")) {
+				if(matchDao.selectClubMatchAble23ByMtDate(cl_num, match.getMt_date()).size() != 0) {
+					match.setApplication_able(0);
+				}
+			}
 		}
 		if(match.getMt_rule() == 1) {
 			MemberVO dbManager = memberDao.selectManagerByMtNum(match.getMt_num());
@@ -619,6 +654,14 @@ public class MatchServiceImp implements MatchService{
 			return null;
 		}
 		return memberDao.selectBusinessByMtNum(mt_num);
+	}
+
+	@Override
+	public MatchVO selectDBMatchByMtNum(int mt_num) {
+		if(mt_num == 0) {
+			return null;
+		}
+		return matchDao.selectDBMatchByMtNum(mt_num);
 	}
 
 }

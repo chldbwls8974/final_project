@@ -85,6 +85,13 @@
 		max-width: 600px;
 		margin: 100px auto;
 	}
+	.member-profile{
+	width: 70px; height: 70px; border-radius: 50%;
+	margin-right: 10px;
+	}
+	.member-table{
+		margin-top: 30px;
+	}
 	
 </style>
 
@@ -172,13 +179,16 @@
 				<p> ${club.cl_url }</p>
 			</div>
 		</div>
+		<div class="form-group">
+			<button type="button" class =" btn" name="clubmember-list-btn">클럽원보기</button>
+		</div>
 	</div>
 	<hr>
 </div>
 <!-- 모달창 -->
 		<div class="modal--bg">
 		<div class="modal--content">
-			<p style="font-size: 20px; font-weight: bolder; margin: 20px auto; border-bottom: 8px solid #c2f296; width: 30%; padding: 20px 0 10px 0; text-align: center;">클럽 가입 신청</p>
+			<p style="font-size: 20px; font-weight: bolder; margin: 20px auto; border-bottom: 8px solid #c2f296; width: 35%; padding: 20px 0 10px 0; text-align: center;">클럽 가입 신청</p>
 				<p style="font-size: 15px; margin: 20px auto; width: 30%; padding: 20px 0 10px 0; text-align: center;">간단한 자기소개를 적어주세요.</p>
 				<form action="<c:url value='/club/join'/>" method="post" class="modal-form">
 					<div class="form-group">
@@ -194,6 +204,58 @@
 		</div>
 	</div>
 	
+<!-- 클럽원들 보여주기 -->
+<div class="table member-table" id="mtable">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>회원 번호</th>
+				<th>프로필사진</th>
+				<th>회원 닉네임</th>
+				<th>권한</th>
+				<th style="width: 25%;"></th>
+			</tr>
+		</thead>
+		<tbody>
+				<c:forEach items="${clubmemberlist }" var="list">
+					<c:if test="${list.cm_authority =='LEADER'}">
+						<tr>
+							<td>${list.cm_num}</td>
+							<td><a
+								href="<c:url value='/member/myprofile?me_num=${list.cm_num}'/>"
+								class="member-link"> <img alt=""
+									src="<c:url value='/memberimg${list.me_profile}'/>"
+									name="profile" class="member-profile">
+							</a></td>
+							<td><a
+								href="<c:url value='/member/myprofile?me_num=${list.cm_num}'/>"
+								class="member-link"> ${list.me_nickname}</a></td>
+							<td>${list.cm_authority}</td>
+							<td style="width: 25%;"></td>
+						</tr>
+					</c:if>
+				</c:forEach>
+				<c:forEach items="${list }" var="list">
+					<c:if test="${list.cm_authority =='MEMBER'}">
+						<tr>
+							<td>${list.cm_num}</td>
+							<td><a
+								href="<c:url value='/member/myprofile?me_num=${list.cm_num}'/>"
+								class="member-link"> <img alt=""
+									src="<c:url value='/memberimg${list.me_profile}'/>"
+									name="profile" class="member-profile">
+							</a></td>
+							<td><a
+								href="<c:url value='/member/myprofile?me_num=${list.cm_num}'/>"
+								class="member-link"> ${list.me_nickname}</a></td>
+							<td>${list.cm_authority}</td>
+						</tr>
+					</c:if>
+				</c:forEach>
+			</tbody>
+	</table>
+</div>
+	
 	
 
 
@@ -204,6 +266,13 @@
 
 	
 	<script type="text/javascript">
+	
+	$('.member-table').hide();
+	
+	$(document).on('click','[name=clubmember-list-btn]',function(){
+		$('.member-table').toggle();
+	})
+	
 	$(document).on('click','[name=withdraw-btn]',function(){
 		if(confirm("가입 신청을 취소하시겠습니까?")){
 			me_num = ${user.me_num}
