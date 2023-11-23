@@ -50,12 +50,6 @@ public class MatchController {
 			model.addAttribute("msg", msg);
 			return "/message";
 		}
-		if(user.getMe_state1() == 1) {
-			Message msg = new Message("/", "이용정지 상태입니다.");
-			
-			model.addAttribute("msg", msg);
-			return "/message";
-		}
 		List<RegionVO> mainRegion = matchService.selectMainRegion();
 		List<ExtraVO> week = matchService.selectWeekDayList(0);
 
@@ -94,15 +88,13 @@ public class MatchController {
 	@GetMapping("/match/search/club")
 	public String searchMatchClub(Model model, HttpSession session, int weekCount) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		
+		if(weekCount > 1) {
+			weekCount = 1;
+		}else if(weekCount < 0) {
+			weekCount = 0;
+		}
 		if(user == null) {
 			Message msg = new Message("/", "로그인이 필요한 기능입니다.");
-			
-			model.addAttribute("msg", msg);
-			return "/message";
-		}
-		if(user.getMe_state1() == 1) {
-			Message msg = new Message("/", "이용정지 상태입니다.");
 			
 			model.addAttribute("msg", msg);
 			return "/message";
@@ -142,26 +134,57 @@ public class MatchController {
 	@GetMapping("/match/application")
 	public String matchApplicationPage(Model model, HttpSession session, int mt_num, int cl_num) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		MatchVO match = matchService.selectMatchByMtNum(mt_num, user.getMe_num(), cl_num);
-		ExpenseVO expense = matchService.selectPrice(cl_num, match.getTi_day());
-		
-		if(match.getMt_state1() == 1) {
-			Message msg = new Message("match/search/solo", "삭제된 경기입니다.");
+		if(user == null) {
+			Message msg = new Message("member/login", "로그인 후 이용 가능합니다.");
 			
 			model.addAttribute("msg", msg);
 			return "/message";			
-		}else if(match.getMt_state1() == 2) {
+
+		}
+		
+		MatchVO dbMatch = matchService.selectDBMatchByMtNum(mt_num);
+		ClubMemberVO dbCM = matchService.selectClubMemberByMeNum(user.getMe_num(), cl_num);
+		
+		if(dbMatch == null || dbMatch.getMt_state1() == 1) {
+			Message msg = new Message("match/search/solo", "삭제되거나 없는 경기입니다.");
+			
+			model.addAttribute("msg", msg);
+			return "/message";			
+		}else if(dbMatch.getMt_state1() == 2) {
 			Message msg = new Message("match/search/solo", "종료된 경기입니다.");
 			
 			model.addAttribute("msg", msg);
 			return "/message";			
 		}
-		if(user.getMe_state1() == 1) {
-			Message msg = new Message("/", "이용정지 상태입니다.");
-			
-			model.addAttribute("msg", msg);
-			return "/message";
+		
+		if(cl_num == 0) {
+			if(dbMatch.getMt_type() == 2) {
+				Message msg = new Message("match/search/club?weekCount=0", "잘못된 접근입니다.");
+				
+				model.addAttribute("msg", msg);
+				return "/message";
+			}
+		}else {
+			if(dbMatch.getMt_type() == 1) {
+				Message msg = new Message("match/search/solo", "잘못된 접근입니다.");
+				
+				model.addAttribute("msg", msg);
+				return "/message";
+			}
+			//클럽 매치로 들어왔을 때 cl_num이 참가한 클럽이지만 접근한 계정이 해당 클럽의 소속이 아닌 경우 예외
+			if(dbCM == null || (!dbCM.getCm_authority().equals("LEADER") && !dbCM.getCm_authority().equals("MEMBER"))) {
+				Message msg = new Message("match/search/club?weekCount=0", "해당 클럽의 클럽원이 아닙니다.");
+				
+				model.addAttribute("msg", msg);
+				return "/message";
+			}else {
+				model.addAttribute("authority", dbCM.getCm_authority());
+			}
 		}
+		
+		MatchVO match = matchService.selectMatchByMtNum(mt_num, user.getMe_num(), cl_num);
+		ExpenseVO expense = matchService.selectPrice(cl_num, match.getTi_day());
+		
 		if(cl_num == 0) {
 			if(match.getEntry_res() == 0) {
 				if(match.getEntry_count() == match.getMt_personnel() * (match.getMt_rule() == 0 ? 2 : 3)) {
@@ -175,7 +198,6 @@ public class MatchController {
 			
 			model.addAttribute("couponList", couponList);
 		}else {
-			ClubMemberVO dbCM = matchService.selectClubMemberByMeNum(user.getMe_num(), cl_num);
 			//클럽 매치로 들어왔을 때 cl_num이 참가한 클럽이 아닌데 매치에 참가한 클럽팀의 수가 다찼으면 예외
 			if(match.getEntry_res() == 0) {
 				if(match.getTeam_count() == (match.getMt_rule() == 0 ? 2 : 3)) {
@@ -185,14 +207,6 @@ public class MatchController {
 					return "/message";
 				}
 			}
-			//클럽 매치로 들어왔을 때 cl_num이 참가한 클럽이지만 접근한 계정이 해당 클럽의 소속이 아닌 경우 예외
-			if(dbCM == null || (!dbCM.getCm_authority().equals("LEADER") && !dbCM.getCm_authority().equals("MEMBER"))) {
-				Message msg = new Message("match/search/club?weekCount=0", "해당 클럽의 클럽원이 아닙니다.");
-				
-				model.addAttribute("msg", msg);
-				return "/message";
-			}
-			model.addAttribute("authority", dbCM.getCm_authority());
 		}
 		List<TeamVO> teamList = matchService.selectTeamByMtNum(mt_num);
 		List<EntryVO> entryList = matchService.selectEntryByMtNum(mt_num);
@@ -251,7 +265,7 @@ public class MatchController {
 		String msg = "신청 실패";
 		
 		if(dbMember.getMe_point() < point) {
-			msg = "포인트가 부족합니다.";
+			msg = "포인트가 부족합니다.\n보유 포인트 : " + dbMember.getMe_point();
 			map.put("msg", msg);
 			map.put("res", res);
 			return map;
@@ -308,7 +322,7 @@ public class MatchController {
 			return map;
 		}
 		if(dbMember.getMe_point() < point) {
-			msg = "포인트가 부족합니다.";
+			msg = "포인트가 부족합니다.\n보유 포인트 : " + dbMember.getMe_point();
 			map.put("msg", msg);
 			map.put("res", res);
 			return map;

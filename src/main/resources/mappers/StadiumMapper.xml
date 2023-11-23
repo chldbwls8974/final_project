@@ -153,4 +153,18 @@
 	<select id="selectAllStadiumList"  resultType="kr.kh.final_project.vo.StadiumVO">
 		select * from stadium
 	</select>
+	<select id="selectStadiumByMeNum"  resultType="kr.kh.final_project.vo.StadiumVO">
+		select
+			stadium.*
+		from
+			businessman
+				join
+			facility on fa_bu_num = bu_num
+				join
+			stadium on st_fa_num = fa_num
+		where
+			bu_me_num = #{me_num} and
+		    st_num = #{st_num} and
+            st_available != 2
+	</select>
 </mapper>

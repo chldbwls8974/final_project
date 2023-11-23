@@ -67,6 +67,7 @@
 		text-align:center; margin-right: 5px;
 		font-size:15px; padding:2px 1px 0 0; width: 23px; height: 25px; border-radius: 3px;
 		color: white; font-weight: bolder; 
+		line-height: 17px;
 	}
 	
 	
@@ -188,9 +189,6 @@
 											<div class="mytier-box-inner" style="background-color: #fa8d43;">5</div>
 										</c:if>
 										<c:if test="${user.me_tr_name == '마스터'}">
-											<div class="mytier-box-inner" style="background-color: #b08bff;">m</div>
-										</c:if>
-										<c:if test="${user.me_tr_name == '마스터'}">
 											<div class="mytier-box-inner" style="background-color: #c52216;">★</div>
 										</c:if>
 								</div>
@@ -225,7 +223,7 @@
 															style="width: 60px; height: 60px; border-radius: 50%">
 													</div>
 													<div style="margin-top: 20px;">
-														<span>${list.cl_name }</span> <span>${list.cl_rg_num }</span>
+														<span>${list.cl_name }</span> 
 													</div>
 												</div>
 											</a>
@@ -246,7 +244,7 @@
 															style="width: 60px; height: 60px; border-radius: 50%">
 													</div>
 													<div style="margin-top: 20px;">
-														<span>${list.cl_name }</span> <span>${list.cl_rg_num }</span>
+														<span>${list.cl_name }</span>
 													</div>
 												</div>
 											</a>
@@ -267,7 +265,7 @@
 															style="width: 60px; height: 60px; border-radius: 50%">
 													</div>
 													<div style="margin-top: 20px;">
-														<span>${list.cl_name }</span> <span>${list.cl_rg_num }</span>
+														<span>${list.cl_name }</span> 
 													</div>
 												</div>
 											</a>

@@ -12,7 +12,7 @@ import kr.kh.final_project.vo.MemberVO;
 
 public interface FacilityDAO {
 
-	List<FacilityVO> selectFacilityByMeNum(@Param("me_num")Integer me_num);
+	List<FacilityVO> selectFacilityListByMeNum(@Param("me_num")Integer me_num);
 	
 	//시설 리스트 가져오기
 	List<FacilityVO> selectFacilityList(@Param("member")MemberVO member, @Param("cri")Criteria cri);
@@ -41,5 +41,7 @@ public interface FacilityDAO {
 	void deletePicture(@Param("fp_num")Integer fp_num);
 
 	List<FacilityVO> selectFacilityListByRegion(@Param("rg_main")String rg_main);
+
+	FacilityVO selectFacilityByMeNum(@Param("me_num")Integer me_num, @Param("fa_num")Integer fa_num);
 
 }

@@ -63,5 +63,9 @@ public interface BusinessmanService {
 	
 	AvailabilityVO getAvailability(Integer st_num);
 	
+	FacilityVO selectFacilityByMeNum(Integer me_num, Integer fa_num);
+	
+	StadiumVO selectStadiumByMeNum(Integer me_num, Integer st_num);
+	
 
 }

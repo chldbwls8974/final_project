@@ -89,12 +89,26 @@ public class ClubController {
 	
 	@GetMapping("/list")
 	public String listClub(Model model, HttpSession session) {
-		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		List<RegionVO> regionList = memberService.getMainRegion();
+		
 		List<ClubVO> list = clubService.getClubList();
-		model.addAttribute("user",user);
 		model.addAttribute("list",list);
+		model.addAttribute("regionList",regionList);
 		return "/club/list";
 	}
+	
+	@ResponseBody
+	@PostMapping("/search")
+	 public Map<String, Object>clubSearch(@RequestParam String searchType, @RequestParam String keyword, Model model) {
+		 Map<String, Object> map = new HashMap<String, Object>();
+		 
+		 List<ClubVO> list = clubService.getClubListBySearch(searchType,keyword);
+		 
+		map.put("list", list);
+		return map;
+	}
+	
 	@GetMapping("/mylist")
 	public String myClubList(Model model, HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");

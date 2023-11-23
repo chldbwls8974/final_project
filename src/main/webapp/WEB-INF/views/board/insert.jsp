@@ -15,12 +15,19 @@
 	.form-control{
 		margin-bottom : 10px;
 	}
+	.title{
+		font-size: 35px; font-weight: bolder; margin: 50px auto; border-bottom: 8px solid #c2f296;
+		width: 28%; padding-bottom: 10px; text-align: center;
+	}
+	.in-btn{
+		background-color: #d7fdb5; color: black; height: 45px; width: 400px; 
+		border-radius: 10px; margin: 50px 0 50px 0; border: none;
+	}
 </style>    
 </head>
 </head>
 <body>
-	<br>
-	<h1>&#x2709 공지글 쓰셈 &#x2709</h1>
+	<br><p class="title"> 공지글 작성</p>
 	<form action="<c:url value='/board/insert'/>" method="post" enctype="multipart/form-data">
 		<div class="form-group">
 			<label>제목</label>
@@ -40,7 +47,9 @@
 			<input type="file" class="form-control" name="files">
 			<input type="file" class="form-control" name="files">
 		</div>
-		<button class="btn btn-outline-success col-12">등록하기</button>
+		<div style="text-align: center;">
+			<button class="in-btn">등록하기</button>
+		</div>
 	</form>
 
 	<script>

@@ -14,7 +14,7 @@
 	}
 	.title{
 		font-size: 35px; font-weight: bolder; margin: 50px auto; border-bottom: 8px solid #c2f296;
-		width: 11%; padding: 20px 0 10px 0; text-align: center;
+		width: 30%; padding-bottom: 10px; text-align: center;
 	}
 	.in-btn{
 		background-color: #d7fdb5; color: black; height: 45px; width: 400px; 
@@ -25,7 +25,7 @@
 </head>
 <body>
 	<br>
-	<p class="title"> 글 작성</p>
+	<p class="title">자유게시판 글 작성</p>
 	<form action="<c:url value='/board/insert2'/>" method="post" enctype="multipart/form-data">
 		<div class="form-group">
 			<label>제목</label>

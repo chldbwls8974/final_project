@@ -249,5 +249,11 @@ public class ClubServiceImp implements ClubService{
 		return preAgeDao.selectPreAgeListByClNum(cl_num);
 	}
 
+	@Override
+	public List<ClubVO> getClubListBySearch(String searchType, String keyword) {
+		// 
+		return clubDao.selectClubListBySearch(searchType, keyword);
+	}
+
 
 }

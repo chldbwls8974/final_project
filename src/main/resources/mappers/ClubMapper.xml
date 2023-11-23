@@ -47,4 +47,22 @@
 	<select id="selectClubTimeList" resultType="kr.kh.final_project.vo.ClubVO">
 	 	select * from team_preferred_time
 	</select>
+	<select id="selectClubListBySearch" resultType="kr.kh.final_project.vo.ClubVO">
+		select 
+			* 
+		from 
+			club
+		join region
+			on cl_rg_num = rg_num
+		<if test='searchType == "전체"'>
+		where
+		</if>
+		<if test='searchType != "전체"'>
+		where
+			rg_main = #{searchType}
+		and
+		</if>
+			cl_name like concat('%', #{keyword}, '%')
+	</select>
+	
 </mapper>

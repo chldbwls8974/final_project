@@ -105,7 +105,9 @@ public class ManagerController {
 	@GetMapping("/manager/manage/schedule")
 	public String manageScheduleManager(Model model, HttpSession session, int weekCount) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		
+		if(weekCount > 2) {
+			weekCount = 2;
+		}
 		if(user == null || !user.getMe_authority().equals("MANAGER")) {
 			Message msg = new Message("/", "매니저 권한이 필요합니다.");
 			model.addAttribute("msg", msg);
@@ -148,6 +150,7 @@ public class ManagerController {
 	@GetMapping("/manager/manage/match")
 	public String matchApplicationPage(Model model, HttpSession session, int mt_num) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
+		MatchVO dbMatch = matchService.selectDBMatchByMtNum(mt_num);
 		MatchVO match = managerService.selectManageMatchByMtNum(mt_num);
 		
 		if(user == null || !user.getMe_authority().equals("MANAGER")) {
@@ -156,8 +159,14 @@ public class ManagerController {
 			model.addAttribute("msg", msg);
 			return "/message";
 		}
-		if(match.getMn_me_num() != user.getMe_num()) {
-			Message msg = new Message("/manager/manage/schedule?weekCount=0", "등록된 매니저가 아닙니다.");
+		if(dbMatch == null || dbMatch.getMt_state1() == 1) {
+			Message msg = new Message("manager/manage/schedule?weekCount=0", "삭제되거나 없는 경기입니다.");
+			
+			model.addAttribute("msg", msg);
+			return "/message";			
+		}
+		if(match == null || match.getMn_me_num() != user.getMe_num()) {
+			Message msg = new Message("/manager/manage/schedule?weekCount=0", "담당 매니저가 아닙니다.");
 			
 			model.addAttribute("msg", msg);
 			return "/message";			
