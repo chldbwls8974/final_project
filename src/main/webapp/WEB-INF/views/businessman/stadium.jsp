@@ -348,7 +348,7 @@
 			          <c:if test="${stadium.st_available == 1}">
 						    <td>
 						        <strong>불가능</strong><br>
-						        <span>날짜: ${stadium.availability.av_notdate}</span><br>
+						        <span>날짜: ${stadium.availability.av_notdate_str}</span><br>
 						        <span>사유: ${stadium.availability.av_reason}</span>
 						    </td>
 					  </c:if>

@@ -118,7 +118,7 @@
 			  </label>
 			</div>
 		  </div>
-		  
+		  <br>
 		  <div id="availabilityFields" style="display: none;">
 			  <div class="form-group">
 			        <label for="av_notdate" style="font-weight: bold;">불가적용 날짜</label>
@@ -131,7 +131,6 @@
 			  </div>
 		  </div> 
 		 </div>
-		 <br>
 		  
 		  <div class="form-group-inline">
 			 <label for="st_width" style="font-weight: bold;">가로 x 세로(m)</label>
