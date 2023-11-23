@@ -27,7 +27,7 @@
 		position: relative;
 	}
 	body::before{
-/* 		content: ""; /* 가상 요소 생성 */ */
+ 		content: ""; /* 가상 요소 생성 */ 
 	    top: 0;
 	    right: 0;
 	    bottom: 0;
@@ -43,6 +43,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        margin-bottom: 50px;
     }
     /* 이미지 보이는 부분 */
     .slider__img {
@@ -81,7 +82,8 @@
     
 	.slider__btn {
     position: absolute;
-    width: 70%;
+    width: 62%;
+    opacity: 0.5;
     display: flex;
     justify-content: space-between;
     transform: translateY(-50%);
@@ -101,8 +103,8 @@
 
   .prev,
   .next {
-    background-color: transparent;
-    color: white;
+    background-color: #f3f6f4;
+    color: black;
     border: none;
     font-size: 20px;
     cursor: pointer;
