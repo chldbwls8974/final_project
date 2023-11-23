@@ -31,8 +31,9 @@
 		margin-top: 20px;
 	}
 	.keyword{
-		width: 500px;
-		padding: .8em .5em;
+		width: 870px;
+	    height: 60px;
+	    margin-top: 20px;
 		border-radius: 5px;
 		border: 1px solid #999;
 		-webkit-appearance: none;
@@ -41,9 +42,11 @@
 	}
 	.search-btn{
 		width: 80px;
-		padding: .8em .5em;
+		height: 60px;
+	    margin-top: 20px;
 		border-radius: 5px;
-		border: 1px solid #999;
+		border: none;
+		background-color: #c2f296;
 		-webkit-appearance: none;
 		-moz-appearance: none;
 		appearance: none;
@@ -285,7 +288,7 @@
 
 
 	<form action="<c:url value='/admin/stadiumlist/${facility.fa_num}'/>" method="get">
-		<div class="stadium-navigation" style="margin: 100px 0 30px 0; text-align: center;">
+		<div class="stadium-navigation" style="margin: 100px 0 30px 0; text-align: center; display: flex; justify-content: center;">
 			<select class="searchType" name="t">
 				<option value="all" <c:if test="${pm.cri.t == 'all'}">selected</c:if>>전체</option>
 				<option value="name" <c:if test="${pm.cri.t == 'name'}">selected</c:if>>경기장 이름</option>
