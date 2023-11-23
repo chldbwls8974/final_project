@@ -233,7 +233,7 @@ CREATE TABLE `availability` (
 DROP TABLE IF EXISTS `tier`;
 
 CREATE TABLE `tier` (
-	`tr_name`	varchar(10)  PRIMARY KEY	NOT NULL	COMMENT '언랭, 브론즈, 실버, 골드, 플래티넘, 다이아',
+	`tr_name`	varchar(10)  PRIMARY KEY	NOT NULL	COMMENT '스타터, 브론즈, 실버, 골드, 플래티넘, 다이아',
 	`tr_min_rating`	int	NULL	COMMENT 'null, 0, 1000, 2000, 3000, 4000'
 );
 
@@ -259,7 +259,7 @@ DROP TABLE IF EXISTS `account`;
 CREATE TABLE `account` (
 	`ac_me_num`	int PRIMARY KEY	NOT NULL,
 	`ac_ba_name`	varchar(10)	NOT NULL,
-	`ac_me_name`	varchar(5)	NOT NULL,
+	`ac_me_name`	varchar(10)	NOT NULL,
 	`ac_num`	varchar(20)	NOT NULL
 );
 
