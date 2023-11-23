@@ -91,7 +91,7 @@
 				<button type="submit" class="search-btn" onclick="getSearchList()">검색
 				</button>
 		</div>
-		<div>
+		<div class="container-sub">
 			<ul id="membertable">
 				<c:forEach items="${memberListByBlock}" var="member">
 				<li class="membertable-list">

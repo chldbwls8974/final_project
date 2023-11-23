@@ -210,9 +210,11 @@ public class MatchController {
 	@PostMapping("/application/print/team")
 	public Map<String, Object> printApplicationTeam(@RequestParam("mt_num")int mt_num, HttpSession session){
 		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO manager = matchService.selectManagerByMtNum(mt_num);
 		List<TeamVO> teamList = matchService.selectTeamByMtNum(mt_num);
 		List<EntryVO> entryList = matchService.selectEntryByMtNum(mt_num);
 		
+		map.put("manager", manager);
 		map.put("teamList", teamList);
 		map.put("entryList", entryList);
 		return map;
@@ -220,10 +222,16 @@ public class MatchController {
 	
 	@ResponseBody
 	@PostMapping("/application/print/club")
-	public Map<String, Object> printApplicationClub(@RequestParam("mt_num")int mt_num, @RequestParam("cl_num")int cl_num, HttpSession session){
+	public Map<String, Object> printApplicationClub(@RequestParam("mt_num")int mt_num, @RequestParam("cl_num")int cl_num){
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<ClubMemberVO> CMList = matchService.selectClubMemberListByMtNum(cl_num, mt_num);
-
+		MatchVO match = matchService.selectMatchByMtNum(mt_num, 0, cl_num);
+		boolean res = true;
+		if(match.getClub_entry_count() == match.getMt_personnel()) {
+			res = false;
+		}
+		
+		map.put("res", res);
 		map.put("CMList", CMList);
 		return map;
 	}

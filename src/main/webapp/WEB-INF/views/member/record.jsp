@@ -24,16 +24,23 @@
 	justify-content: center;
 	align-items: center;
 	}
-	.modal-content {
+	.modal-content1 {
 	background-color: white;
 	padding: 20px;
 	border-radius: 5px;
-	max-width: 600px;
+	width: 600px;
 	margin: 50px auto;
-		
 	}
 	.info-box{margin-bottom: 10px;
 	border: 3px solid black; box-sizing: border-box;}
+	.modal-content2 {
+	background-color: white;
+	padding: 20px;
+	border-radius: 5px;
+	max-width: 400px;
+	margin: 200px auto;
+	}
+	.report-select-sub{display: flex;}
 </style>
 </head>
 <body>
@@ -94,28 +101,29 @@
 	</div>
 	
 	<div class="modal">
-		<div class="modal-content">
+		<div class="modal-content1">
 			<div class="match-record-box">
-				<div class="modal-header">
-					<h4 class="modal-title">경기 결과</h4>
-					<button type="button" class="close btn-record-close" data-dismiss="modal">&times;</button>
-				</div>
-				<h4>참가자 리스트</h4>
+				<button type="button" class="close btn-record-close" data-dismiss="modal">&times;</button><br>
+				<p style="font-size: 20px; font-weight: bolder; margin: 0 auto; border-bottom: 8px solid #c2f296;
+				width: 20%; padding: 20px 0 10px 0; text-align: center;">참가자 리스트</p>
 				<div class="team-box">
 				</div>
-				<div class="reportBtn-box">
+				<div class="reportBtn-box" style="text-align: center; margin-top: 40px;">
 				</div>
-				<hr>
-				<div class="quarter-list-box">
+				<div class="record-content-box">
 				</div>
 			</div>
 			<div class="match-report-box">
-				<div class="modal-header">
-					<h4 class="modal-title">매치 신고</h4>
-					<button type="button" class="close btn-matchReport-close" data-dismiss="modal">&times;</button>
+				<p style="font-size: 20px; font-weight: bolder; margin: 0 auto; border-bottom: 8px solid #c2f296;
+				width: 20%; padding: 20px 0 10px 0; text-align: center;">신고하기</p>
+				<div class="report-box" style="margin-top: 50px;">
 				</div>
-				<div class="report-box">
-				</div>
+				<div style="text-align: center; margin-top: 40px;">
+					<button type="button" style="background-color: black; color: white; border-radius: 10px; width: 80px;"
+						class="btn btn-matchReport-close">닫기</button> 
+					<button  style="background-color: black; color: white; border-radius: 10px; width: 80px;"
+						class="btn btn-report-insert">신고</button> 
+				</div>	
 			</div>
 		</div>
 	</div>
@@ -124,9 +132,14 @@
 	mt_num = 0;
 	te_num = 0;
 	te_type = 0;
+	
 	mt_personnel = 0;
-	manager = ``;
 	entry = ``;
+	
+	rp_rc_num = 0;
+	rp_content = ``;
+	rp_me_num2 = 0;
+	
 	
 	$(document).ready(function() {
         $('.btn-record-open').click(function() {
@@ -160,20 +173,68 @@
 		$('.match-record-box').hide();
 		$('.match-report-box').show();
 		
+		$('.modal-content1').toggleClass('modal-content2')
+		$('.modal-content1').toggleClass('modal-content1')
+		
 		printReport()
 		$('.report-select-sub').html(entry);
 	});
 	$(document).on('click', '.btn-matchReport-close', function() {
 		$('.match-record-box').show();
 		$('.match-report-box').hide();
+
+		$('.modal-content2').toggleClass('modal-content1')
+		$('.modal-content2').toggleClass('modal-content2')
+
 	});
 	$(document).on('change', '.report-type-select', function() {
 		re_type = $(this).val();
-		
+		reset = ``;
 		if(re_type == 0){
 			$('.report-select-sub').html(entry);
+			rp_me_num2 = $('.entry_me_num').val();
+			rp_rc_num = $('.entry_rc_num').val();
+		}else if(re_type == 1){
+			$('.report-select-sub').html(reset);
+			rp_me_num2 = $('.manager_me_num').val();
+			rp_rc_num = $('.manager_rc_num').val();
+		}else if(re_type == 2){
+			$('.report-select-sub').html(reset);
+			rp_me_num2 = $('.business_me_num').val();
+			rp_rc_num = $('.business_rc_num').val();
+		}
+	})
+	$(document).on('change', '.entry_me_num', function() {
+		rp_me_num2 = $(this).val();
+	})
+	$(document).on('change', '.entry_rc_num', function() {
+		rp_rc_num = $(this).val();
+	})
+	$(document).on('keyup', '.rp_content', function() {
+		rp_content = $(this).val();
+	})
+	$(document).on('click', '.btn-report-insert', function() {
+		if(rp_rc_num == 0){
+			alert("옵션을 선택하세요.")
 		}else{
-			$('.report-select-sub').html(manager);
+			if(confirm("신고하시겠습니까?")){
+				$('.match-record-box').show();
+				$('.match-report-box').hide();
+
+				$('.modal-content2').toggleClass('modal-content1')
+				$('.modal-content2').toggleClass('modal-content2')
+				
+				data = {
+					rp_rc_num:parseInt(rp_rc_num),
+					rp_content:rp_content,
+					rp_me_num2:parseInt(rp_me_num2),
+					rp_mt_num:parseInt(mt_num)
+				}
+				
+				insertReport(data);
+			}else{
+				alert("신고취소");
+			}
 		}
 	})
 	function printTeam() {
@@ -185,6 +246,18 @@
 			data : {mt_num:mt_num},
 			dataType : 'json',
 			success : function(data) {
+				if(data.manager != null){
+					str = `
+						<p style="font-size: 20px; font-weight: bolder; margin: 0 auto; border-bottom: 8px solid #c2f296; width: 20%; padding: 20px 0 10px 0; text-align: center;">
+							경기 결과
+						</p>
+						<div class="quarter-list-box">
+						</div>
+					`;
+				}
+					
+				$('.record-content-box').html(str);
+				str = ``;
 				i = 0;
 				for(team of data.teamList){
 					str += `
@@ -261,7 +334,9 @@
 		});
 		$('.team-box').html(str);
 		str = `
-			<button class="btn-matchReport-open" value="\${mt_num}">신고하기</button>
+			<button type="button" class="btn-matchReport-open"
+				 style="background-color: black; color: white; border-radius: 10px; height: 40px; width: 120px; margin: 0 20px 30px 10px;"
+				 data-value="${board.bo_num}">신고하기</button>
 		`;
 		$('.reportBtn-box').html(str);
 	}
@@ -332,27 +407,37 @@
 			data : {mt_num:mt_num},
 			dataType : 'json',
 			success : function(data) {
-				console.log(data);
-				if(data.manager != null){
-					manager += `
-						\${data.manager.me_name}
-						<input type="text" class="rp_me_num2" value="\${data.manager.me_num}" hidden disabled>
-					`;
-				}
 				entry += `
-					<select>
+					<select class="entry_me_num form-control" style="flex: 1;">
 				`;
+				i = 0;
 				for(en of data.entryList){
+					if(i == 0){
+						rp_me_num2 = en.en_me_num;
+						rp_rc_num = 0;
+						rp_content = ``;
+					}
 					entry += `
 							<option value="\${en.en_me_num}">\${en.me_nickname}</option>
 					`;
+					i++;
 				}
 				entry += `
 					</select>
+					<select class="entry_rc_num form-control" style="flex: 1;">
+						<option value="0">분류</option>
+						<option value="1">폭행</option>
+						<option value="2">욕설</option>
+						<option value="3">지각</option>
+						<option value="4">음주</option>
+						<option value="5">비매너 플레이</option>
+						<option value="14">기타</option>
+					</select>
 				`;
+				
 				str += `
 					<div class="report-type-select-box">
-						<select class="report-type-select">
+						<select class="report-type-select form-control" style="margin-bottom: 5px;">
 							<option value="0">회원</option>
 				`;
 				if(data.manager != null){
@@ -361,16 +446,45 @@
 					`;
 				}
 				str += `
+					<option value="2">사업자</option>
+				`;
+				str += `
 						</select>
+				`;
+				if(data.manager != null){
+					str += `
+						<input type="text" class="manager_me_num" value="\${data.manager.me_num}" hidden disabled>
+						<input type="text" class="manager_rc_num" value="15" hidden disabled>
+					`;
+				}
+				str += `
+						<input type="text" class="business_me_num" value="\${data.business.me_num}" hidden disabled>
+						<input type="text" class="business_rc_num" value="16" hidden disabled>
 					</div>
-					<div class="report-select-sub">
+					<div class="report-select-sub" style="margin-bottom: 5px; min-heigth: 38px;">
 					</div>
+					<div>
+						<textarea class="rp_content" style="width: 360px; min-height: 200px;"></textarea>
+					</div>
+					
 				`;
 			}
 		});
-		console.log(entry);
 		$('.report-select-sub').html(entry);
 		$('.report-box').html(str);
+	}
+	function insertReport(data){
+		$.ajax({
+			async : false,
+			method : 'post',
+			url : '<c:url value="/member/matchReport/insert"/>',
+			data : JSON.stringify(data),
+			contentType : "application/json; charset=UTF-8",
+			success : function(data) {
+				console.log(data);
+				alert(data.msg);
+			}
+		});
 	}
 	</script>
 </body>

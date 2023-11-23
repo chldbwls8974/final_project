@@ -76,6 +76,7 @@
 			<mapping path="/member/blocklist"/>
 			<mapping path="/member/myCoupon"/>
 			<mapping path="/member/refund"/>
+			<mapping path="/member/signout"/>
 			<beans:ref bean="memberInterceptor" />
 		</interceptor>
 		<interceptor>
@@ -87,7 +88,8 @@
 			<beans:ref bean="boardBanInterceptor"/>
 		</interceptor>
 		<interceptor>
-			<mapping path="/match/**"/>
+			<mapping path="/match/searchClub"/>
+			<mapping path="/match/searchSole"/>
 			<beans:ref bean="matchBanInterceptor"/>
 		</interceptor>
 	</interceptors>

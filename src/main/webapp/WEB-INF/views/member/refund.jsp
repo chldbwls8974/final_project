@@ -38,6 +38,9 @@
 	border-radius: 20px; width: 100px; height: 45px; border: none;
 	background-color: #c2f296; color: black; font-weight: 900; margin-bottom: 20px;
 }
+.commit-btn{
+	cursor : default;
+}
 
 
 .page-link {
@@ -200,14 +203,14 @@
 				state = '승인 대기중'
 				btnStr = `
 					<div class="btn-group">
-						<button class="cancel-btn"  onclick="deleteRefund(\${a.ph_num})" >취소</button>
+						<button class="btn-outline-success cancel-btn"  onclick="deleteRefund(\${a.ph_num})" >취소</button>
 					</div>
 					`;
 			}else{
 				state = '환급 완료'
 				btnStr = `
 					<div class="btn-group">
-						<label class="commit-btn disabled" >완료</label>
+						<button class="btn-outline-dark commit-btn disabled">완료</button>
 					</div>
 					`
 			} 

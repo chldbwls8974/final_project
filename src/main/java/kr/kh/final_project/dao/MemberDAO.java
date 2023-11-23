@@ -67,4 +67,6 @@ public interface MemberDAO {
 	boolean updateRatingLoseByMeNum(@Param("me_num")int me_num);
 
 	MemberVO selectManagerByMtNum(@Param("mt_num")int mt_num);
+
+	MemberVO selectBusinessByMtNum(@Param("mt_num")int mt_num);
 }
