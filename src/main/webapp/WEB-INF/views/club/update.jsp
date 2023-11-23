@@ -463,7 +463,7 @@ input[type='checkbox']{
 		
 		<div class="form-group">
 		 <label>클럽 회비</label>
-		   <input type="number"  class="form-control" name="cl_price" id="cl_price" value="${club.cl_price }">
+		   <input type="number"  class="form-control" name="cl_price" id="cl_price" value="${club.cl_price }" required>
 		</div>
 		<div class="form-group">
 		 <label>클럽 규칙</label>

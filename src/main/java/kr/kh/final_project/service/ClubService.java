@@ -33,6 +33,8 @@ public interface ClubService {
 	List<Integer> getClubAgeList(Integer cl_num); //마이페이지-내클럽 선호연령 가져오기
 
 	List<Integer> getClubTimeList(int i, Integer cl_num); //마이페이지-내클럽 선호시간 가져오기
+
+	List<ClubVO> getClubListBySearch(String searchType, String keyword);
 	
 }
 	

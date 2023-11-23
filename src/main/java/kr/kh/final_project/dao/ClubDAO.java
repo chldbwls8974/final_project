@@ -27,4 +27,6 @@ public interface ClubDAO {
 	List<PreferredAgeVO> selectClubAgeList();
 
 	List<TeamPreferredTimeVO> selectClubTimeList();
+
+	List<ClubVO> selectClubListBySearch(@Param("searchType")String searchType, @Param("keyword")String keyword);
 }
