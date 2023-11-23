@@ -19,7 +19,7 @@
 	    flex-wrap: wrap; /* 요소가 창을 벗어나면 다음 줄로 넘어감 */
 	    justify-content: start;
 	    list-style: none;
-	    padding: 20;
+	    padding: 30px 20px 20px 70px;
 	    width: 800px;
 	    margin: 0 auto;
 	    height: auto;
@@ -145,9 +145,9 @@ div, ul, li {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizi
 			str=``;
 			for(item of a.list){
 				str += `
-					<div class="box box-emblem">
+					<div class="box box-emblem" style="margin: 0 auto; width: 20%;">
 						<li class="clublist-link clubItem">
-							<div>
+							<div style="display: flex;">
 								<a href="<c:url value='/club/detail?cl_num=\${item.cl_num}'/>">
 								 	<img alt="팀엠블럼" src="<c:url value='/clubimg\${item.cl_emblem}'/>" style="width: 70px; height: 70px; border-radius: 50%">
 								  	<p>\${item.cl_name}</p> 
