@@ -21,7 +21,8 @@
 	}
 	.keyword{
 		width: 750px;
-		padding: .8em .5em;
+	    height: 50px;
+	    margin-top: 20px;
 		border-radius: 5px;
 		border: 1px solid #999;
 		-webkit-appearance: none;
@@ -30,7 +31,8 @@
 	}
 	.search-btn{
 		width: 80px;
-		padding: .8em .5em;
+		height: 50px;
+	    margin-top: 20px;
 		border-radius: 5px;
 		border: none;
 		background-color: #c2f296;
@@ -80,7 +82,7 @@
 
 
 	<div class="member-search">
-		<div class="member-search-navigation" style="margin-top: 50px; text-align: center;">
+		<div class="member-search-navigation" style="margin-top: 50px; text-align: center; display: flex; justify-content: center;">
 				<select class="searchType" name="searchType">
 					<option value="id">아이디</option>
 					<option value="name">이름</option>

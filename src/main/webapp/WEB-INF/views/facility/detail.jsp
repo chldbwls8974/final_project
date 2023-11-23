@@ -93,8 +93,8 @@
     /* 이미지 보이는 부분 */
     .slider__img {
         position: relative;
-        width: 800px;
-        height: 800px;
+        width: 600px;
+        height: 600px;
         overflow: hidden;
     }
      /* 이미지 감싸고 있는 부모 : 움직이는 부분 */
