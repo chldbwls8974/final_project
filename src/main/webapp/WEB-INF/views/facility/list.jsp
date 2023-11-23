@@ -173,7 +173,12 @@
 								</div>
 								<div class="tbody-list" style="width: 18%">${facility.fa_phone}</div>
 								<div class="tbody-list" style="width: 8%">${facility.st_count}</div>
-								<div class="tbody-list" style="width: 20%">${facility.fa_note}</div>
+								<c:if test="${facility.fa_note != null}">
+									<div class="tbody-list" style="width: 20%">${facility.fa_note}</div>
+								</c:if>
+								<c:if test="${facility.fa_note == null}">
+									<div class="tbody-list" style="width: 20%">''</div>
+								</c:if>
 							</div>
 						</li>
 					</c:if>
@@ -205,7 +210,14 @@
 							</div>
 							<div class="tbody-list" style="width: 18%">\${facility.fa_phone}</div>
 							<div class="tbody-list" style="width: 8%">\${facility.st_count}</div>
-							<div class="tbody-list" style="width: 20%">\${facility.fa_note}</div>
+							<div class="tbody-list" style="width: 20%">
+								<c:if test="\${facility.fa_note != null}">
+									<div class="tbody-list" style="width: 20%">\${facility.fa_note}</div>
+								</c:if>
+								<c:if test="\${facility.fa_note == null}">
+									<div class="tbody-list" style="width: 20%">''</div>
+								</c:if>
+							</div>
 						</div>
 					</li>
 						
