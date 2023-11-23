@@ -172,6 +172,9 @@
 										<c:if test="${user.me_tr_name == '다이아'}">
 											<div style="text-align:center; font-size:15px; padding:0; color: white; font-weight: bolder;">5</div>
 										</c:if>
+										<c:if test="${user.me_tr_name == '마스터'}">
+											<div style="text-align:center; font-size:15px; padding:0; color: white; font-weight: bolder;">★</div>
+										</c:if>
 								</div>
 								<div style="margin-left:5px; font-weight: bolder; font-size: 15px; letter-spacing: 1px;">${user.me_tr_name}</div>
 								<c:if test="${user.me_tr_name != '스타터'}"> 
