@@ -8,10 +8,12 @@
 	<style>
 	
 	.navbar-container,
-	.navbar1, .navbar2{ background-color: transparent !important;}
 	.container-footer{margin: 0 !important;}
 	.navbar-brand, footer{ display: none !important;}
-	.navbar1, .navbar2{display: inline-block; margin-bottom: 10px;}
+	.navbar1, .navbar2{
+		display: inline-block; margin-bottom: 10px; opacity: 1;
+		background-color: transparent !important;
+	}
 	.navbar1-nav-link{margin-top: 10px;}
 	.navbar2-nav-link{position: absolute;  right: 20px !important; top: 10px; }
 	.nav-link{ color: white;}
@@ -27,14 +29,14 @@
 		position: relative;
 	}
 	body::before{
-/* 		content: ""; /* 가상 요소 생성 */ */
+ 		content: ""; /* 가상 요소 생성 */ 
 	    top: 0;
 	    right: 0;
 	    bottom: 0;
 	    left: 0;
 	    background: rgba(0, 0, 0, 0.3);
 	    position: fixed;
-	    content: none; /* 가상 요소 내용 없음으로 설정 */
+/* 	    content: none; /* 가상 요소 내용 없음으로 설정 */
     	pointer-events: none;
 	}
 	.slider__wrap {
@@ -43,6 +45,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        margin-bottom: 50px;
     }
     /* 이미지 보이는 부분 */
     .slider__img {
@@ -58,6 +61,7 @@
         /* 총 이미지 5개 */
         width: 3600px;
         height: 400px;
+        opacity: 1;
     }
     
 	/* 개별 이미지 */
@@ -81,7 +85,8 @@
     
 	.slider__btn {
     position: absolute;
-    width: 70%;
+    width: 62%;
+    opacity: 0.5;
     display: flex;
     justify-content: space-between;
     transform: translateY(-50%);
@@ -101,8 +106,8 @@
 
   .prev,
   .next {
-    background-color: transparent;
-    color: white;
+    background-color: #f3f6f4;
+    color: black;
     border: none;
     font-size: 20px;
     cursor: pointer;
@@ -119,27 +124,27 @@
 				<div class="slider__inner">
 					<div class="slider">
 						<a href="<c:url value='/'/>">
-							<img class="item" src="<c:url value='/resources/main/main10.png'/>" alt="Image5">
+							<img class="item" src="<c:url value='/resources/main/main10.png'/>" alt="Image1">
 						</a>
 					</div>
 					<div class="slider">
 						<a href="<c:url value='/match/search/club'/>">
-							<img class="item" src="<c:url value='/resources/main/main9.png'/>" alt="Image4">
+							<img class="item" src="<c:url value='/resources/main/main9.png'/>" alt="Image2">
 						</a>
 					</div>
 					<div class="slider">
 						<a href="<c:url value='/member/signup'/>">
-							<img class="item" src="<c:url value='/resources/main/main6.png'/>" alt="Image1">
+							<img class="item" src="<c:url value='/resources/main/main6.png'/>" alt="Image3">
 						</a>
 					</div>
 					<div class="slider">
 						<a href="<c:url value='/match/search/solo'/>">
-							<img class="item" src="<c:url value='/resources/main/main7.png'/>" alt="Image2">
+							<img class="item" src="<c:url value='/resources/main/main7.png'/>" alt="Image4">
 						</a>
 					</div>
 					<div class="slider">
 						<a href="<c:url value='/match/search/club'/>">
-							<img class="item" src="<c:url value='/resources/main/main8.png'/>" alt="Image3">
+							<img class="item" src="<c:url value='/resources/main/main8.png'/>" alt="Image5">
 						</a>
 					</div>
 				</div>
@@ -206,7 +211,7 @@
 	    // sliderInner.style.transform = "translateX(-3600px)";     600*1
 	
 	    // 마지막 사진이면 0번째로 이동
-	    if(currentIndex == sliderCount){
+	    if(currentIndex == sliderCount -1 ){
 	        setTimeout(()=>{
 	            sliderInner.style.transition = "0s";
 	            sliderInner.style.transform = "translateX(0px)";

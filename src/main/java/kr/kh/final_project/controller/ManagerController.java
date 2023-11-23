@@ -150,6 +150,7 @@ public class ManagerController {
 	@GetMapping("/manager/manage/match")
 	public String matchApplicationPage(Model model, HttpSession session, int mt_num) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
+		MatchVO dbMatch = matchService.selectDBMatchByMtNum(mt_num);
 		MatchVO match = managerService.selectManageMatchByMtNum(mt_num);
 		
 		if(user == null || !user.getMe_authority().equals("MANAGER")) {
@@ -158,14 +159,14 @@ public class ManagerController {
 			model.addAttribute("msg", msg);
 			return "/message";
 		}
-		if(match == null) {
+		if(dbMatch == null || dbMatch.getMt_state1() == 1) {
 			Message msg = new Message("manager/manage/schedule?weekCount=0", "삭제되거나 없는 경기입니다.");
 			
 			model.addAttribute("msg", msg);
 			return "/message";			
 		}
-		if(match.getMn_me_num() != user.getMe_num()) {
-			Message msg = new Message("/manager/manage/schedule?weekCount=0", "등록된 매니저가 아닙니다.");
+		if(match == null || match.getMn_me_num() != user.getMe_num()) {
+			Message msg = new Message("/manager/manage/schedule?weekCount=0", "담당 매니저가 아닙니다.");
 			
 			model.addAttribute("msg", msg);
 			return "/message";			

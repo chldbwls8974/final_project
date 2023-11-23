@@ -34,9 +34,8 @@
 	    border-radius: 10px;
 	}
 	.club-emblem{width: 20px; height: 20px; border-radius: 50%;}
-	.member-profile{width: 20px; height: 20px; border-radius: 50%;}
+	.member-profile{width: 20px; height: 20px; border-radius: 50%; margin-right: 5px;}
 	.team-box{display: flex;}
-	.teamList-box{flex: 1}
 	.quarter-box{width: 500px; height: 200px; margin-left: 15px;}
 	.quarter-list-box{height: 400px; overflow: scroll;}
 	.modal {
@@ -54,11 +53,27 @@
 	background-color: white;
 	padding: 20px;
 	border-radius: 5px;
-	width: 600px;
-	margin: 50px auto;
+	width: 700px;
+	margin: 10px auto;
 	}
-	.info-box{margin-bottom: 10px;
-	border: 3px solid black; box-sizing: border-box;}
+	.info-box{
+		margin-bottom: 10px;
+		box-sizing: border-box;
+		background-color: #f2f2f2;
+	    border-radius: 20px;
+	    margin: 10px auto;
+	    padding: 20px 190px;
+	    width: 500px;
+	}
+	.info-box h4{
+		text-align: center;
+		padding-top: 20px;
+    	font-weight: bold;
+	}
+	.info-box span{
+		padding-left: 20px;
+		font-weight: bold;
+	}
 	.modal-content2 {
 	background-color: white;
 	padding: 20px;
@@ -68,7 +83,7 @@
 	}
 	tr, th{ text-align: center;}
 	.table thead th{ border: none;}
-	.teamList-box{ margin-left: 50px;}
+	.teamList-box{flex: 1; margin-left: 50px;}
 	.teamList-box table tbody tr{text-align: left;}
 	.btn{
 		border-radius: 10px !important; width: 100px; height: 40px; border: none;
@@ -155,7 +170,7 @@
 			</div>
 			<div class="match-report-box">
 				<p style="font-size: 20px; font-weight: bolder; margin: 0 auto; border-bottom: 8px solid #c2f296;
-				width: 20%; padding: 20px 0 10px 0; text-align: center;">신고하기</p>
+				width: 20%; padding: 20px 0 10px 0; text-align: center; border: none;">신고하기</p>
 				<div class="report-box" style="margin-top: 50px;">
 				</div>
 				<div style="text-align: center; margin-top: 40px;">
@@ -288,9 +303,8 @@
 			success : function(data) {
 				if(data.manager != null){
 					str = `
-						<p style="font-size: 20px; font-weight: bolder; margin: 0 auto; border-bottom: 8px solid #c2f296; width: 20%; padding: 20px 0 10px 0; text-align: center;">
-							경기 결과
-						</p>
+						<p style="font-size: 20px; font-weight: bolder; margin: 20px auto; border-bottom: 8px solid #c2f296;
+						width: 20%; padding-bottom: 10px; text-align: center;">경기 결과</p>
 						<div class="quarter-list-box">
 						</div>
 					`;
@@ -375,7 +389,7 @@
 		$('.team-box').html(str);
 		str = `
 			<button type="button" class="btn-matchReport-open"
-				 style="background-color: black; color: white; border-radius: 10px; height: 40px; width: 120px; margin: 0 20px 30px 10px;"
+				 style="background-color: black; color: white; border-radius: 10px; height: 40px; width: 120px; margin: 0 20px 30px 10px; border: none;"
 				 data-value="${board.bo_num}">신고하기</button>
 		`;
 		$('.reportBtn-box').html(str);
@@ -403,13 +417,13 @@
 							<input type="number" class="recored-goal1" value="\${quarter.qu_goal1}" hidden disabled>
 							<input type="number" class="recored-goal2" value="\${quarter.qu_goal2}" hidden disabled>
 							<br>
-							\${quarter.team1}팀 : \${quarter.qu_goal1}
+							\${quarter.team1}팀 \${quarter.qu_goal1}점
 					`;
 					if(quarter.qu_goal1 > quarter.qu_goal2){
 						str += `
 								<span>승리</span>
 								<br>
-								\${quarter.team2}팀 : \${quarter.qu_goal2}
+								\${quarter.team2}팀 \${quarter.qu_goal2}점
 								<span>패배</span>
 							</div>
 						`;
@@ -417,7 +431,7 @@
 						str += `
 								<span>무승부</span>
 								<br>
-								\${quarter.team2}팀 : \${quarter.qu_goal2}
+								\${quarter.team2}팀 \${quarter.qu_goal2}점
 								<span>무승부</span>
 							</div>
 						`;
@@ -425,7 +439,7 @@
 						str += `
 								<span>패배</span>
 								<br>
-								\${quarter.team2}팀 : \${quarter.qu_goal2}
+								\${quarter.team2}팀 \${quarter.qu_goal2}점
 								<span>승리</span>
 							</div>
 						`;

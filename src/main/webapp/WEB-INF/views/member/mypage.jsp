@@ -149,6 +149,7 @@
 							</div>
 						</div>
 					</div>
+					
 					<div style="display: flex;">
 						<div class="mypoint-thumb">
 						<p style="font-size:large; font-weight: bolder; margin-bottom: 20px;">내 포인트</p>

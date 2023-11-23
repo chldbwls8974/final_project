@@ -20,7 +20,7 @@ public class AvailabilityVO {
 	    if (av_notdate == null) {
 	        return "";
 	    }
-	    SimpleDateFormat format = new SimpleDateFormat("yy년 MM월 dd일");
+	    SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
 	    return format.format(av_notdate);
 	}	
 	public void setAv_notdate_str(String time) {

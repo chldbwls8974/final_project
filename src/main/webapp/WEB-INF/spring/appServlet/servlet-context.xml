@@ -48,6 +48,8 @@
 	<beans:bean id="adminInterceptor" class="kr.kh.final_project.interceptor.AdminInterceptor"/>
 	<beans:bean id="boardBanInterceptor" class="kr.kh.final_project.interceptor.BoardBanInterceptor"/>
 	<beans:bean id="matchBanInterceptor" class="kr.kh.final_project.interceptor.MatchBanInterceptor"/>
+	<beans:bean id="businessInterceptor" class="kr.kh.final_project.interceptor.BusinessInterceptor"></beans:bean>
+	<beans:bean id="managerInterceptor" class="kr.kh.final_project.interceptor.ManagerInterceptor"></beans:bean>
 	<interceptors>
 		<interceptor>
 			<mapping path="/**"/>
@@ -90,6 +92,14 @@
 		<interceptor>
 			<mapping path="/match/search/**"/>
 			<beans:ref bean="matchBanInterceptor"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/businessman/**"/>
+			<beans:ref bean="businessInterceptor"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/manager/**"/>
+			<beans:ref bean="managerInterceptor"/>
 		</interceptor>
 	</interceptors>
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

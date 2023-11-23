@@ -13,6 +13,13 @@
 		margin: 50px auto; background-color: #f2f2f2; border-radius: 30px;
 		padding: 30px; width: 60%;
 	}
+	.owner-detail{
+		background-color: #f2f2f2;
+	    border-radius: 20px;
+	    padding: 20px;
+	    width: 42%;
+	    height: auto;
+	}
 	
 	.btn:hover{
 		background-color : outline-info;
@@ -52,7 +59,7 @@
 		appearance: none;
 	}
 	
-	.title-detail{ margin: 50px auto; background-color: #f2f2f2; border-radius: 30px;
+	.title-detail{ margin: 0 auto; background-color: #f2f2f2; border-radius: 30px;
 	padding: 30px; width: 42%; height: auto;}
 
 	.page-link {
@@ -88,7 +95,7 @@
 	/* 슬라이드쇼 */
 	.slider__wrap {
         width: 100%;
-        height: 100vh;
+        height: 80vh;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -112,8 +119,8 @@
 	/* 개별 이미지 */
 	.slider{
 		position: relative;
-		width: 800px;
-		height: 800px;
+		width: 600px;
+		height: 600px;
 	}
 	
 	.slider img{
@@ -130,14 +137,13 @@
     
 	.slider__btn {
     position: absolute;
-    width: 68%;
+    width: 43%;
     display: flex;
     justify-content: space-between;
     transform: translateY(-50%);
   }
-	
-	
-		.controller span{
+
+	.controller span{
 	  position:absolute;
 	  background-color: transparent;
 	  color: black;
@@ -158,7 +164,8 @@
   }
   .prev{ margin-left: 30px;}
   .next{ margin-right: 30px;}
-	
+  tr, td{ text-align: center;}
+  
 </style>
 <body>
 	<div class="stadium-navigation" style="margin-top: 50px; text-align: center;">
@@ -170,11 +177,18 @@
 		<div class="slider__wrap">
 			<div class="slider__img">
 				<div class="slider__inner">
-					<c:forEach items="${files}" var="file">
-						<div class="slider">
-								<img class="item" src="<c:url value='/facilityimg${file.fp_name }'/>" alt="Image">
-						</div>
-					</c:forEach>
+					<c:if test="${!empty files}">
+						<c:forEach items="${files}" var="file">
+							<div class="slider">
+									<img class="item" src="<c:url value='/facilityimg${file.fp_name }'/>" alt="Image">
+							</div>
+						</c:forEach>
+					</c:if>
+					<c:if test="${empty files}">
+					    <div class="slider">
+					        <img class="item" src="<c:url value='/resources/images/add.png'/>" alt="Image">
+					    </div>
+					</c:if>
 				</div>
 			</div>	
 	      <!-- 화살표 -->
@@ -295,7 +309,7 @@
 
 
 	<form action="<c:url value='/admin/stadiumlist/${facility.fa_num}'/>" method="get">
-		<div class="stadium-navigation" style="margin: 100px 0 30px 0; text-align: center; display: flex; justify-content: center;">
+		<div class="stadium-navigation" style="margin: 50px 0 30px 0; text-align: center; display: flex; justify-content: center;">
 			<select class="searchType" name="t">
 				<option value="all" <c:if test="${pm.cri.t == 'all'}">selected</c:if>>전체</option>
 				<option value="name" <c:if test="${pm.cri.t == 'name'}">selected</c:if>>경기장 이름</option>
@@ -383,7 +397,7 @@
 			</c:if>
 	    </ul>
 	</div>
-		<div style="text-align: left; margin-right: 10px;  float:right;">
+		<div style="text-align: end;">
 		<div class="btn-group btn-group">	    
 				<a class="btn" role="button" 
 				 style="
@@ -392,8 +406,9 @@
 						href="<c:url value='/facility/list'/>"
 						>시설 목록으로 이동</a>		
 		</div>
-	</div>	
-	<div class="title-detail">
+	</div>
+	<div style="text-align: -webkit-right;"> 
+	<div class="owner-detail">
 		<div class="match-info-box1 match-info justify-content: space-between">
 			<div>
 				<label class="text">사업자명 </label>
@@ -414,6 +429,7 @@
 				</div>
 			</div>	
 		</div>
+	</div>
 	</div>
 	
 		

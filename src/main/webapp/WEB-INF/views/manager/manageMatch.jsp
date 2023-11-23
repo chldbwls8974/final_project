@@ -47,6 +47,12 @@
 		margin-bottom: 20px; width: 200px; text-align: center;
 		height: 40px; border-radius: 5px;
 	}
+	.quarter-list-box{
+		background-color: #f2f2f2;
+	    width: 92%;
+	    margin-left: 45px;
+	    padding-bottom: 50px;
+	}
 	.quarter-type-box input{ margin: 0 0 10px 60px; width: 60px; border-radius: 5px; }
 	.btn-insert-quarter-box{ text-align: center; margin-top: 10px;}
 	.btn-insert-quarter{
@@ -54,9 +60,8 @@
 		background-color: #c2f296;
 	}
 	.quarter-box{
-		display: table; width: 92%; height: 200px; 
-		background-color: #f2f2f2; border-radius: 20px;
-		margin: 0 40px 20px 45px; padding-bottom: 30px;
+		display: contents; width: 92%; height: 200px; border-radius: 20px;
+		margin: 0 40px 20px 45px;
 	}
 	.btn-quarter-box{
 		text-align: center;
