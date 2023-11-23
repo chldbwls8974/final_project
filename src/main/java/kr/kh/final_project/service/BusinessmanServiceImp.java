@@ -1,6 +1,7 @@
 package kr.kh.final_project.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import kr.kh.final_project.vo.AvailabilityVO;
 import kr.kh.final_project.vo.BusinessmanVO;
 import kr.kh.final_project.vo.FacilityPictureVO;
 import kr.kh.final_project.vo.FacilityVO;
+import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.OperatingVO;
 import kr.kh.final_project.vo.RegionVO;
@@ -236,8 +238,10 @@ public class BusinessmanServiceImp implements BusinessmanService{
 			return false;
 		}
 		boolean insertStadiumInfo = stadiumDao.insertStadium(stadium);
-		availability.setAv_st_num(stadium.getSt_num());
-		boolean insertAvailabilityInfo = stadiumDao.insertAvailability(availability);
+		if(stadium.getSt_available() == 1) {
+			availability.setAv_st_num(stadium.getSt_num());
+			boolean insertAvailabilityInfo = stadiumDao.insertAvailability(availability);
+		}
 		return insertStadiumInfo;
 	}
 	//경기장번호로 경기장 정보가져오기
@@ -260,20 +264,24 @@ public class BusinessmanServiceImp implements BusinessmanService{
 		}
 		//경기장 번호를 이용하여 경기장 정보를 가져옴
 		StadiumVO dbStadium = stadiumDao.selectStadium(stadium.getSt_num());
+		availability.setAv_st_num(stadium.getSt_num());
 		//경기장 정보에서 경기장의 시설 번호와 시설 번호가 같은지 확인 
 		if(dbStadium == null) { 
 			return false;
 		}
+		AvailabilityVO dbA = stadiumDao.selectAvailability(stadium.getSt_num());
 		if(stadium.getSt_available() == 0 || stadium.getSt_available() == 2) {
-	        boolean deleteAvailabilityInfo = stadiumDao.deleteAvailability(stadium.getSt_num());
+	        stadiumDao.deleteAvailability(stadium.getSt_num());
+		}else {
+			if(dbA == null) {
+				stadiumDao.insertAvailability(availability);
+			}else {
+				stadiumDao.updateAvailability(availability);
+			}
 		}
+		
 		boolean res = stadiumDao.updateStadium(stadium);
 		
-		availability.setAv_st_num(stadium.getSt_num());
-		boolean updateAvailabilityInfo = stadiumDao.updateAvailability(availability);
-		if(updateAvailabilityInfo) {
-			
-		}
 		return res;
 	}
 	

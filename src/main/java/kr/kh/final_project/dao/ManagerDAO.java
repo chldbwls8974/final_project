@@ -33,6 +33,8 @@ public interface ManagerDAO {
 	int selectTotalCount2(@Param("cri")Criteria cri);
 	// 매니저신청 게시글을 삭제하기
 	boolean deleteBoardManagerList(@Param("manager")ManagerVO manager);
+
+	void deleteManagerByMtNum(@Param("mt_num")int mt_num);
 	
 	
 }

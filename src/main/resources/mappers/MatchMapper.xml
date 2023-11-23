@@ -966,4 +966,62 @@
 		where
 			mt_num = #{mt_num}
 	</select>
+	<select id="selectMatchByStNumAll" resultType="kr.kh.final_project.vo.MatchVO">
+		select
+			*
+		from
+			`match`
+		where
+			mt_st_num = #{st_num} and
+			mt_state1 in (0, 1) and
+            mt_date >= curdate()
+	</select>
+	<select id="selectMatchByStNumSolo" resultType="kr.kh.final_project.vo.MatchVO">
+		select
+			*
+		from
+			`match`
+		where
+			mt_st_num = #{st_num} and
+			mt_state1 = 0 and
+			mt_type = 1 and
+            mt_date >= curdate()
+	</select>
+	<select id="selectMatchByStNumClub" resultType="kr.kh.final_project.vo.MatchVO">
+		select
+			*
+		from
+			`match`
+		where
+			mt_st_num = #{st_num} and
+			mt_state1 = 0 and
+			mt_type = 2 and
+            mt_date >= curdate()
+	</select>
+	<delete id="deleteMatchByMtNum">
+		delete from `match`
+		where mt_num = #{mt_num}
+	</delete>
+	<select id="selectMatchByAvBefore" resultType="kr.kh.final_project.vo.MatchVO">
+		select
+			*
+		from
+			`match`
+		where
+			mt_st_num = #{st_num} and
+			mt_state1 in (0, 1) and
+            mt_date >= curdate() and
+            #{av_notdate} > mt_date
+	</select>
+	<select id="selectMatchByAvAfter" resultType="kr.kh.final_project.vo.MatchVO">
+		select
+			*
+		from
+			`match`
+		where
+			mt_st_num = #{st_num} and
+			mt_state1 in (0, 1) and
+            mt_date >= curdate() and
+            mt_date >= #{av_notdate}
+	</select>
 </mapper>

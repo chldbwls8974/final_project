@@ -119,8 +119,8 @@
 	/* 개별 이미지 */
 	.slider{
 		position: relative;
-		width: 600px;
-		height: 600px;
+		width: auto;
+		height: auto;
 	}
 	
 	.slider img{
@@ -290,7 +290,7 @@
 		</div>
 	</div>
 	<c:if test="${facility.fa_note != null && facility.fa_note != ''}">
-		<div class="title-detail">
+		<div class="title-detail" style="margin: 10px auto;">
 			<div class="facility-info-box">
 				<div class="facility-info-icon">
 					<img

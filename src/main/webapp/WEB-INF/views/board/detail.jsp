@@ -192,7 +192,7 @@ form{
 					<button type="button"
 							class="btn btn-delete"
 							style="background-color: #d7fdb5; color: black; border-radius: 10px; height: 45px; width: 400px;"
-							onclick="location.href='<c:url value='/board/delete?bo_num=${board.bo_num}'/>'">삭제하기
+							onclick="location.href='<c:url value='/board/delete?bo_num=${board.bo_num}&bo_bt_num=${board.bo_bt_num}'/>'">삭제하기
 					</button><br>
 				</div>
 			</c:if>

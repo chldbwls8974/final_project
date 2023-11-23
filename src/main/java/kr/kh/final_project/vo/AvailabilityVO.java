@@ -24,7 +24,7 @@ public class AvailabilityVO {
 	    return format.format(av_notdate);
 	}	
 	public void setAv_notdate_str(String time) {
-		SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm");
+		SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd");
 		try {
 			av_notdate = format.parse(time);
 		} catch (ParseException e) {

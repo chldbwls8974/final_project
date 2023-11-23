@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.pagination.PageMaker;
 import kr.kh.final_project.service.BusinessmanService;
+import kr.kh.final_project.service.MatchService;
 import kr.kh.final_project.service.ScheduleService;
 import kr.kh.final_project.util.Message;
 import kr.kh.final_project.vo.AvailabilityVO;
@@ -40,7 +41,10 @@ public class BusinessmanController {
 	ScheduleService scheduleBService;
 		
 	@Autowired
-	private BusinessmanService businessmanService;
+	BusinessmanService businessmanService;
+	
+	@Autowired
+	MatchService matchService;
 	
 	//시설 목록, 페이지네이션, 검색창
 		@GetMapping("/businessman/facility")
@@ -405,7 +409,6 @@ public class BusinessmanController {
 			if(stadium.getSt_available() == 1) {
 				updateAvailabilityInfo = businessmanService.getAvailability(st_num);				
 			}
-			System.out.println(updateAvailabilityInfo);
 			model.addAttribute("updateAvailabilityInfo", updateAvailabilityInfo);
 			model.addAttribute("stadium", stadium);
 			return "/businessman/stadiumUpdate";
@@ -416,9 +419,10 @@ public class BusinessmanController {
 				AvailabilityVO availability) {
 			//'j'에 해당 경기장의 '시설 번호' 저장 
 			int j = stadium.getSt_fa_num();
-			System.out.println(availability);
 			boolean res = businessmanService.updateStadium(stadium, availability);
 			if(res) {
+				matchService.updateMatchByStadium(stadium, availability);
+				
 				model.addAttribute("msg", "경기장 수정이 완료되었습니다.");
 				model.addAttribute("url", "/businessman/stadium/" + j);
 			}else {

@@ -3,6 +3,7 @@ package kr.kh.final_project.service;
 import java.util.Date;
 import java.util.List;
 
+import kr.kh.final_project.vo.AvailabilityVO;
 import kr.kh.final_project.vo.ClubMemberVO;
 import kr.kh.final_project.vo.ClubVO;
 import kr.kh.final_project.vo.CouponVO;
@@ -13,6 +14,7 @@ import kr.kh.final_project.vo.MatchVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.QuarterVO;
 import kr.kh.final_project.vo.RegionVO;
+import kr.kh.final_project.vo.StadiumVO;
 import kr.kh.final_project.vo.TeamVO;
 
 public interface MatchService {
@@ -82,5 +84,7 @@ public interface MatchService {
 	MemberVO selecBusinessByMtNum(int mt_num);
 
 	MatchVO selectDBMatchByMtNum(int mt_num);
+
+	void updateMatchByStadium(StadiumVO stadium, AvailabilityVO availability);
 
 }

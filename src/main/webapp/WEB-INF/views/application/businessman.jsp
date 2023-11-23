@@ -11,7 +11,7 @@
 }
 .title{ width:20%; font-size: 35px; font-weight: bolder; text-align: center; letter-spacing: -3px;
 	border-bottom: 8px solid #c2f296; padding-bottom: 10px;  margin: 0 auto; margin-bottom: 30px;}
-.title-detail{ margin: 50px auto; background-color: #f2f2f2; border-radius: 30px;
+.title-detail{ margin: 0 auto; background-color: #f2f2f2; border-radius: 30px;
 	padding: 30px; width: 42%;}
 .form-group{ text-align: center;}
 .form-group label{ text-align: center; display: block; margin: 0 auto;}
@@ -25,7 +25,7 @@
 	background-color: #c2f296; cursor: pointer; border-radius: 5px;}
 
 
-.was-validated .btn{ display: block; margin: 0 auto; margin-bottom: 30px;}
+.was-validated .btn{ margin: 0 auto; margin-bottom: 30px;}
 .btn{border-radius: 3px; width: 300px; height: 45px; border: none; 
 	background-color: #0c0c0c; color: white; font-weight: 900; margin-top: 80px;}
 
@@ -79,7 +79,7 @@
 			<input type="file" class="form-control" name="files" id="file2" style="display: none;"> <br>
 		</div>	
 	  </div>
-	  <div>
+	  <div style="text-align: center;">
   	  	<a href="<c:url value='/'/>"><button type="submit" class="btn">신청하기</button></a>	
   	  </div>
 	</form>
