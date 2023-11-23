@@ -73,7 +73,24 @@
 		width: 40px; height: 30px; margin: 0 3px 0 0; border: none; font-size: 13px;
 		border-radius: 5px; background-color: #c7efa2; color: black;
 	}
-	
+	.modal {
+	display: none;
+	position: fixed;
+	top: 0%;
+	left: 0%;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.3);
+	justify-content: center;
+	align-items: center;
+	}
+	.modal-content {
+	background-color: white;
+	padding: 20px;
+	border-radius: 5px;
+	width: 600px;
+	margin: 50px auto;
+	}
 </style>
 
 </head>
@@ -132,7 +149,9 @@
 							</div>	
 						</div>
 						<div class="mytier-thumb">
-							<p class="mytier-title">내 티어</p>
+							<p class="mytier-title">내 티어
+							<button class="tier-tip btn-info-open" style="width: 20px; height: 20px; margin-left: 5px; background-color: black; color: white;
+							font-weight: bold; text-align: center; line-height: 9px; padding-left: 6px;">!</button></p>
 							<div class="mytier-box">
 								<div style="padding:0px; width:23px; height:25px; border-radius:5px; background-color: black;">
 										<c:if test="${user.me_tr_name == '스타터'}">
@@ -298,6 +317,71 @@
 			</div>	
 		</section>
 </div>	
+	<div class="modal">
+		<div class="modal-content">
+			<div class="match-record-box">
+				<button type="button" class="close btn-info-close" data-dismiss="modal">&times;</button><br>
+				<p style="font-size: 20px; font-weight: bolder; margin: 0 auto; border-bottom: 8px solid #c2f296;
+				width: 20%; padding: 20px 0 10px 0; text-align: center;">티어</p>
+				<div class="tier-info-box">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>등급</th>
+								<th>점수 범위</th>
+								<th>승점 포인트</th>
+								<th>실점 포인트</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>스타터</td>
+								<td>없음</td>
+								<td>200</td>
+								<td>0</td>
+							</tr>
+							<tr>
+								<td>브론즈</td>
+								<td>0이상 1000미만</td>
+								<td>200</td>
+								<td>40</td>
+							</tr>
+							<tr>
+								<td>실버</td>
+								<td>1000이상 2000미만</td>
+								<td>160</td>
+								<td>80</td>
+							</tr>
+							<tr>
+								<td>골드</td>
+								<td>2000이상 3000미만</td>
+								<td>120</td>
+								<td>120</td>
+							</tr>
+							<tr>
+								<td>플래티넘</td>
+								<td>3000이상 4000미만</td>
+								<td>80</td>
+								<td>160</td>
+							</tr>
+							<tr>
+								<td>다이아</td>
+								<td>4000이상 5000미만</td>
+								<td>40</td>
+								<td>200</td>
+							</tr>
+							<tr>
+								<td>마스터</td>
+								<td>5000(최고점)</td>
+								<td>0</td>
+								<td>200</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 <script type="text/javascript">
 
@@ -335,5 +419,22 @@
 		$('.leaderlist-box').show();
 		
 	})
+	 $(document).ready(function() {
+        $('.btn-info-open').click(function() {
+            showModal();
+        });
+
+        $('.btn-info-close').click(function() {
+            closeModal();
+        });
+
+        function showModal() {
+            $('.modal').fadeIn();
+        }
+
+        function closeModal() {
+            $('.modal').fadeOut();
+        }
+    });
 </script>
 </html>

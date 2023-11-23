@@ -80,7 +80,8 @@
 					<p style="font-size: 19px; font-weight: bold; margin-bottom: 30px;">
 						<c:if test="${match.mt_type == 1}">개인 매치</c:if>
 						<c:if test="${match.mt_type == 2}">클럽 매치</c:if>
-						<span style="color: #749f4c;">${match.mt_rule == 0 ? '친선전' : '경쟁전'} </span>(${match.mt_personnel}vs${match.mt_personnel})
+						<span style="color: #749f4c;">${match.mt_rule == 0 ? '친선전' : '경쟁전'} </span><br>
+						${match.mt_personnel}vs${match.mt_personnel}
 					</p>
 					<c:if test="${match.mt_rule == 1}">
 						<div>
@@ -205,7 +206,7 @@
 		</div>
 		<div class="contents-box right-box">
 			<c:if test="${cl_num != 0 && match.team_count != 0}">
-				<div class="info-box team-box">
+				<div class="info-box team-box" style="min-height: 300px;">
 				</div>
 			</c:if>
 			<c:if test="${(match.mt_type == 0 && cl_num == 0) || (match.mt_type == 1 && cl_num == 0)}">
@@ -541,6 +542,7 @@
 			success : function(data) {
 				str += `
 					<div class="club-member-box">
+						<p>대기자 리스트</p>
 				`;
 				for(cm of data.CMList){
 					if(cm.en_num == 0){
@@ -550,9 +552,11 @@
 									<img class="member-profile" alt="멤버프로필" src="<c:url value='/memberimg\${cm.me_profile}'/>">\${cm.me_nickname}
 							`;
 							if(${authority == 'LEADER'}){
-								str += `
-									<button class="entry-btn btn btn-primary entry-add-btn">등록</button>
-								`;
+								if(data.res){
+									str += `
+										<button class="entry-btn btn btn-primary entry-add-btn">등록</button>
+									`;
+								}
 							}
 							str += `
 									<br>
@@ -583,6 +587,7 @@
 				str += `
 					</div>
 					<div class="club-entry-box">
+						<p>참가자 리스트</p>
 				`;
 				for(cm of data.CMList){
 					if(cm.en_num != 0){
