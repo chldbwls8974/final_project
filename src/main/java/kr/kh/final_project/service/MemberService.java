@@ -110,5 +110,11 @@ public interface MemberService {
 	
 	PenaltyVO getMemberPenalty(MemberVO member, String str);
 	
+	int getMemberPointHistoryCount(MemberVO user, Criteria cri);
+	
+	List<PointHistoryVO> getMemberPointHistory(MemberVO user, Criteria cri);
+	
+	
+	
 
 }

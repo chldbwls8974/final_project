@@ -89,7 +89,6 @@ form{
 	border-radius: 5px;
 	max-width: 400px;
 	margin: 200px auto;
-	
 }
 </style>    
 </head>

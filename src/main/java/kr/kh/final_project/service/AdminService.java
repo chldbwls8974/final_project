@@ -73,7 +73,7 @@ public interface AdminService {
 	
 	void noteregistration(int[] price, String date, MemberVO user);
 	//매치 신고를 처리하는 메서드
-	Message matchReportInsert(ReportVO report);
+	String matchReportInsert(ReportVO report);
 	
 	// 사업자 등록 조회(3)
 	List<BusinessmanVO> getBusinessListByInsert(Criteria cri);

@@ -10,8 +10,28 @@
 <style type="text/css">
 	.container-body{
 		background-color: #f2f2f2; height: auto; margin-top: 20px;
-		border-radius: 20px; padding: 100px;
+		border-radius: 20px; padding: 50px;
 	}
+	form{
+		padding-top:50px;
+	}
+	.form-control{border-radius: 30px; width: 500px;}
+	.form-group{text-align: center;}
+	.form-group label{display: inline-block; text-align: center;}
+	.form-group button, .form-group select{margin: 0 auto;}
+	.form-group input{margin: 0 auto;}
+	.fa_pay{
+		width: 55%; background-color: #e4f7d3;
+		border-radius: 20px; padding:30px; margin:auto;
+	}
+	.input-file{display: none;}
+	.img-thumbnail{
+		cursor: pointer; width:200px; height:auto; 
+		background-color: transparent; border: none;
+	}
+	.btn{ border-radius: 10px; width: 300px; height: 45px; border: none;
+	background-color: #c2f296; color: black; margin-top: 10px;}
+	
 </style>
 <body>
 	<div class="facilityUpdate-navigation" style="margin-top: 50px; text-align: center;">
@@ -68,193 +88,215 @@
 		  </div>
 		  <br>
 		  
-		  <h5 class="text-info" style="font-weight: bold;">[부대시설]</h5>
-		  <div class="form-group">
-		    <label for="fa_pay" style="font-weight: bold;">주차장</label><br>
-		    <div class="form-check-inline">
-		        <label class="form-check-label">
-		            <c:choose>
-		                <c:when test="${facility.fa_pay == '0'}">
-		                    <input type="radio" class="form-check-input" name="fa_pay" value="0" checked>없음
-		                </c:when>
-		                <c:otherwise>
-		                    <input type="radio" class="form-check-input" name="fa_pay" value="0">없음
-		                </c:otherwise>
-		            </c:choose>
-		        </label>
-		    </div>
-		    <div class="form-check-inline">
-		        <label class="form-check-label">
-		            <c:choose>
-		                <c:when test="${facility.fa_pay == '1'}">
-		                    <input type="radio" class="form-check-input" name="fa_pay" value="1" checked>무료
-		                </c:when>
-		                <c:otherwise>
-		                    <input type="radio" class="form-check-input" name="fa_pay" value="1">무료
-		                </c:otherwise>
-		            </c:choose>
-		        </label>
-		    </div>
-		    <div class="form-check-inline">
-		        <label class="form-check-label">
-		            <c:choose>
-		                <c:when test="${facility.fa_pay == '2'}">
-		                    <input type="radio" class="form-check-input" name="fa_pay" value="2" checked>유료
-		                </c:when>
-		                <c:otherwise>
-		                    <input type="radio" class="form-check-input" name="fa_pay" value="2">유료
-		                </c:otherwise>
-		            </c:choose>
-		        </label>
-		    </div>
-		  </div>
-	
-		  <div class="form-group">
-		    <label for="fa_locker" style="font-weight: bold;">탈의실</label><br>
-		    <div class="form-check-inline">
-		        <label class="form-check-label">
-		            <c:choose>
-		                <c:when test="${facility.fa_locker == '0'}">
-		                    <input type="radio" class="form-check-input" name="fa_locker" value="0" checked>없음
-		                </c:when>
-		                <c:otherwise>
-		                    <input type="radio" class="form-check-input" name="fa_locker" value="0">없음
-		                </c:otherwise>
-		            </c:choose>
-		        </label>
-		    </div>
-		    <div class="form-check-inline">
-		        <label class="form-check-label">
-		            <c:choose>
-		                <c:when test="${facility.fa_locker == '1'}">
-		                    <input type="radio" class="form-check-input" name="fa_locker" value="1" checked>있음
-		                </c:when>
-		                <c:otherwise>
-		                    <input type="radio" class="form-check-input" name="fa_locker" value="1">있음
-		                </c:otherwise>
-		            </c:choose>
-		        </label>
-		    </div>
-		  </div>
-	
-		  <div class="form-group">
-		    <label for="fa_toilet" style="font-weight: bold;">화장실</label><br>
-		    <div class="form-check-inline">
-		        <label class="form-check-label">
-		            <c:choose>
-		                <c:when test="${facility.fa_toilet == '0'}">
-		                    <input type="radio" class="form-check-input" name="fa_toilet" value="0" checked>없음
-		                </c:when>
-		                <c:otherwise>
-		                    <input type="radio" class="form-check-input" name="fa_toilet" value="0">없음
-		                </c:otherwise>
-		            </c:choose>
-		        </label>
-		    </div>
-		    <div class="form-check-inline">
-		        <label class="form-check-label">
-		            <c:choose>
-		                <c:when test="${facility.fa_toilet == '1'}">
-		                    <input type="radio" class="form-check-input" name="fa_toilet" value="1" checked>있음
-		                </c:when>
-		                <c:otherwise>
-		                    <input type="radio" class="form-check-input" name="fa_toilet" value="1">있음
-		                </c:otherwise>
-		            </c:choose>
-		        </label>
-		    </div>
-		  </div>
-		  
-		  
-		  <div class="form-group">
-		    <label for="fa_shower" style="font-weight: bold;">샤워실</label><br>
-		    <div class="form-check-inline">
-		        <label class="form-check-label">
-		            <c:choose>
-		                <c:when test="${facility.fa_shower == '0'}">
-		                    <input type="radio" class="form-check-input" name="fa_shower" value="0" checked>없음
-		                </c:when>
-		                <c:otherwise>
-		                    <input type="radio" class="form-check-input" name="fa_shower" value="0">없음
-		                </c:otherwise>
-		            </c:choose>
-		        </label>
-		    </div>
-		    <div class="form-check-inline">
-		        <label class="form-check-label">
-		            <c:choose>
-		                <c:when test="${facility.fa_shower == '1'}">
-		                    <input type="radio" class="form-check-input" name="fa_shower" value="1" checked>있음
-		                </c:when>
-		                <c:otherwise>
-		                    <input type="radio" class="form-check-input" name="fa_shower" value="1">있음
-		                </c:otherwise>
-		            </c:choose>
-		        </label>
-		    </div>
-		  </div>
-		  
-		  	  <div class="form-group">
-		    <label for="fa_smoking" style="font-weight: bold;">흡연장</label><br>
-		    <div class="form-check-inline">
-		        <label class="form-check-label">
-		            <c:choose>
-		                <c:when test="${facility.fa_smoking == '0'}">
-		                    <input type="radio" class="form-check-input" name="fa_smoking" value="0" checked>없음
-		                </c:when>
-		                <c:otherwise>
-		                    <input type="radio" class="form-check-input" name="fa_smoking" value="0">없음
-		                </c:otherwise>
-		            </c:choose>
-		        </label>
-		    </div>
-		    <div class="form-check-inline">
-		        <label class="form-check-label">
-		            <c:choose>
-		                <c:when test="${facility.fa_smoking == '1'}">
-		                    <input type="radio" class="form-check-input" name="fa_smoking" value="1" checked>있음
-		                </c:when>
-		                <c:otherwise>
-		                    <input type="radio" class="form-check-input" name="fa_smoking" value="1">있음
-		                </c:otherwise>
-		            </c:choose>
-		        </label>
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="fa_machine" style="font-weight: bold;">자판기</label><br>
-		    <div class="form-check-inline">
-		        <label class="form-check-label">
-		            <c:choose>
-		                <c:when test="${facility.fa_machine == '0'}">
-		                    <input type="radio" class="form-check-input" name="fa_machine" value="0" checked>없음
-		                </c:when>
-		                <c:otherwise>
-		                    <input type="radio" class="form-check-input" name="fa_machine" value="0">없음
-		                </c:otherwise>
-		            </c:choose>
-		        </label>
-		    </div>
-		    <div class="form-check-inline">
-		        <label class="form-check-label">
-		            <c:choose>
-		                <c:when test="${facility.fa_machine == '1'}">
-		                    <input type="radio" class="form-check-input" name="fa_machine" value="1" checked>있음
-		                </c:when>
-		                <c:otherwise>
-		                    <input type="radio" class="form-check-input" name="fa_machine" value="1">있음
-		                </c:otherwise>
-		            </c:choose>
-		        </label>
-		    </div>
+		  <h5 class="text-info" style="font-weight: bold; text-align: center; color: black !important;">부대시설</h5>
+		  <div class="form-group fa_pay">
+			  <div class="form-group">
+			    <label for="fa_pay" style="font-weight: bold;">주차장</label><br>
+			    <div class="form-check-inline">
+			        <label class="form-check-label">
+			            <c:choose>
+			                <c:when test="${facility.fa_pay == '0'}">
+			                    <input type="radio" class="form-check-input" name="fa_pay" value="0" checked>없음
+			                </c:when>
+			                <c:otherwise>
+			                    <input type="radio" class="form-check-input" name="fa_pay" value="0">없음
+			                </c:otherwise>
+			            </c:choose>
+			        </label>
+			    </div>
+			    <div class="form-check-inline">
+			        <label class="form-check-label">
+			            <c:choose>
+			                <c:when test="${facility.fa_pay == '1'}">
+			                    <input type="radio" class="form-check-input" name="fa_pay" value="1" checked>무료
+			                </c:when>
+			                <c:otherwise>
+			                    <input type="radio" class="form-check-input" name="fa_pay" value="1">무료
+			                </c:otherwise>
+			            </c:choose>
+			        </label>
+			    </div>
+			    <div class="form-check-inline">
+			        <label class="form-check-label">
+			            <c:choose>
+			                <c:when test="${facility.fa_pay == '2'}">
+			                    <input type="radio" class="form-check-input" name="fa_pay" value="2" checked>유료
+			                </c:when>
+			                <c:otherwise>
+			                    <input type="radio" class="form-check-input" name="fa_pay" value="2">유료
+			                </c:otherwise>
+			            </c:choose>
+			        </label>
+			    </div>
+			  </div>
+		
+			  <div class="form-group">
+			    <label for="fa_locker" style="font-weight: bold;">탈의실</label><br>
+			    <div class="form-check-inline">
+			        <label class="form-check-label">
+			            <c:choose>
+			                <c:when test="${facility.fa_locker == '0'}">
+			                    <input type="radio" class="form-check-input" name="fa_locker" value="0" checked>없음
+			                </c:when>
+			                <c:otherwise>
+			                    <input type="radio" class="form-check-input" name="fa_locker" value="0">없음
+			                </c:otherwise>
+			            </c:choose>
+			        </label>
+			    </div>
+			    <div class="form-check-inline">
+			        <label class="form-check-label">
+			            <c:choose>
+			                <c:when test="${facility.fa_locker == '1'}">
+			                    <input type="radio" class="form-check-input" name="fa_locker" value="1" checked>있음
+			                </c:when>
+			                <c:otherwise>
+			                    <input type="radio" class="form-check-input" name="fa_locker" value="1">있음
+			                </c:otherwise>
+			            </c:choose>
+			        </label>
+			    </div>
+			  </div>
+		
+			  <div class="form-group">
+			    <label for="fa_toilet" style="font-weight: bold;">화장실</label><br>
+			    <div class="form-check-inline">
+			        <label class="form-check-label">
+			            <c:choose>
+			                <c:when test="${facility.fa_toilet == '0'}">
+			                    <input type="radio" class="form-check-input" name="fa_toilet" value="0" checked>없음
+			                </c:when>
+			                <c:otherwise>
+			                    <input type="radio" class="form-check-input" name="fa_toilet" value="0">없음
+			                </c:otherwise>
+			            </c:choose>
+			        </label>
+			    </div>
+			    <div class="form-check-inline">
+			        <label class="form-check-label">
+			            <c:choose>
+			                <c:when test="${facility.fa_toilet == '1'}">
+			                    <input type="radio" class="form-check-input" name="fa_toilet" value="1" checked>있음
+			                </c:when>
+			                <c:otherwise>
+			                    <input type="radio" class="form-check-input" name="fa_toilet" value="1">있음
+			                </c:otherwise>
+			            </c:choose>
+			        </label>
+			    </div>
+			  </div>
+			  
+			  
+			  <div class="form-group">
+			    <label for="fa_shower" style="font-weight: bold;">샤워실</label><br>
+			    <div class="form-check-inline">
+			        <label class="form-check-label">
+			            <c:choose>
+			                <c:when test="${facility.fa_shower == '0'}">
+			                    <input type="radio" class="form-check-input" name="fa_shower" value="0" checked>없음
+			                </c:when>
+			                <c:otherwise>
+			                    <input type="radio" class="form-check-input" name="fa_shower" value="0">없음
+			                </c:otherwise>
+			            </c:choose>
+			        </label>
+			    </div>
+			    <div class="form-check-inline">
+			        <label class="form-check-label">
+			            <c:choose>
+			                <c:when test="${facility.fa_shower == '1'}">
+			                    <input type="radio" class="form-check-input" name="fa_shower" value="1" checked>있음
+			                </c:when>
+			                <c:otherwise>
+			                    <input type="radio" class="form-check-input" name="fa_shower" value="1">있음
+			                </c:otherwise>
+			            </c:choose>
+			        </label>
+			    </div>
+			  </div>
+			  
+			  	  <div class="form-group">
+			    <label for="fa_smoking" style="font-weight: bold;">흡연장</label><br>
+			    <div class="form-check-inline">
+			        <label class="form-check-label">
+			            <c:choose>
+			                <c:when test="${facility.fa_smoking == '0'}">
+			                    <input type="radio" class="form-check-input" name="fa_smoking" value="0" checked>없음
+			                </c:when>
+			                <c:otherwise>
+			                    <input type="radio" class="form-check-input" name="fa_smoking" value="0">없음
+			                </c:otherwise>
+			            </c:choose>
+			        </label>
+			    </div>
+			    <div class="form-check-inline">
+			        <label class="form-check-label">
+			            <c:choose>
+			                <c:when test="${facility.fa_smoking == '1'}">
+			                    <input type="radio" class="form-check-input" name="fa_smoking" value="1" checked>있음
+			                </c:when>
+			                <c:otherwise>
+			                    <input type="radio" class="form-check-input" name="fa_smoking" value="1">있음
+			                </c:otherwise>
+			            </c:choose>
+			        </label>
+			    </div>
+			  </div>
+			  
+			  <div class="form-group">
+			    <label for="fa_machine" style="font-weight: bold;">자판기</label><br>
+			    <div class="form-check-inline">
+			        <label class="form-check-label">
+			            <c:choose>
+			                <c:when test="${facility.fa_machine == '0'}">
+			                    <input type="radio" class="form-check-input" name="fa_machine" value="0" checked>없음
+			                </c:when>
+			                <c:otherwise>
+			                    <input type="radio" class="form-check-input" name="fa_machine" value="0">없음
+			                </c:otherwise>
+			            </c:choose>
+			        </label>
+			    </div>
+			    <div class="form-check-inline">
+			        <label class="form-check-label">
+			            <c:choose>
+			                <c:when test="${facility.fa_machine == '1'}">
+			                    <input type="radio" class="form-check-input" name="fa_machine" value="1" checked>있음
+			                </c:when>
+			                <c:otherwise>
+			                    <input type="radio" class="form-check-input" name="fa_machine" value="1">있음
+			                </c:otherwise>
+			            </c:choose>
+			        </label>
+			    </div>
+			  </div>
 		  </div>
 		  <br>
-		  <div class="form-group">
-			  <label for="fa_note" style="font-weight: bold;">특이사항</label> &nbsp;<span class="badge badge-secondary">선택</span>
-			  <textarea class="form-control" rows="5" id="fa_note" name="fa_note">${facility.fa_note}</textarea>
+<!-- 		  특이사항 -->
+		  	<div class="form-group">
+				<label for="fa_note" style="font-weight: bold; text-align:center;">특이사항</label> &nbsp;<span class="badge badge-secondary">선택</span>
+				<div style="text-align:center;" >
+				<textarea class="form-control"  rows="5" id="fa_note" name="fa_note" style="display:inline-block"> ${facility.fa_note}</textarea>
+				</div>
+			</div>
+			
+			<!-- 시설 사진 -->
+<%-- 			${files } --%>
+<!-- 			여기해야함. 사진이 있는 경우 없는경우 -->
+			<div class="form-group picture-box">
+			 <label style="font-weight: bold;">시설사진</label> &nbsp;<span class="badge badge-secondary">선택 (최대 3장)</span>
+				<div class="form-group box-thumbnail-input">
+					<input type="file" name="file" class="input-file input-select" onchange="readUrl(this)"  >
+				</div>
+				<div class="box-thumbnail">
+					<img src="<c:url value='/resources/images/add-image.png'/>" alt="미리보기" class="img-thumbnail img-select" height="100" width="auto">
+				</div>
+			</div>	
+			
+			<br>
+			 <div style="text-align: center;">
+		 		 <button class="btn">수정하기</button>
 		  </div>
-		  <button class="btn btn-info btn-block">수정하기</button>
 		</form>
 	</div>
 	

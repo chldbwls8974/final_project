@@ -115,6 +115,12 @@
 		insertManagerToMatch(mt_num)
 		printSelectMatch()
 	});
+	$(document).on('click', '.btn-delete', function() {
+		let mt_num = $(this).val();
+		
+		deleteManagerToMatch(mt_num)
+		printSelectMatch()
+	});
 	function printSelectMatch() {
 		let str = '';
 		$.ajax({
@@ -125,21 +131,55 @@
 			dataType : 'json',
 			success : function(data) {
 				for(match of data.matchList){
-					str +=`
-					<div class="match-box">
-						<div class="match-time-box">
-							<span class="match-time">\${match.ti_time_str}</span>
+					if(match.application == 1){
+						str +=`
+						<div class="match-box">
+							<div class="match-time-box">
+								<span class="match-time">\${match.ti_time_str}</span>
+							</div>
+							<div class="match-info-box">
+								<span>\${match.rg_main} \${match.rg_sub}</span> <br>
+								<span>\${match.fa_name} \${match.st_name} \${match.st_max} vs \${match.st_max}</span>
+							</div>
+							<button class="btn btn-delete"
+								style="width: 120px; height: 40px; border: none;
+								border-radius: 5px; background-color: #f76c6c; color: black;"
+								value="\${match.mt_num}">취소</button> <br>
 						</div>
-						<div class="match-info-box">
-							<span>\${match.rg_main} \${match.rg_sub}</span> <br>
-							<span>\${match.fa_name} \${match.st_name} \${match.st_max} vs \${match.st_max}</span>
+						`
+					}else if(match.application_able == 0){
+						str +=`
+						<div class="match-box">
+							<div class="match-time-box">
+								<span class="match-time">\${match.ti_time_str}</span>
+							</div>
+							<div class="match-info-box">
+								<span>\${match.rg_main} \${match.rg_sub}</span> <br>
+								<span>\${match.fa_name} \${match.st_name} \${match.st_max} vs \${match.st_max}</span>
+							</div>
+							<button class="btn btn-application"
+								style="width: 120px; height: 40px; border: none;
+								border-radius: 5px; background-color: #c2f296; color: black;"
+								value="\${match.mt_num}" disabled>신청 불가</button> <br>
 						</div>
-						<button class="btn btn-application"
-							style="width: 120px; height: 40px; border: none;
-							border-radius: 5px; background-color: #c2f296; color: black;"
-							value="\${match.mt_num}">신청</button> <br>
-					</div>
-					`
+						`
+					}else if(!match.application_able == 0){
+						str +=`
+						<div class="match-box">
+							<div class="match-time-box">
+								<span class="match-time">\${match.ti_time_str}</span>
+							</div>
+							<div class="match-info-box">
+								<span>\${match.rg_main} \${match.rg_sub}</span> <br>
+								<span>\${match.fa_name} \${match.st_name} \${match.st_max} vs \${match.st_max}</span>
+							</div>
+							<button class="btn btn-application"
+								style="width: 120px; height: 40px; border: none;
+								border-radius: 5px; background-color: #c2f296; color: black;"
+								value="\${match.mt_num}">신청</button> <br>
+						</div>
+						`
+					}
 				}
 				$('.select-match-box').html(str)
 			}
@@ -185,6 +225,22 @@
 					alert("등록 성공");
 				}else{
 					alert("등록 실패");					
+				}
+			}
+		});
+	}
+	function deleteManagerToMatch(mt_num) {
+		$.ajax({
+			async : false,
+			method : 'post',
+			url : '<c:url value="/manager/delete/schedule"/>',
+			data : {mt_num:mt_num},
+			dataType : 'json',
+			success : function(data) {
+				if(data.res){
+					alert('취소 성공');
+				}else{
+					alert('취소 실패');
 				}
 			}
 		});

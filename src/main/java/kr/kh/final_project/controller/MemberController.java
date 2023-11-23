@@ -211,6 +211,27 @@ public class MemberController {
 	}
 	
 	
+	//포인트 내역 페이지
+	@GetMapping("/member/pointHistory")
+	public String pointHistory(HttpSession session, Model model, Criteria cri) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		cri.setPerPageNum(5);
+		int totalCount = memberService.getMemberPointHistoryCount(user, cri);
+		final int DISPLAY_PAGE_NUM = 3;
+		
+		PageMaker pm = new PageMaker(DISPLAY_PAGE_NUM, cri, totalCount);
+//		
+		List<PointHistoryVO> list = memberService.getMemberPointHistory(user, cri);
+		
+		System.out.println(totalCount);
+		System.out.println(list);
+		System.out.println(cri);
+		model.addAttribute("pm", pm);
+		model.addAttribute("list", list);
+		return "/member/pointHistory";
+	}
+	
 	//포인트 환급 페이지
 	@GetMapping("/member/refund")
 	public String pointRefund(HttpSession session,  Model model) {
@@ -633,13 +654,17 @@ public class MemberController {
 		str = "경기";
 		PenaltyVO matchPenalty = memberService.getMemberPenalty(member, str);
 		
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일"); 
-		String BoardBanEndDate = simpleDateFormat.format(boardPenalty.getPn_end());
-		String MatchBanEndDate = simpleDateFormat.format(matchPenalty.getPn_end());
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
 		
+		if(boardPenalty.getPn_end() != null) {
+			String BoardBanEndDate = simpleDateFormat.format(boardPenalty.getPn_end());
+			model.addAttribute("BoardBanEndDate", BoardBanEndDate);
+		}
+		if(matchPenalty.getPn_end() != null) {
+			String MatchBanEndDate = simpleDateFormat.format(matchPenalty.getPn_end());
+			model.addAttribute("MatchBanEndDate", MatchBanEndDate);
+		}
 		model.addAttribute("member", member);
-		model.addAttribute("BoardBanEndDate", BoardBanEndDate);
-		model.addAttribute("MatchBanEndDate", MatchBanEndDate);
 		return "/util/ban";
 	}
 	
@@ -653,35 +678,17 @@ public class MemberController {
 			return "message";
 		}
 		//유저가 매치 신고 했을 때
+		@ResponseBody
 		@PostMapping("/member/matchReport/insert")
-		public String matchReportInsert(Model model, ReportVO report) {
-			//신고추가
-			//중복신고 못하게 해야함 (같은 경기에서 같은 유저가 같은 멤버에게 신고 안되게 bo_num, me_num)
+		public Map<String, Object> matchReportInsert(Model model, @RequestBody ReportVO report, HttpSession session) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			report.setRp_me_num(user.getMe_num());
+
+			String msg = adminService.matchReportInsert(report);
 			
-			Message msg = adminService.matchReportInsert(report);
-			model.addAttribute("msg", msg);
-			return "message";
-		}
-		
-		//매치임시페이지
-		//매치임시페이지
-		@GetMapping("/member/tmp")
-		public String match(Model model, MatchVO match) {
-			//신고추가
-			//중복신고 못하게 해야함 (같은 경기에서 같은 유저가 같은 멤버에게 신고 안되게 bo_num, me_num)
-			
-			
-			//Message msg = adminService.boardReportInsert(report);
-			//model.addAttribute("msg", msg);
-			List<EntryVO> entryList = new ArrayList<EntryVO>();
-			for(int i = 1; i < 6 ; i++) {
-				EntryVO e = new EntryVO();
-				e.setEn_me_num(i);
-				entryList.add(e);
-			}
-			model.addAttribute("match", match);
-			model.addAttribute("entryList", entryList);
-			return "/member/tmp";
+			map.put("msg", msg);
+			return map;
 		}
 		
 		@GetMapping("/member/record")
@@ -732,6 +739,21 @@ public class MemberController {
 				}
 			}
 			map.put("quarterList", quarterList);
+			return map;
+		}
+		@ResponseBody
+		@PostMapping("/print/report/match")
+		public Map<String, Object> printReportMatch(@RequestParam("mt_num")int mt_num, HttpSession session){
+			Map<String, Object> map = new HashMap<String, Object>();
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			MemberVO manager = matchService.selectManagerByMtNum(mt_num);
+			MemberVO business = matchService.selecBusinessByMtNum(mt_num);
+			List<EntryVO> entryList = matchService.selectEntryByMtNum(mt_num);
+			
+			map.put("me_num", user.getMe_num());
+			map.put("manager", manager);
+			map.put("business", business);
+			map.put("entryList", entryList);
 			return map;
 		}
 }

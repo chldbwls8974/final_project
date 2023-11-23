@@ -77,4 +77,8 @@ public interface MatchService {
 
 	List<MatchVO> selectMyRecored(Integer me_num);
 
+	MemberVO selectManagerByMtNum(int mt_num);
+
+	MemberVO selecBusinessByMtNum(int mt_num);
+
 }

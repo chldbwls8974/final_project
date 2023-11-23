@@ -78,6 +78,7 @@ public class ManagerController {
 		//fa_rg_num은 지역필터, 0 : 선호 지역, rg_sub = '전체'이면 rg_main 의 모든 지역, 아니면 해당 지역
 		//mt_date는 날짜 필터
 		List<MatchVO> matchList = matchService.selectMatchListOfManager(user.getMe_num(), mt_date, rg_num, check);
+		
 		map.put("matchList", matchList);
 		return map;
 	}

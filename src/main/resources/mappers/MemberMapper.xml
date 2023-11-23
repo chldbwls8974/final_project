@@ -297,15 +297,31 @@
 		where
 			me_num = #{me_num}
 	</update>
-	<select id="selectManagerNameByMtNum" resultType="String">
-		SELECT
-			me_name
-		FROM
+	<select id="selectManagerByMtNum" resultType="kr.kh.final_project.vo.MemberVO">
+		select
+			member.*
+		from
+			member
+				join
+			manager on mn_me_num = me_num
+				join
+			`match` on mn_mt_num = mt_num
+		where
+			mt_num = #{mt_num}
+	</select>
+	<select id="selectBusinessByMtNum" resultType="kr.kh.final_project.vo.MemberVO">
+		select
+			member.*
+		from
 			`match`
 				join
-			manager on mn_mt_num = mt_num
+			stadium on mt_st_num = st_num
 				join
-			member on mn_me_num = me_num
+			facility on st_fa_num = fa_num
+				join
+			businessman on fa_bu_num = bu_num
+				join
+			member on bu_me_num = me_num
 		where
 			mt_num = #{mt_num}
 	</select>

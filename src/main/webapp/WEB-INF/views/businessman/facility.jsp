@@ -25,7 +25,7 @@
 		margin-top: 20px;
 	}
 	.keyword{
-		width: 500px;
+		width: 870px;
 		padding: .8em .5em;
 		border-radius: 5px;
 		border: 1px solid #999;
@@ -37,14 +37,15 @@
 		width: 80px;
 		padding: .8em .5em;
 		border-radius: 5px;
-		border: 1px solid #999;
+		border: none;
+		background-color: #c2f296;
 		-webkit-appearance: none;
 		-moz-appearance: none;
 		appearance: none;
 	}
 	
 	.title-detail{ margin: 50px auto; background-color: #f2f2f2; border-radius: 30px;
-	padding: 30px; width: 42%;}
+	padding: 30px; width: 42%; height: auto; text-align: center;}
 
 	.page-link {
 	  color: #000; 
@@ -63,12 +64,122 @@
 	  background-color: #fafafa; 
 	  border-color: #ccc;
 	}
+	
+	.facility-info-box{ justify-content: space-between; display: flex;}
+	.facility-info-icon{ display: flex;}
+	.facility-info-icon img{ margin-right: 5px;}
+	.facility-info-icon p{padding: 2px; margin-top: 10px;}
+	.a-btn{ border-radius: 10px; width: 200px; height: 45px; border: none; display: block; padding-top: 10px;
+		background-color: #c2f296; color: black; margin: 0 auto;}
+	.btn{ border-radius: 10px; width: 90px; height: 45px; border: none;
+		background-color: #c2f296; color: black; margin: 0 auto;}	
+	.btn-box{text-align: center;}
+	tr, td{ text-align: center;}
+	.table thead th{ border: none; padding-bottom: 20px;}
+	
 </style>
 <body>
   	<div class="facility-navigation" style="margin-top: 50px; text-align: center;">
 		<p style="font-size: 35px; width: 18%; font-weight: bolder; margin: 30px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
 		시설 목록</p>
 	</div>
+	<div class="btn-box">
+		<a class="a-btn"
+			href="<c:url value='/businessman/facilityInsert'/>">시설 등록하기</a>
+  	</div>
+	<div class="title-detail" style="background-color: #eefde1;">
+		<p><strong style="font-size: 18px; letter-spacing: -3px;">꼭 읽어주세요!</strong></p>
+		<p><b>1)</b> 시설등록 후에는 [운영시간] 을 반드시 입력해주세요.
+		<br><b>2)</b> [시설명] 클릭 시, 해당 시설의 [경기장 목록] 으로 이동됩니다.</p>
+	</div>
+	<div class="title-detail">
+		<div class="info-box match-box">
+			<div class="match-info-box2 facility-info">
+				<p style="font-size: 19px; font-weight: bold; margin: 20px 0 30px 0; text-align: center;">
+					편의시설</p>
+				<div style="flex-direction: column; align-items: center;">
+					<div class="facility-info-box">
+						<div class="facility-info-icon">
+							<img
+								src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_park.svg"
+								class="match-icon">
+							<p>주차장</p>
+						</div>
+						<div>
+							<p>${facility.fa_pay == 0 ? '없음' : facility.fa_pay == 1 ? '무료' : '유료'}</p>
+						</div>
+					</div>
+					<div class="facility-info-box">
+						<div class="facility-info-icon">
+							<img
+								src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_gender.svg"
+								class="match-icon">
+							<p>탈의실</p>
+						</div>
+						<div>
+							<p>${facility.fa_locker == 0 ? '없음' : '있음'}</p>
+						</div>
+					</div>
+					<div class="facility-info-box">
+						<div class="facility-info-icon">
+							<img
+								src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_toilet.svg"
+								class="match-icon">
+							<p>화장실</p>
+						</div>
+						<div>
+							<p>${facility.fa_toilet == 0 ? '없음' : '있음'}</p>
+						</div>
+					</div>
+					<div class="facility-info-box">
+						<div class="facility-info-icon">
+							<img
+								src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_shower.svg"
+								class="match-icon">
+							<p>샤워실</p>
+						</div>
+						<div>
+							<p>${facility.fa_shower == 0 ? '없음' : '있음'}</p>
+						</div>
+					</div>
+					<div class="facility-info-box">
+						<div class="facility-info-icon">
+							<img
+								src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_stadium.svg"
+								class="match-icon">
+							<p>흡연장</p>
+						</div>
+						<div>
+							<p>${facility.fa_smoking == 0 ? '없음' : '있음'}</p>
+						</div>
+					</div>
+					<div class="facility-info-box">
+						<div class="facility-info-icon">
+							<img
+								src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_beverage.svg"
+								class="match-icon" style="margin-left: 8px;">
+							<p>자판기</p>
+						</div>
+						<div>
+							<p>${facility.fa_machine == 0 ? '없음' : '있음'}</p>
+						</div>
+					</div>
+					<div class="facility-info-box">
+						<div class="facility-info-icon">
+							<img
+								src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_level.svg"
+								class="match-icon">
+							<p style="margin-top: 20px;">특이사항</p>
+						</div>
+						<div>
+							<p>${facility.fa_note}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	
 	<form action="<c:url value='/businessman/facility'/>" method="get">
 		<div class="facility-navigation" style="margin: 30px 0 30px 0; text-align: center;">
@@ -82,20 +193,11 @@
 		</div>
 	</form>
 
-	<div class="title-detail">
-		<p><strong style="font-size: 18px; letter-spacing: -3px;">꼭 읽어주세요!</strong></p>
-		<p><b>1)</b> 시설등록 후에는 [운영시간] 을 반드시 입력해주세요.
-		<br><b>2)</b> [시설명] 클릭 시, 해당 시설의 [경기장 목록] 으로 이동됩니다.</p>
-	</div>
   	
-	<a class="btn" style="
-		border-radius: 10px; width: 150px; height: 40px; border: none; float: left;
-		background-color: #c2f296; color: black; margin: 10px 0 10px 0;" 
-		href="<c:url value='/businessman/facilityInsert'/>">시설 등록하기</a>
   	
   	<div class="table-responsive">
 		<table class="table">
-	      <thead class="thead-dark">
+	      <thead class="thead">
 	        <tr>
 	          <th hidden="hidden">시설 번호</th>
 	          <th hidden="hidden">사업자 번호</th>
@@ -104,13 +206,7 @@
 	          <th>주소</th>
 	          <th>상세주소</th>
 	          <th>전화번호</th>
-	          <th>주차장</th>
-	          <th>탈의실</th>
-	          <th>화장실</th>
-	          <th>샤워실</th>
-	          <th>흡연장</th>
-	          <th>자판기</th>
-	          <th>특이사항</th>
+	          <th>경기장 수</th>
 	          <th>운영시간</th>
 	          <th>수정</th>
 	          <th>삭제</th>
@@ -128,50 +224,13 @@
 			          <td>${facility.fa_add}</td>
 			          <td>${facility.fa_add_detail}</td>
 			          <td>${facility.fa_phone}</td>
-			          <td>
-			            <c:choose>
-			                <c:when test="${facility.fa_pay == 0}">없음</c:when>
-			                <c:when test="${facility.fa_pay == 1}">무료</c:when>
-			                <c:when test="${facility.fa_pay == 2}">유료</c:when>
-			            </c:choose>
-				      </td>
-			          <td>
-			            <c:choose>
-			                <c:when test="${facility.fa_locker == 0}">없음</c:when>
-			                <c:when test="${facility.fa_locker == 1}">있음</c:when>
-			            </c:choose>
-				      </td>
-			          <td>
-			            <c:choose>
-			                <c:when test="${facility.fa_toilet == 0}">없음</c:when>
-			                <c:when test="${facility.fa_toilet == 1}">있음</c:when>
-			            </c:choose>
-				      </td>
-			          <td>
-			            <c:choose>
-			                <c:when test="${facility.fa_shower == 0}">없음</c:when>
-			                <c:when test="${facility.fa_shower == 1}">있음</c:when>
-			            </c:choose>
-				      </td>
-			          <td>
-			            <c:choose>
-			                <c:when test="${facility.fa_smoking == 0}">없음</c:when>
-			                <c:when test="${facility.fa_smoking == 1}">있음</c:when>
-			            </c:choose>
-				      </td>
-			          <td>
-			            <c:choose>
-			                <c:when test="${facility.fa_machine == 0}">없음</c:when>
-			                <c:when test="${facility.fa_machine == 1}">있음</c:when>
-			            </c:choose>
-				      </td>
-			          <td>${facility.fa_note}</td>
+	 				  <td>${facility.st_count}</td>
 			       	  <td><a href="<c:url value='/businessman/operating/${facility.fa_num}'/>"
-								class="btn btn-outline-info" role="button">운영시간</a></td>
+								class="btn" role="button" style="background-color: #bee5eb;">운영시간</a></td>
 			          <td><a href="<c:url value='/businessman/facilityUpdate?fa_num=${facility.fa_num}'/>"
-								class="btn btn-outline-secondary" role="button">수정</a></td>
+								class="btn" role="button">수정</a></td>
 					  <td><a href="<c:url value='/businessman/facilityDelete?fa_num=${facility.fa_num}'/>"
-						    	class="btn btn-outline-secondary" role="button">삭제</a></td>
+						    	class="btn" role="button">삭제</a></td>
 		           </tr>
 	          </c:if>
 		    </c:forEach>

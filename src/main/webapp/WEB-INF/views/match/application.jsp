@@ -32,17 +32,22 @@
 		padding: 50px 0 30px 0; text-align: center;
 	}
 	.right-side-box div{ text-align: center;}
-	.team-box{display: flex; background-color: black;}
-	.teamList-box{flex: 1; margin-right: 3px; background-color: white; text-align: center;}
-	.teamList-box:last-child {margin-right: 0;}
-	.club-list-box{display: flex;}
-	.club-member-box{flex: 1; border-right: 3px solid black; overflow: scroll;}
-	.club-entry-box{flex: 1; overflow: scroll;}
+	.team-box{
+		display: flex; padding: 10px; margin-top: 20px; margin-bottom: 20px;
+		height: auto; border-radius: 20px; background-color: #e5f4d8;
+	}
+	.teamList-box{flex: 1; border-right: 1px solid black; text-align: center;}
+	.teamList-box:last-child {border-right: none;}
+	.club-list-box{display: flex; overflow: hidden;}
+	.club-member-box{flex: 1; border-right: 3px solid black; overflow: scroll; -ms-overflow-style: none; scrollbar-width: none;}
+	.club-member-box::-webkit-scrollbar{display: none;}
+	.club-entry-box{flex: 1; overflow: scroll; -ms-overflow-style: none; scrollbar-width: none;}
+	.club-entry-box::-webkit-scrollbar{display: none;}
 	.entry-member::after{clear: both; content: ''; display: block;}
 	.entry-btn{float: right}
-	.member-list{border-bottom: 1px solid black}
+	.member-list{border-bottom: 1px solid white}
 	.member-list:last-child{border-bottom: none;}
-	.entry-list-box{height: auto;}
+	.entry-list-box{height: auto; margin-top: 20px; padding-bottom: 20px;}
 	.total-price{
 	    width: 100px;
 	    height: 40px;
@@ -75,20 +80,27 @@
 					<p style="font-size: 19px; font-weight: bold; margin-bottom: 30px;">
 						<c:if test="${match.mt_type == 1}">개인 매치</c:if>
 						<c:if test="${match.mt_type == 2}">클럽 매치</c:if>
-						<span style="color: #749f4c;">${match.mt_rule == 0 ? '친선전' : '경쟁전'} </span>(${match.mt_personnel}vs${match.mt_personnel})
+						<span style="color: #749f4c;">${match.mt_rule == 0 ? '친선전' : '경쟁전'} </span><br>
+						${match.mt_personnel}vs${match.mt_personnel}
 					</p>
-					<div>
-						
-							<c:if test="${match.mt_rule == 1}">
+					<c:if test="${match.mt_rule == 1}">
+						<div>
 								<div>
 									<p>담당 매니저</p>
 								</div>
 								<div>	
 									<p>${match.me_name}</p>
 								</div>
-							</c:if>
-						
-					</div>
+						</div>
+						<div>
+								<div>
+									<p>매니저 연락처</p>
+								</div>
+								<div>	
+									<p>${match.me_phone}</p>
+								</div>
+						</div>
+					</c:if>
 					<div>
 						<div>
 							<p>일시</p>
@@ -191,12 +203,12 @@
 					</div>
 				</div>
 			</div>
-			<c:if test="${cl_num != 0 && match.team_count != 0}">
-				<div class="info-box team-box">
-				</div>
-			</c:if>
 		</div>
 		<div class="contents-box right-box">
+			<c:if test="${cl_num != 0 && match.team_count != 0}">
+				<div class="info-box team-box" style="min-height: 300px;">
+				</div>
+			</c:if>
 			<c:if test="${(match.mt_type == 0 && cl_num == 0) || (match.mt_type == 1 && cl_num == 0)}">
 				<c:if test="${match.entry_res == 0}">
 					<div class="application-box right-side-box">
@@ -217,12 +229,17 @@
 					</div>
 					<div class="coupon-box right-side-box" style="padding-bottom: 40px;">
 						<div style="margin-top: 20px;">
-							<p>보유 쿠폰</p>
+							<p>쿠폰 목록</p>
+							<c:if test="${couponList[0] == null}">
+									<p>등록된 쿠폰이 없습니다.</p>
+							</c:if>
 							<div style="width: 30%; text-align-last: left; margin: 0 auto;">
 								<c:forEach items="${couponList}" var="co">
 									<div>
-										<input type="radio" name="coupon" value="${co.hp_num}">${co.cp_source}(${co.cp_sale}) <br>
-										<input type="text" class="sale-point" value="${co.cp_sale}" hidden>
+										<label for="coupon_${co.hp_num}">
+											<input type="radio" name="coupon" value="${co.hp_num}">${co.cp_source}(${co.cp_sale}) <br>
+											<input type="text" class="sale-point" value="${co.cp_sale}" hidden>
+										</label>
 									</div>
 								</c:forEach>
 							</div>
@@ -230,15 +247,6 @@
 					</div>
 				</c:if>
 				<c:if test="${match.entry_res != 0}">
-					<div class="cansel-box right-side-box" style="margin-top: 20px;">
-						<div>
-							<p>신청한 매치 취소하기</p>
-							<button class="btn btn-cansel"
-									style="width: 100px; height: 40px; border: none; margin: 20px auto 40px;
-									border-radius: 5px; background-color: black; color: white;">
-								취소</button>
-						</div>	
-					</div>
 					<c:if test="${match.entry_res == 1 && match.ready==1}">
 						<div class="entry-list-box right-side-box">
 							<div>
@@ -247,6 +255,25 @@
 									<span><img class="member-profile" alt="멤버프로필" src="<c:url value='/memberimg${el.me_profile}'/>">${el.me_nickname}(${el.me_tr_name})</span> <br>
 								</c:forEach>
 							</div>
+						</div>
+					</c:if>
+					<c:if test="${match.entry_res == 1 && match.ready==0}">
+						<div class="entry-list-box right-side-box" style="margin-bottom: 20px;">
+							<div>
+								<p>참가자 리스트</p>
+								<p>매치 시간 90분전부터 공개됩니다.</p>
+							</div>
+						</div>
+					</c:if>
+					<c:if test="${match.ready == 0}">
+						<div class="cansel-box right-side-box" style="margin-top: 20px;">
+							<div>
+								<p>신청한 매치 취소하기</p>
+								<button class="btn btn-cansel"
+										style="width: 100px; height: 40px; border: none; margin: 20px auto 40px;
+										border-radius: 5px; background-color: black; color: white;">
+									취소</button>
+							</div>	
 						</div>
 					</c:if>
 				</c:if>
@@ -271,18 +298,20 @@
 					</div>
 				</c:if>
 				<c:if test="${match.entry_res != 0}">
-					<div class="cansel-box right-side-box">
-						<div>
-							<p>취소</p>
-							<button class="btn btn-cansel"
-									style="width: 100px; height: 40px; border: none;
-									border-radius: 5px; background-color: black; color: white;">
-								취소</button>
-						</div>	
-					</div>
 					<div class="club-list-box right-side-box">
 						
 					</div>
+					<c:if test="${match.ready == 0}">
+						<div class="cansel-box right-side-box" style="margin-top: 20px;">
+							<div>
+								<p>신청한 매치 취소하기</p>
+								<button class="btn btn-cansel"
+										style="width: 100px; height: 40px; border: none; margin: 20px auto 40px;
+										border-radius: 5px; background-color: black; color: white;">
+									취소</button>
+							</div>	
+						</div>
+					</c:if>
 				</c:if>
 			</c:if>
 			<c:if test="${(match.mt_type == 1 && cl_num != 0) || (match.mt_type == 2 && cl_num == 0)}">
@@ -444,7 +473,7 @@
 				for(team of data.teamList){
 					str += `
 						<div class="teamList-box">
-							<table>
+							<table style="width: 100%;">
 								<thead>
 									<tr>
 										<th>
@@ -469,6 +498,15 @@
 								`;
 							}
 						}
+					}
+					if(team.ct_cl_num != cl_num && ${match.ready == 0}){
+						str += `
+							<tr>
+								<td style="text-align: center;">
+									<p>매치 시간 12시간전부터<br>공개됩니다.</p>
+								</td>
+							</tr>
+						`;
 					}
 					str += `
 								</tbody>
@@ -504,6 +542,7 @@
 			success : function(data) {
 				str += `
 					<div class="club-member-box">
+						<p>대기자 리스트</p>
 				`;
 				for(cm of data.CMList){
 					if(cm.en_num == 0){
@@ -513,9 +552,11 @@
 									<img class="member-profile" alt="멤버프로필" src="<c:url value='/memberimg\${cm.me_profile}'/>">\${cm.me_nickname}
 							`;
 							if(${authority == 'LEADER'}){
-								str += `
-									<button class="entry-btn btn btn-primary entry-add-btn">등록</button>
-								`;
+								if(data.res){
+									str += `
+										<button class="entry-btn btn btn-primary entry-add-btn">등록</button>
+									`;
+								}
 							}
 							str += `
 									<br>
@@ -546,6 +587,7 @@
 				str += `
 					</div>
 					<div class="club-entry-box">
+						<p>참가자 리스트</p>
 				`;
 				for(cm of data.CMList){
 					if(cm.en_num != 0){
@@ -573,6 +615,26 @@
 		});
 		$('.club-list-box').html(str);
 	}
+
+	// 라디오 박스 체크 해제
+	var beforeChecked = -1;
+	$(function() {
+	    $(document).on("click", "input[type=radio]", function(e) {
+	        var index = $(this).parent().index("label");
+	
+	        if (beforeChecked === index) {
+	            beforeChecked = -1;
+	            $(this).prop("checked", false);
+	            // 쿠폰 값 초기화
+	            hp_num = 0;
+	            total_price = ${expense.ex_state == 0 ? expense.ex_price : expense.ex_pre};
+	            $('.total-price').val(total_price + "P");
+	        } else {
+	            beforeChecked = index;
+	        }
+	    });
+	});
+
 	</script>
 </body>
 </html>

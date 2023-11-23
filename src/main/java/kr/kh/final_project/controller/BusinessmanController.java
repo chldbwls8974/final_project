@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.kh.final_project.dao.BusinessDAO;
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.pagination.PageMaker;
 import kr.kh.final_project.service.BusinessmanService;
@@ -57,7 +56,13 @@ public class BusinessmanController {
 			
 			PageMaker pm = new PageMaker(DISPLAY_PAGE_NUM, cri, totalCount);
 			
-			if(list.size() == 0) {
+			cri.setS("");
+			cri.setT("all");
+			
+			List<FacilityVO> allList = businessmanService.getFacilityList(member, cri);
+			
+			System.out.println(allList.size());
+			if(allList.size() == 0) {
 		        Message msg = new Message("/businessman/facilityInsert", "등록된 시설이 없습니다. 시설을 등록해주세요");
 				model.addAttribute("msg", msg);
 				return "/message";
@@ -118,6 +123,7 @@ public class BusinessmanController {
 			BusinessmanVO business = businessmanService.getBusinessmanByMeNum(member.getMe_num());
 			//시설번호로 시설 정보 가져와서 저장
 			FacilityVO facility = businessmanService.getFacility(fa_num);
+			List<FacilityPictureVO> files = businessmanService.getFacilityPictureList(fa_num);
 			
 			List<RegionVO> MainRegion = businessmanService.getMainRegion();
 
@@ -128,6 +134,7 @@ public class BusinessmanController {
 			}
 			model.addAttribute("business", business);
 			model.addAttribute("facility", facility);
+			model.addAttribute("files", files);
 			model.addAttribute("MainRegion", MainRegion);
 			return "/businessman/facilityUpdate";
 		}
@@ -137,7 +144,6 @@ public class BusinessmanController {
 		public Map<String, Object> region1(@RequestParam String rg_main, Model model){
 			Map<String, Object> map = new HashMap<String, Object>();
 			List<RegionVO> SubRegion = businessmanService.getSubRegionByMainRegion(rg_main);
-			System.out.println(SubRegion);
 			map.put("SubRegion", SubRegion);
 			return map;
 		}
@@ -291,7 +297,11 @@ public class BusinessmanController {
 			
 			PageMaker pm = new PageMaker(DISPLAY_PAGE_NUM, cri, totalCount);
 			
-			if(stadiumList.size() == 0) {
+			cri.setS("");
+			cri.setT("all");
+			List<StadiumVO> allStadiumList = businessmanService.getStadiumList(fa_num, cri);
+			
+			if(allStadiumList.size() == 0) {
 		        Message msg = new Message("/businessman/stadiumInsert/" + fa_num , "등록된 경기장이 없습니다. 경기장을 등록해주세요");
 				model.addAttribute("msg", msg);
 				return "/message";
