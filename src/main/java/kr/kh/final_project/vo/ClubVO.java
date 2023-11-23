@@ -21,4 +21,12 @@ public class ClubVO {
 	
 	private String cl_rg_main;
 	
+	public String getCl_emblem() {
+		if(cl_emblem ==null) {
+			cl_emblem = "/default.jpg";
+		}
+		return cl_emblem;
+	}
+	
+	
 }

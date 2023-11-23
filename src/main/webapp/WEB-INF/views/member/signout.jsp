@@ -31,7 +31,7 @@
 <body>
 	<p style="font-size: 35px; font-weight: bolder; margin:50px auto; border-bottom: 8px solid #c2f296;
 	width: 15%; padding: 30px 0 10px 0; text-align: center;">회원 탈퇴</p>
-	<form action="<c:url value='/member/signout'/>" method="post" id="myPassword">
+	<form action="<c:url value='/member/signout'/>" method="post" id="myForm">
 		<div class="form-group" hidden="hidden">
 			<label>회원번호</label> 
 			<input type="text" class="form-control" name="me_num" id="me_num" value="${user.me_num}"readonly>
@@ -41,18 +41,6 @@
 			<input type="text" class="form-control" name="me_point" id="me_point" value="${user.me_point}" readonly>
 		</div>
 		<br>
-		
-		<div class="form-group" hidden="hidden">
-			<label style="font-weight: bold;">비밀번호</label> 
-			<input type="password" class="form-control" name="me_pw" id="me_pw" value="${user.me_pw}">
-		</div>
-		<div class="form-group">
-		    <label style="font-weight: bold;">비밀번호를 입력해주세요.</label>
-		    <label id="check-pw2-error" class="error" for="me_pw2"></label>
-		    <input type="password" class="form-control" name="me_pw2" id="me_pw2" required>
-		</div>
-		<br>
-		${me_pw}
 		<div class="form-group">
 			<div>
 				<label for="terms" style="font-weight: bold;">
@@ -72,7 +60,7 @@
 		</div>
 		<div class="form-group form-check" >
             <input type="checkbox" class="form-check-input"
-            	id="agreeCheck" style="margin-top: 5px;" required>
+            	id="agreeCheck" style="margin-top: 5px;">
             <label class="form-check-label" for="agreeCheck" style="margin-left: 20px;">
             	약관에 동의합니다.</label>
         </div>
@@ -83,54 +71,32 @@
 	</form>
 	
 	<script type="text/javascript">
-	// 비밀번호 일치 검사
-	$('[name=me_pw2]').keyup(function(){
-		flag = false;
-		let pw = $(this).val();
-		let rePw = $('[name=me_pw]').val();
-		if(rePw==pw){
-			$('#check-pw2-error').text('비밀번호가 일치합니다.');
-			return;
-		}else{
-			$('#check-pw2-error').text('비밀번호가 일치하지 않습니다.');
-		}
-	})
 		
-	//필수사항 및 포인트 체크 alert
-	$('#signout').click(function () {
-	    // 필수 사항 체크
-	    var agreeCheck = $('#agreeCheck').prop('checked');
-	    var me_pw = $('#me_pw').val();
-	    var me_pw2 = $('#me_pw2').val();
 		
-	    if (!agreeCheck) {
-	        alert("회원탈퇴 개인정보처리방침에 동의해야 합니다.");
-	    } else if (!me_pw2) {
-	        alert("비밀번호 확인을 입력해야 합니다.");
-	    } else if(me_pw !== me_pw2){
-	    	alert("비밀번호가 일치하지 않습니다. 다시 입력해주세요");
-	    	event.preventDefault();
-	    } else {
-	        // 필수 사항을 모두 입력한 경우에만 포인트 체크
-	        var me_point = parseInt('${user.me_point}');
-	        if (me_point > 0) {
-	            if (confirm("[${user.me_point}원] 포인트가 남아있습니다. 탈퇴를 진행하시겠습니까?")) {
-	            	return true
-	                // 탈퇴 완료되면 메인으로 이동
-	                //location.href = '<c:url value="/"/>'; 
-	                // signout 온클릭이 form 태그 안에 있기 때문에 무조건 서버로 전송되기 때문에 경로 지정이 아닌 
-	                //true/false로 지정해줘야 취소 버튼 눌러도 탈퇴 진행이 안됌
-	            } else {
-	            	//취소 버튼 누르면 탈퇴진행 취소됨
-	                alert("탈퇴가 취소되었습니다.");
-	            	return false
-	                //location.href = '<c:url value="/"/>'; // 취소 시 메인 페이지로 이동
-	            }
-	        }
-	        return true // 포인트 없고, 입력사항 다 충족하면 true
-	    }
-	    return false //처리방침 동의 및 비번입력 안했거나 비번 일치하지 않으면 false
-	});
+		//필수사항 및 포인트 체크 alert
+		$('#signout').click(function () {
+			let agreeCheck = $('#agreeCheck').prop('checked');
+	    	let me_point = parseInt('${user.me_point}');
+		   if(confirm("정말 탈퇴하시겠습니까?")){
+			   if(!agreeCheck){ 
+					alert("회원탈퇴 개인정보처리방침에 동의해야 합니다.");
+					return false
+			   }
+			   if(me_point > 0){
+				   if(confirm("[${user.me_point}원] 포인트가 남아있습니다. 탈퇴를 진행하시겠습니까?")){
+					   return true
+				   }else{
+					   return false
+				   }
+				  
+			   }
+				return true
+		   }else{
+			   return false
+		   }
+		});
+	
+
 	
 	</script>
 </body>

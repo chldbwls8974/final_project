@@ -22,6 +22,7 @@ import kr.kh.final_project.pagination.PageMaker;
 import kr.kh.final_project.service.BusinessmanService;
 import kr.kh.final_project.service.ScheduleService;
 import kr.kh.final_project.util.Message;
+import kr.kh.final_project.vo.AvailabilityVO;
 import kr.kh.final_project.vo.BusinessmanVO;
 import kr.kh.final_project.vo.FacilityPictureVO;
 import kr.kh.final_project.vo.FacilityVO;
@@ -149,7 +150,7 @@ public class BusinessmanController {
 		}
 		//시설 정보 수정
 		@PostMapping("/businessman/facilityUpdate")
-		public String facilityUpdate(Model model, FacilityVO facility, HttpSession session) {
+		public String facilityUpdate(Model model, FacilityVO facility, HttpSession session, MultipartFile[] file, int [] delNums) {
 			Message msg;
 			MemberVO user = (MemberVO)session.getAttribute("user");
 			//회원번호로 사업자 정보 가져와서 business에 저장
@@ -157,7 +158,9 @@ public class BusinessmanController {
 			
 			List<RegionVO> MainRegion = businessmanService.getMainRegion();
 			
+			
 			if(businessmanService.updateFacility(facility, business)) {
+				businessmanService.updateFacilityPicture(facility,file,delNums);	
 				msg = new Message("/businessman/facility?fa_num="+facility.getFa_num(), "시설 정보를 수정했습니다.");
 			}else {
 				msg = new Message("/businessman/facilityUpdate?fa_num="+facility.getFa_num(), "시설 정보를 수정하지 못했습니다."); 
@@ -321,13 +324,12 @@ public class BusinessmanController {
 		//경기장 등록
 		@PostMapping("/businessman/stadiumInsert")
 		public String insertStadium(Model model, 
-				StadiumVO stadium, HttpSession session) {
-
+				StadiumVO stadium, HttpSession session, AvailabilityVO availability) {
 			//'등록'버튼을 누르면 url에 저장한 시설의 번호(fa_num)가 표기되어야 해서 'i'에 시설 번호 저장
 			int i = stadium.getSt_fa_num();
 			
 			//Service에게 stadium 정보를 주고 메서드로 가져와서 res에 저장
-			boolean res = businessmanService.insertStadium(stadium);
+			boolean res = businessmanService.insertStadium(stadium, availability);
 				if(res) {
 					model.addAttribute("msg", "경기장 등록이 완료되었습니다.");
 					//경기장 등록이 완료되면 등록한 시설의 경기장 목록으로 돌아가야 함

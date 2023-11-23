@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import kr.kh.final_project.pagination.Criteria;
+import kr.kh.final_project.vo.AvailabilityVO;
 import kr.kh.final_project.vo.StadiumVO;
 
 public interface StadiumDAO {
@@ -15,10 +16,13 @@ public interface StadiumDAO {
 	
 	//시설번호로 경기장 리스트 가져오기
 	List<StadiumVO> selectStadiumList(@Param("fa_num")Integer fa_num, @Param("cri")Criteria cri);
+	//경기장 리스트 가져올 때 이용가능여부도 함께 가져오기
+	AvailabilityVO selectAvailability(@Param("st_num")Integer st_num);
 	//현재 페이지 정보(검색어, 타입)에 맞는 전체 경기장 수를 가져옴
 	int selectCountStadiumList(@Param("cri")Criteria cri, @Param("fa_num")Integer fa_num);
 	//경기장 등록
 	boolean insertStadium(@Param("stadium")StadiumVO stadium);
+	boolean insertAvailability(@Param("availability")AvailabilityVO availability);
 	//경기장번호로 경기장 정보가져오기
 	StadiumVO selectStadium(@Param("st_num")Integer st_num);
 	//경기장 정보 수정
@@ -34,6 +38,8 @@ public interface StadiumDAO {
 	boolean updateStadiumByAdmin(StadiumVO stadium);
 
 	List<StadiumVO> selectAllStadiumList();
+
+
 	
 
 }

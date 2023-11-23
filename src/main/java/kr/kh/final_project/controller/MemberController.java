@@ -150,22 +150,21 @@ public class MemberController {
 	}
 	
 	
-	//이메일인증 회원탈퇴
 	@GetMapping(value="/member/signout")
 	public String emailMemberSignout(Model model, HttpSession session) {
 		MemberVO member = (MemberVO)session.getAttribute("user");
 		model.addAttribute("member", member);
 		return "/member/signout";
 	}
-	//이메일인증 회원탈퇴
 	@PostMapping(value="/member/signout")
 	public String emailMemberSignoutPost(Model model, HttpSession session) {
 		MemberVO member = (MemberVO)session.getAttribute("user");
-		
+		member.setMe_session_limit(null);
 		boolean res = memberService.emailMemberSignout(member);
 		if(res) {
 			model.addAttribute("msg", "회원 탈퇴가 완료되었습니다.");
 			model.addAttribute("url", "/");
+			session.removeAttribute("user");
 		}else {
 			model.addAttribute("msg", "회원 탈퇴에 실패했습니다.");
 			model.addAttribute("url", "/member/signout");
