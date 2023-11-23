@@ -31,8 +31,9 @@
 		margin-top: 20px;
 	}
 	.keyword{
-		width: 500px;
-		padding: .8em .5em;
+		width: 870px;
+	    height: 60px;
+	    margin-top: 20px;
 		border-radius: 5px;
 		border: 1px solid #999;
 		-webkit-appearance: none;
@@ -41,9 +42,11 @@
 	}
 	.search-btn{
 		width: 80px;
-		padding: .8em .5em;
+		height: 60px;
+	    margin-top: 20px;
 		border-radius: 5px;
-		border: 1px solid #999;
+		border: none;
+		background-color: #c2f296;
 		-webkit-appearance: none;
 		-moz-appearance: none;
 		appearance: none;
@@ -93,8 +96,8 @@
     /* 이미지 보이는 부분 */
     .slider__img {
         position: relative;
-        width: 800px;
-        height: 800px;
+        width: 600px;
+        height: 600px;
         overflow: hidden;
     }
      /* 이미지 감싸고 있는 부모 : 움직이는 부분 */
@@ -209,7 +212,7 @@
 							<p>주차장</p>
 						</div>
 						<div>
-							<p>${match.fa_pay == 0 ? '없음' : match.fa_pay == 1 ? '무료' : '유료'}</p>
+							<p>${facility.fa_pay == 0 ? '없음' : facility.fa_pay == 1 ? '무료' : '유료'}</p>
 						</div>
 					</div>
 					<div class="facility-info-box">
@@ -220,7 +223,7 @@
 							<p>탈의실</p>
 						</div>
 						<div>
-							<p>${match.fa_locker == 0 ? '없음' : '있음'}</p>
+							<p>${facility.fa_locker == 0 ? '없음' : '있음'}</p>
 						</div>
 					</div>
 					<div class="facility-info-box">
@@ -231,7 +234,7 @@
 							<p>화장실</p>
 						</div>
 						<div>
-							<p>${match.fa_toilet == 0 ? '없음' : '있음'}</p>
+							<p>${facility.fa_toilet == 0 ? '없음' : '있음'}</p>
 						</div>
 					</div>
 					<div class="facility-info-box">
@@ -242,7 +245,7 @@
 							<p>샤워실</p>
 						</div>
 						<div>
-							<p>${match.fa_shower == 0 ? '없음' : '있음'}</p>
+							<p>${facility.fa_shower == 0 ? '없음' : '있음'}</p>
 						</div>
 					</div>
 					<div class="facility-info-box">
@@ -253,7 +256,7 @@
 							<p>흡연장</p>
 						</div>
 						<div>
-							<p>${match.fa_smoking == 0 ? '없음' : '있음'}</p>
+							<p>${facility.fa_smoking == 0 ? '없음' : '있음'}</p>
 						</div>
 					</div>
 					<div class="facility-info-box">
@@ -264,28 +267,35 @@
 							<p>자판기</p>
 						</div>
 						<div>
-							<p>${match.fa_machine == 0 ? '없음' : '있음'}</p>
+							<p>${facility.fa_machine == 0 ? '없음' : '있음'}</p>
 						</div>
 					</div>
-					<div class="facility-info-box">
-						<div class="facility-info-icon">
-							<img
-								src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_level.svg"
-								class="match-icon">
-							<p>특이사항</p>
-						</div>
-						<div>
-							<p>${match.fa_note}</p>
-						</div>
-					</div>
+					
 				</div>
 			</div>
 		</div>
 	</div>
+	<c:if test="${facility.fa_note != null && facility.fa_note != ''}">
+		<div class="title-detail">
+			<div class="facility-info-box">
+				<div class="facility-info-icon">
+					<img
+						src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_level.svg"
+						class="match-icon">
+					<p>특이사항</p>
+				</div>
+				<div>
+					<p>${facility.fa_note}</p>
+				</div>
+			</div>
+		</div>
+	</c:if>
+
+
 
 
 	<form action="<c:url value='/admin/stadiumlist/${facility.fa_num}'/>" method="get">
-		<div class="stadium-navigation" style="margin: 100px 0 30px 0; text-align: center;">
+		<div class="stadium-navigation" style="margin: 100px 0 30px 0; text-align: center; display: flex; justify-content: center;">
 			<select class="searchType" name="t">
 				<option value="all" <c:if test="${pm.cri.t == 'all'}">selected</c:if>>전체</option>
 				<option value="name" <c:if test="${pm.cri.t == 'name'}">selected</c:if>>경기장 이름</option>
@@ -382,7 +392,31 @@
 						href="<c:url value='/facility/list'/>"
 						>시설 목록으로 이동</a>		
 		</div>
-	</div>		
+	</div>	
+	<div class="title-detail">
+		<div class="match-info-box1 match-info justify-content: space-between">
+			<div>
+				<label class="text">사업자명 </label>
+				<div>
+					<p>${owner.bu_name}</p>
+				</div>
+			</div>
+			<div>
+				<label class="text">사업자 번호</label>
+				<div>
+					<p>${owner.bu_registration_number}</p>
+				</div>
+			</div>	
+			<div>
+				<label class="text">연락처</label>
+				<div>
+					<p>${owner.bu_phone}</p>
+				</div>
+			</div>	
+		</div>
+	</div>
+	
+		
 <script type="text/javascript">
 	//이미지 슬라이드
 	const sliderWrap = document.querySelector(".slider__wrap");

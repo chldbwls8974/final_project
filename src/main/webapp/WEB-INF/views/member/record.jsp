@@ -7,6 +7,32 @@
 <meta charset="UTF-8">
 <title>경기 전적</title>
 <style type="text/css">
+
+	.container-body{ 
+	    border-radius: 20px;
+	    padding: 20px;
+	    height: auto;
+	}
+	.myrecord-text1{
+		font-size: 35px;
+	    width: 15%;
+	    font-weight: bolder;
+	    margin: 0px auto;
+	    padding: 20px 0 10px 0;
+	    border-bottom: 8px solid #c2f296;
+	}
+	.myrecord-text2{
+		font-size: 20px;
+	    font-weight: bold;
+	    width: 25%;
+	    padding: 10px;
+	    height: auto;
+	    margin: 0 auto;
+	    margin-top: 20px;
+	    margin-bottom: 30px;
+	    background-color: #f2f2f2;
+	    border-radius: 10px;
+	}
 	.club-emblem{width: 20px; height: 20px; border-radius: 50%;}
 	.member-profile{width: 20px; height: 20px; border-radius: 50%;}
 	.team-box{display: flex;}
@@ -40,12 +66,26 @@
 	max-width: 400px;
 	margin: 200px auto;
 	}
+	tr, th{ text-align: center;}
+	.table thead th{ border: none;}
+	.teamList-box{ margin-left: 50px;}
+	.teamList-box table tbody tr{text-align: left;}
+	.btn{
+		border-radius: 10px !important; width: 100px; height: 40px; border: none;
+		background-color: #c2f296; color: black;
+	}
+	
+	
 	.report-select-sub{display: flex;}
 </style>
 </head>
 <body>
-	<div class="container">
-		<h2>${win + draw + lose} 전 ${win} 승${draw} 무${lose} 패</h2>
+		<div style="margin-top: 50px; text-align: center;">
+			<p class="myrecord-text1">나의 전적</p>
+			<p class="myrecord-text2">
+			${win + draw + lose} 전 ${win} 승 ${draw} 무 ${lose} 패</p>
+		</div>
+	<div class="container-body">
 		<table class="table table-hover">
 			<thead>
 				<tr>
@@ -85,13 +125,13 @@
 							<input type="text" class="te_type" value="${mt.te_type}" hidden disabled>
 							<input type="text" class="mt_personnel" value="${mt.mt_personnel}" hidden disabled>
 							<c:if test="${mt.mt_rule == 1 && mt.mt_state1 == 2}">
-								<button class="btn btn-success btn-record-open">경기 결과</button>
+								<button class="btn btn-record-open">경기 결과</button>
 							</c:if>
 							<c:if test="${mt.mt_rule == 1 && mt.mt_state1 == 0}">
-								<button class="btn btn-success btn-record-open">경기 진행중</button>
+								<button class="btn btn-record-open">경기 진행중</button>
 							</c:if>
 							<c:if test="${mt.mt_rule == 0}">
-								<button class="btn btn-success btn-record-open">참가자</button>
+								<button class="btn btn-record-open">참가자</button>
 							</c:if>
 						</td>
 					</tr>
@@ -104,8 +144,8 @@
 		<div class="modal-content1">
 			<div class="match-record-box">
 				<button type="button" class="close btn-record-close" data-dismiss="modal">&times;</button><br>
-				<p style="font-size: 20px; font-weight: bolder; margin: 0 auto; border-bottom: 8px solid #c2f296;
-				width: 20%; padding: 20px 0 10px 0; text-align: center;">참가자 리스트</p>
+				<p style="font-size: 20px; font-weight: bolder; margin: 20px auto; border-bottom: 8px solid #c2f296;
+				width: 20%; padding-bottom: 10px; text-align: center;">참가자 리스트</p>
 				<div class="team-box">
 				</div>
 				<div class="reportBtn-box" style="text-align: center; margin-top: 40px;">

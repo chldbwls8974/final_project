@@ -8,7 +8,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="<c:url value='/kakao/login'/>" method="post" id="myForm">
+
+	<form action="<c:url value='/kakao/login'/>" method="post" id="myForm" style="display:none;">
 	<input name="me_id" value="${user.me_id }">
 	<button name="btn">-</button>
 	</form>

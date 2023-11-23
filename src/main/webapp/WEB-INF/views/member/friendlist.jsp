@@ -21,7 +21,8 @@
 	}
 	.keyword{
 		width: 750px;
-		padding: .8em .5em;
+	    height: 50px;
+	    margin-top: 20px;
 		border-radius: 5px;
 		border: 1px solid #999;
 		-webkit-appearance: none;
@@ -30,7 +31,8 @@
 	}
 	.search-btn{
 		width: 80px;
-		padding: .8em .5em;
+		height: 50px;
+	    margin-top: 20px;
 		border-radius: 5px;
 		border: none;
 		background-color: #c2f296;
@@ -56,7 +58,7 @@
 </style>
 </head>
 <body>
-	<div class="board-report-navigation" style="margin-top: 50px; text-align: center;">
+	<div class="board-report-navigation" style="margin-top: 50px; text-align: center; display: flex; justify-content: center;">
 		<p style="font-size: 30px; width: 32%; font-weight: bolder; margin: 30px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
 		즐겨찾기/차단 회원 조회</p>
 	</div>
@@ -103,7 +105,6 @@
 					</c:forEach>
 				</ul>
 			</div>
-			
 		</div>	
 	</div>
 </body>
@@ -129,8 +130,8 @@
 					for(me of a.memberList){
 						str += `
 							<li style="margin: 0 80px 50px 80px; display: flex; border-bottom: 1px solid rgba(0,0,0,.1);">
-								<a href="#" class="member-link">
-									<img src="<c:url value='/memberimg${member.me_profile}'/>" class="myprofile-image-thumb" alt="프로필 사진">
+								<a href="<c:url value='/member/myprofile?me_num=\${me.me_num}'/>" class="member-link">
+									<img src="<c:url value='/memberimg\${me.me_profile}'/>" class="myprofile-image-thumb" alt="프로필 사진">
 									<span style="font-weight: bold; font-size: large;">\${me.me_name}</span>
 									<span style="font-size: small; color: gray;">\${me.me_id}</span>
 								</a>
