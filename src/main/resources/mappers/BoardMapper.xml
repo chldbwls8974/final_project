@@ -312,12 +312,14 @@
 	<!-- 개인매치게시판 글 가져오기 -->
 	<select id="selectBoardIndividualList" resultType="kr.kh.final_project.vo.BoardVO">
 		select
-			*
+			*, region.rg_main as bo_rg_main
 		from
 			board
 				join
 			member
 				on bo_me_num = me_num
+				join
+			region on bo_rg_num = rg_num
 		where
 			(
 			bo_bt_num = 1
@@ -425,12 +427,14 @@
 	<!-- 클럽매치게시판 글 가져오기 -->
 	<select id="selectBoardClubList" resultType="kr.kh.final_project.vo.BoardVO">
 		select
-			*
+			*, region.rg_main as bo_rg_main
 		from
 			board
 				join
 			member
 				on bo_me_num = me_num
+				join
+			region on bo_rg_num = rg_num
 		where
 			(
 			bo_bt_num = 1

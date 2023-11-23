@@ -128,6 +128,7 @@
 		  <div class="table">
 		     <ul class="individual-thead">
 		      	<li style="width: 10%;">게시글번호</li>
+		      	<li style="width: 10%;">지역</li>
 		      	<li style="width: 35%;">제목</li>
 		        <li style="width: 15%;">작성자 닉네임</li>
 		        <li style="width: 20%;">작성일</li>
@@ -157,6 +158,8 @@
 								<li>
 							      <div class="tbody-box">
 							      	<div class="tbody-list" style="width: 10%;">${bo.bo_num}</div>
+							      	
+							      	<div class="tbody-list" style="width: 10%;">${bo.bo_rg_main}</div>
 							      	<div class="tbody-list" style="width: 35%;"><a href="<c:url value='/board/detail?bo_num=${bo.bo_num}'/>"
 							      								style="color: #86aa64;">${bo.bo_title}</a></div>
 							        <div class="tbody-list" style="width: 15%;">${bo.me_nickname}</div>

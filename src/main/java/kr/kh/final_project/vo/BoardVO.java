@@ -21,6 +21,8 @@ public class BoardVO {
 	private String bo_contents; 
 	private int bo_count;
 	private int bo_comment;
+	//
+	private String bo_rg_main;
 	
 	private String me_nickname;
 	
