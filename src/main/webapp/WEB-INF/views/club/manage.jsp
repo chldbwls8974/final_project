@@ -85,8 +85,10 @@
 							<c:if test="${list.cm_authority =='MEMBER'}">
 								<tr>
 									<td>${list.cm_num}</td>
-									<td><img alt=""
-										src="<c:url value='/memberimg${list.me_profile}'/>" name="profile"></td>
+									<td><a
+										href="<c:url value='/member/myprofile?me_num=${list.cm_num}'/>"
+										class="member-link"><img alt=""
+										src="<c:url value='/memberimg${list.me_profile}'/>" name="profile"></a></td>
 									<td><a
 										href="<c:url value='/member/myprofile?me_num=${list.cm_num}'/>"
 										class="member-link"> ${list.me_nickname}</a></td>
@@ -112,6 +114,7 @@
 					<thead>
 						<tr>
 							<th>번호</th>
+							<th>프로필사진</th>
 							<th>회원 닉네임</th>
 							<th>자기소개</th>
 							<th style="width: 25%;"></th>
@@ -122,6 +125,11 @@
 							<c:if test="${list.cm_authority =='ROOKIE'}">
 								<tr>
 									<td>${list.cm_num}</td>
+									<td><a
+										href="<c:url value='/member/myprofile?me_num=${list.cm_num}'/>"
+										class="member-link"><img alt=""
+										src="<c:url value='/memberimg${list.me_profile}'/>" name="profile"></a></td>
+									<td>${list.me_nickname}</td>
 									<td><a
 										href="<c:url value='/member/myprofile?me_num=${list.cm_num}'/>"
 										class="member-link"> ${list.me_nickname}</a></td>
