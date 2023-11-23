@@ -218,6 +218,15 @@
 	        //입력값이 2자리 이상인 경우 마지막 2자리만 유지
    			target.value = target.value.slice(0, 2);
 		}
+		
+		//이용가능여부 변경
+	    $('input[name="st_available"]').change(function () {
+	        if ($(this).val() === '1') {
+	            $('#availabilityFields').show();
+	        } else {
+	            $('#availabilityFields').hide();
+	        }
+	    });
 	</script>
 	
 </body>
