@@ -135,9 +135,29 @@
 							<p class="mytier-title">내 티어</p>
 							<div class="mytier-box">
 								<div style="padding:0px; width:23px; height:25px; border-radius:5px; background-color: black;">
-									<div style="text-align:center; font-size:15px; padding:0; color: white; font-weight: bolder;">1</div>
+										<c:if test="${user.me_tr_name == '스타터'}">
+											<div style="text-align:center; font-size:15px; padding:0; color: white; font-weight: bolder;">0</div>
+										</c:if>
+										<c:if test="${user.me_tr_name == '브론즈'}">
+											<div style="text-align:center; font-size:15px; padding:0; color: white; font-weight: bolder;">1</div>
+										</c:if>
+										<c:if test="${user.me_tr_name == '실버'}">
+											<div style="text-align:center; font-size:15px; padding:0; color: white; font-weight: bolder;">2</div>
+										</c:if>
+										<c:if test="${user.me_tr_name == '골드'}">
+											<div style="text-align:center; font-size:15px; padding:0; color: white; font-weight: bolder;">3</div>
+										</c:if>
+										<c:if test="${user.me_tr_name == '플래티넘'}">
+											<div style="text-align:center; font-size:15px; padding:0; color: white; font-weight: bolder;">4</div>
+										</c:if>
+										<c:if test="${user.me_tr_name == '다이아'}">
+											<div style="text-align:center; font-size:15px; padding:0; color: white; font-weight: bolder;">5</div>
+										</c:if>
 								</div>
-									<div style="margin-left:5px; font-weight: bolder; font-size: 15px; letter-spacing: 1px;">${user.me_tr_name}(${user.me_rating})</div>	
+								<div style="margin-left:5px; font-weight: bolder; font-size: 15px; letter-spacing: 1px;">${user.me_tr_name}</div>
+								<c:if test="${user.me_tr_name != '스타터'}"> 
+									<div style="margin-left:5px; font-weight: bolder; font-size: 10px; letter-spacing: 1px;">${user.me_rating}점</div>	
+								</c:if>
 							</div>
 						</div>
 					</div>	
