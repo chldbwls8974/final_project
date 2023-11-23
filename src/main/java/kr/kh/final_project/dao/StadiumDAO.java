@@ -39,6 +39,10 @@ public interface StadiumDAO {
 
 	List<StadiumVO> selectAllStadiumList();
 
+	boolean updateAvailability(@Param("availability")AvailabilityVO availability);
+
+	boolean deleteAvailability(@Param("st_num")Integer st_num);
+
 
 	
 

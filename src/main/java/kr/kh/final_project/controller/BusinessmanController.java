@@ -342,20 +342,26 @@ public class BusinessmanController {
 		}
 		//경기장 정보 수정
 		@GetMapping("/businessman/stadiumUpdate")
-		public String updateStadium(Model model, Integer st_num, HttpSession session) {
+		public String updateStadium(Model model, Integer st_num, HttpSession session, AvailabilityVO availability) {
 			//st_num을 통해서 경기장 정보를 가져오고 stadium에 저장(st_fa_num 정보도 포함됨)
 			StadiumVO stadium= businessmanService.getStadium(st_num);
-			
+			AvailabilityVO updateAvailabilityInfo = null;
+			if(stadium.getSt_available() == 1) {
+				updateAvailabilityInfo = businessmanService.getAvailability(st_num);				
+			}
+			System.out.println(updateAvailabilityInfo);
+			model.addAttribute("updateAvailabilityInfo", updateAvailabilityInfo);
 			model.addAttribute("stadium", stadium);
 			return "/businessman/stadiumUpdate";
 		}
 		//경기장 정보 수정
 		@PostMapping("/businessman/stadiumUpdate")
-		public String stadiumUpdate(Model model, StadiumVO stadium, FacilityVO facility, HttpSession session) {
+		public String stadiumUpdate(Model model, StadiumVO stadium, FacilityVO facility, HttpSession session, 
+				AvailabilityVO availability) {
 			//'j'에 해당 경기장의 '시설 번호' 저장 
 			int j = stadium.getSt_fa_num();
-
-			boolean res = businessmanService.updateStadium(stadium);
+			System.out.println(availability);
+			boolean res = businessmanService.updateStadium(stadium, availability);
 			if(res) {
 				model.addAttribute("msg", "경기장 수정이 완료되었습니다.");
 				model.addAttribute("url", "/businessman/stadium/" + j);

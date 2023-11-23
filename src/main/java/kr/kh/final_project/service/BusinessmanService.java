@@ -49,7 +49,7 @@ public interface BusinessmanService {
 	//경기장번호로 경기장 정보가져오기
 	StadiumVO getStadium(Integer st_num);
 	//경기장 정보 수정
-	boolean updateStadium(StadiumVO stadium);
+	boolean updateStadium(StadiumVO stadium, AvailabilityVO availability);
     //현재 페이지 정보(검색어, 타입)에 맞는 전체 경기장 수를 가져옴
 	int getTotalStadiumCount(Criteria cri, Integer fa_num);
 	

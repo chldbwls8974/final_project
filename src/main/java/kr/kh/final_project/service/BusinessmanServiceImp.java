@@ -239,13 +239,18 @@ public class BusinessmanServiceImp implements BusinessmanService{
 	//경기장번호로 경기장 정보가져오기
 	@Override
 	public StadiumVO getStadium(Integer st_num) {
-		if(st_num == null) {
-			return null;
-		}
-		return stadiumDao.selectStadium(st_num);
+	    if (st_num == null) {
+	        return null;
+	    }
+	    StadiumVO stadium = stadiumDao.selectStadium(st_num);
+	    if (stadium != null) {
+	        AvailabilityVO availability = stadiumDao.selectAvailability(st_num);
+	        stadium.setAvailability(availability);
+	    }
+	    return stadium;
 	}
 	//경기장 정보 수정
-	public boolean updateStadium(StadiumVO stadium) {
+	public boolean updateStadium(StadiumVO stadium, AvailabilityVO availability) {
 		if(stadium == null || stadium.getSt_num() == null) {
 			return false;
 		}
@@ -255,7 +260,13 @@ public class BusinessmanServiceImp implements BusinessmanService{
 		if(dbStadium == null) { 
 			return false;
 		}
+		if(stadium.getSt_available() == 0 || stadium.getSt_available() == 2) {
+	        boolean deleteAvailabilityInfo = stadiumDao.deleteAvailability(stadium.getSt_num());
+		}
 		boolean res = stadiumDao.updateStadium(stadium);
+		
+		availability.setAv_st_num(stadium.getSt_num());
+		boolean updateAvailabilityInfo = stadiumDao.updateAvailability(availability);
 		return res;
 	}
 	
