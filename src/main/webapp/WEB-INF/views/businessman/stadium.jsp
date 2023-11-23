@@ -45,9 +45,6 @@
 		-moz-appearance: none;
 		appearance: none;
 	}
-	
-	.title-detail{ margin: 50px auto; background-color: #f2f2f2; border-radius: 30px;
-	padding: 30px; width: 42%;}
 
 	.page-link {
 	  color: #000; 
@@ -70,7 +67,7 @@
 	/* 슬라이드쇼 */
 	.slider__wrap {
         width: 100%;
-        height: 100vh;
+        height: 80vh;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -94,8 +91,8 @@
 	/* 개별 이미지 */
 	.slider{
 		position: relative;
-		width: 800px;
-		height: 800px;
+		width: 600px;
+		height: 600px;
 	}
 	
 	.slider img{
@@ -112,7 +109,7 @@
     
 	.slider__btn {
 	    position: absolute;
-	    width: 68%;
+	    width: 43%;
 	    display: flex;
 	    justify-content: space-between;
 	    transform: translateY(-50%);
@@ -150,7 +147,7 @@
 	.btn-group>.btn:not(:first-child){ border-radius: 0;}
 
   
-	.title-detail{margin: 50px auto; background-color: white; border-radius: 30px;
+	.title-detail{margin: 0px auto; background-color: white; border-radius: 30px;
 		padding: 30px; width: 500px; height: 550px; text-align: center; background-color: #f2f2f2;
 	}
 	.facility-info-box{ justify-content: space-between; display: flex;}

@@ -171,6 +171,12 @@ $(function () {
 	</div>
 	
 	<script type="text/javascript">	
+		var currentDate = new Date();
+		var year = currentDate.getFullYear();
+		var month = currentDate.getMonth() + 1;
+		var day = currentDate.getDate();
+		var date_now = year + '/' + month + '/' + day;
+		$('#av_notdate').val(date_now);
 		//숫자만 입력되도록 하는 메서드
 		function numOnly(target) {
 	        //입력값이 5자리 이상인 경우 마지막 5자리만 유지
