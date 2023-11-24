@@ -10,7 +10,9 @@
 <script>
     $(function () {
         // datepicker 초기화
-        $("#av_notdate").datepicker();
+        $("#av_notdate").datepicker({
+        	dateFormat: 'yy/mm/dd'
+        });
     });
 </script>
 
@@ -184,13 +186,13 @@
 			    <div id="availabilityFields" style="display: none;">
 					  <div class="form-group">
 					        <label for="av_notdate" style="font-weight: bold;">불가적용 날짜</label>
-					        <input type="text" class="form-control" id="av_notdate" name="av_notdate" 
-					        style="width: 80%" value="${stadium.availability.av_notdate}" placeholder="날짜를 선택하세요">
+					        <input type="text" class="form-control" id="av_notdate" name="av_notdate"
+									style="width: 80%" value="${updateAvailabilityInfo.av_notdate_str}" placeholder="날짜를 선택하세요">
 					  </div>
 					  <div class="form-group">
 					        <label for="av_reason" style="font-weight: bold;">사유</label>
-					        <input type="text" class="form-control" id="av_reason" name="av_reason" 
-					         style="width: 80%" value="${stadium.availability.av_reason}" placeholder="사유를 입력하세요">
+					        <input type="text" class="form-control" id="av_reason" name="av_reason"
+									style="width: 80%" value="${updateAvailabilityInfo.av_reason}" placeholder="사유를 입력하세요">
 					  </div>
 				</div> 
 			  </div>
@@ -232,7 +234,7 @@
 	</div>
 	
 	<script type="text/javascript">	
-	    
+    
 	$(document).ready(function () {
 	    // 페이지 로드 시 실행되는 부분
 	    checkAvailability();
@@ -249,8 +251,8 @@
 	    // 불가능인 경우에만 값 세팅 및 보이도록 설정
 	    if ($('input[name="st_available"]:checked').val() === '1') {
 	        // 서버에서 가져온 데이터로 값을 설정
-	        var av_notdateValue = "${stadium.availability.av_notdate}";
-	        var av_reasonValue = "${stadium.availability.av_reason}";
+	        var av_notdateValue = "${availability.av_notdate}";
+	        var av_reasonValue = "${availability.av_reason}";
 
 	        // 값이 있다면 필드에 설정하고 보이도록 설정
 	        if (av_notdateValue && av_reasonValue) {
@@ -268,7 +270,6 @@
 	        $('#availabilityFields').hide();
 	    }
 	}
-	
 	
 	</script>
 	

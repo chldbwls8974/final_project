@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.vo.AvailabilityVO;
+import kr.kh.final_project.vo.FacilityVO;
 import kr.kh.final_project.vo.StadiumVO;
 
 public interface StadiumDAO {
@@ -38,6 +39,11 @@ public interface StadiumDAO {
 	boolean updateStadiumByAdmin(StadiumVO stadium);
 
 	List<StadiumVO> selectAllStadiumList();
+
+	boolean updateAvailability(@Param("availability")AvailabilityVO availability);
+
+	boolean deleteAvailability(@Param("st_num")Integer st_num);
+	StadiumVO selectStadiumByMeNum(@Param("me_num")Integer me_num, @Param("st_num")Integer st_num);
 
 
 	

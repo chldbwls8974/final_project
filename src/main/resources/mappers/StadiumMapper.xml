@@ -80,6 +80,12 @@
  	    values
  	    (#{availability.av_st_num}, #{availability.av_notdate}, #{availability.av_reason})
 	</insert>
+	<update id="updateAvailability">
+		 update availability set
+		 	av_notdate = #{availability.av_notdate}, 
+		 	av_reason = #{availability.av_reason}
+ 	    where av_st_num = #{availability.av_st_num}
+	</update>
 	
 	<select id="selectStadium" resultType="kr.kh.final_project.vo.StadiumVO">
 		 select * from stadium where st_num = #{st_num}
@@ -102,6 +108,10 @@
 	    set st_available = 2
 	    where st_fa_num = #{fa_num}
 	</update>
+	<delete id="deleteAvailability">
+		delete from availability
+		where av_st_num = #{st_num};
+	</delete>
 	<select id="selectStadiumListByAdmin" resultType="kr.kh.final_project.vo.StadiumVO">
 		select * from stadium 
 		<where>
@@ -142,5 +152,19 @@
 	</select>
 	<select id="selectAllStadiumList"  resultType="kr.kh.final_project.vo.StadiumVO">
 		select * from stadium
+	</select>
+	<select id="selectStadiumByMeNum"  resultType="kr.kh.final_project.vo.StadiumVO">
+		select
+			stadium.*
+		from
+			businessman
+				join
+			facility on fa_bu_num = bu_num
+				join
+			stadium on st_fa_num = fa_num
+		where
+			bu_me_num = #{me_num} and
+		    st_num = #{st_num} and
+            st_available != 2
 	</select>
 </mapper>

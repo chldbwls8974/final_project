@@ -145,7 +145,7 @@
 							<button class="btn btn-manager btn-manager-match" 
 							style="width: 120px; height: 40px; border: none; height: auto; margin-left: 20px;
 							border-radius: 5px; background-color: #c2f296; color: black;"
-							value="\${match.mt_num}">매칭 완료<br>\${match.entry_count}/\${match.mt_personnel * 3}</button> <br>
+							value="\${match.mt_num}">매치 완료<br>\${match.entry_count}/\${match.mt_personnel * 3}</button> <br>
 						`;
 					}else if(match.mt_state1 == 0 && ${weekCount >= 0}){
 						str += `
