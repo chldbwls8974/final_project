@@ -68,7 +68,7 @@
 	<div style="padding : 30px">
 	<br>
 		<p style="font-size: 35px; font-weight: bolder; margin: 0px auto; border-bottom: 8px solid #c2f296;
-			width: 18%; padding: 20px 0 10px 0; text-align: center;">개인게시판</p>
+			width: 20%; padding: 20px 0 10px 0; text-align: center;">개인게시판</p>
 		<div style="display:flex;">
 			
 			<div class="input-group mb-3 mt-3">
