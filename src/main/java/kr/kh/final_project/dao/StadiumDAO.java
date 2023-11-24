@@ -43,6 +43,7 @@ public interface StadiumDAO {
 	boolean updateAvailability(@Param("availability")AvailabilityVO availability);
 
 	boolean deleteAvailability(@Param("st_num")Integer st_num);
+	
 	StadiumVO selectStadiumByMeNum(@Param("me_num")Integer me_num, @Param("st_num")Integer st_num);
 
 

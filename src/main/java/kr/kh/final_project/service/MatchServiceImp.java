@@ -13,6 +13,7 @@ import kr.kh.final_project.dao.CouponDAO;
 import kr.kh.final_project.dao.EntryDAO;
 import kr.kh.final_project.dao.ExpenseDAO;
 import kr.kh.final_project.dao.ExtraDAO;
+import kr.kh.final_project.dao.ManagerDAO;
 import kr.kh.final_project.dao.MatchDAO;
 import kr.kh.final_project.dao.MemberDAO;
 import kr.kh.final_project.dao.PointHistoryDAO;
@@ -22,6 +23,7 @@ import kr.kh.final_project.dao.QuarterDAO;
 import kr.kh.final_project.dao.RegionDAO;
 import kr.kh.final_project.dao.TeamDAO;
 import kr.kh.final_project.dao.TimeDAO;
+import kr.kh.final_project.vo.AvailabilityVO;
 import kr.kh.final_project.vo.ClubMemberVO;
 import kr.kh.final_project.vo.ClubVO;
 import kr.kh.final_project.vo.CouponVO;
@@ -33,6 +35,7 @@ import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.PointHistoryVO;
 import kr.kh.final_project.vo.QuarterVO;
 import kr.kh.final_project.vo.RegionVO;
+import kr.kh.final_project.vo.StadiumVO;
 import kr.kh.final_project.vo.TeamVO;
 
 @Service
@@ -82,6 +85,9 @@ public class MatchServiceImp implements MatchService{
 	
 	@Autowired
 	MemberDAO memberDao;
+	
+	@Autowired
+	ManagerDAO managerDao;
 	
 	@Override
 	public List<ExtraVO> selectWeekDayList(int i) {
@@ -510,11 +516,19 @@ public class MatchServiceImp implements MatchService{
 			matchDao.updateMatchMtState1To1(match.getMt_num());
 		}
 	}
-	
+
 	@Override
 	public void deleteMatchSolo() {
 		List<MatchVO> matchList = matchDao.selectMatchSolo();
+		deleteSoloMatch(matchList);
+		
+	}
+	
+	public void deleteSoloMatch(List<MatchVO> matchList) {
 		for(MatchVO match : matchList) {
+			if(match.getMt_rule() == 1) {
+				managerDao.deleteManagerByMtNum(match.getMt_num());
+			}
 			if(match.getDelete() == 1) {
 				//매치 정원이 안되면 참가자 전원 환불 후 참가자 삭제
 				List<EntryVO> entryList = entryDao.selectEntryByMtNum(match.getMt_num());
@@ -536,7 +550,7 @@ public class MatchServiceImp implements MatchService{
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean insertMatchTeamSolo(int mt_num) {
 		List<TeamVO> teamList = teamDao.selectTeamByMtNum(mt_num);
@@ -554,7 +568,15 @@ public class MatchServiceImp implements MatchService{
 	@Override
 	public void deleteMatchClub() {
 		List<MatchVO> matchList = matchDao.selectMatchClub();
+		deleteClubMatch(matchList);
+		
+	}
+	
+	private void deleteClubMatch(List<MatchVO> matchList) {
 		for(MatchVO match : matchList) {
+			if(match.getMt_rule() == 1) {
+				managerDao.deleteManagerByMtNum(match.getMt_num());
+			}
 			if(match.getDelete() == 1) {
 				//클럽 매치 환불 후 참가자/클럽팀/팀 삭제
 				List<TeamVO> teamList = teamDao.selectTeamByMtNum(match.getMt_num());
@@ -573,6 +595,7 @@ public class MatchServiceImp implements MatchService{
 			}
 		}
 	}
+
 	@Override
 	public void updateEndMatch() {
 		List<MatchVO> matchList = matchDao.selectEndMatch();
@@ -662,6 +685,66 @@ public class MatchServiceImp implements MatchService{
 			return null;
 		}
 		return matchDao.selectDBMatchByMtNum(mt_num);
+	}
+
+	@Override
+	public void updateMatchByStadium(StadiumVO stadium, AvailabilityVO availability) {
+		if(stadium.getSt_num() == null) {
+			return;
+		}
+		
+		int st_num = stadium.getSt_num();
+		Date av_notdate = availability.getAv_notdate();
+		List<MatchVO> matchList = new ArrayList<MatchVO>();
+		List<MatchVO> soloMatchList = new ArrayList<MatchVO>();
+		List<MatchVO> clubMatchList =new ArrayList<MatchVO>();
+		List<MatchVO> beforeMatchList =new ArrayList<MatchVO>();
+		List<MatchVO> afterMatchList =new ArrayList<MatchVO>();
+		if(stadium.getSt_available() == 0) {
+			matchList = matchDao.selectMatchByStNumAll(st_num);
+			for(MatchVO match : matchList) {
+				matchDao.updateMatchMtState1To0(match.getMt_num());
+			}
+		}else if(stadium.getSt_available() == 1) {
+			beforeMatchList = matchDao.selectMatchByAvBefore(st_num, av_notdate);
+			for(MatchVO match : beforeMatchList) {
+				matchDao.updateMatchMtState1To0(match.getMt_num());
+			}
+			afterMatchList = matchDao.selectMatchByAvAfter(st_num, av_notdate);
+			for(MatchVO match : afterMatchList) {
+				if(match.getMt_type() == 1) {
+					soloMatchList.add(match);
+				}else if(match.getMt_type() == 2) {
+					clubMatchList.add(match);
+				}else {
+					matchList.add(match);
+				}
+			}
+			for(MatchVO match : matchList) {
+				if(match.getMt_rule() == 1) {
+					managerDao.deleteManagerByMtNum(match.getMt_num());
+				}
+				matchDao.updateMatchMtState1To1(match.getMt_num());					
+			}
+		}else if(stadium.getSt_available() == 2) {
+			soloMatchList = matchDao.selectMatchByStNumSolo(st_num);
+			clubMatchList = matchDao.selectMatchByStNumClub(st_num);
+			
+			deleteSoloMatch(soloMatchList);
+			deleteClubMatch(clubMatchList);
+			
+			matchList = matchDao.selectMatchByStNumAll(st_num);
+			for(MatchVO match : matchList) {
+				if(match.getMt_rule() == 1) {
+					managerDao.deleteManagerByMtNum(match.getMt_num());
+				}
+				if(match.getMt_state2() == 0) {
+					matchDao.deleteMatchByMtNum(match.getMt_num());
+				}else if(match.getMt_state2() == 1) {
+					matchDao.updateMatchMtState1To1(match.getMt_num());					
+				}
+			}
+		}
 	}
 
 }

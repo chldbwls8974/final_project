@@ -76,4 +76,18 @@ public interface MatchDAO {
 	
 	MatchVO selectDBMatchByMtNum(@Param("mt_num")int mt_num);
 	
+	void selectMatchByStAvailable(@Param("st_num")Integer st_num);
+	
+	List<MatchVO> selectMatchByStNumAll(@Param("st_num")int st_num);
+	
+	List<MatchVO> selectMatchByStNumSolo(@Param("st_num")int st_num);
+	
+	List<MatchVO> selectMatchByStNumClub(@Param("st_num")int st_num);
+	
+	void deleteMatchByMtNum(@Param("mt_num")int mt_num);
+	
+	List<MatchVO> selectMatchByAvBefore(@Param("st_num")int st_num, @Param("av_notdate")Date av_notdate);
+	
+	List<MatchVO> selectMatchByAvAfter(@Param("st_num")int st_num, @Param("av_notdate")Date av_notdate);
+	
 }
