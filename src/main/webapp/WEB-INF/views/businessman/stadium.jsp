@@ -128,13 +128,6 @@
 	  font-size: 1.3em;
 	  cursor: pointer;
 	}
-	.add-btn, .link-btn{
-		border-radius: 10px !important; width: 150px; height: 40px; border: none;
-		background-color: #c2f296; color: black; margin: 10px; line-height: 35px;
-	}
-	.btn-group>.btn:not(:last-child):not(.dropdown-toggle),
-	.btn-group>.btn:not(:first-child){ border-radius: 0;}
-
   .prev,
   .next {
     background-color: transparent;
@@ -144,6 +137,18 @@
   }
   .prev{ margin-left: 30px;}
   .next{ margin-right: 30px;}
+	.add-btn, .link-btn{
+		border-radius: 10px !important; width: 150px; height: 40px; border: none;
+		background-color: #c2f296; color: black; margin: 10px; line-height: 35px;
+	}
+	.up-btn{
+		border-radius: 10px !important; padding: 10px; border: none;
+		background-color: #c2f296; color: black; line-height: 35px;
+	}
+	tr, td{ text-align: center;}
+	.btn-group>.btn:not(:last-child):not(.dropdown-toggle),
+	.btn-group>.btn:not(:first-child){ border-radius: 0;}
+
   
 	.title-detail{margin: 50px auto; background-color: white; border-radius: 30px;
 		padding: 30px; width: 500px; height: 550px; text-align: center; background-color: #f2f2f2;
@@ -354,8 +359,8 @@
 					  </c:if>
 					  <td>${stadium.st_note}</td>
 			          <td hidden="hidden">${stadium.st_fa_num}</td>
-			          <td><a href="<c:url value='/businessman/stadiumUpdate?st_num=${stadium.st_num}'/>"
-								class="btn btn-outline-secondary" role="button">수정</a></td>
+			          <td style=""><a href="<c:url value='/businessman/stadiumUpdate?st_num=${stadium.st_num}'/>"
+								class="up-btn" role="button">수정</a></td>
 		         	 </tr>
     	         </c:if>
 		     </c:forEach>

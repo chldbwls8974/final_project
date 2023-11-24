@@ -7,6 +7,13 @@
 <meta charset="UTF-8">
 <title>경기 전적</title>
 <style type="text/css">
+
+	.container-body{ 
+		background-color: #f2f2f2;
+	    border-radius: 20px;
+	    padding: 20px;
+	    height: auto;
+	}
 	.club-emblem{width: 20px; height: 20px; border-radius: 50%;}
 	.member-profile{width: 20px; height: 20px; border-radius: 50%;}
 	.team-box{display: flex;}
@@ -52,11 +59,11 @@
 </style>
 </head>
 <body>
-	<div class="container">
 		<div style="margin-top: 50px; text-align: center;">
 			<p style="font-size: 35px; width: 30%; font-weight: bolder; margin: 30px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
 			${win + draw + lose} 전 ${win} 승${draw} 무${lose} 패</p>
 		</div>
+	<div class="container-body">
 		<table class="table table-hover">
 			<thead>
 				<tr>
