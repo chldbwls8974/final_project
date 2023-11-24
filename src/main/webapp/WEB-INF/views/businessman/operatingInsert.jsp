@@ -28,6 +28,10 @@
 		background-color: #f2f2f2; height: auto; margin-top: 20px;
 		border-radius: 20px; padding: 100px;
 	}
+	.btn{
+ 		border-radius: 10px; width: 250px; height: 40px; border: none;
+		background-color: #c2f296; color: black; margin: 0 auto;
+ 	}
  
 </style>
 <body>
@@ -100,7 +104,7 @@
 					</div>
 				</c:forEach>
 		    </div> 
-	   	    <button class="btn btn-info btn-block">등록</button><br>
+	   	    <button class="btn btn-block">등록</button><br>
 		</form> 
 	</div>
 	

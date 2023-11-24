@@ -73,7 +73,7 @@ div, ul, li {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizi
 		margin-top: 20px;
 	}
 	.keyword{
-		width: 400px;
+		width: 600px;
 		padding: .8em .5em;
 		border-radius: 5px;
 		border: 1px solid #999;
@@ -101,7 +101,7 @@ div, ul, li {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizi
 	  </ul>
 	</div>
 	<div class="container-body">
-		<p style="font-size: 35px; font-weight: bolder; margin: 30px auto; border-bottom: 8px solid #c2f296;
+		<p style="font-size: 35px; font-weight: bolder; margin: 10px auto;
 		width: 20%; padding: 30px 0 10px 0; text-align: center;">모든 클럽 조회</p>
 		<!-- 검색창 -->
 		<div class="search-navigation" style="margin-top: 20px; text-align: center;">

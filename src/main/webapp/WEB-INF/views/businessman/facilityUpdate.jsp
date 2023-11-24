@@ -37,7 +37,7 @@
 </style>
 <body>
 	<div class="facilityUpdate-navigation" style="margin-top: 50px; text-align: center;">
-		<p style="font-size: 35px; width: 24%; font-weight: bolder; margin: 30px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
+		<p style="font-size: 35px; width: 24%; font-weight: bolder; margin: 10px auto; padding: 20px 0 10px 0;">
 		시설 정보 수정</p>
 	</div>
 

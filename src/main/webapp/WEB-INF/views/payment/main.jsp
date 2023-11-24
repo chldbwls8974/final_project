@@ -34,7 +34,7 @@
 	}
 </style>
 <body>
-	<p style="font-size: 35px; font-weight: bolder; margin:50px auto; border-bottom: 8px solid #c2f296;
+	<p style="font-size: 35px; font-weight: bolder; margin: 10px auto;
 	width: 20%; padding: 30px 0 10px 0; text-align: center;">포인트 충전</p>
 	<div class="minibox">
 		<span class="point-information"> 현재 보유 포인트는 </span>

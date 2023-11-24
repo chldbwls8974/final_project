@@ -18,7 +18,7 @@
 </head>
 <body>
 	<div style="margin-top: 50px; text-align: center;">
-		<p style="font-size: 35px; width: 25%; font-weight: bolder; margin: 30px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
+		<p style="font-size: 35px; width: 25%; font-weight: bolder; margin: 10px auto; padding: 20px 0 10px 0;">
 		신청 경기 조회</p>
 	</div>
   <div class="container">

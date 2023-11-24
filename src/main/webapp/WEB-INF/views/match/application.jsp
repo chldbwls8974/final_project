@@ -71,7 +71,7 @@
 </head>
 <body>
 <div class="container-main">
-	<p style="font-size: 35px; font-weight: bolder; margin: 50px auto; border-bottom: 8px solid #c2f296;
+	<p style="font-size: 35px; font-weight: bolder; margin: 50px auto;
 	width: 20%; padding: 30px 0 10px 0; text-align: center;">매치 페이지</p>
 	<nav class="container-body">
 		<div class="contents-box left-box">

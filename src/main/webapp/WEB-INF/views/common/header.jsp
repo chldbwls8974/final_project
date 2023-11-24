@@ -43,11 +43,11 @@
 					text-align: end;
 				    padding: 13px;
 				    width: 200px;
-				    height: 70px;
+				    height: 55px;
 				    position: absolute;
 				    right: 20px;
 				    top: 20px;
-				    border-radius: 10px;">
+				    border-right: 6px solid #c2f296;">
 			<p><b>${user.me_nickname}</b>님 안녕하세요.</p>
 			<p>${user.me_nickname}님의 잔여포인트는 <b>${user.me_point}</b>입니다.</p>
 		</div>
@@ -140,7 +140,6 @@
 						<a class="dropdown-item" href="<c:url value='/businessman/facilityInsert'/>">시설 등록</a>
 						<a class="dropdown-item" href="<c:url value='/businessman/facility'/>">시설 관리</a>
 						<a class="dropdown-item" href="<c:url value='/buisnessman/manage/schedule?fa_num=0'/>">스케줄 관리</a>
-						<a class="dropdown-item" href="#">일정 관리</a>
 					</div>
 				</li>
 			</c:if>

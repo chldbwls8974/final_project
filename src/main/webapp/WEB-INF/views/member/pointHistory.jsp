@@ -79,12 +79,12 @@
 <body>
 <div>
 	<div style="margin-top: 50px; text-align: center;">
-		<p style="font-size: 35px; width: 25%; font-weight: bolder; margin: 30px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
+		<p style="font-size: 35px; width: 25%; font-weight: bolder; margin: 10px auto; padding: 20px 0 10px 0;">
 		포인트 내역 조회</p>
 	</div>
 	<!-- 회원검색 기능 -->
 	<form action="<c:url value='/member/pointHistory'/>" method="get">
-		<div style="margin: 30px 0 30px 0; text-align: right;">
+		<div style="margin: 10px; text-align: right;">
 		    <select class="searchType" name="t">
 		      <option value="all" 
 		      	<c:if test="${pm.cri.t == 'all'}">selected</c:if>>전체 기간</option>

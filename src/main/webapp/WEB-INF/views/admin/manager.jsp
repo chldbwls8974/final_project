@@ -55,13 +55,13 @@
 		color : red;
 	}
 	.notice-thead{
-		display: flex; padding: 0 0 16px 0;
+		display: flex; margin: 10px; padding: 0 0 16px 0;
 		border-bottom: 1px solid rgba(0,0,0,.1);
 	}
- 	.select-manager{padding: 5px;}
+ 	.select-manager{padding: 5px; margin: 10px;}
 	.tbody-box{ 
 		display: flex; border-bottom: 1px solid rgba(0,0,0,.1);
-		margin: 0; padding: 20px 20px 30px 20px;
+		margin: 0;
 	}
 	
 	.page-link {
@@ -82,7 +82,7 @@
 	  border-color: #ccc;
 	}
 	.up-btn{
-		border-radius: 10px !important; padding: 10px; border: none;
+		border-radius: 10px !important; padding: 3px 10px 3px 10px; border: none;
 		background-color: #c2f296; color: black; line-height: 35px;
 	}
 
@@ -156,7 +156,7 @@
 							<div id="tbody-list" style="width: 20%"><a href="<c:url value='/board/detail?bo_num=${ma.bo_num}'/>">${ma.bo_title}</a></div>
 							<div id="tbody-list" class="update" style="width: 10%">${ma.me_authority}</div>
 							<div id="tbody-list" style="width: 20%">${ma.bo_reg_date_str}</div>
-							<div id="tbody-list" style="width: 10%">
+							<div id="tbody-list" style="width: 10%; height: 60px;">
 								<button class="up-btn btn-update" value="${ma.me_nickname}">신청 수락</button>
 							</div>
 						</div>

@@ -31,7 +31,7 @@
 	</style>
 </head>
 <body>
-	<p style="font-size: 35px; font-weight: bolder; margin:50px auto; border-bottom: 8px solid #c2f296;
+	<p style="font-size: 35px; font-weight: bolder; margin:50px auto;
 	width: 25%; padding: 30px 0 10px 0; text-align: center;">클럽 매치 조회</p>
 	<div class="days-box">
 		<c:if test="${weekCount != 0}">
