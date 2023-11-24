@@ -12,17 +12,40 @@
 <style type="text/css">
 
 .container-body{ position:relative; width: 100%; height: auto; }
-.clublist-control{
-	width: 600px; padding: 20px; background-color: #f0f0f0; margin: 0 auto;
-	margin-bottom: 30px; display: grid;	border-radius: 40px;
-}
+/* .clublist-control{ */
+/* 	width: 600px; padding: 20px; background-color: #f0f0f0; margin: 0 auto; */
+/* 	margin-bottom: 30px; display: grid;	border-radius: 40px; */
+/* } */
 .clublist-control li{ margin: 10px;}
-.clublist-link a{ text-decoration: none; color: black;}
+.clublist-control {
+        display: flex;
+	    flex-wrap: wrap; /* 요소가 창을 벗어나면 다음 줄로 넘어감 */
+	    justify-content: start;
+	    list-style: none;
+	    padding: 20;
+	    width: 800px;
+	    margin: 0 auto;
+	    height: auto;
+	    border-radius: 20px;
+	    background-color: #f2f2f2;
+    }
+
+    .clublist-link {
+        width: 22%; /* 각 클럽 리스트가 차지하는 너비 설정 (여유 공간을 줌) */
+        margin: 10px; /* 각 클럽 리스트 간의 간격 설정 */
+    }
+
+    .clublist-link a {
+        display: block; /* 링크를 블록 레벨 요소로 설정하여 전체 영역에 링크 적용 */
+        text-align: center;
+        text-decoration: none; /* 링크에 밑줄 제거 */
+    }
+
 
 div, ul, li {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;padding:0;margin:0}
 .quickmenu {
 	position:absolute; width:90px; height:90px; border-radius:45px;
-	 top:70%; margin-top:-50px; right:10px; background:#c2f296;
+	 top:70%; margin-top:-50px; right: -30px; background:#c2f296;
 	 margin-right: 200px;
 }
 .quickmenu ul {
