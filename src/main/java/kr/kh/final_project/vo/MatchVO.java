@@ -65,6 +65,7 @@ public class MatchVO {
 	private int cl_num;				//신청한 매치 조회에서 클럽 매치의 경우 어떤 클럽으로 참가했는지 판단/개인 매치의 경우 0 입력	
 	
 	private int te_num;				
+	private int te_type;				
 	private String cl_name;				
 	private int win;				//경기 결과 조회에서 승	
 	private int draw;				//경기 결과 조회에서 무

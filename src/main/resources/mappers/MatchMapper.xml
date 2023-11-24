@@ -661,6 +661,7 @@
 		    ti_time,
 		    fa_name,
 		    st_name,
+		    te_type,
 		    te_num,
 		    cl_num,
 		    cl_name,
