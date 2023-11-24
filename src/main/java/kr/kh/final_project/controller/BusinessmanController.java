@@ -204,6 +204,8 @@ public class BusinessmanController {
 		public String insertOperating(Model model, FacilityVO facility, HttpSession session) {
 			//facilityVO에서 운영시간 리스트를 불러와서 operatingList 변수에 저장
 			List<OperatingVO> operatingList = facility.getOperatingList();
+			//오픈시간과 마감시간이 같으면 false;
+			System.out.println(operatingList);
 			int fa_num = facility.getFa_num();
 
 			boolean res = businessmanService.insertOperating(operatingList, fa_num);
@@ -220,7 +222,9 @@ public class BusinessmanController {
 		//운영시간 수정
 		@GetMapping("/businessman/operatingUpdate/{fa_num}")
 		public String updateOperating(Model model, @PathVariable("fa_num")Integer fa_num, HttpSession session) {
-			List<OperatingVO> operatingList = businessmanService.getOperatingListByFaNum(fa_num);		
+			List<OperatingVO> operatingList = businessmanService.getOperatingListByFaNum(fa_num);
+			boolean res = true;
+			
 			model.addAttribute("operatingList", operatingList);
 			return "/businessman/operatingUpdate";
 		}
@@ -230,8 +234,33 @@ public class BusinessmanController {
 			//facility에서 operatingList를 불러옴
 			List<OperatingVO> operatingList = facility.getOperatingList();
 			int fa_num = facility.getFa_num();
-
-			boolean res = businessmanService.updateOperatingList(operatingList, fa_num);
+			
+			boolean res = true;
+			String day = null;
+			String yesterday = null;
+			for(int i = 0; i < 7; i++) {
+				if(i == 0) {
+					if(operatingList.get(6).getOp_open() > operatingList.get(6).getOp_close() && operatingList.get(0).getOp_open() < operatingList.get(6).getOp_close()) {
+						yesterday = operatingList.get(6).getOp_day();
+						day = operatingList.get(0).getOp_day();
+						res = false;
+					}
+				}else {
+					if(operatingList.get(i - 1).getOp_open() > operatingList.get(i - 1).getOp_close() && operatingList.get(i).getOp_open() < operatingList.get(i - 1).getOp_close()) {
+						yesterday = operatingList.get(i - 1).getOp_day();
+						day = operatingList.get(i).getOp_day();
+						res = false;
+					}
+				}
+			}
+			if(!res) {
+				model.addAttribute("msg", "마감시간이 자정을 넘을 경우 " + day + " 요일의 오픈시간이" + yesterday + " 요일의 마감시간보다 늦어야합니다.");
+				model.addAttribute("url", "/businessman/operatingUpdate/" + fa_num);
+				
+				return "/util/message";
+			}
+			
+			res = businessmanService.updateOperatingList(operatingList, fa_num);
 			if(res) {
 				model.addAttribute("msg", "시설 운영시간 수정이 완료되었습니다.");
 				model.addAttribute("url", "/businessman/operating/" + fa_num);

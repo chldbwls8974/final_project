@@ -694,14 +694,15 @@ public class MemberController {
 			for(MatchVO match : matchList) {
 				if(match.getWin() != 0) {
 					win += match.getWin();
-				}
-				if(match.getDraw() != 0) {
-					win += match.getDraw();
-				}
-				if(match.getLose() != 0) {
-					win += match.getLose();
+				}if(match.getDraw() != 0) {
+					draw += match.getDraw();
+				}if(match.getLose() != 0) {
+					lose += match.getLose();
 				}
 			}
+			model.addAttribute("win", win);
+			model.addAttribute("draw", draw);
+			model.addAttribute("lose", lose);
 			model.addAttribute("matchList", matchList);
 			return "/member/record";
 		}

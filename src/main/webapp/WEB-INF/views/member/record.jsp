@@ -38,6 +38,7 @@
 </head>
 <body>
 	<div class="container">
+		<h2>${win + draw + lose} 전 ${win} 승${draw} 무${lose} 패</h2>
 		<table class="table table-hover">
 			<thead>
 				<tr>
