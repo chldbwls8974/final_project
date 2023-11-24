@@ -26,6 +26,7 @@
 	.dropdown-item:hover {color: black;}
 	.nav-item .dropdown-menu {position: absolute; z-index: 999;
 	}
+	.navbar-brand div p{ font-size: 13px; margin: 0;}
 	
 </style>
 </head>
@@ -37,20 +38,33 @@
 			<img alt="로고" src="https://ifh.cc/g/s2ddYw.png" style="width: 150px">
 		</a>
 	</div>
-	<div style="width: 20%"></div>
+	<div style="width: 20%;
+				text-align: end;
+			    padding: 13px;
+			    width: 200px;
+			    height: 70px;
+			    position: absolute;
+			    right: 20px;
+			    top: 20px;
+			    border-radius: 10px;">
+		<p><b>${user.me_nickname}</b>님 안녕하세요.</p>
+		<p>${user.me_nickname}님의 잔여포인트는 <b>${user.me_point}</b>입니다.</p>
+	</div>
 </div>
 <div class="navbar-container">	
 	<nav class="navbar1">
 		<ul class="navbar1-nav-link">
-			<li class="nav-item">
-				<a class="nav-link" href="<c:url value='/match/search/solo'/>">개인매치</a>
+			<li class="nav-item dropdown" >
+				<a class="nav-link" id="navbar" href="<c:url value='/match/search/solo'/>">개인매치</a>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="<c:url value='/match/search/club?weekCount=0'/>">클럽매치</a>
+			<li class="nav-item dropdown">
+				<a class="nav-link" id="navbar" href="<c:url value='/match/search/club?weekCount=0'/>">클럽매치</a>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="<c:url value='/facility/list'/>">시설 조회</a>
-			</li>
+			<c:if test="${ user.me_authority != 'ADMIN' }">
+				<li class="nav-item dropdown">
+					<a class="nav-link" id="navbar" href="<c:url value='/facility/list'/>">시설 조회</a>
+				</li>
+			</c:if>
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 				클럽

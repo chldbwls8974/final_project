@@ -49,9 +49,9 @@
 			<input type="number" class="form-control" name="price" placeholder="${list[0].ex_price }원">
 			<label>주말 개인</label>
 			<input type="number" class="form-control" name="price" placeholder="${list[1].ex_price }원">
-			<label>평일 클랜</label>
+			<label>평일 클럽</label>
 			<input type="number" class="form-control" name="price" placeholder="${list[2].ex_price }원">
-			<label>주말 클랜</label>
+			<label>주말 클럽</label>
 			<input type="number" class="form-control" name="price" placeholder="${list[3].ex_price }원">
 			<label>변경 적용일</label>
 			 <input type="text" class="form-control" name="date" id="date"

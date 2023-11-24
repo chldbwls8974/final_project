@@ -83,7 +83,7 @@
 	}
 	tr, th{ text-align: center;}
 	.table thead th{ border: none;}
-	.teamList-box{flex: 1; margin-left: 110px;}
+	.teamList-box{flex: 1; margin-left: 50px;}
 	.teamList-box table tbody tr{text-align: left;}
 	.btn{
 		border-radius: 10px !important; width: 100px; height: 40px; border: none;
