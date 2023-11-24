@@ -62,6 +62,7 @@ public class MatchVO {
 	private int mn_me_num;
 	
 	private String me_name;			//경쟁전 매치의 경우 담당하는 매니저의 이름
+	private String me_phone;		//경쟁전 매치의 경우 담당하는 매니저의 연락처
 	private int cl_num;				//신청한 매치 조회에서 클럽 매치의 경우 어떤 클럽으로 참가했는지 판단/개인 매치의 경우 0 입력	
 	
 	private int te_num;				
