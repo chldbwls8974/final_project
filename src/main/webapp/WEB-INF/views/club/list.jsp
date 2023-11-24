@@ -12,10 +12,7 @@
 <style type="text/css">
 
 .container-body{ position:relative; width: 100%; height: auto; }
-/* .clublist-control{ */
-/* 	width: 600px; padding: 20px; background-color: #f0f0f0; margin: 0 auto; */
-/* 	margin-bottom: 30px; display: grid;	border-radius: 40px; */
-/* } */
+
 .clublist-control li{ margin: 10px;}
 .clublist-control {
         display: flex;
