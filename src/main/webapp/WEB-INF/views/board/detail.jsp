@@ -476,7 +476,9 @@ form{
 							<div class="box-comment">
 								<div class="comment-box" \${comment.co_num != comment.co_ori_num ? 'style="margin-left: 50px; background-color: #f2f2f2;"' : ''}>
 										<div class="comment-list">	
-											<img src="<c:url value='/memberimg\${comment.me_profile}'/>" class="rounded-circle profile-image" alt="기본프로필 사진">
+											<a href="<c:url value='/member/myprofile?me_num=${member.me_num}'/>">
+												<img src="<c:url value='/memberimg\${comment.me_profile}'/>" class="rounded-circle profile-image" alt="기본프로필 사진">
+											</a>
 											<div class="comment-1">
 												<span class="comment-nickname">\${comment.me_nickname}</span>
 												\${comments}
@@ -488,8 +490,8 @@ form{
 												\${btnStr}
 											</div>
 										</div>
-									</div>
 								</div>
+							</div>
 							<hr>
 							`;
 			             }
