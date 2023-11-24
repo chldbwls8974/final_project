@@ -54,6 +54,9 @@
 					<a class="nav-link" href="<c:url value='/club/list'/>">클럽 조회</a>
 				</div>
 			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="<c:url value='/facility/list'/>">시설 조회</a>
+			</li>
 			<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 					커뮤니티

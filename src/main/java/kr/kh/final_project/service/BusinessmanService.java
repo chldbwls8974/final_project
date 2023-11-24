@@ -54,5 +54,7 @@ public interface BusinessmanService {
 	
 	List<FacilityPictureVO> getFacilityPictureList(Integer fa_num);
 	
+	List<StadiumVO> selectAllStadium();
+	
 
 }
