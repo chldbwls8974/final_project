@@ -56,5 +56,9 @@ public interface MatchDAO {
 	List<MatchVO> selectMyRecored(@Param("me_num")Integer me_num);
 	
 	MatchVO selectMatchRecord(@Param("mt_num")int mt_num, @Param("te_num")int te_num);
+	
+	List<MatchVO> selectManagerAble0ByMtDate(@Param("me_num")Integer me_num, @Param("mt_date")Date mt_date);
+	
+	List<MatchVO> selectManagerAble23ByMtDate(@Param("me_num")Integer me_num, @Param("mt_date")Date mt_date);
 
 }
