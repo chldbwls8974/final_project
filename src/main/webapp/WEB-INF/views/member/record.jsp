@@ -29,7 +29,7 @@
 	padding: 20px;
 	border-radius: 5px;
 	max-width: 600px;
-	margin: 200px auto;
+	margin: 50px auto;
 		
 	}
 	.info-box{margin-bottom: 10px;
@@ -95,15 +95,27 @@
 	
 	<div class="modal">
 		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title">경기 결과</h4>
-				<button type="button" class="close btn-record-close" data-dismiss="modal">&times;</button>
+			<div class="match-record-box">
+				<div class="modal-header">
+					<h4 class="modal-title">경기 결과</h4>
+					<button type="button" class="close btn-record-close" data-dismiss="modal">&times;</button>
+				</div>
+				<h4>참가자 리스트</h4>
+				<div class="team-box">
+				</div>
+				<div class="reportBtn-box">
+				</div>
+				<hr>
+				<div class="quarter-list-box">
+				</div>
 			</div>
-			<h4>참가자 리스트</h4>
-			<div class="team-box">
-			</div>
-			<hr>
-			<div class="quarter-list-box">
+			<div class="match-report-box">
+				<div class="modal-header">
+					<h4 class="modal-title">매치 신고</h4>
+					<button type="button" class="close btn-matchReport-close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="report-box">
+				</div>
 			</div>
 		</div>
 	</div>
@@ -121,6 +133,10 @@
         	te_type = $(this).siblings('.te_type').val();
         	mt_personnel = $(this).siblings('.mt_personnel').val();
         	
+        	$('.match-record-box').show();
+			$('.match-report-box').hide();
+			
+        	printReset()
         	printTeam()
         	printQuarter()
         	
@@ -128,8 +144,6 @@
         });
 
         $('.btn-record-close').click(function() {
-        	printReset()
-        	
             closeModal();
         });
 
@@ -141,6 +155,16 @@
             $('.modal').fadeOut();
         }
     });
+	$(document).on('click', '.btn-matchReport-open', function() {
+		$('.match-record-box').hide();
+		$('.match-report-box').show();
+		
+		printReport()
+	});
+	$(document).on('click', '.btn-matchReport-close', function() {
+		$('.match-record-box').show();
+		$('.match-report-box').hide();
+	});
 	function printTeam() {
 		str = ``;
 		$.ajax({
@@ -225,6 +249,10 @@
 			}
 		});
 		$('.team-box').html(str);
+		str = `
+			<button class="btn-matchReport-open" value="\${mt_num}">신고하기</button>
+		`;
+		$('.reportBtn-box').html(str);
 	}
 	function printQuarter() {
 		str = ``;
@@ -282,10 +310,18 @@
 		});
 		$('.quarter-list-box').html(str);
 	}
-	function printReset() {
+	function printReport() {
 		str = ``;
-		$('.team-box').html(str);
-		$('.quarter-list-box').html(str);
+		$.ajax({
+			async : false,
+			method : 'post',
+			url : '<c:url value="/print/report/match"/>',
+			data : {mt_num:mt_num},
+			dataType : 'json',
+			success : function(data) {
+				
+			}
+		});
 	}
 	</script>
 </body>
