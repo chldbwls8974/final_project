@@ -16,8 +16,8 @@
 		color : white;
 	}
 	.write-btn{
-		border-radius: 5px; width: 120px; height: 40px; border: none;
-		background-color: #c2f296; color: black; margin: 10px 0 10px 0;
+		border-radius: 5px; width: 120px; padding: 13px; border: none;
+		background-color: #c2f296; color: black; margin: 10px 10px 10px 0px;
 	}
 	.write-btn:hover{
 		background-color : #e6ffcc; color: black;
@@ -36,7 +36,7 @@
 		margin-top: 20px;
 	}
 	.keyword{
-		width: 500px;
+		width: 820px;
 		padding: .8em .5em;
 		border-radius: 5px;
 		border: 1px solid #999;
@@ -45,10 +45,11 @@
 		appearance: none;
 	}
 	.search-btn{
-		width: 80px;
+		width: 120px;
 		padding: .8em .5em;
 		border-radius: 5px;
-		border: 1px solid #999;
+		border: none;
+		background-color: #c2f296;
 		-webkit-appearance: none;
 		-moz-appearance: none;
 		appearance: none;
@@ -129,7 +130,7 @@
 	</div>
 	<!-- 사업자 검색 기능 -->
 	<form action="<c:url value='/admin/business3'/>" method="get">
-		<div class="businessman-search-navigation" style="margin: 30px 0 30px 0; text-align: center;">
+		<div class="businessman-search-navigation" style="margin-bottom: 30px; text-align: center;">
 		    <select class="searchType" id="me_authority" name="t">
 		      <option value="all"
 		      		<c:if test="${pm.cri.t == 'all'}">selected</c:if>>전체</option>
@@ -170,14 +171,14 @@
                      <div id="tbody-list" style="width: 10%">
                      	<button type="button"
                      			class="btn btn-update"
-								style="background-color: #d7fdb5; color: black; height: 45px; border-radius: 10px; width: 70px; margin-bottom: 20px;"
+								style="background-color: #898989; color: white; height: 45px; border-radius: 10px; width: 70px; margin-bottom: 20px;"
 								onclick="location.href='<c:url value='/admin/update?bu_num=${bu.bu_num}'/>'"
 								>수정</button>	
                      </div>
                      <div id="tbody-list" style="width: 10%">
                      	<button type="button"
                      			class="btn btn-delete" value="${bu.bu_num}"
-								style="background-color: #d7fdb5; color: black; height: 45px; border-radius: 10px; width: 70px; margin-bottom: 20px;"
+								style="background-color: #898989; color: white; height: 45px; border-radius: 10px; width: 70px; margin-bottom: 20px;"
                      			>삭제</button>
                      </div>
                   </div>

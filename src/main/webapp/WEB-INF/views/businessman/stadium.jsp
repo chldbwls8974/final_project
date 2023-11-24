@@ -67,7 +67,7 @@
 	/* 슬라이드쇼 */
 	.slider__wrap {
         width: 100%;
-        height: 80vh;
+        height: 450px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -76,7 +76,7 @@
     .slider__img {
         position: relative;
         width: 600px;
-        height: 600px;
+        height: 400px;
         overflow: hidden;
     }
      /* 이미지 감싸고 있는 부모 : 움직이는 부분 */
@@ -91,8 +91,8 @@
 	/* 개별 이미지 */
 	.slider{
 		position: relative;
-		width: auto;
-		height: auto;
+		width: 800px;
+		height: 400px;
 	}
 	
 	.slider img{
@@ -160,7 +160,7 @@
 </style>
 <body>
 	<div class="stadium-navigation" style="margin-top: 50px; text-align: center;">
-		<p style="font-size: 35px; width: 38%; font-weight: bolder; margin: 30px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
+		<p style="font-size: 35px; width: 38%; font-weight: bolder; margin: 10px auto; padding: 20px 0 10px 0;">
 		[${facility.fa_name}] 경기장 목록</p>
 	</div>
 	

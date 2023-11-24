@@ -68,8 +68,8 @@
 <div class="container-body">
 	<div style="padding: 30px;">
 	<br>
-		<p style="font-size: 35px; font-weight: bolder; margin:0 auto; border-bottom: 8px solid #c2f296;
-			width: 20%; padding: 20px 0 10px 0; text-align: center;">자유게시판</p>
+		<p style="font-size: 35px; font-weight: bolder; margin:0 auto;
+			width: 20%; padding: 10px 0 10px 0; text-align: center;">자유게시판</p>
 		<div style="display:flex; justify-content: flex-end;">
 			<button type="button"
 				    class="write-btn btn-free"
