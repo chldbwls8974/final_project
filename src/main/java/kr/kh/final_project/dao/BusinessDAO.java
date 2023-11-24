@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.vo.BusinessmanVO;
+import kr.kh.final_project.vo.FacilityPictureVO;
 import kr.kh.final_project.vo.ManagerVO;
 
 public interface BusinessDAO {
@@ -43,6 +44,5 @@ public interface BusinessDAO {
 	boolean updateBusiness(@Param("businessman")BusinessmanVO businessman);
 	// 사업자 삭제하기 (3)
 	boolean deleteBusinessList(@Param("bu_num")Integer bu_num);
-	
 	
 }

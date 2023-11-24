@@ -2,8 +2,11 @@ package kr.kh.final_project.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import kr.kh.final_project.pagination.Criteria;
 import kr.kh.final_project.vo.BusinessmanVO;
+import kr.kh.final_project.vo.FacilityPictureVO;
 import kr.kh.final_project.vo.FacilityVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.OperatingVO;
@@ -19,7 +22,7 @@ public interface BusinessmanService {
 	//회원번호로 사업자정보 가져오기
 	BusinessmanVO getBusinessmanByMeNum(Integer me_num);
 	//시설 등록
-	boolean insertFacility(MemberVO user, FacilityVO facility);
+	boolean insertFacility(MemberVO user, FacilityVO facility, MultipartFile[] file);
 	
 	List<RegionVO> getMainRegion();
 	
@@ -48,5 +51,8 @@ public interface BusinessmanService {
 	boolean updateStadium(StadiumVO stadium);
     //현재 페이지 정보(검색어, 타입)에 맞는 전체 경기장 수를 가져옴
 	int getTotalStadiumCount(Criteria cri, Integer fa_num);
+	
+	List<FacilityPictureVO> getFacilityPictureList(Integer fa_num);
+	
 
 }
