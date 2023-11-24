@@ -46,19 +46,11 @@
 		</div>
 		<div class="contents-box right-box">
 			<div class="entry-list-box right-side-box">
-				<h4>참가자 리스트</h4>
-				<c:if test="${match.team_count != 0 && match.list_team == 0}">
-					<button class="btn-reset">초기화</button>
-					<button class="btn-auto-balance">자동 밸런스</button>
-					<button class="btn-team-complete">팀 확정</button>
-				</c:if>
-				<div class="entry-list">
 				
-				</div>
 			</div>
 		</div>
 	</nav>
-	<c:if test="${match.ready ==  2 && match.list_team == 1}">
+	<c:if test="${match.ready ==  2 && match.list_team == 0}">
 		<div class="insert-quarter-box">
 		
 		</div>
@@ -291,6 +283,22 @@
 			dataType : 'json',
 			success : function(data) {
 				str = ``;
+				if(${match.entry_count == 0}){
+					str += `
+						<h4>참가자가 없습니다.</h4>
+					`;
+				}else{
+					str += `
+						<h4>참가자 리스트</h4>
+					`;
+				}
+				if(${match.team_count != 0 && match.list_team == 1}){
+					str += `
+						<button class="btn-reset">초기화</button>
+						<button class="btn-auto-balance">자동 밸런스</button>
+						<button class="btn-team-complete">팀 확정</button>
+					`;
+				}
 				for(entry of data.entryList){
 					str += `
 						<div class="entry-member member-list">
@@ -327,7 +335,7 @@
 				}
 			}
 		});
-		$('.entry-list').html(str);
+		$('.entry-list-box').html(str);
 	}
 	
 	function printInsertQuarter() {
@@ -376,7 +384,6 @@
 			data : {mt_num:mt_num},
 			dataType : 'json',
 			success : function(data) {
-				quarterList = data.quarterList
 				if(${match.ready ==  2 || match.ready == 3}){
 					let i = 0
 					for(quarterList of data.quarterList){
