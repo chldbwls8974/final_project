@@ -734,4 +734,17 @@ public class MemberController {
 			map.put("quarterList", quarterList);
 			return map;
 		}
+		@ResponseBody
+		@PostMapping("/print/report/match")
+		public Map<String, Object> printReportMatch(@RequestParam("mt_num")int mt_num, HttpSession session){
+			Map<String, Object> map = new HashMap<String, Object>();
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			MemberVO manager = matchService.selectManagerByMtNum(mt_num);
+			List<EntryVO> entryList = matchService.selectEntryByMtNum(mt_num);
+			
+			map.put("me_num", user.getMe_num());
+			map.put("manager", manager);
+			map.put("entryList", entryList);
+			return map;
+		}
 }
