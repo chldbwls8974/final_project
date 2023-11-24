@@ -137,7 +137,7 @@
     
 	.slider__btn {
     position: absolute;
-    width: 35%;
+    width: 43%;
     display: flex;
     justify-content: space-between;
     transform: translateY(-50%);
