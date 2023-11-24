@@ -11,7 +11,7 @@
 }
 .title{ width:20%; font-size: 35px; font-weight: bolder; text-align: center; letter-spacing: -3px;
 	border-bottom: 8px solid #c2f296; padding-bottom: 10px;  margin: 0 auto; margin-bottom: 30px;}
-.title-detail{ margin: 50px auto; background-color: #f2f2f2; border-radius: 30px;
+.title-detail{ margin: 0 auto; background-color: #f2f2f2; border-radius: 30px;
 	padding: 30px; width: 42%;}
 .form-group{ text-align: center;}
 .form-group label{ text-align: center; display: block; margin: 0 auto;}
