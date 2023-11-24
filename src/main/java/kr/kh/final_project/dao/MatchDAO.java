@@ -25,7 +25,7 @@ public interface MatchDAO {
 	//삭제된 매치(조회 불가능)
 	void updateMatchMtState1To1(@Param("mt_num")int mt_num);
 	//종료된 매치(전적 조회용)
-	void updateMatchMtState1To2(@Param("mt_num")int mt_num);
+	boolean updateMatchMtState1To2(@Param("mt_num")int mt_num);
 	//한번이라도 신청된 매치(포인트 내역의 참조키로 필요)
 	void updateMatchMtState2To1(@Param("mt_num")int mt_num);
 

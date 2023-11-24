@@ -14,7 +14,7 @@ public interface TeamDAO {
 
 	TeamVO selectTeamByClNum(@Param("mt_num")int mt_num, @Param("cl_num")int cl_num);
 
-	void insertTeam(@Param("mt_num")int mt_num);
+	boolean insertTeam(@Param("mt_num")int mt_num);
 
 	TeamVO selectNewTeamByMtNum(@Param("mt_num")int mt_num);
 

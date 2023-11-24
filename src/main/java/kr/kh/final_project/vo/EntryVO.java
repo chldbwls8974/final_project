@@ -11,6 +11,7 @@ public class EntryVO {
 	private String me_nickname;
 	private int me_rating;
 	private String me_tr_name;
+	private String me_profile;
 	
 	private int ct_cl_num;
 

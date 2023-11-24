@@ -27,6 +27,7 @@
 		.match-time-box{font-size: 40px; display: inline-block; line-height: 100px; margin-right: 10px;}
 		.match-info-box{display: inline-block;}
 		.btn{float: right; margin-top: 30px;}
+		.club-emblem{width: 20px; height: 20px; border-radius: 50%;}
 	</style>
 </head>
 <body>

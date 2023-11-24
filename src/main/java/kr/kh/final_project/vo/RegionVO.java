@@ -8,10 +8,5 @@ public class RegionVO {
 	private String rg_main;
 	private String rg_sub;
 	
-	private int pr_rg_num; 
-	
-	public int getPr_rg_num() {
-		pr_rg_num = rg_num;
-		return pr_rg_num;
-	}
+
 }

@@ -21,4 +21,5 @@ public class TeamVO {
 
 	private int cl_num;
 	private String cl_name;
+	private String cl_emblem;
 }

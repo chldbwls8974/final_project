@@ -1,3 +1,94 @@
+DROP TRIGGER IF EXISTS INSERT_MANAGER;
+-- 매니저 등록시 경쟁전 매치로 변경
+DELIMITER //
+CREATE TRIGGER INSERT_MANAGER AFTER INSERT ON MANAGER
+FOR EACH ROW
+BEGIN
+	UPDATE FUTSAL.`MATCH`
+    SET
+		MT_RULE = 1
+	WHERE
+		MT_NUM = NEW.MN_MT_NUM;
+END //
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS DELETE_MANAGER;
+-- 매니저 삭제시 친선전 매치로 변경
+DELIMITER //
+CREATE TRIGGER DELETE_MANAGER AFTER DELETE ON MANAGER
+FOR EACH ROW
+BEGIN
+	UPDATE FUTSAL.`MATCH`
+    SET
+		MT_RULE = 0
+	WHERE
+		MT_NUM = OLD.MN_MT_NUM;
+END //
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS INSERT_TEAM;
+-- TE_TYPE = 0 인 팀 생성시 개인 매치로(MT_TYPE = 1) 변경
+DELIMITER //
+CREATE TRIGGER INSERT_TEAM AFTER INSERT ON TEAM
+FOR EACH ROW
+BEGIN
+	IF NEW.TE_TYPE = 0 THEN
+		UPDATE FUTSAL.`MATCH`
+		SET
+			MT_TYPE = 1
+		WHERE
+			MT_NUM = NEW.TE_MT_NUM;
+	END IF;
+END //
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS DELETE_TEAM;
+-- 팀 제거시 속해있던 매치에 등록된 팀이 0개이면 미확정 매치로(MT_TYPE = 0) 변경
+DELIMITER //
+CREATE TRIGGER DELETE_TEAM AFTER DELETE ON TEAM
+FOR EACH ROW
+BEGIN
+	IF (SELECT COUNT(TE_NUM) FROM `MATCH` JOIN TEAM ON TE_MT_NUM = MT_NUM WHERE MT_NUM = OLD.TE_MT_NUM) = 0 THEN
+		UPDATE FUTSAL.`MATCH`
+		SET
+			MT_TYPE = 0
+		WHERE
+			MT_NUM = OLD.TE_MT_NUM;
+    END IF;
+END //
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS INSERT_CLUB_TEAM;
+-- CLUB_TEAM 생성시 클럽 매치로(MT_TYPE = 2) 변경
+DELIMITER //
+CREATE TRIGGER INSERT_CLUB_TEAM AFTER INSERT ON CLUB_TEAM
+FOR EACH ROW
+BEGIN
+	UPDATE FUTSAL.`MATCH`
+    SET
+		MT_TYPE = 2,
+        MT_STATE2 = 1
+	WHERE
+		MT_NUM = (SELECT TE_MT_NUM FROM TEAM WHERE TE_NUM = NEW.CT_TE_NUM);
+END //
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS INSERT_ENTRY;
+-- CLUB_TEAM 생성시 클럽 매치로(MT_TYPE = 2) 변경
+DELIMITER //
+CREATE TRIGGER INSERT_ENTRY AFTER INSERT ON ENTRY
+FOR EACH ROW
+BEGIN
+	IF IFNULL((SELECT CT_CL_NUM FROM TEAM JOIN CLUB_TEAM ON CT_TE_NUM = TE_NUM WHERE TE_NUM = NEW.EN_TE_NUM), 0) = 0 THEN
+		UPDATE FUTSAL.`MATCH`
+		SET
+			MT_STATE2 = 1
+		WHERE
+			MT_NUM = (SELECT TE_MT_NUM FROM TEAM WHERE TE_NUM = NEW.EN_TE_NUM);
+    END IF;
+END //
+DELIMITER ;
+
 INSERT INTO MEMBER(ME_ID, ME_PW, ME_RG_NUM, ME_NICKNAME, ME_AUTHORITY, ME_POINT, ME_RATING, ME_TR_NAME)
 VALUES
 ('user1', 'user1', 2, 'B-1', 'BUSINESS', 300000, 900, '브론즈'), ('user2', 'user2', 2, 'B-2', 'BUSINESS', 30000, 1900, '실버'), ('user3', 'user3', 2, 'M-1', 'MANAGER', 30000, 2900, '골드'),
@@ -604,21 +695,27 @@ futsal.stadium on sc_st_num = st_num
 	left join
 futsal.availability on av_st_num = st_num
 WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(adddate(now(), INTERVAL 6 DAY)), 1));
-
+INSERT INTO futsal.match (mt_date, mt_st_num, mt_ti_num, mt_personnel, mt_state1)
+SELECT
+	date(adddate(now(), INTERVAL 21 DAY)),
+	sc_st_num,
+	sc_ti_num,
+	sc_personnel,
+	if(st_available = 0, 0, if(date(adddate(now(), INTERVAL 21 DAY)) >= av_notdate, 1, 0))
+FROM
+	futsal.schedule
+	join
+futsal.time on sc_ti_num = ti_num
+	join
+futsal.stadium on sc_st_num = st_num
+	left join
+futsal.availability on av_st_num = st_num
+WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(now()), 1));
 
 insert into manager(mn_mt_num, mn_me_num)
 values
-(884, 3), (902, 3), (889, 4), (463, 3) ,(522, 3), (8, 3), (48, 3),
+(902, 3), (463, 3) ,(522, 3), (8, 3), (48, 3),
 (1337, 3), (1344, 3), (465, 4), (524, 4);
-
-update `match`
-set
-	mt_rule = 1,
-    mt_state2 = 1
-where
-	mt_num = 884 or mt_num = 902 or mt_num = 889 or mt_num = 463 or
-	mt_num = 522 or mt_num = 8 or mt_num = 48 or mt_num = 1337 or
-    mt_num = 1344 or mt_num = 465 or mt_num = 524 ;
 
 insert into preferred_region(pr_me_num, pr_rg_num)
 values
@@ -658,31 +755,27 @@ values
 insert into team(te_mt_num, te_type)
 values(463, 0), (902, 0), (524, 0), (465, 1), (522, 1), (522, 2);
 
-update `match`
-set
-	mt_type = 1,
-    mt_state2 = 1
-where
-	mt_num = 902 or mt_num = 463 or mt_num = 524;
-
 insert into entry(en_me_num, en_te_num)
 values
-(5, 1), (6, 1), (7, 1), (8, 1), (9, 1), (10, 1), (11, 1), (12, 1),
-(5, 2), (6, 2), (7, 2), (8, 2), (9, 2), (10, 2), (11, 2), (12, 2);
+(5, 1), (6, 1), (7, 1), (8, 1), (9, 1),
+(10, 1), (11, 1), (12, 1), (13, 1), (14, 1),
+(15, 1), (16, 1), (17, 1), (18, 1), (19, 1),
 
-insert into holding_coupon(hp_me_num, hp_cp_num)
-values(5, 3), (5, 4), (5, 5);
+(5, 2), (6, 2), (7, 2), (8, 2), (9, 2),
+(10, 2), (11, 2), (12, 2),
 
-insert into entry(en_me_num, en_te_num)
-values
 (5, 3), (6, 3), (7, 3), (8, 3), (9, 3),
 (10, 3), (11, 3), (12, 3), (13, 3), (14, 3),
 (15, 3), (16, 3), (17, 3), (18, 3), (19, 3);
 
+insert into holding_coupon(hp_me_num, hp_cp_num)
+values(5, 3), (5, 4), (5, 5);
+
 insert into point_history(ph_price, ph_source, ph_mt_num, ph_me_num)
 values
 (-10000, 1, 463, 5), (-10000, 1, 463, 6), (-10000, 1, 463, 7), (-10000, 1, 463, 8), (-10000, 1, 463, 9),
-(-10000, 1, 463, 10), (-10000, 1, 463, 11), (-10000, 1, 463, 12),
+(-10000, 1, 463, 10), (-10000, 1, 463, 11), (-10000, 1, 463, 12),(-10000, 1, 463, 13), (-10000, 1, 463, 14),
+(-10000, 1, 463, 15), (-10000, 1, 463, 16), (-10000, 1, 463, 17), (-10000, 1, 463, 18), (-10000, 1, 463, 19),
 (-10000, 1, 902, 5), (-10000, 1, 902, 6), (-10000, 1, 902, 7), (-10000, 1, 902, 8), (-10000, 1, 902, 9),
 (-10000, 1, 902, 10), (-10000, 1, 902, 11), (-10000, 1, 902, 12),
 (-10000, 1, 524, 5), (-10000, 1, 524, 6), (-10000, 1, 524, 7), (-10000, 1, 524, 8), (-10000, 1, 524, 9),
@@ -783,10 +876,9 @@ values
 (21, 6), (22, 6), (23, 6), (24, 6),
 (25, 6), (26, 6), (27, 6), (28, 6); 
 
-UPDATE `match`
-SET
-	mt_type = 2,
-	mt_rule = 1,
-    mt_state2 = 1
-WHERE
-	mt_num = 465 or mt_num = 522;
+DROP TRIGGER IF EXISTS INSERT_MANAGER;
+DROP TRIGGER IF EXISTS DELETE_MANAGER;
+DROP TRIGGER IF EXISTS INSERT_TEAM;
+DROP TRIGGER IF EXISTS DELETE_TEAM;
+DROP TRIGGER IF EXISTS INSERT_CLUB_TEAM;
+DROP TRIGGER IF EXISTS INSERT_ENTRY;

@@ -666,7 +666,7 @@ ALTER TABLE `manager` ADD CONSTRAINT `FK_match_TO_manager_1` FOREIGN KEY (
 )
 REFERENCES `match` (
 	`mt_num`
-);
+) ON DELETE CASCADE;
 
 ALTER TABLE `manager` ADD CONSTRAINT `FK_member_TO_manager_1` FOREIGN KEY (
 	`mn_me_num`

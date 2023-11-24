@@ -23,7 +23,7 @@
 	}
 	.right-side-box div{ text-align: center;}
 	.team-box{display: flex; background-color: black;}
-	.teamList-box{flex: 1; margin-right: 3px; background-color: white;}
+	.teamList-box{flex: 1; margin-right: 3px; background-color: white; text-align: center;}
 	.teamList-box:last-child {margin-right: 0;}
 	.club-list-box{display: flex;}
 	.club-member-box{flex: 1; border-right: 3px solid black; overflow: scroll;}
@@ -42,7 +42,8 @@
 	    text-align: center;
 	    margin: 20px auto 0 auto;
 	}
-	
+	.club-emblem{width: 20px; height: 20px; border-radius: 50%;}
+	.member-profile{width: 20px; height: 20px; border-radius: 50%;}
 	</style>
 </head>
 <body>
@@ -106,7 +107,7 @@
 							<div>
 								<p>참가자 리스트</p>
 								<c:forEach items="${entryList}" var="el">
-									<span>${el.me_nickname}(${el.me_tr_name})</span> <br>
+									<span><img class="member-profile" alt="멤버프로필" src="<c:url value='/memberimg${el.me_profile}'/>">${el.me_nickname}(${el.me_tr_name})</span> <br>
 								</c:forEach>
 							</div>
 						</div>
@@ -154,7 +155,9 @@
 	let mt_num = ${match.mt_num};
 	
 	printTeam()
-	printClubMemberState()
+	if(cl_num != 0){
+		printClubMemberState()		
+	}
 	
 	$(document).on('click', '[name=coupon]', function() {
 		hp_num = $(this).val();
@@ -298,6 +301,7 @@
 			data : {mt_num:mt_num},
 			dataType : 'json',
 			success : function(data) {
+				count = 0;
 				for(team of data.teamList){
 					str += `
 						<div class="teamList-box">
@@ -305,7 +309,8 @@
 								<thead>
 									<tr>
 										<th>
-											\${team.te_type}팀:\${team.cl_name} \${team.club_entry_count}/${match.mt_personnel}
+											\${team.te_type}팀 : <img class="club-emblem" alt="팀엠블럼" src="<c:url value='/clubimg\${team.cl_emblem}'/>">\${team.cl_name}
+											(\${team.club_entry_count}/${match.mt_personnel})
 										</th>
 									</tr>
 								</thead>
@@ -318,7 +323,7 @@
 									<tr>
 										<td>
 											<span>
-												\${entry.me_nickname}(\${entry.me_tr_name})
+												<img class="member-profile" alt="멤버프로필" src="<c:url value='/memberimg\${entry.me_profile}'/>">\${entry.me_nickname}(\${entry.me_tr_name})
 											</span>
 										</td>
 									</tr>
@@ -331,6 +336,16 @@
 							</table>
 						</div>
 					`;
+					count++;
+				}
+				if(${match.mt_type = 2}){
+					for(;count < ${match.mt_rule == 0 ? 2 : 3}; count++){
+						str += `
+							<div class="teamList-box">
+								참가 클럽 대기중
+							</div>
+						`;
+					}
 				}
 			}
 		});
@@ -357,7 +372,7 @@
 						if(cm.entry_able == 1){
 							str += `
 								<div class="entry-able-member member-list">
-								\${cm.me_nickname}
+									<img class="member-profile" alt="멤버프로필" src="<c:url value='/memberimg\${cm.me_profile}'/>">\${cm.me_nickname}
 							`;
 							if(${authority == 'LEADER'}){
 								str += `
@@ -373,7 +388,8 @@
 						}
 						if(cm.entry_able != 1){
 							str += `
-								<div class="entry-disable-member member-list">\${cm.me_nickname}
+								<div class="entry-disable-member member-list">
+									<img class="member-profile" alt="멤버프로필" src="<c:url value='/memberimg\${cm.me_profile}'/>">\${cm.me_nickname}
 							`;
 							if(cm.entry_able != 1){
 								str += `
@@ -396,7 +412,8 @@
 				for(cm of data.CMList){
 					if(cm.en_num != 0){
 						str += `
-							<div class="entry-member member-list">\${cm.me_nickname}
+							<div class="entry-member member-list">
+								<img class="member-profile" alt="멤버프로필" src="<c:url value='/memberimg\${cm.me_profile}'/>">\${cm.me_nickname}
 						`;
 						if(${authority == 'LEADER' && match.ready == 0}){
 							str += `

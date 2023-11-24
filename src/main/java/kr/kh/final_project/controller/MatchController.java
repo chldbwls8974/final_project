@@ -176,6 +176,7 @@ public class MatchController {
 			model.addAttribute("couponList", couponList);
 		}else {
 			ClubMemberVO dbCM = matchService.selectClubMemberByMeNum(user.getMe_num(), cl_num);
+			//클럽 매치로 들어왔을 때 cl_num이 참가한 클럽이 아닌데 매치에 참가한 클럽팀의 수가 다찼으면 예외
 			if(match.getEntry_res() == 0) {
 				if(match.getTeam_count() == (match.getMt_rule() == 0 ? 2 : 3)) {
 					Message msg = new Message("match/search/club?weekCount=0", "신청이 마감된 경기입니다.");
@@ -184,6 +185,7 @@ public class MatchController {
 					return "/message";
 				}
 			}
+			//클럽 매치로 들어왔을 때 cl_num이 참가한 클럽이지만 접근한 계정이 해당 클럽의 소속이 아닌 경우 예외
 			if(dbCM == null || (!dbCM.getCm_authority().equals("LEADER") && !dbCM.getCm_authority().equals("MEMBER"))) {
 				Message msg = new Message("match/search/club?weekCount=0", "해당 클럽의 클럽원이 아닙니다.");
 				
