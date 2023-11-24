@@ -75,4 +75,6 @@ public interface MatchService {
 
 	List<MatchVO> getMyMatchListByMeNum(Integer me_num);
 
+	List<MatchVO> selectMyRecored(Integer me_num);
+
 }

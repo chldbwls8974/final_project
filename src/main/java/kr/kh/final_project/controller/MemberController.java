@@ -682,4 +682,13 @@ public class MemberController {
 			model.addAttribute("entryList", entryList);
 			return "/member/tmp";
 		}
+		
+		@GetMapping("/member/record")
+		public String memberMyRecord(Model model, HttpSession session) {
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			List<MatchVO> matchList = matchService.selectMyRecored(user.getMe_num());
+			
+			model.addAttribute("matchList", matchList);
+			return "/member/record";
+		}
 }

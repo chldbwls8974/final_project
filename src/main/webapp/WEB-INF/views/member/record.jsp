@@ -8,38 +8,39 @@
 <title>경기 전적</title>
 </head>
 <body>
-	<div>
-		<section>
-			<div class="section-title">
-				<h3>나의 경기 전적</h3>
-			</div>
-			<div>
-				<div class="record-filter">
-					<ul>
-						<li>
-							<span>내 지역</span>
-							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_filter_arrow_selected.svg">
-						</li>
-						<li>
-							<span>날짜</span>
-							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_filter_arrow_selected.svg">
-						</li>
-						<li>
-							<span>시간</span>
-							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_filter_arrow_selected.svg">
-						</li>
-					</ul>
-				</div>
-			</div>
-			<div class="recordview-list">
-				<p>참여한 경기 횟수</p>
-				<p></p>
-			</div>
-			<div class="recordview-list">
-				<p>획득한 점수 합산</p>
-				<p>${member.me_rating}</p>
-			</div>
-		</section>
+	<div class="container">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>매치 일시</th>
+					<th>매치 타입</th>
+					<th>장소</th>
+	        		<th>소속</th>
+					<th>매치 전적</th>
+					<th>경기 결과</th>
+				 </tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${matchList}" var="mt" >
+					<tr>
+						<td>${mt.mt_date_str}<br>${mt.ti_time_str}</td>
+						<td>${mt.mt_type == 1 ? '개인' : '클럽'} ${mt.mt_rule == 0 ? '친선전' : '경쟁전'} (${mt.mt_personnel} vs ${mt.mt_personnel})</td>
+						<td>${mt.fa_name} ${mt.st_name}</td>
+						<td></td>
+						<td>
+							<c:if test="${mt.mt_rule == 1}">
+								${mt.win + mt.draw + mt_lose}전 ${mt.win}승 ${mt.draw}무 ${mt.lose}패
+							</c:if>
+						</td>
+						<td>
+							<c:if test="${mt.mt_rule == 1}">
+								<button class="btn">경기 결과</button>
+							</c:if>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
 	</div>
 </body>
 </html>

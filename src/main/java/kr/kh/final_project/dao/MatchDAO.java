@@ -52,5 +52,9 @@ public interface MatchDAO {
 	MatchVO selectManageMatchByMtNum(@Param("mt_num")int mt_num);
 	
 	List<MatchVO> selectMyMatchListByMeNum(@Param("me_num")Integer me_num);
+	
+	List<MatchVO> selectMyRecored(@Param("me_num")Integer me_num);
+	
+	MatchVO selectMatchRecord(@Param("mt_num")int mt_num, @Param("te_num")int te_num);
 
 }
