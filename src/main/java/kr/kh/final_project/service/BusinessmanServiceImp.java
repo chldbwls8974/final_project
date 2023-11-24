@@ -3,11 +3,11 @@ package kr.kh.final_project.service;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.commons.io.FileSystemUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.kh.final_project.dao.BusinessDAO;
 import kr.kh.final_project.dao.FacilityDAO;
 import kr.kh.final_project.dao.OperatingDAO;
 import kr.kh.final_project.dao.PreferredRegionDAO;
@@ -18,7 +18,6 @@ import kr.kh.final_project.util.UploadFileUtils;
 import kr.kh.final_project.vo.BusinessmanVO;
 import kr.kh.final_project.vo.FacilityPictureVO;
 import kr.kh.final_project.vo.FacilityVO;
-import kr.kh.final_project.vo.FileVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.OperatingVO;
 import kr.kh.final_project.vo.RegionVO;
@@ -26,6 +25,9 @@ import kr.kh.final_project.vo.StadiumVO;
 
 @Service
 public class BusinessmanServiceImp implements BusinessmanService{
+	
+	@Autowired
+	BusinessDAO businessDao;
 	
 	@Autowired
 	RegionDAO regionDao;
@@ -89,7 +91,6 @@ public class BusinessmanServiceImp implements BusinessmanService{
 				String fp_ori_name = i.getOriginalFilename();
 				String fp_name = UploadFileUtils.uploadFile(uploadPicturePath, fp_ori_name, i.getBytes());
 				FacilityPictureVO fileVo = new FacilityPictureVO(facility.getFa_num(), fp_name, fp_ori_name);
-				System.out.println(fileVo);
 				//업로드한 경로를 이용하여 다오에게 첨부파일 정보를 주면서 DB에 추가하라고 요청
 				facilityDao.insertPicture(fileVo);
 			} catch (IOException e) {
@@ -265,5 +266,50 @@ public class BusinessmanServiceImp implements BusinessmanService{
 	}
 	
 	
+	@Override
+	public void updateFacilityPicture(FacilityVO facility,MultipartFile[] file, int[] delNums) {
+		deletePicture(facility.getFa_num(),delNums);
+		updatePicture(facility.getFa_num(),file);
+	}
+	
+	
+	private void updatePicture(Integer fa_num, MultipartFile[] file) {
+		if (file == null || file.length == 0) {
+			return;
+		}
+
+		for (MultipartFile i : file) {
+			if (i == null || i.getOriginalFilename().length() == 0) {
+				continue;
+			}
+			try {
+				String fp_ori_name = i.getOriginalFilename();
+				String fp_name = UploadFileUtils.uploadFile(uploadPicturePath, fp_ori_name, i.getBytes());
+				FacilityPictureVO fileVo = new FacilityPictureVO(fa_num, fp_name, fp_ori_name);
+				// 업로드한 경로를 이용하여 다오에게 첨부파일 정보를 주면서 DB에 추가하라고 요청
+				facilityDao.insertPicture(fileVo);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+	
+	private void deletePicture(Integer fa_num, int[] delNums) {
+		if (delNums == null || delNums.length == 0) {
+			return;
+		}
+		for (int j : delNums) {
+			facilityDao.deletePicture(j);
+		}
+	}
+	@Override
+	public BusinessmanVO getBusinessmanByBuNum(Integer fa_bu_num) {
+	if(fa_bu_num ==0) {
+		return null;
+	}
+		return businessDao.selectBusinessManByFaBuNum(fa_bu_num);
+	}
+
 
 }

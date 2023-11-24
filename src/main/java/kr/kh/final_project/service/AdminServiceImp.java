@@ -494,5 +494,12 @@ public class AdminServiceImp implements AdminService{
 		}
 		return stadiumDao.selectCountStadiumListByAdmin(cri, fa_num);
 	}
+	@Override
+	public List<FacilityVO> selectFacilityListByRegion(String rg_main) {
+		if(rg_main == null) {
+			return null;
+		}	
+		return facilityDao.selectFacilityListByRegion(rg_main);
+	}
 	
 }

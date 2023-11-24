@@ -56,5 +56,10 @@ public interface BusinessmanService {
 	
 	List<StadiumVO> selectAllStadium();
 	
+	void updateFacilityPicture(FacilityVO facility, MultipartFile[] file, int[] delNums);
+	
+	BusinessmanVO getBusinessmanByBuNum(Integer fa_bu_num);
+	
+	
 
 }

@@ -260,4 +260,8 @@
 	<delete id="deleteBusinessList">
 		delete from businessman where bu_num = #{bu_num}
 	</delete>
+	<select id="selectBusinessManByFaBuNum" resultType="kr.kh.final_project.vo.BusinessmanVO">
+		select businessman.* from businessman
+		join facility on bu_num = #{fa_bu_num} group by bu_num
+	</select>	
 </mapper>

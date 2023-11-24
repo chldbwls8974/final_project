@@ -40,7 +40,7 @@
 	</div>
 
 	<div class="container-body">
-		<form action="<c:url value='/businessman/facilityUpdate'/>" method="post">
+		<form action="<c:url value='/businessman/facilityUpdate'/>" method="post"  enctype="multipart/form-data">
 		  <input name="fa_num" type="hidden" value="${facility.fa_num}">
 		  <div class="form-group" hidden="hidden">
 		    <label for="fa_bu_num">사업자 번호</label>
@@ -285,22 +285,66 @@
 <!-- 			여기해야함. 사진이 있는 경우 없는경우 -->
 			<div class="form-group picture-box">
 			 <label style="font-weight: bold;">시설사진</label> &nbsp;<span class="badge badge-secondary">선택 (최대 3장)</span>
+					<c:forEach items="${files }" var="files">
+						<div class="ori-picture-box">
+							<div class="box-thumbnail">
+								<img src="<c:url value='/facilityimg${files.fp_name }'/>" alt="미리보기" class="img-select" height="100" width="auto">
+							</div>
+							<a href="#" class="btn-del btn" data-num="${files.fp_num}">
+								<button type="button" style="border: none; background-color: white;">X</button>
+							</a>
+						</div>
+					</c:forEach>
+					<c:forEach begin="1" end="${3 - files.size() }">
+						<div class="new-picture-box">
+							<div class="form-group box-thumbnail-input">
+								<input type="file" name="file" class="input-file input-select" onchange="readUrl(this)"  >
+							</div>
+							<div class="box-thumbnail">
+								<img src="<c:url value='/resources/images/add-image.png'/>" alt="미리보기" class="img-thumbnail img-select" height="100" width="auto">
+							</div>
+						</div>
+					</c:forEach>
+			</div>	
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<br>
+			 <div style="text-align: center; margin-top: 40px;">
+		 		 <button class="btn btn-submit"  style="background-color: black; color: white; border-radius: 10px; width:400px" >수정하기</button>
+		  </div>
+		</form>
+	</div>
+	
+	<script type="text/javascript">	
+	$(document).on('click', '.btn-del', function(e) {
+		e.preventDefault();
+		let fi_num = $(this).data('num');
+		str = '';
+		str+=`
+			<div class="new-picture-box">
 				<div class="form-group box-thumbnail-input">
 					<input type="file" name="file" class="input-file input-select" onchange="readUrl(this)"  >
 				</div>
 				<div class="box-thumbnail">
 					<img src="<c:url value='/resources/images/add-image.png'/>" alt="미리보기" class="img-thumbnail img-select" height="100" width="auto">
 				</div>
-			</div>	
-			
-			<br>
-			 <div style="text-align: center;">
-		 		 <button class="btn">수정하기</button>
-		  </div>
-		</form>
-	</div>
+			</div>
+		`;
+		$('.btn-submit').before(str);
+		$('.btn-submit').before('<input type="hidden" name="delNums" value="'+fi_num+'"> <br>');
+		$(this).parent().remove();
+	});
 	
-	<script type="text/javascript">	
+	
+	
+	
 		//자동으로 하이픈(-)으로 구분된 전화번호 형식으로 변환하는 메서드
 		function autoHyphen(target) {
 			//target의 값을 자체로 다시 설정
@@ -347,6 +391,60 @@
 	         //=> 이벤트가 발생하면 선택한 옵션에 따라 다른 도시를 로드하고 옵션을 설정함
 			$(".rg_main").trigger('change')
 	    })
+		
+	 // 이미지를 클릭하면 input 태그가 클릭되게 하는 이벤트 등록
+		$(document).on('click','.img-thumbnail',function(){
+			// 이미지 태그가 몇번째 요소인지
+			let index =$(this).index();
+
+			// 클릭된 이미지와 순서가 같은 input 태그 클릭
+			 $('.input-file').eq(index).click();
+		});
+
+		function readUrl(input){
+			//input 태그가 첨부파일이고, 첨부파일이 선택되면
+			// 파일이 선택 / 취소된 input 요소가 몇번째인지 확인
+			let index = $(input).index();
+
+			//$를 써주는 이유는 jquery 요소임을 표기하기 위해서
+			let $selectInput = $(input); // 선택된 input 태그 요소
+			let $selectImg = $('.img-thumbnail').eq(index); // 선택된 input 태그와 세트인 이미지 태그 요소
+			
+			if(input.files && input.files[0]){
+				let reader = new FileReader();
+				reader.onload = function(e){
+					$selectImg.prop('src', e.target.result);
+				}
+				reader.readAsDataURL(input.files[0]);
+
+				// 새 요소를 추가하지 않는 경우 : 현재 바뀐 첨부 파일이 + 가 아닌 요소일때
+				if(!$selectImg.hasClass('img-select')){
+					return;
+				}
+
+				// 새 요소(input 태그와 img 태그) 추가하는 부분
+				$selectImg.removeClass('img-select');
+				$selectInput.removeClass('input-select');
+
+			
+			}
+			//첨부파일이 선택되지 않으면
+			else{
+				// + 를 눌러서 첨부 파일을 선택할 때 취소하는 경우
+				if($selectImg.hasClass('img-select')){
+					$selectImg.prop('src','img.png');
+					return;
+				}
+				// + 앞에 이미지를 클릭하여 첨부파일을 열어서 취소하는 경우
+				$selectImg.remove();
+				$selectInput.remove();
+				if($('.img-select').length == 0){
+					$('.box-thumbnail-input').append(`<input type="file" name="file" class="input-file input-select" onchange="readUrl(this)"  >`);
+					$('.box-thumbnail').append(`<img src="<c:url value='/resources/images/add-image.png'/>" alt="미리보기" class="img-thumbnail img-select" height="100" width="auto">`);
+				}
+				
+			}
+		}
 	</script>
 	
 </body>

@@ -65,12 +65,12 @@ public class MemberVO {
     private List<PreferredTimeVO> preferTimeList;
     private List<PreferredRegionVO> preferRegionList;
 	
-//	public String getMe_profile() {
-//		if(me_profile ==null) {
-//			me_profile = "/resources/profile/basic.jpg";
-//		}
-//		return me_profile;
-//	}
+	public String getMe_profile() {
+		if(me_profile ==null) {
+			me_profile = "/basic.jpg";
+		}
+		return me_profile;
+	}
 	
 	
 }
