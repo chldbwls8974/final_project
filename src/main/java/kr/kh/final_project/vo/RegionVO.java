@@ -8,5 +8,4 @@ public class RegionVO {
 	private String rg_main;
 	private String rg_sub;
 	
-
 }
