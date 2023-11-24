@@ -235,7 +235,7 @@
 						</tr>
 					</c:if>
 				</c:forEach>
-				<c:forEach items="${list }" var="list">
+				<c:forEach items="${clubmemberlist }" var="list">
 					<c:if test="${list.cm_authority =='MEMBER'}">
 						<tr>
 							<td>${list.cm_num}</td>
