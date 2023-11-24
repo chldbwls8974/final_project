@@ -12,7 +12,10 @@
 <style type="text/css">
 
 .container-body{ position:relative; width: 100%; height: auto; }
-
+/* .clublist-control{ */
+/* 	width: 600px; padding: 20px; background-color: #f0f0f0; margin: 0 auto; */
+/* 	margin-bottom: 30px; display: grid;	border-radius: 40px; */
+/* } */
 .clublist-control li{ margin: 10px;}
 .clublist-control {
         display: flex;
@@ -145,9 +148,9 @@ div, ul, li {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizi
 			str=``;
 			for(item of a.list){
 				str += `
-					<div class="box box-emblem" style="margin: 0 auto; width: 20%;">
+					<div class="box box-emblem">
 						<li class="clublist-link clubItem">
-							<div style="display: flex;">
+							<div style="display: flex; width: 20%;">
 								<a href="<c:url value='/club/detail?cl_num=\${item.cl_num}'/>">
 								 	<img alt="팀엠블럼" src="<c:url value='/clubimg\${item.cl_emblem}'/>" style="width: 70px; height: 70px; border-radius: 50%">
 								  	<p>\${item.cl_name}</p> 
