@@ -185,12 +185,14 @@
 			    <br>
 			    <div id="availabilityFields" style="display: none;">
 					  <div class="form-group">
-					        <label for="av_notdate" style="font-weight: bold;">불가적용 날짜</label>
-					        <input type="text" class="form-control" id="av_notdate" name="av_notdate" value="${updateAvailabilityInfo.av_notdate_str}" placeholder="날짜를 선택하세요">
+					        <label for="av_notdate" style="font-weight: bold; margin-top: 20px;">불가적용 날짜</label>
+					        <input type="text" class="form-control" id="av_notdate" name="av_notdate"
+									style="width: 80%" value="${updateAvailabilityInfo.av_notdate_str}" placeholder="날짜를 선택하세요">
 					  </div>
 					  <div class="form-group">
 					        <label for="av_reason" style="font-weight: bold;">사유</label>
-					        <input type="text" class="form-control" id="av_reason" name="av_reason" value="${updateAvailabilityInfo.av_reason}" placeholder="사유를 입력하세요">
+					        <input type="text" class="form-control" id="av_reason" name="av_reason"
+									style="width: 80%" value="${updateAvailabilityInfo.av_reason}" placeholder="사유를 입력하세요">
 					  </div>
 				</div> 
 			  </div>
