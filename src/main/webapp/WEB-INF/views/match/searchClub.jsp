@@ -111,6 +111,9 @@
 		
 		location.href='<c:url value="/match/application?mt_num="/>'+ mt_num + '&cl_num=' + cl_num;
 	});
+	$(document).on('click', '.btn-matchPage-x', function() {
+		alert("신청이 마감된 경기입니다.")
+	});
 	function printSelectMatch() {
 		let str = ``;
 		if(cl_num == 0){
@@ -148,12 +151,18 @@
 							}
 							if(match.application_able == 0 && match.application == 1){
 								str +=	`
-									<button class="btn btn-outline-danger btn-matchPage" value="\${match.mt_num}">참가 취소</button> <br>
+									<button class="btn btn-matchPage"
+									style="width: 120px; height: 40px; border: none;
+									border-radius: 5px; background-color: #f76c6c; color: black;"
+									value="\${match.mt_num}">신청 완료</button> <br>
 								</div>
 								`;					
 							}else if(match.team_count == (match.mt_rule == 0 ? 2 : 3)){
 								str +=	`
-									<button class="btn btn-dark" value="\${match.mt_num}" disabled>참가 마감</button> <br>
+									<button class="btn btn-matchPage-x"
+									style="width: 120px; height: 40px; border: none;
+									border-radius: 5px; background-color: black; color: white;"
+									value="\${match.mt_num}">신청 마감</button> <br>
 								</div>
 								`;					
 							}else if(match.application_able == 1){
@@ -161,12 +170,15 @@
 									<button class="btn btn-matchPage"
 									style="width: 120px; height: 40px; border: none;
 									border-radius: 5px; background-color: #c2f296; color: black;"
-									value="\${match.mt_num}">참가 신청</button> <br>
+									value="\${match.mt_num}">신청 가능</button> <br>
 								</div>
 								`;
 							}else if(match.application_able == 0 && match.application == 0){
 								str +=	`
-									<button class="btn btn-outline-secondary" value="\${match.mt_num}" disabled>참가 불가</button> <br>
+									<button class="btn btn-matchPage"
+									style="width: 120px; height: 40px; border: none;
+									border-radius: 5px; background-color: #cac5c5; color: black;"
+									value="\${match.mt_num}">신청 불가</button> <br>
 								</div>
 								`;					
 							}

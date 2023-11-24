@@ -182,11 +182,18 @@
 		<div class="slider__wrap">
 			<div class="slider__img">
 				<div class="slider__inner">
+				<c:if test="${files != null && files != '' }">
 					<c:forEach items="${files}" var="file">
 						<div class="slider">
 								<img class="item" src="<c:url value='/facilityimg${file.fp_name }'/>" alt="Image">
 						</div>
 					</c:forEach>
+				</c:if>
+				<c:if test="${empty files}">
+				    <div class="slider">
+				        <img class="item" src="<c:url value='/resources/images/add.png'/>" alt="Image">
+				    </div>
+				</c:if>
 				</div>
 			</div>	
 	      <!-- 화살표 -->
@@ -353,7 +360,7 @@
 			          <c:if test="${stadium.st_available == 1}">
 						    <td>
 						        <strong>불가능</strong><br>
-						        <span>날짜: ${stadium.availability.av_notdate}</span><br>
+						        <span>날짜: ${stadium.availability.av_notdate_str}</span><br>
 						        <span>사유: ${stadium.availability.av_reason}</span>
 						    </td>
 					  </c:if>

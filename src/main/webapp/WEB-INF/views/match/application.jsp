@@ -210,7 +210,7 @@
 				</div>
 			</c:if>
 			<c:if test="${(match.mt_type == 0 && cl_num == 0) || (match.mt_type == 1 && cl_num == 0)}">
-				<c:if test="${match.entry_res == 0}">
+				<c:if test="${match.entry_res == 0 && match.application_able == 1}">
 					<div class="application-box right-side-box">
 						<div style="margin-top: 60px;">
 							<p>개인 매치 신청</p>
@@ -279,7 +279,7 @@
 				</c:if>
 			</c:if>
 			<c:if test="${(match.mt_type == 0 && cl_num != 0) || (match.mt_type == 2 && cl_num != 0)}">
-				<c:if test="${match.entry_res == 0}">
+				<c:if test="${match.entry_res == 0 && match.application_able == 1}">
 					<div class="application-box right-side-box" style="width: 600px; margin: 0 auto;">
 						<div style="margin-top: 20px;">
 							<p>클럽 매치 신청</p>
@@ -570,10 +570,12 @@
 								<div class="entry-disable-member member-list">
 									<img class="member-profile" alt="멤버프로필" src="<c:url value='/memberimg\${cm.me_profile}'/>">\${cm.me_nickname}
 							`;
-							if(cm.entry_able != 1){
-								str += `
-									<button class="entry-btn btn btn-secondary entry-unable-btn">등록</button>
-								`;
+							if(${authority == 'LEADER'}){
+								if(data.res){
+									str += `
+										<button class="entry-btn btn btn-secondary entry-unable-btn">등록</button>
+									`;
+								}
 							}
 							str += `
 									<br>

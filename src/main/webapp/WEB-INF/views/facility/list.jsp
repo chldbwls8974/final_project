@@ -152,47 +152,74 @@
 </div>
 <script type="text/javascript">
  $(document).on('change','.searchType',function(){
+	 let rg_main =  $(this).val()
 	 let data={
-				rg_main : $(this).val()
+				rg_main : rg_main
 		}
-		
-	 		ajaxJsonToJson2(false,'get','/facility/select',data,(a)=>{
-			if(a.rglist[0]==null){
-				$('.notice-tbody').hide()
-				alert('해당 지역에는 등록된 경기장이 없습니다.')
-			}else{
-				$('.notice-tbody').hide()
-				let str='';
-				str+=`
-					<ul class="notice-tbody">
-				`;
-				for(facility of a.rglist){
-					
-					str+=`
+		if(rg_main == 0){
+			$('.notice-tbody').hide()
+			let str = '';
+			str+=`
+				<ul class="notice-tbody">
+				<c:forEach items="${list}" var="facility" varStatus="vs">
+					<c:if test="${facility.fa_deleted == 0 }">
 						<li>
 							<div class="tbody-box">
-								<div class="tbody-list" style="width: 8%">\${facility.fa_rg_main}</div>
+								<div class="tbody-list" style="width: 8%">${facility.fa_rg_main}</div>
 								<div class="tbody-list" style="width: 21%">
 									<a
-										href="<c:url value='/facility/detail/\${facility.fa_num}'/>"
-										style="text-align: left; color: #1179b1f5;">\${facility.fa_name}</a>
+										href="<c:url value='/facility/detail/${facility.fa_num}'/>"
+										style="text-align: left; color: #1179b1f5;">${facility.fa_name}</a>
 								</div>
-								<div class="tbody-list" style="width: 18%">\${facility.fa_phone}</div>
-								<div class="tbody-list" style="width: 8%">\${facility.st_count}</div>
-								<div class="tbody-list" style="width: 20%">\${facility.fa_note}</div>
+								<div class="tbody-list" style="width: 18%">${facility.fa_phone}</div>
+								<div class="tbody-list" style="width: 8%">${facility.st_count}</div>
+								<div class="tbody-list" style="width: 20%">${facility.fa_note}</div>
 							</div>
 						</li>
-							
-					`;
-					
-				}
+					</c:if>
+				</c:forEach>
+			</ul>
+			`;
+			$('.notice-thead').after(str);
+		}else{
+ 		ajaxJsonToJson2(false,'get','/facility/select',data,(a)=>{
+		if(a.rglist[0]==null){
+			$('.notice-tbody').hide()
+			alert('해당 지역에는 등록된 경기장이 없습니다.')
+		}else{
+			$('.notice-tbody').hide()
+			let str='';
+			str+=`
+				<ul class="notice-tbody">
+			`;
+			for(facility of a.rglist){
+				
 				str+=`
-					</ul>
+					<li>
+						<div class="tbody-box">
+							<div class="tbody-list" style="width: 8%">\${facility.fa_rg_main}</div>
+							<div class="tbody-list" style="width: 21%">
+								<a
+									href="<c:url value='/facility/detail/\${facility.fa_num}'/>"
+									style="text-align: left; color: #1179b1f5;">\${facility.fa_name}</a>
+							</div>
+							<div class="tbody-list" style="width: 18%">\${facility.fa_phone}</div>
+							<div class="tbody-list" style="width: 8%">\${facility.st_count}</div>
+							<div class="tbody-list" style="width: 20%">\${facility.fa_note}</div>
+						</div>
+					</li>
+						
 				`;
-				$('.notice-thead').after(str);
 				
 			}
-		})
+			str+=`
+				</ul>
+			`;
+			$('.notice-thead').after(str);
+			
+		}
+	})
+		}
 	 
  })
 </script>

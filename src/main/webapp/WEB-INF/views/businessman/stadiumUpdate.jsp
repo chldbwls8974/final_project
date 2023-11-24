@@ -4,6 +4,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(function () {
+        // datepicker 초기화
+        $("#av_notdate").datepicker();
+    });
+</script>
+
 <meta charset="UTF-8">
 <title>경기장 정보 수정</title>
 </head>
@@ -170,6 +180,17 @@
 			            </c:choose>
 			        </label>
 			    </div>
+			    <br>
+			    <div id="availabilityFields" style="display: none;">
+					  <div class="form-group">
+					        <label for="av_notdate" style="font-weight: bold;">불가적용 날짜</label>
+					        <input type="text" class="form-control" id="av_notdate" name="av_notdate" value="${stadium.availability.av_notdate}" placeholder="날짜를 선택하세요">
+					  </div>
+					  <div class="form-group">
+					        <label for="av_reason" style="font-weight: bold;">사유</label>
+					        <input type="text" class="form-control" id="av_reason" name="av_reason" value="${stadium.availability.av_reason}" placeholder="사유를 입력하세요">
+					  </div>
+				</div> 
 			  </div>
 			 </div> 
 		  <br>
@@ -209,24 +230,44 @@
 	</div>
 	
 	<script type="text/javascript">	
-		//숫자만 입력되도록 하는 메서드
-		function numOnly(target) {
-	        //입력값이 5자리 이상인 경우 마지막 5자리만 유지
-   			target.value = target.value.slice(0, 5);
-		}
-		function numOnly2(target) {
-	        //입력값이 2자리 이상인 경우 마지막 2자리만 유지
-   			target.value = target.value.slice(0, 2);
-		}
-		
-		//이용가능여부 변경
+	    
+	$(document).ready(function () {
+	    // 페이지 로드 시 실행되는 부분
+	    checkAvailability();
+	    checkAndShowAvailabilityFields(); // 추가
+
+	    // 이용가능여부 변경 이벤트 핸들러
 	    $('input[name="st_available"]').change(function () {
-	        if ($(this).val() === '1') {
-	            $('#availabilityFields').show();
-	        } else {
-	            $('#availabilityFields').hide();
-	        }
+	        checkAvailability();
+	        checkAndShowAvailabilityFields(); // 추가
 	    });
+	});
+
+	function checkAndShowAvailabilityFields() {
+	    // 불가능인 경우에만 값 세팅 및 보이도록 설정
+	    if ($('input[name="st_available"]:checked').val() === '1') {
+	        // 서버에서 가져온 데이터로 값을 설정
+	        var av_notdateValue = "${stadium.availability.av_notdate}";
+	        var av_reasonValue = "${stadium.availability.av_reason}";
+
+	        // 값이 있다면 필드에 설정하고 보이도록 설정
+	        if (av_notdateValue && av_reasonValue) {
+	            $('#av_notdate').val(av_notdateValue);
+	            $('#av_reason').val(av_reasonValue);
+	            $('#availabilityFields').show();
+	        }
+	    }
+	}
+	//'불가능'에 체크했을 때만 availabilityFields 보이게 함
+	function checkAvailability() {
+	    if ($('input[name="st_available"]:checked').val() === '1') {
+	        $('#availabilityFields').show();
+	    } else {
+	        $('#availabilityFields').hide();
+	    }
+	}
+	
+	
 	</script>
 	
 </body>
