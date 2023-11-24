@@ -13,6 +13,13 @@
 		margin: 50px auto; background-color: #f2f2f2; border-radius: 30px;
 		padding: 30px; width: 60%;
 	}
+	.owner-detail{
+		background-color: #f2f2f2;
+	    border-radius: 20px;
+	    padding: 20px;
+	    width: 42%;
+	    height: auto;
+	}
 	
 	.btn:hover{
 		background-color : outline-info;
