@@ -62,7 +62,6 @@ public class BusinessmanController {
 			
 			List<FacilityVO> allList = businessmanService.getFacilityList(member, cri);
 			
-			System.out.println(allList.size());
 			if(allList.size() == 0) {
 		        Message msg = new Message("/businessman/facilityInsert", "등록된 시설이 없습니다. 시설을 등록해주세요");
 				model.addAttribute("msg", msg);
@@ -121,6 +120,14 @@ public class BusinessmanController {
 				HttpSession session) {
 			MemberVO member = (MemberVO)session.getAttribute("user");
 			//회원번호로 사업자 정보 가져와서 저장
+			FacilityVO dbFacility = businessmanService.selectFacilityByMeNum(member.getMe_num(), fa_num);
+			if(dbFacility == null) {
+				Message msg = new Message("businessman/facility", "권한이 없거나 삭제된 시설입니다.");
+				
+				model.addAttribute("msg", msg);
+				return "/message";
+			}
+			
 			BusinessmanVO business = businessmanService.getBusinessmanByMeNum(member.getMe_num());
 			//시설번호로 시설 정보 가져와서 저장
 			FacilityVO facility = businessmanService.getFacility(fa_num);
@@ -190,6 +197,14 @@ public class BusinessmanController {
 		@GetMapping("/businessman/operating/{fa_num}")
 		public String operating(Model model, @PathVariable("fa_num")Integer fa_num, 
 				HttpSession session) {
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			FacilityVO dbFacility = businessmanService.selectFacilityByMeNum(user.getMe_num(), fa_num);
+			if(dbFacility == null) {
+				Message msg = new Message("businessman/facility", "권한이 없거나 삭제된 시설입니다.");
+				
+				model.addAttribute("msg", msg);
+				return "/message";
+			}
 			//시설 번호를 통해 시설 정보를 가져와서 facility에 저장
 			FacilityVO facility = businessmanService.getFacility(fa_num);
 			
@@ -208,6 +223,14 @@ public class BusinessmanController {
 		@GetMapping("/businessman/operatingInsert/{fa_num}")
 		public String operatingInsertGet(Model model, @PathVariable("fa_num")Integer fa_num, 
 				FacilityVO facility, HttpSession session) {
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			FacilityVO dbFacility = businessmanService.selectFacilityByMeNum(user.getMe_num(), fa_num);
+			if(dbFacility == null) {
+				Message msg = new Message("businessman/facility", "권한이 없거나 삭제된 시설입니다.");
+				
+				model.addAttribute("msg", msg);
+				return "/message";
+			}
 			return "/businessman/operatingInsert";
 		}
 		//운영시간 등록
@@ -216,7 +239,6 @@ public class BusinessmanController {
 			//facilityVO에서 운영시간 리스트를 불러와서 operatingList 변수에 저장
 			List<OperatingVO> operatingList = facility.getOperatingList();
 			//오픈시간과 마감시간이 같으면 false;
-			System.out.println(operatingList);
 			int fa_num = facility.getFa_num();
 
 			boolean res = businessmanService.insertOperating(operatingList, fa_num);
@@ -233,6 +255,15 @@ public class BusinessmanController {
 		//운영시간 수정
 		@GetMapping("/businessman/operatingUpdate/{fa_num}")
 		public String updateOperating(Model model, @PathVariable("fa_num")Integer fa_num, HttpSession session) {
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			FacilityVO dbFacility = businessmanService.selectFacilityByMeNum(user.getMe_num(), fa_num);
+			if(dbFacility == null) {
+				Message msg = new Message("businessman/facility", "권한이 없거나 삭제된 시설입니다.");
+				
+				model.addAttribute("msg", msg);
+				return "/message";
+			}
+			
 			List<OperatingVO> operatingList = businessmanService.getOperatingListByFaNum(fa_num);
 			boolean res = true;
 			
@@ -286,6 +317,8 @@ public class BusinessmanController {
 		@GetMapping("/businessman/stadium/{fa_num}")
 		public String stadium(Model model, @PathVariable("fa_num")Integer fa_num, 
 				HttpSession session, Criteria cri) {
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			
 			//시설 번호를 통해 시설 정보를 가져와서 facility에 저장
 			FacilityVO facility = businessmanService.getFacility(fa_num);
 			//시설 번호로 사진들 가져옴
@@ -309,6 +342,13 @@ public class BusinessmanController {
 				model.addAttribute("msg", msg);
 				return "/message";
 			}
+			FacilityVO dbFacility = businessmanService.selectFacilityByMeNum(user.getMe_num(), fa_num);
+			if(dbFacility == null) {
+				Message msg = new Message("businessman/facility", "권한이 없거나 삭제된 시설입니다.");
+				
+				model.addAttribute("msg", msg);
+				return "/message";
+			}
 			model.addAttribute("facility", facility);
 			model.addAttribute("files", files);
 			model.addAttribute("stadiumList", stadiumList);
@@ -319,6 +359,14 @@ public class BusinessmanController {
 		@GetMapping("/businessman/stadiumInsert/{fa_num}")
 		public String stadiumInsertGet(Model model, @PathVariable("fa_num")Integer fa_num, 
 				FacilityVO facility, HttpSession session) {
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			FacilityVO dbFacility = businessmanService.selectFacilityByMeNum(user.getMe_num(), fa_num);
+			if(dbFacility == null) {
+				Message msg = new Message("businessman/facility", "권한이 없거나 삭제된 시설입니다.");
+				
+				model.addAttribute("msg", msg);
+				return "/message";
+			}
 			return "/businessman/stadiumInsert";
 		}
 		//경기장 등록
@@ -343,6 +391,14 @@ public class BusinessmanController {
 		//경기장 정보 수정
 		@GetMapping("/businessman/stadiumUpdate")
 		public String updateStadium(Model model, Integer st_num, HttpSession session) {
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			StadiumVO dbStadium = businessmanService.selectStadiumByMeNum(user.getMe_num(), st_num);
+			if(dbStadium == null) {
+				Message msg = new Message("businessman/facility", "권한이 없거나 삭제된 경기장입니다.");
+				
+				model.addAttribute("msg", msg);
+				return "/message";
+			}
 			//st_num을 통해서 경기장 정보를 가져오고 stadium에 저장(st_fa_num 정보도 포함됨)
 			StadiumVO stadium= businessmanService.getStadium(st_num);
 			

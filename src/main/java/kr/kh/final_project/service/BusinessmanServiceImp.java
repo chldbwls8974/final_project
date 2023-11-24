@@ -317,6 +317,20 @@ public class BusinessmanServiceImp implements BusinessmanService{
 	}
 		return businessDao.selectBusinessManByFaBuNum(fa_bu_num);
 	}
+	@Override
+	public FacilityVO selectFacilityByMeNum(Integer me_num, Integer fa_num) {
+		if(me_num == null || fa_num == 0 || fa_num == null) {
+			return null;
+		}
+		return facilityDao.selectFacilityByMeNum(me_num, fa_num);
+	}
+	@Override
+	public StadiumVO selectStadiumByMeNum(Integer me_num, Integer st_num) {
+		if(me_num == null || st_num == 0 || st_num == null) {
+			return null;
+		}
+		return stadiumDao.selectStadiumByMeNum(me_num, st_num);
+	}
 
 
 }
