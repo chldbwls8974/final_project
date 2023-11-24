@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.final_project.dao.BusinessDAO;
 import kr.kh.final_project.dao.FacilityDAO;
+import kr.kh.final_project.dao.MatchDAO;
 import kr.kh.final_project.dao.OperatingDAO;
 import kr.kh.final_project.dao.PreferredRegionDAO;
 import kr.kh.final_project.dao.RegionDAO;
@@ -44,6 +45,9 @@ public class BusinessmanServiceImp implements BusinessmanService{
 
 	@Autowired
 	FacilityDAO facilityDao;
+	
+	@Autowired
+	MatchDAO matchDao;
 	
 	String uploadPicturePath = "D:\\uploadfacility";
 
@@ -267,6 +271,9 @@ public class BusinessmanServiceImp implements BusinessmanService{
 		
 		availability.setAv_st_num(stadium.getSt_num());
 		boolean updateAvailabilityInfo = stadiumDao.updateAvailability(availability);
+		if(updateAvailabilityInfo) {
+			
+		}
 		return res;
 	}
 	
