@@ -185,7 +185,7 @@
 			    <br>
 			    <div id="availabilityFields" style="display: none;">
 					  <div class="form-group">
-					        <label for="av_notdate" style="font-weight: bold;">불가적용 날짜</label>
+					        <label for="av_notdate" style="font-weight: bold; margin-top: 20px;">불가적용 날짜</label>
 					        <input type="text" class="form-control" id="av_notdate" name="av_notdate"
 									style="width: 80%" value="${updateAvailabilityInfo.av_notdate_str}" placeholder="날짜를 선택하세요">
 					  </div>
