@@ -198,10 +198,18 @@ $(function () {
 		            var result = st_width * st_height;
 
 		            // 범위에 따라 st_max 값 설정
-		            if (result >= 420 && result < 540) {
-		                document.getElementById("st_max").value = 15;
+		            if (result >= 200 && result < 300) {
+		                document.getElementById("st_max").value = 3;
+		            } else if (result >= 300 && result < 420) {
+		                document.getElementById("st_max").value = 4;
+		            } else if (result >= 420 && result < 540) {
+		                document.getElementById("st_max").value = 5;
 		            } else if (result >= 540 && result <= 800) {
-		                document.getElementById("st_max").value = 18;
+		                document.getElementById("st_max").value = 6;
+		            } else if (result > 800 && result <= 1060) {
+		                document.getElementById("st_max").value = 7;
+		            } else if (result > 1060 && result <= 1400) {
+		                document.getElementById("st_max").value = 8;
 		            } else {
 		                // 이외의 범위는 직접 최대 인원 수 입력 가능
 		                document.getElementById("st_max").value = "";
