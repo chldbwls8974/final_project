@@ -234,7 +234,7 @@ public class BusinessmanController {
 			//facility에서 operatingList를 불러옴
 			List<OperatingVO> operatingList = facility.getOperatingList();
 			int fa_num = facility.getFa_num();
-			
+			/*
 			boolean res = true;
 			String day = null;
 			String yesterday = null;
@@ -255,12 +255,11 @@ public class BusinessmanController {
 			}
 			if(!res) {
 				model.addAttribute("msg", "마감시간이 자정을 넘을 경우 " + day + " 요일의 오픈시간이" + yesterday + " 요일의 마감시간보다 늦어야합니다.");
-				model.addAttribute("url", "/businessman/operatingUpdate/" + fa_num);
 				
 				return "/util/message";
 			}
-			
-			res = businessmanService.updateOperatingList(operatingList, fa_num);
+			*/
+			boolean res = businessmanService.updateOperatingList(operatingList, fa_num);
 			if(res) {
 				model.addAttribute("msg", "시설 운영시간 수정이 완료되었습니다.");
 				model.addAttribute("url", "/businessman/operating/" + fa_num);
