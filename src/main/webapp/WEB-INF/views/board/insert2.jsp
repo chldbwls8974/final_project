@@ -14,7 +14,7 @@
 	}
 	.title{
 		font-size: 35px; font-weight: bolder; margin: 50px auto; border-bottom: 8px solid #c2f296;
-		width: 35%; padding-bottom: 10px; text-align: center;
+		width: 30%; padding-bottom: 10px; text-align: center;
 	}
 	.in-btn{
 		background-color: #d7fdb5; color: black; height: 45px; width: 400px; 
