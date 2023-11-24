@@ -48,8 +48,8 @@
 				    right: 20px;
 				    top: 20px;
 				    border-radius: 10px;">
-			<p><b>${user.me_nickname}</b>님 안녕하세요.</p>
-			<p>${user.me_nickname}님의 잔여포인트는 <b>${user.me_point}</b>입니다.</p>
+			<p><b class="info-nickname"></b>님 안녕하세요.</p>
+			<p><b class="info-nickname"></b>님의 잔여포인트는 <b class="info-point"></b>입니다.</p>
 		</div>
 	</c:if>
 </div>
@@ -163,6 +163,7 @@
 	</nav>
 </div>
 		<script type="text/javascript">
+			printMemberInfo();
 			//member 정보를 불러와서 변수에 저장(서버에서 JSP로 넘어오는 멤버 정보)
 			var member = "${member}";
 			//각각의 url을 변수로 저장
@@ -182,6 +183,17 @@
 								location.href = '${emailSignoutUrl}';
 					}
 			});
+			function printMemberInfo(){
+				$.ajax({
+					async : false,
+					method : 'post',
+					url : '<c:url value="/print/user/info"/>',
+					success : function(data) {
+						$('.info-nickname').text(data.member.me_nickname);
+						$('.info-point').text(data.member.me_point);
+					}
+				})
+			}
 		</script>
 
 	</div>	

@@ -755,4 +755,15 @@ public class MemberController {
 			map.put("entryList", entryList);
 			return map;
 		}
+		
+		@ResponseBody
+		@PostMapping("/print/user/info")
+		public Map<String, Object> printUserInfo(HttpSession session){
+			Map<String, Object> map = new HashMap<String, Object>();
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			MemberVO member = memberService.getMember(user.getMe_id());
+			
+			map.put("member", member);
+			return map;
+		}
 }
