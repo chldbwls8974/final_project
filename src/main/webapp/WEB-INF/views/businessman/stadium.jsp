@@ -91,8 +91,8 @@
 	/* 개별 이미지 */
 	.slider{
 		position: relative;
-		width: 600px;
-		height: 600px;
+		width: auto;
+		height: auto;
 	}
 	
 	.slider img{
