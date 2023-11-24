@@ -20,6 +20,7 @@
 		margin-top: 20px;
 	}
 	.keyword{
+		margin: 0 3px 0 3px;
 		width: 750px;
 	    height: 50px;
 	    margin-top: 20px;
@@ -56,7 +57,7 @@
 </style>
 </head>
 <body>
-	<div class="board-report-navigation" style="margin-top: 50px; text-align: center;">
+	<div class="board-report-navigation" style="margin-top: 50px; text-align: center; display: flex; justify-content: center;">
 		<p style="font-size: 30px; width: 32%; font-weight: bolder; margin: 30px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
 		즐겨찾기/차단 회원 조회</p>
 	</div>
