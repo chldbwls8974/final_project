@@ -78,13 +78,13 @@
 							<input type="text" class="te_type" value="${mt.te_type}" hidden disabled>
 							<input type="text" class="mt_personnel" value="${mt.mt_personnel}" hidden disabled>
 							<c:if test="${mt.mt_rule == 1 && mt.mt_state1 == 2}">
-								<button class="btn btn-record-open">경기 결과</button>
+								<button class="btn btn-success btn-record-open">경기 결과</button>
 							</c:if>
 							<c:if test="${mt.mt_rule == 1 && mt.mt_state1 == 0}">
-								<button class="btn btn-record-open">경기 진행중</button>
+								<button class="btn btn-success btn-record-open">경기 진행중</button>
 							</c:if>
 							<c:if test="${mt.mt_rule == 0}">
-								<button class="btn btn-record-open">참가자</button>
+								<button class="btn btn-success btn-record-open">참가자</button>
 							</c:if>
 						</td>
 					</tr>

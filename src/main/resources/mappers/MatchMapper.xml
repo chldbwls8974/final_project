@@ -665,6 +665,8 @@
 			if(mt_date = curdate(), ti_time >= curtime(), true)
 		group by
 			mt_num
+		order by
+			mt_date, ti_time
 	</select>
 	<select id="selectMyRecored" resultType="kr.kh.final_project.vo.MatchVO">
 		select
