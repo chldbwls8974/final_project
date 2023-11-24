@@ -66,15 +66,17 @@
 						<a class="dropdown-item" href="<c:url value='/board/inquiry'/>">문의게시판</a>
 					</div>
 				</li>
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-					신청
-					</a>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" href="<c:url value='/application/manager'/>">매니저 신청</a>
-						<a class="dropdown-item" href="<c:url value='/application/businessman'/>">사업자 신청</a>
-					</div>
-				</li>
+				<c:if test="${user != null && user.me_authority == 'USER' }">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+						신청
+						</a>
+						<div class="dropdown-menu">
+							<a class="dropdown-item" href="<c:url value='/application/manager'/>">매니저 신청</a>
+							<a class="dropdown-item" href="<c:url value='/application/businessman'/>">사업자 신청</a>
+						</div>
+					</li>
+				</c:if>
 			</ul>
 		</nav>	
 		<nav class="navbar">	

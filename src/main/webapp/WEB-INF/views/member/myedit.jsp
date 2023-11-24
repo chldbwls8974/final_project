@@ -90,22 +90,25 @@
 			<input type="hidden" name="me_num" value="${user.me_num}">
 			<input type="hidden" name="test" value="${user.me_profile}">
 			<input type="hidden" name="ori_nick" value="${user.me_nickname}">
-			<div style="display: inline-grid;" class="profile">
-				<img src="<c:url value='/memberimg${user.me_profile}'/>" name="profile" height="150" width="150" style="border-radius: 50%; margin-bottom: 10px;">
+			<div  class="form-group">
+				<div style="display: inline-grid;" class="profile">
+					<img src="<c:url value='/memberimg${user.me_profile}'/>" name="profile" height="150" width="150" style="border-radius: 50%; margin-bottom: 10px;">
+				</div>
+				<div class="form-group update-profile" style="margin-top: 10px;">
+					<input type="file" class="input-file" name="img" id="img" onchange="readUrl(this)">
+						<a href="#" class="btn-file">+
+							<div class="box-thumbnail">
+								<img src="" id="preview" height="200" width="200">
+							</div>
+						</a>
+				</div>
+				<div>
+					<button type="button" class="form-control profile-update-btn">
+					프로필 사진 변경
+					</button>
+				</div>
 			</div>
-			<div class="form-group update-profile" style="margin-top: 10px;">
-				<input type="file" class="input-file" name="img" id="img" onchange="readUrl(this)">
-					<a href="#" class="btn-file">+
-						<div class="box-thumbnail">
-							<img src="" id="preview" height="200" width="200">
-						</div>
-					</a>
-			</div>
-			<div>
-				<button type="button" class="profile-update-btn">
-				프로필 사진 변경
-				</button>
-			</div>
+			
 			
 			<hr>
 

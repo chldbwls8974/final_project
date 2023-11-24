@@ -106,13 +106,16 @@
 		 		fa_num = #{fa_num}
 	</select>
 	<update id="facilityDelete" parameterType="int">
-	    update facility
-	    set fa_deleted = 1
-	    where fa_num = #{fa_num}
+		    update facility
+		    set fa_deleted = 1
+		    where fa_num = #{fa_num}
 	</update>
 	<select id="selectFacilityAllList" resultType="kr.kh.final_project.vo.FacilityVO" >
-		select 
-				*
+			select 
+				facility.*,
+				businessman.*,
+				(select count(*) 
+			from stadium where st_fa_num = fa_num and st_available != 2) as st_count
 			from facility
 				 	join 
 			businessman on fa_bu_num = bu_num
@@ -120,8 +123,15 @@
 			<choose>
 				<when test='cri.t == "all"'>
 					(fa_name like concat('%', #{cri.s}, '%')
-					or fa_add like concat('%', #{cri.s}, '%')
-					or fa_phone like concat('%', #{cri.s}, '%'))
+						or 
+					fa_bu_num like concat('%', #{cri.s}, '%')
+						or
+					fa_add like concat('%', #{cri.s}, '%')
+						or 
+					fa_phone like concat('%', #{cri.s}, '%'))
+				</when>
+				<when test='cri.t == "businessman"'>
+					(fa_bu_num like concat('%', #{cri.s}, '%'))
 				</when>
 				<when test='cri.t == "total"'>
 					(fa_name like concat('%', #{cri.s}, '%')
@@ -132,7 +142,7 @@
 				</when>
 			</choose>
 		</where>
-		order by fa_bu_num asc
+		order by fa_name asc
 		limit #{cri.pageStart}, #{cri.perPageNum}
 	</select>
 	<select id="selectFacilityListTotalCount" resultType="int">
@@ -143,8 +153,15 @@
 			<choose>
 				<when test='cri.t == "all"'>
 					(fa_name like concat('%', #{cri.s}, '%')
-					or fa_add like concat('%', #{cri.s}, '%')
-					or fa_phone like concat('%', #{cri.s}, '%'))
+						or 
+					fa_bu_num like concat('%', #{cri.s}, '%')
+						or
+					fa_add like concat('%', #{cri.s}, '%')
+						or 
+					fa_phone like concat('%', #{cri.s}, '%'))
+				</when>
+				<when test='cri.t == "businessman"'>
+					(fa_bu_num like concat('%', #{cri.s}, '%'))
 				</when>
 				<when test='cri.t == "total"'>
 					(fa_name like concat('%', #{cri.s}, '%')
