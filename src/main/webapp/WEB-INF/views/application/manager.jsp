@@ -21,7 +21,7 @@
 		border-radius: 30px; width: 500px;
 	}
 	.form-group input, .form-group .btn{ 
-		display: block; margin: 0 auto; margin-bottom: 30px;
+		 margin: 0 auto; margin-bottom: 30px;
 	}
 	.form-group label{ 
 		text-align: center; display: block; margin: 0 auto;
