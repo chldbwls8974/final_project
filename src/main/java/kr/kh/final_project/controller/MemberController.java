@@ -653,35 +653,17 @@ public class MemberController {
 			return "message";
 		}
 		//유저가 매치 신고 했을 때
+		@ResponseBody
 		@PostMapping("/member/matchReport/insert")
-		public String matchReportInsert(Model model, ReportVO report) {
-			//신고추가
-			//중복신고 못하게 해야함 (같은 경기에서 같은 유저가 같은 멤버에게 신고 안되게 bo_num, me_num)
+		public Map<String, Object> matchReportInsert(Model model, @RequestBody ReportVO report, HttpSession session) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			report.setRp_me_num(user.getMe_num());
+
+			String msg = adminService.matchReportInsert(report);
 			
-			Message msg = adminService.matchReportInsert(report);
-			model.addAttribute("msg", msg);
-			return "message";
-		}
-		
-		//매치임시페이지
-		//매치임시페이지
-		@GetMapping("/member/tmp")
-		public String match(Model model, MatchVO match) {
-			//신고추가
-			//중복신고 못하게 해야함 (같은 경기에서 같은 유저가 같은 멤버에게 신고 안되게 bo_num, me_num)
-			
-			
-			//Message msg = adminService.boardReportInsert(report);
-			//model.addAttribute("msg", msg);
-			List<EntryVO> entryList = new ArrayList<EntryVO>();
-			for(int i = 1; i < 6 ; i++) {
-				EntryVO e = new EntryVO();
-				e.setEn_me_num(i);
-				entryList.add(e);
-			}
-			model.addAttribute("match", match);
-			model.addAttribute("entryList", entryList);
-			return "/member/tmp";
+			map.put("msg", msg);
+			return map;
 		}
 		
 		@GetMapping("/member/record")
@@ -740,10 +722,12 @@ public class MemberController {
 			Map<String, Object> map = new HashMap<String, Object>();
 			MemberVO user = (MemberVO)session.getAttribute("user");
 			MemberVO manager = matchService.selectManagerByMtNum(mt_num);
+			MemberVO business = matchService.selecBusinessByMtNum(mt_num);
 			List<EntryVO> entryList = matchService.selectEntryByMtNum(mt_num);
 			
 			map.put("me_num", user.getMe_num());
 			map.put("manager", manager);
+			map.put("business", business);
 			map.put("entryList", entryList);
 			return map;
 		}

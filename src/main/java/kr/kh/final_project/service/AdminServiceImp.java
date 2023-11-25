@@ -341,12 +341,13 @@ public class AdminServiceImp implements AdminService{
 	}
 	
 	@Override
-	public Message matchReportInsert(ReportVO report) {
-		Message msg = new Message(("member/tmp?mt_num=" + report.getRp_mt_num()), "이미 신고한 회원입니다.");
-		System.out.println(report);
+	public String matchReportInsert(ReportVO report) {
+		String msg = "이미 신고한 대상입니다.";
+		
+		System.out.println(reportDao.selectReportByMeNumAndMtNum(report));
 		//중복검사 (신고자 회원번호, 게시글 번호로 등록된 신고가 없다면 등록)
 		if(reportDao.selectReportByMeNumAndMtNum(report) == null) {
-			msg.setMsg(reportDao.insertMatchReport(report) ? "신고 완료." : "신고 실패.");
+			msg = reportDao.insertMatchReport(report) ? "신고 완료." : "신고 실패.";
 		}
 		return msg;
 	}

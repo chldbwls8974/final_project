@@ -210,9 +210,11 @@ public class MatchController {
 	@PostMapping("/application/print/team")
 	public Map<String, Object> printApplicationTeam(@RequestParam("mt_num")int mt_num, HttpSession session){
 		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO manager = matchService.selectManagerByMtNum(mt_num);
 		List<TeamVO> teamList = matchService.selectTeamByMtNum(mt_num);
 		List<EntryVO> entryList = matchService.selectEntryByMtNum(mt_num);
 		
+		map.put("manager", manager);
 		map.put("teamList", teamList);
 		map.put("entryList", entryList);
 		return map;

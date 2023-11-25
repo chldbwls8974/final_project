@@ -309,4 +309,20 @@
 		where
 			mt_num = #{mt_num}
 	</select>
+	<select id="selectBusinessByMtNum" resultType="kr.kh.final_project.vo.MemberVO">
+		select
+			member.*
+		from
+			`match`
+				join
+			stadium on mt_st_num = st_num
+				join
+			facility on st_fa_num = fa_num
+				join
+			businessman on fa_bu_num = bu_num
+				join
+			member on bu_me_num = me_num
+		where
+			mt_num = #{mt_num}
+	</select>
 </mapper>

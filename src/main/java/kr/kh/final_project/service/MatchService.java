@@ -79,4 +79,6 @@ public interface MatchService {
 
 	MemberVO selectManagerByMtNum(int mt_num);
 
+	MemberVO selecBusinessByMtNum(int mt_num);
+
 }

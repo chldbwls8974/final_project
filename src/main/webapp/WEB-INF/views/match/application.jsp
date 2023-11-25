@@ -228,7 +228,10 @@
 					</div>
 					<div class="coupon-box right-side-box" style="padding-bottom: 40px;">
 						<div style="margin-top: 20px;">
-							<p>보유 쿠폰</p>
+							<p>쿠폰 목록</p>
+							<c:if test="${couponList[0] == null}">
+									<p>등록된 쿠폰이 없습니다.</p>
+							</c:if>
 							<div style="width: 30%; text-align-last: left; margin: 0 auto;">
 								<c:forEach items="${couponList}" var="co">
 									<div>
@@ -259,15 +262,17 @@
 							</div>
 						</div>
 					</c:if>
-					<div class="cansel-box right-side-box" style="margin-top: 20px;">
-						<div>
-							<p>신청한 매치 취소하기</p>
-							<button class="btn btn-cansel"
-									style="width: 100px; height: 40px; border: none; margin: 20px auto 40px;
-									border-radius: 5px; background-color: black; color: white;">
-								취소</button>
-						</div>	
-					</div>
+					<c:if test="${match.ready == 0}">
+						<div class="cansel-box right-side-box" style="margin-top: 20px;">
+							<div>
+								<p>신청한 매치 취소하기</p>
+								<button class="btn btn-cansel"
+										style="width: 100px; height: 40px; border: none; margin: 20px auto 40px;
+										border-radius: 5px; background-color: black; color: white;">
+									취소</button>
+							</div>	
+						</div>
+					</c:if>
 				</c:if>
 			</c:if>
 			<c:if test="${(match.mt_type == 0 && cl_num != 0) || (match.mt_type == 2 && cl_num != 0)}">
@@ -293,15 +298,17 @@
 					<div class="club-list-box right-side-box">
 						
 					</div>
-					<div class="cansel-box right-side-box" style="margin-top: 20px;">
-						<div>
-							<p>신청한 매치 취소하기</p>
-							<button class="btn btn-cansel"
-									style="width: 100px; height: 40px; border: none; margin: 20px auto 40px;
-									border-radius: 5px; background-color: black; color: white;">
-								취소</button>
-						</div>	
-					</div>
+					<c:if test="${match.ready == 0}">
+						<div class="cansel-box right-side-box" style="margin-top: 20px;">
+							<div>
+								<p>신청한 매치 취소하기</p>
+								<button class="btn btn-cansel"
+										style="width: 100px; height: 40px; border: none; margin: 20px auto 40px;
+										border-radius: 5px; background-color: black; color: white;">
+									취소</button>
+							</div>	
+						</div>
+					</c:if>
 				</c:if>
 			</c:if>
 			<c:if test="${(match.mt_type == 1 && cl_num != 0) || (match.mt_type == 2 && cl_num == 0)}">
@@ -463,7 +470,7 @@
 				for(team of data.teamList){
 					str += `
 						<div class="teamList-box">
-							<table>
+							<table style="width: 100%;">
 								<thead>
 									<tr>
 										<th>
@@ -488,6 +495,15 @@
 								`;
 							}
 						}
+					}
+					if(team.ct_cl_num != cl_num && ${match.ready == 0}){
+						str += `
+							<tr>
+								<td style="text-align: center;">
+									<p>매치 시간 12시간전부터<br>공개됩니다.</p>
+								</td>
+							</tr>
+						`;
 					}
 					str += `
 								</tbody>
