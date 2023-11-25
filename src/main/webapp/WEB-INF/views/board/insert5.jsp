@@ -12,6 +12,10 @@
 	.form-control{
 		margin-bottom : 10px;
 	}
+	.title{
+		font-size: 35px; font-weight: bolder; margin: 50px auto; border-bottom: 8px solid #c2f296;
+		width: 20%; padding-bottom: 10px; text-align: center;
+	}
 	.in-btn{ 
 		border-radius: 3px; width: 300px; height: 38px; border: none;
 		background-color: #c2f296; color: black;
@@ -21,8 +25,7 @@
 </head>
 </head>
 <body>
-	<p style="font-size: 35px; font-weight: bolder; margin: 30px auto; border-bottom: 8px solid #c2f296;
-			width: 18%; padding: 20px 0 10px 0; text-align: center;">문의글 작성</p>
+	<br><p class="title"> 문의글 작성</p>
 	<form action="<c:url value='/board/insert5'/>" method="post" enctype="multipart/form-data">
 		<div class="form-group">
 			<label>제목</label>

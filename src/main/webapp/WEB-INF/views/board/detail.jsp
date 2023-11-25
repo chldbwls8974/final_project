@@ -491,8 +491,8 @@ form{
 												\${btnStr}
 											</div>
 										</div>
-									</div>
 								</div>
+							</div>
 							<hr>
 							`;
 			             }
