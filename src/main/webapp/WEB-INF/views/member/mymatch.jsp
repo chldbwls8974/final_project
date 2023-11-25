@@ -5,6 +5,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<style type="text/css">
+
+	tr, th{ text-align: center;}
+	.table thead th{ border: none;}
+	.btn-box{
+		border-radius: 10px !important; width: 100px; height: 40px; border: none;
+		background-color: #c2f296; color: black; margin: 0 auto;
+	}
+</style>
 <title>신청 경기</title>
 </head>
 <body>
@@ -35,9 +44,11 @@
 	        <td>${mt.fa_add} ${mt.fa_add_detail}</td>
 	        <td>${mt.entry_count}/ ${mt.mt_personnel * (mt.mt_rule == 0 ? 2 : 3)}</td>
 	        <td>
-	        	<input type="number" class="mt_num" value="${mt.mt_num}" hidden disabled>
-	        	<input type="number" class="cl_num" value="${mt.cl_num}" hidden disabled>
-	        	<button class="btn">바로가기</button>
+	        	<div class="btn-box">
+		        	<input type="number" class="mt_num" value="${mt.mt_num}" hidden disabled>
+		        	<input type="number" class="cl_num" value="${mt.cl_num}" hidden disabled>
+		        	<button class="btn">바로가기</button>
+	        	</div>
 	        </td>
 	      </tr>
       </c:forEach>

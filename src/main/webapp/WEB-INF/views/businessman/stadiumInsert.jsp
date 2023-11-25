@@ -8,10 +8,12 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-    $(function () {
-        // datepicker 초기화
-        $("#av_notdate").datepicker();
+$(function () {
+    // datepicker 초기화
+    $("#av_notdate").datepicker({
+    	dateFormat: 'yy/mm/dd'
     });
+});
 </script>
 <meta charset="UTF-8">
 <title>경기장 등록</title>
@@ -169,6 +171,12 @@
 	</div>
 	
 	<script type="text/javascript">	
+		var currentDate = new Date();
+		var year = currentDate.getFullYear();
+		var month = currentDate.getMonth() + 1;
+		var day = currentDate.getDate();
+		var date_now = year + '/' + month + '/' + day;
+		$('#av_notdate').val(date_now);
 		//숫자만 입력되도록 하는 메서드
 		function numOnly(target) {
 	        //입력값이 5자리 이상인 경우 마지막 5자리만 유지

@@ -188,7 +188,7 @@
 <!-- 모달창 -->
 		<div class="modal--bg">
 		<div class="modal--content">
-			<p style="font-size: 20px; font-weight: bolder; margin: 20px auto; border-bottom: 8px solid #c2f296; width: 30%; padding: 20px 0 10px 0; text-align: center;">클럽 가입 신청</p>
+			<p style="font-size: 20px; font-weight: bolder; margin: 20px auto; border-bottom: 8px solid #c2f296; width: 35%; padding: 20px 0 10px 0; text-align: center;">클럽 가입 신청</p>
 				<p style="font-size: 15px; margin: 20px auto; width: 30%; padding: 20px 0 10px 0; text-align: center;">간단한 자기소개를 적어주세요.</p>
 				<form action="<c:url value='/club/join'/>" method="post" class="modal-form">
 					<div class="form-group">
