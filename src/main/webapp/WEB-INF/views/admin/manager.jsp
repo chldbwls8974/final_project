@@ -81,6 +81,10 @@
 	  background-color: #fafafa; 
 	  border-color: #ccc;
 	}
+	.up-btn{
+		border-radius: 10px !important; padding: 10px; border: none;
+		background-color: #c2f296; color: black; line-height: 35px;
+	}
 
 </style>
 </head>
@@ -153,7 +157,7 @@
 							<div id="tbody-list" class="update" style="width: 10%">${ma.me_authority}</div>
 							<div id="tbody-list" style="width: 20%">${ma.bo_reg_date_str}</div>
 							<div id="tbody-list" style="width: 10%">
-								<button class="btn btn-update" value="${ma.me_nickname}">신청 수락</button>
+								<button class="up-btn btn-update" value="${ma.me_nickname}">신청 수락</button>
 							</div>
 						</div>
 					</li>
