@@ -114,9 +114,11 @@ public class ClubController {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		ClubVO club = clubService.getClub(cl_num);
 		ClubMemberVO authority = clubService.getMyAuthorityByClub(cl_num, user.getMe_num());
+		List<ClubMemberVO> clubmemberlist = clubService.getClubMemberList(cl_num);
 		List<Integer> age = preferredAgeDao.selectPreAgeListByClNum(cl_num);
 		model.addAttribute("user",user);
 		model.addAttribute("club",club);
+		model.addAttribute("clubmemberlist",clubmemberlist);
 		model.addAttribute("age",age);
 		model.addAttribute("authority",authority);
 		return "/club/detail";
