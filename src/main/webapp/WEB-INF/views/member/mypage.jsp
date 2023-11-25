@@ -60,6 +60,9 @@
 	.mytier-box{
 		display: flex; justify-content: flex-start; margin-top: 20px;
 	}
+	.mytier-box-img{
+		padding:0px; width:23px; height:25px; border-radius:5px;
+	}
 	.myclub-thumb{
 		width: 100%; height: auto; border-radius:30px;
 		background-color: #f2f2f2; padding: 20px; margin: 0 20px 20px 0; 
@@ -72,6 +75,11 @@
 	.club-btn{
 		width: 40px; height: 30px; margin: 0 3px 0 0; border: none; font-size: 13px;
 		border-radius: 5px; background-color: #c7efa2; color: black;
+	}
+	.tier-tip{
+		width: 20px; height: 20px; margin-left: 5px; background-color: black; color: white;
+		font-weight: bold; text-align: center; line-height: 9px; border: none; padding: 0 0 2px 0;
+		border-radius: 2px;
 	}
 	.modal {
 	display: none;
@@ -87,7 +95,8 @@
 	.modal-content {
 	background-color: white;
 	padding: 20px;
-	border-radius: 5px;
+	border: none;
+	border-radius: 10px;
 	width: 600px;
 	margin: 50px auto;
 	}
@@ -150,13 +159,45 @@
 						</div>
 						<div class="mytier-thumb">
 							<p class="mytier-title">내 티어
-							<button class="tier-tip btn-info-open" style="width: 20px; height: 20px; margin-left: 5px; background-color: black; color: white;
-							font-weight: bold; text-align: center; line-height: 9px; padding-left: 6px;">!</button></p>
+							<button class="tier-tip btn-info-open">!</button></p>
 							<div class="mytier-box">
-								<div style="padding:0px; width:23px; height:25px; border-radius:5px; background-color: black;">
-									<div style="text-align:center; font-size:15px; padding:0; color: white; font-weight: bolder;">1</div>
+								<div class="mytier-box-img">
+										<c:if test="${user.me_tr_name == '스타터'}">
+											<div  class="mytier-box-img"  style="text-align:center; margin-right: 5px; font-size:15px; padding:2px 1px 0 0; 
+											color: white; font-weight: bolder; background-color: #8fce00;">0 </div>
+										</c:if>
+										<c:if test="${user.me_tr_name == '브론즈'}">
+											<div style="text-align:center; margin-right: 5px; font-size:15px; padding:2px 1px 0 0; 
+											color: white; font-weight: bolder; background-color: #ce7e00;">1</div>
+										</c:if>
+										<c:if test="${user.me_tr_name == '실버'}">
+											<div  class="mytier-box-img"  style="text-align:center; margin-right: 5px; font-size:15px; padding:2px 1px 0 0; 
+											color: white; font-weight: bolder; background-color: #cdcdcd;">2</div>
+										</c:if>
+										<c:if test="${user.me_tr_name == '골드'}">
+											<div style="text-align:center; margin-right: 5px; font-size:15px; padding:2px 1px 0 0; 
+											color: white; font-weight: bolder; background-color: #ffde8d;">3</div>
+										</c:if>
+										<c:if test="${user.me_tr_name == '플래티넘'}">
+											<div style="text-align:center; margin-right: 5px; font-size:15px; padding:2px 1px 0 0;  
+											color: white; font-weight: bolder; background-color: #78beff;">4</div>
+										</c:if>
+										<c:if test="${user.me_tr_name == '다이아'}">
+											<div style="text-align:center; margin-right: 5px; font-size:15px; padding:2px 1px 0 0;  
+											color: white; font-weight: bolder; background-color: #fa8d43;">5</div>
+										</c:if>
+										<c:if test="${user.me_tr_name == '마스터'}">
+											<div style="text-align:center; margin-right: 5px; font-size:15px; padding:2px 1px 0 0;  
+											color: white; font-weight: bolder; background-color: #b08bff;">m</div>
+										</c:if>
+										<c:if test="${user.me_tr_name == '마스터'}">
+											<div style="text-align:center; font-size:15px; padding:0; color: white; font-weight: bolder;">★</div>
+										</c:if>
 								</div>
-									<div style="margin-left:5px; font-weight: bolder; font-size: 15px; letter-spacing: 1px;">${user.me_tr_name}(${user.me_rating})</div>	
+								<div style="margin-left:5px; font-weight: bolder; font-size: 15px; letter-spacing: 1px;">${user.me_tr_name}</div>
+								<c:if test="${user.me_tr_name != '스타터'}"> 
+									<div style="margin-left:5px; font-weight: bolder; font-size: 10px; letter-spacing: 1px;">${user.me_rating}점</div>	
+								</c:if>
 							</div>
 						</div>
 					</div>	
@@ -288,7 +329,7 @@
 						</li>
 						<li>
 							<a href="<c:url value='/member/refund'/>">
-							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_manner_card.svg" width="24px" height="24px" alt="포인트 환급">
+							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_point_color.svg" width="24px" height="24px" alt="포인트 환급">
 							<p>포인트 환급</p>
 							</a>
 						</li>
@@ -301,8 +342,8 @@
 		<div class="modal-content">
 			<div class="match-record-box">
 				<button type="button" class="close btn-info-close" data-dismiss="modal">&times;</button><br>
-				<p style="font-size: 20px; font-weight: bolder; margin: 0 auto; border-bottom: 8px solid #c2f296;
-				width: 20%; padding: 20px 0 10px 0; text-align: center;">티어</p>
+				<p style="font-size: 20px; font-weight: bolder; margin: 20px auto 40px auto; border-bottom: 8px solid #c2f296;
+				width: 10%; padding: 0 0 10px 0; text-align: center;">티어</p>
 				<div class="tier-info-box">
 					<table class="table table-hover">
 						<thead>
@@ -315,43 +356,78 @@
 						</thead>
 						<tbody>
 							<tr>
-								<td>스타터</td>
+								<td style="display: flex;">
+									<div class="mytier-box-img" 
+									style="text-align:center; margin-right: 5px; font-size:15px; padding: 2px 1px 0 0;
+											color: white; font-weight: bolder; background-color: #8fce00;">0 </div>
+									스타터
+								</td>
 								<td>없음</td>
 								<td>200</td>
 								<td>0</td>
 							</tr>
 							<tr>
-								<td>브론즈</td>
+								<td style="display: flex;">
+									<div class="mytier-box-img"
+									style="text-align:center; margin-right: 5px; font-size:15px; padding: 2px 1px 0 0;
+											color: white; font-weight: bolder; background-color: #ce7e00;">1</div>
+									브론즈
+								</td>
 								<td>0이상 1000미만</td>
 								<td>200</td>
 								<td>40</td>
 							</tr>
 							<tr>
-								<td>실버</td>
+								<td style="display: flex;">
+									<div class="mytier-box-img"
+									style="text-align:center; margin-right: 5px; font-size:15px; padding: 2px 1px 0 0;
+											color: white; font-weight: bolder; background-color: #cdcdcd;">2</div>
+									실버
+								</td>
 								<td>1000이상 2000미만</td>
 								<td>160</td>
 								<td>80</td>
 							</tr>
 							<tr>
-								<td>골드</td>
+								<td style="display: flex;">
+									<div class="mytier-box-img"
+									style="text-align:center; margin-right: 5px; font-size:15px; padding: 2px 1px 0 0;
+											color: white; font-weight: bolder; background-color: #ffde8d;">3</div>
+									골드
+								</td>
 								<td>2000이상 3000미만</td>
 								<td>120</td>
 								<td>120</td>
 							</tr>
 							<tr>
-								<td>플래티넘</td>
+								<td style="display: flex;">
+									<div class="mytier-box-img" 
+									style="text-align:center; margin-right: 5px; font-size:15px; padding: 2px 1px 0 0;
+											color: white; font-weight: bolder; background-color: #78beff;">4</div>
+									플래티넘
+								</td>
 								<td>3000이상 4000미만</td>
 								<td>80</td>
 								<td>160</td>
 							</tr>
 							<tr>
-								<td>다이아</td>
+								<td style="display: flex;">
+									<div class="mytier-box-img" 
+									style="text-align:center; margin-right: 5px; font-size:15px; padding: 2px 1px 0 0; 
+											color: white; font-weight: bolder; background-color: #fa8d43;">5</div>
+									다이아
+								</td>
 								<td>4000이상 5000미만</td>
 								<td>40</td>
 								<td>200</td>
 							</tr>
 							<tr>
-								<td>마스터</td>
+								<td style="display: flex;">
+									<div class="mytier-box-img" 
+									style="text-align:center; margin-right: 5px; font-size:15px; padding: 1px 1px 0 0; 
+											color: white; font-weight: bolder; background-color: #c52216;">★</div>
+									마스터
+								</td>
 								<td>5000(최고점)</td>
 								<td>0</td>
 								<td>200</td>

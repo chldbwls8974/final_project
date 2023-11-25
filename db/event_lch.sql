@@ -48,6 +48,13 @@ BEGIN
     FROM `member` m
     JOIN coupon c ON c.cp_num = 8
     WHERE m.me_tr_name = '다이아';
+    
+    -- 마스터 회원에게 쿠폰 추가
+    INSERT INTO holding_coupon (hp_me_num, hp_cp_num, hp_state)
+    SELECT m.me_num, c.cp_num, 0
+    FROM `member` m
+    JOIN coupon c ON c.cp_num = 9
+    WHERE m.me_tr_name = '마스터';
 END;
 //
 DELIMITER ;

@@ -20,8 +20,9 @@
 		margin-top: 20px;
 	}
 	.keyword{
-		width: 500px;
-		padding: .8em .5em;
+		width: 870px;
+	    height: 60px;
+	    margin-top: 20px;
 		border-radius: 5px;
 		border: 1px solid #999;
 		-webkit-appearance: none;
@@ -30,9 +31,11 @@
 	}
 	.search-btn{
 		width: 80px;
-		padding: .8em .5em;
+		height: 60px;
+	    margin-top: 20px;
 		border-radius: 5px;
-		border: 1px solid #999;
+		border: none;
+		background-color: #c2f296;
 		-webkit-appearance: none;
 		-moz-appearance: none;
 		appearance: none;
@@ -80,7 +83,7 @@
 <body>
 
 <div class="member-search">
-	<div class="member-search-navigation" style="margin-top: 50px; text-align: center;">
+	<div class="member-search-navigation" style="margin-top: 50px; text-align: center; justify-content: center;">
 		<p style="font-size: 35px; width: 17%; font-weight: bolder; margin: 30px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
 		시설 조회</p>
 	</div>
