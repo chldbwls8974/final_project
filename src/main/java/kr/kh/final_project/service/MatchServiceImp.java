@@ -613,4 +613,12 @@ public class MatchServiceImp implements MatchService{
 		return memberDao.selectManagerByMtNum(mt_num);
 	}
 
+	@Override
+	public MemberVO selecBusinessByMtNum(int mt_num) {
+		if(mt_num == 0) {
+			return null;
+		}
+		return memberDao.selectBusinessByMtNum(mt_num);
+	}
+
 }

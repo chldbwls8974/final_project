@@ -56,7 +56,13 @@ public class BusinessmanController {
 			
 			PageMaker pm = new PageMaker(DISPLAY_PAGE_NUM, cri, totalCount);
 			
-			if(list.size() == 0) {
+			cri.setS("");
+			cri.setT("all");
+			
+			List<FacilityVO> allList = businessmanService.getFacilityList(member, cri);
+			
+			System.out.println(allList.size());
+			if(allList.size() == 0) {
 		        Message msg = new Message("/businessman/facilityInsert", "등록된 시설이 없습니다. 시설을 등록해주세요");
 				model.addAttribute("msg", msg);
 				return "/message";
@@ -293,7 +299,11 @@ public class BusinessmanController {
 			
 			PageMaker pm = new PageMaker(DISPLAY_PAGE_NUM, cri, totalCount);
 			
-			if(stadiumList.size() == 0) {
+			cri.setS("");
+			cri.setT("all");
+			List<StadiumVO> allStadiumList = businessmanService.getStadiumList(fa_num, cri);
+			
+			if(allStadiumList.size() == 0) {
 		        Message msg = new Message("/businessman/stadiumInsert/" + fa_num , "등록된 경기장이 없습니다. 경기장을 등록해주세요");
 				model.addAttribute("msg", msg);
 				return "/message";

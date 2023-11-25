@@ -4,34 +4,49 @@
 <head>
 	<title>스케줄 관리</title>
 	<style type="text/css">
-		.schedule-box{width: 100%; height: 770px; background-color: lightblue; position : relative; border-radius: 5px}
+		.schedule-box{
+			background-color: #f2f2f2; position : relative; border-radius: 20px;
+			margin-top: 20px; width: 100%; height: 800px;
+		}
 		.schedule-box::after{clear: both; content: ''; display: block;}
 		.time-bar{width: calc(10% - 10px); height: 750px; position: absolute; top: 25px;}
-		.hour-bar{width: 100%; height: 30px; text-align: center; line-height: 30px; font: 20px bold;}
-		.day-bar{width: 100%; height: 30px; background-color: gray; text-align: center; line-height: 30px; font: 20px bold; border-bottom: 1px solid black;}
+		.hour-bar{width: 100%; height: 30px; text-align: center; line-height: 30px; font: 17px bold;}
+		.day-bar{width: 100%; height: 30px; background-color: #c2f296; text-align: center; line-height: 30px; font: 20px bold;}
 		.week-box{
-		width: 90%; height: 750px; background-color: yellow; display: flex;
-		border: 1px solid black; border-left: none;
-		float: right; position : absolute; right: 10px; bottom: 10px;
-		border-radius: 5px; overflow: hidden;}
-		.day-box{width: 100%; height: 100%; flex: 1; border-left: 1px solid black;}
-		.hour-box{width: 100%; height: 30px;  border-bottom: 1px solid black; float:left;}
+/*  		background-color: yellow; bottom: 10px; */ /*진용쓰가 해둔거 일단 주석*/
+		width: 90%; height: 750px;display: flex;
+		border-left: none; float: right; position : absolute; right: 10px;
+		border-radius: 5px; overflow: hidden;
+		margin: 25px;
+		}
+		.day-box{width: 100%; height: 100%; flex: 1; border-left: 1px solid #b9b9b9;}
+		.hour-box{width: 100%; height: 30px;  border-bottom: 1px solid #b9b9b9; float:left;}
 		.hour-box-abled{background-color: white; cursor: pointer;}
-		.hour-box-abled:hover{background-color: yellow;}
-		.hour-box-disabled{background-color: black;}
-		.hour-box-select1{background-color: aqua; border-bottom: none; display: flex;}
-		.hour-box-select2{background-color: aqua;}
+		.hour-box-abled:hover{background-color: #defac5;}
+		.hour-box-disabled{background-color: #999999;}
+		.hour-box-select1{background-color: #f8f2e1; border-bottom: none; display: flex;}
+		.hour-box-select2{background-color: #f8f2e1;}
 		.select-box{flex: 1}
-		.select-personnel{float: left;}
+		.select-personnel{
+			float: left; text-align: center;
+  		  	margin-left: 35px;
+    	}
 		.btn-box{flex: 1}
-		.btn-del{float: right;}
+		.btn-del{
+			float: right; border: none; background-color: #ffffff; border-radius: 5px;
+			margin-right: 20px;
+		}
 		
 	</style>
 </head>
 <body>
+	<div class="stadiumInsert-navigation" style="margin-top: 50px; text-align: center;">
+		<p style="font-size: 35px; width: 20%; font-weight: bolder; margin: 40px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
+		스케쥴 관리</p>
+	</div>
 	<div>
-		<span>시설 선택 : </span>
-		<select class="select-facility">
+		<span style="margin-right: 10px; font-weight: bold;">시설 선택 </span>
+		<select class="select-facility" style="margin-right: 30px;">
 				<option value="0">선택</option>
 			<c:forEach items="${facilityList}" var="fa">
 				<c:if test="${fa.fa_num == fa_num}">
@@ -42,7 +57,7 @@
 				</c:if>
 			</c:forEach>
 		</select>
-		<span>경기장 선택 : </span>
+		<span style="margin-right: 10px; font-weight: bold;">경기장 선택 </span>
 		<select class="select-stadium">
 				<option value="0">선택</option>
 			<c:forEach items="${stadiumList}" var="st">
@@ -52,7 +67,12 @@
 	</div>
 	<div class="schedule-box">
 		<c:if test="${fa_num == 0}">
-			<span>경기장을 선택해주세요.</span>
+			<span style="display: block;
+						text-align: center;
+					    padding-top: 50px;
+					    font-size: 25px;
+					    font-weight: 600;">
+			경기장을 선택해주세요.</span>
 		</c:if>
 		<c:if test="${fa_num != 0}">
 			<div class="time-bar">

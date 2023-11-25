@@ -704,6 +704,30 @@ public class MemberServiceImp implements MemberService{
 		}
 		return penaltyDao.selectPenaltyByMemberNumAndType(member.getMe_num(), str);
 	}
+
+	@Override
+	public int getMemberPointHistoryCount(MemberVO user, Criteria cri) {
+		if(user == null) {
+			return 0;
+		}
+		if(cri.getS().equals("")) {
+			cri.setS("all");
+		}
+		return pointHistoryDao.selectMemberPointHistoryCount(user, cri);
+	}
+
+	@Override
+	public List<PointHistoryVO> getMemberPointHistory(MemberVO user, Criteria cri) {
+		if(user == null) {
+			return null;
+		}
+		if(cri.getS().equals("")) {
+			cri.setS("all");
+		}
+		
+		return pointHistoryDao.selectMemberPointHistory(user, cri);
+	}
+
 	
 }
 
