@@ -58,5 +58,8 @@ public interface BusinessmanService {
 	
 	void updateFacilityPicture(FacilityVO facility, MultipartFile[] file, int[] delNums);
 	
+	BusinessmanVO getBusinessmanByBuNum(Integer fa_bu_num);
+	
+	
 
 }

@@ -40,4 +40,6 @@ public interface FacilityDAO {
 
 	void deletePicture(@Param("fp_num")Integer fp_num);
 
+	List<FacilityVO> selectFacilityListByRegion(@Param("rg_main")String rg_main);
+
 }

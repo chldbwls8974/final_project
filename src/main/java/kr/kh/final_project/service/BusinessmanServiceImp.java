@@ -3,11 +3,11 @@ package kr.kh.final_project.service;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.commons.io.FileSystemUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.kh.final_project.dao.BusinessDAO;
 import kr.kh.final_project.dao.FacilityDAO;
 import kr.kh.final_project.dao.OperatingDAO;
 import kr.kh.final_project.dao.PreferredRegionDAO;
@@ -18,7 +18,6 @@ import kr.kh.final_project.util.UploadFileUtils;
 import kr.kh.final_project.vo.BusinessmanVO;
 import kr.kh.final_project.vo.FacilityPictureVO;
 import kr.kh.final_project.vo.FacilityVO;
-import kr.kh.final_project.vo.FileVO;
 import kr.kh.final_project.vo.MemberVO;
 import kr.kh.final_project.vo.OperatingVO;
 import kr.kh.final_project.vo.RegionVO;
@@ -26,6 +25,9 @@ import kr.kh.final_project.vo.StadiumVO;
 
 @Service
 public class BusinessmanServiceImp implements BusinessmanService{
+	
+	@Autowired
+	BusinessDAO businessDao;
 	
 	@Autowired
 	RegionDAO regionDao;
@@ -301,6 +303,13 @@ public class BusinessmanServiceImp implements BusinessmanService{
 			facilityDao.deletePicture(j);
 		}
 	}
-	
+	@Override
+	public BusinessmanVO getBusinessmanByBuNum(Integer fa_bu_num) {
+	if(fa_bu_num ==0) {
+		return null;
+	}
+		return businessDao.selectBusinessManByFaBuNum(fa_bu_num);
+	}
+
 
 }
