@@ -839,7 +839,7 @@ input, progress {
 				data : { nickname : nickname}, 
 				success : function(data){
 					if(data){
-						$('#check-nickName-error').text('사용 가능한 닉네임입니다.');
+						$('#check-nickName-error').text('사용 가능한 닉네임입니다.').css('color', 'green');
 						flag = true;
 					}else{
 						$('#check-nickName-error').text('이미 사용중인 닉네임입니다.');

@@ -40,4 +40,8 @@ public interface PointHistoryDAO {
 
 	boolean insertPointHistoryByPayment(@Param("ph")PointHistoryVO ph);
 
+	int selectMemberPointHistoryCount(@Param("user")MemberVO user, @Param("cri")Criteria cri);
+
+	List<PointHistoryVO> selectMemberPointHistory(@Param("user")MemberVO user, @Param("cri")Criteria cri);
+
 }

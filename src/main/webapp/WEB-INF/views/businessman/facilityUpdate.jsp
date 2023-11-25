@@ -10,7 +10,7 @@
 <style type="text/css">
 	.container-body{
 		background-color: #f2f2f2; height: auto; margin-top: 20px;
-		border-radius: 20px; padding: 100px;
+		border-radius: 20px; padding: 50px;
 	}
 	form{
 		padding-top:50px;
@@ -21,12 +21,17 @@
 	.form-group button, .form-group select{margin: 0 auto;}
 	.form-group input{margin: 0 auto;}
 	.fa_pay{
-		border:1px solid  #17a2b8; width:40%;  background-color:#f0f0f0; padding:30px; margin:auto; margin-bottom:40px;
+		width: 55%; background-color: #e4f7d3;
+		border-radius: 20px; padding:30px; margin:auto;
 	}
 	.input-file{display: none;}
 	.img-thumbnail{
 		cursor: pointer; width:200px; height:auto; 
+		background-color: transparent; border: none;
 	}
+	.btn{ border-radius: 10px; width: 300px; height: 45px; border: none;
+	background-color: #c2f296; color: black; margin-top: 10px;}
+	
 </style>
 <body>
 	<div class="facilityUpdate-navigation" style="margin-top: 50px; text-align: center;">
@@ -83,7 +88,7 @@
 		  </div>
 		  <br>
 		  
-		  <h5 class="text-info" style="font-weight: bold; text-align: center;">[부대시설]</h5>
+		  <h5 class="text-info" style="font-weight: bold; text-align: center; color: black !important;">부대시설</h5>
 		  <div class="form-group fa_pay">
 			  <div class="form-group">
 			    <label for="fa_pay" style="font-weight: bold;">주차장</label><br>
@@ -266,7 +271,7 @@
 			    </div>
 			  </div>
 		  </div>
-		  
+		  <br>
 <!-- 		  특이사항 -->
 		  	<div class="form-group">
 				<label for="fa_note" style="font-weight: bold; text-align:center;">특이사항</label> &nbsp;<span class="badge badge-secondary">선택</span>
@@ -276,7 +281,7 @@
 			</div>
 			
 			<!-- 시설 사진 -->
-			${files }
+<%-- 			${files } --%>
 <!-- 			여기해야함. 사진이 있는 경우 없는경우 -->
 			<div class="form-group picture-box">
 			 <label style="font-weight: bold;">시설사진</label> &nbsp;<span class="badge badge-secondary">선택 (최대 3장)</span>
@@ -289,8 +294,8 @@
 			</div>	
 			
 			<br>
-			 <div style="text-align: center; margin-top: 40px;">
-		 		 <button class="btn"  style="background-color: black; color: white; border-radius: 10px; width:400px" >수정하기</button>
+			 <div style="text-align: center;">
+		 		 <button class="btn">수정하기</button>
 		  </div>
 		</form>
 	</div>

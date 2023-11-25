@@ -151,71 +151,71 @@
 							    	승인 대기중</button>
 							</div>
 						</div>	
-							<div class="body-container">
-								<div class="memberlist-box">
-									<p class="title">‘MEMBER’ 등급인 클럽</p>
-									<ul class="memberlist-control">
-										<c:forEach items="${memberlist}" var="list">
-											<li class="memberlist-link">
-												<a href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>">
-													<div style="display: flex;">
-														<div class="emblem">
-															<img alt="엠블럼"
-																src="<c:url value='/clubimg${list.cl_emblem }'/>"
-																style="width: 60px; height: 60px; border-radius: 50%">
-														</div>
-														<div style="margin-top: 20px;">
-															<span>${list.cl_name }</span> <span>${list.cl_rg_num }</span>
-														</div>
+						<div class="body-container">
+							<div class="memberlist-box">
+								<p class="title">‘MEMBER’ 등급인 클럽</p>
+								<ul class="memberlist-control">
+									<c:forEach items="${memberlist}" var="list">
+										<li class="memberlist-link">
+											<a href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>">
+												<div style="display: flex;">
+													<div class="emblem">
+														<img alt="엠블럼"
+															src="<c:url value='/clubimg${list.cl_emblem }'/>"
+															style="width: 60px; height: 60px; border-radius: 50%">
 													</div>
-												</a>
-											</li>
-										</c:forEach>
-									</ul>
-								</div>
-								<div class="leaderlist-box">
-									<p class="title">‘LEADER’ 등급인 클럽</p>
-									<ul class="leaderlist-control">
-										<c:forEach items="${leaderlist}" var="list">
-											<li class="leaderlist-link">
-												<a href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>">
-													<div style="display: flex;">
-														<div class="emblem">
-															<img alt="엠블럼"
-																src="<c:url value='/clubimg${list.cl_emblem }'/>"
-																style="width: 60px; height: 60px; border-radius: 50%">
-														</div>
-														<div style="margin-top: 20px;">
-															<span>${list.cl_name }</span> <span>${list.cl_rg_num }</span>
-														</div>
+													<div style="margin-top: 20px;">
+														<span>${list.cl_name }</span> <span>${list.cl_rg_num }</span>
 													</div>
-												</a>
-											</li>
-										</c:forEach>
-									</ul>
-								</div>
-								<div class="rookielist-box">
-									<p class="title">‘ROOKIE’ 등급인 클럽</p>
-									<ul class="rookielist-control">
-										<c:forEach items="${rookielist}" var="list">
-											<li class="rookielist-link">
-												<a href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>">
-													<div style="display: flex;">
-														<div>
-															<img alt="엠블럼"
-																src="<c:url value='/clubimg${list.cl_emblem }'/>"
-																style="width: 60px; height: 60px; border-radius: 50%">
-														</div>
-														<div style="margin-top: 20px;">
-															<span>${list.cl_name }</span> <span>${list.cl_rg_num }</span>
-														</div>
-													</div>
-												</a>
-											</li>
-										</c:forEach>
-									</ul>
-								</div>
+												</div>
+											</a>
+										</li>
+									</c:forEach>
+								</ul>
 							</div>
+							<div class="leaderlist-box">
+								<p class="title">‘LEADER’ 등급인 클럽</p>
+								<ul class="leaderlist-control">
+									<c:forEach items="${leaderlist}" var="list">
+										<li class="leaderlist-link">
+											<a href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>">
+												<div style="display: flex;">
+													<div class="emblem">
+														<img alt="엠블럼"
+															src="<c:url value='/clubimg${list.cl_emblem }'/>"
+															style="width: 60px; height: 60px; border-radius: 50%">
+													</div>
+													<div style="margin-top: 20px;">
+														<span>${list.cl_name }</span> <span>${list.cl_rg_num }</span>
+													</div>
+												</div>
+											</a>
+										</li>
+									</c:forEach>
+								</ul>
+							</div>
+							<div class="rookielist-box">
+								<p class="title">‘ROOKIE’ 등급인 클럽</p>
+								<ul class="rookielist-control">
+									<c:forEach items="${rookielist}" var="list">
+										<li class="rookielist-link">
+											<a href="<c:url value='/club/detail?cl_num=${list.cl_num}'/>">
+												<div style="display: flex;">
+													<div>
+														<img alt="엠블럼"
+															src="<c:url value='/clubimg${list.cl_emblem }'/>"
+															style="width: 60px; height: 60px; border-radius: 50%">
+													</div>
+													<div style="margin-top: 20px;">
+														<span>${list.cl_name }</span> <span>${list.cl_rg_num }</span>
+													</div>
+												</div>
+											</a>
+										</li>
+									</c:forEach>
+								</ul>
+							</div>
+						</div>
 					</div>
 				</div>	
 			</div>
@@ -238,12 +238,6 @@
 							</a>
 						</li>
 						<li>
-							<a href="#">
-							<img src="	https://d31wz4d3hgve8q.cloudfront.net/media/ic_crown.svg" width="24px" height="24px" alt="나의 티어">
-							<p>나의 티어</p>
-						</a>
-						</li>
-						<li>
 							<a href="<c:url value='/member/search'/>">
 							<img src="	https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_friend.svg" width="24px" height="24px" alt="회원 조회">
 							<p>회원 찾기</p>
@@ -252,13 +246,7 @@
 						<li>
 							<a href="<c:url value='/member/friendlist'/>">
 							<img src="https://d31wz4d3hgve8q.cloudfront.net/media/ic_nav_team_recruit_guest.svg" width="24px" height="24px" alt="회원 조회">
-							<p>즐겨찾기 회원 조회</p>
-							</a>
-						</li>
-						<li>
-							<a href="<c:url value='/member/blocklist'/>">
-							<img src="https://d31wz4d3hgve8q.cloudfront.net/media/ic_nav_team_recruit_guest.svg" width="24px" height="24px" alt="회원 조회">
-							<p>차단 회원 조회</p>
+							<p>즐겨찾기/차단 조회</p>
 							</a>
 						</li>
 						<li>
@@ -271,6 +259,12 @@
 							<a href="<c:url value='/account/insert'/>">
 							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_new_team.svg" width="24px" height="24px" alt="환급 계좌 등록">
 							<p>환급 계좌 등록</p> 
+							</a>
+						</li>
+						<li>
+							<a href="<c:url value='/member/pointHistory'/>">
+							<img src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_manner_card.svg" width="24px" height="24px" alt="포인트 환급">
+							<p>포인트 내역</p>
 							</a>
 						</li>
 						<li>

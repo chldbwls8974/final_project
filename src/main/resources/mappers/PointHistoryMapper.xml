@@ -223,5 +223,88 @@
 		where
 			ph_num = #{ph.ph_num};
 	</update>
-	
+	<select id="selectMemberPointHistoryCount" resultType="int">
+		select 
+			count(*)
+		from 
+			point_history
+		where
+			ph_me_num = #{user.me_num}
+		<if test='cri.t == "all"'>
+		
+		</if>
+		<if test='cri.t == "second"'>
+		and
+			ph_date >= CURDATE() - INTERVAL 1 MONTH
+		</if>
+		<if test='cri.t == "third"'>
+		and
+			ph_date >= CURDATE() - INTERVAL 3 MONTH
+		</if>
+		<if test='cri.t == "fourth"'>
+		and
+			ph_date >= CURDATE() - INTERVAL 6 MONTH
+		</if>
+		<if test='cri.t == "fifth"'>
+		and
+			ph_date >= CURDATE() - INTERVAL 1 YEAR
+		</if>
+		 
+		<if test='cri.s == "all"'>
+		
+		</if>
+		<if test='cri.s == "second"'>
+		and
+			(ph_source = 0 or ph_source = 2 or ph_source = 3)
+		</if>
+		<if test='cri.s == "third"'>
+		and
+			(ph_source = 1 or ph_source = 4 or ph_source = 5)
+		</if>;
+	</select>
+	<select id="selectMemberPointHistory" resultType="kr.kh.final_project.vo.PointHistoryVO">
+		select 
+			*
+		from 
+			point_history
+		where
+			ph_me_num = #{user.me_num}
+		<if test='cri.t == "all"'>
+		
+		</if>
+		<if test='cri.t == "second"'>
+		and
+			ph_date >= CURDATE() - INTERVAL 1 MONTH
+		</if>
+		<if test='cri.t == "third"'>
+		and
+			ph_date >= CURDATE() - INTERVAL 3 MONTH
+		</if>
+		<if test='cri.t == "fourth"'>
+		and
+			ph_date >= CURDATE() - INTERVAL 6 MONTH
+		</if>
+		<if test='cri.t == "fifth"'>
+		and
+			ph_date >= CURDATE() - INTERVAL 1 YEAR
+		</if>
+		 
+		<if test='cri.s == "all"'>
+		
+		</if>
+		<if test='cri.s == "second"'>
+		and
+			(ph_source = 0 or ph_source = 2 or ph_source = 3)
+		</if>
+		<if test='cri.s == "third"'>
+		and
+			(ph_source = 1 or ph_source = 4 or ph_source = 5)
+		</if>
+		order by
+			ph_date desc,
+			ph_num desc
+		limit
+			#{cri.pageStart}, #{cri.perPageNum}
+			;
+	</select>
 </mapper>

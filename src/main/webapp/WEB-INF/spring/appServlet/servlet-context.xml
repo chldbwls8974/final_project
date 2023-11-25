@@ -76,6 +76,7 @@
 			<mapping path="/member/blocklist"/>
 			<mapping path="/member/myCoupon"/>
 			<mapping path="/member/refund"/>
+			<mapping path="/member/signout"/>
 			<beans:ref bean="memberInterceptor" />
 		</interceptor>
 		<interceptor>

@@ -12,6 +12,19 @@
 		background-color: #f2f2f2; height: auto; margin-top: 20px;
 		border-radius: 20px; padding: 100px;
 	}
+	.form-control{border-radius: 30px; width: 500px;}
+	.form-group{text-align: center;}
+	.form-group label{display: inline-block; text-align: center;}
+	.form-group button, .form-group select{margin: 0 auto;}
+	.form-group input{margin: 0 auto;}
+	.form-group-box{ background-color: #e4f7d3; border-radius: 10px; width: 60%; padding: 30px; margin: 0 auto;}
+	.form-group-inline{ text-align: center;}
+	.form-group-inline .form-group input{ width: 100px;}
+	.input-group{ width: 50%; margin: 0 auto; }
+	textarea.form-control{ margin: 0 auto; }
+	.btn{ border-radius: 10px; width: 300px; height: 45px; border: none;
+	background-color: #c2f296; color: black; margin-top: 50px;}
+	
 </style>
 <body>
 	<div class="stadiumInsert-navigation" style="margin-top: 50px; text-align: center;">
@@ -20,7 +33,7 @@
 	</div>
 		
 	<div class="container-body">
-		<form action="<c:url value='/businessman/stadiumInsert'/>" method="post">
+		<form action="<c:url value='/businessman/stadiumInsert'/>" method="post" style="text-align: center;">
 		  <div class="form-group" hidden="hidden">
 		    <label for="st_fa_num">시설 번호</label>
 	 	    <input type="text" class="form-control" id="st_fa_num" name="st_fa_num" value="${fa_num}" readonly>
@@ -37,7 +50,9 @@
 		  </div>
 		  <br>
 		  
-		  <h5 class="text-info" style="font-weight: bold;">[체크 사항]</h5>
+		  <h5 class="text-info" style="font-weight: bold; color: black !important; text-align: center; margin-bottom: 20px;">
+		  	체크 사항</h5>
+		 <div class="form-group-box">
 		  <div class="form-group">
 		    <label for="st_door" style="font-weight: bold;">실내/실외</label><br>
 		    <div class="form-check-inline">
@@ -94,6 +109,7 @@
 			  </label>
 			</div>
 		  </div>
+		 </div> 
 		  <br>
 		  
 		  <div class="form-group-inline">
@@ -122,9 +138,11 @@
 			  <label for="st_note" style="font-weight: bold;">특이사항</label> &nbsp;<span class="badge badge-secondary">선택</span>
 			  <textarea class="form-control" rows="5" id="st_note" name="st_note"></textarea>
 		  </div>
-		  
-		  <button class="btn btn-info btn-block">등록</button>
-		  <a class="btn btn-warning btn-block" role="button" href="<c:url value='/businessman/facility'/>">취소</a>
+			<div style="display: inline-block;">
+			  <button class="btn btn-block">등록</button>
+			  <a class="btn btn-block" role="button" href="<c:url value='/businessman/facility'/>" style="background-color: #b9b9b9;">
+			  취소</a>
+			</div>	
 		</form>
 	</div>
 	
