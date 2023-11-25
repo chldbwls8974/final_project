@@ -739,7 +739,7 @@ input, progress {
 
 		
 		
-		
+
 		
 		// 아이디 중복 검사
 		let flag = false;
@@ -747,7 +747,7 @@ input, progress {
 			flag = false;
 			let id = $(this).val();
 			if(!/^[a-zA-Z]\w{5,9}$/.test(id)){
-				$('#check-id-error').text('아이디는 6~10글자 영문+숫자 조합이며, 영문으로 시작해야합니다').css('color', 'red');
+				$('#check-id-error').text('아이디는 6~10글자 영문+숫자 조합이며, 영문으로 시작해야합니다.').css('color', 'red');
 				flag = false;
 				return;
 			}
