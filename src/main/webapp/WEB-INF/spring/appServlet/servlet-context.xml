@@ -88,8 +88,7 @@
 			<beans:ref bean="boardBanInterceptor"/>
 		</interceptor>
 		<interceptor>
-			<mapping path="/match/searchClub"/>
-			<mapping path="/match/searchSole"/>
+			<mapping path="/match/search/**"/>
 			<beans:ref bean="matchBanInterceptor"/>
 		</interceptor>
 	</interceptors>

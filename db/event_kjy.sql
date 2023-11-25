@@ -25,7 +25,7 @@ BEGIN
 	futsal.stadium on sc_st_num = st_num
 		left join
 	futsal.availability on av_st_num = st_num
-    WHERE ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(now()), 1));
+    WHERE st_available != 2 and ti_day = (SELECT SUBSTR('일월화수목금토', DAYOFWEEK(now()), 1));
 END;
 $$
 DELIMITER ;
