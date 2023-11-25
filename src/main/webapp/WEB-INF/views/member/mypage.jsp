@@ -63,6 +63,13 @@
 	.mytier-box-img{
 		padding:0px; width:23px; height:25px; border-radius:5px;
 	}
+	.mytier-box-inner{
+		text-align:center; margin-right: 5px;
+		font-size:15px; padding:2px 1px 0 0; width: 23px; height: 25px; border-radius: 3px;
+		color: white; font-weight: bolder; 
+	}
+	
+	
 	.myclub-thumb{
 		width: 100%; height: auto; border-radius:30px;
 		background-color: #f2f2f2; padding: 20px; margin: 0 20px 20px 0; 
@@ -163,35 +170,28 @@
 							<div class="mytier-box">
 								<div class="mytier-box-img">
 										<c:if test="${user.me_tr_name == '스타터'}">
-											<div  class="mytier-box-img"  style="text-align:center; margin-right: 5px; font-size:15px; padding:2px 1px 0 0; 
-											color: white; font-weight: bolder; background-color: #8fce00;">0 </div>
+											<div class="mytier-box-inner" style="background-color: #8fce00;">0 </div>
 										</c:if>
 										<c:if test="${user.me_tr_name == '브론즈'}">
-											<div style="text-align:center; margin-right: 5px; font-size:15px; padding:2px 1px 0 0; 
-											color: white; font-weight: bolder; background-color: #ce7e00;">1</div>
+											<div class="mytier-box-inner" style="background-color: #ce7e00;">1</div>
 										</c:if>
 										<c:if test="${user.me_tr_name == '실버'}">
-											<div  class="mytier-box-img"  style="text-align:center; margin-right: 5px; font-size:15px; padding:2px 1px 0 0; 
-											color: white; font-weight: bolder; background-color: #cdcdcd;">2</div>
+											<div class="mytier-box-inner" style="background-color: #cdcdcd;">2</div>
 										</c:if>
 										<c:if test="${user.me_tr_name == '골드'}">
-											<div style="text-align:center; margin-right: 5px; font-size:15px; padding:2px 1px 0 0; 
-											color: white; font-weight: bolder; background-color: #ffde8d;">3</div>
+											<div class="mytier-box-inner" style="background-color: #ffde8d;">3</div>
 										</c:if>
 										<c:if test="${user.me_tr_name == '플래티넘'}">
-											<div style="text-align:center; margin-right: 5px; font-size:15px; padding:2px 1px 0 0;  
-											color: white; font-weight: bolder; background-color: #78beff;">4</div>
+											<div class="mytier-box-inner" style="background-color: #78beff;">4</div>
 										</c:if>
 										<c:if test="${user.me_tr_name == '다이아'}">
-											<div style="text-align:center; margin-right: 5px; font-size:15px; padding:2px 1px 0 0;  
-											color: white; font-weight: bolder; background-color: #fa8d43;">5</div>
+											<div class="mytier-box-inner" style="background-color: #fa8d43;">5</div>
 										</c:if>
 										<c:if test="${user.me_tr_name == '마스터'}">
-											<div style="text-align:center; margin-right: 5px; font-size:15px; padding:2px 1px 0 0;  
-											color: white; font-weight: bolder; background-color: #b08bff;">m</div>
+											<div class="mytier-box-inner" style="background-color: #b08bff;">m</div>
 										</c:if>
 										<c:if test="${user.me_tr_name == '마스터'}">
-											<div style="text-align:center; font-size:15px; padding:0; color: white; font-weight: bolder;">★</div>
+											<div class="mytier-box-inner" style="background-color: #c52216;">★</div>
 										</c:if>
 								</div>
 								<div style="margin-left:5px; font-weight: bolder; font-size: 15px; letter-spacing: 1px;">${user.me_tr_name}</div>

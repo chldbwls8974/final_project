@@ -24,6 +24,8 @@
 		width: 55%; background-color: #e4f7d3;
 		border-radius: 20px; padding:30px; margin:auto;
 	}
+	.picture-box{ display: flex; justify-content: center; }
+	.badge-secondary{ height: 20px; margin-left: 2px; margin-top: 2px;}
 	.input-file{display: none;}
 	.img-thumbnail{
 		cursor: pointer; width:200px; height:auto; 
@@ -283,38 +285,31 @@
 			<!-- 시설 사진 -->
 <%-- 			${files } --%>
 <!-- 			여기해야함. 사진이 있는 경우 없는경우 -->
+				<div style="display: flex; justify-content: center;">
+					 <p style="font-weight: bold;">시설사진</p> &nbsp;<p class="badge badge-secondary">선택 (최대 3장)</p>
+				</div>
 			<div class="form-group picture-box">
-			 <label style="font-weight: bold;">시설사진</label> &nbsp;<span class="badge badge-secondary">선택 (최대 3장)</span>
-					<c:forEach items="${files }" var="files">
-						<div class="ori-picture-box">
-							<div class="box-thumbnail">
-								<img src="<c:url value='/facilityimg${files.fp_name }'/>" alt="미리보기" class="img-select" height="100" width="auto">
-							</div>
-							<a href="#" class="btn-del btn" data-num="${files.fp_num}">
-								<button type="button" style="border: none; background-color: white;">X</button>
-							</a>
+				<c:forEach items="${files }" var="files">
+					<div class="ori-picture-box">
+						<div class="box-thumbnail">
+							<img src="<c:url value='/facilityimg${files.fp_name }'/>" alt="미리보기" class="img-select" height="100" width="auto">
 						</div>
-					</c:forEach>
-					<c:forEach begin="1" end="${3 - files.size() }">
-						<div class="new-picture-box">
-							<div class="form-group box-thumbnail-input">
-								<input type="file" name="file" class="input-file input-select" onchange="readUrl(this)"  >
-							</div>
-							<div class="box-thumbnail">
-								<img src="<c:url value='/resources/images/add-image.png'/>" alt="미리보기" class="img-thumbnail img-select" height="100" width="auto">
-							</div>
+						<a href="#" class="btn-del btn" data-num="${files.fp_num}">
+							<button type="button" style="border: none; background-color: white;">X</button>
+						</a>
+					</div>
+				</c:forEach>
+				<c:forEach begin="1" end="${3 - files.size() }">
+					<div class="new-picture-box">
+						<div class="form-group box-thumbnail-input">
+							<input type="file" name="file" class="input-file input-select" onchange="readUrl(this)"  >
 						</div>
-					</c:forEach>
+						<div class="box-thumbnail">
+							<img src="<c:url value='/resources/images/add-image.png'/>" alt="미리보기" class="img-thumbnail img-select" height="100" width="auto">
+						</div>
+					</div>
+				</c:forEach>
 			</div>	
-			
-			
-			
-			
-			
-			
-			
-			
-			
 			<br>
 			 <div style="text-align: center; margin-top: 40px;">
 		 		 <button class="btn btn-submit"  style="background-color: black; color: white; border-radius: 10px; width:400px" >수정하기</button>

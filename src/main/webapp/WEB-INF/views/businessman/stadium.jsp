@@ -347,13 +347,19 @@
 			          <td>${stadium.st_width}m</td>
 			          <td>${stadium.st_height}m</td>
 			          <td>${stadium.st_max}명</td>
-			          <td>
-			            <c:choose>
-			                <c:when test="${stadium.st_available == 0}">가능</c:when>
-			                <c:when test="${stadium.st_available == 1}">불가능</c:when>
-			            </c:choose>
-				      </td>
-			          <td>${stadium.st_note}</td>
+			          <c:if test="${stadium.st_available == 0}">
+						    <td>
+						        <strong>가능</strong><br>
+						    </td>
+					  </c:if>
+			          <c:if test="${stadium.st_available == 1}">
+						    <td>
+						        <strong>불가능</strong><br>
+						        <span>날짜: ${stadium.availability.av_notdate}</span><br>
+						        <span>사유: ${stadium.availability.av_reason}</span>
+						    </td>
+					  </c:if>
+					  <td>${stadium.st_note}</td>
 			          <td hidden="hidden">${stadium.st_fa_num}</td>
 			          <td><a href="<c:url value='/businessman/stadiumUpdate?st_num=${stadium.st_num}'/>"
 								class="btn btn-outline-secondary" role="button">수정</a></td>

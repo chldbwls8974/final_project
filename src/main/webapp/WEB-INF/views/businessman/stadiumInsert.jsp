@@ -4,6 +4,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(function () {
+        // datepicker 초기화
+        $("#av_notdate").datepicker();
+    });
+</script>
 <meta charset="UTF-8">
 <title>경기장 등록</title>
 </head>
@@ -109,8 +118,20 @@
 			  </label>
 			</div>
 		  </div>
-		 </div> 
-		  <br>
+		  
+		  <div id="availabilityFields" style="display: none;">
+			  <div class="form-group">
+			        <label for="av_notdate" style="font-weight: bold;">불가적용 날짜</label>
+			        <input type="text" class="form-control" id="av_notdate" name="av_notdate" placeholder="날짜를 선택하세요">
+			  </div>
+			
+			  <div class="form-group">
+			        <label for="av_reason" style="font-weight: bold;">사유</label>
+			        <input type="text" class="form-control" id="av_reason" name="av_reason" placeholder="사유를 입력하세요">
+			  </div>
+		  </div> 
+		 </div>
+		 <br>
 		  
 		  <div class="form-group-inline">
 			 <label for="st_width" style="font-weight: bold;">가로 x 세로(m)</label>
@@ -181,6 +202,15 @@
 		            document.getElementById("st_max").value = "";
 		        }
 		    }
+		
+		 //이용가능여부 변경
+	    $('input[name="st_available"]').change(function () {
+	        if ($(this).val() === '1') {
+	            $('#availabilityFields').show();
+	        } else {
+	            $('#availabilityFields').hide();
+	        }
+	    });
 		
 	</script>
 	
