@@ -158,7 +158,6 @@
   }
   .prev{ margin-left: 30px;}
   .next{ margin-right: 30px;}
-	
 </style>
 <body>
 	<div class="stadium-navigation" style="margin-top: 50px; text-align: center;">
@@ -170,11 +169,18 @@
 		<div class="slider__wrap">
 			<div class="slider__img">
 				<div class="slider__inner">
-					<c:forEach items="${files}" var="file">
-						<div class="slider">
-								<img class="item" src="<c:url value='/facilityimg${file.fp_name }'/>" alt="Image">
-						</div>
-					</c:forEach>
+					<c:if test="${!empty files}">
+						<c:forEach items="${files}" var="file">
+							<div class="slider">
+									<img class="item" src="<c:url value='/facilityimg${file.fp_name }'/>" alt="Image">
+							</div>
+						</c:forEach>
+					</c:if>
+					<c:if test="${empty files}">
+					    <div class="slider">
+					        <img class="item" src="<c:url value='/resources/images/add.png'/>" alt="Image">
+					    </div>
+					</c:if>
 				</div>
 			</div>	
 	      <!-- 화살표 -->
@@ -393,7 +399,7 @@
 						>시설 목록으로 이동</a>		
 		</div>
 	</div>	
-	<div class="title-detail">
+	<div class="title-detail owner-detail">
 		<div class="match-info-box1 match-info justify-content: space-between">
 			<div>
 				<label class="text">사업자명 </label>

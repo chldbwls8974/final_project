@@ -225,7 +225,7 @@
 															style="width: 60px; height: 60px; border-radius: 50%">
 													</div>
 													<div style="margin-top: 20px;">
-														<span>${list.cl_name }</span> <span>${list.cl_rg_num }</span>
+														<span>${list.cl_name }</span> 
 													</div>
 												</div>
 											</a>
@@ -246,7 +246,7 @@
 															style="width: 60px; height: 60px; border-radius: 50%">
 													</div>
 													<div style="margin-top: 20px;">
-														<span>${list.cl_name }</span> <span>${list.cl_rg_num }</span>
+														<span>${list.cl_name }</span>
 													</div>
 												</div>
 											</a>
@@ -267,7 +267,7 @@
 															style="width: 60px; height: 60px; border-radius: 50%">
 													</div>
 													<div style="margin-top: 20px;">
-														<span>${list.cl_name }</span> <span>${list.cl_rg_num }</span>
+														<span>${list.cl_name }</span> 
 													</div>
 												</div>
 											</a>
