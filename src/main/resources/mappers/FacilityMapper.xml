@@ -11,7 +11,8 @@
 				join
 			businessman on fa_bu_num = bu_num
 		where
-			bu_me_num = #{me_num}
+			bu_me_num = #{me_num} and
+			fa_deleted = 0
 	</select>
 	<select id="selectFacilityList" resultType="kr.kh.final_project.vo.FacilityVO">
 			select 
