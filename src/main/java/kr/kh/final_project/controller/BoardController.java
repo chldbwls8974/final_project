@@ -136,12 +136,12 @@ public class BoardController {
 	
 	//게시글 삭제하기
 	@GetMapping("/board/delete")
-	public String boardDelete(Model model, HttpSession session, Integer bo_num) {
+	public String boardDelete(Model model, HttpSession session, BoardVO board) {
 		// memberVO에서 지금 로그인하고 있는 user의 정보를 가져와 user에 저장한다.
 		// 작성한 자신의 글만 삭제하기 위해서
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		// boardService한테 로그인한 user와 게시글 번호를 주면 삭제하라고 시킨 것을 res에 담는다.
-		boolean res = boardService.deleteBoard(bo_num, user);
+		boolean res = boardService.deleteBoard(board.getBo_num(), user);
 		// 만약 res가 true면 안내문구 출력
 		if(res) {
 			model.addAttribute("msg", "게시글을 삭제하였습니다.");
@@ -150,12 +150,32 @@ public class BoardController {
 		}
 		// 사용자가 이전에 보고 있던 페이지로 리다이렉트
 		// user정보를 가져왔던거 처럼 preBoard로 이전에 있던 위치를 session으로 가져온다.
-		String preBoard = (String)session.getAttribute("preBoard");
+		String preBoard = getBoardTypeString(board.getBo_bt_num());
+		System.out.println(preBoard);
 		// 이전에 위치가 null이 아니거나 이전위치가 empty가 아닐 때를 redirectUrl에 저장하기
 		String redirectUrl = (preBoard != null && !preBoard.isEmpty()? "/board/"+preBoard : "/");
 		
 		model.addAttribute("url", redirectUrl);
 		return "/util/message";
+	}
+
+	private String getBoardTypeString(int bo_bt_num) {
+		if(bo_bt_num == 1) {
+			return "notice";
+		}
+		if(bo_bt_num == 2) {
+			return "free";
+		}
+		if(bo_bt_num == 3) {
+			return "individual";
+		}
+		if(bo_bt_num == 4) {
+			return "club";
+		}
+		if(bo_bt_num == 5) {
+			return "inquiry";
+		}
+		return null;
 	}
 
 	// ===================================================================================
