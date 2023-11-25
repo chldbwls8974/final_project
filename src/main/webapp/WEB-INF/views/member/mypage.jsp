@@ -132,7 +132,8 @@
 							</div>	
 						</div>
 						<div class="mytier-thumb">
-							<p class="mytier-title">내 티어</p>
+							<p class="mytier-title">내 티어<button class="tier-tip" style="width: 20px; height: 20px; margin-left: 5px; background-color: black; color: white;
+							font-weight: bold; text-align: center; line-height: 9px;">!</button></p>
 							<div class="mytier-box">
 								<div style="padding:0px; width:23px; height:25px; border-radius:5px; background-color: black;">
 									<div style="text-align:center; font-size:15px; padding:0; color: white; font-weight: bolder;">1</div>
