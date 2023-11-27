@@ -84,11 +84,11 @@
 
 <div class="member-search">
 	<div class="member-search-navigation" style="margin-top: 50px; text-align: center; justify-content: center;">
-		<p style="font-size: 35px; width: 17%; font-weight: bolder; margin: 30px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
+		<p style="font-size: 35px; width: 17%; font-weight: bolder; margin: 10px auto; padding: 20px 0 10px 0;">
 		시설 조회</p>
 	</div>
 	<!-- 검색  -->
-		<div class="facility-navigation" style="margin: 30px 0 30px 0; text-align: center;">
+		<div class="facility-navigation" style="margin: 10px; text-align: left;">
 			<select class="searchType">
 				<option value="0">전체</option>
 				<c:forEach items="${MainRegion}" var="main">
@@ -105,7 +105,7 @@
 		        <li style="width: 21%">시설명</li>
 		        <li style="width: 18%">전화번호</li>
 		        <li style="width: 8%">경기장 수</li>
-		        <li style="width: 20%">특이사항</li>
+		        <li style="width: 44%">특이사항</li>
 		  	</ul>
 	    	<ul class="notice-tbody">
 					<c:forEach items="${list}" var="facility" varStatus="vs">
@@ -120,7 +120,7 @@
 									</div>
 									<div class="tbody-list" style="width: 18%">${facility.fa_phone}</div>
 									<div class="tbody-list" style="width: 8%">${facility.st_count}</div>
-									<div class="tbody-list" style="width: 20%">${facility.fa_note}</div>
+									<div class="tbody-list" style="width: 44%">${facility.fa_note}</div>
 								</div>
 							</li>
 						</c:if>

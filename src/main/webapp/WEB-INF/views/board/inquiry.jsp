@@ -8,7 +8,7 @@
 <title>문의 게시판</title>
 <style>
 .container-body{
-		background-color: #f2f2f2; height: 100%; margin-top: 20px;
+		background-color: #f2f2f2; height: auto; margin-top: 20px;
 		border-radius: 20px;
 	}
 	.main{
@@ -58,10 +58,10 @@
 </head>
 <body>
 <div class="container-body">
-	<div style="padding: 30px 30px 90px 30px;">
+	<div style="padding: 30px;">
 	<br>
-		<p style="font-size: 35px; font-weight: bolder; margin:0 auto; border-bottom: 8px solid #c2f296;
-			width: 20%; padding: 20px 0 10px 0; text-align: center;">문의게시판</p>
+		<p style="font-size: 35px; font-weight: bolder; margin:0 auto;
+			width: 20%; padding: 10px 0 10px 0; text-align: center;">문의게시판</p>
 		<div style="display:flex; justify-content: flex-end;">
 			<button type="button"
 				    class="write-btn btn-inquiry"

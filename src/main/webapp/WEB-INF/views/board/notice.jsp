@@ -16,6 +16,7 @@
 		padding: 40px; height: auto; width1: 100%;
 		background-color: white; border-radius: 20px;
 	}
+	form{ margin-top: 85px;}
 	.notice-thead{
 		display: flex; justify-content: space-between; padding: 20px;
 		border-bottom: 1px solid rgba(0,0,0,.1);
@@ -57,7 +58,7 @@
 <div class="container-body">
 	<div style="padding: 30px 30px 90px 30px;">
 	<br>
-		<p style="font-size: 35px; font-weight: bolder; margin: 0px auto; border-bottom: 8px solid #c2f296;
+		<p style="font-size: 35px; font-weight: bolder; margin: 0 auto;
 			width: 20%; padding: 10px 0 10px 0; text-align: center;">공지게시판</p>
 		<c:if test="${user.me_authority == 'ADMIN'}">
 			<div style="display:flex; justify-content: flex-end;">
