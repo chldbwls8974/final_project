@@ -28,7 +28,7 @@
 	</style>
 </head>
 <body>
-	<p style="font-size: 35px; font-weight: bolder; margin:50px auto; border-bottom: 8px solid #c2f296;
+	<p style="font-size: 35px; font-weight: bolder; margin:50px auto;
 	width: 16%; padding: 30px 0 10px 0; text-align: center;">일정 관리</p>
 	<div class="days-box">
 		<div class="prev-week btn-week"><</div>

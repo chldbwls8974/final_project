@@ -234,7 +234,15 @@
 	</div>
 	
 	<script type="text/javascript">	
-    
+	var currentDate = new Date();
+	var year = currentDate.getFullYear();
+	var month = currentDate.getMonth() + 1;
+	var day = currentDate.getDate();
+	var date_now = year + '/' + month + '/' + day;
+	if($('#av_notdate').val() == ''){
+		$('#av_notdate').val(date_now);		
+	}
+	
 	$(document).ready(function () {
 	    // 페이지 로드 시 실행되는 부분
 	    checkAvailability();

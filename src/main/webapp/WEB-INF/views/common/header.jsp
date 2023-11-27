@@ -38,18 +38,20 @@
 			<img alt="로고" src="https://ifh.cc/g/s2ddYw.png" style="width: 150px">
 		</a>
 	</div>
-	<div style="width: 20%;
-				text-align: end;
-			    padding: 13px;
-			    width: 200px;
-			    height: 70px;
-			    position: absolute;
-			    right: 20px;
-			    top: 20px;
-			    border-radius: 10px;">
-		<p><b>${user.me_nickname}</b>님 안녕하세요.</p>
-		<p>${user.me_nickname}님의 잔여포인트는 <b>${user.me_point}</b>입니다.</p>
-	</div>
+	<c:if test="${user != null}">
+		<div style="width: 20%;
+					text-align: end;
+				    padding: 13px;
+				    width: 200px;
+				    height: 55px;
+				    position: absolute;
+				    right: 20px;
+				    top: 20px;
+				    border-right: 6px solid #c2f296;">
+			<p><b>${user.me_nickname}</b>님 안녕하세요.</p>
+			<p>${user.me_nickname}님의 잔여포인트는 <b>${user.me_point}</b>입니다.</p>
+		</div>
+	</c:if>
 </div>
 <div class="navbar-container">	
 	<nav class="navbar1">
@@ -138,7 +140,6 @@
 						<a class="dropdown-item" href="<c:url value='/businessman/facilityInsert'/>">시설 등록</a>
 						<a class="dropdown-item" href="<c:url value='/businessman/facility'/>">시설 관리</a>
 						<a class="dropdown-item" href="<c:url value='/buisnessman/manage/schedule?fa_num=0'/>">스케줄 관리</a>
-						<a class="dropdown-item" href="#">일정 관리</a>
 					</div>
 				</li>
 			</c:if>

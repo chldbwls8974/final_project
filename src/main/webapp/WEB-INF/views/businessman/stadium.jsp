@@ -67,7 +67,7 @@
 	/* 슬라이드쇼 */
 	.slider__wrap {
         width: 100%;
-        height: 80vh;
+        height: 450px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -76,7 +76,7 @@
     .slider__img {
         position: relative;
         width: 600px;
-        height: 600px;
+        height: 400px;
         overflow: hidden;
     }
      /* 이미지 감싸고 있는 부모 : 움직이는 부분 */
@@ -91,8 +91,8 @@
 	/* 개별 이미지 */
 	.slider{
 		position: relative;
-		width: 600px;
-		height: 600px;
+		width: 800px;
+		height: 400px;
 	}
 	
 	.slider img{
@@ -148,7 +148,7 @@
 
   
 	.title-detail{margin: 0px auto; background-color: white; border-radius: 30px;
-		padding: 30px; width: 500px; height: 550px; text-align: center; background-color: #f2f2f2;
+		padding: 30px; width: 500px; height: auto; text-align: center; background-color: #f2f2f2;
 	}
 	.facility-info-box{ justify-content: space-between; display: flex;}
 	.facility-info-icon{ display: flex;}
@@ -160,7 +160,7 @@
 </style>
 <body>
 	<div class="stadium-navigation" style="margin-top: 50px; text-align: center;">
-		<p style="font-size: 35px; width: 38%; font-weight: bolder; margin: 30px auto; padding: 20px 0 10px 0; border-bottom: 8px solid #c2f296;">
+		<p style="font-size: 35px; width: 38%; font-weight: bolder; margin: 10px auto; padding: 20px 0 10px 0;">
 		[${facility.fa_name}] 경기장 목록</p>
 	</div>
 	
@@ -272,21 +272,25 @@
 								<p>${facility.fa_machine == 0 ? '없음' : '있음'}</p>
 							</div>
 						</div>
-						<div class="facility-info-box">
-							<div class="facility-info-icon">
-								<img
-									src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_level.svg"
-									class="match-icon">
-								<p style="margin-top: 20px;">특이사항</p>
-							</div>
-							<div>
-								<p>${facility.fa_note}</p>
-							</div>
-						</div>
 					</div>
 				</div>	
 			</div>
 		</div>
+		<c:if test="${facility.fa_note != null && facility.fa_note != ''}">
+			<div class="title-detail" style="margin: 10px auto;">
+				<div class="facility-info-box">
+					<div class="facility-info-icon">
+						<img
+							src="https://d31wz4d3hgve8q.cloudfront.net/static/img/ic_info_level.svg"
+							class="match-icon">
+						<p>특이사항</p>
+					</div>
+					<div>
+						<p>${facility.fa_note}</p>
+					</div>
+				</div>
+			</div>
+		</c:if>	
 	
 <!-- 	검색창 -->
 	<form action="<c:url value='/businessman/stadium/${facility.fa_num}'/>" method="get">

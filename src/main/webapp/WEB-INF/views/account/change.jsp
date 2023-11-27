@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <style>
 	.container-body{
-		background-color: #f0f0f0; height: 100%; padding: 100px 0 100px 0;
+		background-color: #f0f0f0; height: auto; padding: 30px;
 		border-radius: 40px;
 	}
 	form{ text-align: center;}
@@ -26,8 +26,8 @@
 </head>
 <body>
 <div class="container-body">
-	<p style="font-size: 45px; font-weight: bolder;
-		text-align: center; padding: 50px 0 20px 0;">환급 계좌 수정</p>
+	<p style="font-size: 35px; font-weight: bolder;
+		text-align: center; padding: 30px;">환급 계좌 수정</p>
 	<form action="<c:url value='/account/change'/>" method="post">
 		<div class="form-group">
 			<input type="hidden" class="form-control" name="ac_me_num" value="${user.me_num}" >

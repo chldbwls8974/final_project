@@ -35,8 +35,8 @@
 </style>
 <body>
 	<div class="container-body">
-		<p style="font-size: 35px; font-weight: bolder; margin:50px auto; border-bottom: 8px solid #c2f296;
-		width: 23%; padding: 80px 0 10px 0; text-align: center;">나의 보유 쿠폰</p>
+		<p style="font-size: 35px; font-weight: bolder; margin: 10px auto;
+		width: 30%; padding: 30px; text-align: center;">나의 보유 쿠폰</p>
 		
 		<div class="mini-container">
 			<table class="table table-hover mt-4">

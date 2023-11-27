@@ -128,11 +128,6 @@
 						</a>
 					</div>
 					<div class="slider">
-						<a href="<c:url value='/match/search/club'/>">
-							<img class="item" src="<c:url value='/resources/main/main9.png'/>" alt="Image2">
-						</a>
-					</div>
-					<div class="slider">
 						<a href="<c:url value='/member/signup'/>">
 							<img class="item" src="<c:url value='/resources/main/main6.png'/>" alt="Image3">
 						</a>
@@ -144,9 +139,14 @@
 					</div>
 					<div class="slider">
 						<a href="<c:url value='/match/search/club'/>">
-							<img class="item" src="<c:url value='/resources/main/main8.png'/>" alt="Image5">
+							<img class="item" src="<c:url value='/resources/main/main9.png'/>" alt="Image2">
 						</a>
 					</div>
+<!-- 					<div class="slider"> -->
+<%-- 						<a href="<c:url value='/match/search/club'/>"> --%>
+<%-- 							<img class="item" src="<c:url value='/resources/main/main8.png'/>" alt="Image5"> --%>
+<!-- 						</a> -->
+<!-- 					</div> -->
 				</div>
 			</div>
 	    	<!-- 화살표 -->
@@ -203,15 +203,15 @@
 	
 	    sliderInner.style.transform = "translateX(-"+ sliderWidth * currentIndex +"px)";
 	
-	    // sliderInner.style.transform = "translateX(-600px)";      600*1
-	    // sliderInner.style.transform = "translateX(-1200px)";     600*2
-	    // sliderInner.style.transform = "translateX(-1800px)";     600*3
-	    // sliderInner.style.transform = "translateX(-2400px)";     600*4
-	    // sliderInner.style.transform = "translateX(-3000px)";     600*5
-	    // sliderInner.style.transform = "translateX(-3600px)";     600*1
+// 	    sliderInner.style.transform = "translateX(-600px)";      600*1
+// 	    sliderInner.style.transform = "translateX(-1200px)";     600*2
+// 	    sliderInner.style.transform = "translateX(-1800px)";     600*3
+// 	    sliderInner.style.transform = "translateX(-2400px)";     600*4
+// 	    sliderInner.style.transform = "translateX(-3000px)";     600*5
+// 	    sliderInner.style.transform = "translateX(-3600px)";     600*1
 	
 	    // 마지막 사진이면 0번째로 이동
-	    if(currentIndex == sliderCount -1 ){
+	    if(currentIndex == sliderCount){
 	        setTimeout(()=>{
 	            sliderInner.style.transition = "0s";
 	            sliderInner.style.transform = "translateX(0px)";

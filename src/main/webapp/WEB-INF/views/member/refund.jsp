@@ -62,8 +62,8 @@
 }
 </style>
 <body>
-	<p style="font-size: 45px; font-weight: bolder;
-		text-align: center; padding: 50px 0 20px 0;">포인트 환급</p>
+	<p style="font-size: 35px; font-weight: bolder;
+		text-align: center; padding: 30px;">포인트 환급</p>
 	<form action="<c:url value='/member/refund'/>" method="post" style="text-align: center;">
 		<div class="form-group-info">
 			<p style="font-size: 20px; margin: 0; padding-top: 10px; ">${user.me_name} 님의 보유 포인트</p> 
