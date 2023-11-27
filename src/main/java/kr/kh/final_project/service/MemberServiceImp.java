@@ -282,7 +282,7 @@ public class MemberServiceImp implements MemberService{
 	@Override
 	public MemberVO login(MemberVO member) {
 		// 이메일 인증 로그인이면
-		if(!member.getMe_id().matches("^\\d+.*k$")) {
+		if(member.getMe_id().matches("^[a-zA-Z]\\w{5,9}$")) {
 			if(member == null || member.getMe_id() == null || member.getMe_pw() == null) {
 				return null;
 			}
