@@ -438,7 +438,7 @@ public class AdminServiceImp implements AdminService{
 		if(business == null) {
 			return false;
 		}
-		boolean res = businessDao.deleteBusinessList(bu_num);
+		boolean res = businessDao.deleteBusinessList2(bu_num);
 		
 		return res;
 	}

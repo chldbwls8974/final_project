@@ -261,7 +261,7 @@
 		where
 			bu_num = #{businessman.bu_num}
 	</update>
-	<update id="deleteBusinessList">
+	<update id="deleteBusinessList2">
 		update
 			businessman
 		set

@@ -43,7 +43,7 @@ public interface BusinessDAO {
 	// 사업자 수정하기 (3)
 	boolean updateBusiness(@Param("businessman")BusinessmanVO businessman);
 	// 사업자 삭제하기 (3)
-	boolean deleteBusinessList(@Param("bu_num")Integer bu_num);
+	boolean deleteBusinessList2(@Param("bu_num")Integer bu_num);
 
 	BusinessmanVO selectBusinessManByFaBuNum(@Param("fa_bu_num")Integer fa_bu_num);
 	
