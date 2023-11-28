@@ -19,7 +19,6 @@
 	    font-weight: bolder;
 	    margin: 0px auto;
 	    padding: 20px 0 10px 0;
-	    border-bottom: 8px solid #c2f296;
 	}
 	.myrecord-text2{
 		font-size: 20px;
@@ -86,7 +85,7 @@
 	.teamList-box{flex: 1; margin-left: 50px;}
 	.teamList-box table tbody tr{text-align: left;}
 	.btn{
-		border-radius: 10px !important; width: 100px; height: 40px; border: none;
+		border-radius: 10px !important; width: 115px; height: 40px; border: none;
 		background-color: #c2f296; color: black;
 	}
 	

@@ -50,7 +50,7 @@ public class AccountController {
 			
 		if(accountService.insertAccount(account, user)) {
 			msg = "계좌등록에 성공하였습니다.";
-			url = "/";
+			url = "/member/mypage";
 		}else {
 			msg = "계좌등록에 실패하였습니다.";
 			url = "/account/insert"; 
@@ -66,10 +66,10 @@ public class AccountController {
 			
 		if(accountService.updateAccount(account, user)) {
 			msg = "계좌변경에 성공하였습니다.";
-			url = "/";
+			url = "/member/mypage";
 		}else {
 			msg = "계좌변경에 실패하였습니다.";
-			url = "/"; 
+			url = "/account/insert"; 
 		}
 		model.addAttribute("url", url);
 		model.addAttribute("msg", msg);

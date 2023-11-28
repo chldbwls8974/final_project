@@ -29,8 +29,8 @@
 	</style>
 </head>
 <body>
-	<p style="font-size: 35px; font-weight: bolder; margin:50px auto; border-bottom: 8px solid #c2f296;
-	width: 16%; padding: 30px 0 10px 0; text-align: center;">매치 조회</p>
+	<p style="font-size: 35px; font-weight: bolder; margin:50px auto;
+	width: 16%; padding: 30px 0 10px 0; text-align: center;">매치 신청</p>
 	<div class="days-box">
 		<c:forEach items="${thirdWeek}" var="day">
 			<div class="day-box">

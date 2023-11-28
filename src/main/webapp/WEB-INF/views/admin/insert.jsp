@@ -15,11 +15,18 @@
 	.form-control{
 		margin-bottom : 10px;
 	}
+	.form-control{border-radius: 30px; width: 500px;}
+	.form-group{text-align: center;}
+	.form-group label{display: inline-block; text-align: center;}
+	.form-group button, .form-group select{margin: 0 auto;}
+	.form-group input{margin: 0 auto;}
 </style>    
 </head>
 </head>
 <body>
-	<hr>
+	<br>
+	<p class="title" style="font-size: 35px; font-weight: bolder; padding-bottom: 30px;
+		text-align: center; margin-top: 20px;">사업자 등록</p>
 	<form action="<c:url value='/admin/insert'/>" method="post" enctype="multipart/form-data">
 		<div class="form-group">
 			<label>대표자명</label>
@@ -42,7 +49,7 @@
 			<input type="text" class="form-control" name="bu_me_num" >
 		</div>
 		<div style="text-align: center; margin-top: 40px;">
-			<button style="background-color: black; color: white; border-radius: 10px; width: 80px;"
+			<button style="background-color: black; color: white; border-radius: 10px; width: 130px;"
 				class="btn">등록</button> 
 		</div>
 	</form>
