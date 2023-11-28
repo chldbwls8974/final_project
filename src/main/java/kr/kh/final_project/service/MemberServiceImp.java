@@ -290,10 +290,13 @@ public class MemberServiceImp implements MemberService{
 			if(user == null) {
 				return null;
 			}
-					if(passwordEncoder.matches(member.getMe_pw(), user.getMe_pw())) {
-						return user;
-					}
-			
+//					if(passwordEncoder.matches(member.getMe_pw(), user.getMe_pw())) {
+//						return user;
+//					}
+			//원활한 테스트를 위해서 남겨두는 코드. 나중에 이부분 삭제 후 위의 주석을 해제하면 됌
+			if(member.getMe_pw().equals(user.getMe_pw())) {
+				return user;
+			}
 			
 		}
 		// 카카오 인증 로그인이면, pw가 없으므로
