@@ -282,7 +282,7 @@ public class MemberServiceImp implements MemberService{
 	@Override
 	public MemberVO login(MemberVO member) {
 		// 이메일 인증 로그인이면
-		if(member.getMe_id().matches("^[a-zA-Z]\\w{5,9}$")) {
+		if(!member.getMe_id().matches("k$")) {
 			if(member == null || member.getMe_id() == null || member.getMe_pw() == null) {
 				return null;
 			}
@@ -290,14 +290,20 @@ public class MemberServiceImp implements MemberService{
 			if(user == null) {
 				return null;
 			}
-					if(passwordEncoder.matches(member.getMe_pw(), user.getMe_pw())) {
+//					if(passwordEncoder.matches(member.getMe_pw(), user.getMe_pw())) {
+//						return user;
+//					}
+			
+			
+					//원활한 테스트를 위해서 남겨두는 코드. 나중에 이거 삭제하고 위의 주석을 해제하면 됨
+					if(member.getMe_pw().equals(user.getMe_pw())) {
 						return user;
 					}
 			
 			
 		}
 		// 카카오 인증 로그인이면, pw가 없으므로
-		else if(member.getMe_id().matches("^\\d+.*k$")){
+		else if(member.getMe_id().matches("k$")){
 			if(member == null || member.getMe_id() == null) {
 				return null;
 			}
